@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','surname','image','phone','status_account,'
     ];
 
     /**
@@ -38,8 +38,4 @@ class User extends Authenticatable
     ];
 
 
-
-    public function prueba(){
-
-    }
 }
