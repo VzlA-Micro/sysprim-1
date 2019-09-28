@@ -12,9 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// User module routes
+Route::get('/users/register', function() {
+    return view('register');
+})->name('users.register');
+
+// Companies module routes
+Route::get('/companies/register', function() {
+    return view('register');
+})->name('companies/register');

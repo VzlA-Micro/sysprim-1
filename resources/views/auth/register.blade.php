@@ -6,40 +6,52 @@
             <div class="col s12 m6 offest-m3 l4 offset-l4">
                 <form action="" method="post" class="card">
                     <div class="card-header center-align">
-                        <span>{{ __('Register') }}</span>
+                        <h5>Registrarse</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
-                            <input id="name" type="text" name="name" value="{{ old('name') }}" required>
-                            <label for="name">{{ __('Name') }}</label>
+                                <input id="ci" type="text" name="ci" required>
+                                <label for="ci">Cedula</label>
+                            </div>
+                        <div class="input-field col s12 m6">
+                            <input id="name" type="text" name="name" required>
+                            <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="surname" type="text" name="surname" value="{{ old('surname') }}" required>
-                            <label for="surname">{{ __('Surname') }}</label>
+                            <input id="surname" type="text" name="surname" required>
+                            <label for="surname">Apellido</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input id="phone" type="text" name="phone" required>
+                            <label for="phone">Teléfono</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="username" type="text" name="username" value="{{ old('username') }}" required>
-                            <label for="username">{{ __('Username') }}</label>
+                            <select name="type" id="type">
+                                <option value="null" disabled selected>Elige un tipo...</option>
+                                <option value="natural">Natural</option>
+                                <option value="business">Juridica</option>
+                              </select>
+                              <label for="type">Tipo de Persona</label>
                         </div>
                         <div class="input-field col s12">
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required>
-                            <label for="email">{{ __('E-Mail Address') }}</label>
+                            <label for="email">E-mail</label>
                         </div>
                         <div class="input-field col s12">
                             <input id="password" type="password" name="password" required>
-                            <label for="password">{{ __('Password') }}</label>
+                            <label for="password">Contraseña</label>
                         </div>
                         <div class="input-field col s12">
                             <input id="password-confirm" type="password" name="password_confirmation" required>
-                            <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm">Confirmar contraseña</label>
                         </div>
                     </div>
                     <div class="card-action center">
-                        <button type="submit" class="btn green">{{ __('Register') }}</button>
+                        <button type="submit" class="btn green">Registarse</button>
                     </div>
                     <div class="card-footer center-align">
-                        <a href="{{ route('login') }}">Login here.</a>
+                        <a href="{{ route('login') }}">¿Ya tienes una cuenta? Inicia sesión aquí.</a>
                     </div>
                 </form>
             </div>

@@ -26,3 +26,19 @@ footer {
     //     max-height: 54px !important;
     // }
 }
+
+body.auth-view {
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    & header,
+    & main,
+    & footer {
+        padding-left: 0px !important;
+    }
+}
