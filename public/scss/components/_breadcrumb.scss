@@ -1,0 +1,55 @@
+nav .breadcrumb-nav,
+nav.breadcrumb-nav,
+.breadcrumb-nav {
+    background-color: transparent;
+    width: 100%;
+    height: 44px !important;
+    padding: 10px !important;
+    border-radius: 2px;
+    margin-top: 1rem !important;
+    margin-bottom: 0.2rem !important;
+}
+
+.breadcrumb {
+    font-size: 16px;
+    color: #666666;
+    display: inline-block;
+
+    &:hover {
+        color: #444444 !important;
+    }
+
+    & i, 
+    & [class^=mdi-],
+    & [class*=mdi-],
+    & [class^=icon-],
+    & [class*=icon-],
+    & i.material-icons {
+        display: inline-block;
+        float: left;
+        font-size: 16px;
+    }
+
+    &:before {
+        content: "" !important;
+        color: #666666;
+        vertical-align: top;
+        display: inline-block;
+        font-family: "icomaterialize" !important;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 18px;
+        margin: 0 10px 0 8px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &:first-child:before {
+        display: none;
+    }
+    
+    &:last-child {
+        color: #333333;
+        font-weight: bold;
+        cursor: default;
+    }
+}

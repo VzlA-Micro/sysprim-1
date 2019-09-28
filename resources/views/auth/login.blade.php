@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-footer">
                         <label for="remember">
-                            <input type="checkbox" name="remember" id="remember" class="filled-in" {{ old('remember') ? 'checked' : '' }}>
+                            <input type="checkbox" name="remember" id="remember" class="filled-in blue" {{ old('remember') ? 'checked' : '' }}>
                             <span>{{ __('Remember Me') }}</span>
                         </label>
                     </div>
