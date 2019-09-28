@@ -5,6 +5,7 @@
 /vendor
 .idea/
 /routes/web.php
+.idea/workspace.xml
 .env
 .env.backup
 .phpunit.result.cache
