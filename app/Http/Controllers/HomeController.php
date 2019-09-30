@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
 class HomeController extends Controller
 {
     /**
@@ -21,9 +24,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
 
-        return view('home');
+
+        if(\Auth::user()->confirmed!=0){
+            return view('home');
+        }else{
+            Auth::logout();
+            return redirect('/')->with('notification','Verifica tu correo para entrar en el sistema');
+        }
     }
 }

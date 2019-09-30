@@ -22,7 +22,7 @@ class CreateCompanyTable extends Migration
             $table->string('lat',20);
             $table->string('lng',20);
             $table->string('address',20);
-            $table->string('image',255);
+            $table->string('image',255)->nullable();
             $table->timestamps();
         });
     }

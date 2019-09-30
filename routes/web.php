@@ -25,16 +25,14 @@ Route::get('/users/register', function() {
     return view('modules.users.register');
 })->name('users.register');
 
+Route::get('/users/verify/{code}','UserController@verify');
+
 // ---------------------------------------------------
 
 // Companies module routes
-Route::get('/companies/my-business', function() {
-    return view('modules.companies.menu');
-})->name('companies.my-business');
-Route::get('/companies/register', function() {
-    return view('modules.companies.register');
-})->name('companies/register');
-
+Route::get('/companies/my-business','CompaniesController@index')->name('companies.my-business');
+Route::get('/companies/register', 'CompaniesController@create')->name('companies.register');
+Route::post('/companies/save', 'CompaniesController@store')->name('companies.save');
 // ---------------------------------------------------
 
 // Vehicles module routes
@@ -48,3 +46,5 @@ Route::get('/vehicles/my-vehicles', function() {
 Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments');
+
+

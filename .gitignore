@@ -4,7 +4,7 @@
 /storage/*.key
 /vendor
 .idea/
-/routes/web.php
+routes/web.php
 .idea/workspace.xml
 .env
 .env.backup

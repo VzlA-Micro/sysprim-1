@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
+
+use App\Notifications\VerifyEmailNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\DB;
 class RegisterController extends Controller
 {
     /*
@@ -77,12 +81,11 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'confirmed_code'=> $data['confirmation_code']
         ]);
+        $id=DB::getPdo()->lastInsertId();
+        $user=User::find($id);
+        $user->VerifyEmail($data['confirmation_code']);
 
-
-        Mail::send('mails.confirm', $data, function($message) use ($data) {
-            $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
-        });
-        return $user;
+      return $user;
 
     }
 }

@@ -5,6 +5,9 @@
         <div class="row">
             <div class="col s12 m6 offset-m3 l4 offset-l4">
                 <form action="{{ route('login') }}" method="post" class="card">
+                    @if(session('notification'))
+                        {{session('notification')}}
+                    @endif
                     <div class="card-header center-align">
                         <h5>{{ __('Login') }}</h5>
                     </div>

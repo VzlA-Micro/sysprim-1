@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('surname',30);
             $table->string('phone',15);
             $table->boolean('confirmed')->default(0);
-            $table->string('confirmed_code');
+            $table->string('confirmed_code')->nullable();
             $table->integer('role_id')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
