@@ -58,3 +58,57 @@ Route::get('/payments/history/{company}','CompanyTaxesController@history');
 Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
+
+
+
+// Ciu module routes
+Route::get('/ciu-register', function() {
+    return view('dev.registerCiu');
+})->name('dev.ciu-register');
+
+Route::post('/save-ciu',array(
+   'as'=>'saveCiu',
+   'uses'=>'CiuController@create'
+));
+
+Route::get('/read-ciu',array(
+   'as'=>'readCiu',
+   'uses'=>'CiuController@show'
+));
+
+Route::get('/details-ciu/{id}',array(
+   'as'=>'detailsCiu',
+   'uses'=>'CiuController@edit'
+));
+
+Route::post('/update-ciu/{id?}',array(
+   'as'=>'updateCiu',
+   'uses'=>'CiuController@update'
+));
+
+Route::get('/delete-ciu/{id}',array(
+   'as'=>'deleteCiu',
+   'uses'=>'CiuController@destroy'
+));
+
+// Payments Taxes Module
+
+Route::get('/paymentsTaxes-register', function() {
+   return view('dev.paymentsTaxes.register');
+})->name('paymentsTaxes.paymentsTaxes-register');
+
+Route::post('/save-paymentsTaxes',array(
+   'as'=>'savePaymentsTaxes',
+   'uses'=>'PaymentsTaxesController@store'
+));
+
+//References bank module
+
+Route::get('/referenceBank-register', function() {
+   return view('dev.registerReference');
+})->name('dev.referencesBank-register');
+
+Route::post('/save-referenceBank',array(
+   'as'=>'saveReferenceBank',
+   'uses'=>'PaymentsImportController@importFile'
+));
