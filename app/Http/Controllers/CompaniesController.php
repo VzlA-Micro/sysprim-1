@@ -93,7 +93,7 @@ class CompaniesController extends Controller
     }
 
     public function getImage($filename){
-        $file=Storage::disk('')->get($filename);
+        $file=Storage::disk('companies')->get($filename);
         return new Response($file,200);
     }
 
@@ -115,9 +115,9 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $comapanies=Company::findOrFail($id);
-        $ciu=Ciu::all();
-        return view('dev.companiesUpdate',['ciu'=>$ciu,'companies'=>$comapanies]);
+        $company = Company::findOrFail($id);
+        $ciu = Ciu::all();
+        return view('modules.companies.edit',['ciu' => $ciu, 'company' => $company]);
     }
 
     public function update(Request $request){
@@ -165,7 +165,10 @@ class CompaniesController extends Controller
 
     }
 
-
+    public function details($id) {
+        $company = Company::find($id);
+        return view('modules.companies.details',['company' => $company]);
+    }
 
     public function verifyTaxes($id){
         setlocale(LC_ALL, "es_ES");//establecer idioma local
