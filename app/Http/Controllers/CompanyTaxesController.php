@@ -26,7 +26,7 @@ class CompanyTaxesController extends Controller
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)->get();
 
-        return view('dev.historyTaxes',['taxes'=>$taxes]);
+        return view('modules.payments.history',['taxes'=>$taxes]);
 
     }
 
@@ -45,7 +45,7 @@ class CompanyTaxesController extends Controller
             //mientras tanto
             $notifications=Notification::where('user_id',\Auth::user()->id)->get();
 
-            return view('dev.registertaxes',['company'=>$company_find,'notifications'=>$notifications]);
+            return view('modules.taxes.register',['company'=>$company_find,'notifications'=>$notifications]);
         }
     }
 
@@ -67,7 +67,7 @@ class CompanyTaxesController extends Controller
 
         $fiscal_period=$request->input('fiscal_period');
         $company=$request->input('company_id');
-
+    
         $company_find=Company::find($company);
 
         $ciu_id=$request->input('ciu_id');
