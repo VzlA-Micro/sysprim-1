@@ -41,6 +41,22 @@ class PaymentsImportController extends Controller
             } 
             echo "listo";   
         }
+
+        $this->verifyPayments();
        
+    }
+
+    public function verifyPayments(){
+        $banks=Bank::all();
+        $payments=PaymentTaxes::all();
+
+        foreach ($banks as  $bank){
+            $payments=PaymentTaxes::where('code_ref',$bank->ref)->first();
+            if(!is_null($payments)){
+                $payments_find=PaymentTaxes::find($payments->id);
+                $payments->status='verified';
+                $payments->save();
+            }
+        }
     }
 }
