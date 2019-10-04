@@ -16,5 +16,8 @@ class Company extends Model{
         return $this->belongsToMany('App\Ciu','company_ciu')
             ->withPivot('ciu_id');
     }
+    public function taxesCompanies(){
+        return $this->hasMany('App\Taxe','company_id');
+    }
 
 }

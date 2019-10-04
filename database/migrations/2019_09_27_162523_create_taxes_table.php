@@ -17,6 +17,8 @@ class CreateTaxesTable extends Migration
             $table->increments('id');
             $table->string('code')->unique();
             $table->date('fiscal_period');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('company');
             $table->timestamps();
         });
     }

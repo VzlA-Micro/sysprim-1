@@ -47,4 +47,14 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments');
 
+//dev
 
+Route::get('/payments/create/{company}','CompanyTaxesController@create');
+Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
+Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
+Route::get('/payments/history/{company}','CompanyTaxesController@history');
+
+
+Route::get('/company/edit/{id}','CompaniesController@edit');
+Route::post('/company/update','CompaniesController@update')->name('companies.update');
+Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');

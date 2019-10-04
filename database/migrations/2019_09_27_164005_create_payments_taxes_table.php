@@ -11,6 +11,8 @@ class CreatePaymentsTaxesTable extends Migration
      *
      * @return void
      */
+
+    /*esta relacion este en veremos*/
     public function up()
     {
         Schema::create('payments_taxes', function (Blueprint $table) {
@@ -20,9 +22,8 @@ class CreatePaymentsTaxesTable extends Migration
             $table->string('bank',20);
             $table->float('amount');
             $table->string('status',40);
-            $table->date('fiscal_period');
-            $table->integer('taxes_id')->unsigned();
-            $table->foreign('taxes_id')->references('id')->on('taxes');
+            $table->integer('taxe_id')->unsigned();
+            $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();
         });
     }

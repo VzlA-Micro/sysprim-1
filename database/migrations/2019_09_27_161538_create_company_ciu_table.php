@@ -19,7 +19,6 @@ class CreateCompanyCiuTable extends Migration
             $table->integer('company_id')->unsigned();
             $table->foreign('ciu_id')->references('id')->on('ciu');
             $table->foreign('company_id')->references('id')->on('company');
-            $table->timestamps();
         });
     }
 
