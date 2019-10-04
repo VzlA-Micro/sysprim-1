@@ -58,3 +58,17 @@ Route::get('/payments/history/{company}','CompanyTaxesController@history');
 Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
+
+
+Route::get('/bank/',function (){
+
+    return view('dev.bank');
+});
+
+Route::post('/bank/import','BankController@import')->name('bank.import');
+Route::get('/bank/verify','BankController@verifyPayments');
+Route::get('/codigo-qr',function (){
+   return view('dev.taxesQr');
+});
+
+Route::get('/pdf','CompanyTaxesController@getPdf');

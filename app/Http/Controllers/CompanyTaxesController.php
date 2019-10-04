@@ -136,4 +136,9 @@ class CompanyTaxesController extends Controller
     {
         //
     }
+
+    public function getPDF(){
+        $pdf = \PDF::loadView('dev.taxesQr');
+        return $pdf->stream();
+    }
 }
