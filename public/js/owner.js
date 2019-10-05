@@ -1,8 +1,12 @@
+$(window).on("load", function () {
+    $("#preloader").fadeOut(2000);
+    $("#preloader-overlay").fadeOut(2000);
+});
 $(document).ready(function() {
     $(".dropdown-trigger").dropdown({
         coverTrigger: false,
         constrainWidth: false,
-        alignment: 'right'
+        alignment: 'right',
     });
     $('.sidenav').sidenav();
     $('select').formSelect();
@@ -22,4 +26,6 @@ $(document).ready(function() {
         }
     });
     M.textareaAutoResize($('#address'));
+    $('.tooltipped').tooltip();
+    // $('.parallax').parallax();
 });

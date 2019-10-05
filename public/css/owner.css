@@ -146,6 +146,10 @@ button.btn-app:hover {
   background-color: transparent;
 }
 
+.dropdown-content.collection li > span {
+  color: #444444 !important;
+}
+
 nav .breadcrumb-nav,
 nav.breadcrumb-nav,
 .breadcrumb-nav {
@@ -284,6 +288,57 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 [type=checkbox].filled-in.blue:checked + span:not(.lever):after {
   border: 2px solid #2196f3 !important;
   background-color: #2196f3 !important;
+}
+
+.preloader {
+  position: fixed;
+  left: 47%;
+  top: 40%;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1000;
+  opacity: 0.8;
+}
+
+.preloader-overlay {
+  position: fixed !important;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.preloader-wrapper.big {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.spinner-blue, .spinner-blue-only {
+  border-color: #2196f3 !important;
+}
+
+@media only screen and (max-width: 992px) {
+  .preloader {
+    left: 40%;
+  }
+}
+.collection .collection-item.avatar {
+  min-height: 64px !important;
+  padding-left: 72px;
+  position: relative;
+  color: #2196f3 !important;
+}
+.collection .collection-item.avatar .collection-title {
+  font-weight: bold;
+  color: #222222 !important;
+}
+.collection .collection-item.avatar .collection-subtitle {
+  font-weight: normal;
+  color: #444444 !important;
+}
+.collection .collection-footer {
+  min-height: 40px !important;
+  color: #666666 !important;
 }
 
 /*# sourceMappingURL=owner.css.map */
