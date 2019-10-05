@@ -15,6 +15,7 @@
                         <h5>Editar datos de mi empresa</h5>
                     </div>
                     <div class="card-content row">
+                        <input type="hidden" name="id" value="{{$company->id}}">
                         <div class="input-field col s12 m6">
                             <input type="text" name="name" id="name" value="{{ $company->name }}" required>
                             <label for="name">Nombre</label>

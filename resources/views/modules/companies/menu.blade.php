@@ -7,10 +7,7 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="" class="breadcrumb">Mi Empresa</a>
             </div>
-
-            @if(session('message'))
-                {{session('message')}}
-            @endif
+            @include('sweet::alert')
             @foreach($companies as $company)
             <div class="col s12 m4">
                 <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="btn-app white purple-text">

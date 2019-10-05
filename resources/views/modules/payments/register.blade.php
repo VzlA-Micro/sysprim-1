@@ -12,16 +12,17 @@
                 <a href="" class="breadcrumb">Conciliar Pago</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="" method="post" class="card">
+                <form action="{{route('savePaymentsTaxes')}}" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Conciliar Pago</h5>
                     </div>
                     <div class="card-content row">
+                        <input type="hidden" name="taxes" value="1">
                         <div class="input-field col s12 m6">
                             <select name="type" id="type">
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
+                                <option value="" disabled selected>Eligi una opcion</option>
+                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                <option value="PAGO MOVIL">PAGO MOVIL</option>
                                 <option value="3">Option 3</option>
                             </select>
                             <label for="type">Forma de Pago</label>
@@ -29,8 +30,8 @@
                         <div class="input-field col s12 m6">
                             <select name="bank" id="bank">
                                 <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
+                                <option value="1">VENEZUELA</option>
+                                <option value="2">PRONVICIAL</option>
                                 <option value="3">Option 3</option>
                             </select>
                             <label for="bank">Banco</label>

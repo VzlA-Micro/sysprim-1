@@ -17,6 +17,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\UserCompany;
 use App\PaymentTaxes;
+
+
+use Alert;
 class CompaniesController extends Controller
 {
     /**
@@ -89,7 +92,9 @@ class CompaniesController extends Controller
         foreach ($ciu as $ciu){
             $company->ciu()->attach(['company_id'=>$id],['ciu_id'=>$ciu]);
         }
-        return redirect('companies/my-business')->with(['message'=>'Empresa registrada con éxito']);
+
+        Alert::success('Empresa registrada con éxito.','!Bien Hecho!');
+        return redirect('companies/my-business');
     }
 
     public function getImage($filename){
@@ -151,6 +156,8 @@ class CompaniesController extends Controller
         }else{
             $company->image=null;
         }
+        var_dump($name);
+
         $company->name=$name;
         $company->address=$address;
         $company->rif=$rif;
@@ -160,8 +167,8 @@ class CompaniesController extends Controller
         $company->opening_date=$openingDate;
         $company->update();
         $company->ciu()->sync($ciu);
-
-        return redirect('company/edit/'.$id)->with(['message'=>'Empresa actualizada con éxito']);
+        Alert::success('Empresa actualizada con éxito.','!Bien Hecho!');
+        return redirect('companies/details/'.$id);
 
     }
 
