@@ -11,6 +11,7 @@
                 <a href="" class="breadcrumb">Historial de Pagos</a>
             </div>
             <div class="col s12 m10 offset-m1">
+                @include('sweet::alert')
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Historial de Pagos</h5>
@@ -33,11 +34,18 @@
                                     @if($taxe->payments->isEmpty())
                                         <td>SIN CONCILIAR AÚN</td>
                                         <td><a href="{{ route('payments.reconcile') }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
-                                    @endif
+                                    @else
+
                                     @foreach($taxe->payments as $payment)
-                                        <td>{{ $payment->status }}</td>
-                                        <td><button><a href="{{ url('payments/taxes/'.$taxe->id) }}">DESCARGAR SOLVENCIA</a></button></td>
-                                    @endforeach
+                                            <td>{{$payment->status}}</td>
+                                        @if($payment->status==='verified')
+                                            <td><button><a href="{{ url('payments/taxes/'.$taxe->id) }}">DESCARGAR SOLVENCIA</a></button><button><a href="{{url('pdf/'.$taxe->id) }}">DETALLES</a></button></td>
+                                            @else
+                                                <td><button><a href="#">PROCESANDO</a></button></td>
+                                            @endif
+
+                                        @endforeach
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

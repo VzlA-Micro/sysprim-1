@@ -49,9 +49,7 @@ Route::get('/vehicles/my-vehicles', function() {
 // ---------------------------------------------------
 
 // Payments module routes
-Route::get('/companies/my-payments/{company}', function() {
-    return view('modules.payments.menu');
-})->name('companies.my-payments');
+Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
 
 Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
@@ -60,7 +58,7 @@ Route::get('/payments/my-payments', function() {
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
-Route::get('/payments/history/{company}','CompanyTaxesController@history');
+Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
 Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
 })->name('payments.reconcile');
@@ -70,6 +68,20 @@ Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 
+
+
+Route::get('/bank/',function (){
+
+    return view('dev.bank');
+});
+
+Route::post('/bank/import','BankController@import')->name('bank.import');
+Route::get('/bank/verify','BankController@verifyPayments');
+Route::get('/codigo-qr',function (){
+   return view('dev.taxesQr');
+});
+
+Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 
 // Ciu module routes
@@ -129,3 +141,4 @@ Route::post('/save-referenceBank',array(
    'as'=>'saveReferenceBank',
    'uses'=>'PaymentsImportController@importFile'
 ));
+

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 </head>
 <body class="grey lighten-4 @guest auth-view @endguest">
     @auth
@@ -23,7 +25,7 @@
         @include('includes.footer')
     @endauth
 
-    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+
     <script src="{{ asset('js/materialize.min.js') }}"></script>
     <script src="{{ asset('js/owner.js') }}"></script>
 </body>

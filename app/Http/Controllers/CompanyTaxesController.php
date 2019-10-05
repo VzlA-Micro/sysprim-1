@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\TaxesNumber;
 use App\Taxe;
 use Illuminate\Support\Facades\DB;
-
+use Alert;
 
 class CompanyTaxesController extends Controller
 {
@@ -88,7 +88,9 @@ class CompanyTaxesController extends Controller
             'status' => 'success',
             'message' => 'Impuesto registrada correctamente.'
         ]);
-        return redirect('payments/create/'.$company_find->name)->with('message','Impuesto registrado correctamente.');
+
+        Alert::success('Actividad Económica declarada  con éxito, por favor realize el pago.','!Bien Hecho!');
+        return redirect('payments/history/'.$company_find->name);
     }
 
     /**
@@ -135,5 +137,10 @@ class CompanyTaxesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getPDF($id){
+        $pdf = \PDF::loadView('dev.taxesQr',['id'=>$id]);
+        return $pdf->stream();
     }
 }

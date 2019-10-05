@@ -16,7 +16,6 @@ class CreateReferenceBankTable extends Migration
         Schema::create('reference_bank', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ref',20);
-            $table->date('date_ref');
             $table->string('bank',20);
             $table->timestamps();
         });

@@ -1,6 +1,7 @@
 @extends('layouts.app2')
 
 @section('content')
+    @include('sweet::alert')
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">

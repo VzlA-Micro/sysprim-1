@@ -1,7 +1,7 @@
 @extends('layouts.app2')
-
 @section('content')
     <div class="container-fluid">
+
         <div class="row">
             <div class="col s12 m8 l6 offset-m2 offset-l3">
                 <form action="{{ route('companies.save') }}" method="post" class="card" enctype="multipart/form-data">
