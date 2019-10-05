@@ -66,10 +66,6 @@ Route::get('/payments/reconcile', function () {
 })->name('payments.reconcile');
 
 
-Route::get('/company/edit/{id}','CompaniesController@edit');
-Route::post('/company/update','CompaniesController@update')->name('companies.update');
-Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
-
 
 
 // Ciu module routes

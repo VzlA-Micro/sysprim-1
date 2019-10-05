@@ -6,8 +6,43 @@
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}
             <ul id="nav-movile" class="right hide-on-med-and-down">    
-                <li><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
-                <li><a href=""><i class="icon-notifications"></i></a></li>
+                <li><a href="{{ route('home') }}" class="tooltipped" data-position="bottom" data-tooltip="{{ __('Home') }}"><i class="icon-home"></i></a></li>
+                <li>
+                    <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones" data-target="notification-dropdown">
+                        <i class="icon-notifications">
+                            {{-- <span class="new badge blue">1</span> --}}
+                        </i>
+                    </a>
+                </li>
+                {{-- Notification dropdown content --}}
+                <div class="dropdown-content collection" id="notification-dropdown">
+                    <a class="collection-header center-align">
+                        <span class=" center-align grey-text">NOTIFICACIONES</span>
+                    </a>
+                    <a href="" class="collection-item avatar">
+                        <i class="icon-folder circle"></i>
+                        <p class="collection-title">First Line</p>
+                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
+                    </a>
+                    <a href="" class="collection-item avatar">
+                        <i class="icon-folder circle"></i>
+                        <p class="collection-title">First Line</p>
+                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
+                    </a>
+                    <a href="" class="collection-item avatar">
+                        <i class="icon-folder circle"></i>
+                        <p class="collection-title">First Line</p>
+                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
+                    </a>
+                    <a href="" class="collection-item avatar">
+                        <i class="icon-folder circle"></i>
+                        <p class="collection-title">First Line</p>
+                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
+                    </a>
+                    <a href="" class="collection-footer center-align">
+                        <span>Ver todas las notificaciones</span>
+                    </a>
+                </div>
                 {{-- User dropdown trigger --}}
                 <li>
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
@@ -41,16 +76,17 @@
                     <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @endif
             @else
+                <li><a href="" class="subheader">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
                 <li class="waves-efect waves-light"><a href=""><i class="icon-account_circle left"></i>Mi Cuenta</a></li>
                 <li class="divider"></li>
                 <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Home</a></li>
                 <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notifications</a></li>
                 <li class="divider hide-on-large-only"></li>
                 <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>                
-                <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li>
+                {{-- <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li> --}}
                 <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
-                <li class="waves-efect waves-light"><a href="{{ route('payments.my-payments') }}"><i class="icon-payment left"></i>Mis Pagos</a></li>
-                <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-local_shipping left"></i>Mis Vehículos</a></li>
+                {{-- <li class="waves-efect waves-light"><a href="{{ route('payments.my-payments') }}"><i class="icon-payment left"></i>Mis Pagos</a></li>
+                <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-local_shipping left"></i>Mis Vehículos</a></li> --}}
                 <li class="divider hide-on-large-only"></li>
                 <li class="waves-efect waves-light hide-on-large-only">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-sidenav-form').submit();">
