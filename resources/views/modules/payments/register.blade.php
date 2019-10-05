@@ -20,34 +20,21 @@
                         <input type="hidden" name="taxes" value="1">
                         <div class="input-field col s12 m6">
                             <select name="type" id="type">
-<<<<<<< HEAD
                                 <option value="" disabled selected>Choose your option</option>
                                 <option value="Transferencia">Transferencia</option>
                                 <option value="Pago Movil">Pago Movil</option>
                                 <option value="Deposito">Deposito</option>
-=======
-                                <option value="" disabled selected>Eligi una opcion</option>
-                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
-                                <option value="PAGO MOVIL">PAGO MOVIL</option>
-                                <option value="3">Option 3</option>
->>>>>>> e65490b42f653565893bdfcd532d95290b47e674
                             </select>
                             <label for="type">Forma de Pago</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <select name="bank" id="bank">
                                 <option value="" disabled selected>Choose your option</option>
-<<<<<<< HEAD
                                 <option value="Venezuela">Venezuela</option>
                                 <option value="Bicentenario">Bicentenario</option>
                                 <option value="Mercantil">Mercantil</option>
                                 <option value="Banesco">Banesco</option>
                                 <option value="BOD">BOD</option>
-=======
-                                <option value="1">VENEZUELA</option>
-                                <option value="2">PRONVICIAL</option>
-                                <option value="3">Option 3</option>
->>>>>>> e65490b42f653565893bdfcd532d95290b47e674
                             </select>
                             <label for="bank">Banco</label>
                         </div>

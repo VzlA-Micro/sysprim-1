@@ -27,7 +27,7 @@
                             <label for="amount">Monto</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="taxes" type="text" name="taxes" required>
+                            <input id="taxes" type="text" name="taxes" required >
                             <label for="taxes">Impuesto</label>
                         </div>
                         
