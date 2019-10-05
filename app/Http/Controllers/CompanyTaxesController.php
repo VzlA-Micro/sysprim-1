@@ -90,7 +90,8 @@ class CompanyTaxesController extends Controller
         ]);
 
         Alert::success('Actividad Económica declarada  con éxito, por favor realize el pago.','!Bien Hecho!');
-        return redirect('payments/history/'.$company_find->name);
+
+        return redirect('payments/history/'.session('company'));
     }
 
     /**

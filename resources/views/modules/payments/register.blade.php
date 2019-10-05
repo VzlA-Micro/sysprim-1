@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
@@ -17,7 +17,6 @@
                         <h5>Conciliar Pago</h5>
                     </div>
                     <div class="card-content row">
-                        <input type="hidden" name="taxes" value="1">
                         <div class="input-field col s12 m6">
                             <select name="type" id="type">
                                 <option value="" disabled selected>Choose your option</option>
