@@ -1,0 +1,88 @@
+input:not([type]),
+input[type=text]:focus:not(.browser-default),
+input[type=password]:focus:not(.browser-default),
+input[type=email]:focus:not(.browser-default),
+input[type=url]:focus:not(.browser-default),
+input[type=time]:focus:not(.browser-default),
+input[type=date]:focus:not(.browser-default),
+input[type=datetime]:focus:not(.browser-default),
+input[type=datetime-local]:focus:not(.browser-default),
+input[type=tel]:focus:not(.browser-default),
+input[type=number]:focus:not(.browser-default),
+input[type=search]:focus:not(.browser-default),
+textarea.materialize-textarea:focus {
+  border-bottom: 1px solid #2196f3 !important;
+  -webkit-box-shadow: 0 1px 0 0 #2196f3 !important;
+  box-shadow: 0 1px 0 0 #2196f3 !important;
+}
+
+.input-field label.active {
+  color: #2196f3 !important;
+}
+
+.input-field .prefix.active {
+  color: #2196f3 !important;
+}
+
+.input-field .prefix {
+  color: #9e9e9e;
+}
+
+input:not([type]):disabled,
+input:not([type])[readonly=readonly],
+input[type=text]:not(.browser-default):disabled,
+input[type=text]:not(.browser-default)[readonly=readonly],
+input[type=password]:not(.browser-default):disabled,
+input[type=password]:not(.browser-default)[readonly=readonly],
+input[type=email]:not(.browser-default):disabled,
+input[type=email]:not(.browser-default)[readonly=readonly],
+input[type=url]:not(.browser-default):disabled,
+input[type=url]:not(.browser-default)[readonly=readonly],
+input[type=time]:not(.browser-default):disabled,
+input[type=time]:not(.browser-default)[readonly=readonly],
+input[type=date]:not(.browser-default):disabled,
+input[type=date]:not(.browser-default)[readonly=readonly],
+input[type=datetime]:not(.browser-default):disabled,
+input[type=datetime]:not(.browser-default)[readonly=readonly],
+input[type=datetime-local]:not(.browser-default):disabled,
+input[type=datetime-local]:not(.browser-default)[readonly=readonly],
+input[type=tel]:not(.browser-default):disabled,
+input[type=tel]:not(.browser-default)[readonly=readonly],
+input[type=number]:not(.browser-default):disabled,
+input[type=number]:not(.browser-default)[readonly=readonly],
+input[type=search]:not(.browser-default):disabled,
+input[type=search]:not(.browser-default)[readonly=readonly],
+textarea.materialize-textarea:disabled,
+textarea.materialize-textarea[readonly=readonly] {
+  color: #9e9e9e;
+  border-bottom: 1px dotted #9e9e9e;
+}
+
+input:not([type]):disabled + label.active,
+input:not([type])[readonly=readonly] + label.active,
+input[type=text]:disabled:not(.browser-default) + label.active,
+input[type=text][readonly=readonly]:not(.browser-default) + label.active,
+input[type=password]:disabled:not(.browser-default) + label.active,
+input[type=password][readonly=readonly]:not(.browser-default) + label.active,
+input[type=email]:disabled:not(.browser-default) + label.active,
+input[type=email][readonly=readonly]:not(.browser-default) + label.active,
+input[type=url]:disabled:not(.browser-default) + label.active,
+input[type=url][readonly=readonly]:not(.browser-default) + label.active,
+input[type=time]:disabled:not(.browser-default) + label.active,
+input[type=time][readonly=readonly]:not(.browser-default) + label.active,
+input[type=date]:disabled:not(.browser-default) + label.active,
+input[type=date][readonly=readonly]:not(.browser-default) + label.active,
+input[type=datetime]:disabled:not(.browser-default) + label.active,
+input[type=datetime][readonly=readonly]:not(.browser-default) + label.active,
+input[type=datetime-local]:disabled:not(.browser-default) + label.active,
+input[type=datetime-local][readonly=readonly]:not(.browser-default) + label.active,
+input[type=tel]:disabled:not(.browser-default) + label.active,
+input[type=tel][readonly=readonly]:not(.browser-default) + label.active,
+input[type=number]:disabled:not(.browser-default) + label.active,
+input[type=number][readonly=readonly]:not(.browser-default) + label.active,
+input[type=search]:disabled:not(.browser-default) + label.active,
+input[type=search][readonly=readonly]:not(.browser-default) + label.active,
+textarea:disabled.materialize-textarea + label.active,
+textarea[readonly=readonly].materialize-textarea + label.active {
+  color: #9e9e9e !important;
+}
