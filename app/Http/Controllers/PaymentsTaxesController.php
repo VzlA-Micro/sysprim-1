@@ -12,6 +12,10 @@ class PaymentsTaxesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
@@ -22,9 +26,12 @@ class PaymentsTaxesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        
+        $id=$request->id;
+        return view('modules.payments.register',array(
+            'id'=>$id
+        ));
     }
 
     /**
@@ -41,9 +48,11 @@ class PaymentsTaxesController extends Controller
         $pTaxes->code_ref= $request->input('code_ref');
         $pTaxes->bank= $request->input('bank');
         $pTaxes->amount= $request->input('amount');
-        $pTaxes->status="En Proceso";
-        $pTaxes->taxes_id= $request->input('taxes');
+        $pTaxes->status="process";
+        $pTaxes->taxe_id= $request->input('taxes');
         $pTaxes->save();
+
+       // return redirect('payments/history/'.sesion('company'));
     }
 
     /**
@@ -65,7 +74,10 @@ class PaymentsTaxesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paymentTaxe= PaymentsTaxes::findOrFail($id);
+        return view('dev.updatePayments',array(
+            '$payment'=>$paymentTaxe
+        ));
     }
 
     /**

@@ -11,24 +11,24 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
-                            <input id="type" type="text" name="type" required>
+                        <input id="type" type="text" name="type" required value="{{$paymentsTaxe->type}}">
                             <label for="type">Tipo</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="code_ref" type="text" name="code_ref" required>
+                            <input id="code_ref" type="text" name="code_ref" required value="{{$paymentsTaxe->code_ref}}">
                             <label for="code_ref">Codigo De Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="bank" type="text" name="bank" required>
+                            <input id="bank" type="text" name="bank" required value="{{$paymentsTaxe->bank}}">
                             <label for="bank">Banco</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="amount" type="text" name="amount" required>
+                            <input id="amount" type="text" name="amount" required value="{{$paymentsTaxe->amount}}">
                             <label for="amount">Monto</label>
                         </div>
                         <div class="input-field col s12 m6">
-                        <input id="taxes" type="hidden" name="taxes" required value="{{$id}}">
-                          
+                            <input id="taxes" type="text" name="taxes" required>
+                            <label for="taxes">Impuesto</label>
                         </div>
                         
                     </div>
