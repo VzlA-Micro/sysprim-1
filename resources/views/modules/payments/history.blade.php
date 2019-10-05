@@ -33,7 +33,7 @@
                                     <td>{{ $taxe->fiscal_period }}</td>
                                     @if($taxe->payments->isEmpty())
                                         <td>SIN CONCILIAR AÚN</td>
-                                        <td><a href="{{ route('payments.reconcile') }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
+                                        <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
                                     @else
 
                                     @foreach($taxe->payments as $payment)

@@ -19,7 +19,7 @@
                         <h5>Pagar Impuesto</h5>
                     </div>
                     <div class="card-content row">
-                        <input type="hidden" id="company_id" name="company_id" value="1">
+                        <input type="hidden" id="company_id" name="company_id" value="{{$company->id}}">
                         <div class="input-field col s12">
                             <input type="text" name="fiscal_period" id="fiscal_period" class="datepicker" >
                             <label for="fiscal_period">Año Fiscal</label>

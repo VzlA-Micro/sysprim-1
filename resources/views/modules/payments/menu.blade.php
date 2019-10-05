@@ -40,7 +40,7 @@
                 </a>
             </div>
             <div class="col s12 m4">
-                <a href="" class="btn-app white orange-text">
+                <a href="{{route('payments.history',['company'=>session('company')])}}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>
                 </a>

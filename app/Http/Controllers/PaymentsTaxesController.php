@@ -52,7 +52,7 @@ class PaymentsTaxesController extends Controller
         $pTaxes->taxe_id= $request->input('taxes');
         $pTaxes->save();
 
-       // return redirect('payments/history/'.sesion('company'));
+       return redirect('payments/history/'.session('company'));
     }
 
     /**

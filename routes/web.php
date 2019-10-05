@@ -112,7 +112,7 @@ Route::get('/delete-ciu/{id}',array(
 
 // Payments Taxes Module
 
-Route::get('/paymentsTaxes-register/{id?}',array(
+Route::get('/paymentsTaxes-register/{id}',array(
    'as'=>'registerPayments',
    'uses'=>'PaymentsTaxesController@create'
 ));
