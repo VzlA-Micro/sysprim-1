@@ -116,15 +116,20 @@ Route::get('/delete-ciu/{id}',array(
 
 // Payments Taxes Module
 
-Route::get('/paymentsTaxes-register', function() {
-   return view('dev.paymentsTaxes.register');
-})->name('paymentsTaxes.paymentsTaxes-register');
-
-Route::post('/save-paymentsTaxes',array(
-   'as'=>'savePaymentsTaxes',
-   'uses'=>'PaymentsTaxesController@store'
+Route::get('/paymentsTaxes-register/{id}',array(
+    'as'=>'registerPayments',
+    'uses'=>'PaymentsTaxesController@create'
 ));
 
+Route::post('/save-paymentsTaxes',array(
+    'as'=>'savePaymentsTaxes',
+    'uses'=>'PaymentsTaxesController@store'
+));
+
+Route::post('/update-paymentsTaxes/{id?}',array(
+    'as'=>'updatePayments',
+    'uses'=>'PaymentsTaxesController@edit'
+));
 //References bank module
 
 Route::get('/referenceBank-register', function() {

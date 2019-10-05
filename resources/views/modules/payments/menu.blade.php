@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
@@ -12,19 +12,31 @@
             <div class="col s12 m4">
                 <a href="{{route('payments.create',['company'=>session('company')])}}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
-                    <span class="truncate">Pagar mis Impuestos</span>
+                    <span class="truncate">Pagar mi Actividad Económica</span>
                 </a>
             </div>
             <div class="col s12 m4">
                 <a href="" class="btn-app white amber-text">
                     <i class="icon-assistant"></i>
-                    <span class="truncate">Pagar mi Publicidad</span>
+                    <span class="truncate">Pagar mi Publicidad Comercial</span>
                 </a>
             </div>
             <div class="col s12 m4">
                 <a href="" class="btn-app white indigo-text">
                     <i class="icon-local_shipping"></i>
                     <span class="truncate">Pagar mis Vehículos</span>
+                </a>
+            </div>
+            <div class="col s12 m4">
+                <a href="" class="btn-app white red-text">
+                    <i class="icon-store_mall_directory"></i>
+                    <span class="truncate">Pagar mis Inmuebles</span>
+                </a>
+            </div>
+            <div class="col s12 m4">
+                <a href="" class="btn-app white cyan-text">
+                    <i class="icon-speaker"></i>
+                    <span class="truncate">Pagar mis Eventos</span>
                 </a>
             </div>
             <div class="col s12 m4">
