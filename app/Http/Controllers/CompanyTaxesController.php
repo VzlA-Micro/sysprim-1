@@ -103,7 +103,7 @@ class CompanyTaxesController extends Controller
     public function show($id){
         $taxes=Taxe::findOrFail($id);
 
-        return view('dev.taxes',['taxes'=>$taxes]);
+        return view('modules.taxes.details',['taxes'=>$taxes]);
     }
 
     /**
@@ -141,7 +141,12 @@ class CompanyTaxesController extends Controller
     }
 
     public function getPDF($id){
-        $pdf = \PDF::loadView('dev.taxesQr',['id'=>$id]);
+        $pdf = \PDF::loadView('modules.taxes.receipt',['id'=>$id]);
         return $pdf->stream();
     }
+
+    // public function getQR($id) {
+    //     $taxes=Taxe::findOrFail($id);
+    //     return view();
+    // }
 }

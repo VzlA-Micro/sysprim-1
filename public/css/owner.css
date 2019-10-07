@@ -24,13 +24,13 @@ footer {
   }
 }
 body.auth-view {
-  -webkit-flex-direction: row;
+  /* -webkit-flex-direction: row;
   -moz-flex-direction: row;
   -ms-flex-direction: row;
   -o-flex-direction: row;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 body.auth-view header, body.auth-view main, body.auth-view footer {
   padding-left: 0px !important;

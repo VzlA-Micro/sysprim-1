@@ -9,14 +9,14 @@
                         {{session('notification')}}
                     @endif
                     <div class="card-header center-align">
-                        <h5>{{ __('Login') }}</h5>
+                        <h5>{{ __('Iniciar Sesión') }}</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix"></i>
-                            <input type="email" name="email" id="email" class="validate">
-                            <label for="email">{{ __('E-Mail Address') }}</label>
+                            <input type="email" name="email" id="email" class="validate" required>
+                            <label for="email">{{ __('E-Mail') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('email')
                                 <div class="alert alert-danger">
@@ -26,8 +26,8 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-lock_outline prefix"></i>
-                            <input type="password" name="password" id="password" class="validate">
-                            <label for="password">{{ __('Password') }}</label>
+                            <input type="password" name="password" id="password" class="validate" minlength="8" required>
+                            <label for="password">{{ __('Contraseña') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('password')
                                 <div class="alert alert-danger">
@@ -39,17 +39,17 @@
                     <div class="card-footer">
                         <label for="remember">
                             <input type="checkbox" name="remember" id="remember" class="filled-in blue" {{ old('remember') ? 'checked' : '' }}>
-                            <span>{{ __('Remember Me') }}</span>
+                            <span>{{ __('Recordarme') }}</span>
                         </label>
                     </div>
                     <div class="card-action center-align">
                         <button type="submit" class="btn blue">
-                                {{ __('Login') }}
+                                {{ __('Iniciar Sesión') }}
                         </button>
                     </div>
                     <div class="card-footer center-align">
                         @if (Route::has('password.request'))
-                            <a class="" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                            <a class="" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
                         @endif
                     </div>
                     <div class="card-footer center-align">

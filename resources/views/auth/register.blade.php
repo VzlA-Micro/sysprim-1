@@ -3,31 +3,46 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m6 offest-m3 l4 offset-l4">
+            <div class="col s12 m8 offest-m2 l6 offset-l3">
                 <form action="" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrarse</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
-                        <div class="input-field col s12 m6">
-                                <input id="ci" type="text" name="ci" required>
+                        <div class="input-field col s2">
+                            <select name="nationality" id="nationality" required>
+                                <option value="null">...</option>
+                                <option value="V-">V</option>
+                                <option value="E-">E</option>
+                            </select>
+                            <label for="nationality">Nacionalidad</label>
+                        </div>
+                        <div class="input-field col s10 m4">
+                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6">
-                            <input id="name" type="text" name="name" required>
+                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="surname" type="text" name="surname" required>
+                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <input id="phone" type="text" name="phone" required>
+                        <div class="input-field col s2">
+                            <select name="country_code" id="country_code" required>
+                                <option value="null">...</option>
+                                <option value="+58">+58</option>
+                            </select>
+                            <label for="country_code">Código</label>
+                        </div>
+                        <div class="input-field col s10 m4">
                             <label for="phone">Teléfono</label>
+                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 4161234567" required>
                         </div>
                         <div class="input-field col s12">
-                            <select name="type" id="type">
+                            <select name="type" id="type" required>
                                 <option value="null" disabled selected>Elige un tipo...</option>
                                 <option value="natural">Natural</option>
                                 <option value="business">Juridica</option>
@@ -35,15 +50,15 @@
                               <label for="type">Tipo de Persona</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+                            <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="password" type="password" name="password" required>
+                            <input id="password" type="password" name="password" class="validate" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password">Contraseña</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="password-confirm" type="password" name="password_confirmation" required>
+                            <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password-confirm">Confirmar contraseña</label>
                         </div>
                     </div>
@@ -58,79 +73,3 @@
         </div>
     </div>
 @endsection
-
-{{-- @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header"></div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}

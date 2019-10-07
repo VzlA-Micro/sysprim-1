@@ -36,7 +36,7 @@
         <li>BASE IMPONIBLE:{{$ciu->pivot->base}}</li>
         <li>DEDUCCIONES:{{$ciu->pivot->deductions}}</li>
         <li>CREDITO FISCAL:{{$ciu->pivot->fiscal_credits}}</li>
-        <li>NO RECUERDO:{{$ciu->pivot->withholding}}</li>
+        <li>DEDUCCIONES:{{$ciu->pivot->withholding}}</li>
         <li>-------------------------------------------</li>
     @endforeach
 </ul>
