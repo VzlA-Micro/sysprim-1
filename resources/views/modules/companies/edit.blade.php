@@ -15,17 +15,18 @@
                         <h5>Editar datos de mi empresa</h5>
                     </div>
                     <div class="card-content row">
-                        <input type="hidden" name="id" value="{{$company->id}}">
+                        @csrf
+                        <input type="hidden" name="id" name="id" value="{{ $company->id }}">
                         <div class="input-field col s12 m6">
-                            <input type="text" name="name" id="name" value="{{ $company->name }}" required>
+                            <input type="text" name="name" id="name" class="validate" pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" value="{{ $company->name }}" required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="RIF" id="RIF" value="{{ $company->RIF }}" required>
+                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9J-]+" title="Solo puede escribir números." value="{{ $company->RIF }}" required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="license" id="license" value="{{ $company->license }}" required>
+                            <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->license }}" required>
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -33,7 +34,7 @@
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
                         <div class="input-field col s12">
-                            <textarea name="address" id="" cols="30" rows="10" class="materialize-textarea">{{ $company->address }}</textarea>
+                            <textarea name="address" id="" cols="30" rows="10" class="materialize-textarea" required>{{ $company->address }}</textarea>
                             <label for="address">Dirección</label>
                         </div>
                         <div class="input-field col s12">

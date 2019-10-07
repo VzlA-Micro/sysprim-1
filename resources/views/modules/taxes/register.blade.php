@@ -19,35 +19,36 @@
                         <h5>Pagar Impuesto</h5>
                     </div>
                     <div class="card-content row">
-                        <input type="hidden" id="company_id" name="company_id" value="{{$company->id}}">
+                        @csrf
+                        <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
                         <div class="input-field col s12">
                             <input type="text" name="fiscal_period" id="fiscal_period" class="datepicker" >
                             <label for="fiscal_period">Año Fiscal</label>
                         </div>
                         @foreach($company->ciu as $ciu)
-                        <input type="hidden" name="ciu_id[]" value="{{$ciu->id}}" ><br>
+                        <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                         <div class="input-field col s12 m6">
-                            <input type="text" name="code" id="code" value="{{ $ciu->code }}" required disabled>
+                            <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
                             <label for="code">Código</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="ciu" id="ciu" value="{{ $ciu->name }}" required disabled>
+                            <input type="text" name="ciu" id="ciu" value="{{ $ciu->name }}" required readonly>
                             <label for="ciu">CIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="base[]" id="base" required>
+                            <input type="number" name="base[]" id="base" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"  required>
                             <label for="base">Base Imponible</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="deductions[]" id="deductions" required>
+                            <input type="number" name="deductions[]" id="deductions" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             <label for="deductions">Deducciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="withholding[]" id="withholdings" required>
+                            <input type="number" name="withholding[]" id="withholdings" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             <label for="withholdings">Retenciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="fiscal_credits[]" id="fiscal_credits" required>
+                            <input type="number" name="fiscal_credits[]" id="fiscal_credits" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
                         <div class="input-field col s12">

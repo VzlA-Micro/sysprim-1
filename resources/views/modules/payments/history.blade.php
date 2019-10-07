@@ -20,10 +20,10 @@
                         <table class="centered highlight table-responsive">
                             <thead>
                                 <tr>
-                                    <th>CÓDIGO</th>
-                                    <th>PERIODO FISCAL</th>
-                                    <th>ESTADO</th>
-                                    <th>ACCIÓN</th>
+                                    <th>Código</th>
+                                    <th>Periodo Fiscal</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,15 +35,18 @@
                                         <td>SIN CONCILIAR AÚN</td>
                                         <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
                                     @else
-
-                                    @foreach($taxe->payments as $payment)
-                                            <td>{{$payment->status}}</td>
-                                        @if($payment->status==='verified')
-                                            <td><button><a href="{{ url('payments/taxes/'.$taxe->id) }}">DESCARGAR SOLVENCIA</a></button><button><a href="{{url('pdf/'.$taxe->id) }}">DETALLES</a></button></td>
-                                            @else
-                                                <td><button><a href="#">PROCESANDO</a></button></td>
+                                        @foreach($taxe->payments as $payment)
+                                                <td>{{ $payment->status }}</td>
+                                            @if($payment->status==='verified')
+                                                <td>
+                                                    <a href="{{ url('payments/taxes/'.$taxe->id) }}" class="btn orange waves-effect waves-light"><i class="icon-description"></i>Descargar Solvencia</a>
+                                                </td>
+                                                @else
+                                                <td>
+                                                    <button class="btn disabled"><i class="icon-more_horiz"></i>Procesando</button>
+                                                    <a href="{{ url('pdf/'.$taxe->id) }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview"></i>Detalles</a>
+                                                </td>
                                             @endif
-
                                         @endforeach
                                     @endif
                                 </tr>

@@ -39,14 +39,14 @@
                             <label for="bank">Banco</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." required>
+                            <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." value="{{ $paymentsTaxe->bank }}" required>
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="amount" id="amount" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+                            <input type="number" name="amount" id="amount" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $paymentsTaxe->amount }}" required>
                             <label for="amount">Monto</label>
                         </div>
-                        <input id="taxes" type="hidden" name="taxes" required value="{{ $id }}">
+                        {{-- <input id="taxes" type="hidden" name="taxes" required value="{{ $id }}"> --}}
                         {{-- <div class="input-field col s12">
                             <select name="status" id="status">
                                 <option value="" disabled selected>Choose your option</option>
