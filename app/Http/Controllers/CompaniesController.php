@@ -156,7 +156,7 @@ class CompaniesController extends Controller
         }else{
             $company->image=null;
         }
-        var_dump($name);
+
 
         $company->name=$name;
         $company->address=$address;
@@ -247,5 +247,37 @@ class CompaniesController extends Controller
                 $notification->save();
             }
 
+    }
+
+    public function verifyRif($rif){
+        $validate=\Validator::make(['rif'=>$rif],[
+            'RIF'=>'unique:company,rif,'
+        ]);
+
+        if($validate->fails()){
+            return response()->json($validate->errors(),400);
+        }
+
+    die();
+
+
+
+        $company = Company::where('RIF',$rif)->get();
+        if(!$company->isEmpty()){
+            $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese una RIF valido.');
+        }else{
+            $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
+    }
+
+    public function verifyLicense($license){
+        $company = Company::where('license',$license)->get();
+        if(!$company->isEmpty()){
+            $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta registrado en sysprim, Ingrese una Licencia valida.');
+        }else{
+            $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
     }
 }
