@@ -26,7 +26,9 @@ Route::get('/users/register', function() {
 })->name('users.register');
 
 Route::get('/users/verify/{code}','UserController@verify');
-
+Route::get('/profile', function() {
+    return view('modules.users.profile');
+})->name('profile');
 // ---------------------------------------------------
 
 // Companies module routes
