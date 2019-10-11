@@ -145,3 +145,4 @@ Route::get('/users/verify-email/{email}','UserController@verifyEmail');
 
 Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
 Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
+Route::get('/company/find/{rif}','CompaniesController@findCompany');

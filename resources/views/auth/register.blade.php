@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 m8 offest-m2 l6 offset-l3">

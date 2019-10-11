@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Notification;
 use App\Parish;
-use App\User;
 use Carbon\Carbon;
-use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Ciu;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\UserCompany;
 use App\PaymentTaxes;
+use App\FindCompany;
 
 
 use Alert;
@@ -66,6 +64,7 @@ class CompaniesController extends Controller
         $code_catastral = $request->input('code_catastral');
         $numberEmployees=$request->input('number_employees');
         $sector=$request->input('sector');
+        $phone=$request->input('phone');
 
         $lat = "23554454";
         $lng = "265656577";
@@ -82,7 +81,8 @@ class CompaniesController extends Controller
             'code_catastral' => 'required',
             'sector' => 'required',
             'number_employees' => 'required',
-        ]);
+            'phone' => 'required|min:11',
+            ]);
 
         $company = new Company();
         if ($image) {
@@ -103,6 +103,7 @@ class CompaniesController extends Controller
         $company->opening_date = $openingDate;
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
+        $company->phone = $phone;
         $company->save();
         $id = DB::getPdo()->lastInsertId();
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
@@ -159,6 +160,8 @@ class CompaniesController extends Controller
         $sector=$request->input('sector');
         $lat="23554454";
         $lng="265656577";
+        $phone=$request->input('phone');
+
         $id=$request->input('id');
 
 
@@ -173,6 +176,7 @@ class CompaniesController extends Controller
             'code_catastral'=>'required',
             'sector' => 'required',
             'number_employees' => 'required',
+            'phone'=>'required'
         ]);
 
         $company=Company::find($id);
@@ -296,6 +300,17 @@ class CompaniesController extends Controller
             $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta registrado en sysprim, Ingrese una Licencia valida.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
+    }
+
+
+    public function findCompany($rif){
+        $company_find = FindCompany::where('rif',$rif)->get();
+        if(!$company_find->isEmpty()){
+            $response=array('status'=>'success','company'=>$company_find[0]);
+        }else{
+            $response=array('status'=>'error','message'=>'No encontrado');
         }
         return response()->json($response);
     }

@@ -13,8 +13,7 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+
 
                     if (response.status === 'error') {
                         swal({
@@ -23,9 +22,12 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
-
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                         $('#RIF').val("J-");
                         $('#RIF').addClass('validate');
+                    }else{
+                        findCompany(rif);
                     }
 
                 },
@@ -130,4 +132,47 @@ $(document).ready(function () {
             }
         });
     });
+
+    function findCompany(rif){
+
+        $.ajax({
+            method: "GET",
+            url: url+"company/find/" + rif.toUpperCase(),
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                console.log(response);
+                if (response.status === 'success') {
+                     var company=response.company;
+
+                    $('#name').val(company.historico_nombre_empresa);
+                    $('#RIF').val(company.rif);
+                    $('#license').val(company.codigo_licencia);
+                    $('#address').val(company.direccion);
+                    M.updateTextFields();
+
+                     console.log(response);
+                }
+
+
+
+            },
+            error: function (err) {
+                $('#license').val('');
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+    }
+
 });
