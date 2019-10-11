@@ -73,3 +73,7 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('js/dev/user.js') }}"></script>
+@endsection

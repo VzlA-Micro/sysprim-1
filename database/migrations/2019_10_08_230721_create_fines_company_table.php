@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePublicityTable extends Migration
+class CreateFinesCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreatePublicityTable extends Migration
      */
     public function up()
     {
-        Schema::create('publicity', function (Blueprint $table) {
+        Schema::create('fines_company', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type',10);
-            $table->float('height');
-            $table->float('width');
-            $table->string('status',40);
-            $table->string('image')->nullable();
             $table->integer('company_id')->unsigned();
+            $table->integer('fine_id')->unsigned();
+            $table->float('unid_tribu_value');
+            $table->foreign('fine_id')->references('id')->on('fines');
             $table->foreign('company_id')->references('id')->on('company');
-            $table->timestamps();
         });
     }
 
@@ -33,6 +30,6 @@ class CreatePublicityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publicity');
+        Schema::dropIfExists('fines_company');
     }
 }

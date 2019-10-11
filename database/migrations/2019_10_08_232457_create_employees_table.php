@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCiuTable extends Migration
+class CreateEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateCiuTable extends Migration
      */
     public function up()
     {
-        Schema::create('ciu', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',15);
-            $table->text('name');
-            $table->float('alicuota');
-            $table->integer('min_tribu_men');
+            $table->integer('min');
+            $table->integer('max');
+            $table->float('value');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateCiuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ciu');
+        Schema::dropIfExists('employees');
     }
 }

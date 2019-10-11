@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var company_id = 1;
+    /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
     ciu.push({id:1,base:70000,deductions:50000,withholding:30000,fiscal_credits:8000});
@@ -22,5 +22,13 @@ $(document).ready(function () {
         error: function (err) {
          console.log(err);
         }
+    });*/
+
+    var acum=0;
+    $('.total_ciu').each(function () {
+        acum=acum+parseFloat($(this).val());
     });
+
+    $('#total_pagar').val(acum);
+    M.updateTextFields();
 });

@@ -15,18 +15,26 @@
                     {{session('message')}}
                 @endIf
                 <form action="{{ route('taxes.save') }}" method="post" class="card">
+
+                    @if(is_null($date))
                     <div class="card-header center-align">
-                        <h5>Pagar Impuesto</h5>
+                        <h5>EMPRESA SOLVENTE HASTA LA FECHA.</h5>
                     </div>
+                    @else
+                        <div class="card-header center-align">
+                            <h5>Pagar Impuesto</h5>
+                        </div>
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
                         <div class="input-field col s12">
-                            <input type="text" name="fiscal_period" id="fiscal_period" class="datepicker" >
-                            <label for="fiscal_period">Año Fiscal</label>
+                            <input type="date" name="fiscal_period" id="fiscal_period"  value="{{$date['fiscal_period']}}" readonly>
+                            <label for="fiscal_period">Periodo Fiscal</label>
                         </div>
                         @foreach($company->ciu as $ciu)
-                        <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
+                            <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
+                            <input type="hidden" name="ciu_alicuota" class="ciu_alicuota" value="{{ $ciu->alicuota }}">
+
                         <div class="input-field col s12 m6">
                             <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
                             <label for="code">Código</label>
@@ -59,6 +67,7 @@
                     <div class="card-action center-align">
                         <button type="submit" class="btn waves-effect waves-light blue">Register</button>
                     </div>
+                        @endif
                 </form>
             </div>
         </div>

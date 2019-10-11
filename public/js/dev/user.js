@@ -1,10 +1,21 @@
 $(document).ready(function () {
     $('#ci').blur(function () {
+        CheckCedula();
+    });
+
+
+    $('#nationality').change(function () {
+        CheckCedula();
+    });
+
+
+    function CheckCedula() {
         if($('#ci').val()!==''){
             var ci=$('#ci').val();
+            var nationality=$('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: "http://sysprim.com.devel/users/verify-ci/"+ci,
+                url: "http://sysprim.com.devel/users/verify-ci/"+nationality+ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -20,6 +31,8 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
+
+                        $('#ci').addClass('invalid');
                     }
 
                 },
@@ -35,9 +48,7 @@ $(document).ready(function () {
                 }
             });
         }
-    });
-
-
+    }
 
     $('#email').blur(function () {
         if($('#email').val()!==''){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notification;
+use App\Parish;
 use App\User;
 use Carbon\Carbon;
 use Faker\Provider\DateTime;
@@ -41,7 +42,8 @@ class CompaniesController extends Controller
 
     public function create(){
         $ciu=Ciu::all();
-        return view('modules.companies.register',['ciu'=>$ciu]);
+        $parish=Parish::all();
+        return view('modules.companies.register',['ciu'=>$ciu,'parish'=>$parish]);
     }
 
     /**
@@ -50,51 +52,64 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-        $ciu=$request->input('ciu');
-        $image=$request->file('image');
-        $name=$request->input('name');
-        $license=$request->input('license');
-        $openingDate=$request->input('opening_date');
-        $rif=$request->input('RIF');
-        $address=$request->input('address');
-        $lat="23554454";
-        $lng="265656577";
+        $ciu = $request->input('ciu');
+        $image = $request->file('image');
+        $name = $request->input('name');
+        $license = $request->input('license');
+        $parish = $request->input('parish');
+        $openingDate = $request->input('opening_date');
+        $rif = $request->input('RIF');
+        $address = $request->input('address');
+        $code_catastral = $request->input('code_catastral');
+        $numberEmployees=$request->input('number_employees');
+        $sector=$request->input('sector');
+
+        $lat = "23554454";
+        $lng = "265656577";
 
 
-        $validate=$this->validate($request,[
-            'name'=>'required',
-            'license'=>'required',
-            'RIF'=>'required|min:9',
-            'address'=>'required',
-            'opening_date'=>'required',
+
+        $validate = $this->validate($request, [
+            'name' => 'required',
+            'license' => 'required',
+            'RIF' => 'required|min:9',
+            'address' => 'required',
+            'opening_date' => 'required',
+            'parish' => 'required|integer',
+            'code_catastral' => 'required',
+            'sector' => 'required',
+            'number_employees' => 'required',
         ]);
 
-        $company=new Company();
-        if($image){
-            $image_path_name=time().$image->getClientOriginalName();
-            Storage::disk('companies')->put($image_path_name,File::get($image));
-            $company->image=$image_path_name;
-        }else{
-            $company->image=null;
+        $company = new Company();
+        if ($image) {
+            $image_path_name = time() . $image->getClientOriginalName();
+            Storage::disk('companies')->put($image_path_name, File::get($image));
+            $company->image = $image_path_name;
+        } else {
+            $company->image = null;
         }
-        $company->name=$name;
-        $company->address=$address;
-        $company->rif=$rif;
-        $company->license=$license;
-        $company->lat="23554454";
-        $company->lng="23554454";
-        $company->opening_date=$openingDate;
+        $company->name = strtoupper($name);
+        $company->address = strtoupper($address);
+        $company->rif = $rif;
+        $company->license = strtoupper($license);
+        $company->lat = "23554454";
+        $company->lng = "23554454";
+        $company->code_catastral = strtoupper($code_catastral);
+        $company->parish_id = $parish;
+        $company->opening_date = $openingDate;
+        $company->sector = $sector;
+        $company->number_employees = $numberEmployees;
         $company->save();
-        $id=DB::getPdo()->lastInsertId();
-        $company->users()->attach(['company_id'=>$id],['user_id'=>\Auth::user()->id]);
-        foreach ($ciu as $ciu){
-            $company->ciu()->attach(['company_id'=>$id],['ciu_id'=>$ciu]);
+        $id = DB::getPdo()->lastInsertId();
+        $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
+        foreach ($ciu as $ciu) {
+            $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);
         }
-
-        Alert::success('Empresa registrada con éxito.','!Bien Hecho!');
-        return redirect('companies/my-business');
+        return response()->json(['status'=>'success','message'=>"Empresa registrada con éxito"]);
     }
 
     public function getImage($filename){
@@ -122,22 +137,30 @@ class CompaniesController extends Controller
     public function edit($id){
         $company = Company::findOrFail($id);
         $ciu = Ciu::all();
-        return view('modules.companies.edit',['ciu' => $ciu, 'company' => $company]);
+        $parish=Parish::all();
+
+        return view('modules.companies.edit',['ciu' => $ciu, 'company' => $company,'parish'=>$parish]);
     }
 
     public function update(Request $request){
         /*Falta:eliminar imagenes antigua una vez suba la nueva, */
 
         $ciu=$request->input('ciu');
+
         $image=$request->file('image');
         $name=$request->input('name');
         $license=$request->input('license');
+        $parish=$request->input('parish');
         $openingDate=$request->input('opening_date');
         $rif=$request->input('RIF');
         $address=$request->input('address');
-        $id=$request->input('id');
+        $code_catastral=$request->input('code_catastral');
+        $numberEmployees=$request->input('number_employees');
+        $sector=$request->input('sector');
         $lat="23554454";
         $lng="265656577";
+        $id=$request->input('id');
+
 
 
         $validate=$this->validate($request,[
@@ -146,6 +169,10 @@ class CompaniesController extends Controller
             'RIF'=>'required|min:9',
             'address'=>'required',
             'opening_date'=>'required',
+            'parish'=>'required|integer',
+            'code_catastral'=>'required',
+            'sector' => 'required',
+            'number_employees' => 'required',
         ]);
 
         $company=Company::find($id);
@@ -158,16 +185,20 @@ class CompaniesController extends Controller
         }
 
 
-        $company->name=$name;
-        $company->address=$address;
+        $company->name=strtoupper($name);
+        $company->address=strtoupper($address);
         $company->rif=$rif;
-        $company->license=$license;
+        $company->license=strtoupper($license);
         $company->lat="23554454";
         $company->lng="23554454";
+        $company->code_catastral=strtoupper($code_catastral);
+        $company->parish_id=$parish;
         $company->opening_date=$openingDate;
+        $company->sector = $sector;
+        $company->number_employees = $numberEmployees;
         $company->update();
         $company->ciu()->sync($ciu);
-        Alert::success('Empresa actualizada con éxito.','!Bien Hecho!');
+
         return redirect('companies/details/'.$id);
 
     }
@@ -250,21 +281,9 @@ class CompaniesController extends Controller
     }
 
     public function verifyRif($rif){
-        $validate=\Validator::make(['rif'=>$rif],[
-            'RIF'=>'unique:company,rif,'
-        ]);
-
-        if($validate->fails()){
-            return response()->json($validate->errors(),400);
-        }
-
-    die();
-
-
-
         $company = Company::where('RIF',$rif)->get();
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese una RIF valido.');
+            $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }

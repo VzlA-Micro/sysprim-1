@@ -9,7 +9,7 @@
                 <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ $company->name }}</a>
                 <a href="" class="breadcrumb">Modificar</a>
             </div>
-            <div class="col s12 m8 l6 offset-m2 offset-l3">
+            <div class="col s12 m8 l8 offset-m3 offset-l2">
                 <form action="{{ route('companies.update') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Editar datos de mi empresa</h5>
@@ -33,37 +33,69 @@
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
-                        <div class="input-field col s12">
-                            <textarea name="address" id="" cols="30" rows="10" class="materialize-textarea" required>{{ $company->address }}</textarea>
-                            <label for="address">Dirección</label>
+
+                        <div class="input-field col s12 m6">
+                            <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" value="{{ $company->number_employees }}" required>
+                            <label for="number_employees">Numero de Empleados</label>
                         </div>
-                        <div class="input-field col s12">
-                            <span>CIU de la Empresa:</span>
-                            <br>
-                            <div class="divider"></div>
-                            <ul>
-                            @foreach($company->ciu as $ciu_selected)
-                                <li>{{ $ciu_selected->name }}</li>
-                            @endforeach
-                            </ul>
+
+
+                        <div class="input-field col m6 s12">
+                            <select  name="sector" id="sector" required>
+                                <option value="null" disabled selected>Seleccionar Ubicación</option>
+                                <option value="ESTE" @if($company->sector=="ESTE"){{"selected"}}@endif >ESTE</option>
+                                <option value="OESTE" @if($company->sector=="OESTE"){{"selected"}}@endif>OESTE</option>
+                                <option value="NORTE" @if($company->sector=="NORTE"){{"selected"}}@endif>NORTE</option>
+                                <option value="SUR" @if($company->sector=="SUR"){{"selected"}}@endif>SUR</option>
+                            </select>
+                            <label>Ubicación geográfica </label>
                         </div>
+
+
+
+                        <div class="input-field col m6 s12">
+                            <select  name="parish" required>
+                                <option value="null" disabled selected>Seleccionar una parroquia</option>
+                                @foreach($parish as $parish):
+                                    @if($parish->id===$company->parish_id)
+                                            <option value="{{ $parish->id }}" selected>{{ $parish->name }}</option>
+                                        @else
+                                                <option value="{{ $parish->id }}">{{ $parish->name }}</option>
+                                       @endif
+                                @endforeach
+                            </select>
+                            <label>Parroquia</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+"  value="{{ $company->code_catastral }}" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
+                            <label for="code_catastral">CÓDIGO CATASTRAL</label>
+                        </div>
+
+                       <div class="input-field col s12">
+                        <textarea name="address" id="" cols="30" rows="10" class="materialize-textarea" required>{{ $company->address }}</textarea>
+                        <label for="address">Dirección</label>
+                    </div>
+
                         <div class="input-field col s12">
                             <select multiple name="ciu[]">
-                                <option value="null" selected disabled>Seleccionar CIU</option>
+                                @php $band=false @endphp;
+
                                 @foreach($ciu as $ciu):
-                                    <option {{-- @if ($company->ciu == $ciu->id) selected @endif --}} value="{{ $ciu->id }}">{{ $ciu->name }}</option>
+                                    @foreach($company->ciu as $ciu_selected)
+                                        @if($ciu_selected->id==$ciu->id)
+                                            <option value="{{ $ciu->id }}"@if($ciu_selected->id==$ciu->id){{"selected"}}@endif>{{ $ciu->name }} </option>
+                                            @php $band=true @endphp;
+                                         @endif
+                                     @endforeach
+
+                                    @if(!$band)
+                                         <option value="{{ $ciu->id }}">{{ $ciu->name }} </option>
+                                    @endif
+                                     @php $band=false @endphp;
                                 @endforeach
                             </select>
                             <label>Agregar CIU</label>
-                        </div>
-                        <div class="file-field input-field col s12">
-                            <div class="btn purple">
-                                <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
-                                <input type="file" name="image" id="image" value="{{ $company->image }}">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" value="{{ $company->image }}" placeholder="Elige una imagen">
-                            </div>
                         </div>
                         <div class="input-field col s12 location-container">
                             <span>Elige tu ubicación:</span>
