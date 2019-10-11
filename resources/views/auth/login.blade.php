@@ -4,10 +4,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 m6 offset-m3 l4 offset-l4">
+                @if(session('notification'))
+                <div class="alert alert-success" style="margin-top: 1.5rem">
+                    <span>{{ session('notification') }}</span>
+                </div>
+                @endif
                 <form action="{{ route('login') }}" method="post" class="card">
-                    @if(session('notification'))
-                        {{session('notification')}}
-                    @endif
                     <div class="card-header center-align">
                         <h5>{{ __('Iniciar Sesión') }}</h5>
                     </div>

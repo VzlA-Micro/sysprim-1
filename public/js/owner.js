@@ -28,4 +28,5 @@ $(document).ready(function() {
     M.textareaAutoResize($('#address'));
     $('.tooltipped').tooltip();
     // $('.parallax').parallax();
+    $('.materialboxed').materialbox();
 });

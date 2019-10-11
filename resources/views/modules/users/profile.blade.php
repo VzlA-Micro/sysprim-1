@@ -14,16 +14,47 @@
                             <img src="{{ asset('images/user.jpg') }}" alt="" srcset="" class="circle responsive-img">
                         </div>
                         <div class="col s12 m6">
-                            <h4 class="center-align">Jhon Doe</h4>
+                            <h4 class="center-align">{{ Auth::user()->name . " " . Auth::user()->surname }}</h4>
                             <div class="divider"></div>
-                            <ul>
-                                <li><b>Teléfono: </b>+584121234567</li>
-                                <li><b>E-mail: </b>jhondoe@mail.com</li>
-                            </ul>
+                            <div id="user_info">
+                                <ul>
+                                    <li><b>Cedula: </b>{{ Auth::user()->ci }}</li>
+                                    <li><b>Teléfono: </b>{{ Auth::user()->phone }}</li>
+                                    <li><b>E-mail: </b>{{ Auth::user()->email }}</li>
+                                </ul>
+                            </div>
+
+                            <div id="user_form" >
+                                <form method="post" action="#" class="row">
+                                    @csrf
+                                    <div class="input-field col s12">
+                                        <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate">
+                                        <label for="name">Nombre</label>    
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <input type="text" name="surname" id="surname" value="{{ Auth::user()->surname }}" class="validate">
+                                        <label for="surname">Apellido</label>    
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <input type="text" name="phone" id="phone" value="{{ Auth::user()->phone }}" class="validate">
+                                        <label for="phone">Teléfono</label> 
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <input type="text" name="email" id="email" value="{{ Auth::user()->email }}" class="validate">
+                                        <label for="email">E-mail</label> 
+                                    </div>
+                                    <div class="input-field col s12 center-align">
+                                        <button type="submit" class="btn green col s12 btn-rounded">Actualizar</button>
+                                    </div>
+                                    <div class="input-field col s12 center-align">
+                                        <button type="submit" class="btn red col s12 btn-rounded">Cambiar contraseña</button>
+                                    </div>
+                                <form>
+                            </div>
                             {{-- <div class="divider"></div> --}}
                             <div class="row">
                                 <div class="col s12">
-                                    <button class="btn green col s12">Editar Perfil</button>
+                                    <button class="btn green col s12" id="btn-edit">Editar Perfil</button>
                                 </div>
                             </div>
                         </div>
@@ -32,4 +63,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="{{ asset('js/dev/profile.js') }}"></script>
 @endsection
