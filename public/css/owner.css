@@ -35,6 +35,16 @@ body.auth-view {
 body.auth-view header, body.auth-view main, body.auth-view footer {
   padding-left: 0px !important;
 }
+body.auth-view.auth-background {
+  background-image: url("../images/bg-1.jpg");
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.bg-light-opacity-8 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
 
 a.btn-app,
 button.btn-app {
@@ -339,6 +349,51 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 .collection .collection-footer {
   min-height: 40px !important;
   color: #666666 !important;
+}
+
+/* Datepicker */
+.datepicker-date-display {
+  background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
+  background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+}
+
+.datepicker-table td.is-selected {
+  background: #b3e5fc;
+  background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
+  background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+  color: #fff !important;
+}
+
+.datepicker-table td.is-today {
+  color: #0d47a1;
+}
+
+.datepicker-day-button:active {
+  background-color: #2196f3 !important;
+}
+
+.datepicker-footer .datepicker-cancel,
+.datepicker-footer .datepicker-done {
+  color: #0d47a1;
+}
+
+.datepicker-footer .datepicker-clear {
+  color: #2196f3;
+}
+
+.datepicker-controls .select-month input {
+  width: 100px !important;
+}
+
+.material-tooltip {
+  background: -webkit-linear-gradient(40deg, #2196f3, #64b5f6) !important;
+  background: linear-gradient(40deg, #2196f3, #64b5f6) !important;
+  border-radius: 50px;
+}
+
+.backdrop {
+  background: -webkit-linear-gradient(40deg, #2196f3, #64b5f6) !important;
+  background: linear-gradient(40deg, #2196f3, #64b5f6) !important;
 }
 
 /*# sourceMappingURL=owner.css.map */

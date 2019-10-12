@@ -10,7 +10,7 @@
             <div class="col s12 m8 offset-m2">
                 <div class="card">
                     <div class="card-content row">
-                        <div class="col s12 m6">
+                        <div class="col s12 m6 center-align">
                             <img src="{{ asset('images/user.jpg') }}" alt="" srcset="" class="circle responsive-img">
                         </div>
                         <div class="col s12 m6">
@@ -47,7 +47,7 @@
                                         <button type="submit" class="btn green col s12 btn-rounded">Actualizar</button>
                                     </div>
                                     <div class="input-field col s12 center-align">
-                                        <button type="submit" class="btn red col s12 btn-rounded">Cambiar contraseña</button>
+                                        <a class="btn red col s12 btn-rounded">Cambiar contraseña</a>
                                     </div>
                                 <form>
                             </div>

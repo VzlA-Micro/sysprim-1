@@ -9,7 +9,7 @@
                     <span>{{ session('notification') }}</span>
                 </div>
                 @endif
-                <form action="{{ route('login') }}" method="post" class="card">
+                <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>{{ __('Iniciar Sesión') }}</h5>
                     </div>
@@ -44,8 +44,8 @@
                             <span>{{ __('Recordarme') }}</span>
                         </label>
                     </div>
-                    <div class="card-action center-align">
-                        <button type="submit" class="btn blue">
+                    <div class="card-footer center-align">
+                        <button type="submit" class="btn btn-large btn-rounded blue waves-effect waves-light">
                                 {{ __('Iniciar Sesión') }}
                         </button>
                     </div>
