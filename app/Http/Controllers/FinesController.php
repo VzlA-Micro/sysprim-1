@@ -29,7 +29,7 @@ class FinesController extends Controller
         $fine->cant_unid_tribu= $request->input('undTributo');
         $fine->save();
 
-        return redirect()->route('readFines');
+        return redirect()->route('fines.read');
     }
 
     /**
@@ -52,8 +52,8 @@ class FinesController extends Controller
     public function show()
     {     
         $fines= Fine::get();
-        return view('dev.fines.read',array(
-            'showFines'=>$fines
+        return view('modules.fines.read',array(
+            'showFines' => $fines
         ));
         //return $ciu;
     }
@@ -67,7 +67,7 @@ class FinesController extends Controller
     public function edit($id)
     {
         $fines = Fine::findOrFail($id);
-        return view('dev.fines.details',array(
+        return view('modules.fines.details',array(
             'fines'=>$fines
         ));
         
@@ -89,7 +89,7 @@ class FinesController extends Controller
         $fines->cant_unid_tribu= $request->input('undTributo');
        
         $fines->update(); 
-        return redirect()->route('readFines');
+        return redirect()->route('fines.read');
     }
 
     /**
@@ -101,6 +101,6 @@ class FinesController extends Controller
     public function destroy($id)
     {
         $fines=Fine::destroy($id);
-        return redirect()->route('readFines');
+        return redirect()->route('fines.read');
     }
 }

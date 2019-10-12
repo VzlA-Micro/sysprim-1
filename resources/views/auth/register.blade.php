@@ -6,7 +6,7 @@
     @endforeach
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m8 offest-m2 l6 offset-l3">
+            <div class="col s12 m8 offest-m2 l6 offset-l3 animated bounceInDown">
                 <form action="" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>Registrarse</h5>
