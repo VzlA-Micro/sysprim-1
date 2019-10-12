@@ -145,6 +145,7 @@ Route::get('/users/verify-email/{email}','UserController@verifyEmail');
 
 Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
 Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
+<<<<<<< HEAD
 
 
 //Fines module routes
@@ -219,3 +220,6 @@ Route::post('/save-paymentsFines',array(
     'as'=>'savePaymentsFines',
     'uses'=>'PaymentsFinesController@store'
 ));
+=======
+Route::get('/company/find/{rif}','CompaniesController@findCompany');
+>>>>>>> d4e88a764c6b065dbbd8143345b342809cfac495

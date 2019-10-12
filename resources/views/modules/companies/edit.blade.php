@@ -14,6 +14,9 @@
                     <div class="card-header center-align">
                         <h5>Editar datos de mi empresa</h5>
                     </div>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" name="id" name="id" value="{{ $company->id }}">
@@ -40,6 +43,11 @@
                         </div>
 
 
+                        <div class="input-field col s10 m6">
+                            <label for="phone">Teléfono de la Empresa</label>
+                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" value="{{$company->phone}}" required>
+                        </div>
+
                         <div class="input-field col m6 s12">
                             <select  name="sector" id="sector" required>
                                 <option value="null" disabled selected>Seleccionar Ubicación</option>
@@ -47,6 +55,12 @@
                                 <option value="OESTE" @if($company->sector=="OESTE"){{"selected"}}@endif>OESTE</option>
                                 <option value="NORTE" @if($company->sector=="NORTE"){{"selected"}}@endif>NORTE</option>
                                 <option value="SUR" @if($company->sector=="SUR"){{"selected"}}@endif>SUR</option>
+                                <option value="CENTRO"  @if($company->sector=="CENTRO"){{"selected"}}@endif>CENTRO</option>
+                                <option value="NORTE"   @if($company->sector=="NORTE"){{"selected"}}@endif>NORTE</option>
+                                <option value="SUR"     @if($company->sector=="SUR"){{"selected"}}@endif>SUR</option>
+                                <option value="INDUSI"  @if($company->sector=="INDUSI"){{"selected"}}@endif>ZONA INDUSTRIAL I</option>
+                                <option value="INDUSII" @if($company->sector=="INDUSII"){{"selected"}}@endif>ZONA INDUSTRIAL II</option>
+                                <option value="INDUSIII"@if($company->sector=="INDUSIII"){{"selected"}}@endif>ZONA INDUSTRIAL III</option>
                             </select>
                             <label>Ubicación geográfica </label>
                         </div>
@@ -72,7 +86,7 @@
                             <label for="code_catastral">CÓDIGO CATASTRAL</label>
                         </div>
 
-                       <div class="input-field col s12">
+                       <div class="input-field col s6 m6">
                         <textarea name="address" id="" cols="30" rows="10" class="materialize-textarea" required>{{ $company->address }}</textarea>
                         <label for="address">Dirección</label>
                     </div>

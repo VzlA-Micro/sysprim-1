@@ -20,6 +20,7 @@ class CreateFinesCompanyTable extends Migration
             $table->float('unid_tribu_value');
             $table->foreign('fine_id')->references('id')->on('fines');
             $table->foreign('company_id')->references('id')->on('company');
+            $table->timestamps();
         });
     }
 
