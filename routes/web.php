@@ -165,37 +165,23 @@ Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
 Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
 
 //Fines module routes
-Route::get('/fines-register', function() {
-    return view('dev.fines.register');
-})->name('dev.fines-register');
-
-Route::post('/save-fines',array(
-    'as'=>'saveFines',
-    'uses'=>'FinesController@create'
-));
-
-Route::get('/read-fines',array(
-    'as'=>'readFines',
-    'uses'=>'FinesController@show'
-));
-
-Route::get('/details-fines/{id}',array(
-    'as'=>'detailsFines',
-    'uses'=>'FinesController@edit'
-));
-
-Route::post('/update-fines/{id}',array(
-    'as'=>'updateFines',
-    'uses'=>'FinesController@update'
-));
-
-Route::get('/delete-fines/{id}',array(
-    'as'=>'deleteFines',
-    'uses'=>'FinesController@destroy'
-));
 
 //Fines Company module routes
+Route::get('/fines/manage', function() {
+    return view('modules.fines.menu');
+})->name('fines.manage');
 
+Route::get('/fines/register', function() {
+    return view('modules.fines.register');
+})->name('fines.register');
+
+Route::post('/fines/save', 'FinesController@create')->name('fines.save');
+Route::get('/fines/read', 'FinesController@show')->name('fines.read');
+Route::get('/fines/details/{id}', 'FinesController@edit')->name('fines.details');
+Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update');
+Route::get('/fines/delete/{id}', 'FinesController@destroy')->name('fines.delete');
+
+// ------------------------ Fiscal
 Route::get('/read-fines-company',array(
     'as'=>'readFinesCompany',
     'uses'=>'FinesCompanyController@show'
@@ -205,20 +191,6 @@ Route::get('/finesCompany-register/{id}', function() {
     return view('dev.finesCompany.register');
 })->name('dev.finesCompany-register');
 
-Route::post('/save-finesCompany',array(
-    'as'=>'saveFinesCompany',
-    'uses'=>'FinesCompanyController@store'
-));
-
-Route::get('/readFinesCompany',array(
-    'as'=>'readFinesCompany',
-    'uses'=>'FinesCompanyController@read'
-));
-
-Route::get('/details-finesCompany/{id}',array(
-    'as'=>'detailsFinesCompany',
-    'uses'=>'FinesCompanyController@edit'
-));
 
 //Fines Company module routes
 

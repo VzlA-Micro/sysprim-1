@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m6 offset-m3 l4 offset-l4">
+            <div class="col s12 m6 offset-m3 l4 offset-l4 animated bounceInDown">
                 @if(session('notification'))
                 <div class="alert alert-success" style="margin-top: 1.5rem">
                     <span>{{ session('notification') }}</span>
