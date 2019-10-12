@@ -65,7 +65,7 @@
                         @endforeach
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn waves-effect waves-light blue">Register</button>
+                        <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
                     </div>
                         @endif
                 </form>

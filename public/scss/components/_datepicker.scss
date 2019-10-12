@@ -1,0 +1,38 @@
+/* Datepicker */
+.datepicker-date-display{
+    background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
+    background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+}
+
+.datepicker-table td.is-selected{
+    background: #b3e5fc;
+    background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
+    background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+    color: #fff !important;
+}
+
+.datepicker-table td.is-today{
+    color: #0d47a1;
+}
+
+.datepicker-day-button:active/* ,
+.datepicker-day-button .is-selected:active */{
+    background-color: #2196f3 !important;
+}
+
+.datepicker-footer .datepicker-cancel,
+.datepicker-footer .datepicker-done{
+    color:#0d47a1;
+}
+
+.datepicker-footer .datepicker-clear{
+    color:#2196f3;
+}
+
+.month-prev, .month-next{
+
+}
+
+.datepicker-controls .select-month input {
+    width: 100px !important;
+}

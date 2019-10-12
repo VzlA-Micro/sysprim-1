@@ -212,7 +212,11 @@ img {
 }
 
 .button {
+<<<<<<< HEAD
     border-radius: 3px;
+=======
+    border-radius: 2px;
+>>>>>>> dev.codeslator
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
     color: #fff;
     display: inline-block;
@@ -222,11 +226,19 @@ img {
 
 .button-blue,
 .button-primary {
+<<<<<<< HEAD
     background-color: #3490dc;
     border-top: 10px solid #3490dc;
     border-right: 18px solid #3490dc;
     border-bottom: 10px solid #3490dc;
     border-left: 18px solid #3490dc;
+=======
+    background-color: #2196f3;
+    border-top: 10px solid #2196f3;
+    border-right: 18px solid #2196f3;
+    border-bottom: 10px solid #2196f3;
+    border-left: 18px solid #2196f3;
+>>>>>>> dev.codeslator
 }
 
 .button-green,

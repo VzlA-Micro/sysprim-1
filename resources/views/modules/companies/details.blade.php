@@ -16,7 +16,7 @@
                     </div>
                     @if (Storage::disk('companies')->has($company->image))
                     <div class="card-image">
-                        <img src="{{ route('companies.image', ['filename' => $company->image]) }}" alt="" srcset="" style="max-height:350px;">
+                        <img src="{{ route('companies.image', ['filename' => $company->image]) }}" class="materialboxed" data-caption="{{ $company->address }}" alt="" srcset="" style="max-height:350px;">
                         {{-- <span class="card-title grey-text"><b>Dirección:</b> {{ $company->address }}</span> --}}
                     </div>
                     @endif
@@ -32,10 +32,10 @@
                     <div class="card-action">
                         <div class="row" style="margin-bottom:0">
                             <div class="col s12 m6 center-align">
-                                <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue col s12">Modificar</a>
+                                <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue btn-rounded waves-light col s12">Editar</a>
                             </div>
                             <div class="col s12 m6 center-align">
-                                <a href="" class="btn red col s12">Eliminar</a>
+                                <a href="" class="btn red btn-rounded waves-light col s12">Eliminar</a>
                             </div>
                         </div>
                     </div>
@@ -47,6 +47,12 @@
                         <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Pagos</span>
+                        </a>
+                    </div>
+                    <div class="col s12">
+                        <a href="" class="btn-app white orange-text">
+                            <i class="icon-warning"></i>
+                            <span class="truncate">Mis Multas</span>
                         </a>
                     </div>
                 </div>

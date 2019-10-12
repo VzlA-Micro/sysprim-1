@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="{{ asset('css/material-components.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
 </head>
-<body class="grey lighten-4 @guest auth-view @endguest">
+<body class="grey lighten-4 @guest auth-view auth-background @endguest">
     @include('includes.preloader')
     @auth
         @include('includes.header')
