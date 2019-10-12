@@ -17,6 +17,7 @@ class MyResetPassword extends  ResetPassword
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->theme('default')
             ->subject('Recuperar contraseña')
             ->greeting('Hola')
             ->line('Estás recibiendo este correo porque hiciste una solicitud de recuperación de contraseña para tu cuenta.')

@@ -12,6 +12,12 @@
                     <span class="truncate">Mis Empresas</span>
                 </a>
             </div>
+            <div class="col s12 m3">
+                <a href="{{ route('fines.manage') }}" class="btn-app white deep-orange-text">
+                    <i class="icon-warning"></i>
+                    <span class="truncate">Gestionar Multas</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

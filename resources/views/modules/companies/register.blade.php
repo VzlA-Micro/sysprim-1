@@ -103,7 +103,7 @@
 
 
                         <div class="file-field input-field col s12 12">
-                            <div class="btn purple">
+                            <div class="btn purple btn-rounded waves-light">
                                 <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
                                 <input type="file" name="image" id="image">
                             </div>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn waves-effect waves-light green">Register</button>
+                        <button type="submit" class="btn btn-rounded waves-effect waves-light green">Register</button>
                     </div>
 
                 </form>

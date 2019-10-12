@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\MyResetPassword;
 use App\Notifications\VerifyEmailNotification;
+use App\Notifications\Payments;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -51,6 +52,8 @@ class User extends Authenticatable
     public function VerifyEmail ($token) {
         $this->notify(new VerifyEmailNotification($token));
     }
-
+    public function ConfirmedPayments ($token) {
+        $this->notify(new Payments($token));
+    }
 
 }

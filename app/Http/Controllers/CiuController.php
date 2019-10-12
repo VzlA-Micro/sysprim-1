@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ciu;
+use App\GroupCiiu;
 
 class CiuController extends Controller
 {
@@ -14,7 +15,10 @@ class CiuController extends Controller
      */
     public function index()
     {
-       
+       $groupCiiu = GroupCiiu::all();
+       return view('dev.ciu.registerCiu',array(
+          'groupCiiu'=>$groupCiiu
+       ));
     }
 
     /**
@@ -27,8 +31,13 @@ class CiuController extends Controller
         $ciu= new ciu();
         $ciu->code= $request->input('code');
         $ciu->name= $request->input('name');
-        $ciu->value= $request->input('value');
+        $ciu->alicuota= $request->input('alicuota');
+        $ciu->min_tribu_men= $request->input('mTM');
+        $ciu->group_ciu_id= $request->input('groupCiiu');
         $ciu->save();
+
+        return redirect()->route('readCiu');
+
     }
 
     /**
