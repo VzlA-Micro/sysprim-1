@@ -58,7 +58,9 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'ci'=>['required','string', 'min:8','unique:users'],
-            'phone'=>['required','string', 'min:11'],
+            'phone'=>['required','string', 'min:10'],
+            'nationality'=>['required','string'],
+            'country_code'=>['required','string'],
         ]);
     }
 
@@ -77,8 +79,8 @@ class RegisterController extends Controller
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'ci' => $data['ci'],
-            'phone' => $data['phone'],
+            'ci' => $data['nationality'].$data['ci'],
+            'phone' => $data['country_code'].$data['phone'],
             'confirmed_code'=> $data['confirmation_code']
         ]);
         $id=DB::getPdo()->lastInsertId();

@@ -17,6 +17,7 @@ class CreateReferenceBankTable extends Migration
             $table->increments('id');
             $table->string('ref',20);
             $table->string('bank',20);
+            $table->float('amount',8);
             $table->timestamps();
         });
     }

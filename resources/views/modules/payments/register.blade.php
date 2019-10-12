@@ -17,9 +17,10 @@
                         <h5>Conciliar Pago</h5>
                     </div>
                     <div class="card-content row">
+                        @csrf
                         <div class="input-field col s12 m6">
-                            <select name="type" id="type">
-                                <option value="" disabled selected>Choose your option</option>
+                            <select name="type" id="type" required>
+                                <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Transferencia">Transferencia</option>
                                 <option value="Pago Movil">Pago Movil</option>
                                 <option value="Deposito">Deposito</option>
@@ -27,8 +28,8 @@
                             <label for="type">Forma de Pago</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <select name="bank" id="bank">
-                                <option value="" disabled selected>Choose your option</option>
+                            <select name="bank" id="bank" required>
+                                <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Venezuela">Venezuela</option>
                                 <option value="Bicentenario">Bicentenario</option>
                                 <option value="Mercantil">Mercantil</option>
@@ -38,11 +39,13 @@
                             <label for="bank">Banco</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="code_ref" id="code_ref" required>
+                            <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." required>
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="amount" id="amount" required>
+                            @foreach($taxes->taxesCiu as $ciu)
+                            <input type="number" name="amount" id="amount" value="{{$ciu->alicuota*$ciu->pivot->base/100}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+                            @endforeach
                             <label for="amount">Monto</label>
                         </div>
                         <input id="taxes" type="hidden" name="taxes" required value="{{$id}}">
@@ -56,7 +59,7 @@
                         </div> --}}
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn waves-effect waves-light blue">Register</button>
+                        <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
                     </div>
                 </form>
             </div>

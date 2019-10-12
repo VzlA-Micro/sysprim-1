@@ -16,10 +16,12 @@ class CreatePublicityTable extends Migration
         Schema::create('publicity', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type',10);
-            $table->integer('height');
-            $table->integer('width');
+            $table->float('height');
+            $table->float('width');
             $table->string('status',40);
             $table->string('image')->nullable();
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('company');
             $table->timestamps();
         });
     }

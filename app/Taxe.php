@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\DB;
+
+
 class Taxe extends Model{
     protected $table="taxes";
-
+    protected $appends = ['total'];
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
             ->withPivot('ciu_id','fiscal_credits','withholding','deductions','base');
@@ -19,5 +22,10 @@ class Taxe extends Model{
 
     public function payments(){
         return $this->hasMany('App\PaymentTaxes');
+    }
+
+    public function getTotalAttribute(){
+
+
     }
 }

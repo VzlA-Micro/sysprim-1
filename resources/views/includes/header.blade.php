@@ -10,7 +10,9 @@
                 <li>
                     <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones" data-target="notification-dropdown">
                         <i class="icon-notifications">
-                            {{-- <span class="new badge blue">1</span> --}}
+                            @if(session('notifications')->count()>0)
+                              <span class="new badge red" data-badge-caption="nuevo">{{session('notifications')->count()}}</span>
+                            @endif
                         </i>
                     </a>
                 </li>
@@ -19,26 +21,13 @@
                     <a class="collection-header center-align">
                         <span class=" center-align grey-text">NOTIFICACIONES</span>
                     </a>
+                    @foreach(session('notifications') as $notification)
                     <a href="" class="collection-item avatar">
-                        <i class="icon-folder circle"></i>
-                        <p class="collection-title">First Line</p>
-                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
+                        <i class="icon-message circle"></i>
+                        <p class="collection-title">{{$notification->title}}</p>
+                        <p class="collection-subtitle">@php echo $notification->content @endphp </p>
                     </a>
-                    <a href="" class="collection-item avatar">
-                        <i class="icon-folder circle"></i>
-                        <p class="collection-title">First Line</p>
-                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
-                    </a>
-                    <a href="" class="collection-item avatar">
-                        <i class="icon-folder circle"></i>
-                        <p class="collection-title">First Line</p>
-                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
-                    </a>
-                    <a href="" class="collection-item avatar">
-                        <i class="icon-folder circle"></i>
-                        <p class="collection-title">First Line</p>
-                        <p class="collection-subtitle">Lorem ipsum dolor sit amet.</p>
-                    </a>
+                    @endforeach
                     <a href="" class="collection-footer center-align">
                         <span>Ver todas las notificaciones</span>
                     </a>
@@ -61,7 +50,6 @@
                             {{ __('Logout') }}
                         </a>
                     </li>
-
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -77,7 +65,7 @@
                 @endif
             @else
                 <li><a href="" class="subheader">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
-                <li class="waves-efect waves-light"><a href=""><i class="icon-account_circle left"></i>Mi Cuenta</a></li>
+                <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a></li>
                 <li class="divider"></li>
                 <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Home</a></li>
                 <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notifications</a></li>

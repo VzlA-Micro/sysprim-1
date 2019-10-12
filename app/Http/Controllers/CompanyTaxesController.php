@@ -9,7 +9,7 @@ use App\Helpers\TaxesNumber;
 use App\Taxe;
 use Illuminate\Support\Facades\DB;
 use Alert;
-
+use App\Helpers\TaxesMonth;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -38,14 +38,17 @@ class CompanyTaxesController extends Controller
     public function create($company){
         $company=Company::where('name',$company)->get();
         $company_find=Company::find($company[0]->id);
+
+        $date=TaxesMonth::verify($company[0]->id,false);
         $users=$company_find->users()->get();
+
         if(isset($users[0]->id)&&$users[0]->id!=\Auth::user()->id){//si la empresa le pertenece a quien coloco la ruta
             return redirect('companies/my-business');
         }else{
             //mientras tanto
             $notifications=Notification::where('user_id',\Auth::user()->id)->get();
 
-            return view('modules.taxes.register',['company'=>$company_find,'notifications'=>$notifications]);
+            return view('modules.taxes.register',['company'=>$company_find,'notifications'=>$notifications,"date"=>$date]);
         }
     }
 
@@ -66,6 +69,7 @@ class CompanyTaxesController extends Controller
        */
 
         $fiscal_period=$request->input('fiscal_period');
+
         $company=$request->input('company_id');
     
         $company_find=Company::find($company);
@@ -88,10 +92,7 @@ class CompanyTaxesController extends Controller
             'status' => 'success',
             'message' => 'Impuesto registrada correctamente.'
         ]);
-
-        Alert::success('Actividad Económica declarada  con éxito, por favor realize el pago.','!Bien Hecho!');
-
-        return redirect('payments/history/'.session('company'));
+        return redirect('payments/taxes/'.$id);
     }
 
     /**
@@ -102,8 +103,15 @@ class CompanyTaxesController extends Controller
      */
     public function show($id){
         $taxes=Taxe::findOrFail($id);
+        $company=Company::where('name',session('company'))->get();
+        $company_find=Company::find($company[0]->id);
 
-        return view('dev.taxes',['taxes'=>$taxes]);
+        $date=TaxesMonth::verify($company[0]->id,false);
+
+
+
+
+        return view('modules.taxes.details',['taxes'=>$taxes]);
     }
 
     /**
@@ -141,7 +149,12 @@ class CompanyTaxesController extends Controller
     }
 
     public function getPDF($id){
-        $pdf = \PDF::loadView('dev.taxesQr',['id'=>$id]);
+        $pdf = \PDF::loadView('modules.taxes.receipt',['id'=>$id]);
         return $pdf->stream();
     }
+
+    // public function getQR($id) {
+    //     $taxes=Taxe::findOrFail($id);
+    //     return view();
+    // }
 }

@@ -10,7 +10,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Codigo</th>
-                        <th>Valor</th>
+                        <th>Alicuota</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{$ciu->name}}</td>
                         <td>{{$ciu->code}}</td>
-                        <td>{{$ciu->value}}</td>
+                        <td>{{$ciu->alicuotas}}</td>
                         <td>
                             <a href="{{url('/details-ciu/'.$ciu->id)}} " class="btn btn-small btn-floating pink waves-effect effect-light"><i class="icon-pageview"></i></a>
                         </td>

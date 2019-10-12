@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use App\User;
 use Mail;
+use App\Notification;
 use App\Bank;
 use App\Taxe;
 use App\Company;
@@ -34,11 +35,13 @@ class PaymentsImportController extends Controller
 
         if ($mime == "text/plain") {
             for($i=0; $i<$count;$i++){
-                if ($i > 1) {
+                if ($i > 2 ) {
                     $referenceBank = new Bank();
                     $referenceBank->ref = $dat[$i];
                     $i++;
                     $referenceBank->bank=$dat[$i];
+                    $i++;
+                    $referenceBank->amount=$dat[$i];
                     $referenceBank->save();
                 }
             }
@@ -52,29 +55,42 @@ class PaymentsImportController extends Controller
     }
 
     public function verifyPayments(){
-        $banks=Bank::all();
+        $banks=DB::select(DB::raw(
+            "SELECT * from reference_bank"
+        ));
+
         $payments=PaymentTaxes::all();
 
         foreach ($banks as  $bank){
-            $payments=PaymentTaxes::where('code_ref',$bank->ref)->first();
 
+           $payments=PaymentTaxes::where('code_ref',$bank->ref)
+                ->orWhere('bank',$bank->bank)
+                ->where('amount',$bank->amount)
+                ->get();
+
+            $idPayments=$payments[0]->id;
             if(!is_null($payments)){
-                $payments_find=PaymentTaxes::find($payments->id);
+                $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
                 $bank_find=Bank::find($bank->id);
-                $payments->status='verified';
-                $payments->save();
 
-                $taxes=Taxe::where('id',$payments->taxe_id)->get();
+                $taxes=Taxe::where('id',$payments[0]->taxe_id)->get();
                 $company=Company::find($taxes[0]->company_id);
                 $uCompa=$company->users()->get();
 
-                $subject = "RECIBO DE SOLVENCIA";
-                $for =$uCompa[0]->email;
-                Mail::send('dev.pago',[], function($msj) use($subject,$for){
-                    $msj->from("grabieldiaz63@gmail.com","Equipo de Sysprim");
-                    $msj->subject($subject);
-                    $msj->to($for);
-                });
+                $id =$uCompa[0]->id;
+
+                $payments=DB::update(
+                    "update payments_taxes set status='verified' where id='$idPayments' "
+                );
+                $user=User::find($id);
+
+                $notification=Notification::where('user_id',$user->id);
+                if(!is_null($notification)) {
+                    $notification->update([
+                        'view' => 1
+                    ]);
+                }
+                $user->ConfirmedPayments($user);
 
                 $bank_find->delete();
 

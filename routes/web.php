@@ -26,7 +26,9 @@ Route::get('/users/register', function() {
 })->name('users.register');
 
 Route::get('/users/verify/{code}','UserController@verify');
-
+Route::get('/profile', function() {
+    return view('modules.users.profile');
+})->name('profile');
 // ---------------------------------------------------
 
 // Companies module routes
@@ -83,11 +85,27 @@ Route::get('/codigo-qr',function (){
 
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
+// Group Ciiu module routes
+Route::get('/group-ciiu-register', function() {
+    return view('dev.groupCiiu.register');
+})->name('groupCiiu.register');
+
+Route::post('/save-GroupCiiu',array(
+    'as'=>'saveGroupCiiu',
+    'uses'=>'groupCiiuController@store'
+));
+
+Route::get('/read-GroupCiiu',array(
+    'as'=>'readGroupCiiu',
+    'uses'=>'GroupCiiuController@show'
+));
 
 // Ciu module routes
-Route::get('/ciu-register', function() {
-    return view('dev.registerCiu');
-})->name('dev.ciu-register');
+
+Route::get('/ciu-register', array(
+    'as'=>'ciuRegister',
+    'uses'=>'CiuController@index'
+    ));
 
 Route::post('/save-ciu',array(
    'as'=>'saveCiu',
@@ -133,11 +151,62 @@ Route::post('/update-paymentsTaxes/{id?}',array(
 //References bank module
 
 Route::get('/referenceBank-register', function() {
-   return view('dev.registerReference');
-})->name('dev.referencesBank-register');
+   return view('modules.bank.upload');
+})->name('bank.upload');
 
 Route::post('/save-referenceBank',array(
    'as'=>'saveReferenceBank',
    'uses'=>'PaymentsImportController@importFile'
 ));
+Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
+Route::get('/users/verify-email/{email}','UserController@verifyEmail');
+
+Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
+Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
+
+Route::get('/company/find/{rif}','CompaniesController@findCompany');
+
+
+Route::post('ciu/filter-group','CiuController@filterCiu');
+Route::get('/company/find/{rif}','CompaniesController@findCompany');
+//Fines module routes
+
+//Fines Company module routes
+Route::get('/fines/manage', function() {
+    return view('modules.fines.menu');
+})->name('fines.manage');
+
+Route::get('/fines/register', function() {
+    return view('modules.fines.register');
+})->name('fines.register');
+
+Route::post('/fines/save', 'FinesController@create')->name('fines.save');
+Route::get('/fines/read', 'FinesController@show')->name('fines.read');
+Route::get('/fines/details/{id}', 'FinesController@edit')->name('fines.details');
+Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update');
+Route::get('/fines/delete/{id}', 'FinesController@destroy')->name('fines.delete');
+
+// ------------------------ Fiscal
+Route::get('/read-fines-company',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@show'
+));
+
+Route::get('/finesCompany-register/{id}', function() {
+    return view('dev.finesCompany.register');
+})->name('dev.finesCompany-register');
+
+
+//Fines Company module routes
+
+Route::get('/register-paymentsFines/{company}',array(
+    'as'=>'registerPaymentsFines',
+    'uses'=>'PaymentsFinesController@create'
+));
+
+Route::post('/save-paymentsFines',array(
+    'as'=>'savePaymentsFines',
+    'uses'=>'PaymentsFinesController@store'
+));
+
 

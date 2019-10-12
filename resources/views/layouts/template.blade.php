@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
@@ -6,4 +6,7 @@
             <div class="col s12"></div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    
 @endsection

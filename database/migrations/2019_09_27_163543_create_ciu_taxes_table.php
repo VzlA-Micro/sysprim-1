@@ -19,6 +19,9 @@ class CreateCiuTaxesTable extends Migration
             $table->float('deductions')->nullable();
             $table->float('withholding')->nullable();
             $table->float('fiscal_credits')->nullable();
+            $table->float('tax_rate')->nullable();
+            $table->float('mora')->nullable();
+            $table->float('unid_tribu')->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->integer('ciu_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');

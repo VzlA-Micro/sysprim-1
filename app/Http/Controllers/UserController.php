@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class UserController extends Controller{
 
@@ -16,7 +17,30 @@ class UserController extends Controller{
         $user->confirmed = true;
         $user->confirmed_code = null;
         $user->save();
-        return redirect('/')->with('notification', 'Has confirmado correctamente tu correo.Ya puedes inciar Sesion');
+        return redirect('/')->with('notification', 'El equipo de SysPRIM ha verificado tu correo electrónico exitosamente. Por favor, inicia sesión.');
+    }
+
+
+
+    public function verifyCi($ci){
+        $user=User::where('ci', $ci)->get();
+        if(!$user->isEmpty()){
+            $response=array('status'=>'error','message'=>'Esta cedula ya existe en el sistema. Por favor, ingresa una cedula valida.');
+        }else{
+            $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
+    }
+
+
+    public function verifyEmail($email){
+        $user=User::where('email', $email)->get();
+        if(!$user->isEmpty()){
+            $response=array('status'=>'error','message'=>'Esta correo ya existe en el sistema. Ingrese un correo valido.');
+        }else{
+            $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
     }
 
 }

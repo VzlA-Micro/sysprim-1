@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="{{ asset('css/material-components.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
 </head>
-<body class="grey lighten-4 @guest auth-view @endguest">
+<body class="grey lighten-4 @guest auth-view auth-background @endguest">
     @include('includes.preloader')
     @auth
         @include('includes.header')
@@ -24,8 +25,8 @@
         @include('includes.footer')
     @endauth
 
-    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('js/materialize.min.js') }}"></script>
-    <script src="{{ asset('js/owner.js') }}"></script>
+
+    @include('includes.scripts')
+    @yield('scripts')
 </body>
 </html>
