@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="col s12 m4">
-                <a href="" class="btn-app white amber-text">
+                <a href="{{ route('fines.read') }}" class="btn-app white amber-text">
                     <i class="icon-assignment_late"></i>
                     <span class="truncate">Ver Multas</span>
                 </a>
