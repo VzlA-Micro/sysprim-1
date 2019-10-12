@@ -3,25 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Company;
-use App\FineCompany;
-use App\Fine;
-use App\PaymentFines;
+use App\fine;
 
-class PaymentsFinesController extends Controller
+class FinesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    /*public function __construct(){
-        $this->middleware('auth');
-    }*/
-
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -30,21 +23,13 @@ class PaymentsFinesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {
-        $id=$request->id;
+    { 
+        $fine= new Fine();
+        $fine->name= $request->input('name');
+        $fine->cant_unid_tribu= $request->input('undTributo');
+        $fine->save();
 
-        $finesCompany=FineCompany::findOrFail($id);
-
-        $fines=Fine::findOrFail($finesCompany->fine_id);
-
-        $company=Company::findOrFail($finesCompany->company_id);
-
-        $monto=$finesCompany->unid_tribu_value*$fines->cant_unid_tribu;
-
-        return view('dev.finesPayments.register',array(
-            'finesCompany'=>$finesCompany,
-            'monto'=>$monto
-        ));
+        return redirect()->route('readFines');
     }
 
     /**
@@ -56,16 +41,6 @@ class PaymentsFinesController extends Controller
     public function store(Request $request)
     {
         //
-        $pFines= new PaymentFines();
-        $pFines->payments_type= $request->input('type');
-        $pFines->code_ref= $request->input('code_ref');
-        $pFines->bank= $request->input('bank');
-        $pFines->amount= $request->input('amount');
-        $pFines->status="process";
-        $pFines->fine_company_id= $request->input('idFinesCompany');
-        $pFines->save();
-
-        return redirect('payments/history/'.session('company'));
     }
 
     /**
@@ -74,9 +49,13 @@ class PaymentsFinesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show()
+    {     
+        $fines= Fine::get();
+        return view('dev.fines.read',array(
+            'showFines'=>$fines
+        ));
+        //return $ciu;
     }
 
     /**
@@ -87,10 +66,11 @@ class PaymentsFinesController extends Controller
      */
     public function edit($id)
     {
-        $paymentTaxe= PaymentTaxes::findOrFail($id);
-        return view('dev.updatePayments',array(
-            '$payment'=>$paymentTaxe
+        $fines = Fine::findOrFail($id);
+        return view('dev.fines.details',array(
+            'fines'=>$fines
         ));
+        
     }
 
     /**
@@ -102,7 +82,14 @@ class PaymentsFinesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //$id=$request->input('id');
+        $fines=Fine::findOrFail($id);
+        
+        $fines->name= $request->input('name');
+        $fines->cant_unid_tribu= $request->input('undTributo');
+       
+        $fines->update(); 
+        return redirect()->route('readFines');
     }
 
     /**
@@ -113,6 +100,7 @@ class PaymentsFinesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fines=Fine::destroy($id);
+        return redirect()->route('readFines');
     }
 }

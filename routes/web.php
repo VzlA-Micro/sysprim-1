@@ -133,8 +133,8 @@ Route::post('/update-paymentsTaxes/{id?}',array(
 //References bank module
 
 Route::get('/referenceBank-register', function() {
-   return view('dev.registerReference');
-})->name('dev.referencesBank-register');
+   return view('modules.bank.upload');
+})->name('bank.upload');
 
 Route::post('/save-referenceBank',array(
    'as'=>'saveReferenceBank',
@@ -145,3 +145,77 @@ Route::get('/users/verify-email/{email}','UserController@verifyEmail');
 
 Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
 Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
+
+
+//Fines module routes
+Route::get('/fines-register', function() {
+    return view('dev.fines.register');
+})->name('dev.fines-register');
+
+Route::post('/save-fines',array(
+    'as'=>'saveFines',
+    'uses'=>'FinesController@create'
+));
+
+Route::get('/read-fines',array(
+    'as'=>'readFines',
+    'uses'=>'FinesController@show'
+));
+
+Route::get('/details-fines/{id}',array(
+    'as'=>'detailsFines',
+    'uses'=>'FinesController@edit'
+));
+
+Route::post('/update-fines/{id}',array(
+    'as'=>'updateFines',
+    'uses'=>'FinesController@update'
+));
+
+Route::get('/delete-fines/{id}',array(
+    'as'=>'deleteFines',
+    'uses'=>'FinesController@destroy'
+));
+
+//Fines Company module routes
+
+Route::get('/read-fines-company',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@show'
+));
+
+Route::get('/finesCompany-register/{id}', function() {
+    return view('dev.finesCompany.register');
+})->name('dev.finesCompany-register');
+
+Route::get('/create-finesCompany/{id}',array(
+    'as'=>'createFinesCompany',
+    'uses'=>'FinesCompanyController@create'
+));
+
+Route::post('/save-finesCompany',array(
+    'as'=>'saveFinesCompany',
+    'uses'=>'FinesCompanyController@store'
+));
+
+Route::get('/readFinesCompany',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@read'
+));
+
+Route::get('/details-finesCompany/{id}',array(
+    'as'=>'detailsFinesCompany',
+    'uses'=>'FinesCompanyController@edit'
+));
+
+//Fines Company module routes
+
+Route::get('/register-paymentsFines/{id}',array(
+    'as'=>'registerPaymentsFines',
+    'uses'=>'PaymentsFinesController@create'
+));
+
+Route::post('/save-paymentsFines',array(
+    'as'=>'savePaymentsFines',
+    'uses'=>'PaymentsFinesController@store'
+));

@@ -12,7 +12,7 @@
                 <a href="" class="breadcrumb">Conciliar Pago</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="{{route('savePaymentsTaxes')}}" method="post" class="card">
+                <form action="{{route('savePaymentsFines')}}" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Conciliar Pago</h5>
                     </div>
@@ -43,12 +43,10 @@
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            @foreach($taxes->taxesCiu as $ciu)
-                            <input type="number" name="amount" id="amount" value="{{$ciu->alicuota*$ciu->pivot->base/100}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                            @endforeach
+                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             <label for="amount">Monto</label>
                         </div>
-                        <input id="taxes" type="hidden" name="taxes" required value="{{$id}}">
+                        <input id="idFinesCompany" type="hidden" name="idFinesCompany" required value="{{$finesCompany->id}}">
                         {{-- <div class="input-field col s12">
                             <select name="status" id="status">
                                 <option value="" disabled selected>Choose your option</option>

@@ -7,19 +7,18 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyEmailNotification extends Notification
+class Payments extends Notification
 {
     use Queueable;
-    protected $token;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct()
     {
         //
-        $this->token = $token;
     }
 
     /**
@@ -42,13 +41,10 @@ class VerifyEmailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->theme('default')
-                    ->greeting('Confirma tu correo electrónico')
-                    ->subject('CONFIRMAR EMAIL')
-                    ->line('Muchas gracias por registrarte en Sysprim!')
-                    ->line('Para completar su registro,confirma tu dirección de correo electrónico haciendo clic en el siguiente botón')
-                    ->action('Verificar Cuenta', url('/users/verify/'.$this->token))
-                    ->line('Saludos cordiales,El equipo Sysprim');
+                ->theme('default')
+                ->greeting('Hola')
+                ->subject('PAGO VERIFICADO')
+                ->line('Querido usuario de Syspim Tu pago ha sido verificado con exito');
     }
 
     /**
