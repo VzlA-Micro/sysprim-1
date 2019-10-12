@@ -79,17 +79,27 @@
                             <label for="address">Dirección</label>
                         </div>
 
+                        <input id="lat" type="hidden" name="lat" value="">
+                        <input id="lng" type="hidden" name="lng" value="">
 
-                        <div class="input-field col s12 m12">
-                            <select multiple name="ciu[]" required id="ciu">
+
+
+                        <div class="input-field col s12 m6">
+                            <select multiple name="ciu_group[]" required id="ciu_group">
                                 <option value="null" disabled >Seleccionar CIU</option>
                                 @foreach($ciu as $ciu):
                                 <option value="{{ $ciu->id }}">{{ $ciu->name }}</option>
                                 @endforeach
                             </select>
-                            <label>CIU</label>
+                            <label>Categoria de actividad ecónomica</label>
                         </div>
 
+                        <div class="input-field col s12 m6">
+                            <select multiple name="ciu[]" required id="ciu">
+
+                            </select>
+                            <label>CIU</label>
+                        </div>
 
 
                         <div class="file-field input-field col s12 12">
@@ -102,12 +112,15 @@
                             </div>
                         </div>
                         <div class="input-field col s12 location-container">
-                            <span>Elige tu ubicación:</span>
+                            <span>Elige la  ubicación de tu empresa:</span>
+                            <div id="map" style="height: 500px;width: 800px;" class="s12">
+                            </div>
                         </div>
                     </div>
                     <div class="card-action center-align">
                         <button type="submit" class="btn waves-effect waves-light green">Register</button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -115,5 +128,7 @@
 @endsection
 
 @section('scripts')
+
     <script src="{{ asset('js/dev/company.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>
 @endsection

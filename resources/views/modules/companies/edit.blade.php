@@ -65,7 +65,8 @@
                             <label>Ubicación geográfica </label>
                         </div>
 
-
+                        <input id="lat" type="hidden" name="lat" value="{{$company->lat}}">
+                        <input id="lng" type="hidden" name="lng" value="{{$company->lng}}">
 
                         <div class="input-field col m6 s12">
                             <select  name="parish" required>
@@ -113,6 +114,7 @@
                         </div>
                         <div class="input-field col s12 location-container">
                             <span>Elige tu ubicación:</span>
+                            <div id="map" style="height: 500px;width: 800px;" class="s12"></div>
                         </div>
                     </div>
                     <div class="card-action center-align">
@@ -122,4 +124,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/dev/company-edit.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU" type="text/javascript"></script>
+
 @endsection

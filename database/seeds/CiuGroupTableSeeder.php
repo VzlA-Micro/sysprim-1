@@ -10,11 +10,11 @@ class CiuGroupTableSeeder extends Seeder
      * @return void
      */
     public function run(){
+
         DB::table('group_ciu')->insert([
             'name'=>'FABRICACION DE PRODUCTOS FARMACEUTICOS  Y MEDICAMENTOS',
             'code'=>'3522',
         ]);
-
 
         DB::table('group_ciu')->insert([
             'name'=>'ARTICULOS DE FERRETERÍA',

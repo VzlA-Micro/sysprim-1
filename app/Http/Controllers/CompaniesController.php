@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\GroupCiu;
 use App\Notification;
 use App\Parish;
 use Carbon\Carbon;
+use function Complex\ln;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Ciu;
@@ -39,7 +41,7 @@ class CompaniesController extends Controller
      */
 
     public function create(){
-        $ciu=Ciu::all();
+        $ciu=GroupCiu::all();
         $parish=Parish::all();
         return view('modules.companies.register',['ciu'=>$ciu,'parish'=>$parish]);
     }
@@ -66,8 +68,8 @@ class CompaniesController extends Controller
         $sector=$request->input('sector');
         $phone=$request->input('phone');
 
-        $lat = "23554454";
-        $lng = "265656577";
+        $lat=$request->input('lat');
+        $lng=$request->input('lng');
 
 
 
@@ -96,8 +98,8 @@ class CompaniesController extends Controller
         $company->address = strtoupper($address);
         $company->rif = $rif;
         $company->license = strtoupper($license);
-        $company->lat = "23554454";
-        $company->lng = "23554454";
+        $company->lat = $lat;
+        $company->lng = $lng;
         $company->code_catastral = strtoupper($code_catastral);
         $company->parish_id = $parish;
         $company->opening_date = $openingDate;
@@ -158,12 +160,10 @@ class CompaniesController extends Controller
         $code_catastral=$request->input('code_catastral');
         $numberEmployees=$request->input('number_employees');
         $sector=$request->input('sector');
-        $lat="23554454";
-        $lng="265656577";
         $phone=$request->input('phone');
-
         $id=$request->input('id');
-
+        $lat=$request->input('lat');
+        $lng=$request->input('lng');
 
 
         $validate=$this->validate($request,[
@@ -193,8 +193,8 @@ class CompaniesController extends Controller
         $company->address=strtoupper($address);
         $company->rif=$rif;
         $company->license=strtoupper($license);
-        $company->lat="23554454";
-        $company->lng="23554454";
+        $company->lat=$lat;
+        $company->lng=$lng;
         $company->code_catastral=strtoupper($code_catastral);
         $company->parish_id=$parish;
         $company->opening_date=$openingDate;
