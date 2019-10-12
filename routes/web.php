@@ -211,7 +211,7 @@ Route::get('/details-finesCompany/{id}',array(
 
 //Fines Company module routes
 
-Route::get('/register-paymentsFines/{id}',array(
+Route::get('/register-paymentsFines/{company}',array(
     'as'=>'registerPaymentsFines',
     'uses'=>'PaymentsFinesController@create'
 ));

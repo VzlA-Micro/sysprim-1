@@ -22,7 +22,7 @@ class TaxesMonth{
             $fiscal_period = Carbon::parse($company->created_at);//utilizo la fecha que se creo el registro como referencia si esta atrasado o no
             $now = Carbon::now();//fecha del computador
             $diffMount = $fiscal_period->diffInMonths($now);//veo la diferencia de meses
-           
+
             if($diffMount>=1){
                 $mes=$mounths[($fiscal_period->format('m'))-1];
                 $date = array('mount_pay' => $mes, 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));

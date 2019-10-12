@@ -19,9 +19,9 @@ class PaymentsFinesController extends Controller
         $this->middleware('auth');
     }*/
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+
     }
 
     /**
@@ -31,15 +31,15 @@ class PaymentsFinesController extends Controller
      */
     public function create(Request $request)
     {
-        $id=$request->id;
+        $id=Company::where('name',$request->company)->select('id')->get();
 
         $finesCompany=FineCompany::findOrFail($id);
 
-        $fines=Fine::findOrFail($finesCompany->fine_id);
+        $fines=Fine::findOrFail($finesCompany[0]->fine_id);
 
-        $company=Company::findOrFail($finesCompany->company_id);
+        $company=Company::findOrFail($finesCompany[0]->company_id);
 
-        $monto=$finesCompany->unid_tribu_value*$fines->cant_unid_tribu;
+        $monto=$finesCompany[0]->unid_tribu_value*$fines->cant_unid_tribu;
 
         return view('dev.finesPayments.register',array(
             'finesCompany'=>$finesCompany,

@@ -46,7 +46,7 @@
                             <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             <label for="amount">Monto</label>
                         </div>
-                        <input id="idFinesCompany" type="hidden" name="idFinesCompany" required value="{{$finesCompany->id}}">
+                        <input id="idFinesCompany" type="hidden" name="idFinesCompany" required value="{{$finesCompany[0]->id}}">
                         {{-- <div class="input-field col s12">
                             <select name="status" id="status">
                                 <option value="" disabled selected>Choose your option</option>
