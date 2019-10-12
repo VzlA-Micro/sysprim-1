@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ciu;
 use App\GroupCiiu;
 
-class CiuController extends Controller
+class GroupCiiuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,7 @@ class CiuController extends Controller
      */
     public function index()
     {
-       $groupCiiu = GroupCiiu::all();
-       return view('dev.ciu.registerCiu',array(
-          'groupCiiu'=>$groupCiiu
-       ));
+       
     }
 
     /**
@@ -28,15 +24,6 @@ class CiuController extends Controller
      */
     public function create(Request $request)
     { 
-        $ciu= new ciu();
-        $ciu->code= $request->input('code');
-        $ciu->name= $request->input('name');
-        $ciu->alicuota= $request->input('alicuota');
-        $ciu->min_tribu_men= $request->input('mTM');
-        $ciu->group_ciu_id= $request->input('groupCiiu');
-        $ciu->save();
-
-        return redirect()->route('readCiu');
 
     }
 
@@ -48,7 +35,12 @@ class CiuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $groupCiiu= new GroupCiiu();
+        $groupCiiu->code= $request->input('code');
+        $groupCiiu->name= $request->input('name');
+        $groupCiiu->save();
+
+        return redirect()->route('readGroupCiiu');
     }
 
     /**
@@ -59,9 +51,9 @@ class CiuController extends Controller
      */
     public function show()
     {     
-        $ciu= ciu::get();
-        return view('dev.readCiu',array(
-            'showCiu'=>$ciu
+        $groupCiiu = GroupCiiu::get();
+        return view('dev.groupCiiu.read',array(
+            'showGroupCiiu'=>$groupCiiu
         ));
         //return $ciu;
     }
@@ -74,10 +66,7 @@ class CiuController extends Controller
      */
     public function edit($id)
     {
-        $ciu= ciu::findOrFail($id);
-        return view('dev.detailsCiu',array(
-            'ciu'=>$ciu
-        ));
+
         
     }
 
@@ -91,14 +80,7 @@ class CiuController extends Controller
     public function update(Request $request, $id)
     {
         //$id=$request->input('id');
-        $ciu=ciu::findOrFail($id);
-        
-        $ciu->code= $request->input('code');
-        $ciu->name= $request->input('name');
-        $ciu->value= $request->input('value');
-        
-        $ciu->update(); 
-        return redirect()->route('readCiu');
+
     }
 
     /**

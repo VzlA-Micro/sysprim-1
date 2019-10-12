@@ -85,11 +85,27 @@ Route::get('/codigo-qr',function (){
 
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
+// Group Ciiu module routes
+Route::get('/group-ciiu-register', function() {
+    return view('dev.groupCiiu.register');
+})->name('groupCiiu.register');
+
+Route::post('/save-GroupCiiu',array(
+    'as'=>'saveGroupCiiu',
+    'uses'=>'groupCiiuController@store'
+));
+
+Route::get('/read-GroupCiiu',array(
+    'as'=>'readGroupCiiu',
+    'uses'=>'GroupCiiuController@show'
+));
 
 // Ciu module routes
-Route::get('/ciu-register', function() {
-    return view('dev.registerCiu');
-})->name('dev.ciu-register');
+
+Route::get('/ciu-register', array(
+    'as'=>'ciuRegister',
+    'uses'=>'CiuController@index'
+    ));
 
 Route::post('/save-ciu',array(
    'as'=>'saveCiu',
@@ -188,11 +204,6 @@ Route::get('/read-fines-company',array(
 Route::get('/finesCompany-register/{id}', function() {
     return view('dev.finesCompany.register');
 })->name('dev.finesCompany-register');
-
-Route::get('/create-finesCompany/{id}',array(
-    'as'=>'createFinesCompany',
-    'uses'=>'FinesCompanyController@create'
-));
 
 Route::post('/save-finesCompany',array(
     'as'=>'saveFinesCompany',
