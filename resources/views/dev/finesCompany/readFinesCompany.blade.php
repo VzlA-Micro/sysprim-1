@@ -15,16 +15,18 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach($company as $Company)
                     <tr>
-                        <td>{{$Company->name}}</td>
-                        <td>{{$Company->RIF}}</td>
-                        <td>{{$Company->address}}</td>
+                        <td>{{$Company[0]->name}}</td>
+                        <td>{{$Company[0]->RIF}}</td>
+                        <td>{{$Company[0]->address}}</td>
                         <td>
-                            <a href="{{url('/details-finesCompany/'.$Company->id)}} " class="btn btn-small btn-floating pink waves-effect effect-light">MULTAR</a>
+                            <a href="{{url('/details-finesCompany/'.$Company[0]->fineCompany[0]->id)}} " class="btn btn-small btn-floating pink waves-effect effect-light"></a>
                         </td>
                     </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>

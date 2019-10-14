@@ -197,6 +197,26 @@ Route::get('/read-fines-company',array(
     'uses'=>'FinesCompanyController@show'
 ));
 
+Route::get('/create-finesCompany/{id}',array(
+    'as'=>'createFinesCompany',
+    'uses'=>'FinesCompanyController@create'
+));
+
+Route::post('/save-finesCompany',array(
+    'as'=>'saveFinesCompany',
+    'uses'=>'FinesCompanyController@store'
+));
+
+Route::get('/readFinesCompany',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@read'
+));
+
+Route::get('/details-finesCompany/{id}',array(
+    'as'=>'detailsFinesCompany',
+    'uses'=>'FinesCompanyController@edit'
+));
+
 Route::get('/finesCompany-register/{id}', function() {
     return view('dev.finesCompany.register');
 })->name('dev.finesCompany-register');

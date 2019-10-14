@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Fine;
 use App\Company;
 use App\FineCompany;
+use App\Tributo;
 
 class FinesCompanyController extends Controller
 {
@@ -26,12 +27,14 @@ class FinesCompanyController extends Controller
      */
     public function create($id)
     { 
-        $company=Company::findOrFail($id);
-        $fines=Fine::get();
-       
+        $company = Company::findOrFail($id);
+        $fines = Fine::get();
+        $tributo = Tributo::get()->first();
+
         return view('dev.finesCompany.register',array(
             'Company'=>$company,
-            'fines'=>$fines
+            'fines'=>$fines,
+            'tributo'=>$tributo
         ));
     }
 
@@ -60,7 +63,7 @@ class FinesCompanyController extends Controller
      */
     public function show()
     {     
-        $finesCompany= Company::get();
+        $finesCompany= Company::all();
         return view('dev.finesCompany.read',array(
             'showCompany'=>$finesCompany
         ));
@@ -119,12 +122,15 @@ class FinesCompanyController extends Controller
 
     public function read(){
         $finesCompany=FineCompany::get();
-        foreach($finesCompany as $fine){
-            $Company=Company::where('id',$fine->company_id)->get();
-        }
+        $count=count($finesCompany);
 
+        for ($i=0; $i<$count;$i++) {
+            $Company[] = Company::where('id', $finesCompany[$i]->company_id)->get();
+        }
         return view('dev.finesCompany.readFinesCompany',array(
-            'company'=>$Company
+            'company'=>$Company,
+            'finesCompany'=>$finesCompany,
+            'count'=>$count
         ));
 
     }
