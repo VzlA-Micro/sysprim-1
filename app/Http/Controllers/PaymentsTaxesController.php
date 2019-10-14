@@ -7,6 +7,7 @@ use App\PaymentTaxes;
 use App\Ciu;
 use App\Company;
 use App\Taxe;
+use App\CiuTaxes;
 
 class PaymentsTaxesController extends Controller
 {
@@ -35,9 +36,21 @@ class PaymentsTaxesController extends Controller
         $company=Company::where('name',session('company'))->get();
         $company_find=Company::find($company[0]->id);
         $taxes=Taxe::findOrFail($id);
+        $ciuTaxes=CiuTaxes::findOrFail($taxes->id);
+
+        $ciu=Ciu::findOrFail($ciuTaxes->ciu_id);
+
+        if($ciuTaxes->base == 0){
+            $monto=$ciu->min_tribu_men * $ciuTaxes->unid_tribu;
+        }
+        else{
+            $monto=$ciu->alicuota * $ciuTaxes->base/100;
+        }
+
         return view('modules.payments.register',array(
             'taxes'=>$taxes,
-            'id'=>$id
+            'id'=>$id,
+            'monto'=>$monto
         ));
     }
 

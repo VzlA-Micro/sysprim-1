@@ -27,7 +27,7 @@
                             <label for="name">RIF</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="valueUndTributo" id="valueUndTributo" required>
+                            <input type="number" name="valueUndTributo" id="valueUndTributo" value="{{$tributo->value}}" readonly required>
                             <label for="valueUndTributo">Valor de unidad tributaria</label>
                         </div>
                         <div class="input-field col s12 m6">

@@ -44,7 +44,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             @foreach($taxes->taxesCiu as $ciu)
-                            <input type="number" name="amount" id="amount" value="{{$ciu->alicuota*$ciu->pivot->base/100}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             @endforeach
                             <label for="amount">Monto</label>
                         </div>

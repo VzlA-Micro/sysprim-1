@@ -62,6 +62,10 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
+Route::get('/payments/help', function() {
+    return view('modules.payments.help');
+})->name('payments.help');
+
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
@@ -173,6 +177,26 @@ Route::get('/fines/delete/{id}', 'FinesController@destroy')->name('fines.delete'
 Route::get('/read-fines-company',array(
     'as'=>'readFinesCompany',
     'uses'=>'FinesCompanyController@show'
+));
+
+Route::get('/create-finesCompany/{id}',array(
+    'as'=>'createFinesCompany',
+    'uses'=>'FinesCompanyController@create'
+));
+
+Route::post('/save-finesCompany',array(
+    'as'=>'saveFinesCompany',
+    'uses'=>'FinesCompanyController@store'
+));
+
+Route::get('/readFinesCompany',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@read'
+));
+
+Route::get('/details-finesCompany/{id}',array(
+    'as'=>'detailsFinesCompany',
+    'uses'=>'FinesCompanyController@edit'
 ));
 
 Route::get('/finesCompany-register/{id}', function() {
