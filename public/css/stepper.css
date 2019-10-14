@@ -1,0 +1,63 @@
+.stepper {
+  counter-reset: item;
+  list-style: none;
+  padding-left: 0;
+  margin-left: 30px;
+}
+.stepper .task {
+  counter-increment: item;
+  position: relative;
+  margin-bottom: 10px;
+}
+.stepper .task:after {
+  content: "";
+  border-left: 2px solid #dee3e7;
+  position: absolute;
+  left: -16px;
+  top: 40px;
+  bottom: 0;
+}
+.stepper .task:before {
+  margin-left: -30px;
+  content: counter(item);
+  background: #f7f7f9;
+  border-radius: 100%;
+  border: 1px solid #dee3e7;
+  color: #516f87;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 5px;
+}
+.stepper .task .task-content-wrapper {
+  margin-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: 5px;
+}
+.stepper .task .task-content-wrapper .content {
+  padding: 15px;
+  background: #FFFFFF;
+  /* border: 1px solid #DEE3E7; */
+  /* box-shadow: 0 1px 3px 0 rgba(83, 112, 135, 0.15); */
+  margin-bottom: 15px;
+}
+.stepper .task--complete:before, .stepper .task--current:before {
+  background-color: #516f87;
+  border-color: #516f87;
+  color: #f7f7f9;
+}
+.stepper .task--complete .task-content-wrapper * {
+  display: none;
+}
+.stepper .task--complete:before {
+  content: "✓";
+}
+.stepper .task--complete:after {
+  border-color: #516f87;
+}
+.stepper .task--current strong {
+  color: #516f87;
+}

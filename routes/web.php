@@ -62,6 +62,10 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
+Route::get('/payments/help', function() {
+    return view('modules.payments.help');
+})->name('payments.help');
+
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
