@@ -8,6 +8,10 @@ use App\Ciu;
 use App\Company;
 use App\Taxe;
 use App\CiuTaxes;
+use App\Employees;
+use Illuminate\Support\Facades\App;
+
+
 
 class PaymentsTaxesController extends Controller
 {
@@ -34,17 +38,38 @@ class PaymentsTaxesController extends Controller
     {
         $id=$request->id;
         $company=Company::where('name',session('company'))->get();
+
         $company_find=Company::find($company[0]->id);
+
         $taxes=Taxe::findOrFail($id);
+
         $ciuTaxes=CiuTaxes::findOrFail($taxes->id);
+
+        $employees=Employees::all();
+
+        $count=count($employees);
 
         $ciu=Ciu::findOrFail($ciuTaxes->ciu_id);
 
+        $rebaja=0;
+
+        for($i=0;$i<$count;$i++){
+            if($company_find->number_employees >= $employees[$i]->min){
+                if($company_find->number_employees <= $employees[$i]->max) {
+                    $rebaja = $employees[$i]->value;
+                }
+            }
+        }
+
         if($ciuTaxes->base == 0){
-            $monto=$ciu->min_tribu_men * $ciuTaxes->unid_tribu;
+            $base=$ciu->min_tribu_men * $ciuTaxes->unid_tribu/100;
+            $rebaja_employees= $base * $rebaja/100;
+            $monto=$base-$rebaja_employees;
         }
         else{
-            $monto=$ciu->alicuota * $ciuTaxes->base/100;
+            $base=$ciu->alicuota * $ciuTaxes->base / 100;
+            $rebaja_employees= $base * $rebaja/100;
+            $monto=$base-$rebaja_employees;
         }
 
         return view('modules.payments.register',array(
