@@ -21,23 +21,23 @@
                         @csrf
                         <input type="hidden" name="id" name="id" value="{{ $company->id }}">
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Razón social o nombre de la empresa.">
-                            <input type="text" name="name" id="name" class="validate"  pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" value="{{ $company->name }}" required>
+                            <input type="text" name="name" id="name" class="validate"  pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" value="{{ $company->name }}" required disabled>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Puede escribir: J, G ó V y números. Ej: J1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9JGV]+" title="Puede escribir: J = Juridico, G = Gubernamental, V = Venezolano y números." value="{{ $company->RIF }}" required>
+                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9JGV]+" title="Puede escribir: J = Juridico, G = Gubernamental, V = Venezolano y números." value="{{ $company->RIF }}" required disabled>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
-                            <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->license }}" required>
+                            <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->license }}" required disabled>
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required>
+                            <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required disabled>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" value="{{ $company->number_employees }}" required>
+                            <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" value="{{ $company->number_employees }}" required >
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
                         <div class="input-field col m6 s12">
@@ -85,21 +85,10 @@
                         </div>
                         <div class="input-field col s12">
                             <select multiple name="ciu[]">
-                                @php $band=false @endphp;
 
-                                @foreach($ciu as $ciu):
                                     @foreach($company->ciu as $ciu_selected)
-                                        @if($ciu_selected->id==$ciu->id)
-                                            <option value="{{ $ciu->id }}"@if($ciu_selected->id==$ciu->id){{"selected"}}@endif>{{ $ciu->name }} </option>
-                                            @php $band=true @endphp;
-                                         @endif
+                                            <option value="{{ $ciu_selected->id }}" selected>{{ $ciu_selected->name }} </option>
                                      @endforeach
-
-                                    @if(!$band)
-                                         <option value="{{ $ciu->id }}">{{ $ciu->name }} </option>
-                                    @endif
-                                     @php $band=false @endphp;
-                                @endforeach
                             </select>
                             <label>Agregar CIU</label>
                         </div>

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Notification;
+use App\Tributo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\TaxesNumber;
 use App\Taxe;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
+use Illuminate\Support\Facades\Session;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -25,7 +28,6 @@ class CompanyTaxesController extends Controller
     public function history($company){
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)->get();
-
         return view('modules.payments.history',['taxes'=>$taxes]);
 
     }
@@ -35,21 +37,27 @@ class CompanyTaxesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create($company){
         $company=Company::where('name',$company)->get();
         $company_find=Company::find($company[0]->id);
 
         $date=TaxesMonth::verify($company[0]->id,false);
         $users=$company_find->users()->get();
+        $taxes=Taxe::where('company_id',$company[0]->id)->orderBy('id', 'desc')->take(1)->get();
+
 
         if(isset($users[0]->id)&&$users[0]->id!=\Auth::user()->id){//si la empresa le pertenece a quien coloco la ruta
             return redirect('companies/my-business');
         }else{
-            //mientras tanto
-            $notifications=Notification::where('user_id',\Auth::user()->id)->get();
-
-            return view('modules.taxes.register',['company'=>$company_find,'notifications'=>$notifications,"date"=>$date]);
+            if(!is_null($date)&&isset($taxes[0]->fiscal_period)&&$taxes[0]->fiscal_period===$date['fiscal_period']){
+                Session::flash('message','ACTIVIDAD ECONOMICA DECLARADAS POR FAVOR CONCILIE SUS PAGOS.');
+                return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
+            }else{
+                return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
+            }
         }
+
     }
 
     /**
@@ -59,7 +67,6 @@ class CompanyTaxesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-
         /*
         $ciu=$request->input('ciu');
         $base=$request->input('base');
@@ -75,6 +82,7 @@ class CompanyTaxesController extends Controller
         $company_find=Company::find($company);
 
         $ciu_id=$request->input('ciu_id');
+        $min_tribu_men=$request->input('min_tribu_men');
         $deductions=$request->input('deductions');
         $withholding=$request->input('withholding');
         $base=$request->input('base');
@@ -85,8 +93,18 @@ class CompanyTaxesController extends Controller
         $taxe->company_id=$company;
         $taxe->save();
         $id=DB::getPdo()->lastInsertId();
+
+
         for ($i=0;$i<count($ciu_id);$i++){
-            $taxe->taxesCiu()->attach(['taxe_id'=>$id],['ciu_id'=>$ciu_id[$i],'base'=>$base[$i],'deductions'=>$deductions[$i],'withholding'=>$withholding[$i],'fiscal_credits'=>$fiscal_credits[$i]]);
+
+            if($base[$i]==0){
+                    $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
+                    $unid_total=$unid_tribu[0]->value;
+            }else{
+                    $unid_total=0;
+            }
+            $taxe->taxesCiu()->attach(['taxe_id'=>$id],['ciu_id'=>$ciu_id[$i],'base'=>$base[$i],'deductions'=>$deductions[$i],'withholding'=>$withholding[$i],'fiscal_credits'=>$fiscal_credits[$i],'unid_tribu'=>$unid_total]);
+
         }
         $data = array([
             'status' => 'success',
@@ -105,13 +123,10 @@ class CompanyTaxesController extends Controller
         $taxes=Taxe::findOrFail($id);
         $company=Company::where('name',session('company'))->get();
         $company_find=Company::find($company[0]->id);
-
-        $date=TaxesMonth::verify($company[0]->id,false);
-
-
-
-
-        return view('modules.taxes.details',['taxes'=>$taxes]);
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
+        $unid_tribu=$unid_tribu[0]->value;
+        return view('modules.taxes.details',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'unid_tribu'=>$unid_tribu]);
     }
 
     /**
@@ -149,6 +164,8 @@ class CompanyTaxesController extends Controller
     }
 
     public function getPDF($id){
+        $taxes=Taxe::findOrFail($id);
+
         $pdf = \PDF::loadView('modules.taxes.receipt',['id'=>$id]);
         return $pdf->stream();
     }

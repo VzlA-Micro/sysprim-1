@@ -2,7 +2,9 @@ $(document).ready(function () {
     var url="http://sysprim.com.devel/";
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '') {
-            var rif = $('#RIF').val();
+            var rif = $('#document_type').val()+$('#RIF').val();
+                console.log(rif);
+
             $.ajax({
                 method: "GET",
                 url: url+"company/verify-rif/" + rif,
@@ -11,8 +13,6 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-
-
                     if (response.status === 'error') {
                         swal({
                             title: "¡Oh no!",
@@ -22,7 +22,7 @@ $(document).ready(function () {
                         });
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
-                        $('#RIF').val("J-");
+                        $('#RIF').val("");
                         $('#RIF').addClass('validate');
                     }else{
                         findCompany(rif);
@@ -225,15 +225,11 @@ $(document).ready(function () {
                      var company=response.company;
 
                     $('#name').val(company.historico_nombre_empresa);
-                    $('#RIF').val(company.rif);
+                    $('#RIF').val(company.rif.substr(1));
                     $('#license').val(company.codigo_licencia);
                     $('#address').val(company.direccion);
                     M.updateTextFields();
-
-                     console.log(response);
                 }
-
-
 
             },
             error: function (err) {
@@ -278,7 +274,6 @@ function initMap() {
         var marker = new google.maps.Marker({
             position: latLng,
             map: map,
-            animation: google.maps.Animation.BOUNCE,
             title:"ESTOY AQUÍ"
         });
         map.panTo(latLng);
@@ -297,7 +292,8 @@ function initMap() {
             });
         }else{
             $('#lng').val(marcadores[0].getPosition().lng());
-            $('#lat').val(marcadores[0].getPosition().lat())
+            $('#lat').val(marcadores[0].getPosition().lat());
+            M.updateTextFields();
         }
         google.maps.event.addListener(marker, 'click', function() {
             removeItemFromArr( marcadores, marker );

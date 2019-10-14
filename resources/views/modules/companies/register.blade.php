@@ -24,7 +24,7 @@
                             <label for="document_type">Documento</label>
                         </div>
                         <div class="input-field col s10 m4 tooltipped" data-position="left" data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9]+" maxlength="9" title="Solo puede escribir y números." required>
+                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir y números." required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Razón social o nombre de la empresa.">
@@ -72,14 +72,12 @@
                         </div>
                         <div class="input-field col s10 m6 tooltipped" data-position="left" data-tooltip="Ej: 02511234567">
                             <label for="phone">Teléfono de la Empresa</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" required>
+                            <input id="phone" type="tel" name="phone" class="validate"  maxlength="11" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" required>
                         </div>
                         <div class="input-field col s12 m6">
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required></textarea>
                             <label for="address">Dirección</label>
                         </div>
-                        <input id="lat" type="hidden" name="lat" value="">
-                        <input id="lng" type="hidden" name="lng" value="">
                         <div class="input-field col s12 m6">
                             <select multiple name="ciu_group[]" required id="ciu_group">
                                 <option value="null" disabled >Seleccionar CIU</option>
@@ -108,6 +106,18 @@
                             <span>Elige la  ubicación de tu empresa:</span>
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
                         </div>
+
+
+                        <div class="input-field col s12 m6">
+                            <input id="lat" type="text" name="lat" value="" readonly>
+                            <label for="lat">Latitud</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input id="lng" type="text" name="lng" value="" readonly>
+                            <label for="lat">Logintud</label>
+                        </div>
+
                     </div>
                     <div class="card-action center-align">
                         <button type="submit" class="btn btn-rounded waves-effect waves-light green">Registrar</button>

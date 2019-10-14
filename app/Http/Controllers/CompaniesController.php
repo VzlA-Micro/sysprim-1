@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\DB;
 use App\UserCompany;
 use App\PaymentTaxes;
 use App\FindCompany;
-
-
 use Alert;
 class CompaniesController extends Controller
 {
@@ -61,13 +59,12 @@ class CompaniesController extends Controller
         $license = $request->input('license');
         $parish = $request->input('parish');
         $openingDate = $request->input('opening_date');
-        $rif = $request->input('RIF');
+        $rif = $request->input('document_type').$request->input('RIF');
         $address = $request->input('address');
         $code_catastral = $request->input('code_catastral');
         $numberEmployees=$request->input('number_employees');
         $sector=$request->input('sector');
         $phone=$request->input('phone');
-
         $lat=$request->input('lat');
         $lng=$request->input('lng');
 
@@ -76,7 +73,7 @@ class CompaniesController extends Controller
         $validate = $this->validate($request, [
             'name' => 'required',
             'license' => 'required',
-            'RIF' => 'required|min:9',
+            'RIF' => 'required|min:8',
             'address' => 'required',
             'opening_date' => 'required',
             'parish' => 'required|integer',
@@ -149,13 +146,7 @@ class CompaniesController extends Controller
         /*Falta:eliminar imagenes antigua una vez suba la nueva, */
 
         $ciu=$request->input('ciu');
-
-        $image=$request->file('image');
-        $name=$request->input('name');
-        $license=$request->input('license');
         $parish=$request->input('parish');
-        $openingDate=$request->input('opening_date');
-        $rif=$request->input('RIF');
         $address=$request->input('address');
         $code_catastral=$request->input('code_catastral');
         $numberEmployees=$request->input('number_employees');
@@ -164,14 +155,10 @@ class CompaniesController extends Controller
         $id=$request->input('id');
         $lat=$request->input('lat');
         $lng=$request->input('lng');
-
+        $image=$request->input('image');
 
         $validate=$this->validate($request,[
-            'name'=>'required',
-            'license'=>'required',
-            'RIF'=>'required|min:9',
             'address'=>'required',
-            'opening_date'=>'required',
             'parish'=>'required|integer',
             'code_catastral'=>'required',
             'sector' => 'required',
@@ -189,15 +176,12 @@ class CompaniesController extends Controller
         }
 
 
-        $company->name=strtoupper($name);
+
         $company->address=strtoupper($address);
-        $company->rif=$rif;
-        $company->license=strtoupper($license);
         $company->lat=$lat;
         $company->lng=$lng;
         $company->code_catastral=strtoupper($code_catastral);
         $company->parish_id=$parish;
-        $company->opening_date=$openingDate;
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
         $company->update();
