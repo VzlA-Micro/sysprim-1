@@ -18,6 +18,12 @@
                     <span class="truncate">Gestionar Multas</span>
                 </a>
             </div>
+            <div class="col s12 m3">
+                <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-assignment"></i>
+                    <span class="truncate">Gestionar CIIU</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

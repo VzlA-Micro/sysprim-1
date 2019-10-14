@@ -91,51 +91,29 @@ Route::get('/codigo-qr',function (){
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 // Group Ciiu module routes
-Route::get('/group-ciiu-register', function() {
-    return view('dev.groupCiiu.register');
-})->name('groupCiiu.register');
 
-Route::post('/save-GroupCiiu',array(
-    'as'=>'saveGroupCiiu',
-    'uses'=>'groupCiiuController@store'
-));
+Route::get('/ciu/manage', function() {
+    return view('modules.ciiu-group.menu');
+})->name('ciu.manage');
 
-Route::get('/read-GroupCiiu',array(
-    'as'=>'readGroupCiiu',
-    'uses'=>'GroupCiiuController@show'
-));
+Route::get('/ciu-group/register', function() {
+    return view('modules.ciiu-group.register');
+})->name('ciu-group.register');
+Route::post('/ciu-group/save','groupCiiuController@store')->name('ciu-group.save');
+Route::get('/ciu-group/read','GroupCiiuController@show')->name('ciu-group.read');
+Route::get('/ciu-branch/manage', function() {
+    return view('modules.ciiu.menu');
+})->name('ciu-branch.manage');
 
 // Ciu module routes
 
-Route::get('/ciu-register', array(
-    'as'=>'ciuRegister',
-    'uses'=>'CiuController@index'
-    ));
+Route::get('/ciu-branch/register','CiuController@index')->name('ciu-branch.register');
+Route::post('/ciu-branch/save','CiuController@create')->name('ciu-branch.save');
+Route::get('/ciu-branch/read','CiuController@show')->name('ciu-branch.read');
+Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
+Route::post('/ciu-branch/update/{id?}','CiuController@update')->name('ciu-branch.update');
 
-Route::post('/save-ciu',array(
-   'as'=>'saveCiu',
-   'uses'=>'CiuController@create'
-));
-
-Route::get('/read-ciu',array(
-   'as'=>'readCiu',
-   'uses'=>'CiuController@show'
-));
-
-Route::get('/details-ciu/{id}',array(
-   'as'=>'detailsCiu',
-   'uses'=>'CiuController@edit'
-));
-
-Route::post('/update-ciu/{id?}',array(
-   'as'=>'updateCiu',
-   'uses'=>'CiuController@update'
-));
-
-Route::get('/delete-ciu/{id}',array(
-   'as'=>'deleteCiu',
-   'uses'=>'CiuController@destroy'
-));
+Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
 
 // Payments Taxes Module
 

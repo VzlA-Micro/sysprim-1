@@ -16,7 +16,7 @@ class CiuController extends Controller
     public function index()
     {
        $groupCiiu = GroupCiiu::all();
-       return view('dev.ciu.registerCiu',array(
+       return view('modules.ciiu.register',array(
           'groupCiiu'=>$groupCiiu
        ));
     }
@@ -36,7 +36,7 @@ class CiuController extends Controller
         $ciu->group_ciu_id= $request->input('groupCiiu');
         $ciu->save();
 
-        return redirect()->route('readCiu');
+        return redirect()->route('ciu.read');
 
     }
 
@@ -60,7 +60,7 @@ class CiuController extends Controller
     public function show()
     {     
         $ciu= ciu::get();
-        return view('dev.readCiu',array(
+        return view('modules.ciiu.read',array(
             'showCiu'=>$ciu
         ));
         //return $ciu;
@@ -75,7 +75,7 @@ class CiuController extends Controller
     public function edit($id)
     {
         $ciu= ciu::findOrFail($id);
-        return view('dev.detailsCiu',array(
+        return view('modules.ciiu.details',array(
             'ciu'=>$ciu
         ));
         
@@ -98,7 +98,7 @@ class CiuController extends Controller
         $ciu->value= $request->input('value');
         
         $ciu->update(); 
-        return redirect()->route('readCiu');
+        return redirect()->route('ciu-branch.read');
     }
 
     /**
@@ -110,7 +110,7 @@ class CiuController extends Controller
     public function destroy($id)
     {
         $ciu=ciu::destroy($id);
-        return redirect()->route('readCiu');
+        return redirect()->route('ciu-branch.read');
     }
 
 
