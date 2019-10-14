@@ -20,7 +20,7 @@
                         <div class="col m6">
                             <ul>
                                 <li><b>Código: </b>{{ $taxes->code }}</li>
-                                <li><b>Periodo Fiscal: </b>{{ $taxes->fiscal_period }}</li>
+                                <li><b>Periodo Fiscal: </b>{{ $fiscal_period }}</li>
                                 <li><b>Fecha: </b>{{ $taxes->created_at }}</li>
 
                             </ul>
@@ -35,11 +35,6 @@
                     </div>
 
                     <div class="divider"></div>
-                    @if (Storage::disk('companies')->has($taxes->companies->image))
-                    <div class="card-image">
-                        <img src="{{ route('companies.image', ['filename' => $taxes->companies->image]) }}" alt="" srcset="">
-                    </div>
-                    @endif
 
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
@@ -72,11 +67,13 @@
                             <input type="number" name="fiscal_credits[]" id="fiscal_credits" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->fiscal_credits }}" disabled>
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
-
                             <div class="input-field col s12 m4">
-                                <input type="number" name="total_ciu[]" id="total_ciu" class="validate total_ciu" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ ($ciu->alicuota*$ciu->pivot->base/100)}}" disabled>
-
-                                <label for="fiscal_credits">Total a Pagar por CIU<b> (Bs)</b></label>
+                                @if($ciu->pivot->base!=0)
+                                    <input type="number" name="total_ciu[]" id="total_ciu" class="validate total_ciu" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ ($ciu->alicuota*$ciu->pivot->base/100)}}" disabled>
+                                @else
+                                    <input type="number" name="total_ciu[]" id="total_ciu" class="validate total_ciu" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->unid_tribu*$ciu->min_tribu_men}}" disabled>
+                                @endif
+                                    <label for="fiscal_credits">Total a Pagar por CIU<b> (Bs)</b></label>
                             </div>
 
 
@@ -95,33 +92,57 @@
                         </div>
 
                         @endforeach
+                        <div class="col l12">
+                            <div class="col l6">
 
-                        <div class="col s12 m6 offset-m6">
-                            <input type="text" name="total_tasa" id="total_tasa" class="validate total_tasa" value="0"  readonly>
-                            <label for="total_tasa">Total Tasa:(Bs)</label>
+                                    <table class="centered">
+                                        <tr>
+                                            <td>CODIGO</td>
+                                            <td>NOMBRE</td>
+                                            <td>ALICUOTA</td>
+                                            <td>MININIMO TRIBUTABLE</td>
+                                        </tr>
+                                        @php $unid=$ciu->pivot->unid_tribu;@endphp
+                                        @foreach($taxes->taxesCiu as $ciu)
+                                        <tr>
+                                            <td>{{$ciu->code}}</td>
+                                            <td>{{$ciu->name}}</td>
+                                            <td>{{$ciu->alicuota."%"}}</td>
+                                            <td>{{$ciu->min_tribu_men}}</td>
+                                        </tr>
+
+                                @endforeach
+                                    </table>
+                                    <p><b>UNIDAD TRIBUTARIA: {{$unid_tribu}}</b>Bs</p>
+                                    <p><b>TASA: </b>500Bs</p>
+                                    <p><b>RECARGO:</b>600Bs</p>
+
+                            </div>
+                            <div class="col l6">
+                                <div class="col s12 m12 ">
+                                    <input type="text" name="total_tasa" id="total_tasa" class="validate total_tasa" value="0"  readonly>
+                                    <label for="total_tasa">Total Tasa:(Bs)</label>
+                                </div>
+
+                                <div class="col s12 m12 ">
+                                    <input type="text" name="total_mora" id="total_mora" class="validate total_mora"  value="0" readonly>
+                                    <label for="total_mora">Total Mora:(Bs)</label>
+                                </div>
+
+
+                                <div class="col s12 m12">
+                                    <input type="text" name="total" id="total_pagar" class="validate total"  readonly>
+                                    <label for="total_pagar">Total a Pagar:(Bs)</label>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col s12 m6 offset-m6">
-                            <input type="text" name="total_mora" id="total_mora" class="validate total_mora"  value="0" readonly>
-                            <label for="total_mora">Total Mora:(Bs)</label>
-                        </div>
-
-
-                        <div class="col s12 m6 offset-m6">
-                            <input type="text" name="total" id="total_pagar" class="validate total"  readonly>
-                            <label for="total_pagar">Total a Pagar:(Bs)</label>
-                        </div>
-
-
-
-                        <div class="input-field col s12">
-                            <button type="submit" class="btn btn-rounded col s12 blue waves-effect waves-light">Guardar</button>
-                        </div>
                     </form>
                     <div class="card-action">
                         <div class="row">
-                            <button class="btn btn-rounded blue col s12 m6 waves-light">Editar</button>
-                            <button class="btn btn-rounded red col s12 m6 waves-light">Eliminar</button>
+                            <div class="input-field col s12">
+                                <a href="{{ route('payments.help',['id'=>$taxes->id]) }}" class="btn btn-rounded col s12 blue waves-effect waves-light">PAGAR</a>
+                            </div>
                         </div>
                     </div>
                 </div>

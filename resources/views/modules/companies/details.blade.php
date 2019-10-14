@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mi Empresa</a>
+                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
                 <a href="" class="breadcrumb">{{ $company->name }}</a>
             </div>
             <div class="col s12 m8">
@@ -34,9 +34,9 @@
                             <div class="col s12 m6 center-align">
                                 <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue btn-rounded waves-light col s12">Editar</a>
                             </div>
-                            <div class="col s12 m6 center-align">
+                           <!-- <div class="col s12 m6 center-align">
                                 <a href="" class="btn red btn-rounded waves-light col s12">Eliminar</a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

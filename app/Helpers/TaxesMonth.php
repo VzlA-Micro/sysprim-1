@@ -6,13 +6,13 @@ use App\Notification;
 use Illuminate\Support\Carbon;
 use App\PaymentTaxes;
 class TaxesMonth{
-
+    static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
     public  static function verify($id,$notification=true){
 
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $date = null;
         $company = Company::find($id);
-        $mounths=array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
 
         $companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();//busco el ultimo pago realizado por la empresa
 
@@ -24,8 +24,8 @@ class TaxesMonth{
             $diffMount = $fiscal_period->diffInMonths($now);//veo la diferencia de meses
 
             if($diffMount>=1){
-                $mes=$mounths[($fiscal_period->format('m'))-1];
-                $date = array('mount_pay' => $mes, 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
+                $mes=self::$mounths[($fiscal_period->format('m'))-1];
+                $date = array('mount_pay' =>$mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
             }else{
                 $date=null;
                 $mes=null;
@@ -43,15 +43,15 @@ class TaxesMonth{
                 if (!$payment->isEmpty() && $payment[0]->status === 'verified' && $diffMount > 1) {
                     $diffMount--;//resto 1 a la diferencia de mes porque este utilimo esta pago
                     $fiscal_period->addMonth(1);//añado un mes para saber cual es el proximo a pagar
-                    $mes=$mounths[($fiscal_period->format('m'))-1];
-                    $date = array('mount_pay' => $mes, 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
+                    $mes=self::$mounths[($fiscal_period->format('m'))-1];
+                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
 
                 } else if (!$payment->isEmpty() && $payment[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
                     $date = null;
                     $mes=null;
                 } else {
-                    $mes=$mounths[($fiscal_period->format('m'))-1];
-                    $date = array('mount_pay' => $mes,
+                    $mes=self::$mounths[($fiscal_period->format('m'))-1];
+                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'),
                         'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
                 }
             }
@@ -85,6 +85,12 @@ class TaxesMonth{
             $notification->save();
         }
 
+    }
+
+    public static function convertFiscalPeriod($fiscal_period){
+        $fiscal_period = Carbon::parse($fiscal_period);
+        $fiscal_period_format=self::$mounths[($fiscal_period->format('m'))-1]."-".$fiscal_period->format('Y');
+        return $fiscal_period_format;
     }
 
 }

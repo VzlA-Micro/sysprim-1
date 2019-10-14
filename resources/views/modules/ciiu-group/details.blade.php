@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('styles')
-    
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">

@@ -11,29 +11,37 @@
                 <a href="" class="breadcrumb">Pagar Impuestos</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                @if(session('message'))
-                    {{session('message')}}
-                @endIf
                 <form action="{{ route('taxes.save') }}" method="post" class="card">
 
                     @if(is_null($date))
                     <div class="card-header center-align">
                         <h5>EMPRESA SOLVENTE HASTA LA FECHA.</h5>
                     </div>
+                    @elseif(Session::has('message'))
+                        <div class="card-header center-align">
+                            <h5>{{session('message')}}</h5>
+                        </div>
                     @else
                         <div class="card-header center-align">
                             <h5>Pagar Impuesto</h5>
                         </div>
-                    <div class="card-content row">
+
+                        <div class="card-content row">
                         @csrf
                         <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
                         <div class="input-field col s12">
-                            <input type="date" name="fiscal_period" id="fiscal_period"  value="{{$date['fiscal_period']}}" readonly>
+                            <input type="hidden" name="fiscal_period" id="fiscal_period"  value="{{$date['fiscal_period']}}">
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input type="text" name="fiscal_period" id="fiscal_period"  value="{{$date['mount_pay']}}" disabled>
                             <label for="fiscal_period">Periodo Fiscal</label>
                         </div>
+
                         @foreach($company->ciu as $ciu)
                             <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                             <input type="hidden" name="ciu_alicuota" class="ciu_alicuota" value="{{ $ciu->alicuota }}">
+                            <input type="hidden" name="min_tribu_men[]" class="min_tribu_men" value="{{ $ciu->min_tribu_men}}">
 
                         <div class="input-field col s12 m6">
                             <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
@@ -67,7 +75,7 @@
                     <div class="card-action center-align">
                         <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
                     </div>
-                        @endif
+                    @endif
                 </form>
             </div>
         </div>

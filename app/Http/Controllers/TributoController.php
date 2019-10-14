@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ciu;
-use App\GroupCiiu;
+use App\Tributo;
 
-class CiuController extends Controller
+class TributoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,40 +14,19 @@ class CiuController extends Controller
      */
     public function index()
     {
-       $groupCiiu = GroupCiiu::all();
-       return view('modules.ciiu.register',array(
-          'groupCiiu'=>$groupCiiu
-       ));
+       
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    { 
-        $ciu= new ciu();
-        $ciu->code= $request->input('code');
-        $ciu->name= $request->input('name');
-        $ciu->alicuota= $request->input('alicuota');
-        $ciu->min_tribu_men= $request->input('mTM');
-        $ciu->group_ciu_id= $request->input('groupCiiu');
-        $ciu->save();
-
-        return redirect()->route('ciu.read');
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        $tributo= new Tributo();
+        $tributo->since= $request->input('since_date');
+        $tributo->to= $request->input('to_date');
+        $tributo->value= $request->input('valueUndTributo');
+        $tributo->save();
+
+        return redirect()->route('readTributo');
     }
 
     /**
@@ -59,9 +37,9 @@ class CiuController extends Controller
      */
     public function show()
     {     
-        $ciu= ciu::get();
-        return view('modules.ciiu.read',array(
-            'showCiu'=>$ciu
+        $tributo= Tributo::get();
+        return view('dev.tributo.read',array(
+            'showTributo'=>$tributo
         ));
         //return $ciu;
     }
@@ -75,7 +53,7 @@ class CiuController extends Controller
     public function edit($id)
     {
         $ciu= ciu::findOrFail($id);
-        return view('modules.ciiu.details',array(
+        return view('dev.detailsCiu',array(
             'ciu'=>$ciu
         ));
         
@@ -98,7 +76,7 @@ class CiuController extends Controller
         $ciu->value= $request->input('value');
         
         $ciu->update(); 
-        return redirect()->route('ciu-branch.read');
+        return redirect()->route('readCiu');
     }
 
     /**
@@ -110,18 +88,6 @@ class CiuController extends Controller
     public function destroy($id)
     {
         $ciu=ciu::destroy($id);
-        return redirect()->route('ciu-branch.read');
-    }
-
-
-    public function filterCiu(Request $request){
-        $ciuid=$request->input('id');
-        foreach ($ciuid as $id){
-            $ciu_find=Ciu::where('group_ciu_id',$id)->get();
-            $ciu[]=$ciu_find;
-        }
-
-
-        return response()->json([['ciu'=>$ciu]]);
+        return redirect()->route('readCiu');
     }
 }

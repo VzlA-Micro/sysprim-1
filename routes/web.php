@@ -62,6 +62,8 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
+Route::get('/payments/help/{id}', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
+
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
@@ -91,51 +93,29 @@ Route::get('/codigo-qr',function (){
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 // Group Ciiu module routes
-Route::get('/group-ciiu-register', function() {
-    return view('dev.groupCiiu.register');
-})->name('groupCiiu.register');
 
-Route::post('/save-GroupCiiu',array(
-    'as'=>'saveGroupCiiu',
-    'uses'=>'groupCiiuController@store'
-));
+Route::get('/ciu/manage', function() {
+    return view('modules.ciiu-group.menu');
+})->name('ciu.manage');
 
-Route::get('/read-GroupCiiu',array(
-    'as'=>'readGroupCiiu',
-    'uses'=>'GroupCiiuController@show'
-));
+Route::get('/ciu-group/register', function() {
+    return view('modules.ciiu-group.register');
+})->name('ciu-group.register');
+Route::post('/ciu-group/save','groupCiiuController@store')->name('ciu-group.save');
+Route::get('/ciu-group/read','GroupCiiuController@show')->name('ciu-group.read');
+Route::get('/ciu-branch/manage', function() {
+    return view('modules.ciiu.menu');
+})->name('ciu-branch.manage');
 
 // Ciu module routes
 
-Route::get('/ciu-register', array(
-    'as'=>'ciuRegister',
-    'uses'=>'CiuController@index'
-    ));
+Route::get('/ciu-branch/register','CiuController@index')->name('ciu-branch.register');
+Route::post('/ciu-branch/save','CiuController@create')->name('ciu-branch.save');
+Route::get('/ciu-branch/read','CiuController@show')->name('ciu-branch.read');
+Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
+Route::post('/ciu-branch/update/{id?}','CiuController@update')->name('ciu-branch.update');
 
-Route::post('/save-ciu',array(
-   'as'=>'saveCiu',
-   'uses'=>'CiuController@create'
-));
-
-Route::get('/read-ciu',array(
-   'as'=>'readCiu',
-   'uses'=>'CiuController@show'
-));
-
-Route::get('/details-ciu/{id}',array(
-   'as'=>'detailsCiu',
-   'uses'=>'CiuController@edit'
-));
-
-Route::post('/update-ciu/{id?}',array(
-   'as'=>'updateCiu',
-   'uses'=>'CiuController@update'
-));
-
-Route::get('/delete-ciu/{id}',array(
-   'as'=>'deleteCiu',
-   'uses'=>'CiuController@destroy'
-));
+Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
 
 // Payments Taxes Module
 
@@ -197,6 +177,26 @@ Route::get('/read-fines-company',array(
     'uses'=>'FinesCompanyController@show'
 ));
 
+Route::get('/create-finesCompany/{id}',array(
+    'as'=>'createFinesCompany',
+    'uses'=>'FinesCompanyController@create'
+));
+
+Route::post('/save-finesCompany',array(
+    'as'=>'saveFinesCompany',
+    'uses'=>'FinesCompanyController@store'
+));
+
+Route::get('/readFinesCompany',array(
+    'as'=>'readFinesCompany',
+    'uses'=>'FinesCompanyController@read'
+));
+
+Route::get('/details-finesCompany/{id}',array(
+    'as'=>'detailsFinesCompany',
+    'uses'=>'FinesCompanyController@edit'
+));
+
 Route::get('/finesCompany-register/{id}', function() {
     return view('dev.finesCompany.register');
 })->name('dev.finesCompany-register');
@@ -214,4 +214,36 @@ Route::post('/save-paymentsFines',array(
     'uses'=>'PaymentsFinesController@store'
 ));
 
+
+// unidad tributaria module
+
+Route::get('/undTributo-register', function() {
+    return view('dev.tributo.register');
+})->name('tributo.tributo-register');
+
+Route::post('/save-tributo',array(
+    'as'=>'saveTributo',
+    'uses'=>'TributoController@store'
+));
+
+Route::get('/readTributo',array(
+    'as'=>'readTributo',
+    'uses'=>'TributoController@show'
+));
+
+// Employees Modules
+
+Route::get('/employees-register', function() {
+    return view('dev.employees.register');
+})->name('employees.employees-register');
+
+Route::post('/save-employees',array(
+    'as'=>'saveEmployees',
+    'uses'=>'EmployeesController@store'
+));
+
+Route::get('/readEmployees',array(
+    'as'=>'readEmployees',
+    'uses'=>'EmployeesController@show'
+));
 

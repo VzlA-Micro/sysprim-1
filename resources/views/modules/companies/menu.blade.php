@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
+                <a href="" class="breadcrumb">Mis Empresas</a>
             </div>
             @include('sweet::alert')
             @foreach($companies as $company)
