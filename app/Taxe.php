@@ -28,4 +28,9 @@ class Taxe extends Model{
 
 
     }
+
+    public function ciuTaxes(){
+        return $this->hasMany('App\CiuTaxes','ciu_id');
+    }
+
 }
