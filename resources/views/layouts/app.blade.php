@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
+    @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
     @include('includes.preloader')
