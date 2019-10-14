@@ -210,3 +210,35 @@ Route::post('/save-paymentsFines',array(
 ));
 
 
+// unidad tributaria module
+
+Route::get('/undTributo-register', function() {
+    return view('dev.tributo.register');
+})->name('tributo.tributo-register');
+
+Route::post('/save-tributo',array(
+    'as'=>'saveTributo',
+    'uses'=>'TributoController@store'
+));
+
+Route::get('/readTributo',array(
+    'as'=>'readTributo',
+    'uses'=>'TributoController@show'
+));
+
+// Employees Modules
+
+Route::get('/employees-register', function() {
+    return view('dev.employees.register');
+})->name('employees.employees-register');
+
+Route::post('/save-employees',array(
+    'as'=>'saveEmployees',
+    'uses'=>'EmployeesController@store'
+));
+
+Route::get('/readEmployees',array(
+    'as'=>'readEmployees',
+    'uses'=>'EmployeesController@show'
+));
+
