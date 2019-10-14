@@ -127,7 +127,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <div>
+                                </div>
                             </li>
                             <li class="task task--current">
                                 <strong>Realiza el pago.</strong>
@@ -136,8 +136,8 @@
                                         <div class="row">
                                             <div class="col s12">
                                                 <span>
-                                                    Una vez realizado el pago con el monto exacto de ????? , guarda el número de referencia y registralo en nuestra plataforma para ser verificado. <br>
-                                                    Recuerda que la verificacion puede tardar máximo 48 horas. Una vez verificado el pago, se le enviara un corre electrónico con los datos de la solvecia.
+                                                    Una vez realizado el pago con el monto exacto de {{$monto."Bs"}} , guarda el número de referencia y registralo en nuestra plataforma para ser verificado. <br>
+                                                    Recuerda que la verificacion puede tardar máximo 48 horas. Una vez verificado el pago, se le enviara un correo electrónico con los datos de la solvecia.
                                                 </span>
                                                 <form action="{{route('savePaymentsTaxes')}}" method="post">
                                                     <div class="center-align">
@@ -169,13 +169,11 @@
                                                             <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." required>
                                                             <label for="code_ref">N° de Referencia</label>
                                                         </div>
-                                                        {{-- <div class="input-field col s12 m6">
-                                                            @foreach($taxes->taxesCiu as $ciu)
-                                                            <input type="number" name="amount" id="amount" value="{{$ciu->alicuota*$ciu->pivot->base/100}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                                                            @endforeach
+                                                        <div class="input-field col s12 m6">
+                                                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                                                             <label for="amount">Monto</label>
-                                                        </div> --}}
-                                                        {{-- <input id="taxes" type="hidden" name="taxes" required value="{{$id}}"> --}}
+                                                        </div>
+                                                        <input id="taxes" type="hidden" name="taxes" required value="{{$taxes->id}}">
                                                         {{-- <div class="input-field col s12">
                                                             <select name="status" id="status">
                                                                 <option value="" disabled selected>Choose your option</option>

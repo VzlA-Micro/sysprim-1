@@ -30,7 +30,7 @@
                                 @foreach($taxes as $taxe)
                                 <tr>
                                     <td>{{ $taxe->code }}</td>
-                                    <td>{{ $taxe->fiscal_period }}</td>
+                                    <td>{{  TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                     @if($taxe->payments->isEmpty())
                                         <td>SIN CONCILIAR AÚN</td>
                                         <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
@@ -39,11 +39,11 @@
                                                 <td><button class="btn disabled"><i class="icon-more_horiz"></i>{{ $payment->status }}</button></td>
                                             @if($payment->status==='verified')
                                                 <td>
-                                                    <a href="{{ url('payments/taxes/'.$taxe->id) }}" class="btn orange waves-effect waves-light"><i class="icon-description"></i>Descargar Solvencia</a>
+                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description"></i>Descargar Solvencia</a>
                                                 </td>
                                                 @else
                                                 <td>
-                                                    <a href="{{ url('pdf/'.$taxe->id) }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview"></i>Detalles</a>
+                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview"></i>Detalles</a>
                                                 </td>
                                             @endif
                                         @endforeach

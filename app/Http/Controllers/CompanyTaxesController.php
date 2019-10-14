@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
 use Illuminate\Support\Facades\Session;
+use App\CiuTaxes;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -170,6 +171,31 @@ class CompanyTaxesController extends Controller
         return $pdf->stream();
     }
 
+    public function paymentsHelp(Request $request){
+        $id=$request->id;
+        $company=Company::where('name',session('company'))->get();
+        $company_find=Company::find($company[0]->id);
+        $taxes=Taxe::findOrFail($id);
+        $monto=0;
+
+        foreach($taxes->taxesCiu as $ciu){
+            if($ciu->pivot->base == 0){
+                $monto+=$ciu->min_tribu_men * $ciu->pivot->unid_tribu;
+
+            }
+            else{
+                $monto+=$ciu->alicuota * $ciu->pivot->base/100;
+
+            }
+        }
+
+
+        return view('modules.payments.help',array(
+            'taxes'=>$taxes,
+            'id'=>$id,
+            'monto'=>$monto
+        ));
+    }
     // public function getQR($id) {
     //     $taxes=Taxe::findOrFail($id);
     //     return view();

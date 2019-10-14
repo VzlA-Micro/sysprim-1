@@ -70,6 +70,7 @@ class CompaniesController extends Controller
 
 
 
+
         $validate = $this->validate($request, [
             'name' => 'required',
             'license' => 'required',
@@ -103,6 +104,7 @@ class CompaniesController extends Controller
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
         $company->phone = $phone;
+        $company->created_at='2019-09-14';
         $company->save();
         $id = DB::getPdo()->lastInsertId();
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);

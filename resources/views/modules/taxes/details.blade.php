@@ -141,7 +141,7 @@
                     <div class="card-action">
                         <div class="row">
                             <div class="input-field col s12">
-                                <a href="{{route('registerPayments',['id'=>$taxes->id])}}" class="btn btn-rounded col s12 blue waves-effect waves-light">PAGAR</a>
+                                <a href="{{ route('payments.help',['id'=>$taxes->id]) }}" class="btn btn-rounded col s12 blue waves-effect waves-light">PAGAR</a>
                             </div>
                         </div>
                     </div>
