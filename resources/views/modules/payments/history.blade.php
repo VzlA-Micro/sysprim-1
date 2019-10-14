@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
+                <a href="" class="breadcrumb">Mis Empresas</a>
                 <a href="" class="breadcrumb">Nombre de la empresa</a>
                 <a href="" class="breadcrumb">Mis Pagos</a>
                 <a href="" class="breadcrumb">Historial de Pagos</a>
