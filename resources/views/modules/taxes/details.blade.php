@@ -11,7 +11,7 @@
                 <a href="" class="breadcrumb">Pagar Impuestos</a>
                 <a href="" class="breadcrumb">Detalles de Pago</a>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Detalles de Pago</h5>
@@ -52,39 +52,38 @@
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <input type="number" name="base[]" id="base" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->base }}" disabled>
+                            <input type="text" name="base[]" id="base" class="validate money" value="{{ $ciu->pivot->base }}" disabled>
                             <label for="base">Base Imponible</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="deductions[]" id="deductions" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->deductions }}" disabled>
+                            <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->deductions }}" disabled>
                             <label for="deductions">Deducciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="withholding[]" id="withholdings" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->withholding }}" disabled>
+                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->withholding }}" disabled>
                             <label for="withholdings">Retenciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="fiscal_credits[]" id="fiscal_credits" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->fiscal_credits }}" disabled>
+                            <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->fiscal_credits }}" disabled>
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
                             <div class="input-field col s12 m4">
                                 @if($ciu->pivot->base!=0)
-                                    <input type="number" name="total_ciu[]" id="total_ciu" class="validate total_ciu" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ ($ciu->alicuota*$ciu->pivot->base/100)}}" disabled>
+                                    <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ ($ciu->alicuota*$ciu->pivot->base/100)}}" disabled>
                                 @else
-                                    <input type="number" name="total_ciu[]" id="total_ciu" class="validate total_ciu" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->unid_tribu*$ciu->min_tribu_men}}" disabled>
+                                    <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->pivot->unid_tribu*$ciu->min_tribu_men}}" disabled>
                                 @endif
                                     <label for="fiscal_credits">Total a Pagar por CIU<b> (Bs)</b></label>
                             </div>
 
-
                             <div class="input-field col s12 m4">
-                                <input type="number" name="tasa[]" id="tasa" class="validate tasa" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" disabled>
-                                <label for="fiscal_credits">Tasa<b> (Bs)</b></label>
+                                <input type="text" name="tasa[]" id="tasa" class="validate tasa money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" disabled>
+                                <label for="tasa">Tasa<b> (Bs)</b></label>
                             </div>
 
                             <div class="input-field col s12 m4">
-                                <input type="number" name="mora[]" id="mora" class="validate mora" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" disabled>
-                                <label for="fiscal_credits">Mora<b> (Bs)</b></label>
+                                <input type="text" name="mora[]" id="mora" class="validate mora money" pattern="" value="{{ $ciu->pivot->mora }}" disabled>
+                                <label for="mora">Mora<b> (Bs)</b></label>
                             </div>
 
                         <div class="input-field col s12">
@@ -95,7 +94,7 @@
                         <div class="col l12">
                             <div class="col l6">
 
-                                    <table class="centered">
+                                    <table class="centered responsive-table" style="font-size: 10px;!important;">
                                         <tr>
                                             <td>CODIGO</td>
                                             <td>NOMBRE</td>
@@ -113,25 +112,25 @@
 
                                 @endforeach
                                     </table>
-                                    <p><b>UNIDAD TRIBUTARIA: {{$unid_tribu}}</b>Bs</p>
-                                    <p><b>TASA: </b>500Bs</p>
-                                    <p><b>RECARGO:</b>600Bs</p>
+                                    <p><b>UNIDAD TRIBUTARIA: {{$extra['unid_tribu']}}</b>Bs</p>
+                                    <p><b>TASA: </b>{{$extra['tasa']}}Bs</p>
+                                    <p><b>MORA:</b>{{($extra["mora"])}}Bs</p>
 
                             </div>
                             <div class="col l6">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="total_tasa" id="total_tasa" class="validate total_tasa" value="0"  readonly>
+                                    <input type="text" name="total_tasa" id="total_tasa" class="validate total_tasa money" value="0"  readonly>
                                     <label for="total_tasa">Total Tasa:(Bs)</label>
                                 </div>
 
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="total_mora" id="total_mora" class="validate total_mora"  value="0" readonly>
+                                    <input type="text" name="total_mora" id="total_mora" class="validate total_mora money"  value="0" readonly>
                                     <label for="total_mora">Total Mora:(Bs)</label>
                                 </div>
 
 
                                 <div class="col s12 m12">
-                                    <input type="text" name="total" id="total_pagar" class="validate total"  readonly>
+                                    <input type="text" name="total" id="total_pagar" class="validate total money"  readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                             </div>

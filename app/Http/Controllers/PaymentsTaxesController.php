@@ -82,6 +82,7 @@ class PaymentsTaxesController extends Controller {
      */
     public function store(Request $request) {
         //
+
         $pTaxes = new PaymentTaxes();
         $pTaxes->payments_type = $request->input('type');
         $pTaxes->code_ref = $request->input('code_ref');
@@ -102,6 +103,17 @@ class PaymentsTaxesController extends Controller {
             $pTaxes->file = $filePath;
         }
 
+
+        $pTaxes= new PaymentTaxes();
+        $pTaxes->payments_type= $request->input('type');
+        $pTaxes->code_ref= $request->input('code_ref');
+        $pTaxes->bank= $request->input('bank');
+
+        $amount_format=str_replace('.','',$request->input('amount'));
+        $amount_format=str_replace(',','.',$amount_format);
+        $pTaxes->amount=$amount_format;
+        $pTaxes->status="process";
+        $pTaxes->taxe_id= $request->input('taxes');
         $pTaxes->save();
 
         return redirect('payments/history/' . session('company'));

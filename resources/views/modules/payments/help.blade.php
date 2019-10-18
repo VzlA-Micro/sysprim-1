@@ -86,8 +86,7 @@
                                         <div class="row">
                                             <div class="col s12">
                                                 <span>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id veritatis, 
-                                                    aspernatur ullam hic iusto laborum expedita quod laboriosam sint.
+                                                  Puedes seleccionar cualquiera de nuestros bancos, recuerda que para el pago sea validado la transferencia debe realizarse del mismo banco.
                                                 </span><br>
                                             </div>
                                             
@@ -137,7 +136,7 @@
                                             <div class="col s12">
                                                 <span>
                                                     Una vez realizado el pago con el monto exacto de {{$monto."Bs"}} , guarda el número de referencia y registralo en nuestra plataforma para ser verificado. <br>
-                                                    Recuerda que la verificacion puede tardar máximo 48 horas. Una vez verificado el pago, se le enviara un correo electrónico con los datos de la solvecia.
+                                                    Recuerda que la verificacion puede tardar máximo 48 horas. Una vez verificado el pago, se le enviara un correo electrónico con los datos de la solvencia.
                                                 </span>
                                                 <form action="{{route('savePaymentsTaxes')}}" method="post">
                                                     <div class="center-align">
@@ -170,7 +169,7 @@
                                                             <label for="code_ref">N° de Referencia</label>
                                                         </div>
                                                         <div class="input-field col s12 m6">
-                                                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+                                                            <input type="text" name="amount" class="money" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                                                             <label for="amount">Monto</label>
                                                         </div>
                                                         <input id="taxes" type="hidden" name="taxes" required value="{{$taxes->id}}">
@@ -201,8 +200,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/mstepper.min.js') }}"></script>
-    <script>
 
-    </script>
+    <script src="{{ asset('js/dev/taxes.js') }}"></script>
 @endsection

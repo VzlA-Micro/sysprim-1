@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->integer('min');
             $table->integer('max');
-            $table->float('value');
+            $table->float('value',12);
             $table->timestamps();
         });
     }

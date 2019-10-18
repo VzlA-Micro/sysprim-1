@@ -30,7 +30,7 @@
                                 @foreach($taxes as $taxe)
                                 <tr>
                                     <td>{{ $taxe->code }}</td>
-                                    <td>{{  TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
+                                    <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                     @if($taxe->payments->isEmpty())
                                         <td>SIN CONCILIAR AÚN</td>
                                         <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>

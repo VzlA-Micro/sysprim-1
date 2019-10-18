@@ -42,45 +42,31 @@
     <table style="width: 100%; border-collapse: collapse;">
     	<tr>
     		<td style="width:15%"><b>Contribuyente:</b></td>
-    		<td style="width:35%">ABASTECER CA</td>
+    		<td style="width:35%">{{$taxes->companies->name}}</td>
     		<td style="width:20%"><b>Codigo Catastral:</b></td>
-    		<td style="width:30%">02q306536uqw</td>
+    		<td style="width:30%">{{$taxes->companies->code_catastral}}</td>
     	</tr>
     	<tr>
     		<td style="width:15%"><b>Cedula o RIF:</b></td>
-    		<td style="width:35%">J-122516236</td>
+    		<td style="width:35%">{{$taxes->companies->RIF}}</td>
     		<td style="width:20%"><b>Cód. Licencia:</b></td>
-    		<td style="width:30%">L253FV4</td>
+    		<td style="width:30%">{{$taxes->companies->license}}</td>
     	</tr>
     	<tr>
     		<td style="width:15%"><b>Dirección:</b></td>
-    		<td style="width:35%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quae unde voluptatem dicta facere pariatur dolor delectus itaque blanditiis aliquid.</td>
-    		<td style="width:20%"><b>DOc. Sap:</b></td>
-    		<td style="width:30%">L253FV4</td>
+    		<td style="width:35%">{{$taxes->companies->address}}</td>
     	</tr>
     	<tr>
     		<td style="width:15%"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%">J-122516236</td>
+    		<td style="width:35%">{{$taxes->companies->phone}}</td>
     		<td style="width:20%"><b>Operador:</b></td>
-    		<td style="width:30%">L253FV4</td>
+    		<td style="width:30%">SYSPRIM</td>
     	</tr>
     	<tr>
     		<td style="width:15%"><b>Planilla Liq:</b></td>
-    		<td style="width:35%">J-122516236</td>
+    		<td style="width:35%">{{$taxes->code}}</td>
     		<td style="width:20%"><b>Oficina:</b></td>
-    		<td style="width:30%">L253FV4</td>
-    	</tr>
-    	<tr>
-    		<td style="width:15%"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%">J-122516236</td>
-    		<td style="width:20%"><b>Operador:</b></td>
-    		<td style="width:30%">L253FV4</td>
-    	</tr>
-    	<tr>
-    		<td style="width:15%"><b>Planilla Liq:</b></td>
-    		<td style="width:35%">J-122516236</td>
-    		<td style="width:20%"><b>Oficina:</b></td>
-    		<td style="width:30%">L253FV4</td>
+    		<td style="width:30%">VIRTUAL</td>
     	</tr>
     </table>
     <hr>
@@ -123,7 +109,7 @@
         		<td style="width: 30%"></td>
         		<td style="width: 30%"></td>
         		<td style="width: 40%;"> 
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/paymentsTaxes-register/".$id)) !!} " style="float: right;position: absolute;top: -100px">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/paymentsTaxes-register/".$taxes->id)) !!} " style="float: right;position: absolute;top: -100px">
         		</td>
         	</tr>
         </table>

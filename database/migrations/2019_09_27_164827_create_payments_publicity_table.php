@@ -18,7 +18,7 @@ class CreatePaymentsPublicityTable extends Migration
             $table->string('payments_type',20);
             $table->string('code_ref',15);
             $table->string('bank',20);
-            $table->float('amount');
+            $table->float('amount',11);
             $table->string('status',40);
             $table->date('fiscal_period');
             $table->integer('publicity_id')->unsigned();

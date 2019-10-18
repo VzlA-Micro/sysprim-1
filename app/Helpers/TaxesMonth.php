@@ -8,7 +8,7 @@ use App\PaymentTaxes;
 class TaxesMonth{
     static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
     public  static function verify($id,$notification=true){
-
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $date = null;
         $company = Company::find($id);
@@ -25,7 +25,15 @@ class TaxesMonth{
 
             if($diffMount>=1){
                 $mes=self::$mounths[($fiscal_period->format('m'))-1];
-                $date = array('mount_pay' =>$mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
+                if($now->format('d')<=16){
+                    $mora=false;
+                }else{
+                    $mora=true;
+                }
+
+                $date =array(
+                    'mount_pay' =>$mes.'-'.$fiscal_period->format('Y'), 'mount_diff' =>
+                    $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora);
             }else{
                 $date=null;
                 $mes=null;
@@ -39,12 +47,19 @@ class TaxesMonth{
             $diffMount = $fiscal_period->diffInMonths($now);
             $payment = PaymentTaxes::where('taxe_id', $companyTaxes[0]->id)->get();//busco si el pago fue realizo
 
+            if($now->format('d')<=16){
+                $mora=false;
+            }else{
+                $mora=true;
+            }
+
+
             if ($diffMount >= 1 || $payment->isEmpty()) {
                 if (!$payment->isEmpty() && $payment[0]->status === 'verified' && $diffMount > 1) {
                     $diffMount--;//resto 1 a la diferencia de mes porque este utilimo esta pago
                     $fiscal_period->addMonth(1);//añado un mes para saber cual es el proximo a pagar
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
-                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
+                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'),   'mora'=>$mora);
 
                 } else if (!$payment->isEmpty() && $payment[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
                     $date = null;
@@ -52,7 +67,7 @@ class TaxesMonth{
                 } else {
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
                     $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'),
-                        'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'));
+                        'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora);
                 }
             }
 

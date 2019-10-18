@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Imports\PaymentsImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,6 +52,7 @@ class PaymentsImportController extends Controller {
         }
 
         $this->verifyPayments();
+      return redirect('home');
     }
 
     public function verifyPayments() {
@@ -69,11 +68,13 @@ class PaymentsImportController extends Controller {
                     ->orWhere('bank', $bank->bank)
                     ->where('amount', $bank->amount)
                     ->get();
-
-            $idPayments = $payments[0]->id;
             if (!is_null($payments)) {
                 $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
                 $bank_find = Bank::find($bank->id);
+            if(!$payments->isEmpty()){
+                $idPayments=$payments[0]->id;
+	        $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
+                $bank_find=Bank::find($bank->id);
 
                 $taxes = Taxe::where('id', $payments[0]->taxe_id)->get();
                 $company = Company::find($taxes[0]->company_id);
@@ -99,4 +100,5 @@ class PaymentsImportController extends Controller {
         }
     }
 
+}
 }
