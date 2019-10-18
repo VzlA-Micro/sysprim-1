@@ -12,7 +12,7 @@
                 <a href="" class="breadcrumb">Conciliar Pago</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="{{route('savePaymentsTaxes')}}" enctype="multipart/form-data" method="post" class="card">
+                <form id="payments" enctype="multipart/form-data" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Conciliar Pago</h5>
                     </div>
@@ -62,10 +62,6 @@
                             <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." required>
                             <label for="cedula">Cedula</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <input type="text" name="date_transference" id="date_transference" class="datepicker" required>
-                            <label for="date_transference">Fecha de Transacción</label>
-                        </div>
                         <div class="file-field input-field col s12 12">
                             <div class="btn purple btn-rounded waves-light">
                                 <span><i class="icon-photo_size_select_actual right"></i>Archivo</span>
@@ -92,4 +88,8 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
 @endsection

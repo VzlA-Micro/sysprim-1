@@ -136,7 +136,7 @@
                                                     Una vez realizado el pago con el monto exacto de {{$monto."Bs"}} , guarda el número de referencia y registralo en nuestra plataforma para ser verificado. <br>
                                                     Recuerda que la verificacion puede tardar máximo 48 horas. Una vez verificado el pago, se le enviara un correo electrónico con los datos de la solvencia.
                                                 </span>
-                                                <form action="{{route('savePaymentsTaxes')}}" method="post">
+                                                <form id="payments" enctype="multipart/form-data" method="post">
                                                     <div class="center-align">
                                                         <h5>Conciliar Pago</h5>
                                                     </div>
@@ -170,15 +170,29 @@
                                                             <input type="text" name="amount" class="money" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                                                             <label for="amount">Monto</label>
                                                         </div>
+                                                        <div class="input-field col s12 m6">
+                                                            <input type="text" name="name" id="name" pattern="[a-zA-Z]+" title="Solo puede escribir letras." required>
+                                                            <label for="name">Nombre</label>
+                                                        </div>
+                                                        <div class="input-field col s12 m6">
+                                                            <input type="text" name="surname" id="surname" pattern="[a-zA-Z]+" title="Solo puede escribir números." required>
+                                                            <label for="surname">Apellido</label>
+                                                        </div>
+                                                        <div class="input-field col s12 m6">
+                                                            <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                                            <label for="cedula">Cedula</label>
+                                                        </div>
+                                                        <div class="file-field input-field col s12 12">
+                                                            <div class="btn purple btn-rounded waves-light">
+                                                                <span><i class="icon-photo_size_select_actual right"></i>Archivo</span>
+                                                                <input type="file" id="files" name="files">
+                                                            </div>
+                                                            <div class="file-path-wrapper">
+                                                                <input class="file-path validate" type="text" title="Solo puede subir archivos de tipo (.jpg,.png y .pdf)">
+                                                            </div>
+                                                        </div>
                                                         <input id="taxes" type="hidden" name="taxes" required value="{{$taxes->id}}">
-                                                        {{-- <div class="input-field col s12">
-                                                            <select name="status" id="status">
-                                                                <option value="" disabled selected>Choose your option</option>
-                                                                <option value="1">Option 1</option>
-                                                                <option value="2">Option 2</option>
-                                                            </select>
-                                                            <label for="status">Estado</label>
-                                                        </div> --}}
+
                                                     </div>
                                                     <div class="card-action center-align">
                                                         <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
@@ -198,6 +212,6 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
 @endsection

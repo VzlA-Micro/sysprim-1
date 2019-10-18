@@ -81,30 +81,7 @@ class PaymentsTaxesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
-
-        $pTaxes = new PaymentTaxes();
-        $pTaxes->payments_type = $request->input('type');
-        $pTaxes->code_ref = $request->input('code_ref');
-        $pTaxes->bank = $request->input('bank');
-        $pTaxes->amount = $request->input('amount');
-        $pTaxes->status = "process";
-        $pTaxes->taxe_id = $request->input('taxes');
-        $pTaxes->name_deposito = $request->input('name');
-        $pTaxes->surname_deposito = $request->input('surname');
-        $pTaxes->cedula = $request->input('cedula');
-        $pTaxes->date_transference = $request->input('date_transference');
-        $file = $request->file('files');
-        
-        if ($file) {
-            
-            $filePath = time() . $file->getClientOriginalName();
-            \Storage::disk('payments')->put($filePath, \File::get($file));
-            $pTaxes->file = $filePath;
-        }
-
-
-        $pTaxes= new PaymentTaxes();
+       $pTaxes= new PaymentTaxes();
         $pTaxes->payments_type= $request->input('type');
         $pTaxes->code_ref= $request->input('code_ref');
         $pTaxes->bank= $request->input('bank');
@@ -114,6 +91,18 @@ class PaymentsTaxesController extends Controller {
         $pTaxes->amount=$amount_format;
         $pTaxes->status="process";
         $pTaxes->taxe_id= $request->input('taxes');
+        $pTaxes->name_deposito = $request->input('name');
+        $pTaxes->surname_deposito = $request->input('surname');
+        $pTaxes->cedula = $request->input('cedula');
+        $file = $request->file('files');
+
+        if ($file) {
+
+            $filePath = time() . $file->getClientOriginalName();
+            \Storage::disk('payments')->put($filePath, \File::get($file));
+            $pTaxes->file = $filePath;
+        }
+
         $pTaxes->save();
 
         return redirect('payments/history/' . session('company'));

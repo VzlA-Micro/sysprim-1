@@ -108,7 +108,7 @@ $(document).ready(function () {
 
                     swal({
                         title: "¡Bien Hecho!",
-                        text: response.message,
+                        text: "Ciiu Registrado con Exito",
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {
