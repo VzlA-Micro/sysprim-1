@@ -12,7 +12,7 @@
                 <a href="" class="breadcrumb">Conciliar Pago</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="{{route('savePaymentsTaxes')}}" method="post" class="card">
+                <form action="{{route('savePaymentsTaxes')}}" enctype="multipart/form-data" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Conciliar Pago</h5>
                     </div>
@@ -44,9 +44,36 @@
                         </div>
                         <div class="input-field col s12 m6">
                             @foreach($taxes->taxesCiu as $ciu)
-                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+                            
+                            <input type="number" name="amount" id="amount" value="{{$monto+$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
                             @endforeach
                             <label for="amount">Monto</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="name" id="name" pattern="[a-zA-Z]+" title="Solo puede escribir letras." required>
+                            <label for="name">Nombre</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="surname" id="surname" pattern="[a-zA-Z]+" title="Solo puede escribir números." required>
+                            <label for="surname">Apellido</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." required>
+                            <label for="cedula">Cedula</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="date_transference" id="date_transference" class="datepicker" required>
+                            <label for="date_transference">Fecha de Transacción</label>
+                        </div>
+                        <div class="file-field input-field col s12 12">
+                            <div class="btn purple btn-rounded waves-light">
+                                <span><i class="icon-photo_size_select_actual right"></i>Archivo</span>
+                                <input type="file" id="files" name="files">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" title="Solo puede subir archivos de tipo (.jpg,.png y .pdf)">
+                            </div>
                         </div>
                         <input id="taxes" type="hidden" name="taxes" required value="{{$id}}">
                         {{-- <div class="input-field col s12">

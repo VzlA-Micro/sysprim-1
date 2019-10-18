@@ -16,74 +16,78 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\PaymentTaxes;
 
-class PaymentsImportController extends Controller
-{
+class PaymentsImportController extends Controller {
 
+    public function importFile(Request $request) {
 
-    public function importFile(Request $request){
-
-        $file=$request->file;
-        $Archivo=\File::get($file);
+        $file = $request->file;
+        $Archivo = \File::get($file);
         $mime = $file->getMimeType();
 
-        $dat=explode(";",$Archivo);
-        $count=count($dat);
+        $dat = explode(";", $Archivo);
+        $count = count($dat);
 
-        if ($mime =="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+        if ($mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
             Excel::import(new PaymentsImport, request()->file('file'));
         }
 
         if ($mime == "text/plain") {
-            for($i=0; $i<$count;$i++){
-                if ($i > 2 ) {
+            for ($i = 0; $i < $count; $i++) {
+                if ($i > 2) {
                     $referenceBank = new Bank();
                     $referenceBank->ref = $dat[$i];
                     $i++;
-                    $referenceBank->bank=$dat[$i];
+                    $referenceBank->bank = $dat[$i];
                     $i++;
-                    $referenceBank->amount=$dat[$i];
+                    $referenceBank->amount = $dat[$i];
+                    $i++;
+                    $referenceBank->name_deposito = $dat[$i];
+                    $i++;
+                    $referenceBank->surname_deposito = $dat[$i];
+                    $i++;
+                    $referenceBank->cedula = $dat[$i];
+                    $i++;
+                    $referenceBank->date_transference = $dat[$i];
                     $referenceBank->save();
                 }
             }
-
         }
 
         $this->verifyPayments();
-
     }
 
-    public function verifyPayments(){
-        $banks=DB::select(DB::raw(
-            "SELECT * from reference_bank"
+    public function verifyPayments() {
+        $banks = DB::select(DB::raw(
+                                "SELECT * from reference_bank"
         ));
 
-        $payments=PaymentTaxes::all();
+        $payments = PaymentTaxes::all();
 
-        foreach ($banks as  $bank){
+        foreach ($banks as $bank) {
 
-           $payments=PaymentTaxes::where('code_ref',$bank->ref)
-                ->orWhere('bank',$bank->bank)
-                ->where('amount',$bank->amount)
-                ->get();
+            $payments = PaymentTaxes::where('code_ref', $bank->ref)
+                    ->orWhere('bank', $bank->bank)
+                    ->where('amount', $bank->amount)
+                    ->get();
 
-            $idPayments=$payments[0]->id;
-            if(!is_null($payments)){
-                $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
-                $bank_find=Bank::find($bank->id);
+            $idPayments = $payments[0]->id;
+            if (!is_null($payments)) {
+                $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
+                $bank_find = Bank::find($bank->id);
 
-                $taxes=Taxe::where('id',$payments[0]->taxe_id)->get();
-                $company=Company::find($taxes[0]->company_id);
-                $uCompa=$company->users()->get();
+                $taxes = Taxe::where('id', $payments[0]->taxe_id)->get();
+                $company = Company::find($taxes[0]->company_id);
+                $uCompa = $company->users()->get();
 
-                $id =$uCompa[0]->id;
+                $id = $uCompa[0]->id;
 
-                $payments=DB::update(
-                    "update payments_taxes set status='verified' where id='$idPayments' "
+                $payments = DB::update(
+                                "update payments_taxes set status='verified' where id='$idPayments' "
                 );
-                $user=User::find($id);
+                $user = User::find($id);
 
-                $notification=Notification::where('user_id',$user->id);
-                if(!is_null($notification)) {
+                $notification = Notification::where('user_id', $user->id);
+                if (!is_null($notification)) {
                     $notification->update([
                         'view' => 1
                     ]);
@@ -91,8 +95,8 @@ class PaymentsImportController extends Controller
                 $user->ConfirmedPayments($user);
 
                 $bank_find->delete();
-
             }
         }
     }
+
 }
