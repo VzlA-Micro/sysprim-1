@@ -12,7 +12,7 @@
             <div class="col s12 m8">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Mi Empresa: {{ $company->name }}</h5>
+                        <h5>Mi Empresa: {{ $company->name}}</h5>
                     </div>
                     @if (Storage::disk('companies')->has($company->image))
                     <div class="card-image">

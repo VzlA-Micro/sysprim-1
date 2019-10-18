@@ -19,7 +19,7 @@ class PaymentsImport implements ToCollection
                     'ref' => $row[0],
                     'bank' => $row[1],
                     'amount'=>$row[2]
-		]);
+		   ]);
 
             }
 

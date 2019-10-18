@@ -11,7 +11,7 @@
                 <a href="" class="breadcrumb">Pagar Impuestos</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="{{ route('taxes.save') }}" method="post" class="card">
+                <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
                     @if(is_null($date))
                         <div class="card-header center-align">
                             <h5>Empresa solvente hasta la fecha.</h5>
@@ -52,29 +52,33 @@
                                        value="{{ $ciu->min_tribu_men}}">
 
                                 <div class="input-field col s12 m6">
-                                    <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
+                                    <input type="text" name="code" id="code" value="{{ $ciu->code }}" class="code" required readonly>
                                     <label for="code">Código</label>
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <input type="text" name="ciu" id="ciu" value="{{ $ciu->name }}" required readonly>
                                     <label for="ciu">CIU</label>
                                 </div>
+
                                 <div class="input-field col s12 m6">
-                                    <input type="text"  name="base[]" id="base_{{$ciu->code}}" class="validate money_keyup" maxlength="18" required>
+                                    <input type="text"  name="base[]" id="base_{{$ciu->code}}" class="validate money_keyup base" maxlength="18" required>
                                     <label for="base_{{$ciu->code}}">Base Imponible</label>
                                 </div>
+
+                                <input type="hidden" id="alicuota_{{$ciu->code}}"   class="alicuota" value="{{ $ciu->alicuota }}">
+
                                 <div class="input-field col s12 m6">
-                                    <input type="text" step="any" name="deductions[]" id="deductions_{{$ciu->code}}" class="validate money_keyup"
+                                    <input type="text"  name="deductions[]" id="deductions_{{$ciu->code}}" class="validate money_keyup"
                                             required>
                                     <label for="deductions_{{$ciu->code}}">Deducciones</label>
                                 </div>
                                 <div class="input-field col s12 m6">
-                                    <input type="text" step="any" name="withholding[]" id="withholdings_{{$ciu->code}}"
+                                    <input type="text"  name="withholding[]" id="withholdings_{{$ciu->code}}"
                                            class="validate money_keyup"  required>
                                     <label for="withholdings_{{$ciu->code}}">Retenciones</label>
                                 </div>
                                 <div class="input-field col s12 m6">
-                                    <input type="text" step="any" name="fiscal_credits[]" id="fiscal_credits_{{$ciu->code}}"
+                                    <input type="text" name="fiscal_credits[]" id="fiscal_credits_{{$ciu->code}}"
                                            class="validate money_keyup"  required>
                                     <label for="fiscal_credits_{{$ciu->code}}">Creditos Fiscales</label>
                                 </div>

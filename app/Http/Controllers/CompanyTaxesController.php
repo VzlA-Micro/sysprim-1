@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ciu;
 use App\Company;
 use App\Extras;
 use App\Notification;
@@ -89,6 +90,7 @@ class CompanyTaxesController extends Controller
         $withholding=$request->input('withholding');
         $base=$request->input('base');
         $fiscal_credits=$request->input('fiscal_credits');
+
         $taxe=new Taxe();
         $taxe->code=TaxesNumber::generateNumber();
         $taxe->fiscal_period=$fiscal_period;
@@ -96,17 +98,9 @@ class CompanyTaxesController extends Controller
         $taxe->save();
         $id=DB::getPdo()->lastInsertId();
 
-
+        $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $date=TaxesMonth::verify($company,false);
 
-
-
-        if($date['mora']){//si tiene mora
-                $extra=Extras::orderBy('id', 'desc')->take(1)->get();
-                $mora=$extra[0]->mora;
-        }else{
-                $mora=0;
-        }
 
         for ($i=0;$i<count($base);$i++){
             //format a base
@@ -123,17 +117,38 @@ class CompanyTaxesController extends Controller
             $fiscal_credits_format=str_replace('.','',$fiscal_credits[$i]);
             $fiscal_credits_format=str_replace(',','.',$fiscal_credits_format);
 
+            if($date['mora']){//si tiene mora
+                $extra=Extras::orderBy('id', 'desc')->take(1)->get();
+                $mora=$extra[0]->mora*$unid_tribu[0]->value;
+                $ciu=Ciu::find($ciu_id[$i]);
+                $taxes=$ciu->alicuota*$base_format/100;
 
+                $tax_rate=$taxes-(float)$deductions[$i]-(float)$withholding[$i]-(float)$fiscal_credits[$i];
+
+                $tax_rate=$tax_rate*$extra[0]->tax_rate/100;
+
+
+
+                $interest=(0.42648/360)*($tax_rate+$taxes);
+            }else{
+                $mora=0;
+                $tax_rate=0;
+                $interest=0;
+
+            }
 
             if($base[$i]==0){
-                    $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
                     $unid_total=$unid_tribu[0]->value;
             }else{
                     $unid_total=0;
             }
-
-
-            $taxe->taxesCiu()->attach(['taxe_id'=>$id],['ciu_id'=>$ciu_id[$i],'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total,'mora'=>$mora]);
+            $taxe->taxesCiu()->attach(['taxe_id'=>$id],
+                ['ciu_id'=>$ciu_id[$i],
+                'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
+                'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total, 'mora'=>$mora,
+                'tax_rate'=>$tax_rate,
+                'interest'=>$interest
+            ]);
         }
         $data = array([
             'status' => 'success',
