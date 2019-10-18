@@ -40,7 +40,7 @@
                 </a>
             </div>
             <div class="col s12 m4">
-                    <a href="{{route('registerPaymentsFines',['company'=>session('company')])}}" class="btn-app white orange-text">
+                    <a href="{{route('fines.manage',['company'=>session('company')])}}" class="btn-app white orange-text">
                         <i class="icon-warning"></i>
                         <span class="truncate">Pagar mis Multas</span>
                     </a>

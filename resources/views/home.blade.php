@@ -12,20 +12,38 @@
                     <span class="truncate">Mis Empresas</span>
                 </a>
             </div>
-                @if(\Auth::user()->name==='sysprim')
-                    <div class="col s12 m3">
-                        <a href="{{ route('fines.manage') }}" class="btn-app white deep-orange-text">
-                            <i class="icon-warning"></i>
-                            <span class="truncate">Gestionar Multas</span>
-                        </a>
-                    </div>
-                    <div class="col s12 m3">
-                        <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
-                            <i class="icon-assignment"></i>
-                            <span class="truncate">Gestionar CIIU</span>
-                        </a>
-                    </div>
-                @endif
+            @if(\Auth::user()->email ==='sysprim@gmail.com')
+                <div class="col s12 m3">
+                    <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
+                        <i class="icon-people_outline"></i>
+                        <span class="truncate">Gestionar Usuarios</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
+                        <i class="icon-work"></i>
+                        <span class="truncate">Gestionar Empresas</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('payments.manage') }}" class="btn-app white orange-text text-darken-2">
+                        <i class="icon-payment"></i>
+                        <span class="truncate">Gestionar Pagos</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('fines.manage') }}" class="btn-app white deep-orange-text">
+                        <i class="icon-warning"></i>
+                        <span class="truncate">Gestionar Multas</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
+                        <i class="icon-assignment"></i>
+                        <span class="truncate">Gestionar CIIU</span>
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

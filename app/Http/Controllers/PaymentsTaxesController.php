@@ -163,4 +163,11 @@ class PaymentsTaxesController extends Controller {
         //
     }
 
+<<<<<<< HEAD
+=======
+    public function getPDF() {
+        $pdf = \PDF::loadView('modules.payments.receipt');
+        return $pdf->stream();
+    }
+>>>>>>> dev.codeslator
 }

@@ -17,6 +17,10 @@
                         <h5>Historial de Pagos</h5>
                     </div>
                     <div class="card-content">
+                        {{-- Realizar verificacion --}}
+                        @if ($taxes === null)
+                            <h5 class="center-align">No hay registros para mostrar.</h5>
+                        @else
                         <table class="centered highlight table-responsive">
                             <thead>
                                 <tr>
@@ -52,6 +56,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </div>
                 </div>
             </div>
