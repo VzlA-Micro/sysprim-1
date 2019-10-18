@@ -18,10 +18,12 @@ class PaymentsImport implements ToCollection
                 Bank::create([
                     'ref' => $row[0],
                     'bank' => $row[1],
-                    'amount'=>$row[2]
-		   ]);
-
-            }
+                    'amount'=> $row[2],
+                    'name_deposito'=> $row[3],
+                    'surname_deposito'=> $row[4],
+                    'cedula'=>$row[5]
+                ]);
+           }
 
         }
     }

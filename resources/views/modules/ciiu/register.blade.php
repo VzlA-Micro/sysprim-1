@@ -10,7 +10,7 @@
                 <a href="#!" class="breadcrumb">Registrar Ramo CIIU</a>
             </div>
             <div class="col s12 m8 offest-m2 l6 offset-l3">
-                <form action="{{ route('ciu-branch.save') }}" method="post" class="card">
+                <form id="ciuu" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Ramo CIIU</h5>
                     </div>
@@ -35,11 +35,11 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <input id="alicuota" type="text" name="alicuota" required>
-                            <label for="code">Alicuota</label>
+                            <label for="alicuota">Alicuota</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <input id="mTM" type="text" name="mTM" required>
-                            <label for="nTM">Minimo de Tributo Mensual</label>
+                            <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>
                     </div>
                     <div class="card-action center">
@@ -51,5 +51,5 @@
     </div>
 @endsection
 @section('scripts')
-    
+    <script src="{{ asset('js/dev/ciiu.js') }}"></script>
 @endsection

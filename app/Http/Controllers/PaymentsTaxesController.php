@@ -11,21 +11,18 @@ use App\CiuTaxes;
 use App\Employees;
 use Illuminate\Support\Facades\App;
 
+class PaymentsTaxesController extends Controller {
 
-
-class PaymentsTaxesController extends Controller
-{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
+    public function __construct() {
         $this->middleware('auth');
     }
 
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -34,48 +31,46 @@ class PaymentsTaxesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        $id=$request->id;
-        $company=Company::where('name',session('company'))->get();
+    public function create(Request $request) {
+        $id = $request->id;
+        $company = Company::where('name', session('company'))->get();
 
-        $company_find=Company::find($company[0]->id);
+        $company_find = Company::find($company[0]->id);
 
-        $taxes=Taxe::findOrFail($id);
+        $taxes = Taxe::findOrFail($id);
 
-        $ciuTaxes=CiuTaxes::findOrFail($taxes->id);
+        $ciuTaxes = CiuTaxes::findOrFail($taxes->id);
 
-        $employees=Employees::all();
+        $employees = Employees::all();
 
-        $count=count($employees);
+        $count = count($employees);
 
-        $ciu=Ciu::findOrFail($ciuTaxes->ciu_id);
+        $ciu = Ciu::findOrFail($ciuTaxes->ciu_id);
 
-        $rebaja=0;
+        $rebaja = 0;
 
-        for($i=0;$i<$count;$i++){
-            if($company_find->number_employees >= $employees[$i]->min){
-                if($company_find->number_employees <= $employees[$i]->max) {
+        for ($i = 0; $i < $count; $i++) {
+            if ($company_find->number_employees >= $employees[$i]->min) {
+                if ($company_find->number_employees <= $employees[$i]->max) {
                     $rebaja = $employees[$i]->value;
                 }
             }
         }
 
-        if($ciuTaxes->base == 0){
-            $base=$ciu->min_tribu_men * $ciuTaxes->unid_tribu/100;
-            $rebaja_employees= $base * $rebaja/100;
-            $monto=$base-$rebaja_employees;
-        }
-        else{
-            $base=$ciu->alicuota * $ciuTaxes->base / 100;
-            $rebaja_employees= $base * $rebaja/100;
-            $monto=$base-$rebaja_employees;
+        if ($ciuTaxes->base == 0) {
+            $base = $ciu->min_tribu_men * $ciuTaxes->unid_tribu / 100;
+            $rebaja_employees = $base * $rebaja / 100;
+            $monto = $base - $rebaja_employees;
+        } else {
+            $base = $ciu->alicuota * $ciuTaxes->base / 100;
+            $rebaja_employees = $base * $rebaja / 100;
+            $monto = $base - $rebaja_employees;
         }
 
-        return view('modules.payments.register',array(
-            'taxes'=>$taxes,
-            'id'=>$id,
-            'monto'=>$monto
+        return view('modules.payments.register', array(
+            'taxes' => $taxes,
+            'id' => $id,
+            'monto' => $monto
         ));
     }
 
@@ -85,10 +80,8 @@ class PaymentsTaxesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-        $pTaxes= new PaymentTaxes();
+    public function store(Request $request) {
+       $pTaxes= new PaymentTaxes();
         $pTaxes->payments_type= $request->input('type');
         $pTaxes->code_ref= $request->input('code_ref');
         $pTaxes->bank= $request->input('bank');
@@ -98,9 +91,21 @@ class PaymentsTaxesController extends Controller
         $pTaxes->amount=$amount_format;
         $pTaxes->status="process";
         $pTaxes->taxe_id= $request->input('taxes');
+        $pTaxes->name_deposito = $request->input('name');
+        $pTaxes->surname_deposito = $request->input('surname');
+        $pTaxes->cedula = $request->input('cedula');
+        $file = $request->file('files');
+
+        if ($file) {
+
+            $filePath = time() . $file->getClientOriginalName();
+            \Storage::disk('payments')->put($filePath, \File::get($file));
+            $pTaxes->file = $filePath;
+        }
+
         $pTaxes->save();
 
-        return redirect('payments/history/'.session('company'));
+        return redirect('payments/history/' . session('company'));
     }
 
     /**
@@ -109,8 +114,7 @@ class PaymentsTaxesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -120,11 +124,10 @@ class PaymentsTaxesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $paymentTaxe= PaymentTaxes::findOrFail($id);
-        return view('dev.updatePayments',array(
-            '$payment'=>$paymentTaxe
+    public function edit($id) {
+        $paymentTaxe = PaymentTaxes::findOrFail($id);
+        return view('dev.updatePayments', array(
+            '$payment' => $paymentTaxe
         ));
     }
 
@@ -135,8 +138,7 @@ class PaymentsTaxesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -146,8 +148,8 @@ class PaymentsTaxesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

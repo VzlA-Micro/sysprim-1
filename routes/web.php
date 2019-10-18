@@ -113,7 +113,7 @@ Route::get('/ciu-branch/register','CiuController@index')->name('ciu-branch.regis
 Route::post('/ciu-branch/save','CiuController@create')->name('ciu-branch.save');
 Route::get('/ciu-branch/read','CiuController@show')->name('ciu-branch.read');
 Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
-Route::post('/ciu-branch/update/{id?}','CiuController@update')->name('ciu-branch.update');
+Route::post('/ciu-branch/update/{id}','CiuController@update')->name('ciu-branch.update');
 
 Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
 
@@ -124,7 +124,7 @@ Route::get('/paymentsTaxes-register/{id}',array(
     'uses'=>'PaymentsTaxesController@create'
 ));
 
-Route::post('/save-paymentsTaxes',array(
+Route::post('paymentsTaxes/save',array(
     'as'=>'savePaymentsTaxes',
     'uses'=>'PaymentsTaxesController@store'
 ));

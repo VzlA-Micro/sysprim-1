@@ -18,6 +18,9 @@ class CreateReferenceBankTable extends Migration
             $table->string('ref',20);
             $table->string('bank',20);
             $table->decimal('amount',12,2);
+            $table->string('name_deposito',30);
+            $table->string('surname_deposito',30);
+            $table->string('cedula',8);
             $table->timestamps();
         });
     }

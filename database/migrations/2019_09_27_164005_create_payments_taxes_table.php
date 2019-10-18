@@ -22,7 +22,10 @@ class CreatePaymentsTaxesTable extends Migration
             $table->string('bank',20);
             $table->decimal('amount',12,2);
             $table->string('status',40);
-            $table->string('image',255)->nullable();
+            $table->string('name_deposito',30);
+            $table->string('surname_deposito',30);
+            $table->string('cedula',8);
+            $table->string('file',80)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();
