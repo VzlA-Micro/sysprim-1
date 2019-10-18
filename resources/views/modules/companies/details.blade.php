@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                {{-- Configurar nombre si es usuario o es administrador --}}
                 <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
                 <a href="" class="breadcrumb">{{ $company->name }}</a>
             </div>
@@ -29,10 +30,10 @@
                             <li><b></b></li>
                         </ul>
                     </div>
-                    <div class="card-action">
+                    <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
-                            <div class="col s12 m6 center-align">
-                                <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue btn-rounded waves-light col s12">Editar</a>
+                            <div class="col s12 center-align">
+                                <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue btn-rounded waves-light">Editar</a>
                             </div>
                            <!-- <div class="col s12 m6 center-align">
                                 <a href="" class="btn red btn-rounded waves-light col s12">Eliminar</a>
@@ -41,6 +42,7 @@
                     </div>
                 </div>
             </div>
+            {{-- Mostrar seccion si es administrador o no --}}
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">

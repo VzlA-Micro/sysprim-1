@@ -5,12 +5,12 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
-                <a href="#!" class="breadcrumb">Registrar</a>
+                <a href="#!" class="breadcrumb">Registrar Empresa</a>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post" class="card" enctype="multipart/form-data" id="company-register">
                     <div class="card-header center-align">
-                        <h5>Registrar mi empresa</h5>
+                        <h5>Registrar Empresa</h5>
                     </div>
                     <div class="card-content row">
                         @csrf

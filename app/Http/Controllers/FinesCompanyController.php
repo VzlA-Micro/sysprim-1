@@ -31,7 +31,7 @@ class FinesCompanyController extends Controller
         $fines = Fine::get();
         $tributo = Tributo::get()->first();
 
-        return view('dev.finesCompany.register',array(
+        return view('modules.fines-company.register',array(
             'Company'=>$company,
             'fines'=>$fines,
             'tributo'=>$tributo
@@ -81,7 +81,7 @@ class FinesCompanyController extends Controller
         $fine = Fine::where('id',$finesCompany->fine_id)->get();
         $company = Company::where('id',$finesCompany->company_id)->get();
 
-        return view('dev.finesCompany.details',array(
+        return view('modules.fines-company.details',array(
             'finesCompany'=>$finesCompany,
             'fines'=>$fine,
             'company'=>$company
@@ -127,7 +127,7 @@ class FinesCompanyController extends Controller
         for ($i=0; $i<$count;$i++) {
             $Company[] = Company::where('id', $finesCompany[$i]->company_id)->get();
         }
-        return view('dev.finesCompany.readFinesCompany',array(
+        return view('modules.fines-company.read',array(
             'company'=>$Company,
             'finesCompany'=>$finesCompany,
             'count'=>$count

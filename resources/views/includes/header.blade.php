@@ -73,6 +73,14 @@
                 <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>                
                 {{-- <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li> --}}
                 <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
+                @if (Auth::user()->email === 'sysprim@gmail.com')
+                <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
+                <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li>
+                <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('payments.manage') }}"><i class="icon-payment"></i>Gestionar Pagos</a></li>
+                <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('fines.manage') }}"><i class="icon-warning"></i>Gestionar Multas</a></li>
+                <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
+                    
+                @endif
                 {{-- <li class="waves-efect waves-light"><a href="{{ route('payments.my-payments') }}"><i class="icon-payment left"></i>Mis Pagos</a></li>
                 <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-local_shipping left"></i>Mis Vehículos</a></li> --}}
                 <li class="divider hide-on-large-only"></li>

@@ -13,16 +13,16 @@
             <div class="col s12 m8 offset-m2">
                 <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
                     @if(is_null($date))
-                        <div class="card-header center-align">
-                            <h5>Empresa solvente hasta la fecha.</h5>
+                        <div class="alert alert-success center-align">
+                            <strong>Empresa solvente hasta la fecha.</strong>
                         </div>
                     @elseif(Session::has('message'))
-                        <div class="card-header center-align">
-                            <h5>{{session('message')}}</h5>
+                        <div class="alert alert-warning center-align">
+                            <strong>{{ session('message') }}</strong>
                         </div>
                     @elseif($date['mount_diff']>=2)
-                        <div class="card-header center-align">
-                            <h5>Estimado contribuyente, el plazo para el pago del periodo de {{$date['mount_pay']}} expiró, por favor, diríjase a la oficina del SEMAT. </h5>
+                        <div class="alert alert-warning center-align">
+                            <strong>Estimado contribuyente, el plazo para el pago del periodo de {{ $date['mount_pay'] }} expiró, por favor, diríjase a la oficina del SEMAT. </strong>
                         </div>
                     @else
 
