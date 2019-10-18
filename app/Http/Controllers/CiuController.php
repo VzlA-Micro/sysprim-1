@@ -33,11 +33,8 @@ class CiuController extends Controller
         $ciu->name= $request->input('name');
         $ciu->alicuota= $request->input('alicuota');
         $ciu->min_tribu_men= $request->input('mTM');
-        $ciu->group_ciu_id= $request->input('groupCiiu');
+        $ciu->group_ciu_id= $request->input('idGroupCiiu');
         $ciu->save();
-
-        return redirect()->route('ciu.read');
-
     }
 
     /**
@@ -75,8 +72,10 @@ class CiuController extends Controller
     public function edit($id)
     {
         $ciu= ciu::findOrFail($id);
+        $groupCiu=GroupCiiu::find($ciu->group_ciu_id);
         return view('modules.ciiu.details',array(
-            'ciu'=>$ciu
+            'ciu'=>$ciu,
+            'groupCiu'=>$groupCiu
         ));
         
     }
@@ -88,17 +87,18 @@ class CiuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //$id=$request->input('id');
-        $ciu=ciu::findOrFail($id);
-        
+        var_dump($request->input('groupCiuId'));
+        $ciu=ciu::findOrFail($request->input('id'));
         $ciu->code= $request->input('code');
         $ciu->name= $request->input('name');
-        $ciu->value= $request->input('value');
+        $ciu->alicuota= $request->input('alicuota');
+        $ciu->min_tribu_men= $request->input('mTM');
+        $ciu->group_ciu_id= $request->input('idGroupCiiu');
         
-        $ciu->update(); 
-        return redirect()->route('ciu-branch.read');
+        $ciu->update();
     }
 
     /**

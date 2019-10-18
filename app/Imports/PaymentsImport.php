@@ -21,8 +21,7 @@ class PaymentsImport implements ToCollection
                     'amount'=> $row[2],
                     'name_deposito'=> $row[3],
                     'surname_deposito'=> $row[4],
-                    'cedula'=>$row[5],
-                    'date_transference'=> $row[6]
+                    'cedula'=>$row[5]
                 ]);
            }
 

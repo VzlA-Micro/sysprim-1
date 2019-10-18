@@ -9,7 +9,7 @@
                 <a href="#!" class="breadcrumb">Registrar Grupo CIIU</a>
             </div>
             <div class="col s12 m8 offest-m2 l6 offset-l3">
-                <form action="{{ route('ciu-group.save') }}" method="post" class="card">
+                <form id="groupCiiu" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Grupo de CIIU</h5>
                     </div>
@@ -33,5 +33,5 @@
     </div>
 @endsection
 @section('scripts')
-    
+    <script src="{{ asset('js/dev/groupCiiu.js') }}"></script>
 @endsection

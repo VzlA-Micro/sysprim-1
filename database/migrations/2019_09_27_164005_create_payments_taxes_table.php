@@ -25,7 +25,6 @@ class CreatePaymentsTaxesTable extends Migration
             $table->string('name_deposito',30);
             $table->string('surname_deposito',30);
             $table->string('cedula',8);
-            $table->date('date_transference');
             $table->string('file',80)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');
