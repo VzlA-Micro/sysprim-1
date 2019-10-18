@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Imports\PaymentsImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -66,9 +68,13 @@ class PaymentsImportController extends Controller
                 ->where('amount',$bank->amount)
                 ->get();
 
-            if(!$payments->isEmpty()){
-                $idPayments=$payments[0]->id;
-	        $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
+	var_dump($payments);
+die();
+            $idPayments=$payments[0]->id;
+
+            if(!is_null($payments)){
+               ller.php
+		 $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
                 $bank_find=Bank::find($bank->id);
 
                 $taxes=Taxe::where('id',$payments[0]->taxe_id)->get();

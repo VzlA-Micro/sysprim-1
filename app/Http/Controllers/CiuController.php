@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ciu;
+use App\Ciu;
 use App\GroupCiiu;
 
 class CiuController extends Controller

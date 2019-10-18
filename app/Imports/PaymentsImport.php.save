@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Imports;
+
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Bank;
@@ -17,9 +19,7 @@ class PaymentsImport implements ToCollection
            if(!is_null($row[0])){
                 Bank::create([
                     'ref' => $row[0],
-                    'bank' => $row[1],
-                    'amount'=>$row[2]
-		]);
+                    'bank' => $row[1],                ]);
 
             }
 

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="http://sysprim.com/";
+    var url="https://sysprim.com/";
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '') {
             var rif = $('#document_type').val()+$('#RIF').val();

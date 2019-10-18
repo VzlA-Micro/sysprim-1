@@ -15,7 +15,7 @@ $(document).ready(function () {
             var nationality=$('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: "http://sysprim.com.devel/users/verify-ci/"+nationality+ci,
+                url: "https://sysprim.com/users/verify-ci/"+nationality+ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -55,7 +55,7 @@ $(document).ready(function () {
             var email=$('#email').val();
             $.ajax({
                 method: "GET",
-                url: "http://sysprim.com.devel/users/verify-email/"+email,
+                url: "https://sysprim.com/users/verify-email/"+email,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
