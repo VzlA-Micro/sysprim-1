@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Extras;
 use App\Notification;
 use App\Tributo;
 use Carbon\Carbon;
@@ -96,7 +97,33 @@ class CompanyTaxesController extends Controller
         $id=DB::getPdo()->lastInsertId();
 
 
-        for ($i=0;$i<count($ciu_id);$i++){
+        $date=TaxesMonth::verify($company,false);
+
+
+
+        if($date['mora']){//si tiene mora
+                $extra=Extras::orderBy('id', 'desc')->take(1)->get();
+                $mora=$extra[0]->mora;
+        }else{
+                $mora=0;
+        }
+
+        for ($i=0;$i<count($base);$i++){
+            //format a base
+            $base_format=str_replace('.','',$base[$i]);
+            $base_format=str_replace(',','.',$base_format);
+            //format a deductions
+            $deductions_format=str_replace('.','',$deductions[$i]);
+            $deductions_format=str_replace(',','.',$deductions_format);
+            //format withdolding
+            $withholding_format=str_replace('.','',$withholding[$i]);
+
+            $withholding_format=str_replace(',','.',$withholding_format);
+            //format fiscal credits
+            $fiscal_credits_format=str_replace('.','',$fiscal_credits[$i]);
+            $fiscal_credits_format=str_replace(',','.',$fiscal_credits_format);
+
+
 
             if($base[$i]==0){
                     $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
@@ -104,8 +131,9 @@ class CompanyTaxesController extends Controller
             }else{
                     $unid_total=0;
             }
-            $taxe->taxesCiu()->attach(['taxe_id'=>$id],['ciu_id'=>$ciu_id[$i],'base'=>$base[$i],'deductions'=>$deductions[$i],'withholding'=>$withholding[$i],'fiscal_credits'=>$fiscal_credits[$i],'unid_tribu'=>$unid_total]);
 
+
+            $taxe->taxesCiu()->attach(['taxe_id'=>$id],['ciu_id'=>$ciu_id[$i],'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total,'mora'=>$mora]);
         }
         $data = array([
             'status' => 'success',
@@ -126,8 +154,11 @@ class CompanyTaxesController extends Controller
         $company_find=Company::find($company[0]->id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
-        $unid_tribu=$unid_tribu[0]->value;
-        return view('modules.taxes.details',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'unid_tribu'=>$unid_tribu]);
+        $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
+
+
+        return view('modules.taxes.details',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
     }
 
     /**
@@ -166,8 +197,13 @@ class CompanyTaxesController extends Controller
 
     public function getPDF($id){
         $taxes=Taxe::findOrFail($id);
-
-        $pdf = \PDF::loadView('modules.taxes.receipt',['id'=>$id]);
+        $company=Company::where('name',session('company'))->get();
+        $company_find=Company::find($company[0]->id);
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
+        $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
+        $pdf = \PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
         return $pdf->stream();
     }
 
@@ -180,11 +216,10 @@ class CompanyTaxesController extends Controller
 
         foreach($taxes->taxesCiu as $ciu){
             if($ciu->pivot->base == 0){
-                $monto+=$ciu->min_tribu_men * $ciu->pivot->unid_tribu;
-
+                $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
             }
             else{
-                $monto+=$ciu->alicuota * $ciu->pivot->base/100;
+                $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
 
             }
         }

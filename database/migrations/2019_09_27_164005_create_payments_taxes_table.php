@@ -20,8 +20,9 @@ class CreatePaymentsTaxesTable extends Migration
             $table->string('payments_type',20);
             $table->string('code_ref',15);
             $table->string('bank',20);
-            $table->float('amount');
+            $table->decimal('amount',12,2);
             $table->string('status',40);
+            $table->string('image',255)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();

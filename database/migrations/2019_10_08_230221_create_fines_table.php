@@ -16,7 +16,7 @@ class CreateFinesTable extends Migration
         Schema::create('fines', function (Blueprint $table) {
             $table->increments('id');
             $table->text('name');
-            $table->string('cant_unid_tribu');
+            $table->integer('cant_unid_tribu');
             $table->timestamps();
         });
     }

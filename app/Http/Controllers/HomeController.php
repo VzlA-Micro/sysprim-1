@@ -32,7 +32,7 @@ class HomeController extends Controller
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
                 foreach ($user->companies as $company){
-                    TaxesMonth::verify($company->id);
+                         TaxesMonth::verify($company->id);
                 }
 
                 $notifications= DB::table('notification')->where('user_id','=',\Auth::user()->id)->get();

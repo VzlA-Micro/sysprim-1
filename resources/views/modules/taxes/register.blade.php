@@ -12,72 +12,87 @@
             </div>
             <div class="col s12 m8 offset-m2">
                 <form action="{{ route('taxes.save') }}" method="post" class="card">
-
                     @if(is_null($date))
-                    <div class="card-header center-align">
-                        <h5>EMPRESA SOLVENTE HASTA LA FECHA.</h5>
-                    </div>
+                        <div class="card-header center-align">
+                            <h5>Empresa solvente hasta la fecha.</h5>
+                        </div>
                     @elseif(Session::has('message'))
                         <div class="card-header center-align">
                             <h5>{{session('message')}}</h5>
                         </div>
+                    @elseif($date['mount_diff']>=2)
+                        <div class="card-header center-align">
+                            <h5>Estimado contribuyente, el plazo para el pago del periodo de {{$date['mount_pay']}} expiró, por favor, diríjase a la oficina del SEMAT. </h5>
+                        </div>
                     @else
+
                         <div class="card-header center-align">
                             <h5>Pagar Impuesto</h5>
                         </div>
 
                         <div class="card-content row">
-                        @csrf
-                        <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
-                        <div class="input-field col s12">
-                            <input type="hidden" name="fiscal_period" id="fiscal_period"  value="{{$date['fiscal_period']}}">
-                        </div>
+                            @csrf
+                            <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
+                            <div class="input-field col s12">
+                                <input type="hidden" name="fiscal_period" id="fiscal_period"
+                                       value="{{$date['fiscal_period']}}">
+                            </div>
 
-                        <div class="input-field col s12">
-                            <input type="text" name="fiscal_period" id="fiscal_period"  value="{{$date['mount_pay']}}" disabled>
-                            <label for="fiscal_period">Periodo Fiscal</label>
-                        </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="fiscal_period" id="fiscal_period"
+                                       value="{{$date['mount_pay']}}" disabled>
+                                <label for="fiscal_period">Periodo Fiscal</label>
+                            </div>
 
-                        @foreach($company->ciu as $ciu)
-                            <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
-                            <input type="hidden" name="ciu_alicuota" class="ciu_alicuota" value="{{ $ciu->alicuota }}">
-                            <input type="hidden" name="min_tribu_men[]" class="min_tribu_men" value="{{ $ciu->min_tribu_men}}">
+                            @foreach($company->ciu as $ciu)
+                                <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
+                                <input type="hidden" name="ciu_alicuota" class="ciu_alicuota"
+                                       value="{{ $ciu->alicuota }}">
+                                <input type="hidden" name="min_tribu_men[]" class="min_tribu_men"
+                                       value="{{ $ciu->min_tribu_men}}">
 
-                        <div class="input-field col s12 m6">
-                            <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
-                            <label for="code">Código</label>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" name="code" id="code" value="{{ $ciu->code }}" required readonly>
+                                    <label for="code">Código</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" name="ciu" id="ciu" value="{{ $ciu->name }}" required readonly>
+                                    <label for="ciu">CIU</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text"  name="base[]" id="base_{{$ciu->code}}" class="validate money_keyup" maxlength="18" required>
+                                    <label for="base_{{$ciu->code}}">Base Imponible</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" step="any" name="deductions[]" id="deductions_{{$ciu->code}}" class="validate money_keyup"
+                                            required>
+                                    <label for="deductions_{{$ciu->code}}">Deducciones</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" step="any" name="withholding[]" id="withholdings_{{$ciu->code}}"
+                                           class="validate money_keyup"  required>
+                                    <label for="withholdings_{{$ciu->code}}">Retenciones</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" step="any" name="fiscal_credits[]" id="fiscal_credits_{{$ciu->code}}"
+                                           class="validate money_keyup"  required>
+                                    <label for="fiscal_credits_{{$ciu->code}}">Creditos Fiscales</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="divider"></div>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="input-field col s12 m6">
-                            <input type="text" name="ciu" id="ciu" value="{{ $ciu->name }}" required readonly>
-                            <label for="ciu">CIU</label>
+                        <div class="card-action center-align">
+                            <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register
+                            </button>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <input type="number" name="base[]" id="base" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"  required>
-                            <label for="base">Base Imponible</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input type="number" name="deductions[]" id="deductions" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                            <label for="deductions">Deducciones</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input type="number" name="withholding[]" id="withholdings" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                            <label for="withholdings">Retenciones</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input type="number" name="fiscal_credits[]" id="fiscal_credits" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                            <label for="fiscal_credits">Creditos Fiscales</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <div class="divider"></div>
-                        </div>
-                        @endforeach
-                    </div>
-                    <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
-                    </div>
                     @endif
                 </form>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+        <script src="{{asset('js/dev/taxes.js')}}"></script>
 @endsection
