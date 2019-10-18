@@ -1,20 +1,22 @@
 @extends('layouts.app')
 
+@section('styles')
+    
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Historial de Pagos</a>
-                <a href="" class="breadcrumb">Conciliar Pago</a>
+                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="" class="breadcrumb">Gestionar Mutlas</a>
+                <a href="" class="breadcrumb">Multas y Empresas</a>
+                <a href="" class="breadcrumb">Registrar</a>
             </div>
             <div class="col s12 m8 offset-m2">
                 <form id="register" action="{{ route('fines-company.save') }}" method="post" class="card">
                     <div class="card-header center-align">
-                        <h5>Registrar Multa A Compañia</h5>
+                        <h5>Asignar Multa a Compañia</h5>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6">
@@ -47,4 +49,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    
 @endsection

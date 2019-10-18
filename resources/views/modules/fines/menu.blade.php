@@ -19,6 +19,12 @@
                     <span class="truncate">Ver Multas</span>
                 </a>
             </div>
+            <div class="col s12 m4">
+                <a href="{{ route('fines-company.read') }}" class="btn-app white pink-text">
+                    <i class="icon-assignment"></i>
+                    <span class="truncate">Multas y Empresas</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

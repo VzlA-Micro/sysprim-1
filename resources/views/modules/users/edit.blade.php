@@ -9,13 +9,16 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
-                <a href="#!" class="breadcrumb">Registrar Usuario</a>
+                <a href="{{ route('companies.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
+                <a href="{{ route('companies.read') }}" class="breadcrumb">Ver Usuarios</a>
+                <a href="#!" class="breadcrumb">Detalles</a>
+                <a href="#!" class="breadcrumb">Editar</a>
             </div>
             <div class="col s12 m8 offset-m2">
+                {{-- Agregar los valores de la base de datos con la consulta --}}
                 <form action="" method="post" class="card">
                     <div class="card-header center-align">
-                        <h5>Registrar Usuario</h5>
+                        <h5>Editar Usuario</h5>
                     </div>
                     <div class="card-content row">
                         @csrf

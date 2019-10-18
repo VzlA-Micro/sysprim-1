@@ -34,6 +34,22 @@ Route::get('/users/verify/{code}','UserController@verify');
 Route::get('/profile', function() {
     return view('modules.users.profile');
 })->name('profile');
+Route::get('/users/manage', function() {
+    return view('modules.users.menu');
+})->name('users.manage');
+Route::get('/users/register', function() {
+    return view('modules.users.register');
+})->name('users.register');
+Route::get('/users/read', function() {
+    return view('modules.users.read');
+})->name('users.read');
+Route::get('/users/details', function() {
+    return view('modules.users.details');
+})->name('users.details');
+Route::get('/users/edit', function() {
+    return view('modules.users.edit');
+})->name('users.edit');
+
 // ---------------------------------------------------
 
 // Companies module routes
@@ -45,6 +61,15 @@ Route::get('/thumb/{filename}', 'CompaniesController@getImage')->name('companies
 Route::get('/companies/edit/{id}','CompaniesController@edit')->name('companies.edit');
 Route::post('/companies/update','CompaniesController@update')->name('companies.update');
 Route::get('/companies/verify/{id}','CompaniesController@verifyTaxes');
+Route::get('/companies/manage', function () {
+    return view('modules.companies.manage');
+})->name('companies.manage');
+Route::get('/companies/read', function () {
+    return view('modules.companies.read');
+})->name('companies.read');
+Route::get('/company/edit/{id}','CompaniesController@edit');
+Route::post('/company/update','CompaniesController@update')->name('companies.update');
+Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 
 // ---------------------------------------------------
 
@@ -64,6 +89,7 @@ Route::get('/payments/my-payments', function() {
 
 Route::get('/payments/help/{id}', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
 
+
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
@@ -72,12 +98,21 @@ Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
 })->name('payments.reconcile');
 
+Route::get('/payments/manage', function() {
+    return view('modules.payments.manage');
+})->name('payments.manage');
+Route::get('/payments/register', function() {
+    return view('modules.payments.create');
+})->name('payments.register');
+Route::get('/payments/read', function() {
+    return view('modules.payments.read');
+})->name('payments.read');
+Route::get('/payments/details', function() {
+    return view('modules.payments.details');
+})->name('payments.details');
 
-Route::get('/company/edit/{id}','CompaniesController@edit');
-Route::post('/company/update','CompaniesController@update')->name('companies.update');
-Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
-
-
+// ---------------------------------------------------------------
+Route::get('payments/receipt', 'PaymentsTaxesController@getPDF')->name('payments.receipt');
 
 Route::get('/bank/',function (){
 
@@ -172,48 +207,17 @@ Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update'
 Route::get('/fines/delete/{id}', 'FinesController@destroy')->name('fines.delete');
 
 // ------------------------ Fiscal
+    Route::get('/fines-company/register/{id}', function() {
+        return view('modules.fines-company.register');
+    })->name('fines-company.register');
 Route::get('/read-fines-company',array(
     'as'=>'readFinesCompany',
     'uses'=>'FinesCompanyController@show'
 ));
-
-Route::get('/create-finesCompany/{id}',array(
-    'as'=>'createFinesCompany',
-    'uses'=>'FinesCompanyController@create'
-));
-
-Route::post('/save-finesCompany',array(
-    'as'=>'saveFinesCompany',
-    'uses'=>'FinesCompanyController@store'
-));
-
-Route::get('/readFinesCompany',array(
-    'as'=>'readFinesCompany',
-    'uses'=>'FinesCompanyController@read'
-));
-
-Route::get('/details-finesCompany/{id}',array(
-    'as'=>'detailsFinesCompany',
-    'uses'=>'FinesCompanyController@edit'
-));
-
-Route::get('/finesCompany-register/{id}', function() {
-    return view('dev.finesCompany.register');
-})->name('dev.finesCompany-register');
-
-
-//Fines Company module routes
-
-Route::get('/register-paymentsFines/{company}',array(
-    'as'=>'registerPaymentsFines',
-    'uses'=>'PaymentsFinesController@create'
-));
-
-Route::post('/save-paymentsFines',array(
-    'as'=>'savePaymentsFines',
-    'uses'=>'PaymentsFinesController@store'
-));
-
+Route::get('fines-company/read','FinesCompanyController@read')->name('fines-company.read');
+Route::get('/fines-company/create/{id}','FinesCompanyController@create')->name('fines-company.create');
+Route::post('/fines-company/save','FinesCompanyController@store')->name('fines-company.save');
+Route::get('/fines-company/details/{id}','FinesCompanyController@edit')->name('fines-company.details');
 
 // unidad tributaria module
 

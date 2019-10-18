@@ -26,54 +26,36 @@
                                     <div class="content">
                                         <div class="row">
                                             <div class="col s12">
-                                                <h5>Banco de Venezuela:</h5>
-                                                <ul>
-                                                    <li><b>Número de Cuenta:</b></li>
-                                                    <li><b>Documento: </b></li>
-                                                    <li><b>Beneficiario: </b></li>
-                                                    <li><b>Teléfono: </b></li>
-                                                    <li><b>E-mail: </b></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12">
-                                                <h5>Banco de Venezuela:</h5>
-                                                <ul>
-                                                    <li><b>Número de Cuenta:</b></li>
-                                                    <li><b>Documento: </b></li>
-                                                    <li><b>Beneficiario: </b></li>
-                                                    <li><b>Teléfono: </b></li>
-                                                    <li><b>E-mail: </b></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12">
-                                                <h5>BOD (Banco Occidental de Descuento):</h5>
-                                                <ul>
-                                                    <li><b>Número de Cuenta:</b></li>
-                                                    <li><b>Documento: </b></li>
-                                                    <li><b>Beneficiario: </b></li>
-                                                    <li><b>Teléfono: </b></li>
-                                                    <li><b>E-mail: </b></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12">
-                                                <h5>Banco Bicentenario:</h5>
-                                                <ul>
-                                                    <li><b>Número de Cuenta:</b></li>
-                                                    <li><b>Documento: </b></li>
-                                                    <li><b>Beneficiario: </b></li>
-                                                    <li><b>Teléfono: </b></li>
-                                                    <li><b>E-mail: </b></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12">
-                                                <h5>Banesco:</h5>
-                                                <ul>
-                                                    <li><b>Número de Cuenta:</b></li>
-                                                    <li><b>Documento: </b></li>
-                                                    <li><b>Beneficiario: </b></li>
-                                                    <li><b>Teléfono: </b></li>
-                                                    <li><b>E-mail: </b></li>
-                                                </ul>
+                                                <table class="centered highlight responsive-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Banco</th>
+                                                            <th>N°. Cuenta</th>
+                                                            <th>Documento</th>
+                                                            <th>Beneficiario</th>
+                                                            <th>Teléfono</th>
+                                                            <th>E-mail</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Venezuela</td>
+                                                            <td>010200000000000000</td>
+                                                            <td>J123456789</td>
+                                                            <td>Jhon Doe</td>
+                                                            <td>04121111111</td>
+                                                            <td>jhondoe@example.com</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>BOD</td>
+                                                            <td>000000000000000000</td>
+                                                            <td>J123456789</td>
+                                                            <td>Jhon Doe</td>
+                                                            <td>04121122233</td>
+                                                            <td>jhondoe@example.com</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +75,11 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 m3 center-align">
-                                                <a href="" class="btn btn-large red darken-2 dropdown-trigger col s12" data-target="bdv">BDVenezuela</a>
+                                                <a href="" class="btn btn-large white dropdown-trigger col s12" data-target="bdv">
+                                                    <i class="icon-logo">
+                                                        <img src="{{ asset('images/bdv_logo.png') }}" style="width: 130px;" alt="" srcset="">
+                                                    </i>
+                                                </a>
                                                 {{-- Dropdown content --}}
                                                 <ul class="dropdown-content" id="bdv">
                                                     <li><a href="https://bdvenlinea.banvenez.com/login" target="_blank">BDVenLinea Personas</a></li>
@@ -101,7 +87,11 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m3 center-align">
-                                                <a href="" class="btn btn-large dropdown-trigger col s12" style="background-color: #007953" data-target="banesco">Banesco</a>
+                                                <a href="" class="btn btn-large dropdown-trigger col s12 white" data-target="banesco">
+                                                    <i>
+                                                        <img src="{{ asset('images/banesco_logo.png') }}" style="width: 60px;" alt="" srcset="">                                                
+                                                    </i>
+                                                </a>
                                                 {{-- Dropdown content --}}
                                                 <ul class="dropdown-content" id="banesco">
                                                     <li><a href="https://www.banesconline.com/mantis/Website/Login.aspx" target="_blank">BanescOnline</a></li>
@@ -109,7 +99,11 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m3 center-align">
-                                                <a href="" class="btn btn-large dropdown-trigger col s12" data-target="bod" style="background-color:#6AAF42">BOD</a>
+                                                <a href="" class="btn btn-large dropdown-trigger col s12 white" data-target="bod">
+                                                    <i>
+                                                        <img src="{{ asset('images/bod_logo.png') }}" style="width: 60px;margin-top:5px" alt="" srcset="">                                                
+                                                    </i>
+                                                </a>
                                                 {{-- Dropdown content --}}
                                                 <ul class="dropdown-content" id="bod">
                                                     <li><a href="https://web.bancadigitalbod.com/nblee6/f/ext/Login/index.xhtml" target="_blank">BanescOnline</a></li>
@@ -117,7 +111,11 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m3 center-align">
-                                                <a href="" class="btn btn-large red dropdown-trigger col s12" data-target="bicentenario">Bicentenario</a>
+                                                <a href="" class="btn btn-large white dropdown-trigger col s12" data-target="bicentenario">
+                                                    <i>
+                                                        <img src="{{ asset('images/bicentenario_logo.png') }}" style="width: 110px;" alt="" srcset="">                                                
+                                                    </i>
+                                                </a>
                                                 {{-- Dropdown content --}}
                                                 <ul class="dropdown-content" id="bicentenario">
                                                     <li><a href="https://bancaenlinea.bicentenariobu.com/#/LOGINMODI" target="_blank">Personas</a></li>
