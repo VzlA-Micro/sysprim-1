@@ -17,7 +17,7 @@ class CreateUnidadTribuTable extends Migration
             $table->increments('id');
             $table->date('since');
             $table->date('to');
-            $table->float('value');
+            $table->float('value',12);
             $table->timestamps();
         });
     }

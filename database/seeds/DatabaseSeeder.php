@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call([CiuGroupTableSeeder::class,
                     CiuTableSeeder::class,
-                    ParishTableSeeder::class]);
+                    ParishTableSeeder::class,
+                    UsersTableSeeder::class,
+                    CompanyTableSeeder::class,
+                    UsersCompanyTableSeeder::class,
+                    CiuCompanyTableSeeder::class,
+                    UnidTribuTableSeeder::class,
+                    ExtrasTableSeeder::class
+        ]);
     }
 }

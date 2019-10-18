@@ -3,8 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
-
-class UsersCompanyTableSeeder extends Seeder
+class ExtrasTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,12 +12,13 @@ class UsersCompanyTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('users_company')->insert([
-            'user_id'=>1,
-            'company_id'=>1,
+        DB::table('extras')->insert([
+            'tax_rate'=>500,
+            'mora'=>300,
+            'since'=>Carbon::now(),
+            'to'=>Carbon::now(),
             'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
+            'updated_at'=>Carbon::now(),
         ]);
     }
 }

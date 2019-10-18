@@ -17,7 +17,7 @@ class CreateFinesCompanyTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->integer('fine_id')->unsigned();
-            $table->float('unid_tribu_value');
+            $table->float('unid_tribu_value',12);
             $table->foreign('fine_id')->references('id')->on('fines');
             $table->foreign('company_id')->references('id')->on('company');
             $table->timestamps();

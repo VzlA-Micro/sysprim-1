@@ -12,7 +12,7 @@ class Taxe extends Model{
     protected $appends = ['total'];
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
-            ->withPivot('ciu_id','fiscal_credits','withholding','deductions','base','unid_tribu');
+            ->withPivot('ciu_id','fiscal_credits','withholding','deductions','base','unid_tribu','mora','tax_rate');
     }
 
     public function companies(){

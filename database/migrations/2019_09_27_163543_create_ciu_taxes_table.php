@@ -15,13 +15,13 @@ class CreateCiuTaxesTable extends Migration
     {
         Schema::create('ciu_taxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('base');
-            $table->float('deductions')->nullable();
-            $table->float('withholding')->nullable();
-            $table->float('fiscal_credits')->nullable();
-            $table->float('tax_rate')->nullable();
-            $table->float('mora')->nullable();
-            $table->float('unid_tribu')->nullable();
+            $table->decimal('base',12,2);
+            $table->decimal('deductions',12,2)->nullable();
+            $table->decimal('withholding',12,2)->nullable();
+            $table->decimal('fiscal_credits',12,2)->nullable();
+            $table->decimal('tax_rate',12,2)->nullable();
+            $table->decimal('mora',12,2)->nullable();
+            $table->decimal('unid_tribu',12,2)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->integer('ciu_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');
