@@ -11,7 +11,7 @@
                     <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones" data-target="notification-dropdown">
                         <i class="icon-notifications">
                             @if(session('notifications')->count()>0)
-                              <span class="new badge red" data-badge-caption="nuevo">{{session('notifications')->count()}}</span>
+                                <span class="new badge red" data-badge-caption="nuevo" style="position: absolute; top: 10px; right: 25px;">{{ session('notifications')->count() }}</span>
                             @endif
                         </i>
                     </a>

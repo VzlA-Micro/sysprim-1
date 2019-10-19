@@ -251,3 +251,6 @@ Route::get('/readEmployees',array(
     'uses'=>'EmployeesController@show'
 ));
 
+Route::get('/admin/geolocation', function() {
+    return view('modules.map.home');
+})->name('admin.geolocation');
