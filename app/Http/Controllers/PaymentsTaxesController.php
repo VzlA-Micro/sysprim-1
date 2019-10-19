@@ -11,18 +11,21 @@ use App\CiuTaxes;
 use App\Employees;
 use Illuminate\Support\Facades\App;
 
-class PaymentsTaxesController extends Controller {
+class PaymentsTaxesController extends Controller
+{
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index()
+    {
         //
     }
 
@@ -31,7 +34,8 @@ class PaymentsTaxesController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $id = $request->id;
         $company = Company::where('name', session('company'))->get();
 
@@ -77,20 +81,21 @@ class PaymentsTaxesController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-       $pTaxes= new PaymentTaxes();
-        $pTaxes->payments_type= $request->input('type');
-        $pTaxes->code_ref= $request->input('code_ref');
-        $pTaxes->bank= $request->input('bank');
+    public function store(Request $request)
+    {
+        $pTaxes = new PaymentTaxes();
+        $pTaxes->payments_type = $request->input('type');
+        $pTaxes->code_ref = $request->input('code_ref');
+        $pTaxes->bank = $request->input('bank');
 
-        $amount_format=str_replace('.','',$request->input('amount'));
-        $amount_format=str_replace(',','.',$amount_format);
-        $pTaxes->amount=$amount_format;
-        $pTaxes->status="process";
-        $pTaxes->taxe_id= $request->input('taxes');
+        $amount_format = str_replace('.', '', $request->input('amount'));
+        $amount_format = str_replace(',', '.', $amount_format);
+        $pTaxes->amount = $amount_format;
+        $pTaxes->status = "process";
+        $pTaxes->taxe_id = $request->input('taxes');
         $pTaxes->name_deposito = $request->input('name');
         $pTaxes->surname_deposito = $request->input('surname');
         $pTaxes->cedula = $request->input('cedula');
@@ -111,20 +116,22 @@ class PaymentsTaxesController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $paymentTaxe = PaymentTaxes::findOrFail($id);
         return view('dev.updatePayments', array(
             '$payment' => $paymentTaxe
@@ -134,25 +141,23 @@ class PaymentsTaxesController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
-    }
-    public function getPDF() {
-        $pdf = \PDF::loadView('modules.payments.receipt');
-        return $pdf->stream();
     }
 }
