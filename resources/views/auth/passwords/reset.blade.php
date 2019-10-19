@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col s12 m8 offset-m2">
-                <form method="POST" action="{{ route('password.update') }}" class="card">
+                <form method="POST" action="{{ route('password.update') }}" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>Resetear Contraseña</h5>
                     </div>
@@ -24,8 +24,8 @@
                             <label for="password-confirm">{{ __('Confirmar Contraseña') }}</label>
                         </div>
                     </div>
-                    <div class="card-action">
-                        <button type="submit" class="btn btn-outline-success waves-effect waves-green">
+                    <div class="card-action center-align">
+                        <button type="submit" class="btn green waves-effect waves-green">
                             <i class="icon-send right"></i>
                             {{ __('Resetear Contraseña') }}
                         </button>

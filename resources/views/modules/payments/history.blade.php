@@ -40,14 +40,19 @@
                                         <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
                                     @else
                                         @foreach($taxe->payments as $payment)
-                                                <td><button class="btn disabled"><i class="icon-more_horiz"></i>{{ $payment->status }}</button></td>
+                                            <td>
+                                                <button class="btn disabled">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    {{ $payment->status }}
+                                                </button>
+                                            </td>
                                             @if($payment->status==='verified')
                                                 <td>
-                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description"></i>Descargar Solvencia</a>
+                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar Solvencia</a>
                                                 </td>
                                                 @else
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview"></i>Detalles</a>
+                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview left"></i>Detalles</a>
                                                 </td>
                                             @endif
                                         @endforeach

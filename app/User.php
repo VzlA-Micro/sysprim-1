@@ -52,8 +52,8 @@ class User extends Authenticatable
     public function VerifyEmail ($token) {
         $this->notify(new VerifyEmailNotification($token));
     }
-    public function ConfirmedPayments ($token) {
-        $this->notify(new Payments($token));
+    public function ConfirmedPayments($user) {
+        $this->notify(new Payments($user));
     }
 
 }

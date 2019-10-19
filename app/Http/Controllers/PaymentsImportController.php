@@ -1,22 +1,27 @@
 <?php
 namespace App\Http\Controllers;
 use App\Imports\PaymentsImport;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use App\User;
 use Mail;
-use App\Notification;
 use App\Bank;
 use App\Taxe;
 use App\Company;
+use App\Extras;
+use App\Tributo;
+use App\Helpers\TaxesMonth;
 use App\Http\Controllers\Controller;
 use App\PaymentTaxes;
 
-class PaymentsImportController extends Controller {
+class PaymentsImportController extends Controller
+{
 
-    public function importFile(Request $request) {
+    public function importFile(Request $request)
+    {
 
         $file = $request->file;
         $Archivo = \File::get($file);
@@ -52,12 +57,13 @@ class PaymentsImportController extends Controller {
         }
 
         $this->verifyPayments();
-      return redirect('home');
+        return redirect('home');
     }
 
-    public function verifyPayments() {
+    public function verifyPayments()
+    {
         $banks = DB::select(DB::raw(
-                                "SELECT * from reference_bank"
+            "SELECT * FROM reference_bank"
         ));
 
         $payments = PaymentTaxes::all();
@@ -65,40 +71,59 @@ class PaymentsImportController extends Controller {
         foreach ($banks as $bank) {
 
             $payments = PaymentTaxes::where('code_ref', $bank->ref)
-                    ->orWhere('bank', $bank->bank)
-                    ->where('amount', $bank->amount)
-                    ->get();
+                ->orWhere('bank', $bank->bank)
+                ->where('amount', $bank->amount)
+                ->get();
             if (!is_null($payments)) {
                 $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
                 $bank_find = Bank::find($bank->id);
-            if(!$payments->isEmpty()){
-                $idPayments=$payments[0]->id;
-	        $payments_find=PaymentTaxes::findOrFail($payments[0]->id);
-                $bank_find=Bank::find($bank->id);
+                if (!$payments->isEmpty()) {
+                    $idPayments = $payments[0]->id;
+                    $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
+                    $bank_find = Bank::find($bank->id);
 
-                $taxes = Taxe::where('id', $payments[0]->taxe_id)->get();
-                $company = Company::find($taxes[0]->company_id);
-                $uCompa = $company->users()->get();
+                    //$taxes = Taxe::where('id', $payments[0]->taxe_id)->get();
+                    $taxes=Taxe::findOrFail($payments[0]->taxe_id);
+                    $company = Company::find($taxes->company_id);
+                    $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+                    $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
+                    $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+                    $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
 
-                $id = $uCompa[0]->id;
+                    $userCompany = $company->users()->get();
 
-                $payments = DB::update(
-                                "update payments_taxes set status='verified' where id='$idPayments' "
-                );
-                $user = User::find($id);
+                    //$id = $userCompany[0]->id;
+                    //$user = User::find($id);
 
-                $notification = Notification::where('user_id', $user->id);
-                if (!is_null($notification)) {
-                    $notification->update([
-                        'view' => 1
-                    ]);
+                    $payments = DB::update(
+                        "update payments_taxes set status='verified' where id='$idPayments' "
+                    );
+
+
+                    $subject = "Recibo de Solvencia";
+                    $for =$userCompany[0]->email;
+                    $pdf=\PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
+
+                    Mail::send('dev.pago',[], function($msj) use($subject,$for,$pdf){
+
+                        $msj->from("grabieldiaz63@gmail.com","Equipo de Sysprim");
+                        $msj->subject($subject);
+                        $msj->to($for);
+                        $msj->attachData($pdf->output(),'recibo de solvencia.pdf');
+                    });
+
+                    /*$notification = Notification::where('user_id', $user->id);
+                    if (!is_null($notification)) {
+                        $notification->update([
+                            'view' => 1
+                        ]);
+                    }*/
+                    //$user->ConfirmedPayments($users);
+
+                    $bank_find->delete();
                 }
-                $user->ConfirmedPayments($user);
-
-                $bank_find->delete();
             }
         }
-    }
 
-}
+    }
 }
