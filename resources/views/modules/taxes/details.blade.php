@@ -34,8 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="divider"></div>
-
+                    <div class="divider"></div>>
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
@@ -136,6 +135,8 @@
                                 </div>
                             </div>
                         </div>
+
+
 
                     </form>
                     <div class="card-action">

@@ -251,3 +251,10 @@ Route::get('/readEmployees',array(
     'uses'=>'EmployeesController@show'
 ));
 
+
+
+
+
+//Geosysprim
+Route::get('/geosysprim/home','GeoSysprimController@home');
+Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanySolvent');

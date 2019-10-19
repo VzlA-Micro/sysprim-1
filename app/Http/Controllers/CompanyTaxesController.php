@@ -126,9 +126,6 @@ class CompanyTaxesController extends Controller
                 $tax_rate=$taxes-(float)$deductions[$i]-(float)$withholding[$i]-(float)$fiscal_credits[$i];
 
                 $tax_rate=$tax_rate*$extra[0]->tax_rate/100;
-
-
-
                 $interest=(0.42648/360)*($tax_rate+$taxes);
             }else{
                 $mora=0;

@@ -8,9 +8,15 @@
     {{-- <link rel="stylesheet" href="http://sysprim.com.devel/css/materialize.min.css">
     <link rel="stylesheet" href="http://sysprim.com.devel/css/material-componente.css"> --}}
     <link rel="stylesheet" href="http://sysprim.com.devel/css/pdf.css">
+	<style>
+		body {
+
+		}
+	</style>
 </head>
-<body>
-    <div class="receipt-header font-nunito">
+<body style="font-family:Helvetica!important;">
+@php setlocale(LC_MONETARY, 'en_US');@endphp
+    <div class="receipt-header" style="">
     	<table style="width: 100%; border-collapse: collapse;">
 	        <tr style="text-align: center">
 	            <td style="width: 25%;">
@@ -40,61 +46,132 @@
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
     <hr>
     <table style="width: 100%; border-collapse: collapse;">
-    	<tr>
-    		<td style="width:15%"><b>Contribuyente:</b></td>
-    		<td style="width:35%">{{$taxes->companies->name}}</td>
-    		<td style="width:20%"><b>Codigo Catastral:</b></td>
-    		<td style="width:30%">{{$taxes->companies->code_catastral}}</td>
+    	<tr style="">
+    		<td style="width:15%;font-size: 14px !important; "><b>Contribuyente:</b></td>
+    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->name}}</td>
+    		<td style="width:20%;font-size: 14px !important;"><b>Codigo Catastral:</b></td>
+    		<td style="width:30%;font-size: 13px !important;">{{$taxes->companies->code_catastral}}</td>
     	</tr>
     	<tr>
-    		<td style="width:15%"><b>Cedula o RIF:</b></td>
-    		<td style="width:35%">{{$taxes->companies->RIF}}</td>
-    		<td style="width:20%"><b>Cód. Licencia:</b></td>
-    		<td style="width:30%">{{$taxes->companies->license}}</td>
+    		<td style="width:15%;font-size: 14px !important;"><b>Cedula o RIF:</b></td>
+    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->RIF}}</td>
+    		<td style="width:20%;font-size: 14px !important;"><b>Cód. Licencia:</b></td>
+    		<td style="width:30%;font-size: 13px !important">{{$taxes->companies->license}}</td>
     	</tr>
     	<tr>
-    		<td style="width:15%"><b>Dirección:</b></td>
-    		<td style="width:35%">{{$taxes->companies->address}}</td>
+    		<td style="width:15%;font-size: 14px !important"><b>Dirección:</b></td>
+    		<td style="width:35%;font-size: 12px !important">{{$taxes->companies->address}}</td>
+
+			<td style="width:15%;font-size: 14px !important;"><b>Planilla liquidada:</b></td>
+			<td style="width:35%;font-size: 13px !important;">{{$taxes->code}}</td>
     	</tr>
     	<tr>
-    		<td style="width:15%"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%">{{$taxes->companies->phone}}</td>
-    		<td style="width:20%"><b>Operador:</b></td>
-    		<td style="width:30%">SYSPRIM</td>
+    		<td style="width:15%;font-size: 14px !important;"><b>Telf. Empresa:</b></td>
+    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->phone}}</td>
+
     	</tr>
     	<tr>
-    		<td style="width:15%"><b>Planilla Liq:</b></td>
-    		<td style="width:35%">{{$taxes->code}}</td>
-    		<td style="width:20%"><b>Oficina:</b></td>
-    		<td style="width:30%">VIRTUAL</td>
+    		<td style="width:15%;font-size: 14px !important;"><b>Pers.Rsponsable:</b></td>
+    		<td style="width:35%;font-size: 13px !important;">{{\Auth()->user()->name .' '.\Auth()->user()->surname}}</td>
+    		<td style="width:20%;font-size: 14px !important;"><b>Oficina:</b></td>
+    		<td style="width:30%;font-size: 13px !important;">VIRTUAL</td>
     	</tr>
     </table>
     <hr>
 	<table style="width: 100%;">
 		<thead>
-			<tr>
-				<th style="width: 10%">Mat.</th>
-				<th style="width: 20%">Descripción</th>
-				<th style="width: 10%">Ramo</th>
-				<th style="width: 10%">Deuda</th>
-				<th style="width: 15%">Planilla</th>
-				<th style="width: 15%">Lapso</th>
-				<th style="width: 10%">Benef/CF</th>
-				<th style="width: 10%">Neto</th>
-			</tr>
+			<tr style="border-bottom: 1px solid #000; !important;">
+				<th style="width: 10%;font-size: 13px !important; ">CIIU</th>
+				<th style="width: 20%;font-size: 13px !important;">Descripción</th>
+				<th style="width: 10%;font-size: 13px !important;">Ramo</th>
+				<th style="width: 10%;font-size: 13px !important;">Lapso</th>
+				<th style="width: 15%;font-size: 13px !important;">Base Imponible</th>
+				<th style="width: 15%;font-size: 13px !important;">Monto o Benef/CF</th>
+				<th style="width: 10%;font-size: 13px !important;">Impuesto</th>
 		</thead>
+
 		<tbody>
+		@php $total_taxes=0;@endphp
+		@foreach($taxes->taxesCiu as $ciu)
+			@php
+			 	if($ciu->pivot->base!=0&&$ciu->pivot->interest!=0){
+			 	$taxe=$ciu->pivot->base*$ciu->alicuota/100;
+				$surchange_total=$ciu->pivot->tax_rate+$taxe;
+				$interest_total=$surchange_total+$ciu->pivot->interest;
+				$total_taxes+=$surchange_total+$ciu->pivot->mora;
+			 	}else{
+			   	 $taxe=$ciu->pivot->unid_tribu*$ciu->min_tribu_men;
+			 	 $total_taxes+=$taxe;
+			 	}
+			@endphp
+
+
+
+
+
+
+
 			<tr>
-				<td style="width: 10%">L35FG5</td>
-				<td style="width: 20%">Lorem ipsum dolor sit amet.</td>
-				<td style="width: 10%">36276247</td>
-				<td style="width: 10%">83798736</td>
-				<td style="width: 15%">090239602</td>
-				<td style="width: 15%">01.12 - 01.19</td>
-				<td style="width: 10%">0.00</td>
-				<td style="width: 10%">0,14</td>	
+				<td style="width: 10%;font-size: 12px !important;">{{$ciu->code}}</td>
+				<td style="width: 30%;font-size: 11px;!important;">{{$ciu->name}}</td>
+				<td style="width: 10%;font-size: 12px;!important">Act Eco</td>
+				<td style="width: 10%;font-size: 12px; !important;">{{$taxes->fiscal_period}}</td>
+				<td style="width: 15%;font-size: 12px;!important">@php echo number_format($ciu->pivot->base, 2);@endphp</td>
+				<td style="width: 15%;font-size: 12px;!important">{{$ciu->alicuota."%"}}</td>
+				<td style="width: 10%;font-size: 12px;!important">{{number_format($taxe,2)}}</td>
 			</tr>
+
+
+
+		@if($ciu->pivot->interest!==0)
+			<tr>
+				<td></td>
+				<td style="font-size: 13px !important;">Recargo</td>
+				<td></td>
+				<td></td>
+				<td style="font-size: 12px !important;">{{number_format($taxe,2)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->tax_rate,2)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td style="font-size: 13px !important;">Interés por mora</td>
+				<td></td>
+				<td></td>
+				<td style="font-size: 12px !important;">{{number_format($surchange_total)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->interest,2)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
+			</tr>
+
+
+			<tr>
+				<td></td>
+				<td style="font-size: 13px !important;">Mora</td>
+				<td></td>
+				<td></td>
+				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->mora,2)}}</td>
+				<td style="font-size: 12px !important;">{{number_format($surchange_total+$ciu->pivot->mora,2)}}</td>
+			</tr>
+		@endif
+		@endforeach
+
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>TOTAL</td>
+			<td style="font-size: 14px !important; text-align: left">{{number_format($total_taxes,2)}}</td>
+		</tr>
 		</tbody>
+
+
+		<hr>
+		<tr>
+			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($total_taxes))."."}}</td>
+		</tr>
 	</table>
 	<?php
     $num = 'CMD01-'.date('ymd');
@@ -108,15 +185,32 @@
         	<tr>
         		<td style="width: 30%"></td>
         		<td style="width: 30%"></td>
-        		<td style="width: 40%;"> 
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/paymentsTaxes-register/".$taxes->id)) !!} " style="float: right;position: absolute;top: -100px">
+        		<td style="width: 100%;">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/payments/taxes/".$taxes->id)) !!} " style="float: left;position: absolute;top: -120px;right: -700px !important;">
         		</td>
+
         	</tr>
+			<tr>
+
+			</tr>
         </table>
-        <b>1</b> place <b>plein tarif</b><br>
-        Prix unitaire TTC : <b>45,00&euro;</b><br>
-        N° commande : <b><?php echo $num; ?></b><br>
-        Date d'achat : <b><?php echo date('d/m/Y à H:i:s'); ?></b><br>
+        <b></b>  <b></b><br>
+         <b></b><br>
+         <b></b><br>
+
+
+		<table style="width: 100%;margin-bottom:-30px;">
+			<tr>
+				<td style="width: 100%;text-align: center;">
+					{{$taxes->created_at}}
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100%;text-align: center;">
+					**ESTE DOCUMENTO VA SIN TACHADURA NI ENMENDADURA.**
+				</td>
+			</tr>
+		</table>
     </div>
 </body>
 </html>

@@ -18,7 +18,6 @@ class TaxesMonth{
 
         if ($companyTaxes->isEmpty()) {//si no tiene pagos
 
-
             $fiscal_period = Carbon::parse($company->created_at);//utilizo la fecha que se creo el registro como referencia si esta atrasado o no
             $now = Carbon::now();//fecha del computador
             $diffMount = $fiscal_period->diffInMonths($now);//veo la diferencia de meses
@@ -60,7 +59,6 @@ class TaxesMonth{
                     $fiscal_period->addMonth(1);//añado un mes para saber cual es el proximo a pagar
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
                     $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'),   'mora'=>$mora);
-
                 } else if (!$payment->isEmpty() && $payment[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
                     $date = null;
                     $mes=null;
