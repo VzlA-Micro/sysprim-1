@@ -95,7 +95,7 @@
                         </div>
                         <div class="file-field input-field col s12 12">
                             <div class="btn purple btn-rounded waves-light">
-                                <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
+                                 <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
                                 <input type="file" name="image" id="image">
                             </div>
                             <div class="file-path-wrapper">

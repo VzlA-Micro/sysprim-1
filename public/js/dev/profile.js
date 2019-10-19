@@ -1,4 +1,4 @@
-console.log("Estoy aqui");
+
 $(document).ready(function() {
     $("#user_form").hide();
     $("#btn-edit").click(function(e) {

@@ -30,10 +30,60 @@ $(document).ready(function () {
                 .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
         });
     });
+
+
+    $('.base').blur(function () {
+
+    });
+    $('#taxes-register').submit(function (e) {
+        e.preventDefault();
+
+        var band=false;
+
+        $('.code').each(function () {
+            var code=$(this).val();
+            console.log(code);
+            var base=$('#base_'+code).val();
+            var alicuota=$('#alicuota_'+code).val();
+            var deductions=$('#deductions_'+code).val();
+            var withholdings=$('#withholdings_'+code).val();
+            var fiscal_credits=$('#fiscal_credits_'+code).val();
+
+            base = base.replace(/\./g,'');
+            deductions=deductions.replace(/\./g,'');
+            withholdings=withholdings.replace(/\./g,'');
+            fiscal_credits=fiscal_credits.replace(/\./g,'');
+
+            var total_deductions=parseFloat(deductions)+parseFloat(withholdings)+parseFloat(fiscal_credits);
+            console.log(total_deductions);
+            var total=Math.floor(parseFloat(base)*alicuota)/100;
+            console.log(total);
+            if(total_deductions>=total){
+                swal({
+                    title: "¡Oh no!",
+                    text: "Verifica los datos ingresados.",
+                    icon: "error",
+                    button: "Ok",
+                });
+                band=true;
+            }
+        });
+
+
+        if(!band){
+            $(('#taxes-register'))[0].submit();
+        }
+
+    });
+
+
+
+
     if($('.money').val()!==undefined){
 
         var total_ciu=0;
         var total_mora=0;
+        var total_recargo=0;
 
         $('.total_ciu').each(function () {
             total_ciu=total_ciu+parseFloat($(this).val());
@@ -44,8 +94,16 @@ $(document).ready(function () {
             total_mora=total_mora+parseFloat($(this).val());
         });
 
+        $('.recargo').each(function () {
+            total_recargo=total_recargo+parseFloat($(this).val());
+        });
+
+        $('#recargo').val(total_recargo);
+
+
         $('#total_mora').val(total_mora);
-        $('#total_pagar').val(total_ciu+total_mora);
+        $('#total_pagar').val(total_ciu+total_mora+total_recargo);
+
         M.updateTextFields();
 
 
