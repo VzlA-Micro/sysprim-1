@@ -158,7 +158,7 @@ Route::get('/paymentsTaxes-register/{id}',array(
     'as'=>'registerPayments',
     'uses'=>'PaymentsTaxesController@create'
 ));
-
+Route::get('paymentsTaxes/pdf/','PaymentsTaxesController@pdf');
 Route::post('paymentsTaxes/save',array(
     'as'=>'savePaymentsTaxes',
     'uses'=>'PaymentsTaxesController@store'
@@ -177,6 +177,11 @@ Route::get('/referenceBank-register', function() {
 Route::post('/save-referenceBank',array(
    'as'=>'saveReferenceBank',
    'uses'=>'PaymentsImportController@importFile'
+));
+
+Route::get('get-pdf/{pdf}',array(
+    'as'=>'pdfImport',
+    'uses'=>'PaymentsImportController@pdfImport'
 ));
 Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
 Route::get('/users/verify-email/{email}','UserController@verifyEmail');
@@ -207,9 +212,9 @@ Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update'
 Route::get('/fines/delete/{id}', 'FinesController@destroy')->name('fines.delete');
 
 // ------------------------ Fiscal
-    Route::get('/fines-company/register/{id}', function() {
-        return view('modules.fines-company.register');
-    })->name('fines-company.register');
+Route::get('/fines-company/register/{id}', function() {
+    return view('modules.fines-company.register');
+})->name('fines-company.register');
 Route::get('/read-fines-company',array(
     'as'=>'readFinesCompany',
     'uses'=>'FinesCompanyController@show'
