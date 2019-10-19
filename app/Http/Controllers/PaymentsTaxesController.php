@@ -151,7 +151,6 @@ class PaymentsTaxesController extends Controller {
     public function destroy($id) {
         //
     }
-
     public function getPDF() {
         $pdf = \PDF::loadView('modules.payments.receipt');
         return $pdf->stream();
