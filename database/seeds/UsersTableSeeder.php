@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
             'confirmed'=>1,
             'confirmed_code'=>null,
             'role_id'=>3,
-            'email'=>'usuario@gmail.com',
+            'email'=>'usuario-@gmail.com',
             'email_verified_at'=>null,
             'password'=>Hash::make('Sysprim2000'),
             'address'=>'CALLE 12 CARRERA 2',

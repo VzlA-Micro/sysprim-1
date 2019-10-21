@@ -41,18 +41,16 @@ class PaymentsTaxesController extends Controller
 
         $company_find = Company::find($company[0]->id);
 
-        $taxes = Taxe::findOrFail($id);
+        $taxes = Taxe::find($id);
 
-        $ciuTaxes = CiuTaxes::findOrFail($taxes->id);
+        $ciuTaxes = CiuTaxes::where('id', $taxes->id)->get();
 
         $employees = Employees::all();
 
         $count = count($employees);
 
-        $ciu = Ciu::findOrFail($ciuTaxes->ciu_id);
 
         $rebaja = 0;
-
         for ($i = 0; $i < $count; $i++) {
             if ($company_find->number_employees >= $employees[$i]->min) {
                 if ($company_find->number_employees <= $employees[$i]->max) {
@@ -60,15 +58,17 @@ class PaymentsTaxesController extends Controller
                 }
             }
         }
-
-        if ($ciuTaxes->base == 0) {
-            $base = $ciu->min_tribu_men * $ciuTaxes->unid_tribu / 100;
-            $rebaja_employees = $base * $rebaja / 100;
-            $monto = $base - $rebaja_employees;
-        } else {
-            $base = $ciu->alicuota * $ciuTaxes->base / 100;
-            $rebaja_employees = $base * $rebaja / 100;
-            $monto = $base - $rebaja_employees;
+        foreach ($ciuTaxes as $ciuTaxe) {
+            $ciu = Ciu::find($ciuTaxe->ciu_id);
+            if ($ciuTaxe->base == 0) {
+                $base = $ciu->min_tribu_men * $ciuTaxe->unid_tribu / 100;
+                $rebaja_employees = $base * $rebaja / 100;
+                $monto = $base - $rebaja_employees;
+            } else {
+                $base = $ciu->alicuota * $ciuTaxe->base / 100;
+                $rebaja_employees = $base * $rebaja / 100;
+                $monto = $base - $rebaja_employees;
+            }
         }
 
         return view('modules.payments.register', array(
@@ -98,7 +98,7 @@ class PaymentsTaxesController extends Controller
         $pTaxes->taxe_id = $request->input('taxes');
         $pTaxes->name_deposito = $request->input('name');
         $pTaxes->surname_deposito = $request->input('surname');
-        $pTaxes->cedula = $request->input('cedula');
+        $pTaxes->cedula =$request->input('nationality').$request->input('cedula');
         $file = $request->file('files');
 
         if ($file) {
