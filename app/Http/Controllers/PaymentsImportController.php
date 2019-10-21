@@ -62,11 +62,10 @@ class PaymentsImportController extends Controller
 
     public function verifyPayments()
     {
-        $banks = DB::select(DB::raw(
-            "SELECT * FROM reference_bank"
-        ));
+
 
         $payments = PaymentTaxes::all();
+            $banks=Bank::all();
 
         foreach ($banks as $bank) {
 
@@ -74,7 +73,10 @@ class PaymentsImportController extends Controller
                 ->orWhere('bank', $bank->bank)
                 ->where('amount', $bank->amount)
                 ->get();
-            if (!is_null($payments)) {
+
+
+
+            if (!$payments->isEmpty()) {
                 $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
                 $bank_find = Bank::find($bank->id);
                 if (!$payments->isEmpty()) {

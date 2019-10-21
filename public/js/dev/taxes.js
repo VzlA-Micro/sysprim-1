@@ -55,17 +55,17 @@ $(document).ready(function () {
             fiscal_credits=fiscal_credits.replace(/\./g,'');
 
             var total_deductions=parseFloat(deductions)+parseFloat(withholdings)+parseFloat(fiscal_credits);
-            console.log(total_deductions);
             var total=Math.floor(parseFloat(base)*alicuota)/100;
-            console.log(total);
-            if(total_deductions>=total){
-                swal({
-                    title: "¡Oh no!",
-                    text: "Verifica los datos ingresados.",
-                    icon: "error",
-                    button: "Ok",
-                });
-                band=true;
+            if(total!==0){
+                if(total_deductions>=total){
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Verifica los datos ingresados.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                    band=true;
+                }
             }
         });
 
