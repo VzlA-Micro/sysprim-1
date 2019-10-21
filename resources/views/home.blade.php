@@ -13,6 +13,18 @@
                     <span class="truncate">Mis Empresas</span>
                 </a>
             </div>
+            <div class="col s12 m3">
+                <a href="{{ route('companies.my-business') }}" class="btn-app white grey-text text-darken-2">
+                    <i class="icon-location_city"></i>
+                    <span class="truncate">Mis Inmuebles</span>
+                </a>
+            </div>
+            <div class="col s12 m3">
+                <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">
+                    <i class="icon-directions_car"></i>
+                    <span class="truncate">Mis Vehículos</span>
+                </a>
+            </div>
             @endif
 
             @if(\Auth::user()->role_id ==1)
@@ -44,6 +56,12 @@
                     <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
                         <i class="icon-assignment"></i>
                         <span class="truncate">Gestionar CIIU</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('geosysprim') }}" class="btn-app white green-text text-darken-4">
+                        <i class="icon-public"></i>
+                        <span class="truncate">GeoSysPRIM</span>
                     </a>
                 </div>
             @endif

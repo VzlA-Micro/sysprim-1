@@ -75,8 +75,14 @@ Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 
 // Vehicles module routes
 Route::get('/vehicles/my-vehicles', function() {
-    return view('modules.vehicles.menu');
+    return view('modules.vehicles.manage        ');
 })->name('vehicles.my-vehicles');
+Route::get('/vehicles/register', function() {
+    return view('modules.vehicles.register');
+})->name('vehicles.register');
+Route::get('/vehicles/read', function() {
+    return view('modules.vehicles.read');
+})->name('vehicles.read');
 
 // ---------------------------------------------------
 
@@ -257,7 +263,7 @@ Route::get('/readEmployees',array(
 ));
 
 //Geosysprim
-Route::get('/geosysprim/home','GeoSysprimController@home');
+Route::get('/geosysprim/home','GeoSysprimController@home')->name('geosysprim');
 Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanySolvent');
 
 Route::get('/admin/geolocation', function() {
