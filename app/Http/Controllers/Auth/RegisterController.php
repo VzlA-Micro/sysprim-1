@@ -74,6 +74,7 @@ class RegisterController extends Controller
     {
         $data['confirmation_code'] = str_random(25);
 
+
         $user=User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
@@ -81,7 +82,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'ci' => $data['nationality'].$data['ci'],
             'phone' => $data['country_code'].$data['phone'],
-            'confirmed_code'=> $data['confirmation_code']
+            'confirmed_code'=> $data['confirmation_code'],
         ]);
         $id=DB::getPdo()->lastInsertId();
         $user=User::find($id);

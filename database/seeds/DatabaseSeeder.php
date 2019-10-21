@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
                     UsersCompanyTableSeeder::class,
                     CiuCompanyTableSeeder::class,
                     UnidTribuTableSeeder::class,
-                    ExtrasTableSeeder::class
+                    ExtrasTableSeeder::class,
+                    EmployeesTableSeeder::class
         ]);
     }
 }

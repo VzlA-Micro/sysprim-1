@@ -13,7 +13,7 @@ class ExtrasTableSeeder extends Seeder
     public function run()
     {
         DB::table('extras')->insert([
-            'tax_rate'=>500,
+            'tax_rate'=>12,
             'mora'=>300,
             'since'=>Carbon::now(),
             'to'=>Carbon::now(),

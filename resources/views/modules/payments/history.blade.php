@@ -50,7 +50,7 @@
                                                 <td>
                                                     <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar Solvencia</a>
                                                 </td>
-                                                @else
+                                            @else
                                                 <td>
                                                     <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview left"></i>Detalles</a>
                                                 </td>

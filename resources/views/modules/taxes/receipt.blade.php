@@ -20,7 +20,7 @@
     	<table style="width: 100%; border-collapse: collapse;">
 	        <tr style="text-align: center">
 	            <td style="width: 25%;">
-					<img src="http://sysprim.com.devel/images/alcaldia_logo.png" style="width:180px; height:80px" alt="">
+					<img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="">
 	            </td>
 	            <td style="width: 50%;" style="text-align: center;">
 					República Bolivariana de Venezuela <br>
@@ -28,7 +28,7 @@
 					Barquisimeto - Edo. Lara
 	            </td>
 	            <td style="width: 25%;">
-					<img src="http://sysprim.com.devel/images/semat_logo.png" style="width:180px; height:80px" alt="">
+					<img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="">
 	            </td>
 	        </tr><!-- 
 	        <tr>
@@ -101,6 +101,7 @@
 				$total_taxes+=$surchange_total+$ciu->pivot->mora;
 			 	}else{
 			   	 $taxe=$ciu->pivot->unid_tribu*$ciu->min_tribu_men;
+			   	 $surchange_total=0;
 			 	 $total_taxes+=$taxe;
 			 	}
 			@endphp
@@ -123,7 +124,7 @@
 
 
 
-		@if($ciu->pivot->interest!==0)
+		@if($ciu->pivot->interest!=0)
 			<tr>
 				<td></td>
 				<td style="font-size: 13px !important;">Recargo</td>
@@ -178,7 +179,7 @@
     $nom = 'DUPONT Alphonse';
     $date = '31/12/'.date('Y');
 ?>
-    
+
 
     <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
         <table style="width: 100%">
@@ -186,7 +187,7 @@
         		<td style="width: 30%"></td>
         		<td style="width: 30%"></td>
         		<td style="width: 100%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/payments/taxes/".$taxes->id)) !!} " style="float: left;position: absolute;top: -120px;right: -700px !important;">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("https://sysprim.com/payments/taxes/".$taxes->id)) !!} " style="float: left;position: absolute;top: -120px;right: -700px !important;">
         		</td>
 
         	</tr>
