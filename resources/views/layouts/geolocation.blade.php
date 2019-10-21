@@ -19,6 +19,8 @@
     @yield('content')
 
     @include('includes.map.footer')
+
+    @include('includes.scripts')
     @yield('scripts')
 </body>
 </html>
