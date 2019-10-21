@@ -41,6 +41,7 @@
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
+            <li><a href="{{ route('home') }}" class="waves-effect waves-blue">Volver a SysPRIM</a></li>
         </ul>
     </nav>
 </header>
