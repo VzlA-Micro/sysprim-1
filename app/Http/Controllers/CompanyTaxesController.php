@@ -168,11 +168,13 @@ class CompanyTaxesController extends Controller
      */
     public function show($id){
         $taxes=Taxe::findOrFail($id);
-        $company=Company::where('name',session('company'))->get();
-        $company_find=Company::find($company[0]->id);
+        //$company=Company::where('name',session('company'))->get();
+        //$company_find=Company::find($company[0]->id);
+
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+
         $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
 
 
