@@ -14,24 +14,24 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'name'=>'Super Usuario',
-            'description'=>'Persona la cual posee acceso a todo las funcionalidades del sistema',
-            'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now(),
+            'name' => 'Super Usuario',
+            'description' => 'Persona la cual posee acceso a todo las funcionalidades del sistema',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('roles')->insert([
-            'name'=>'Ticket Office',
-            'description'=>'persona encargada de la taquilla de atencion al usuario',
-            'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now(),
+            'name' => 'Ticket Office',
+            'description' => 'persona encargada de la taquilla de atencion al usuario',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('roles')->insert([
-            'name'=>'Usuario',
-            'description'=>'persona que utiliza el sistema',
-            'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now(),
+            'name' => 'Usuario',
+            'description' => 'persona que utiliza el sistema',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

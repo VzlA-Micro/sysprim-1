@@ -74,7 +74,6 @@ class RegisterController extends Controller
     {
         $data['confirmation_code'] = str_random(25);
 
-
         $user=User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
