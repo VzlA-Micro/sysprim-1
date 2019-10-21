@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
                     CiuCompanyTableSeeder::class,
                     UnidTribuTableSeeder::class,
                     ExtrasTableSeeder::class,
+                    EmployeesTableSeeder::class,
                     RolesTableSeeder::class,
                     RolPermissionTableSeeder::class,
                     PermissionsTableSeeder::class

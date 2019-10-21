@@ -20,6 +20,9 @@ class GeoSysprimController extends Controller{
             if(is_null($verified)) {
                 $company_find[]=$company;
                 $taxes[]=$company->taxesCompanies->last();
+            }else{
+                $taxes=null;
+                $company_find=null;
             }
         }
         return response()->json(['taxes'=>$taxes,'company'=>$company_find]);

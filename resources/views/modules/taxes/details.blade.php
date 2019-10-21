@@ -34,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="divider"></div>>
+                    <div class="divider"></div>
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
@@ -90,9 +90,8 @@
                         </div>
 
                         @endforeach
-                        <div class="col l12">
-                            <div class="col l6">
-
+                        <div class="col l12 s12">
+                            <div class="col l6 s12">
                                     <table class="centered responsive-table" style="font-size: 10px;!important;">
                                         <tr>
                                             <td>CODIGO</td>
@@ -117,7 +116,7 @@
                                     <p><b>MORA:</b>{{($extra["mora"])}}UT</p>
 
                             </div>
-                            <div class="col l6">
+                            <div class="col l6 s12">
                                 <div class="col s12 m12 ">
                                     <input type="text" name="recargo" id="recargo" class="validate total_recargo money" value="0"  readonly>
                                     <label for="total_tasa">Recargo  Interes:(Bs)</label>
@@ -135,16 +134,88 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </form>
-                    <div class="card-action">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <a href="{{ route('payments.help',['id'=>$taxes->id]) }}" class="btn btn-rounded col s12 blue waves-effect waves-light">CONTINUAR</a>
+
+
+                    @if(!$taxes->payments->isEmpty())
+
+                    <form id="payments" enctype="multipart/form-data" method="post">
+                        <div class="card-header center-align">
+                            <h5>DETALLES DE PAGOS</h5>
+                        </div>
+                        <div class="card-content row">
+                            @csrf
+                            <div class="input-field col s12 m6">
+                                <select name="type" id="type" required readonly="">
+                                    <option value="" disabled selected readonly>Elije una opción...</option>
+                                    <option value="Transferencia" @if($taxes->payments[0]->payments_type=="Transferencia"){{"selected"}}@endif>Transferencia</option>
+                                    <option value="Pago Movil" @if($taxes->payments[0]->payments_type=="Pago Movil"){{"selected"}}@endif >Pago Movil</option>
+                                    <option value="Deposito" @if($taxes->payments[0]->payments_type=="Deposito"){{"selected"}} @endif>Deposito</option>
+                                </select>
+                                <label for="type">Forma de Pago</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <select name="bank" id="bank" required readonly>
+                                    <option value="" disabled selected>Elije una opción...</option>
+                                    <option value="Venezuela" @if($taxes->payments[0]->bank=="Venezuela"){{"selected"}}@endif>Venezuela</option>
+                                    <option value="Bicentenario" @if($taxes->payments[0]->bank=="Bicentenario"){{"selected"}}@endif>Bicentenario</option>
+                                    <option value="Mercantil" @if($taxes->payments[0]->bank=="Mercantil"){{"selected"}}@endif>Mercantil</option>
+                                    <option value="Banesco"  @if($taxes->payments[0]->bank=="Banesco"){{"selected"}}@endif>Banesco</option>
+                                    <option value="BOD" @if($taxes->payments[0]->bank=="BOD"){{"selected"}}@endif>BOD</option>
+                                </select>
+                                <label for="bank">Banco</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input type="text" name="code_ref" id="code_ref" value="{{$taxes->payments[0]->code_ref}}" pattern="[0-9]+" title="Solo puede escribir números."  readonly required>
+                                <label for="code_ref" >N° de Referencia</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                    <input type="number" name="amount" id="amount" value="{{$taxes->payments[0]->amount}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"  required>
+                                <label for="amount">Monto</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input type="text" name="name" id="name" pattern="[a-zA-Z]+" title="Solo puede escribir letras." value="{{$taxes->payments[0]->name_deposito}}" readonly required>
+                                <label for="name">Nombre</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input type="text" name="surname" id="surname" pattern="[a-zA-Z]+" title="Solo puede escribir números."  value="{{$taxes->payments[0]->surname_deposito}}" readonly required>
+                                <label for="surname">Apellido</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." readonly  value="{{$taxes->payments[0]->cedula}}" required>
+                                <label for="cedula">Cedula</label>
+                            </div>
+
+                          <div class="input-field col s12 m6">
+                                <select name="status" id="status">
+                                    <option value="null" disabled selected>Selecionar opcion</option>
+                                    <option value="verified" @if($taxes->payments[0]->status=="verified"){{"selected"}}@endif >Verificada</option>
+                                    <option value="process"  @if($taxes->payments[0]->status=="process"){{"selected"}}@endif  >Procesando</option>
+                                    <option value="cancel" @if($taxes->payments[0]->status=="cancel"){{"selected"}}@endif>Anulada</option>
+                                </select>
+                                <label for="status">Estado</label>
                             </div>
                         </div>
+                    </form>
+
+                    @endif
+
+                    <div class="card-action">
+
+                        @if(!$taxes->payments->isEmpty())
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <a href="{{ route('home')}}" class="btn btn-rounded col s12 blue waves-effect waves-light">VOLVER</a>
+                                </div>
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <a href="{{ route('payments.help',['id'=>$taxes->id]) }}" class="btn btn-rounded col s12 blue waves-effect waves-light">CONTINUAR</a>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

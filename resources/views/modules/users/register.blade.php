@@ -13,12 +13,13 @@
                 <a href="#!" class="breadcrumb">Registrar Usuario</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="" method="post" class="card">
+                <form action="{{route('register')}}" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Usuario</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
+                        <input type="hidden" value="1" name="confirmed">
                         <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>

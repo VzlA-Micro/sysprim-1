@@ -43,10 +43,10 @@
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            @foreach($taxes->taxesCiu as $ciu)
+
                             
-                            <input type="number" name="amount" id="amount" value="{{$monto+$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-                            @endforeach
+                            <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
+
                             <label for="amount">Monto</label>
                         </div>
 
@@ -58,11 +58,19 @@
                             <input type="text" name="surname" id="surname" pattern="[a-zA-Z]+" title="Solo puede escribir números." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s2 m2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <select name="nationality" id="nationality" required>
+                                <option value="null">...</option>
+                                <option value="V-">V</option>
+                                <option value="E-">E</option>
+                            </select>
+                            <label for="nationality">Nacionalidad</label>
+                        </div>
+                        <div class="input-field col s12 m4">
                             <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." required>
                             <label for="cedula">Cedula</label>
                         </div>
-                        <div class="file-field input-field col s12 12">
+                        <div class="file-field input-field col s12 m6">
                             <div class="btn purple btn-rounded waves-light">
                                 <span><i class="icon-photo_size_select_actual right"></i>Archivo</span>
                                 <input type="file" id="files" name="files">

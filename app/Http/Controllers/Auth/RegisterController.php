@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'ci' => $data['nationality'].$data['ci'],
             'phone' => $data['country_code'].$data['phone'],
-            'confirmed_code'=> $data['confirmation_code']
+            'confirmed_code'=> $data['confirmation_code'],
         ]);
         $id=DB::getPdo()->lastInsertId();
         $user=User::find($id);
