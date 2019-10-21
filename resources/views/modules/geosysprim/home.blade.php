@@ -1,10 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.geolocation')
 
 @section('content')
-<div id="map" style="width:1000px;height: 1000px;">
-
-</div>
-
+    <main>
+        <div id="map" style="width:100%; height: 600px; z-index: -1000"></div>
+    </main>
 @endsection
 
 @section('scripts')
