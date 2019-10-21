@@ -48,5 +48,23 @@ class UsersTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
+
+        DB::table('users')->insert([
+            'ci'=>'V9876321',
+            'name'=>'usuario',
+            'surname'=>'Sysprim',
+            'phone'=>'04121234567',
+            'confirmed'=>1,
+            'confirmed_code'=>null,
+            'role_id'=>3,
+            'email'=>'usuario@gmail.com',
+            'email_verified_at'=>null,
+            'password'=>Hash::make('Sysprim2000'),
+            'address'=>'CALLE 12 CARRERA 2',
+            'image'=>null,
+            'remember_token'=>null,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);
     }
 }

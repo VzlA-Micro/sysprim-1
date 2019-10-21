@@ -26,5 +26,12 @@ class RolesTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
         ]);
+
+        DB::table('roles')->insert([
+            'name'=>'Usuario',
+            'description'=>'persona que utiliza el sistema',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+        ]);
     }
 }

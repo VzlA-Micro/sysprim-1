@@ -14,15 +14,22 @@ class RolPermissionTableSeeder extends Seeder
     public function run()
     {
         DB::table('roles_permissions')->insert([
-        'role_id'=>1,
-        'permission_id'=>1,
-        'created_at'=>Carbon::now(),
-        'updated_at'=>Carbon::now(),
+            'role_id'=>1,
+            'permission_id'=>1,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
         ]);
 
         DB::table('roles_permissions')->insert([
             'role_id'=>2,
             'permission_id'=>2,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        DB::table('roles_permissions')->insert([
+            'role_id'=>3,
+            'permission_id'=>3,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
         ]);
