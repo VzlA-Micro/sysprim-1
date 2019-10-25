@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use App\Helpers\TaxesMonth;
+use App\Helpers\CedulaVE;
 class HomeController extends Controller
 {
     /**
@@ -28,13 +29,13 @@ class HomeController extends Controller
      */
     public function index(Request $request){
 
+
         if(\Auth::user()->confirmed!=0){
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
                 foreach ($user->companies as $company){
-                         TaxesMonth::verify($company->id);
+                         $taxes=TaxesMonth::verify($company->id,false);
                 }
-
                 $notifications= DB::table('notification')->where('user_id','=',\Auth::user()->id)->get();
                 session(['notifications' => $notifications]);
             }

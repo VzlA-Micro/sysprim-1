@@ -49,6 +49,8 @@ Route::get('/users/details', function() {
 Route::get('/users/edit', function() {
     return view('modules.users.edit');
 })->name('users.edit');
+Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
+
 
 // ---------------------------------------------------
 

@@ -16,8 +16,8 @@
                         <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
-                                <option value="V-">V</option>
-                                <option value="E-">E</option>
+                                <option value="V">V</option>
+                                <option value="E">E</option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
@@ -26,11 +26,11 @@
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
                         <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">

@@ -14,25 +14,47 @@ class TaxesMonth{
         $company = Company::find($id);
 
 
+        $dayMoraEspecial=20;//el dia de cobro para lo que tienen mora y son agente de retencion
+        $dayMoraNormal=24;//el dia de cobro para lo que no son agente de retención
+        $diffDayMora=0;
+
         $companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();//busco el ultimo pago realizado por la empresa
 
         if ($companyTaxes->isEmpty()) {//si no tiene pagos
 
             $fiscal_period = Carbon::parse($company->created_at);//utilizo la fecha que se creo el registro como referencia si esta atrasado o no
-            $now = Carbon::now();//fecha del computador
-            $diffMount = $fiscal_period->diffInMonths($now);//veo la diferencia de meses
 
+
+            $now = Carbon::now();//fecha del computador
+
+            $diffMount = $fiscal_period->diffInMonths($now);//veo la diferencia de meses
             if($diffMount>=1){
+
                 $mes=self::$mounths[($fiscal_period->format('m'))-1];
-                if($now->format('d')<=16){
-                    $mora=false;
+
+
+                if($company->typeCompany==='R'){
+                    if($now->format('d')<=$dayMoraEspecial){
+                        $mora=false;
+                    }else{
+                        $mora=true;
+                        $diffDayMora=$now->format('d')-$dayMoraEspecial;
+                    }
                 }else{
-                    $mora=true;
+                    if($now->format('d')<=$dayMoraNormal){
+                        $mora=false;
+                    }else{
+                        $diffDayMora=$now->format('d')-$dayMoraNormal;
+                        $mora=true;
+                    }
                 }
+
 
                 $date =array(
                     'mount_pay' =>$mes.'-'.$fiscal_period->format('Y'), 'mount_diff' =>
-                    $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora);
+                    $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora,
+                    'diffDayMora'=>$diffDayMora
+                    );
             }else{
                 $date=null;
                 $mes=null;
@@ -46,10 +68,20 @@ class TaxesMonth{
             $diffMount = $fiscal_period->diffInMonths($now);
             $payment = PaymentTaxes::where('taxe_id', $companyTaxes[0]->id)->get();//busco si el pago fue realizo
 
-            if($now->format('d')<=16){
-                $mora=false;
+            if($company->typeCompany==='R'){
+                if($now->format('d')<=$dayMoraEspecial){
+                    $mora=false;
+                }else{
+                    $mora=true;
+                    $diffDayMora=$now->format('d')-$dayMoraEspecial;
+                }
             }else{
-                $mora=true;
+                if($now->format('d')<=$dayMoraNormal){
+                    $mora=false;
+                }else{
+                    $diffDayMora=$now->format('d')-$dayMoraNormal;
+                    $mora=true;
+                }
             }
 
 
@@ -58,14 +90,14 @@ class TaxesMonth{
                     $diffMount--;//resto 1 a la diferencia de mes porque este utilimo esta pago
                     $fiscal_period->addMonth(1);//añado un mes para saber cual es el proximo a pagar
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
-                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'),   'mora'=>$mora);
+                    $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'),  'mora'=>$mora, 'diffDayMora'=>$diffDayMora);
                 } else if (!$payment->isEmpty() && $payment[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
                     $date = null;
                     $mes=null;
                 } else {
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
                     $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'),
-                        'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora);
+                        'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'), 'mora'=>$mora, 'diffDayMora'=>$diffDayMora);
                 }
             }
 
