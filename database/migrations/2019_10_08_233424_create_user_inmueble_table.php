@@ -13,7 +13,7 @@ class CreateUserInmuebleTable extends Migration
      */
     public function up()
     {
-        Schema::create('inmueble', function (Blueprint $table) {
+        Schema::create('user_inmueble', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('inmueble_id')->unsigned();

@@ -10,6 +10,7 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
+                @if(\Auth::users()->rol_id)
                 <a href="#!" class="breadcrumb">Registrar Usuario</a>
             </div>
             <div class="col s12 m8 offset-m2">

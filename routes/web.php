@@ -50,6 +50,9 @@ Route::get('/users/edit', function() {
     return view('modules.users.edit');
 })->name('users.edit');
 
+//contribuyente module routes
+
+
 // ---------------------------------------------------
 
 // Companies module routes
