@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '') {
             var rif = $('#document_type').val()+$('#RIF').val();
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
                     swal({
                         title: "¡Bien Hecho!",
-                        text: "Ciiu Registrado con Exito",
+                        text: "Empresa Registrada con Éxito.",
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {

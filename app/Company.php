@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 class Company extends Model{
     protected $table='company';
-    protected $appends=['desc'];
+    protected $appends=['desc','typeCompany'];
     public function users(){
     return $this->belongsToMany('App\User','users_company')
         ->withPivot('user_id');
@@ -34,6 +34,10 @@ class Company extends Model{
         }else{
            return $this->desc=true;
         }
+    }
+
+    public function getTypeCompanyAttribute(){
+        return $this->typeCompany=substr($this->license,0,1);
     }
 
 }

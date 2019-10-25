@@ -15,15 +15,12 @@ $(document).ready(function () {
             var nationality=$('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: "https://sysprim.com/users/verify-ci/"+nationality+ci,
+                url: "http://sysprim.com.devel/users/verify-ci/"+nationality+ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
                     if(response.status==='error'){
                         swal({
                             title: "¡Oh no!",
@@ -33,6 +30,10 @@ $(document).ready(function () {
                         });
 
                         $('#ci').addClass('invalid');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }else{
+                        findUser(nationality,ci);
                     }
 
                 },
@@ -55,7 +56,7 @@ $(document).ready(function () {
             var email=$('#email').val();
             $.ajax({
                 method: "GET",
-                url: "https://sysprim.com/users/verify-email/"+email,
+                url: "http://sysprim.com.devel/users/verify-email/"+email,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -87,4 +88,34 @@ $(document).ready(function () {
             });
         }
     });
+
+
+    function findUser(nationality,ci) {
+        $.ajax({
+            method: "GET",
+            url: "http://sysprim.com.devel/users/find/"+nationality+"/"+ci,
+            success: function (response) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                if(response.status!=='error'){
+                   $('#name').val(response.response.nombres);
+                   $('#surname').val(response.response.apellidos);
+                    console.log(response);
+                   M.updateTextFields();
+
+                }
+            },
+            error: function (err) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+    }
 });

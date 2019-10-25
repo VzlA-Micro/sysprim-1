@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use PHPUnit\Framework\Constraint\IsEmpty;
+use App\Helpers\CedulaVE;
 
 class UserController extends Controller{
 
@@ -42,9 +42,12 @@ class UserController extends Controller{
         }
         return response()->json($response);
     }
-
     public function create(){
         return view('modules.users.register');
+    }
+    public function findUser($nationality,$ci){
+        $user=CedulaVE::get($nationality,$ci,false);
+        return response()->json($user);
     }
 
 }

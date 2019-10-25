@@ -24,8 +24,8 @@
                         <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
-                                <option value="V-">V</option>
-                                <option value="E-">E</option>
+                                <option value="V">V</option>
+                                <option value="E">E</option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>

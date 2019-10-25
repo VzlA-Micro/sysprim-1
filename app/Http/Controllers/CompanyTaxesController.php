@@ -16,6 +16,7 @@ use Alert;
 use App\Helpers\TaxesMonth;
 use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
+use App\Employees;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -108,6 +109,7 @@ class CompanyTaxesController extends Controller
         $date=TaxesMonth::verify($company,false);
 
 
+
         for ($i=0;$i<count($base);$i++){
             //format a base
             $base_format=str_replace('.','',$base[$i]);
@@ -122,29 +124,36 @@ class CompanyTaxesController extends Controller
             //format fiscal credits
             $fiscal_credits_format=str_replace('.','',$fiscal_credits[$i]);
             $fiscal_credits_format=str_replace(',','.',$fiscal_credits_format);
+            $ciu=Ciu::find($ciu_id[$i]);
+
+            if($base[$i]==0){
+                $taxes=$ciu->min_tribu_men*$unid_tribu[0]->value;
+                $unid_total=$unid_tribu[0]->value;
+            }else{
+                $taxes=$ciu->alicuota*$base_format/100;
+                $unid_total=0;
+            }
+
+
 
             if($date['mora']){//si tiene mora
                 $extra=Extras::orderBy('id', 'desc')->take(1)->get();
-                $mora=$extra[0]->mora*$unid_tribu[0]->value;
-                $ciu=Ciu::find($ciu_id[$i]);
-                $taxes=$ciu->alicuota*$base_format/100;
+                if($company_find->typeCompany==='R'){
 
-                $tax_rate=$taxes-(float)$deductions[$i]-(float)$withholding[$i]-(float)$fiscal_credits[$i];
+                    $tax_rate=$taxes+(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
+                }else{
+                    $tax_rate=$taxes-(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
+                }
 
                 $tax_rate=$tax_rate*$extra[0]->tax_rate/100;
-                $interest=(0.42648/360)*($tax_rate+$taxes);
+                $interest=(0.42648/360)*$date['diffDayMora']*($tax_rate+$taxes);
+                $mora=0;
             }else{
                 $mora=0;
                 $tax_rate=0;
                 $interest=0;
-
             }
 
-            if($base[$i]==0){
-                    $unid_total=$unid_tribu[0]->value;
-            }else{
-                    $unid_total=0;
-            }
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
                 'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
@@ -167,18 +176,68 @@ class CompanyTaxesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
+
+
         $taxes=Taxe::findOrFail($id);
-        //$company=Company::where('name',session('company'))->get();
-        //$company_find=Company::find($company[0]->id);
-
+        $ciuTaxes=CiuTaxes::where('taxe_id',$id)->get();
+        $company_find=Company::find($taxes->company_id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra=['tasa'=>$mora[0]->tax_rate];
 
-        $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
+
+        foreach ($ciuTaxes as $ciu){
+                $amountInterest+=$ciu->interest;
+                $amountRecargo+=$ciu->tax_rate;
+
+                if($company_find->TypeCompany==='R'){
+                    $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+                }else{
+                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+                }
+        }
+
+        $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
 
 
-        return view('modules.taxes.details',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
+
+
+        //si tiene descuento
+        if($company_find->desc){
+            $employees = Employees::all();
+            foreach ($employees as $employee){
+                if ($company_find->number_employees >= $employee->min) {
+                    if ($company_find->number_employees <= $employee->max) {
+                        $amountDesc=$amountTaxes*$employee->value/100;
+
+                    }
+                }
+            }
+
+            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+        }
+
+        $amount=['amountInterest'=>$amountInterest,
+            'amountRecargo'=>$amountRecargo,
+            'amountCiiu'=>$amountCiiu,
+            'amountTotal'=>$amountTaxes,
+            'amountDesc'=>$amountDesc
+            ];
+
+
+        return view('modules.taxes.details',
+            [   'taxes'=>$taxes,
+                'fiscal_period'=> $fiscal_period,
+                'extra'=>$extra,
+                'ciuTaxes'=>$ciuTaxes,
+                'amount'=>$amount
+            ]);
     }
 
     /**
