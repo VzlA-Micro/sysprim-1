@@ -26,7 +26,7 @@ class TributoController extends Controller
         $tributo->value= $request->input('valueUndTributo');
         $tributo->save();
 
-        return redirect()->route('readTributo');
+        return redirect()->route('tax-unit.read');
     }
 
     /**
@@ -38,7 +38,7 @@ class TributoController extends Controller
     public function show()
     {     
         $tributo= Tributo::get();
-        return view('dev.tributo.read',array(
+        return view('modules.tax-unit.read',array(
             'showTributo'=>$tributo
         ));
         //return $ciu;
@@ -52,10 +52,6 @@ class TributoController extends Controller
      */
     public function edit($id)
     {
-        $ciu= ciu::findOrFail($id);
-        return view('dev.detailsCiu',array(
-            'ciu'=>$ciu
-        ));
         
     }
 
@@ -68,15 +64,7 @@ class TributoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$id=$request->input('id');
-        $ciu=ciu::findOrFail($id);
         
-        $ciu->code= $request->input('code');
-        $ciu->name= $request->input('name');
-        $ciu->value= $request->input('value');
-        
-        $ciu->update(); 
-        return redirect()->route('readCiu');
     }
 
     /**
@@ -87,7 +75,6 @@ class TributoController extends Controller
      */
     public function destroy($id)
     {
-        $ciu=ciu::destroy($id);
-        return redirect()->route('readCiu');
+       
     }
 }

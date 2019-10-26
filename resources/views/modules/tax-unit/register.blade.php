@@ -1,18 +1,19 @@
 @extends('layouts.app')
 
+@section('styles')
+    
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Historial de Pagos</a>
-                <a href="" class="breadcrumb">Conciliar Pago</a>
+                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('tax-unit.manage') }}" class="breadcrumb">Gestionar Unidad Tributaria</a>
+                <a href="{{ route('tax-unit.register') }}" class="breadcrumb">Registrar</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form id="register" action="{{route('saveTributo')}}" method="post" class="card">
+                <form id="register" action="{{ route('tax-unit.save') }}" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Unidad Tributaria</h5>
                     </div>
@@ -25,7 +26,7 @@
                             <input type="text" name="to_date" id="to_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Fin</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12">
                             <input type="number" name="valueUndTributo" id="valueUndTributo" required>
                             <label for="valueUndTributo">Valor de unidad tributaria</label>
                         </div>
@@ -37,4 +38,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    
 @endsection
