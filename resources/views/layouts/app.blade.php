@@ -18,9 +18,9 @@
     @auth
         @include('includes.app.header')
     @endauth
-    @guest
+    {{-- @guest
         @include('includes.auth.header')
-    @endguest
+    @endguest --}}
     <main>
         @yield('content')
     </main>
