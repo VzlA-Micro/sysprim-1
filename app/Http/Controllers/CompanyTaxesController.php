@@ -284,25 +284,24 @@ class CompanyTaxesController extends Controller
     {
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
-
-
+        $bank=$request->input('bank');
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $code = TaxesNumber::generateNumberTaxes("PPB81");
         $taxes->code = $code;
+        $taxes->bank=$bank;
         $taxes->status = 'process';
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
-        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, '44', $code);
+        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, $bank, $code);
         $taxes->update();
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['mora' => $mora[0]->mora, 'tasa' => $mora[0]->tax_rate, 'unid_tribu' => $unid_tribu[0]->value];
         $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
-
 
         return $pdf->stream();
 

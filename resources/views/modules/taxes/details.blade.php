@@ -137,7 +137,7 @@
                                     <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
-                                <input type="hidden" id="bank" value="0">
+                                <input type="hidden" id="bank" name="bank" value="0">
                                 <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
                             </div>
                         </div>
@@ -166,11 +166,11 @@
                                         </div>
                                         <!-- Dropdown Structure -->
                                         <ul id='deposito' class='dropdown-content'>
-                                            <li><a href="#!" class="bank">Banco Bicentenario</a></li>
-                                            <li><a href="#!" class="bank">Banesco</a></li>
-                                            <li><a href="#!" class="bank">BOD</a></li>
-                                            <li><a href="#!" class="bank">100% Banco</a></li>
-                                            <li><a href="#!" class="bank">BNC</a></li>
+                                            <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a></li>
+                                            <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
+                                            <li><a href="#!" data-bank="44"  class="bank">BOD</a></li>
+                                            <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
+                                            <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -189,14 +189,14 @@
     <script>
         $(document).ready(function () {
             $('.bank').click(function () {
-                $('#bank').val($(this).text());
+                $('#bank').val($(this).attr('data-bank'));
                 $('#register-taxes')[0].submit();
-
-
             });
-
-
         });
+
+
+
+
     </script>
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
 @endsection

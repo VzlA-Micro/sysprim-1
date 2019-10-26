@@ -222,9 +222,26 @@
 			<tr>
 				<td></td>
 			</tr>
+
 			<tr>
 				<td style="width: 100%;text-align: center; font-size: 14px;">
-					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{$taxes->created_at}}**
+
+					@if($taxes->bank==44)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
+					@elseif($taxes->bank==77)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BICENTENARIO*****
+					@elseif($taxes->bank==99)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
+					@elseif($taxes->bank==33)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
+					@else
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
+					@endif
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100%;text-align: center; font-size: 14px;">
+					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes->created_at))}}**
 				</td>
 			</tr>
 
@@ -277,7 +294,7 @@
 			</tr>
 			<tr>
 				<td style="width: 20%;">
-					<img src="https://sysprim.com/images/bod_logo.png" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+					<img src="http://sysprim.com.devel/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
 				</td>
 			</tr>
 		</table>
