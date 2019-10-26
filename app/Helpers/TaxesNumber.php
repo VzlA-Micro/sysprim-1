@@ -87,7 +87,6 @@ class TaxesNumber{
         $dat_code=$sp_code+$prod1_code;
 
 
-        var_dump($dat_code);
 
 
         for($i=0;$i<strlen($bank);$i++){
@@ -183,27 +182,27 @@ class TaxesNumber{
             $dat1=$dat1*10;
         }
 
-        var_dump($dat1);
-        die();
+
         return $dat1;
     }
 
 
-    public static function generateNumberTaxes($type_payments,$type_taxes){
+    public static function generateNumberTaxes($type_payments){
         $code=DB::table('taxes')->select('code')
-                            ->where('type_payments','=',$type_payments)
-                            ->where('type_taxe','=',$type_taxes)
+                            ->where('code','LIKE',"%".$type_payments."%")
                             ->orderByDesc('id')->take(1)->get();
+
         if($code->isEmpty()){
             $number_generated=strtoupper(str_pad(1, 8, '0', STR_PAD_LEFT));
-            return $number_generated;
+            return $type_payments.$number_generated;
         }else{
-            $number_integer=(int)$code[0]->code;//LOS COVIERTOS A UN ENTERO PARA PORDER SUMARLA 1 Y SEGUIR LA SECUENCIA
+            $code_type=substr($code[0]->code,0,5);
+            $correlative=substr($code[0]->code,5,13);
+            $number_integer=(int)$correlative;//LOS COVIERTOS A UN ENTERO PARA PORDER SUMARLA 1 Y SEGUIR LA SECUENCIA
             $number_generated=strtoupper(str_pad($number_integer+1, 8, '0', STR_PAD_LEFT));
-            return $number_generated;
+            return $code_type.$number_generated;
         }
     }
-
 
 
 

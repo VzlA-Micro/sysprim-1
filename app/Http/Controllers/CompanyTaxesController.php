@@ -98,15 +98,11 @@ class CompanyTaxesController extends Controller
         $base=$request->input('base');
         $fiscal_credits=$request->input('fiscal_credits');
         $taxe=new Taxe();
-        $taxe->code=TaxesNumber::generateNumberTaxes('PTEM','00');
-        $taxe->type_payments=00;
-
+        $taxe->code=TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period=$fiscal_period;
+
         $taxe->company_id=$company;
         $taxe->save();
-
-
-
         $id=DB::getPdo()->lastInsertId();
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $date=TaxesMonth::verify($company,false);
@@ -284,42 +280,31 @@ class CompanyTaxesController extends Controller
         return $pdf->stream();
     }
 
-    public function paymentsHelp(Request $request){
-        $id=$request->input('taxes_id');
-        $amount=$request->input('total');
+    public function paymentsHelp(Request $request)
+    {
+        $id = $request->input('taxes_id');
+        $amount = $request->input('total');
 
 
-
-        $amount_format=str_replace('.','',$amount);
-        $amount_format=str_replace(',','.',$amount_format);
-
-
-        $taxes=Taxe::findOrFail($id);
-        $taxes->amount=$amount_format;
-        $taxes->type_payments="PB";
-        $taxes->type_taxe="81";
-        $code=TaxesNumber::generateNumberTaxes("PB",'81');
-        $taxes->code=$code;
-        $date_format=date("Y-m-d",strtotime($taxes->created_at));
-        $taxes->digit=$code=TaxesNumber::generateNumberSecret($amount_format,$date_format,'44','81'.$code);
-
+        $amount_format = str_replace('.', '', $amount);
+        $amount_format = str_replace(',', '.', $amount_format);
+        $taxes = Taxe::findOrFail($id);
+        $taxes->amount = $amount_format;
+        $code = TaxesNumber::generateNumberTaxes("PPB81");
+        $taxes->code = $code;
+        $taxes->status = 'process';
+        $code = substr($code, 3, 12);
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
+        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, '44', $code);
         $taxes->update();
-
-        $this->getPDF($id);
-
-
-
-
-
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra = ['mora' => $mora[0]->mora, 'tasa' => $mora[0]->tax_rate, 'unid_tribu' => $unid_tribu[0]->value];
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
 
 
-
-
-
-
-
-
-
+        return $pdf->stream();
 
 
         /*foreach($taxes->taxesCiu as $ciu){
@@ -336,7 +321,6 @@ class CompanyTaxesController extends Controller
             'monto'=>$monto
         ));
         }*/
-
 
 
     }
