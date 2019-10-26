@@ -1,3 +1,4 @@
+// Charts
 var taxCollectionChart = document.querySelector("#tax-collection");
 var taxCollection = new Chart(taxCollectionChart, {
     type: "bar", // Tipo de chart
@@ -90,4 +91,10 @@ var bankEarnings = new Chart(bankEarningsChart, {
             position: 'top'
         }
     }
+});
+
+// COunters
+$('.timer').countTo({
+    from: 0,
+    speed: 5000
 });

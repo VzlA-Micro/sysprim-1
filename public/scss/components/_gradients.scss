@@ -17,3 +17,8 @@
     background: -webkit-linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
     background: linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
 }
+
+.banesco-gradient {
+    background: rgb(79,136,106);
+    background: linear-gradient(90deg, rgba(79,136,106,1) 5%, rgba(0,59,112,1) 50%, rgba(224,37,28,1) 90%);
+}

@@ -1,9 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    {{-- <div class="container-fluid"> --}}
         <div class="row">
-            <div class="col s12 m6 offset-m3 l4 offset-l4 animated bounceInDown">
+            <div class="col s12 m8" style="margin-top: .5rem">
+                <div class="carousel carousel-slider z-depth-2 hide-on-med-and-down">
+                    <a class="carousel-item" href="#one!"><img src="{{ asset('images/prensa1.jpg') }}"></a>
+                    <a class="carousel-item" href="#two!"><img src="{{ asset('images/prensa2.jpg') }}"></a>
+                    <a class="carousel-item" href="#three!"><img src="{{ asset('images/prensa5.jpg') }}"></a>
+                    <a class="carousel-item" href="#four!"><img src="{{ asset('images/prensa4.jpg') }}"></a>
+                    <a class="carousel-item" href="#five!"><img src="{{ asset('images/prensa7.jpg') }}"></a>
+                </div>
+            </div>
+            <div class="col s12 m4 animated bounceInDown">
                 @if(session('notification'))
                 <div class="alert alert-success" style="margin-top: 1.5rem">
                     <span>{{ session('notification') }}</span>
@@ -60,5 +69,9 @@
                 </form>
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
+@endsection
+
+@section('scripts')
+    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
 @endsection

@@ -22,6 +22,11 @@ main,
 footer {
     padding-left: 0 !important;
   }
+
+  .brand-logo img {
+    width: 150px;
+    height: 54px;
+  }
 }
 body.auth-view {
   /* -webkit-flex-direction: row;
@@ -35,11 +40,15 @@ body.auth-view {
 body.auth-view header, body.auth-view main, body.auth-view footer {
   padding-left: 0px !important;
 }
-body.auth-view.auth-background {
-  background-image: url("../images/bg-1.jpg");
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  background-size: cover;
+body.auth-view .brand-logo img {
+  width: 150px;
+  height: 64px;
+}
+@media only screen and (max-width: 992px) {
+  body.auth-view header .brand-logo img {
+    width: 150px;
+    height: 54px;
+  }
 }
 
 .bg-light-opacity-8 {
@@ -65,6 +74,85 @@ body.auth-view.auth-background {
 }
 .iribarren-grey-text {
   color: #a4a4a5 !important;
+}
+
+.social {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.social i {
+  color: #ffffff;
+  font-size: 50px !important;
+}
+
+.banesco-green {
+  background-color: #4f886a !important;
+}
+.banesco-green-text {
+  color: #4f886a !important;
+}
+
+.banesco-blue {
+  background-color: #003b70 !important;
+}
+.banesco-blue-text {
+  color: #003b70 !important;
+}
+
+.banesco-red {
+  background-color: #e0251c !important;
+}
+.banesco-red-text {
+  color: #e0251c !important;
+}
+
+.x100-banco-blue {
+  background-color: #032563 !important;
+}
+.x100-banco-blue-text {
+  color: #032563 !important;
+}
+
+.x100-banco-yellow {
+  background-color: #EC7022 !important;
+}
+.x100-banco-yellow-text {
+  color: #EC7022 !important;
+}
+
+.bod-yellow {
+  background-color: #FFE200 !important;
+}
+.bod-yellow-text {
+  color: #FFE200 !important;
+}
+
+.bod-green {
+  background-color: #72C267 !important;
+}
+.bod-green-text {
+  color: #72C267 !important;
+}
+
+.bnc-green {
+  background-color: #0C894B !important;
+}
+.bnc-green-text {
+  color: #0C894B !important;
+}
+
+.bnc-yellow {
+  background-color: #FE8100 !important;
+}
+.bnc-yellow-text {
+  color: #FE8100 !important;
+}
+
+.bnc-blue {
+  background-color: #003C81 !important;
+}
+.bnc-blue-text {
+  color: #003C81 !important;
 }
 
 a.btn-app,
@@ -109,25 +197,25 @@ button.btn-app:hover {
 }
 .sidenav .logo-container {
   padding: 0 16px;
-  height: 64px;
-  line-height: 64px;
+  height: 62px;
+  line-height: 62px;
   font-size: 24px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: content-box;
 }
 .sidenav .logo-container img {
   width: 160px;
-  height: 64px;
+  height: 62px;
 }
 
 @media only screen and (max-width: 992px) {
   .sidenav .logo-container {
-    height: 54px;
-    line-height: 54px;
+    height: 52px;
+    line-height: 52px;
   }
   .sidenav .logo-container img {
     width: 140px;
-    height: 54px;
+    height: 52px;
   }
 }
 @font-face {
@@ -447,6 +535,17 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 .bdv-gradient {
   background: -webkit-linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
   background: linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
+}
+
+.banesco-gradient {
+  background: #4f886a;
+  background: linear-gradient(90deg, #4f886a 5%, #003b70 50%, #e0251c 90%);
+}
+
+.carousel .carousel-item > img {
+  width: 100%;
+  border-radius: 3px;
+  max-height: 523px;
 }
 
 /*# sourceMappingURL=owner.css.map */

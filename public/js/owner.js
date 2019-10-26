@@ -40,4 +40,11 @@ $(document).ready(function() {
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
     $('.modal').modal();
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        // indicators: true
+    });
+    setInterval(function() {
+        $('.carousel.carousel-slider').carousel('next');
+      }, 3500); // every 2 seconds
 });

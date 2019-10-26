@@ -17,29 +17,35 @@
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Dinero Total en Bolivares</span>
-						<span class="widget-stats-number">100.000.000Bs</span>
+                        <span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
 					</div>
 				</div>
             </div>
             <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats">
-					<div class="widget-stats-icon green white-text">
+					<div class="widget-stats-icon red white-text">
 						<i class="icon-thumb_up"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Dinero Total en Petros</span>
-						<span class="widget-stats-number">0,0000215136136</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000" data-decimals="10"></span> P.
+                        </span>
 					</div>
 				</div>
 			</div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats blue-gradient">
+				<div class="widget bootstrap-widget stats banesco-green white-text">
 					<div class="widget-stats-icon white-text">
 						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banesco</b></span>
-						<span class="widget-stats-number">5 stars</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
@@ -52,13 +58,15 @@
 				</div>
             </div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats green-gradient">
+				<div class="widget bootstrap-widget stats x100-banco-yellow white-text">
 					<div class="widget-stats-icon white-text">
 						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>100% Banco</b></span>
-						<span class="widget-stats-number">5 stars</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
@@ -71,13 +79,15 @@
 				</div>
             </div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats green-gradient">
+				<div class="widget bootstrap-widget stats bod-green white-text">
 					<div class="widget-stats-icon white-text">
 						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-						<span class="widget-stats-number">5 stars</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
@@ -90,13 +100,15 @@
 				</div>
             </div>
             <div class="col s12 m6">
-				<div class="widget bootstrap-widget stats">
-					<div class="widget-stats-icon white-text red">
+				<div class="widget bootstrap-widget stats red-gradient white-text">
+					<div class="widget-stats-icon white-text">
 						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banco Bicentenario</b></span>
-						<span class="widget-stats-number">5 stars</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
@@ -109,13 +121,15 @@
 				</div>
             </div>
             <div class="col s12 m6">
-				<div class="widget bootstrap-widget stats green-gradient">
+				<div class="widget bootstrap-widget stats bnc-blue white-text">
 					<div class="widget-stats-icon white-text">
 						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
-						<span class="widget-stats-number">5 stars</span>
+						<span class="widget-stats-number">
+                            <span class="timer" data-to="100000000"></span> Bs.
+                        </span>
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
