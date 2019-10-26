@@ -16,7 +16,7 @@
                         <i class="icon-thumb_up"></i>
 					</div>
 					<div class="widget-stats-content">
-						<span class="widget-stats-title">Dinero Total en Bolivares</span>
+						<span class="widget-stats-title">Recaudación Total en Bolivares</span>
                         <span class="widget-stats-number">
                             <span class="timer" data-to="100000000"></span> Bs.
                         </span>
@@ -26,10 +26,10 @@
             <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats">
 					<div class="widget-stats-icon red white-text">
-						<i class="icon-thumb_up"></i>
+						<i class="icon-Petro_sign"></i>
 					</div>
 					<div class="widget-stats-content">
-						<span class="widget-stats-title">Dinero Total en Petros</span>
+						<span class="widget-stats-title">Recaudación Total en Petros</span>
 						<span class="widget-stats-number">
                             <span class="timer" data-to="100000000" data-decimals="10"></span> P.
                         </span>
@@ -39,7 +39,7 @@
             <div class="col s12 m6 l4">
 				<div class="widget bootstrap-widget stats banesco-green white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="icon-320x0w"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banesco</b></span>
@@ -239,12 +239,17 @@
                     </li>
                 </ul>
             </div>
-        </div>
+            <div class="col s12">
+                <div id="map" style="width: 100%; height: 400px"></div>
+            </div>
+        </div>  
     </div>
 @endsection
 @section('scripts')
     <script src="{{ asset('js/jquery.countTo.js') }}"></script>
     <script src="{{ asset('js/aos.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>    
+    <script src="{{ asset('js/dashboard.js') }}"></script> 
+    <script src="{{ asset('js/dev/geosysprim.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>   
 @endsection

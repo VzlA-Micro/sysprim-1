@@ -83,4 +83,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/user.js') }}"></script>
+    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
 @endsection

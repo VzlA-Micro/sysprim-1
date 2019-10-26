@@ -155,6 +155,13 @@ body.auth-view .brand-logo img {
   color: #003C81 !important;
 }
 
+.peach {
+  background-color: #F63 !important;
+}
+.peach-text {
+  color: #F63 !important;
+}
+
 a.btn-app,
 button.btn-app {
   display: block;
@@ -336,17 +343,17 @@ input[type=tel]:focus:not(.browser-default),
 input[type=number]:focus:not(.browser-default),
 input[type=search]:focus:not(.browser-default),
 textarea.materialize-textarea:focus {
-  border-bottom: 1px solid #e1a02e !important;
-  -webkit-box-shadow: 0 1px 0 0 #e1a02e !important;
-  box-shadow: 0 1px 0 0 #e1a02e !important;
+  border-bottom: 1px solid #a51d1d !important;
+  -webkit-box-shadow: 0 1px 0 0 #a51d1d !important;
+  box-shadow: 0 1px 0 0 #a51d1d !important;
 }
 
 .input-field label.active {
-  color: #e1a02e !important;
+  color: #a51d1d !important;
 }
 
 .input-field .prefix.active {
-  color: #e1a02e !important;
+  color: #a51d1d !important;
 }
 
 .input-field .prefix {
@@ -413,8 +420,8 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 }
 
 [type=checkbox].filled-in.blue:checked + span:not(.lever):after {
-  border: 2px solid #e1a02e !important;
-  background-color: #e1a02e !important;
+  border: 2px solid #a51d1d !important;
+  background-color: #a51d1d !important;
 }
 
 .preloader {
@@ -505,6 +512,12 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 }
 
 .material-tooltip {
+  background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+  background: linear-gradient(40deg, #a51d1d, #d92626) !important;
+  border-radius: 50px;
+}
+
+.backdrop {
   background: -webkit-linear-gradient(40deg, #a51d1d, #c32222) !important;
   background: linear-gradient(40deg, #a51d1d, #c32222) !important;
   border-radius: 25px;
@@ -523,8 +536,8 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 }
 
 .iribarren-wine-gradient {
-  background: -webkit-linear-gradient(40deg, #a51d1d, #c32222) !important;
-  background: linear-gradient(40deg, #a51d1d, #c32222) !important;
+  background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+  background: linear-gradient(40deg, #a51d1d, #d92626) !important;
 }
 
 .iribarren-grey-gradient {
@@ -535,11 +548,6 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 .bdv-gradient {
   background: -webkit-linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
   background: linear-gradient(90deg, #fdd835, #0d47a1, #e53935) !important;
-}
-
-.banesco-gradient {
-  background: #4f886a;
-  background: linear-gradient(90deg, #4f886a 5%, #003b70 50%, #e0251c 90%);
 }
 
 .carousel .carousel-item > img {
