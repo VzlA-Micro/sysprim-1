@@ -45,17 +45,17 @@
                         </label>
                     </div>
                     <div class="card-footer center-align">
-                        <button type="submit" class="btn btn-large btn-rounded blue waves-effect waves-light">
+                        <button type="submit" class="btn btn-large btn-rounded iribarren-wine waves-effect waves-light">
                                 {{ __('Iniciar Sesión') }}
                         </button>
                     </div>
                     <div class="card-footer center-align">
                         @if (Route::has('password.request'))
-                            <a class="" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
+                            <a class="iribarren-yellow-text" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
                         @endif
                     </div>
                     <div class="card-footer center-align">
-                        <a href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
+                        <a class="iribarren-yellow-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
                     </div>
                 </form>
             </div>

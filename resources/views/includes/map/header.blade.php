@@ -1,7 +1,7 @@
 <header>
-    <nav class="container-fluid blue-gradient">
+    <nav class="container-fluid iribarren-yellow-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}" class="brand-logo font-audiowide">SysPRIM</a>
+            <a href="{{ url('/') }}" class="brand-logo font-audiowide">SEMAT</a>
             {{-- Sidenav Trigger --}}
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}
@@ -41,7 +41,7 @@
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
             <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
-            <li><a href="{{ route('home') }}" class="waves-effect waves-blue">Volver a SysPRIM</a></li>
+            <li><a href="{{ route('home') }}" class="waves-effect waves-blue">Volver a SEMAT</a></li>
         </ul>
     </nav>
 </header>

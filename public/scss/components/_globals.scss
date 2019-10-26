@@ -1,3 +1,7 @@
+$primary-color: #e1a02e;
+$secondary-color: #a51d1d;
+$third-color: #a4a4a5;
+
 body {
     display: flex;
     min-height: 100vh;
@@ -53,3 +57,27 @@ body.auth-view {
 .bg-light-opacity-8 {
     background-color: rgba(255, 255, 255, 0.8);
   }
+
+.iribarren-yellow {
+    background-color: $primary-color !important;
+
+    &-text {
+        color: $primary-color !important;
+    }
+}
+
+.iribarren-wine {
+    background-color: $secondary-color !important;
+
+    &-text {
+        color: $secondary-color !important;
+    }
+}
+
+.iribarren-grey {
+    background-color: $third-color !important;
+
+    &-text {
+        color: $third-color !important;
+    }
+}
