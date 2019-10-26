@@ -105,8 +105,12 @@ class CompaniesController extends Controller
         $company->number_employees = $numberEmployees;
         $company->phone = $phone;
         $company->created_at='2019-09-14';
+
         $company->save();
+
         $id = DB::getPdo()->lastInsertId();
+
+
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
         foreach ($ciu as $ciu) {
             $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);

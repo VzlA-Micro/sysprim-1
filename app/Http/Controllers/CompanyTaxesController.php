@@ -97,18 +97,19 @@ class CompanyTaxesController extends Controller
         $withholding=$request->input('withholding');
         $base=$request->input('base');
         $fiscal_credits=$request->input('fiscal_credits');
-
         $taxe=new Taxe();
-        $taxe->code=TaxesNumber::generateNumber();
+        $taxe->code=TaxesNumber::generateNumberTaxes('PTEM','00');
+        $taxe->type_payments=00;
+
         $taxe->fiscal_period=$fiscal_period;
         $taxe->company_id=$company;
         $taxe->save();
-        $id=DB::getPdo()->lastInsertId();
 
+
+
+        $id=DB::getPdo()->lastInsertId();
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $date=TaxesMonth::verify($company,false);
-
-
 
         for ($i=0;$i<count($base);$i++){
             //format a base
@@ -134,12 +135,9 @@ class CompanyTaxesController extends Controller
                 $unid_total=0;
             }
 
-
-
             if($date['mora']){//si tiene mora
                 $extra=Extras::orderBy('id', 'desc')->take(1)->get();
                 if($company_find->typeCompany==='R'){
-
                     $tax_rate=$taxes+(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
                 }else{
                     $tax_rate=$taxes-(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
@@ -287,13 +285,44 @@ class CompanyTaxesController extends Controller
     }
 
     public function paymentsHelp(Request $request){
-        $id=$request->id;
-        $company=Company::where('name',session('company'))->get();
-        $company_find=Company::find($company[0]->id);
-        $taxes=Taxe::findOrFail($id);
-        $monto=0;
+        $id=$request->input('taxes_id');
+        $amount=$request->input('total');
 
-        foreach($taxes->taxesCiu as $ciu){
+
+
+        $amount_format=str_replace('.','',$amount);
+        $amount_format=str_replace(',','.',$amount_format);
+
+
+        $taxes=Taxe::findOrFail($id);
+        $taxes->amount=$amount_format;
+        $taxes->type_payments="PB";
+        $taxes->type_taxe="81";
+        $code=TaxesNumber::generateNumberTaxes("PB",'81');
+        $taxes->code=$code;
+        $date_format=date("Y-m-d",strtotime($taxes->created_at));
+        $taxes->digit=$code=TaxesNumber::generateNumberSecret($amount_format,$date_format,'44','81'.$code);
+
+        $taxes->update();
+
+        $this->getPDF($id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*foreach($taxes->taxesCiu as $ciu){
             if($ciu->pivot->base == 0){
                 $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
             }
@@ -301,14 +330,15 @@ class CompanyTaxesController extends Controller
                 $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
 
             }
-        }
-
-
-        return view('modules.payments.help',array(
+          return view('modules.payments.help',array(
             'taxes'=>$taxes,
             'id'=>$id,
             'monto'=>$monto
         ));
+        }*/
+
+
+
     }
     // public function getQR($id) {
     //     $taxes=Taxe::findOrFail($id);

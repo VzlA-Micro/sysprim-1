@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TaxesNumber;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,9 @@ class HomeController extends Controller
     public function index(Request $request){
 
 
+        $code=TaxesNumber::generateNumberSecret('118132.48',"2019-10-25",'99','8102295857');
+        var_dump($code);
+        die();
         if(\Auth::user()->confirmed!=0){
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);

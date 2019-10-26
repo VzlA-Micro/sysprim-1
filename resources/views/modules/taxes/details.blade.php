@@ -38,7 +38,7 @@
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
-                    <form method="post" action="" class="card-content row">
+                    <form method="post" action="{{ route('payments.help') }}" class="card-content row">
                         @csrf
                         @foreach($ciuTaxes as $ciu)
                         <div class="input-field col s12 m6">
@@ -140,6 +140,13 @@
                                     <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
+
+                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <button type="submit" class="btn btn-rounded col s12 blue waves-effect waves-light">CONTINUAR</button>
                             </div>
                         </div>
                     </form>
@@ -205,6 +212,8 @@
                                 <label for="status">Estado</label>
                             </div>
                         </div>
+
+
                     </form>
 
                     @endif
@@ -218,11 +227,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <a href="{{ route('payments.help',['id'=>$taxes->id]) }}" class="btn btn-rounded col s12 blue waves-effect waves-light">CONTINUAR</a>
-                                </div>
-                            </div>
+
                         @endif
                     </div>
                 </div>
