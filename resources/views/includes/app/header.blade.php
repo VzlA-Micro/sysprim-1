@@ -1,5 +1,5 @@
 <header>
-    <nav class="container-fluid iribarren-yellow-gradient">
+    <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
             <a href="{{ url('/') }}" class="brand-logo font-audiowide">SEMAT</a>
             {{-- Sidenav Trigger --}}

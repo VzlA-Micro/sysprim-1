@@ -11,6 +11,7 @@ $bod-yellow: #FFE200;
 $bnc-green: #0C894B;
 $bnc-yellow: #FE8100;
 $bnc-blue: #003C81;
+$peach: #F63;
 
 body {
     display: flex;
@@ -205,5 +206,13 @@ body.auth-view {
 
     &-text {
         color: $bnc-blue !important;
+    }
+}
+
+.peach {
+    background-color: $peach !important;
+
+    &-text {
+        color: $peach !important;
     }
 }

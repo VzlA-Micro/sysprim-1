@@ -22,3 +22,7 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
+@endsection
