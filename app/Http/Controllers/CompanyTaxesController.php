@@ -38,10 +38,11 @@ class CompanyTaxesController extends Controller
 
 
     public function history($company){
+
+
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('company_id',$company[0]->id)
-            ->where('status','verified')->orWhere('status','process')
-            ->where('created_at','!=')->get();
+        $taxes=Taxe::where('company_id',$company[0]->id)->get();
+
    
 
 
