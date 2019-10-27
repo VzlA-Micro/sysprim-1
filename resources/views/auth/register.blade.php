@@ -73,7 +73,7 @@
                         <button type="submit" class="btn btn-rounded green waves-effect waves-light">Registarse</button>
                     </div>
                     <div class="card-footer center-align">
-                        <a href="{{ route('login') }}">¿Ya tienes una cuenta? Inicia sesión aquí.</a>
+                        <a class="iribarren-yellow-text" href="{{ route('login') }}">¿Ya tienes una cuenta? Inicia sesión aquí.</a>
                     </div>
                 </form>
             </div>

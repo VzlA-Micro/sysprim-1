@@ -1,7 +1,7 @@
 <header>
-    <nav class="container-fluid blue-gradient">
+    <nav class="container-fluid iribarren-yellow-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}" class="brand-logo font-audiowide">SysPRIM</a>
+            <a href="{{ url('/') }}" class="brand-logo font-audiowide">SEMAT</a>
             {{-- Sidenav Trigger --}}
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}
@@ -36,7 +36,7 @@
                             </a>
                         @endforeach
                     @endif
-                    <a href="" class="collection-footer center-align">
+                    <a href="{{ route('notifications.read') }}" class="collection-footer center-align">
                         <span>Ver todas las notificaciones</span>
                     </a>
                 </div>
@@ -66,7 +66,11 @@
             </ul>
         </div>
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
-            <li><a href="" class="logo-container font-audiowide center-align">SysPRIM</a></li>
+            <li>
+                <a href="" class="logo-container font-audiowide center-align">
+                    <img src="{{ asset('images/alcaldia_logo.png') }}" alt="" srcset="">                    
+                </a>
+            </li>
             @guest
                 <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                 @if (Route::has('register'))

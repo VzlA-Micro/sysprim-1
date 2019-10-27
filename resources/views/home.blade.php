@@ -53,6 +53,12 @@
                     </a>
                 </div>
                 <div class="col s12 m3">
+                    <a href="{{ route('tax-unit.manage') }}" class="btn-app white blue-text text-darken-2">
+                        <i class="icon-attach_money"></i>
+                        <span class="truncate">Gestionar Unidad Tributaria</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
                     <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
                         <i class="icon-assignment"></i>
                         <span class="truncate">Gestionar CIIU</span>
@@ -62,6 +68,12 @@
                     <a href="{{ route('geosysprim') }}" class="btn-app white green-text text-darken-4">
                         <i class="icon-public"></i>
                         <span class="truncate">GeoSysPRIM</span>
+                    </a>
+                </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('dashboard') }}" class="btn-app white green-text text-darken-4">
+                        <i class="icon-multiline_chart"></i>
+                        <span class="truncate">Estadísticas</span>
                     </a>
                 </div>
             @endif

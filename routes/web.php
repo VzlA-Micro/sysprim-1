@@ -234,19 +234,15 @@ Route::get('/fines-company/details/{id}','FinesCompanyController@edit')->name('f
 
 // unidad tributaria module
 
-Route::get('/undTributo-register', function() {
-    return view('dev.tributo.register');
-})->name('tributo.tributo-register');
+Route::get('/tax-unit/manage', function() {
+    return view('modules.tax-unit.manage');
+})->name('tax-unit.manage');
 
-Route::post('/save-tributo',array(
-    'as'=>'saveTributo',
-    'uses'=>'TributoController@store'
-));
-
-Route::get('/readTributo',array(
-    'as'=>'readTributo',
-    'uses'=>'TributoController@show'
-));
+Route::get('/tax-unit/register', function() {
+    return view('modules.tax-unit.register');
+})->name('tax-unit.register');
+Route::post('/tax-unit/save','TributoController@store')->name('tax-unit.save');
+Route::get('/tax-unit/read','TributoController@show')->name('tax-unit.read');
 
 // Employees Modules
 
@@ -271,3 +267,14 @@ Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanyS
 Route::get('/admin/geolocation', function() {
     return view('modules.map.home');
 })->name('admin.geolocation');
+
+Route::get('/dashboard', function() {
+    return view('modules.admin.dashboard');
+})->name('dashboard');
+
+Route::get('/notifications', function() {
+    return view('modules.notifications.read');
+})->name('notifications.read');
+Route::get('/notifications/details', function() {
+    return view('modules.notifications.details');
+})->name('notifications.details');

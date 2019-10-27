@@ -1,3 +1,17 @@
+$primary-color: #e1a02e;
+$secondary-color: #a51d1d;
+$third-color: #a4a4a5;
+$banesco-green: #4f886a;
+$banesco-red: #e0251c;
+$banesco-blue: #003b70;
+$x100-banco-blue: #032563;
+$x100-banco-yellow: #EC7022;
+$bod-green: #72C267;
+$bod-yellow: #FFE200;
+$bnc-green: #0C894B;
+$bnc-yellow: #FE8100;
+$bnc-blue: #003C81;
+
 body {
     display: flex;
     min-height: 100vh;
@@ -25,6 +39,12 @@ footer {
     // img.responsive-logo {
     //     max-height: 54px !important;
     // }
+    .brand-logo {
+            img {
+                width: 150px;
+                height:54px;
+            }
+        }
 }
 
 body.auth-view {
@@ -42,14 +62,148 @@ body.auth-view {
         padding-left: 0px !important;
     }
 
-    &.auth-background {
-        background-image: url("../images/bg-1.jpg");
-        background-repeat: no-repeat;
-        -webkit-background-size: cover;
-        background-size: cover;
+    // &.auth-background {
+    //     // background-image: url("../images/bg-1.jpg");
+    //     // background-repeat: no-repeat;
+    //     // -webkit-background-size: cover;
+    //     // background-size: cover;
+    //     background-color: #f5f5f5 !important;
+    // }
+
+    & .brand-logo {
+        img {
+            width: 150px;
+            height:64px;
+        }
+    }
+
+    @media only screen and (max-width: 992px) {
+        header {
+            & .brand-logo {
+                img {
+                    width: 150px;
+                    height:54px;
+                }
+            }
+        }
     }
 }
 
 .bg-light-opacity-8 {
     background-color: rgba(255, 255, 255, 0.8);
   }
+
+.iribarren-yellow {
+    background-color: $primary-color !important;
+
+    &-text {
+        color: $primary-color !important;
+    }
+}
+
+.iribarren-wine {
+    background-color: $secondary-color !important;
+
+    &-text {
+        color: $secondary-color !important;
+    }
+}
+
+.iribarren-grey {
+    background-color: $third-color !important;
+
+    &-text {
+        color: $third-color !important;
+    }
+}
+
+.social {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+
+    & i {
+        color: #ffffff;
+        font-size: 50px !important;
+    }
+}
+
+.banesco-green {
+    background-color: $banesco-green !important;
+
+    &-text {
+        color: $banesco-green !important;
+    }
+}
+
+.banesco-blue {
+    background-color: $banesco-blue !important;
+
+    &-text {
+        color: $banesco-blue !important;
+    }
+}
+
+.banesco-red {
+    background-color: $banesco-red !important;
+
+    &-text {
+        color: $banesco-red !important;
+    }
+}
+
+.x100-banco-blue {
+    background-color: $x100-banco-blue !important;
+
+    &-text {
+        color: $x100-banco-blue !important;
+    }
+}
+
+.x100-banco-yellow {
+    background-color: $x100-banco-yellow !important;
+
+    &-text {
+        color: $x100-banco-yellow !important;
+    }
+}
+
+.bod-yellow {
+    background-color: $bod-yellow !important;
+
+    &-text {
+        color: $bod-yellow !important;
+    }
+}
+
+.bod-green {
+    background-color: $bod-green !important;
+
+    &-text {
+        color: $bod-green !important;
+    }
+}
+
+.bnc-green {
+    background-color: $bnc-green !important;
+
+    &-text {
+        color: $bnc-green !important;
+    }
+}
+
+.bnc-yellow {
+    background-color: $bnc-yellow !important;
+
+    &-text {
+        color: $bnc-yellow !important;
+    }
+}
+
+.bnc-blue {
+    background-color: $bnc-blue !important;
+
+    &-text {
+        color: $bnc-blue !important;
+    }
+}

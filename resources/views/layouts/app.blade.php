@@ -18,6 +18,9 @@
     @auth
         @include('includes.app.header')
     @endauth
+    {{-- @guest
+        @include('includes.auth.header')
+    @endguest --}}
     <main>
         @yield('content')
     </main>
@@ -25,6 +28,9 @@
     @auth
         @include('includes.app.footer')
     @endauth
+    @guest
+        @include('includes.auth.footer')
+    @endguest
 
 
     @include('includes.scripts')

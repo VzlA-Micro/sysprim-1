@@ -11,17 +11,17 @@ input[type=tel]:focus:not(.browser-default),
 input[type=number]:focus:not(.browser-default),
 input[type=search]:focus:not(.browser-default),
 textarea.materialize-textarea:focus {
-  border-bottom: 1px solid #2196f3 !important;
-  -webkit-box-shadow: 0 1px 0 0 #2196f3 !important;
-  box-shadow: 0 1px 0 0 #2196f3 !important;
+  border-bottom: 1px solid #e1a02e !important;
+  -webkit-box-shadow: 0 1px 0 0 #e1a02e !important;
+  box-shadow: 0 1px 0 0 #e1a02e !important;
 }
 
 .input-field label.active {
-  color: #2196f3 !important;
+  color: #e1a02e !important;
 }
 
 .input-field .prefix.active {
-  color: #2196f3 !important;
+  color: #e1a02e !important;
 }
 
 .input-field .prefix {

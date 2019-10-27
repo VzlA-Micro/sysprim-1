@@ -274,7 +274,45 @@
                                 </div>
                             </div>
                         @else
+<<<<<<< HEAD
 
+=======
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    {{-- Modal trigger --}}
+                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s12 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
+                                    {{-- Modal structure --}}
+                                    <div id="modal1" class="modal modal-fixed-footer">
+                                        <div class="modal-content">
+                                            <h4 class="center-align">Formas de pago</h4>
+                                            <div class="row">
+                                                <div class="col s12">
+                                                    <p>Por favor, elija la forma en como desea pagar sus impuestos.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col s12 m4 center-align">
+                                                <a href="" class="btn btn-large yellow waves-effect waves-light">Taquilla</a>
+                                            </div>
+                                            <div class="col s12 m4 center-align">
+                                                <a href="" class="btn btn-large blue waves-effect waves-light">Transferencia</a>
+                                            </div>
+                                            <div class="col s12 m4 center-align">
+                                                {{-- Dropdown trigger --}}
+                                                <a href=""  data-target='deposito' class="btn btn-large red waves-effect waves-light dropdown-trigger">Deposito</a>
+                                            </div>
+                                            <!-- Dropdown Structure -->
+                                            <ul id='deposito' class='dropdown-content'>
+                                                <li><a href="#!">Banco Bicentenario</a></li>
+                                                <li><a href="#!">Banesco</a></li>
+                                                <li><a href="#!">BOD</a></li>
+                                                <li><a href="#!">100% Banco</a></li>
+                                                <li><a href="#!">BNC</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+>>>>>>> semat
                         @endif
                     </div>
                     */

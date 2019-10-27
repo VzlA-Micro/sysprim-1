@@ -10,17 +10,27 @@
 
     & .logo-container {
         padding: 0 16px;
-        height: 64px;
-        line-height: 64px;
+        height: 62px;
+        line-height: 62px;
         font-size: 24px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         box-sizing: content-box;
+
+        & img {
+            width: 160px;
+            height: 62px;
+        }
     }
 }
 
 @media only screen and (max-width: 992px) {
     .sidenav .logo-container {
-        height: 54px;
-        line-height: 54px;
+        height: 52px;
+        line-height: 52px;
+
+        & img {
+            width: 140px;
+            height: 52px;
+        }
     }
 }
