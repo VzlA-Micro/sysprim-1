@@ -49,14 +49,14 @@
                 </li>
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
-                    <li><a href=""><i class="icon-account_box"></i>Account</a></li>
-                    <li><a href=""><i class="icon-settings"></i>Settings</a></li>
+                    <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li>
+                    <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
                     <li class="divider"></li>
                     <li>
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             <i class="icon-exit_to_app"></i>
-                            {{ __('Logout') }}
+                            {{ __('Desconectar') }}
                         </a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -72,13 +72,13 @@
                 </a>
             </li>
             @guest
-                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                <li><a href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a></li>
                 @if (Route::has('register'))
-                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                    <li><a href="{{ route('register') }}">{{ __('Registrarse') }}</a></li>
                 @endif
                 @else
                     <li><a href=""
-                           class="subheader">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
+                           class="subheader truncate">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
                     <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i
                                     class="icon-account_circle left"></i>Mi Cuenta</a></li>
                     <li class="divider"></li>
@@ -113,7 +113,7 @@
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();document.getElementById('logout-sidenav-form').submit();">
                             <i class="icon-exit_to_app"></i>
-                            {{ __('Logout') }}
+                            {{ __('Desconectar') }}
                         </a>
                     </li>
                     <form id="logout-sidenav-form" action="{{ route('logout') }}" method="post" style="display: none;">

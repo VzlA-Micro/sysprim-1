@@ -51,11 +51,11 @@
                     </div>
                     <div class="card-footer center-align">
                         @if (Route::has('password.request'))
-                            <a class="iribarren-yellow-text" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
+                            <a class="iribarren-wine-text" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
                         @endif
                     </div>
                     <div class="card-footer center-align">
-                        <a class="iribarren-yellow-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
+                        <a class="iribarren-wine-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
                     </div>
                 </form>
             </div>
