@@ -11,12 +11,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\TaxesNumber;
 use App\Taxe;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
 use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
+use Illuminate\Support\Facades\Mail;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -37,7 +39,12 @@ class CompanyTaxesController extends Controller
 
     public function history($company){
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('company_id',$company[0]->id)->get();
+        $taxes=Taxe::where('company_id',$company[0]->id)
+            ->where('status','verified')->orWhere('status','process')
+            ->where('created_at','!=')->get();
+   
+
+
         return view('modules.payments.history',['taxes'=>$taxes]);
 
     }
@@ -277,24 +284,28 @@ class CompanyTaxesController extends Controller
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
         $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
         $pdf = \PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
-        return $pdf->stream();
+        return $pdf->download(time().'planilla.pdf');
     }
 
     public function paymentsHelp(Request $request)
     {
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
-        $bank=$request->input('bank');
+        $bank = $request->input('bank');
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $code = TaxesNumber::generateNumberTaxes("PPB81");
         $taxes->code = $code;
-        $taxes->bank=$bank;
+        $taxes->bank = $bank;
         $taxes->status = 'process';
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
+
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+
+
         $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, $bank, $code);
         $taxes->update();
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
@@ -303,7 +314,23 @@ class CompanyTaxesController extends Controller
         $extra = ['mora' => $mora[0]->mora, 'tasa' => $mora[0]->tax_rate, 'unid_tribu' => $unid_tribu[0]->value];
         $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
 
-        return $pdf->stream();
+        $subject = "PLANILLA DE PAGO";
+        $for = \Auth::user()->email;
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
+        Mail::send('dev.pago', [], function ($msj) use ($subject, $for, $pdf) {
+            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+            $msj->attachData($pdf->output(), time() . "planilla.pdf");
+        });
+
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+
+
+    }
+
+
+
 
 
         /*foreach($taxes->taxesCiu as $ciu){
@@ -322,7 +349,7 @@ class CompanyTaxesController extends Controller
         }*/
 
 
-    }
+
     // public function getQR($id) {
     //     $taxes=Taxe::findOrFail($id);
     //     return view();

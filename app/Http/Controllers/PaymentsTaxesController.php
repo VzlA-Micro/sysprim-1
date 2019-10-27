@@ -102,7 +102,6 @@ class PaymentsTaxesController extends Controller
         $file = $request->file('files');
 
         if ($file) {
-
             $filePath = time() . $file->getClientOriginalName();
             \Storage::disk('payments')->put($filePath, \File::get($file));
             $pTaxes->file = $filePath;
