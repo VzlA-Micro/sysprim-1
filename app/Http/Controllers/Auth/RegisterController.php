@@ -82,6 +82,7 @@ class RegisterController extends Controller
             'ci' => $data['nationality'].$data['ci'],
             'phone' => $data['country_code'].$data['phone'],
             'confirmed_code'=> $data['confirmation_code'],
+            'role_id'=> 3,
         ]);
         $id=DB::getPdo()->lastInsertId();
         $user=User::find($id);

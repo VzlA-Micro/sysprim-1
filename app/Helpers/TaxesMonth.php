@@ -66,7 +66,6 @@ class TaxesMonth{
             $fiscal_period = Carbon::parse($companyTaxes[0]->fiscal_period);//utilizo el ultimo pago realido valido y lo tomo como refencia
             $now = Carbon::now();//fecha del computador
             $diffMount = $fiscal_period->diffInMonths($now);
-            $payment = PaymentTaxes::where('taxe_id', $companyTaxes[0]->id)->get();//busco si el pago fue realizo
 
             if($company->typeCompany==='R'){
                 if($now->format('d')<=$dayMoraEspecial){
@@ -85,13 +84,13 @@ class TaxesMonth{
             }
 
 
-            if ($diffMount >= 1 || $payment->isEmpty()) {
-                if (!$payment->isEmpty() && $payment[0]->status === 'verified' && $diffMount > 1) {
+            if ($diffMount >= 1 || $companyTaxes[0]->status!==null) {
+                if ($companyTaxes[0]->status === 'verified' && $diffMount > 1) {
                     $diffMount--;//resto 1 a la diferencia de mes porque este utilimo esta pago
                     $fiscal_period->addMonth(1);//añado un mes para saber cual es el proximo a pagar
                     $mes=self::$mounths[($fiscal_period->format('m'))-1];
                     $date = array('mount_pay' => $mes.'-'.$fiscal_period->format('Y'), 'mount_diff' => $diffMount,'fiscal_period'=>$fiscal_period->format('Y-m-d'),  'mora'=>$mora, 'diffDayMora'=>$diffDayMora);
-                } else if (!$payment->isEmpty() && $payment[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
+                } else if ($companyTaxes[0]->status === 'verified') {//si no esta vacio y el pago esta verificado,y no hay diferencia de mes, esta al dia.
                     $date = null;
                     $mes=null;
                 } else {

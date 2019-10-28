@@ -38,7 +38,7 @@
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
-                    <form method="post" action="" class="card-content row">
+                    <form method="post" action="{{ route('payments.help') }}" id='register-taxes' class="card-content row">
                         @csrf
                         @foreach($ciuTaxes as $ciu)
                         <div class="input-field col s12 m6">
@@ -118,9 +118,6 @@
                             </div>
                             <div class="col l6 s12">
 
-
-
-
                                 <div class="col s12 m12 ">
                                     <input type="text" name="interest"  class="validate money" value="{{$amount['amountInterest']}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
@@ -140,13 +137,78 @@
                                     <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
+                                <input type="hidden" id="bank" name="bank" value="0">
+                                <input type="hidden" id="payments" name="payments" value="1">
+                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{-- Modal trigger --}}
+                                @if($taxes->status!='process')
+                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s12 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
+                                {{-- Modal structure --}}
+                               @endif
+
+                                <div id="modal1" class="modal modal-fixed-footer">
+                                    <div class="modal-content">
+                                        <h4 class="center-align">Formas de pago</h4>
+                                        <div class="row">
+                                            <div class="col s12">
+                                                <p>Por favor, elija la forma en como desea pagar su actividad .</p>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 m4 center-align">
+                                            <div class="col s12 m12">
+                                                <img src="{{asset('images/taquilla.png')}}" class="responsive-img circle">
+                                            </div>
+                                            <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light   tick" data-payments="PPV">Taquilla</a>
+                                        </div>
+                                        <div class="col s12 m4 center-align">
+                                            <div class="col s12 m12">
+                                                <img src="{{asset('images/transferencia.png')}}" class="responsive-img circle">
+                                            </div>
+                                            <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">Transferencia</a>
+                                            <ul id='ptb' class='dropdown-content'>
+                                                <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
+                                                <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
+                                                <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
+                                            </ul>
+                                        </div>
+
+
+                                        <div class="col s12 m4 center-align">
+                                            <div class="col s12 m12">
+                                                <img src="{{asset('images/deposito.png')}}" class="responsive-img circle">
+                                            </div>
+                                            {{-- Dropdown trigger --}}
+                                            <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >Deposito</a>
+                                        </div>
+                                        <!-- Dropdown Structure -->
+                                        <ul id='ppb' class='dropdown-content'>
+                                            <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a></li>
+                                            <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
+                                            <li><a href="#!" data-bank="44"  class="bank">BOD</a></li>
+                                            <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
+                                            <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
 
+    </div>
 
-                    @if(!$taxes->payments->isEmpty())
+@endsection
 
+@section('scripts')
+    <script src="{{ asset('js/dev/taxes.js') }}"></script>
+@endsection
+@php /*
                     <form id="payments" enctype="multipart/form-data" method="post">
                         <div class="card-header center-align">
                             <h5>DETALLES DE PAGOS</h5>
@@ -205,6 +267,8 @@
                                 <label for="status">Estado</label>
                             </div>
                         </div>
+
+
                     </form>
 
                     @endif
@@ -218,6 +282,9 @@
                                 </div>
                             </div>
                         @else
+<<<<<<< HEAD
+
+=======
                             <div class="row">
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
@@ -253,15 +320,10 @@
                                     </div>
                                 </div>
                             </div>
+>>>>>>> semat
                         @endif
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    */
+@endphp
 
-@endsection
 
-@section('scripts')
-        <script src="{{ asset('js/dev/taxes.js') }}"></script>
-@endsection

@@ -39,6 +39,9 @@ $(document).ready(function() {
     $('.tooltipped').tooltip();
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
+
+    $('#modal1').modal();
+
     $('.modal').modal();
     $('.carousel.carousel-slider').carousel({
         fullWidth: true,
@@ -47,4 +50,5 @@ $(document).ready(function() {
     setInterval(function() {
         $('.carousel.carousel-slider').carousel('next');
       }, 3500); // every 2 seconds
+
 });

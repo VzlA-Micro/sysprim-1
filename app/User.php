@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','surname','image','phone','ci','confirmed_code','confirmed'
+        'name', 'email', 'password','surname','image','phone','ci','confirmed_code','confirmed','role_id'
     ];
 
     /**
@@ -43,6 +43,13 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Company','users_company')
             ->withPivot('company_id');
     }
+
+    public function property(){
+        return $this->belongsToMany('App\Inmueble','user_inmueble')
+            ->withPivot('inmueble_id');
+    }
+
+
 
     public function sendPasswordResetNotification($token)
     {

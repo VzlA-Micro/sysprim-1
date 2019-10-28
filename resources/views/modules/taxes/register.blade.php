@@ -17,7 +17,7 @@
                             <strong>Empresa solvente hasta la fecha.</strong>
                         </div>
                     @elseif(Session::has('message'))
-                        <div class="alert alert-warning center-align">
+                        <div class="alert alert-success center-align">
                             <strong>{{ session('message') }}</strong>
                         </div>
                     @elseif($date['mount_diff']>=2)
@@ -27,7 +27,7 @@
                     @else
 
                         <div class="card-header center-align">
-                            <h5>Pagar Impuesto</h5>
+                            <h5>Declarar actividad Economica</h5>
                         </div>
 
                         <div class="card-content row">

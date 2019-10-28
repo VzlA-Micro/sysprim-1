@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTaxesTable extends Migration
+class CreatePersonPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,16 +15,11 @@ class CreatePaymentsTaxesTable extends Migration
     /*esta relacion este en veremos*/
     public function up()
     {
-        Schema::create('payments_taxes', function (Blueprint $table) {
+        Schema::create('person_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('payments_type',20);
-            $table->string('code_ref',15);
-            $table->string('bank',20);
-            $table->decimal('amount',12,2);
-            $table->string('status',40);
-            $table->string('name_deposito',30);
-            $table->string('surname_deposito',30);
-            $table->string('cedula',10);
+            $table->string('name',30);
+            $table->string('ci',30);
+            $table->string('number_deposit',10);
             $table->string('file',80)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes');
