@@ -11,12 +11,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\TaxesNumber;
 use App\Taxe;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
 use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
+use Illuminate\Support\Facades\Mail;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -37,7 +39,12 @@ class CompanyTaxesController extends Controller
 
     public function history($company){
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('company_id',$company[0]->id)->get();
+        $taxes=Taxe::where('company_id',$company[0]->id)
+            ->where('status','verified')->orWhere('status','process')
+            ->where('created_at','!=')->get();
+   
+
+
         return view('modules.payments.history',['taxes'=>$taxes]);
 
     }
@@ -97,18 +104,15 @@ class CompanyTaxesController extends Controller
         $withholding=$request->input('withholding');
         $base=$request->input('base');
         $fiscal_credits=$request->input('fiscal_credits');
-
         $taxe=new Taxe();
-        $taxe->code=TaxesNumber::generateNumber();
+        $taxe->code=TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period=$fiscal_period;
+
         $taxe->company_id=$company;
         $taxe->save();
         $id=DB::getPdo()->lastInsertId();
-
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $date=TaxesMonth::verify($company,false);
-
-
 
         for ($i=0;$i<count($base);$i++){
             //format a base
@@ -134,12 +138,9 @@ class CompanyTaxesController extends Controller
                 $unid_total=0;
             }
 
-
-
             if($date['mora']){//si tiene mora
                 $extra=Extras::orderBy('id', 'desc')->take(1)->get();
                 if($company_find->typeCompany==='R'){
-
                     $tax_rate=$taxes+(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
                 }else{
                     $tax_rate=$taxes-(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
@@ -283,17 +284,56 @@ class CompanyTaxesController extends Controller
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
         $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
         $pdf = \PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
-        return $pdf->stream();
+        return $pdf->download(time().'planilla.pdf');
     }
 
-    public function paymentsHelp(Request $request){
-        $id=$request->id;
-        $company=Company::where('name',session('company'))->get();
-        $company_find=Company::find($company[0]->id);
-        $taxes=Taxe::findOrFail($id);
-        $monto=0;
+    public function paymentsHelp(Request $request)
+    {
+        $id = $request->input('taxes_id');
+        $amount = $request->input('total');
+        $bank = $request->input('bank');
+        $amount_format = str_replace('.', '', $amount);
+        $amount_format = str_replace(',', '.', $amount_format);
+        $taxes = Taxe::findOrFail($id);
+        $taxes->amount = $amount_format;
+        $code = TaxesNumber::generateNumberTaxes("PPB81");
+        $taxes->code = $code;
+        $taxes->bank = $bank;
+        $taxes->status = 'process';
+        $code = substr($code, 3, 12);
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
 
-        foreach($taxes->taxesCiu as $ciu){
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+
+
+        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, $bank, $code);
+        $taxes->update();
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra = ['mora' => $mora[0]->mora, 'tasa' => $mora[0]->tax_rate, 'unid_tribu' => $unid_tribu[0]->value];
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
+
+        $subject = "PLANILLA DE PAGO";
+        $for = \Auth::user()->email;
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
+        Mail::send('dev.pago', [], function ($msj) use ($subject, $for, $pdf) {
+            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+            $msj->attachData($pdf->output(), time() . "planilla.pdf");
+        });
+
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+
+
+    }
+
+
+
+
+
+        /*foreach($taxes->taxesCiu as $ciu){
             if($ciu->pivot->base == 0){
                 $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
             }
@@ -301,15 +341,15 @@ class CompanyTaxesController extends Controller
                 $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
 
             }
-        }
-
-
-        return view('modules.payments.help',array(
+          return view('modules.payments.help',array(
             'taxes'=>$taxes,
             'id'=>$id,
             'monto'=>$monto
         ));
-    }
+        }*/
+
+
+
     // public function getQR($id) {
     //     $taxes=Taxe::findOrFail($id);
     //     return view();

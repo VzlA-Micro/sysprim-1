@@ -11,7 +11,11 @@
                 <a href="" class="breadcrumb">Historial de Pagos</a>
             </div>
             <div class="col s12 m10 offset-m1">
-                @include('sweet::alert')
+                @if(Session::has('message'))
+                    <div class="alert alert-warning center-align">
+                        <strong>{{ session('message') }}</strong>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Historial de Pagos</h5>
@@ -34,28 +38,27 @@
                                 @foreach($taxes as $taxe)
                                 <tr>
                                     <td>{{ $taxe->code }}</td>
+
                                     <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
-                                    @if($taxe->payments->isEmpty())
+                                    @if($taxe->status==='process')
                                         <td>SIN CONCILIAR AÚN</td>
-                                        <td><a href="{{ route('registerPayments',['id'=>$taxe->id]) }}" class="btn green waves-effect waves-light"><i class="icon-payment left"></i>Pagar</a></td>
+                                        <td><a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a></td>
                                     @else
-                                        @foreach($taxe->payments as $payment)
                                             <td>
                                                 <button class="btn disabled">
                                                     <i class="icon-more_horiz left"></i>
-                                                    {{ $payment->status }}
+                                                    {{ $taxe->status }}
                                                 </button>
                                             </td>
-                                            @if($payment->status==='verified')
+                                            @if($taxe->status==='verified')
                                                 <td>
-                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar Solvencia</a>
+                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>
                                                 </td>
                                             @else
                                                 <td>
                                                     <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview left"></i>Detalles</a>
                                                 </td>
                                             @endif
-                                        @endforeach
                                     @endif
                                 </tr>
                                 @endforeach

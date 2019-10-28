@@ -116,7 +116,7 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
-Route::get('/payments/help/{id}', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
+Route::post('/payments/help', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
 
 
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');

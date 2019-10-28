@@ -39,4 +39,6 @@ $(document).ready(function() {
     $('.tooltipped').tooltip();
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
+
+    $('#modal1').modal();
 });
