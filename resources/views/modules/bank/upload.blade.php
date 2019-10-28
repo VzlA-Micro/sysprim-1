@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m8 offest-m2 l4 offset-l4">
+            <div class="col s12 m6 offset-m3">
                 <form action="{{ route('saveReferenceBank') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Cargar Estados de cuenta</h5>
@@ -12,7 +12,7 @@
                         @csrf
                         <div class="file-field input-field">
                             <div class="btn blue waves-light">
-                              <span>Cargar Archivo</span>
+                              <span>Seleccionar Archivo</span>
                               <input type="file" name="file" id="file">
                             </div>
                             <div class="file-path-wrapper">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="card-action center">
-                        <button type="submit" class="btn green">Registrar</button>
+                        <button type="submit" class="btn btn-large btn-rounded peach waves-light">Cargar</button>
                     </div>
                 </form>
             </div>

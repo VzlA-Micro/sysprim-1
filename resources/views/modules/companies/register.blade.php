@@ -39,7 +39,7 @@
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
@@ -78,7 +78,7 @@
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required></textarea>
                             <label for="address">Dirección</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). ">
                             <select multiple name="ciu_group[]" required id="ciu_group">
                                 <option value="null" disabled >Seleccionar CIU</option>
                                 @foreach($ciu as $ciu):
@@ -120,7 +120,7 @@
 
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded waves-effect waves-light green">Registrar</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Registrar</button>
                     </div>
 
                 </form>

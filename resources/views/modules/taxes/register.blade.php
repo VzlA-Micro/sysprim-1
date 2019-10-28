@@ -67,7 +67,7 @@
 
                                 <input type="hidden" id="alicuota_{{$ciu->code}}"   class="alicuota" value="{{ $ciu->alicuota }}">
 
-                                <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Descuento por un Beneficio Fiscal Emitido y/o Aprobado por el Municipio.">
+                                <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Cuando se trate de un contribuyente industrial que venda los bienes producidos en otros  municipios distintos al de la ubicación de la industria, el impuesto pagado por el ejercicio de actividades económicas en el Municipio sede de la industria, podrá deducirse del impuesto a pagar en el Municipio en que se realiza la actividad comercial. En caso que la venta se realice en más de un Municipio sólo podrá deducirse el impuesto pagado por el ejercicio de la actividad industrial proporcional a los bienes vendidos en  cada Municipio. En ningún caso la cantidad a deducir podrá exceder de la cantidad de impuesto que corresponda pagar en la jurisdicción del establecimiento  comercial (Ord. AE Art. 7, Parágrafo Quinto N° 3).">
                                     <input type="text"  name="deductions[]" id="deductions_{{$ciu->code}}" class="validate money_keyup"
                                             required>
                                     <label for="deductions_{{$ciu->code}}">Deducciones</label>
@@ -95,7 +95,7 @@
                             El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Economica Art. 112).
                         </div>
                         <div class="card-action center-align">
-                            <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register
+                            <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light peach">Registrar
                             </button>
                         </div>
                     @endif

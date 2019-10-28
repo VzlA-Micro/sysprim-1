@@ -214,7 +214,7 @@
                         @if(!$taxes->payments->isEmpty())
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <a href="{{ route('home')}}" class="btn btn-rounded col s12 blue waves-effect waves-light">VOLVER</a>
+                                    <a href="{{ route('home')}}" class="btn btn-rounded btn-large col s12 blue waves-effect waves-light">VOLVER</a>
                                 </div>
                             </div>
                         @else

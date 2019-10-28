@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'SysPRIM'),
+    'name' => env('APP_NAME', 'SEMAT - Iribarren'),
 
     /*
     |--------------------------------------------------------------------------

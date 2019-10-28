@@ -1,8 +1,30 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style type="text/css">
+        header,
+        main,
+        footer {
+          padding-right: 400px !important;
+        }
+
+        .sidenav {
+            width: 400px !important;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header,
+            main,
+            footer {
+                padding-right: 0 !important;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+        <div class="row show-on-down-only hide-on-med-and-up">
             <div class="col s12 m4 offset-m4 animated bounceInDown">
                 @if(session('notification'))
                 <div class="alert alert-success" style="margin-top: 1.5rem">
@@ -60,7 +82,7 @@
                 </form>
             </div>
         </div>
-    {{-- </div> --}}
+    </div>
 @endsection
 
 @section('scripts')
@@ -68,9 +90,15 @@
     <script src="{{ asset('js/jquery.backstretch.min.js') }}"></script>
     <script>
         $.backstretch([
-            "images/prensa1.jpg"
-            , "images/prensa2.jpg"
+            "images/jonas1.jpg"
+            , "images/prensa1.jpg"
             , "images/prensa3.jpg"
         ], {duration: 3000, fade: 750});
+
+        $('.sidenav#side-login').sidenav({
+            edge:'right',
+
+        });
+
     </script>
 @endsection

@@ -119,13 +119,13 @@ body.auth-view {
 }
 
 .social {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
 
 
     & i {
         color: #ffffff;
-        font-size: 50px !important;
+        font-size: 40px !important;
     }
 }
 
@@ -215,4 +215,19 @@ body.auth-view {
     &-text {
         color: $peach !important;
     }
+}
+
+.paper-cut:after {
+    content: " ";
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    background: -webkit-linear-gradient(#fff 0,transparent 0),-webkit-linear-gradient(135deg,#F5F5F5 33.33%,transparent 33.33%) 0 0,#F5F5F5 -webkit-linear-gradient(45deg,#F5F5F5 33.33%,#fff 33.33%) 0 0;
+    background: -o-linear-gradient(#fff 0,transparent 0),-o-linear-gradient(135deg,#F5F5F5 33.33%,transparent 33.33%) 0 0,#F5F5F5 -o-linear-gradient(45deg,#F5F5F5 33.33%,#fff 33.33%) 0 0;
+    background: -moz-linear-gradient(#fff 0,transparent 0),-moz-linear-gradient(135deg,#F5F5F5 33.33%,transparent 33.33%) 0 0,#F5F5F5 -moz-linear-gradient(45deg,#F5F5F5 33.33%,#fff 33.33%) 0 0;
+    background-repeat: repeat-x;
+    background-size: 0 100%,14px 27px,14px 27px;
 }

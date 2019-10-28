@@ -1,28 +1,64 @@
 .collection {
-    .collection-item.avatar {
-        min-height: 64px !important;
-        padding-left: 72px;
-        position: relative;
-        // color:  #2196f3 !important;
 
-        .collection-title {
-            font-weight: bold;
-            color: #222222 !important;
+    .collection-item {
+        &.avatar {
+            min-height: 64px !important;
+            padding-left: 72px;
+            position: relative;
+            // color:  #2196f3 !important;
+
+            .collection-title {
+                font-weight: bold;
+                color: #222222 !important;
+            }
+
+            .collection-subtitle {
+                font-weight: normal;
+                color: #444444 !important;
+            }
         }
 
-        .collection-subtitle {
-            font-weight: normal;
+        a.collection-item {
             color: #444444 !important;
         }
-    }
 
-    a.collection-item {
-        color: #444444 !important;
-    }
+        .collection-footer {
+            min-height: 40px !important;
+            color: #666666 !important;
+        }
 
-    .collection-footer {
-        min-height: 40px !important;
-        color: #666666 !important;
+        &.amount-block {
+            height: 70px;
+            border-top: 1px dashed #d0d3d8;
+            border-bottom: 1px dashed #d0d3d8;
+
+            & .total:nth-child(1) {
+                border-right: 1px dashed #d0d3d8;
+            }
+
+            & .total {
+                padding: 10px;
+                padding-top: 0px;
+                display: inline-block;
+                width: 49%;
+                height: 68px;
+
+                & .side-heading {
+                    padding-left: 0px;
+                    color: #67676c;
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 26px;
+                }
+
+                & .amount {
+                        text-align: center;
+                        color: #6fd64b;
+                        font-size: 22px;
+                        font-weight: 400;
+                }
+            }
+        }
     }
 }
 

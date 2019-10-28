@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded waves-effect waves-light green">Actualizar</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Actualizar</button>
                     </div>
                 </form>
             </div>

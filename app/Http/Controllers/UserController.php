@@ -17,7 +17,7 @@ class UserController extends Controller{
         $user->confirmed = true;
         $user->confirmed_code = null;
         $user->save();
-        return redirect('/')->with('notification', 'El equipo de SysPRIM ha verificado tu correo electrónico exitosamente. Por favor, inicia sesión.');
+        return redirect('/')->with('notification', 'El equipo de SEMAT - Iribarren ha verificado tu correo electrónico exitosamente. Por favor, inicia sesión.');
     }
 
 

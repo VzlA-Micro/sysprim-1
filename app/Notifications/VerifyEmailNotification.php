@@ -43,17 +43,13 @@ class VerifyEmailNotification extends Notification
     {
         return (new MailMessage)
                     ->theme('default')
+                    ->subject('Confirmar E-mail')
                     ->greeting('Confirma tu correo electrónico')
-                    ->subject('CONFIRMAR EMAIL')
-                    ->line('Muchas gracias por registrarte en Sysprim!')
+                    ->line('Muchas gracias por registrarte en SEMAT - Iribarren!')
                     ->line('Para completar su registro,confirma tu dirección de correo electrónico haciendo clic en el siguiente botón')
                     ->greeting('Por favor, confirma tu correo electrónico.')
-                    ->subject('Confirmar E-mail')
-                    ->line('Muchas gracias por registrarte en Sysprim.com!')
-                    ->line('Para completar su registro, verifica tu dirección de correo electrónico haciendo clic en el siguiente botón:')
-
                     ->action('Verificar Cuenta', url('/users/verify/'.$this->token))
-                    ->line('Saludos cordiales, el equipo Sysprim.');
+                    ->line('Saludos cordiales, el equipo SEMAT - Iribarren.');
     }
 
     /**

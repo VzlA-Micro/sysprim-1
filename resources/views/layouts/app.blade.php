@@ -22,7 +22,7 @@
     @guest
         @include('includes.auth.header')
     @endguest
-    <main>
+    <main id="@if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')slide @endif">
         @yield('content')
     </main>
 

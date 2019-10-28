@@ -7,7 +7,6 @@
             {{-- Authenticacion links --}}
             <ul id="nav-movile" class="right hide-on-med-and-down">
                 {{-- Boton de prueba --}}
-                <li><a href="{{ route('bank.upload') }}"><i class="icon-file_upload"></i></a></li>
                 <li><a href="{{ route('home') }}" class="tooltipped" data-position="bottom"
                        data-tooltip="{{ __('Home') }}"><i class="icon-home"></i></a></li>
                 <li>

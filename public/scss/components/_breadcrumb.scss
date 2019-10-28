@@ -53,3 +53,15 @@ nav.breadcrumb-nav,
         cursor: default;
     }
 }
+
+@media only screen and (max-width: 992px) {
+    .breadcrumb {
+        
+        &:last-child {
+            color: #333333;
+            font-weight: bold;
+            cursor: default;
+            margin-bottom: 2rem;
+        }
+    }
+}

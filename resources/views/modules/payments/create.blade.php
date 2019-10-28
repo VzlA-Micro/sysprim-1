@@ -60,7 +60,7 @@
                         </div> --}}
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded waves-effect waves-light blue">Register</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Register</button>
                     </div>
                 </form>
             </div>

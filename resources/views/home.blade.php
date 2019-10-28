@@ -76,6 +76,12 @@
                         <span class="truncate">Estadísticas</span>
                     </a>
                 </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
+                        <i class="icon-file_upload"></i>
+                        <span class="truncate">Verificación de Pagos</span>
+                    </a>
+                </div>
             @endif
             @if( \Auth::user()->role_id ==2)
                 <div class="col s12 m3">

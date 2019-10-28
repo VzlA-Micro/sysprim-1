@@ -107,8 +107,8 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
-    background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
-    background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+    background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+    background: linear-gradient(40deg, #a51d1d, #d92626) !important;
 }
 
 .header a {
@@ -168,8 +168,8 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
-    background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
-    background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+    background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+    background: linear-gradient(40deg, #a51d1d, #d92626) !important;
 }
 
 .footer p {
@@ -233,9 +233,15 @@ img {
     -webkit-text-size-adjust: none;
 }
 
-
-.button-blue,
 .button-primary {
+    background-color: #F63;
+    border-top: 10px solid #F63;
+    border-right: 18px solid #F63;
+    border-bottom: 10px solid #F63;
+    border-left: 18px solid #F63;
+}
+
+.button-blue {
     background-color: #2196f3;
     border-top: 10px solid #2196f3;
     border-right: 18px solid #2196f3;

@@ -278,3 +278,11 @@ Route::get('/notifications', function() {
 Route::get('/notifications/details', function() {
     return view('modules.notifications.details');
 })->name('notifications.details');
+
+Route::get('/ticket-office/payments', function() {
+    return view('modules.ticket-office.create');
+})->name('ticket-office.payments');
+
+Route::get('/payments/verify/manage', function() {
+    return view('modules.bank.manage');
+})->name('payments.verify.manage');
