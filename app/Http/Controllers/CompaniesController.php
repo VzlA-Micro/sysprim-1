@@ -110,7 +110,6 @@ class CompaniesController extends Controller
 
         $id = DB::getPdo()->lastInsertId();
 
-
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
         foreach ($ciu as $ciu) {
             $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);

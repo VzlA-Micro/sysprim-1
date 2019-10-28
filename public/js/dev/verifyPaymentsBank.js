@@ -22,7 +22,7 @@ $('documents').ready(function () {
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {
-                        window.location.href=url+"verified/payments";
+                        console.log(response)
                     });
 
                     $("#preloader").fadeOut('fast');
