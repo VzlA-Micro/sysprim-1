@@ -23,8 +23,11 @@ class DatabaseSeeder extends Seeder
                     ExtrasTableSeeder::class,
                     EmployeesTableSeeder::class,
                     RolesTableSeeder::class,
-                   PermissionsTableSeeder::class,
+                    PermissionsTableSeeder::class,
                     RolPermissionTableSeeder::class,
+                    CatastralTerrenoTableSeeder::class,
+                    CatastralConstruccionTableSeeder::class,
+
 
         ]);
     }

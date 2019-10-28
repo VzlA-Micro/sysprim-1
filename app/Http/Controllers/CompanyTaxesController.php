@@ -11,12 +11,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\TaxesNumber;
 use App\Taxe;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
 use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
+use Illuminate\Support\Facades\Mail;
 class CompanyTaxesController extends Controller
 {
     /**
@@ -36,8 +38,15 @@ class CompanyTaxesController extends Controller
 
 
     public function history($company){
+
+
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('company_id',$company[0]->id)->get();
+
+
+        $taxes=Taxe::where('company_id',$company[0]->id)
+            ->where('status','verified')->orWhere('status','process')
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+
         return view('modules.payments.history',['taxes'=>$taxes]);
 
     }
@@ -97,18 +106,15 @@ class CompanyTaxesController extends Controller
         $withholding=$request->input('withholding');
         $base=$request->input('base');
         $fiscal_credits=$request->input('fiscal_credits');
-
         $taxe=new Taxe();
-        $taxe->code=TaxesNumber::generateNumber();
+        $taxe->code=TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period=$fiscal_period;
+
         $taxe->company_id=$company;
         $taxe->save();
         $id=DB::getPdo()->lastInsertId();
-
         $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $date=TaxesMonth::verify($company,false);
-
-
 
         for ($i=0;$i<count($base);$i++){
             //format a base
@@ -134,12 +140,9 @@ class CompanyTaxesController extends Controller
                 $unid_total=0;
             }
 
-
-
             if($date['mora']){//si tiene mora
                 $extra=Extras::orderBy('id', 'desc')->take(1)->get();
                 if($company_find->typeCompany==='R'){
-
                     $tax_rate=$taxes+(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
                 }else{
                     $tax_rate=$taxes-(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
@@ -207,7 +210,6 @@ class CompanyTaxesController extends Controller
 
 
 
-
         //si tiene descuento
         if($company_find->desc){
             $employees = Employees::all();
@@ -220,7 +222,10 @@ class CompanyTaxesController extends Controller
                 }
             }
 
-            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+
+
+
+            $amountTaxes=round($amountTaxes-$amountDesc,2);//descuento
         }
 
         $amount=['amountInterest'=>$amountInterest,
@@ -275,25 +280,181 @@ class CompanyTaxesController extends Controller
     }
 
     public function getPDF($id){
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
+
+
         $taxes=Taxe::findOrFail($id);
-        $company=Company::where('name',session('company'))->get();
-        $company_find=Company::find($company[0]->id);
+        $ciuTaxes=CiuTaxes::where('taxe_id',$id)->get();
+        $company_find=Company::find($taxes->company_id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
-        $extra=['mora'=>$mora[0]->mora,'tasa'=>$mora[0]->tax_rate,'unid_tribu'=>$unid_tribu[0]->value];
-        $pdf = \PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra]);
+        $extra=['tasa'=>$mora[0]->tax_rate];
+
+
+        foreach ($ciuTaxes as $ciu){
+            $amountInterest+=$ciu->interest;
+            $amountRecargo+=$ciu->tax_rate;
+
+            if($company_find->TypeCompany==='R'){
+                $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+            }else{
+                $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+            }
+        }
+
+        $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
+
+
+
+
+        //si tiene descuento
+        if($company_find->desc){
+            $employees = Employees::all();
+            foreach ($employees as $employee){
+                if ($company_find->number_employees >= $employee->min) {
+                    if ($company_find->number_employees <= $employee->max) {
+                        $amountDesc=$amountTaxes*$employee->value/100;
+
+                    }
+                }
+            }
+
+            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+        }
+
+        $amount=['amountInterest'=>$amountInterest,
+            'amountRecargo'=>$amountRecargo,
+            'amountCiiu'=>$amountCiiu,
+            'amountTotal'=>$amountTaxes,
+            'amountDesc'=>$amountDesc
+        ];
+
+
+        $pdf = \PDF::loadView('modules.taxes.receipt',[
+            'taxes'=>$taxes,
+            'fiscal_period'=>$fiscal_period,
+            'extra'=>$extra,
+            'ciuTaxes'=>$ciuTaxes,
+            'amount'=>$amount,
+            'firm'=>false
+            ]);
         return $pdf->stream();
     }
 
     public function paymentsHelp(Request $request){
-        $id=$request->id;
-        $company=Company::where('name',session('company'))->get();
-        $company_find=Company::find($company[0]->id);
-        $taxes=Taxe::findOrFail($id);
-        $monto=0;
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
 
-        foreach($taxes->taxesCiu as $ciu){
+
+
+
+
+        $id = $request->input('taxes_id');
+        $amount = $request->input('total');
+
+        $bank = $request->input('bank');
+        $payments_type = $request->input('payments');
+
+        if($payments_type==='PPV'){
+            $bank=57;
+        }
+
+        $amount_format = str_replace('.', '', $amount);
+        $amount_format = str_replace(',', '.', $amount_format);
+        $taxes = Taxe::findOrFail($id);
+        $taxes->amount = $amount_format;
+        $code = TaxesNumber::generateNumberTaxes($payments_type."81");
+        $taxes->code = $code;
+        $taxes->bank = $bank;
+        $taxes->status = 'process';
+        $taxes->branch='Act.Eco';
+        $code = substr($code, 3, 12);
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, $bank, $code);
+        $taxes->update();
+
+        $taxes=Taxe::findOrFail($id);
+        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+
+
+
+
+
+        $company_find=Company::find($taxes->company_id);
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra=['tasa'=>$mora[0]->tax_rate];
+
+        foreach ($ciuTaxes as $ciu){
+            $amountInterest+=$ciu->interest;
+            $amountRecargo+=$ciu->tax_rate;
+
+            if($company_find->TypeCompany==='R'){
+                $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+            }else{
+                $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+            }
+        }
+
+        $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
+
+        //si tiene descuento
+        if($company_find->desc){
+            $employees = Employees::all();
+            foreach ($employees as $employee){
+                if ($company_find->number_employees >= $employee->min) {
+                    if ($company_find->number_employees <= $employee->max) {
+                        $amountDesc=$amountTaxes*$employee->value/100;
+
+                    }
+                }
+            }
+
+            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+        }
+
+        $amount=['amountInterest'=>$amountInterest,
+            'amountRecargo'=>$amountRecargo,
+            'amountCiiu'=>$amountCiiu,
+            'amountTotal'=>$amountTaxes,
+            'amountDesc'=>$amountDesc
+        ];
+
+
+
+        $subject = "PLANILLA DE PAGO";
+        $for = \Auth::user()->email;
+        $pdf = \PDF::loadView('modules.taxes.receipt',['taxes'=>$taxes,'fiscal_period'=>$fiscal_period,'extra'=>$extra, 'ciuTaxes'=>$ciuTaxes,
+            'amount'=>$amount,'firm'=>false
+        ]);
+
+
+
+        Mail::send('dev.planilla', [], function ($msj) use ($subject, $for, $pdf) {
+            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+            $msj->attachData($pdf->output(), time() . "planilla.pdf");
+        });
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+
+    }
+
+
+
+
+
+        /*foreach($taxes->taxesCiu as $ciu){
             if($ciu->pivot->base == 0){
                 $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
             }
@@ -301,15 +462,15 @@ class CompanyTaxesController extends Controller
                 $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
 
             }
-        }
-
-
-        return view('modules.payments.help',array(
+          return view('modules.payments.help',array(
             'taxes'=>$taxes,
             'id'=>$id,
             'monto'=>$monto
         ));
-    }
+        }*/
+
+
+
     // public function getQR($id) {
     //     $taxes=Taxe::findOrFail($id);
     //     return view();

@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="col s12 m4">
-                <a href="{{ route('users.read') }}" class="btn-app white indigo-text">
+                <a href="#" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver ???</span>
                 </a>

@@ -12,6 +12,14 @@
 		body {
 
 		}
+
+		td.border{
+			 border: 1px solid black;!important;
+			 border-right:none;
+			 border-left:none;
+			margin: 0 !important;
+
+		}
 	</style>
 </head>
 <body style="font-family:Helvetica!important;">
@@ -19,17 +27,25 @@
     <div class="receipt-header" style="">
     	<table style="width: 100%; border-collapse: collapse;">
 	        <tr style="text-align: center">
-	            <td style="width: 25%;">
-					<img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="">
+	            <td style="width: 25%;" rowspan="2">
+					<img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt=""><br>
+					<span></span><br>
+					<span style="font-size: 5px;"></span><br>
 	            </td>
-	            <td style="width: 50%;" style="text-align: center;">
+	            <td style="width: 50%;" style="text-align: center;font-size: 10px !important;" rowspan="2">
+					<span style="font-size: 12px !important;">
+
 					República Bolivariana de Venezuela <br>
 					Alcaldía Bolivariana del Municipio Iribarren <br>
 					Barquisimeto - Edo. Lara
+					</span>
 	            </td>
-	            <td style="width: 25%;">
-					<img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="">
-	            </td>
+	            <td style="width: 25%;" rowspan="2">
+					<img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
+					<span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
+					<span style="font-size: 10px !important;">{{$taxes->created_at}}</span><br>
+
+	             </td>
 	        </tr><!-- 
 	        <tr>
 	            <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>
@@ -43,58 +59,64 @@
 	        </tr> -->
 	    </table>
     </div>
-    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
-    <hr>
+
+	@if($firm)
+		<h4 style="text-align:center">RECIBO DE PAGO</h4>
+	@else
+		<h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
+	@endif
     <table style="width: 100%; border-collapse: collapse;">
     	<tr style="">
-    		<td style="width:15%;font-size: 14px !important; "><b>Contribuyente:</b></td>
-    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->name}}</td>
-    		<td style="width:20%;font-size: 14px !important;"><b>Codigo Catastral:</b></td>
-    		<td style="width:30%;font-size: 13px !important;">{{$taxes->companies->code_catastral}}</td>
+    		<td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->name}}</td>
+    		<td style="width:20%;font-size: 12px !important;"><b>Codigo Catastral:</b></td>
+    		<td style="width:30%;font-size: 11px !important;">{{$taxes->companies->code_catastral}}</td>
     	</tr>
     	<tr>
-    		<td style="width:15%;font-size: 14px !important;"><b>Cedula o RIF:</b></td>
-    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->RIF}}</td>
-    		<td style="width:20%;font-size: 14px !important;"><b>Cód. Licencia:</b></td>
-    		<td style="width:30%;font-size: 13px !important">{{$taxes->companies->license}}</td>
+    		<td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
+    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->RIF}}</td>
+    		<td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
+    		<td style="width:30%;font-size: 11px !important">{{$taxes->companies->license}}</td>
     	</tr>
     	<tr>
-    		<td style="width:15%;font-size: 14px !important"><b>Dirección:</b></td>
-    		<td style="width:35%;font-size: 12px !important">{{$taxes->companies->address}}</td>
+    		<td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
+    		<td style="width:35%;font-size: 11px !important">{{$taxes->companies->address}}</td>
 
-			<td style="width:15%;font-size: 14px !important;"><b>Planilla liquidada:</b></td>
-			<td style="width:35%;font-size: 13px !important;">{{$taxes->code}}</td>
+			<td style="width:15%;font-size: 12px !important;"><b></b></td>
+			<td style="width:35%;font-size: 11px !important;"></td>
     	</tr>
     	<tr>
-    		<td style="width:15%;font-size: 14px !important;"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%;font-size: 13px !important;">{{$taxes->companies->phone}}</td>
+    		<td style="width:15%;font-size: 12px !important;"><b>Telf. Empresa:</b></td>
+    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->phone}}</td>
 
     	</tr>
     	<tr>
-    		<td style="width:15%;font-size: 14px !important;"><b>Pers.Rsponsable:</b></td>
-    		<td style="width:35%;font-size: 13px !important;">{{\Auth()->user()->name .' '.\Auth()->user()->surname}}</td>
-    		<td style="width:20%;font-size: 14px !important;"><b>Oficina:</b></td>
-    		<td style="width:30%;font-size: 13px !important;">VIRTUAL</td>
+    		<td style="width:15%;font-size: 12px !important;"><b>Pers.Rsponsable:</b></td>
+    		<td style="width:35%;font-size: 11px !important;"></td>
+    		<td style="width:20%;font-size: 12px !important;"><b></b></td>
+    		<td style="width:30%;font-size: 11px !important;"></td>
     	</tr>
     </table>
-    <hr>
+
+
+
 	<table style="width: 100%;">
 		<thead>
-			<tr style="border-bottom: 1px solid #000; !important;">
-				<th style="width: 10%;font-size: 13px !important; ">CIIU</th>
-				<th style="width: 20%;font-size: 13px !important;">Descripción</th>
-				<th style="width: 10%;font-size: 13px !important;">Ramo</th>
-				<th style="width: 10%;font-size: 13px !important;">Lapso</th>
-				<th style="width: 15%;font-size: 13px !important;">Base Imponible</th>
-				<th style="width: 15%;font-size: 13px !important;">Monto o Benef/CF</th>
-				<th style="width: 10%;font-size: 13px !important;">Impuesto</th>
+			<tr style="border: 1px solid #000; !important;">
+				<td style="width: 10%;font-size: 12px !important;" class="border">CIIU</td>
+				<td style="width: 20%;font-size: 12px !important;" class="border">Descripción</td>
+				<td style="width: 10%;font-size: 12px !important;" class="border">Ramo</td>
+				<td style="width: 10%;font-size: 12px !important;" class="border">Lapso</td>
+				<td style="width: 15%;font-size: 12px !important;" class="border">Base Imponible</td>
+				<td style="width: 15%;font-size: 12px !important;" class="border">Monto o Benef/CF</td>
+				<td style="width: 10%;font-size: 12px !important;" class="border">Impuesto</td>
 		</thead>
 
 		<tbody>
 		@php $total_taxes=0;@endphp
-		@foreach($taxes->taxesCiu as $ciu)
+		@foreach($ciuTaxes as $ciu)
 			@php
-			 	if($ciu->pivot->base!=0&&$ciu->pivot->interest!=0){
+			 /*	if($ciu->pivot->base!=0&&$ciu->pivot->interest!=0){
 			 	$taxe=$ciu->pivot->base*$ciu->alicuota/100;
 				$surchange_total=$ciu->pivot->tax_rate+$taxe;
 				$interest_total=$surchange_total+$ciu->pivot->interest;
@@ -103,58 +125,132 @@
 			   	 $taxe=$ciu->pivot->unid_tribu*$ciu->min_tribu_men;
 			   	 $surchange_total=0;
 			 	 $total_taxes+=$taxe;
-			 	}
+			 	}*/
 			@endphp
 
 
 
 
 
-
-
 			<tr>
-				<td style="width: 10%;font-size: 12px !important;">{{$ciu->code}}</td>
-				<td style="width: 30%;font-size: 11px;!important;">{{$ciu->name}}</td>
-				<td style="width: 10%;font-size: 12px;!important">Act Eco</td>
-				<td style="width: 10%;font-size: 12px; !important;">{{$taxes->fiscal_period}}</td>
-				<td style="width: 15%;font-size: 12px;!important">@php echo number_format($ciu->pivot->base, 2);@endphp</td>
-				<td style="width: 15%;font-size: 12px;!important">{{$ciu->alicuota."%"}}</td>
-				<td style="width: 10%;font-size: 12px;!important">{{number_format($taxe,2)}}</td>
+				<td style="width: 10%;font-size: 10px !important;">{{$ciu->ciu->code}}</td>
+				<td style="width: 30%;font-size: 10px;!important;">{{$ciu->ciu->name}}</td>
+				<td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
+				<td style="width: 10%;font-size: 10px; !important;">{{$taxes->fiscal_period}}</td>
+				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
+				<td style="width: 15%;font-size: 10px;!important">{{$ciu->ciu->alicuota."%"}}</td>
+				<td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
 			</tr>
 
 
 
-		@if($ciu->pivot->interest!=0)
+		@if($ciu->interest!=0)
 			<tr>
 				<td></td>
-				<td style="font-size: 13px !important;">Recargo</td>
+				<td style="font-size: 10px !important;">Recargo</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 12px !important;">{{number_format($taxe,2)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->tax_rate,2)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->tax_rate,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td style="font-size: 13px !important;">Interés por mora</td>
+				<td style="font-size: 10px !important;">Interés por mora</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 12px !important;">{{number_format($surchange_total)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->interest,2)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->interest,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest,2)}}</td>
 			</tr>
 
+		@endif
 
+
+		@if($ciu->withholding!=0)
 			<tr>
 				<td></td>
-				<td style="font-size: 13px !important;">Mora</td>
+				<td style="font-size: 10px !important;">Retención al Impuesto del Período Fiscal</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 12px !important;">{{number_format($surchange_total,2)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($ciu->pivot->mora,2)}}</td>
-				<td style="font-size: 12px !important;">{{number_format($surchange_total+$ciu->pivot->mora,2)}}</td>
+				<td style="font-size: 10px !important;"></td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->withholding,2)}}</td>
+				@if($taxes->companies->typeCompany=='R')
+					<td style="font-size: 10px !important;">
+						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding,2)}}
+					</td>
+				@else
+					<td style="font-size: 10px !important;">
+						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding,2)}}
+					</td>
+				@endif
 			</tr>
 		@endif
+
+
+			@if($ciu->credit_fiscal!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Crédito Fiscal</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($ciu->credit_fiscal,2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal,2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal,2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
+
+
+			@if($ciu->deductions!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Deducciones</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
+
+			@if($amount['amountDesc']!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Descuento por trajador</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($amount['amountDesc'],2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
 		@endforeach
 
 		<tr>
@@ -164,7 +260,7 @@
 			<td></td>
 			<td></td>
 			<td>TOTAL</td>
-			<td style="font-size: 14px !important; text-align: left">{{number_format($total_taxes,2)}}</td>
+			<td style="font-size: 14px !important; text-align: left">{{number_format($amount['amountTotal'],2)}}</td>
 		</tr>
 		</tbody>
 
@@ -174,7 +270,65 @@
 			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($total_taxes))."."}}</td>
 		</tr>
 	</table>
-	<?php
+	<table>
+		<tr>
+			<td style="font-size: 12px !important; text-align: center;">Planilla</td>
+			<td style="font-size: 12px !important; text-align: center;">Dígito</td>
+			<td style="font-size: 12px !important; text-align: center;">Correlat</td>
+			<td style="font-size: 12px !important; text-align: center;">Contrib</td>
+			<td style="font-size: 12px !important; text-align: center;">Monto</td>
+			<td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI ENMENDADURA NO VALIDO COMO SOLVENCIA</td>
+		</tr>
+
+		<tr>
+			<td style="font-size: 12px !important;text-align: center;">{{$taxes->code}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{$taxes->digit}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{$taxes->companies->license}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{$taxes->amount}}</td>
+		</tr>
+	</table>
+
+		<table>
+			<tr>
+				<td colspan="3" style="font-size: 12px;">Nota: Una vez que se publiquen
+					las tasas de interés moratorio correspondiente se procederá a cobrar
+					el complemento de la misma, de conformidad con el articulo 66 Decreto
+					con Rango Valor y Fuerza de Ley del Código Tributario.
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td style="width: 100%;text-align: center; font-size: 14px;">
+
+					@if($taxes->bank==44)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
+					@elseif($taxes->bank==77)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BICENTENARIO*****
+					@elseif($taxes->bank==99)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
+					@elseif($taxes->bank==33)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
+					@elseif($taxes->bank==55)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
+					@else
+						***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
+					@endif
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 100%;text-align: center; font-size: 14px;">
+					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes->created_at))}}**
+				</td>
+			</tr>
+
+		</table>
+
+
+<?php
     $num = 'CMD01-'.date('ymd');
     $nom = 'DUPONT Alphonse';
     $date = '31/12/'.date('Y');
@@ -184,16 +338,16 @@
     <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
         <table style="width: 100%">
         	<tr>
-        		<td style="width: 30%"></td>
-        		<td style="width: 30%"></td>
+        		<td style="width: 100%;"></td>
+        		<td style="width: 100%"></td>
         		<td style="width: 100%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("https://sysprim.com/payments/taxes/".$taxes->id)) !!} " style="float: left;position: absolute;top: -120px;right: -700px !important;">
+
+
+
         		</td>
 
         	</tr>
-			<tr>
 
-			</tr>
         </table>
         <b></b>  <b></b><br>
          <b></b><br>
@@ -202,13 +356,45 @@
 
 		<table style="width: 100%;margin-bottom:-30px;">
 			<tr>
-				<td style="width: 100%;text-align: center;">
-					{{$taxes->created_at}}
+
+				@if($firm)
+					<td style="width: 40%;text-align: center;">
+						<img src="{{asset('images/pdf/firma.png')}}" style="width:180px; height:80px;">
+					</td>
+				@else
+
+					<td style="width: 40%;text-align: center;">
+						__________________________________________
+					</td>
+
+				@endif
+
+			</tr>
+			<tr>
+				@if($firm)
+				<td style="width:40%;text-align: center; font-size: 10px;">
+					FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
+					DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+					DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
+				@else
+					<td style="width:40%;text-align: center; font-size: 10px;">
+						FIRMA DEL GERENTE DE RECAUDACIÓN DEL SEMAT.<br> JURO QUE LOS DATOS EN ESTA
+						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
+				@endif
+			</tr>
+		</table>
+		<table style="width: 100%;margin-bottom:-30px;">
+			<tr>
+				<td style="width: 80%;">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate("https://sysprim.com/payments/taxes/".$taxes->id)) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 100%;text-align: center;">
-					**ESTE DOCUMENTO VA SIN TACHADURA NI ENMENDADURA.**
+				<td style="width: 20%;">
+					@if($taxes->bank!=57)
+						<img src="http://sysprim.com.devel/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+					@endif
 				</td>
 			</tr>
 		</table>

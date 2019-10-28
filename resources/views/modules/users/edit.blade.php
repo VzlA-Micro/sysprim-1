@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -16,70 +16,72 @@
             </div>
             <div class="col s12 m8 offset-m2">
                 {{-- Agregar los valores de la base de datos con la consulta --}}
-                <form action="" method="post" class="card">
+                <form action="#" id="userUpdate" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Editar Usuario</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
-                        <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
-                            <select name="nationality" id="nationality" required>
-                                <option value="null">...</option>
-                                <option value="V-">V</option>
-                                <option value="E-">E</option>
-                            </select>
-                            <label for="nationality">Nacionalidad</label>
+                        <input id="id" type="hidden" value="{{$user->id}}" name="id">
+                        <div class="input-field col s10 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 12345678">
+                            <input id="cedula" type="text" name="cedula" class="validate" readonly pattern="[0-9VvEe]+"
+                                   title="Solo puede escribir números." value="{{$user->ci}}" required>
+                            <label for="cedula">Cedula</label>
                         </div>
-                        <div class="input-field col s10 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
-                                <label for="ci">Cedula</label>
-                            </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede agregar letras (con acentos).">
+                            <input id="name" type="text" name="name" class="validate" readonly
+                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+"
+                                   title="Solo puede agregar letras (con acentos)." value="{{$user->name}}" required>
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede agregar letras (con acentos).">
+                            <input id="surname" type="text" name="surname" readonly class="validate"
+                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+"
+                                   title="Solo puede agregar letras (con acentos)." value="{{$user->surname}}" required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
-                            <select name="country_code" id="country_code" required>
-                                <option value="null">...</option>
-                                <option value="+58412">(412)</option>
-                                <option value="+58414">(414)</option>
-                                <option value="+58416">(416)</option>
-                                <option value="+58424">(424)</option>
-                                <option value="+58426">(426)</option>
-                            </select>
-                            <label for="country_code">Operadora</label>
-                        </div>
-                        <div class="input-field col s10 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s10 m6 tooltipped" readonly data-position="bottom"
+                             data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone" type="tel" name="phone" readonly class="validate" pattern="[0-9+]+"
+                                   value="{{$user->phone}}" title="Solo puede escribir números."
+                                   placeholder="Ej. 1234567" maxlength="13" minlength="13" required>
                         </div>
-                        <div class="input-field col s12">
-                            <select name="type" id="type" required>
-                                <option value="null" disabled selected>Elige un tipo...</option>
-                                <option value="natural">Natural</option>
-                                <option value="business">Juridica</option>
-                              </select>
-                              <label for="type">Tipo de Persona</label>
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede agregar letras (con acentos).">
+                            <input id="rol" type="text" name="rol" readonly class="validate"
+                                   title="Solo puede agregar letras (con acentos)." value="{{$role[0]->name}}" required>
+                            <label for="rol">Rol De Usuario</label>
                         </div>
-                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
-                            <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
-                            <label for="email">E-mail</label>
+                        <div class="input-field col m6 s12">
+                            <select  name="roles" id="roles"  required>
+                                <option value="null" disabled selected>Selecciona rol</option>
+                                @foreach($roles as $rol):
+                                <option value="{{$rol->id }}">{{ $rol->name}}</option>
+                                @endforeach
+                            </select>
+                            <label>Rol Usuario</label>
                         </div>
-                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234">
-                            <input id="password" type="password" name="password" class="validate" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
-                            <label for="password">Contraseña</label>
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                                   data-tooltip="Ej: correo@mail.com">
+                            <input id="emailEdit" type="text" name="emailEdit" readonly class="validate"
+                                   value="{{ $user->email }}" required>
+                            <label for="emailEdit">E-mail</label>
                         </div>
-                        <div class="input-field col s12">
-                            <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
-                            <label for="password-confirm">Confirmar contraseña</label>
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Ej: correo@mail.com">
+                            <input id="passwordEdit" type="password" name="passwordEdit" readonly class="validate"
+                                   value="{{ $user->email }}" required>
+                            <label for="passwordEdit">Password</label>
                         </div>
+
                     </div>
                     <div class="card-footer center">
-                        <button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
+                        <button type="submit" id="actualizar" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
+                        <!--<button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>-->
                     </div>
                 </form>
             </div>
@@ -87,5 +89,5 @@
     </div>
 @endsection
 @section('scripts')
-    
+    <script src="{{ asset('js/dev/user.js')}}"></script>
 @endsection

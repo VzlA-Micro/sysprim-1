@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="col s12 m3">
-                <a href="{{ route('companies.my-business') }}" class="btn-app white grey-text text-darken-2">
+                <a href="{{ route('inmueble.my-property') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
@@ -27,7 +27,7 @@
             </div>
             @endif
 
-            @if(\Auth::user()->role_id ==1)
+            @if(\Auth::user()->role_id ==1 || \Auth::user()->role_id ==4)
                 <div class="col s12 m3">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
                         <i class="icon-people_outline"></i>
