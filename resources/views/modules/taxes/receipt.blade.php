@@ -220,11 +220,11 @@
 					<td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
 					@if($taxes->companies->typeCompany=='R')
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions,2)}}
 						</td>
 					@else
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions,2)}}
 						</td>
 					@endif
 				</tr>
@@ -241,11 +241,11 @@
 					<td style="font-size: 10px !important;">{{number_format($amount['amountDesc'],2)}}</td>
 					@if($taxes->companies->typeCompany=='R')
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions-$amount['amountDesc'],2)}}
 						</td>
 					@else
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions-$amount['amountDesc'],2)}}
 						</td>
 					@endif
 				</tr>
@@ -300,7 +300,7 @@
 			<tr>
 				<td></td>
 			</tr>
-
+			@if(!$firm)
 			<tr>
 				<td style="width: 100%;text-align: center; font-size: 14px;">
 
@@ -324,7 +324,7 @@
 					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes->created_at))}}**
 				</td>
 			</tr>
-
+			@endif
 		</table>
 
 
