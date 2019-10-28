@@ -221,7 +221,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
-                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s12 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
+                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded btn-large col s12 peach waves-effect waves-light modal-trigger">CONTINUAR</a>
                                     {{-- Modal structure --}}
                                     <div id="modal1" class="modal modal-fixed-footer">
                                         <div class="modal-content">

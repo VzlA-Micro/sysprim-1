@@ -118,7 +118,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="header iribarren-wine">
         <h1 class="center-align">Recibo de Solvencia</h1>
     </div>
     <div>
