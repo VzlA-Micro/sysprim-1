@@ -60,7 +60,8 @@ class VerifyPaymentsBankImportController extends Controller
                     $taxes = Taxe::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
-                        if ($document == $code && $amountThere == $taxe->amount) {
+                        //&& $amountThere == $taxe->amount
+                        if ($document == $code) {
                             $company = Company::find($taxe->company_id);
                             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
                             $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();

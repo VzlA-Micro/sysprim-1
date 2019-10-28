@@ -324,3 +324,8 @@ Route::get('/verified/payments',array(
     'as'=>'verifiedPayments',
     'uses'=>'VerifyPaymentsBankImportController@verifyPayments'
 ));
+
+//taquilla
+Route::get('/home/ticketOffice', function() {
+    return view('modules.ticket-office.home');
+})->name('home.ticket-office');
