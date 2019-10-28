@@ -27,7 +27,7 @@
                     @else
 
                         <div class="card-header center-align">
-                            <h5>Pagar Impuesto</h5>
+                            <h5>Declarar actividad Economica</h5>
                         </div>
 
                         <div class="card-content row">

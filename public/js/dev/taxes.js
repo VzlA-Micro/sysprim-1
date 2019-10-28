@@ -138,5 +138,16 @@ $(document).ready(function () {
         }
     }
     //Calculos de total a pagar
+    $('.bank').click(function () {
+        $('#bank').val($(this).attr('data-bank'));
+        $('#register-taxes')[0].submit();
+    });
 
+    $('.payments').click(function () {
+        $('#payments').val($(this).attr('data-payments'));
+    });
+
+    $('.tick').click(function () {
+        $('#register-taxes')[0].submit();
+    });
 });

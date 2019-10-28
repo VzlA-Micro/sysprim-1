@@ -44,6 +44,13 @@ class User extends Authenticatable
             ->withPivot('company_id');
     }
 
+    public function property(){
+        return $this->belongsToMany('App\Inmueble','user_inmueble')
+            ->withPivot('inmueble_id');
+    }
+
+
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MyResetPassword($token));

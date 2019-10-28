@@ -33,5 +33,12 @@ class RolPermissionTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
         ]);
+
+        DB::table('roles_permissions')->insert([
+            'role_id'=>4,
+            'permission_id'=>2,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+        ]);
     }
 }

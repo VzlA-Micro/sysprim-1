@@ -10,10 +10,11 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
+
                 <a href="#!" class="breadcrumb">Registrar Usuario</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="{{route('register')}}" method="post" class="card">
+                <form action="#" id="gestionUser" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Usuario</h5>
                     </div>
@@ -33,11 +34,11 @@
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
                         <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
@@ -55,14 +56,6 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
-                        <div class="input-field col s12">
-                            <select name="type" id="type" required>
-                                <option value="null" disabled selected>Elige un tipo...</option>
-                                <option value="natural">Natural</option>
-                                <option value="business">Juridica</option>
-                              </select>
-                              <label for="type">Tipo de Persona</label>
-                        </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
@@ -75,6 +68,15 @@
                             <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password-confirm">Confirmar contraseña</label>
                         </div>
+                        <div class="input-field col m6 s12">
+                            <select  name="role" id="role" required>
+                                <option value="null" disabled selected>Selecciona rol</option>
+                                @foreach($Role as $rol):
+                                <option value="{{$rol->id }}">{{ $rol->name}}</option>
+                                @endforeach
+                            </select>
+                            <label>Rol Usuario</label>
+                        </div>
                     </div>
                     <div class="card-footer center">
                         <button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
@@ -85,5 +87,5 @@
     </div>
 @endsection
 @section('scripts')
-    
+    <script src="{{ asset('js/dev/user.js') }}"></script>
 @endsection
