@@ -78,10 +78,17 @@
                     <li><a href="{{ route('register') }}">{{ __('Registrarse') }}</a></li>
                 @endif
                 @else
-                    <li><a href=""
-                           class="subheader truncate">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
+                    @php 
+                        $name = strtolower(Auth::user()->name);
+                        $surname = strtolower(Auth::user()->surname);
+                    @endphp 
+                    <li>
+                        <div class="user-view grey-text darken-2">
+                            <span>Bienvenido,<br> {{ ucwords($name) }} {{ ucwords($surname) }}</span>
+                        </div>
+                    </li>
                     <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i
-                                    class="icon-account_circle left"></i>Mi Cuenta</a></li>
+                                    class="icon-account_circle left"></i>{{ ucwords('mi cuenta') }}</a></li>
                     <li class="divider"></li>
                     <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}"
                                                                               class="waves-effect waves-black"><i
