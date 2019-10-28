@@ -315,7 +315,12 @@ Route::get('/fileBank-register', function() {
     return view('dev.verifyPaymentsBank.upload');
 })->name('bank.upload');
 
-Route::post('/save-fileBank',array(
+Route::post('/fileBank/save',array(
     'as'=>'saveFileBank',
     'uses'=>'VerifyPaymentsBankImportController@importFile'
+));
+
+Route::get('/verified/payments',array(
+    'as'=>'verifiedPayments',
+    'uses'=>'VerifyPaymentsBankImportController@verifyPayments'
 ));

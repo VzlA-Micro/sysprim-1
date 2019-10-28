@@ -18,6 +18,7 @@ class CreateTaxesTable extends Migration
             $table->string('digit',3)->nullable();
             $table->double('amount',11,2)->nullable();
             $table->string('status')->nullable();
+            $table->string('bank',3)->nullable();
             $table->date('fiscal_period');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('company');

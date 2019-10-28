@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 m8 offest-m2 l4 offset-l4">
-                <form action="{{ route('saveFileBank') }}" method="post" class="card" enctype="multipart/form-data">
+                <form id="verifyPaymentsBank" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Cargar Estados de cuenta</h5>
                     </div>
@@ -27,4 +27,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="{{ asset('js/dev/verifyPaymentsBank.js') }}"></script>
 @endsection
