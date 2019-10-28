@@ -341,7 +341,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->download(time()."planilla_pago");
+        return $pdf->download(time()."planilla_pago.pdf");
     }
 
     public function paymentsHelp(Request $request){
