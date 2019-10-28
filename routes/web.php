@@ -329,3 +329,7 @@ Route::get('/verified/payments',array(
 Route::get('/home/ticketOffice', function() {
     return view('modules.ticket-office.home');
 })->name('home.ticket-office');
+
+Route::get('/home/atencion', function() {
+    return view('modules.ticket-office.atencion.home');
+})->name('atencion.home');

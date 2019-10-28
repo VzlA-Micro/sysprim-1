@@ -64,7 +64,7 @@ class UserController extends Controller{
         $surname= $request->input('surname');
         $phone= $request->input('phone');
         $country_code= $request->input('country_code');
-        $role= $request->input('role');
+        //$role= $request->input('role');
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
 
@@ -75,7 +75,7 @@ class UserController extends Controller{
         $user->surname=$surname;
         $user->phone=$country_code.$phone;
         $user->confirmed=1;
-        $user->role_id=$role;
+        $user->role_id=3;
         $user->email=$email;
         $user->password=$password;
 

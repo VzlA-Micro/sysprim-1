@@ -67,16 +67,16 @@
                         <div class="input-field col s12">
                             <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password-confirm">Confirmar contraseña</label>
-                        </div>
-                        <div class="input-field col m6 s12">
-                            <select  name="role" id="role" required>
-                                <option value="null" disabled selected>Selecciona rol</option>
-                                @foreach($Role as $rol):
-                                <option value="{{$rol->id }}">{{ $rol->name}}</option>
+                            {{--</div>
+                             <div class="input-field col m6 s12">
+                                <select  name="role" id="role" required>
+                                    <option value="null" disabled selected>Selecciona rol</option>
+                                    @foreach($Role as $rol):
+                                    <option value="{{$rol->id }}">{{ $rol->name}}</option>
                                 @endforeach
                             </select>
                             <label>Rol Usuario</label>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="card-footer center">
                         <button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
