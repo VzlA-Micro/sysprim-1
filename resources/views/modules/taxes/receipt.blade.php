@@ -59,8 +59,12 @@
 	        </tr> -->
 	    </table>
     </div>
-    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
 
+	@if($firm)
+		<h4 style="text-align:center">RECIBO DE PAGO</h4>
+	@else
+		<h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
+	@endif
     <table style="width: 100%; border-collapse: collapse;">
     	<tr style="">
     		<td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
@@ -88,7 +92,7 @@
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Pers.Rsponsable:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{\Auth()->user()->name .' '.\Auth()->user()->surname}}</td>
+    		<td style="width:35%;font-size: 11px !important;"></td>
     		<td style="width:20%;font-size: 12px !important;"><b></b></td>
     		<td style="width:30%;font-size: 11px !important;"></td>
     	</tr>
@@ -110,9 +114,9 @@
 
 		<tbody>
 		@php $total_taxes=0;@endphp
-		@foreach($taxes->taxesCiu as $ciu)
+		@foreach($ciuTaxes as $ciu)
 			@php
-			 	if($ciu->pivot->base!=0&&$ciu->pivot->interest!=0){
+			 /*	if($ciu->pivot->base!=0&&$ciu->pivot->interest!=0){
 			 	$taxe=$ciu->pivot->base*$ciu->alicuota/100;
 				$surchange_total=$ciu->pivot->tax_rate+$taxe;
 				$interest_total=$surchange_total+$ciu->pivot->interest;
@@ -121,58 +125,132 @@
 			   	 $taxe=$ciu->pivot->unid_tribu*$ciu->min_tribu_men;
 			   	 $surchange_total=0;
 			 	 $total_taxes+=$taxe;
-			 	}
+			 	}*/
 			@endphp
 
 
 
 
 
-
-
 			<tr>
-				<td style="width: 10%;font-size: 10px !important;">{{$ciu->code}}</td>
-				<td style="width: 30%;font-size: 10px;!important;">{{$ciu->name}}</td>
-				<td style="width: 10%;font-size: 10px;!important">Act Eco</td>
+				<td style="width: 10%;font-size: 10px !important;">{{$ciu->ciu->code}}</td>
+				<td style="width: 30%;font-size: 10px;!important;">{{$ciu->ciu->name}}</td>
+				<td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
 				<td style="width: 10%;font-size: 10px; !important;">{{$taxes->fiscal_period}}</td>
-				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->pivot->base, 2);@endphp</td>
-				<td style="width: 15%;font-size: 10px;!important">{{$ciu->alicuota."%"}}</td>
-				<td style="width: 10%;font-size: 10px;!important">{{number_format($taxe,2)}}</td>
+				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
+				<td style="width: 15%;font-size: 10px;!important">{{$ciu->ciu->alicuota."%"}}</td>
+				<td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
 			</tr>
 
 
 
-		@if($ciu->pivot->interest!=0)
+		@if($ciu->interest!=0)
 			<tr>
 				<td></td>
 				<td style="font-size: 10px !important;">Recargo</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 10px !important;">{{number_format($taxe,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->pivot->tax_rate,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($surchange_total,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->tax_rate,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td style="font-size: 10px !important;">Interés por mora</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 10px !important;">{{number_format($surchange_total)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->pivot->interest,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($surchange_total,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->interest,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest,2)}}</td>
 			</tr>
 
+		@endif
 
+
+		@if($ciu->withholding!=0)
 			<tr>
 				<td></td>
-				<td style="font-size: 10px !important;">Mora</td>
+				<td style="font-size: 10px !important;">Retención al Impuesto del Período Fiscal</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 10px !important;">{{number_format($surchange_total,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->pivot->mora,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($surchange_total+$ciu->pivot->mora,2)}}</td>
+				<td style="font-size: 10px !important;"></td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->withholding,2)}}</td>
+				@if($taxes->companies->typeCompany=='R')
+					<td style="font-size: 10px !important;">
+						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding,2)}}
+					</td>
+				@else
+					<td style="font-size: 10px !important;">
+						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding,2)}}
+					</td>
+				@endif
 			</tr>
 		@endif
+
+
+			@if($ciu->credit_fiscal!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Crédito Fiscal</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($ciu->credit_fiscal,2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal,2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal,2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
+
+
+			@if($ciu->deductions!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Deducciones</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions,2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
+
+			@if($amount['amountDesc']!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Descuento por trajador</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($amount['amountDesc'],2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal+$ciu->deductions-$amount['amountDesc'],2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
 		@endforeach
 
 		<tr>
@@ -182,7 +260,7 @@
 			<td></td>
 			<td></td>
 			<td>TOTAL</td>
-			<td style="font-size: 14px !important; text-align: left">{{number_format($total_taxes,2)}}</td>
+			<td style="font-size: 14px !important; text-align: left">{{number_format($amount['amountTotal'],2)}}</td>
 		</tr>
 		</tbody>
 
@@ -234,8 +312,10 @@
 						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
 					@elseif($taxes->bank==33)
 						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
-					@else
+					@elseif($taxes->bank==55)
 						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
+					@else
+						***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
 					@endif
 				</td>
 			</tr>
@@ -248,7 +328,7 @@
 		</table>
 
 
-	<?php
+<?php
     $num = 'CMD01-'.date('ymd');
     $nom = 'DUPONT Alphonse';
     $date = '31/12/'.date('Y');
@@ -277,13 +357,31 @@
 		<table style="width: 100%;margin-bottom:-30px;">
 			<tr>
 
-				<td style="width: 40%;text-align: center;">_________________________</td>
+				@if($firm)
+					<td style="width: 40%;text-align: center;">
+						<img src="{{asset('images/pdf/firma.png')}}" style="width:180px; height:80px;">
+					</td>
+				@else
+
+					<td style="width: 40%;text-align: center;">
+						__________________________________________
+					</td>
+
+				@endif
+
 			</tr>
 			<tr>
+				@if($firm)
 				<td style="width:40%;text-align: center; font-size: 10px;">
 					FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
 					DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
 					DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
+				@else
+					<td style="width:40%;text-align: center; font-size: 10px;">
+						FIRMA DEL GERENTE DE RECAUDACIÓN DEL SEMAT.<br> JURO QUE LOS DATOS EN ESTA
+						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
+				@endif
 			</tr>
 		</table>
 		<table style="width: 100%;margin-bottom:-30px;">
@@ -294,7 +392,10 @@
 			</tr>
 			<tr>
 				<td style="width: 20%;">
-					<img src="http://sysprim.com.devel/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+					@if($taxes->bank!=57)
+						<img src="http://sysprim.com.devel/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+					@endif
+
 				</td>
 			</tr>
 		</table>

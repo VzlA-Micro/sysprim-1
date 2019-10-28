@@ -48,14 +48,6 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
-                        <div class="input-field col s12">
-                            <select name="type" id="type" required>
-                                <option value="null" disabled selected>Elige un tipo...</option>
-                                <option value="natural">Natural</option>
-                                <option value="business">Juridica</option>
-                              </select>
-                              <label for="type">Tipo de Persona</label>
-                        </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>

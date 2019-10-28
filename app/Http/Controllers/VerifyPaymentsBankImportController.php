@@ -18,12 +18,26 @@ use App\Helpers\TaxesMonth;
 use App\Http\Controllers\Controller;
 use App\PaymentTaxes;
 use Carbon\Carbon;
+use App\Employees;
+use App\CiuTaxes;
+
 
 class VerifyPaymentsBankImportController extends Controller
 {
 
     public function importFile(Request $request)
     {
+
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
+
+
+
+
         $file = $request->file;
         $Archivo = \File::get($file);
         $mime = $file->getMimeType();
@@ -62,11 +76,61 @@ class VerifyPaymentsBankImportController extends Controller
                         $code = substr($taxe->code, 3, 10);
                         //&& $amountThere == $taxe->amount
                         if ($document == $code) {
+
                             $company = Company::find($taxe->company_id);
-                            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
-                            $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
-                            $mora = Extras::orderBy('id', 'desc')->take(1)->get();
-                            $extra = ['mora' => $mora[0]->mora, 'tasa' => $mora[0]->tax_rate, 'unid_tribu' => $unid_tribu[0]->value];
+                            $taxes=Taxe::findOrFail($taxe->id);
+
+                            $ciuTaxes=CiuTaxes::where('taxe_id',$taxe->id)->get();
+                            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+                            $mora=Extras::orderBy('id', 'desc')->take(1)->get();
+                            $extra=['tasa'=>$mora[0]->tax_rate];
+                            foreach ($ciuTaxes as $ciu){
+                                $amountInterest+=$ciu->interest;
+                                $amountRecargo+=$ciu->tax_rate;
+
+                                if($company->TypeCompany==='R'){
+                                    $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+                                }else{
+                                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+                                }
+                            }
+
+                            $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
+
+
+
+
+                            //si tiene descuento
+                            if($company->desc){
+                                $employees = Employees::all();
+                                foreach ($employees as $employee){
+                                    if ($company->number_employees >= $employee->min) {
+                                        if ($company->number_employees <= $employee->max) {
+                                            $amountDesc=$amountTaxes*$employee->value/100;
+
+                                        }
+                                    }
+                                }
+
+                                $amountTaxes=$amountTaxes-$amountDesc;//descuento
+                            }
+
+                            $amount=['amountInterest'=>$amountInterest,
+                                'amountRecargo'=>$amountRecargo,
+                                'amountCiiu'=>$amountCiiu,
+                                'amountTotal'=>$amountTaxes,
+                                'amountDesc'=>$amountDesc
+                            ];
+
+
+                            $pdf = \PDF::loadView('modules.taxes.receipt',[
+                                'taxes'=>$taxes,
+                                'fiscal_period'=>$fiscal_period,
+                                'extra'=>$extra,
+                                'ciuTaxes'=>$ciuTaxes,
+                                'amount'=>$amount,
+                                'firm'=>true
+                            ]);
 
                             $userCompany = $company->users()->get();
                             $taxe->status = 'verified';
@@ -75,7 +139,7 @@ class VerifyPaymentsBankImportController extends Controller
 
                             $subject = "Planilla Verificada";
                             $for = $userCompany[0]->email;
-                            $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxe, 'fiscal_period' => $fiscal_period, 'extra' => $extra]);
+
 
                             Mail::send('dev.pago', [], function ($msj) use ($subject, $for, $pdf) {
 
