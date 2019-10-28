@@ -393,7 +393,7 @@
 			<tr>
 				<td style="width: 20%;">
 					@if($taxes->bank!=57)
-						<img src="http://sysprim.com.devel/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+						<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
 					@endif
 				</td>
 			</tr>
