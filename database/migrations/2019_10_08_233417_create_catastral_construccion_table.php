@@ -17,7 +17,7 @@ class CreateCatastralConstruccionTable extends Migration
             $table->increments('id');
             $table->string('name',30);
             $table->string('regimen_propiedad',10);
-            $table->float('value_edificacion');
+            $table->float('value_edificacion',8,3);
             $table->timestamps();
         });
     }

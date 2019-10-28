@@ -26,9 +26,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // User module routes
-Route::get('/users/register', function() {
-    return view('modules.users.register');
-})->name('users.register');
+Route::get('/user/register',array(
+    'uses'=>'UserController@create',
+    'as'=>'userRegister'
+));
+
+Route::post('/user/save',array(
+    'uses'=>'UserController@store',
+    'as'=>'userSave'
+));
 
 Route::get('/users/verify/{code}','UserController@verify');
 Route::get('/profile', function() {
@@ -40,15 +46,27 @@ Route::get('/users/manage', function() {
 Route::get('/users/register', function() {
     return view('modules.users.register');
 })->name('users.register');
-Route::get('/users/read', function() {
-    return view('modules.users.read');
-})->name('users.read');
-Route::get('/users/details', function() {
-    return view('modules.users.details');
-})->name('users.details');
-Route::get('/users/edit', function() {
-    return view('modules.users.edit');
-})->name('users.edit');
+
+Route::get('/users/read',array(
+    'as'=>'userRead',
+    'uses'=>'UserController@show'
+));
+
+Route::get('/users/details/{id}',array(
+    'as'=>'detailsUser',
+    'uses'=>'UserController@edit'
+));
+
+Route::get('/users/editar/{id}',array(
+    'as'=>'editarUser',
+    'uses'=>'UserController@editar'
+));
+
+Route::post('/users/update/',array(
+    'as'=>'updateUser',
+    'uses'=>'UserController@update'
+));
+
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 
@@ -274,3 +292,30 @@ Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanyS
 Route::get('/admin/geolocation', function() {
     return view('modules.map.home');
 })->name('admin.geolocation');
+
+//Inmuebles
+Route::get('/inmueble/my-property','InmuebleController@index')->name('inmueble.my-property');
+Route::get('/inmueble-register',array(
+    'as'=>'registerInmueble',
+    'uses'=>'InmuebleController@create'
+));
+Route::post('/inmueble/save',array(
+    'as'=>'saveInmueble',
+    'uses'=>'InmuebleController@store'
+));
+
+Route::get('/inmueble/show/{id}',array(
+    'as'=>'show.inmueble',
+    'uses'=>'InmuebleController@show'
+));
+
+//verifyPaymentsBanks
+
+Route::get('/fileBank-register', function() {
+    return view('dev.verifyPaymentsBank.upload');
+})->name('bank.upload');
+
+Route::post('/save-fileBank',array(
+    'as'=>'saveFileBank',
+    'uses'=>'VerifyPaymentsBankImportController@importFile'
+));

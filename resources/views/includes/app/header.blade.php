@@ -1,5 +1,5 @@
 <header>
-    <nav class="container-fluid blue-gradient">
+    <nav class="container-fluid green-gradient">
         <div class="nav-wrapper">
             <a href="{{ url('/') }}" class="brand-logo font-audiowide">SysPRIM</a>
             {{-- Sidenav Trigger --}}

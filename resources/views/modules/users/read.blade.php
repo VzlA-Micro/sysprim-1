@@ -30,20 +30,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($showUser as $user)
                                 <tr>
-                                    <td>Jhon Doe</td>
-                                    <td>E-123456789</td>
-                                    <td>+12221234567</td>
-                                    <td>jhondoe@mail.com</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->ci}}</td>
+                                    <td>{{$user->phone}}</td>
+                                    <td>{{$user->email}}</td>
                                     <td>
                                         <i class="icon-check" style="font-size: 20px"></i>
                                     </td>
                                     <td>
-                                        <a href="{{ route('users.details') }}" class="btn btn-floating orange waves-effect waves-light">
+                                        <a href="{{url('/users/details/'.$user->id)}}" class="btn btn-floating orange waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

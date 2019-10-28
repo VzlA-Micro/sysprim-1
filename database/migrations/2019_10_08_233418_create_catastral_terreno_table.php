@@ -16,11 +16,11 @@ class CreateCatastralTerrenoTable extends Migration
         Schema::create('value_catastral_terreno', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parish_id')->unsigned();
-            $table->integer('sector_nueva_nomenclatura');
+            $table->integer('sector_nueva_nomenclatura')->nullable();
             $table->integer('sector_catastral');
             $table->string('name',50);
-            $table->float('value_terreno_construccion');
-            $table->float('value_terreno_vacio');
+            $table->float('value_terreno_construccion',8,3);
+            $table->float('value_terreno_vacio',8,3);
             $table->foreign('parish_id')->references('id')->on('parish');
             $table->timestamps();
         });
