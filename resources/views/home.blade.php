@@ -82,6 +82,12 @@
                         <span class="truncate">Verificación de Pagos</span>
                     </a>
                 </div>
+                <div class="col s12 m3">
+                    <a href="{{ route('ticket-office.payments') }}" class="btn-app white pink-text text-darken-4">
+                        <i class="icon-personal_video"></i>
+                        <span class="truncate">Taquilla</span>
+                    </a>
+                </div>
             @endif
             @if( \Auth::user()->role_id ==2)
                 <div class="col s12 m3">
