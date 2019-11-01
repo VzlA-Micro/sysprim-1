@@ -5,6 +5,8 @@ use App\Company;
 use App\Notification;
 use Illuminate\Support\Carbon;
 use App\Payments;
+
+
 class TaxesMonth{
     static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
     public  static function verify($id,$notification=true){
@@ -15,7 +17,7 @@ class TaxesMonth{
 
 
         $dayMoraEspecial=20;//el dia de cobro para lo que tienen mora y son agente de retencion
-        $dayMoraNormal=24;//el dia de cobro para lo que no son agente de retención
+        $dayMoraNormal=14;//el dia de cobro para lo que no son agente de retención
         $diffDayMora=0;
 
         $companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();//busco el ultimo pago realizado por la empresa
