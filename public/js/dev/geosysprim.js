@@ -1,5 +1,5 @@
 function initMap() {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
     $.ajax({
         method: "GET",
         url: url + "geosysprim/find-company/solvent",

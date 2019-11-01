@@ -231,25 +231,7 @@
 			@endif
 
 
-			@if($amount['amountDesc']!=0)
-				<tr>
-					<td></td>
-					<td style="font-size: 10px !important;">Descuento por trajador</td>
-					<td></td>
-					<td></td>
-					<td style="font-size: 10px !important;"></td>
-					<td style="font-size: 10px !important;">{{number_format($amount['amountDesc'],2)}}</td>
-					@if($taxes->companies->typeCompany=='R')
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions-$amount['amountDesc'],2)}}
-						</td>
-					@else
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions-$amount['amountDesc'],2)}}
-						</td>
-					@endif
-				</tr>
-			@endif
+
 
 		@endforeach
 

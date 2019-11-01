@@ -111,14 +111,24 @@
                     <li class="collection-header"><h4>Pagar</h4></li>
                     <li class="collection-item">
                         <div>
-                            Descripción
+                            Contribuyente:
                             <span class="secondary-content">
-                                Monto a pagar
+                                {{$taxe->companies->users[0]->name." ".$taxe->companies->users[0]->surname }}
                             </span>
                         </div>
                     </li>
-                    <li class="collection-item">
 
+                    @foreach($ciuTaxes as $ciu)
+                        <li class="collection-item">
+                            <div>
+                                {{$ciu->ciu->code}}
+                            <span class="secondary-content">
+                                {{$ciu->ciu->name}}
+                            </span>
+                            </div>
+                        </li>
+
+                    <li class="collection-item">
                         <div>
                             Base Imponible
                             <span class="secondary-content">
@@ -129,21 +139,39 @@
                     <li class="collection-item">
                         <div>
                             Retenciones
-                            <span class="secondary-content">10%</span>
+                            <span class="secondary-content">{{number_format($ciu->withholding,2)}}</span>
                         </div>
                     </li>
                     <li class="collection-item">
                         <div>
                             Créditos Fiscales
-                            <span class="secondary-content">10%</span>
+                            <span class="secondary-content">{{number_format($ciu->credit_fiscal,2)}}</span>
                         </div>
                     </li>
                     <li class="collection-item">
                         <div>
                             Deducciones
-                            <span class="secondary-content">10%</span>
+                            <span class="secondary-content">{{number_format($ciu->deductions,2)}}</span>
                         </div>
                     </li>
+                        @if($ciu->interest!=0)
+                        <li class="collection-item">
+                            <div>
+                                Recargo
+                                <span class="secondary-content">{{number_format($ciu->tax_rate,2)}}</span>
+                            </div>
+                        </li>
+
+                        <li class="collection-item">
+                            <div>
+                                Interés por mora
+                                <span class="secondary-content">{{number_format($ciu->interest,2)}}</span>
+                            </div>
+                        </li>
+                        @endif
+                    @endforeach
+
+
                     <li class="collection-item amount-block">
                         <div class="total">
                             <div class="side-heading">Total</div>

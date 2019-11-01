@@ -359,5 +359,5 @@ Route::get('/ticket-office/payments', function() {
 })->name('ticket-office.payments');
 
 Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
-Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxes.save');
+Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
 
