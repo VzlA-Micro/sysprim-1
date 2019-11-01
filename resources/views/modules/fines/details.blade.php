@@ -17,13 +17,20 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
+                            <i class="icon-check prefix"></i>                                                                                   
                             <input id="name" type="text" name="name" required value="{{ $fines->name }}">
+                            <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-swap_vertical_circle prefix"></i>                                                        
                             <input id="undTributo" type="text" name="undTributo" required value="{{ $fines->cant_unid_tribu }}">
+                            <label for="undTributo">Cantidad de unidades tributarias</label>
                         </div>
                         <div class="col s12 m6 center-align">
-                            <button type="submit" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
+                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">
+                                Actualizar
+                                <i class="icon-send right"></i>
+                            </button>
                         </div>
                         <div class="col s12 m6 center-align">
                             <a href="{{ route('fines.delete', ['id' => $fines->id]) }}" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>

@@ -9,7 +9,7 @@
                 <a href="{{ route('ciu-branch.manage') }}" class="breadcrumb">Gestionar Ramo CIIU</a>
                 <a href="#!" class="breadcrumb">Registrar Ramo CIIU</a>
             </div>
-            <div class="col s12 m8 offest-m2 l6 offset-l3">
+            <div class="col s12 m8 offset-m2">
                 <form id="ciuu" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Ramo CIIU</h5>
@@ -17,6 +17,7 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12">
+                            <i class="icon-featured_play_list prefix"></i>
                             <select name="groupCiiu" id="groupCiiu" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 @foreach($groupCiiu as $group)
@@ -26,24 +27,30 @@
                             <label for="type">Grupo CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-check prefix"></i>
                             <input id="name" type="text" name="name" required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-confirmation_number prefix"></i>
                             <input id="code" type="text" name="code" required>
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-attach_money prefix"></i>
                             <input id="alicuota" type="text" name="alicuota" required>
                             <label for="alicuota">Alicuota</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-attach_money prefix"></i>
                             <input id="mTM" type="text" name="mTM" required>
                             <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>
                     </div>
-                    <div class="card-action center">
-                        <button type="submit" class="btn green">Registrar</button>
+                    <div class="card-footer center-align">
+                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">Registrar
+                            <i class="icon-send right"></i>
+                        </button>
                     </div>
                 </form>
             </div>

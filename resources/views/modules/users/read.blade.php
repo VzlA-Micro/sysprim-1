@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">    
 @endsection
 
 @section('content')
@@ -12,16 +12,16 @@
                 <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
                 <a href="#!" class="breadcrumb">Ver Usuarios</a>
             </div>
-            <div class="col s12 m10 offset-m1">
+            <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Usuarios registrados</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight centered responsive-table">
+                        <table class="highlight centered" id="users">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Nombre Completo</th>
                                     <th>Doc. Identidad</th>
                                     <th>Teléfono</th>
                                     <th>E-mail</th>
@@ -32,7 +32,7 @@
                             <tbody>
                                 @foreach($showUser as $user)
                                 <tr>
-                                    <td>{{$user->name}}</td>
+                                    <td>{{ $user->name . " " . $user->surname }}</td>
                                     <td>{{$user->ci}}</td>
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
@@ -54,6 +54,43 @@
         </div>
     </div>
 @endsection
+
 @section('scripts')
-    
+    <script src="{{ asset('js/datatables.js') }}"></script>
+    <script>
+        $('#users').DataTable({
+            responsive: true,
+            scroller: true,
+            "scrollX": true,
+            "pageLength": 2,
+            language: {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sPrevious": "<i class='icon-navigate_before'></i>"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+            }
+        });
+    </script>
 @endsection
