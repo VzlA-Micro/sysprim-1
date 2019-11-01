@@ -5,7 +5,8 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mis Empresas</a>
+                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
+                {{-- <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ $company->name }}</a> --}}
                 <a href="" class="breadcrumb">Nombre de la empresa</a>
                 <a href="" class="breadcrumb">Mis Pagos</a>
             </div>
@@ -15,7 +16,7 @@
                     <span class="truncate">Pagar mi Actividad Económica</span>
                 </a>
             </div>
-            <div class="col s12 m4">
+            {{-- <div class="col s12 m4">
                 <a href="" class="btn-app white amber-text">
                     <i class="icon-assistant"></i>
                     <span class="truncate">Pagar mi Publicidad Comercial</span>
@@ -41,10 +42,10 @@
             </div>
             <div class="col s12 m4">
                     <a href="{{route('fines.manage',['company'=>session('company')])}}" class="btn-app white orange-text">
-                        <i class="icon-warning"></i>
-                        <span class="truncate">Pagar mis Multas</span>
-                    </a>
-                </div>
+                    <i class="icon-warning"></i>
+                    <span class="truncate">Pagar mis Multas</span>
+                </a>
+            </div> --}}
             <div class="col s12 m4">
                 <a href="{{route('payments.history',['company'=>session('company')])}}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>

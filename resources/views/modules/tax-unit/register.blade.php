@@ -19,20 +19,26 @@
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6">
+                            <i class="icon-date_range prefix"></i>
                             <input type="text" name="since_date" id="since_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Inicio</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-date_range prefix"></i>
                             <input type="text" name="to_date" id="to_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Fin</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-attach_money prefix"></i>
                             <input type="number" name="valueUndTributo" id="valueUndTributo" required>
                             <label for="valueUndTributo">Valor de unidad tributaria</label>
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Register</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">
+                            <i class="icon-send right"></i>
+                            Register
+                        </button>
                     </div>
                 </form>
             </div>

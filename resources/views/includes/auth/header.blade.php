@@ -61,6 +61,7 @@
                     </div>
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                <i class="icon-send right"></i>
                                 {{ __('Iniciar Sesión') }}
                         </button>
                     </div>

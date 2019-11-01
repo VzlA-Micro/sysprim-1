@@ -39,8 +39,8 @@
                         @csrf
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix"></i>
-                            <input type="email" name="email" id="email" class="validate" required>
-                            <label for="email">{{ __('E-Mail') }}</label>
+                            <input type="email" name="email" id="email_input" class="validate" required>
+                            <label for="email_input">{{ __('E-Mail') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('email')
                                 <div class="alert alert-danger">
@@ -50,8 +50,8 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-lock_outline prefix"></i>
-                            <input type="password" name="password" id="password" class="validate" minlength="8" required>
-                            <label for="password">{{ __('Contraseña') }}</label>
+                            <input type="password" name="password" id="password_input" class="validate" minlength="8" required>
+                            <label for="password_input">{{ __('Contraseña') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('password')
                                 <div class="alert alert-danger">
@@ -62,12 +62,13 @@
                     </div>
                     <div class="card-footer">
                         <label for="remember">
-                            <input type="checkbox" name="remember" id="remember" class="filled-in blue" {{ old('remember') ? 'checked' : '' }}>
+                            <input type="checkbox" name="remember" id="remember_check" class="filled-in blue" {{ old('remember') ? 'checked' : '' }}>
                             <span>{{ __('Recordarme') }}</span>
                         </label>
                     </div>
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                <i class="icon-send right"></i>
                                 {{ __('Iniciar Sesión') }}
                         </button>
                     </div>
