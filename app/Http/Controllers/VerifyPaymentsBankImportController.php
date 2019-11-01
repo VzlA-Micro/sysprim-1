@@ -16,7 +16,7 @@ use App\Extras;
 use App\Tributo;
 use App\Helpers\TaxesMonth;
 use App\Http\Controllers\Controller;
-use App\PaymentTaxes;
+use App\Payments;
 use Carbon\Carbon;
 use App\Employees;
 use App\CiuTaxes;

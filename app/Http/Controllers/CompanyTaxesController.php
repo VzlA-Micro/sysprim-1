@@ -371,14 +371,19 @@ class CompanyTaxesController extends Controller
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $code = TaxesNumber::generateNumberTaxes($payments_type."81");
+
+
         $taxes->code = $code;
         $taxes->bank = $bank;
         $taxes->status = 'process';
         $taxes->branch='Act.Eco';
         $code = substr($code, 3, 12);
+
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
-        $taxes->digit = $code = TaxesNumber::generateNumberSecret($amount_format, $date_format, $bank, $code);
+
+        $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
+
         $taxes->update();
 
         $taxes=Taxe::findOrFail($id);
@@ -452,6 +457,13 @@ class CompanyTaxesController extends Controller
 
 
 
+    public function calculate($id){
+        $taxes=Taxe::findOrFail($id);
+        $taxes->delete();
+        return redirect('payments/create/'.session('company'));
+
+    }
+
         /*foreach($taxes->taxesCiu as $ciu){
             if($ciu->pivot->base == 0){
                 $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
@@ -473,4 +485,6 @@ class CompanyTaxesController extends Controller
     //     $taxes=Taxe::findOrFail($id);
     //     return view();
     // }
+
+
 }

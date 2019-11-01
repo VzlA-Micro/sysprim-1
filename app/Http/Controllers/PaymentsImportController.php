@@ -15,7 +15,7 @@ use App\Extras;
 use App\Tributo;
 use App\Helpers\TaxesMonth;
 use App\Http\Controllers\Controller;
-use App\PaymentTaxes;
+use App\Payments;
 
 class PaymentsImportController extends Controller
 {
@@ -64,12 +64,12 @@ class PaymentsImportController extends Controller
     {
 
 
-        $payments = PaymentTaxes::all();
+        $payments = Payments::all();
             $banks=Bank::all();
 
         foreach ($banks as $bank) {
 
-            $payments = PaymentTaxes::where('code_ref', $bank->ref)
+            $payments = Payments::where('code_ref', $bank->ref)
                 ->orWhere('bank', $bank->bank)
                 ->where('amount', $bank->amount)
                 ->get();
@@ -77,11 +77,11 @@ class PaymentsImportController extends Controller
 
 
             if (!$payments->isEmpty()) {
-                $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
+                $payments_find = Payments::findOrFail($payments[0]->id);
                 $bank_find = Bank::find($bank->id);
                 if (!$payments->isEmpty()) {
                     $idPayments = $payments[0]->id;
-                    $payments_find = PaymentTaxes::findOrFail($payments[0]->id);
+                    $payments_find = Payments::findOrFail($payments[0]->id);
                     $bank_find = Bank::find($bank->id);
 
                     //$taxes = Taxe::where('id', $payments[0]->taxe_id)->get();

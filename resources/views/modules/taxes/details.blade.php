@@ -19,10 +19,8 @@
                     <div class="row padding-2 left-align">
                         <div class="col m6">
                             <ul>
-                                <li><b>Código: </b>{{ $taxes->code }}</li>
                                 <li><b>Periodo Fiscal: </b>{{ $fiscal_period }}</li>
                                 <li><b>Fecha: </b>{{ $taxes->created_at }}</li>
-
                             </ul>
                         </div>
                         <div class="col m6">
@@ -146,7 +144,8 @@
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
                                 @if($taxes->status!='process')
-                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s12 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
+                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
+                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 blue waves-effect waves-light modal-trigger">CALCULAR DE NUEVO.</a>
                                 {{-- Modal structure --}}
                                @endif
 

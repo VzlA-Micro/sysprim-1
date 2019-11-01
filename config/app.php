@@ -177,6 +177,7 @@ return [
         App\Providers\TaxesNumberServiceProvider::class,
         App\Providers\VerifyTaxesMonthServiceProvider::class,
         App\Providers\CedulaVEServiceProvider::class,
+        App\Providers\CalculateServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
@@ -237,7 +238,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
-        'CedulaVe'=>App\Helpers\CedulaVE::class
+        'CedulaVe'=>App\Helpers\CedulaVE::class,
+        'Calculate'=>App\Helpers\Calculate::class
     ],
 
 ];
