@@ -1,3 +1,9 @@
+var url="https://sysprim.com/";
+$('document').ready(function (){
+    var recaudacion;
+});
+
+
 // Charts
 var taxCollectionChart = document.querySelector("#tax-collection");
 var taxCollection = new Chart(taxCollectionChart, {
