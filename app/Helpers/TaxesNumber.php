@@ -68,6 +68,7 @@ class TaxesNumber{
         $sum1_amount=0;
 
 
+
         for($i=0;$i<strlen($numberTaxes);$i++){
             $suma_code+=$numberTaxes[$i];
             $pos=$i+1;
@@ -75,11 +76,17 @@ class TaxesNumber{
         }
 
         $sum1_code=$suma_code+$producto_code;
+
+
+
         $sp_code=$sum1_code;
         if($sum1_code<100){
             $sp_code=$sum1_code*100;
         }
         $prod1_code=$suma_code*$producto_code;
+
+
+
         if($prod1_code<100){
             $prod1_code=$prod1_code*100;
         }
@@ -89,11 +96,13 @@ class TaxesNumber{
 
 
 
+
         for($i=0;$i<strlen($bank);$i++){
             $suma_bank+=$bank[$i];
             $pos=$i+1;
             $producto_bank+=$bank[$i]*$pos;
         }
+
 
 
         $sum1_bank=$suma_bank+$producto_bank;

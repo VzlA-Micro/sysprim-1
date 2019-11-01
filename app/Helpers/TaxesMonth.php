@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\DB;
 use App\Company;
 use App\Notification;
 use Illuminate\Support\Carbon;
-use App\PaymentTaxes;
+use App\Payments;
 class TaxesMonth{
     static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
     public  static function verify($id,$notification=true){

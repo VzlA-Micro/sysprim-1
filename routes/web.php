@@ -122,7 +122,9 @@ Route::post('/payments/help', 'CompanyTaxesController@paymentsHelp')->name('paym
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
+Route::get('/payments/calculate/{id}','CompanyTaxesController@calculate')->name('taxes.calculate');
 Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
+
 Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
 })->name('payments.reconcile');
@@ -302,9 +304,13 @@ Route::get('/notifications/details', function() {
 })->name('notifications.details');
 
 
-Route::get('/ticket-office/payments', function() {
-    return view('modules.ticket-office.create');
-})->name('ticket-office.payments');
+
+
+
+
+
+
+
 
 Route::get('/payments/verify/manage', function() {
     return view('modules.bank.manage');
@@ -347,4 +353,11 @@ Route::get('/home/ticketOffice', function() {
     return view('modules.ticket-office.home');
 })->name('home.ticket-office');
 
+
+Route::get('/ticket-office/payments', function() {
+    return view('modules.ticket-office.create');
+})->name('ticket-office.payments');
+
+Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
+Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxes.save');
 

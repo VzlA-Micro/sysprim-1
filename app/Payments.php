@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentTaxes extends Model{
-    protected $table='payments_taxes';
+class Payments extends Model{
+    protected $table='payments';
     //
 }

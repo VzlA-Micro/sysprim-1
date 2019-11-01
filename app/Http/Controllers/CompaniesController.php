@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\UserCompany;
-use App\PaymentTaxes;
+use App\Payments;
 use App\FindCompany;
 use Alert;
 class CompaniesController extends Controller
@@ -227,7 +227,7 @@ class CompaniesController extends Controller
             $fiscal_period = Carbon::parse($companyTaxes[0]->fiscal_period);//utilizo el ultimo pago realido valido y lo tomo como refencia
             $now = Carbon::now();//fecha del computador
             $diffMount = $fiscal_period->diffInMonths($now);
-            $payment = PaymentTaxes::where('taxe_id', $companyTaxes[0]->id)->get();//busco si el pago fue realizo
+            $payment = Payments::where('taxe_id', $companyTaxes[0]->id)->get();//busco si el pago fue realizo
 
             if ($diffMount >= 1 || $payment->isEmpty()) {
                 if (!$payment->isEmpty() && $payment[0]->status === 'verified' && $diffMount > 1) {

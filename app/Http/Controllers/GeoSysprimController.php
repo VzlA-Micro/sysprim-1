@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\TaxesMonth;
 use App\Company;
-use App\PaymentTaxes;
+use App\Payments;
 use Illuminate\Http\Request;
 class GeoSysprimController extends Controller{
 

@@ -21,7 +21,7 @@ class Taxe extends Model{
 
 
     public function payments(){
-        return $this->hasMany('App\PaymentTaxes');
+        return $this->hasMany('App\Payments');
     }
 
     public function getTotalAttribute(){

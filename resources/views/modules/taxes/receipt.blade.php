@@ -92,7 +92,7 @@
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Pers.Rsponsable:</b></td>
-    		<td style="width:35%;font-size: 11px !important;"></td>
+    		<td style="width:35%;font-size: 11px !important;">{{ $taxes->companies->users[0]->name.''.$taxes->companies->users[0]->surname }}</td>
     		<td style="width:20%;font-size: 12px !important;"><b></b></td>
     		<td style="width:30%;font-size: 11px !important;"></td>
     	</tr>
@@ -387,7 +387,7 @@
 		<table style="width: 100%;margin-bottom:-30px;">
 			<tr>
 				<td style="width: 80%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate("https://sysprim.com/payments/taxes/".$taxes->id)) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate("https://sysprim.com/ticket-office/QrTaxes/".$taxes->id)) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
 				</td>
 			</tr>
 			<tr>

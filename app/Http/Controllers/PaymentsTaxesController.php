@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\PaymentTaxes;
+use App\Payments;
 use App\Ciu;
 use App\Company;
 use App\Taxe;
@@ -86,7 +86,7 @@ class PaymentsTaxesController extends Controller
      */
     public function store(Request $request)
     {
-        $pTaxes = new PaymentTaxes();
+        $pTaxes = new Payments();
         $pTaxes->payments_type = $request->input('type');
         $pTaxes->code_ref = $request->input('code_ref');
         $pTaxes->bank = $request->input('bank');
@@ -131,7 +131,7 @@ class PaymentsTaxesController extends Controller
      */
     public function edit($id)
     {
-        $paymentTaxe = PaymentTaxes::findOrFail($id);
+        $paymentTaxe = Payments::findOrFail($id);
         return view('dev.updatePayments', array(
             '$payment' => $paymentTaxe
         ));
