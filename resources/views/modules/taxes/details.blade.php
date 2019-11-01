@@ -144,8 +144,8 @@
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
                                 @if($taxes->status!='process')
-                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 blue waves-effect waves-light modal-trigger">CONTINUAR</a>
-                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 blue waves-effect waves-light modal-trigger">CALCULAR DE NUEVO.</a>
+                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">CONTINUAR</a>
+                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">CALCULAR DE NUEVO.</a>
                                 {{-- Modal structure --}}
                                @endif
 
