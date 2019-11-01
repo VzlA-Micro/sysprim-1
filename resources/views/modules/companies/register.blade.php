@@ -89,21 +89,17 @@
                             <label for="address">Dirección</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). ">
-                            <i class="icon-assignment prefix"></i>                            
-                            <select multiple name="ciu_group[]" required id="ciu_group">
-                                <option value="null" disabled >Seleccionar CIU</option>
-                                @foreach($ciu as $ciu):
-                                <option value="{{ $ciu->id }}">{{ $ciu->name }}</option>
-                                @endforeach
-                            </select>
-                            <label>Categoria de actividad ecónomica</label>
+                            <i class="icon-cloud_done prefix"></i>
+                            <input type="text" name="search-ciu" >
+                            <label>CIU</label>
+
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-assignment prefix"></i>
-                            <select multiple name="ciu[]" required id="ciu">
-
-                            </select>
-                            <label>CIU</label>
+                            <button class="btn btn-large waves-effect waves-light peach col s12 btn-rounded">
+                               Buscar
+                                <i class="icon-search right"></i>
+                            </button>
                         </div>
                         <div class="file-field input-field col s12 12">
                             <div class="btn purple btn-rounded waves-light">
