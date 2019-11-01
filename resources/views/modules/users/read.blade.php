@@ -18,7 +18,7 @@
                         <h5>Usuarios registrados</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight centered" id="users">
+                        <table class="highlight centered" style="width: 100%" id="users">
                             <thead>
                                 <tr>
                                     <th>Nombre Completo</th>
@@ -60,7 +60,6 @@
     <script>
         $('#users').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
             "pageLength": 2,
             language: {

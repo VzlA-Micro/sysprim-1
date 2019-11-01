@@ -18,7 +18,7 @@
                         <h5>Empresas Registradas</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight responsive-table centered" id="companies">
+                        <table class="highlight responsive-table centered" id="companies"  style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>

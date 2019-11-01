@@ -8,7 +8,7 @@
             <ul id="nav-movile" class="right hide-on-med-and-down">
                 {{-- Boton de prueba --}}
                 <li><a href="{{ route('home') }}" class="tooltipped" data-position="bottom"
-                       data-tooltip="{{ __('Home') }}"><i class="icon-home"></i></a></li>
+                       data-tooltip="{{ __('Inicio') }}"><i class="icon-home"></i></a></li>
                 <li>
                     <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones"
                        data-target="notification-dropdown">
@@ -34,10 +34,10 @@
                                 <p class="collection-subtitle">@php echo $notification->content @endphp </p>
                             </a>
                         @endforeach
+                        <a href="{{ route('notifications.read') }}" class="collection-footer center-align">
+                            <span>Ver todas las notificaciones</span>
+                        </a>
                     @endif
-                    <a href="{{ route('notifications.read') }}" class="collection-footer center-align">
-                        <span>Ver todas las notificaciones</span>
-                    </a>
                 </div>
                 {{-- User dropdown trigger --}}
                 <li>
@@ -86,7 +86,7 @@
                         </div>
                     </li>
                     <li class="waves-efect waves-light">
-                        <a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>{{ ucwords('mi cuenta') }}</a>
+                        <a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a>
                     </li>
                     <li class="divider"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
