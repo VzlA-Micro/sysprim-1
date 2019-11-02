@@ -1,5 +1,16 @@
+var url = "http://sysprim.com.devel/";
 function initMap() {
-    var url = "http://sysprim.com.devel/";
+    findCompanySolvent();
+}
+
+
+
+$('#refresh').click(function () {
+    findCompanySolvent();
+});
+
+
+function findCompanySolvent() {
     $.ajax({
         method: "GET",
         url: url + "geosysprim/find-company/solvent",
@@ -8,14 +19,12 @@ function initMap() {
         },
         success: function (response) {
 
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
-                center: {lat: 10.0736954, lng: -69.3498597}
-            });
-
-
             if(response.taxes!==null){
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 13,
+                    center: {lat: 10.0736954, lng: -69.3498597},
+                });
+
 
                 for (var i = 0; i < response.company.length; i++) {
 
@@ -26,8 +35,7 @@ function initMap() {
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: response.company[i].name,
-                        animation: google.maps.Animation.DROP,
-                        icon: 'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;
@@ -57,6 +65,8 @@ function initMap() {
                     });
 
 
+
+
                 }
             }
 
@@ -66,4 +76,12 @@ function initMap() {
 
         }
     });
+
+
+
+
+
+
 }
+
+
