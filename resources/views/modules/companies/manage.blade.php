@@ -12,7 +12,7 @@
                 <a href="{{ route('companies.manage') }}" class="breadcrumb">Gestionar Empresas</a>
             </div>
             <div class="col s12 m4">
-                <a href="{{ route('companies.register') }}" class="btn-app white teal-text text-darken-2">
+                <a href="{{ route('tickOffice.companies.register') }}" class="btn-app white teal-text text-darken-2">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Empresa</span>
                 </a>

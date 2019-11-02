@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GroupCiu;
+use App\Helpers\CedulaVE;
 use App\Notification;
 use App\Parish;
 use Carbon\Carbon;
@@ -58,6 +59,7 @@ class CompaniesController extends Controller
         $name = $request->input('name');
         $license = $request->input('license');
         $parish = $request->input('parish');
+        $country_code = $request->input('country_code');
         $openingDate = $request->input('opening_date');
         $rif = $request->input('document_type').$request->input('RIF');
         $address = $request->input('address');
@@ -81,7 +83,7 @@ class CompaniesController extends Controller
             'code_catastral' => 'required',
             'sector' => 'required',
             'number_employees' => 'required',
-            'phone' => 'required|min:11',
+            'phone' => 'required|min:7',
             ]);
 
         $company = new Company();
@@ -103,7 +105,7 @@ class CompaniesController extends Controller
         $company->opening_date = $openingDate;
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
-        $company->phone = $phone;
+        $company->phone = $country_code.$phone;
         $company->created_at='2019-09-14';
 
         $company->save();
@@ -148,7 +150,7 @@ class CompaniesController extends Controller
     }
 
     public function update(Request $request){
-        /*Falta:eliminar imagenes antigua una vez suba la nueva, */
+        /*Falta:eliminar imagenes antigua una vez suba la nueva*/
 
         $ciu=$request->input('ciu');
         $parish=$request->input('parish');
@@ -296,6 +298,7 @@ class CompaniesController extends Controller
 
     public function findCompany($rif){
         $company_find = FindCompany::where('rif',$rif)->get();
+
         if(!$company_find->isEmpty()){
             $response=array('status'=>'success','company'=>$company_find[0]);
         }else{
@@ -305,13 +308,5 @@ class CompaniesController extends Controller
     }
 
 
-    public function findCiiu($ciu){
-        $company_find = FindCompany::where('code',$ciu)->first();
-        if(!$company_find->isEmpty()){
-            $response=array('status'=>'success','company'=>$company_find[0]);
-        }else{
-            $response=array('status'=>'error','message'=>'No encontrado');
-        }
 
-    }
 }

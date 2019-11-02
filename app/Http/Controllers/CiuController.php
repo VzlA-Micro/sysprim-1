@@ -124,4 +124,15 @@ class CiuController extends Controller
 
         return response()->json([['ciu'=>$ciu]]);
     }
+
+    public function findCiu($ciu){
+        $ciu_find = Ciu::where('code',$ciu)->get();
+        if(!$ciu_find->isEmpty()){
+            $response=array('status'=>'success','ciu'=>$ciu_find[0]);
+        }else{
+            $response=array('status'=>'error','message'=>'No encontrado');
+        }
+
+        return response()->json($response);
+    }
 }

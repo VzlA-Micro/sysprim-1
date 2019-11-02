@@ -148,6 +148,7 @@ $(document).ready(function () {
     });
 
     $('.tick').click(function () {
+        $('#payments').val($(this).attr('data-payments'));
         $('#register-taxes')[0].submit();
     });
 });

@@ -166,7 +166,7 @@
                                         <div class="row">
                                             <div class="col s12 m4 center-align">
                                                 <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
-                                                <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick" data-payments="PPV">
+                                                <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
                                                     Taquilla
                                                     <i class="icon-payment right"></i>
                                                 </a>

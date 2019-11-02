@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\TaxesMonth;
 use App\Company;
 use App\Payments;
+use App\Taxe;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 class GeoSysprimController extends Controller{
 
@@ -14,16 +16,16 @@ class GeoSysprimController extends Controller{
     }
 
     public function findCompanySolvent(){
-        $companies=Company::all();
-        foreach ($companies as $company){
-            $verified=TaxesMonth::verify($company->id,false);
-            if(is_null($verified)) {
-                $company_find[]=$company;
-                $taxes[]=$company->taxesCompanies->last();
-            }else{
-                $taxes=null;
-                $company_find=null;
-            }
+        $date_now=Carbon::now();
+
+        $date_now->subMonth(1);
+
+        $mounth=$date_now->format('m');
+
+        $taxes=Taxe::where('status','verified')->whereMonth('fiscal_period','=',$mounth)->get();
+
+        foreach ($taxes as $taxe){
+                $company_find[]=$taxe->companies;
         }
         return response()->json(['taxes'=>$taxes,'company'=>$company_find]);
     }

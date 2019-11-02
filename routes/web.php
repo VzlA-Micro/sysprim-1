@@ -87,12 +87,25 @@ Route::get('/companies/verify/{id}','CompaniesController@verifyTaxes');
 Route::get('/companies/manage', function () {
     return view('modules.companies.manage');
 })->name('companies.manage');
-Route::get('/companies/read', function () {
-    return view('modules.companies.read');
-})->name('companies.read');
+
 Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
+
+
+// Companies taquillero
+
+
+Route::get('ticketOffice/company/register','ticketOfficeController@registerCompany')->name('tickOffice.companies.register');
+Route::post('ticketOffice/company/save','ticketOfficeController@storeCompany');
+Route::get('ticketOffice/companies/all','ticketOfficeController@allCompanies')->name('companies.read');
+Route::get('ticketOffice/companies/details/{id}','ticketOfficeController@detailsCompany')->name('tickOffice.companies.details');
+
+
+
+
+
+
 
 // ---------------------------------------------------
 
@@ -156,6 +169,10 @@ Route::get('/codigo-qr',function (){
    return view('dev.taxesQr');
 });
 
+Route::get('/cargar-ciu',function (){
+    return view('modules.bank.upload');
+});
+
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 // Group Ciiu module routes
@@ -163,6 +180,9 @@ Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 Route::get('/ciu/manage', function() {
     return view('modules.ciiu-group.menu');
 })->name('ciu.manage');
+
+Route::get('/ciu/find/{ciu} ','CiuController@findCiu');
+
 
 Route::get('/ciu-group/register', function() {
     return view('modules.ciiu-group.register');
@@ -292,9 +312,10 @@ Route::get('/admin/geolocation', function() {
 })->name('admin.geolocation');
 
 
-Route::get('/dashboard', function() {
-    return view('modules.admin.dashboard');
-})->name('dashboard');
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));
 
 Route::get('/notifications', function() {
     return view('modules.notifications.read');
@@ -362,3 +383,13 @@ Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->nam
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
 Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
 
+//Estadisticas
+Route::get('/collection/statistics',array(
+    'as'=>'collection',
+    'uses'=>'DashboardController@collection'
+));
+
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));

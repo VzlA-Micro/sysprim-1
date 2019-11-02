@@ -100,6 +100,10 @@ $(document).ready(function () {
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
+
+                    if($('#name_user').val()!==undefined){
+                        $('#name_user').val(response.response.nombres);
+                    }
                     $('#surname').val(response.response.apellidos);
                     console.log(response);
                     M.updateTextFields();
@@ -119,7 +123,7 @@ $(document).ready(function () {
         });
     }
 
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
     $('#gestionUser').on('submit', function (e) {
         e.preventDefault();
         $.ajax({

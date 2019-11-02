@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '') {
             var rif = $('#document_type').val()+$('#RIF').val();
-                console.log(rif);
+            console.log(rif);
 
             $.ajax({
                 method: "GET",
@@ -90,52 +90,61 @@ $(document).ready(function () {
 
     $('#company-register').on('submit',function (e) {
         e.preventDefault();
-        console.log($('#lgn').val());
-        if($('#lgn').val()!==" "){
-            $.ajax({
-                url: url+"companies/save" ,
-                cache:false,
-                contentType:false,
-                processData:false,
-                data:new FormData(this),
-                method: "POST",
+        console.log($('#lat').val());
+        if($('#lat').val()!==""){
+            if($('#ciu').val()!==undefined){
+                $.ajax({
+                    url: url+"companies/save" ,
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data:new FormData(this),
+                    method: "POST",
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                       swal({
+                            title: "¡Bien Hecho!",
+                            text: "Empresa Registrada con Éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            window.location.href=url+"companies/my-business";
+                        });
 
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Empresa Registrada con Éxito.",
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        window.location.href=url+"companies/my-business";
-                    });
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+            }else{
+                swal({
+                    title: "¡Oh no!",
+                    text: "Debe tener al menos un ciiu para poder registrar una empresa..",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            }
 
-                },
-                error: function (err) {
-                    console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                }
-            });
         }else{
             swal({
                 title: "¡Oh no!",
                 text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
-                icon: "error",
+                icon: "warning",
                 button: "Ok",
             });
         }
@@ -204,7 +213,152 @@ $(document).ready(function () {
 
 
 
+    $('#search-ciu').click(function () {
+        var code=$('#code').val();
 
+
+        $.ajax({
+            type: "GET",
+            url: url + "ciu/find/"+code,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+
+
+
+                if(response.status!=='error'){
+                    var subr=response.ciu.name.substr(0,3);
+                    var template=`<div>
+                                <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="${response.ciu.id}">
+                                <div class="input-field col s12 m5">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}">
+                                    <label>CIIU</label>
+                                </div>
+                                <div class="input-field col s10 m6"  >
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                     <textarea name="name-ciu" id="${subr}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
+                                </div>
+
+                                <div class="input-field col s12 m1">
+                                    <button  class="btn waves-effect waves-light peach col s12 delete-ciu"><i class="icon-close"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+
+                    if($('.ciu').val()!==undefined){
+                        $('.ciu').each(function (index,value) {
+                            if($(this).val()==response.ciu.id){
+                                swal({
+                                    title: "¡Oh no!",
+                                    text: "El ciiu "+response.ciu.code+" ya  esta ingresado en esta empresa.",
+                                    icon: "warning",
+                                    button: "Ok",
+                                });
+                                $('#code').val("");
+
+                            }else{
+                                $('#group-ciu').append(template);
+                            }
+                        });
+
+                    }else{
+                        $('#group-ciu').append(template);
+                    }
+
+                    $('.delete-ciu').click(function () {
+                        $(this).parent().parent().text("");
+                    });
+
+                    M.textareaAutoResize($('#'+subr));
+                    M.updateTextFields();
+                }else{
+
+                    swal({
+                        title: "¡Oh no! ",
+                        text: "El ciiu ingresado no está registrado, verifica. quizás te equivocaste al ingresarlo al sistema.",
+                        icon: "warning",
+                        button: "Ok",
+                    });
+
+                }
+
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            },
+            error: function (err) {
+                console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+
+
+
+
+
+        $('#company-register-ticket').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: url+"ticketOffice/company/save" ,
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Empresa Registrada con Éxito.",
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        window.location.href=url+"ticketOffice/companies/all";
+                    });
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+
+
+
+
+
+
+        });
+    });
 
 
 
@@ -230,6 +384,20 @@ $(document).ready(function () {
                     $('#RIF').val(company.rif.substr(1));
                     $('#license').val(company.codigo_licencia);
                     $('#address').val(company.direccion);
+                    $('#phone-company').val(company.telefono_principal);
+
+
+                    if($('#ci-license').val()!==undefined){
+
+                        $('#name_company').val(company.historico_nombre_empresa);
+                        $('#ci-license').val(company.historico_cedula);
+                        $('#phone-user').val(company.telefono_principal);
+                        $('#name-license').val(company.historico_nombre_representante);
+                        $('#email').val(company.email);
+
+
+                    }
+                    M.textareaAutoResize($('#address'));
                     M.updateTextFields();
                 }
 
@@ -250,7 +418,13 @@ $(document).ready(function () {
 
 
 
+
+
+
 });
+
+
+
 
 
 
@@ -272,11 +446,14 @@ function initMap() {
         addMark(e.latLng, map);
     });
 
+    var image ='https://sysprim.com/images/mark-map.png';
     function addMark(latLng, map) {
         var marker = new google.maps.Marker({
             position: latLng,
             map: map,
-            title:"ESTOY AQUÍ"
+            icon:image,
+            title:"ESTOY AQUÍ",
+            animation: google.maps.Animation.BOUNCE
         });
         map.panTo(latLng);
 
@@ -306,3 +483,6 @@ function initMap() {
         console.log(marcadores[0].getPosition().lat()+'-'+marcadores[0].getPosition().lng());
     }
 }
+
+
+
