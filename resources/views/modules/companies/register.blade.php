@@ -90,17 +90,24 @@
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). ">
                             <i class="icon-cloud_done prefix"></i>
-                            <input type="text" name="search-ciu" >
+                            <input type="text" name="search-ciu" id="code" >
                             <label>CIU</label>
 
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-assignment prefix"></i>
-                            <button class="btn btn-large waves-effect waves-light peach col s12 btn-rounded">
+                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
                                Buscar
                                 <i class="icon-search right"></i>
-                            </button>
+                            </a>
                         </div>
+
+                        <div id="group-ciu">
+
+
+
+                        </div>
+
                         <div class="file-field input-field col s12 12">
                             <div class="btn purple btn-rounded waves-light">
                                  <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>

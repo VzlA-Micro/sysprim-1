@@ -8,6 +8,7 @@ function initMap() {
         },
         success: function (response) {
 
+            console.log(response);
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13,
@@ -27,7 +28,7 @@ function initMap() {
                         map: map,
                         title: response.company[i].name,
                         animation: google.maps.Animation.DROP,
-                        icon: 'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;

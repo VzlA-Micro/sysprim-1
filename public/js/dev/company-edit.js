@@ -1,4 +1,5 @@
 window.onload = function() {
+    var image ='http://sysprim.com.devel/images/mark-map.png';
 
     var lat=parseFloat($('#lat').val());
     var lng=parseFloat($('#lng').val());
@@ -27,8 +28,9 @@ window.onload = function() {
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
+            icon:image,
             animation: google.maps.Animation.BOUNCE,
-            title: "ESTOY AQUÍ"
+            title: "ESTOY AQUÍ",
         });
 
         google.maps.event.addListener(marker, 'click', function () {
