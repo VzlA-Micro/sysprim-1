@@ -67,7 +67,7 @@
                 <div class="col s12 m3">
                     <a href="{{ route('geosysprim') }}" class="btn-app white green-text text-darken-4">
                         <i class="icon-public"></i>
-                        <span class="truncate">GeoSysPRIM</span>
+                        <span class="truncate">GeoSEMAT</span>
                     </a>
                 </div>
                 <div class="col s12 m3">
