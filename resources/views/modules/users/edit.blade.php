@@ -29,41 +29,42 @@
                                    title="Solo puede escribir números." value="{{$user->ci}}" required>
                             <label for="cedula">Cedula</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                             data-tooltip="Solo puede agregar letras (con acentos).">
+                        <div class="input-field col s12 m6">
+                             <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
                             <input id="name" type="text" name="name" class="validate" readonly
                                    pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+"
                                    title="Solo puede agregar letras (con acentos)." value="{{$user->name}}" required>
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                             data-tooltip="Solo puede agregar letras (con acentos).">
+                        <div class="input-field col s12 m6">
+                             <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
                             <input id="surname" type="text" name="surname" readonly class="validate"
                                    pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ]+"
                                    title="Solo puede agregar letras (con acentos)." value="{{$user->surname}}" required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s10 m6 tooltipped" readonly data-position="bottom"
-                             data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s10 m6" readonly>
+                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" readonly class="validate" pattern="[0-9+]+"
                                    value="{{$user->phone}}" title="Solo puede escribir números."
                                    placeholder="Ej. 1234567" maxlength="13" minlength="13" required>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                        <!-- <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
                             <input id="rol" type="text" name="rol" readonly class="validate"
                                    title="Solo puede agregar letras (con acentos)." value="{{$role[0]->name}}" required>
                             <label for="rol">Rol De Usuario</label>
-                        </div>
+                        </div> -->
                         <div class="input-field col m6 s12">
+                            <i class="icon-recent_actors prefix"></i>
                             <select  name="roles" id="roles"  required>
                                 <option value="null" disabled selected>Selecciona rol</option>
                                 @foreach($roles as $rol):
                                 <option value="{{$rol->id }}">{{ $rol->name}}</option>
                                 @endforeach
                             </select>
-                            <label>Rol Usuario</label>
+                            <label for="roles">Rol Usuario</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                    data-tooltip="Ej: correo@mail.com">

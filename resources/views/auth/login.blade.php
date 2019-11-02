@@ -91,9 +91,10 @@
     <script src="{{ asset('js/jquery.backstretch.min.js') }}"></script>
     <script>
         $.backstretch([
-            "images/jonas1.jpg"
-            , "images/prensa1.jpg"
-            , "images/prensa3.jpg"
+            "images/bg-1.jpg",
+            "images/bg-4.jpeg",
+            "images/bg-2.jpg",
+            "images/bg-3.jpeg"
         ], {duration: 3000, fade: 750});
 
         $('.sidenav#side-login').sidenav({

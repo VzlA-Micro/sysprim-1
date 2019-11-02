@@ -461,7 +461,7 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   position: fixed !important;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 1000;
 }
 
@@ -471,7 +471,7 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 }
 
 .spinner-blue, .spinner-blue-only {
-  border-color: #2196f3 !important;
+  border-color: #a51d1d !important;
 }
 
 @media only screen and (max-width: 992px) {
@@ -530,32 +530,32 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 
 /* Datepicker */
 .datepicker-date-display {
-  background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
-  background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+  background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+  background: linear-gradient(40deg, #a51d1d, #d92626) !important;
 }
 
 .datepicker-table td.is-selected {
   background: #b3e5fc;
-  background: -webkit-linear-gradient(40deg, #0d47a1, #2196f3) !important;
-  background: linear-gradient(40deg, #0d47a1, #2196f3) !important;
+  background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
+  background: linear-gradient(40deg, #a51d1d, #d92626) !important;
   color: #fff !important;
 }
 
 .datepicker-table td.is-today {
-  color: #0d47a1;
+  color: #a51d1d;
 }
 
 .datepicker-day-button:active {
-  background-color: #2196f3 !important;
+  background-color: #d92626 !important;
 }
 
 .datepicker-footer .datepicker-cancel,
 .datepicker-footer .datepicker-done {
-  color: #0d47a1;
+  color: #a51d1d;
 }
 
 .datepicker-footer .datepicker-clear {
-  color: #2196f3;
+  color: #d92626;
 }
 
 .datepicker-controls .select-month input {

@@ -20,8 +20,8 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" value="1" name="confirmed">
-                        <div class="input-field col s4 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
-                            <i class="icon-public prefix"></i>
+                        <div class="input-field col s4 m3">
+                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V">V</option>
@@ -33,18 +33,18 @@
                                 <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <i class="icon-person prefix"></i>
+                        <div class="input-field col s12 m6">
+                            <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
                             <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                            <i class="icon-person prefix"></i>
+                        <div class="input-field col s12 m6">
+                            <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
                             <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
-                            <i class="icon-phone_android prefix"></i>
+                        <div class="input-field col s3 m3">
+                            <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
                             <select name="country_code" id="country_code" required>
                                 <option value="null">...</option>
                                 <option value="+58412">(412)</option>
@@ -59,13 +59,13 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
-                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
-                            <i class="icon-mail_outline prefix"></i>
+                        <div class="input-field col s12">
+                            <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
-                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234">
-                            <i class="icon-lock prefix"></i>
+                        <div class="input-field col s12">
+                            <i class="icon-lock prefix tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234"></i>
                             <input id="password" type="password" name="password" class="validate" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password">Contraseña</label>
                         </div>
