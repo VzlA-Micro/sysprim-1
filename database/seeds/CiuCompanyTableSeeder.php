@@ -12,7 +12,7 @@ class CiuCompanyTableSeeder extends Seeder
     public function run()
     {
 
-        DB::table('company_ciu')->insert([
+        /*DB::table('company_ciu')->insert([
             'ciu_id'=>6,
             'company_id'=>1,
         ]);
@@ -23,6 +23,6 @@ class CiuCompanyTableSeeder extends Seeder
             'company_id'=>1,
 
         ]);
-
+*/
     }
 }

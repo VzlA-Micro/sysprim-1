@@ -71,10 +71,12 @@ class InmuebleController extends Controller
         $property->save();
 
         $id = DB::getPdo()->lastInsertId();
+
+        $valCat=new Val_cat_const_inmu();
+        $valCat->value_catas_const_id=$typeConst;
+        $valCat->inmueble_id=$id;
         $property->user()->attach(['inmueble_id' => $id], ['user_id' => \Auth::user()->id]);
-        $property->catasConstruct()->attach(['' => $typeConst],['inmueble_id' => $id]);
-
-
+        $valCat->save();
     }
 
     /**
@@ -86,12 +88,20 @@ class InmuebleController extends Controller
     public function show($id)
     {
         $property=Inmueble::where('id',$id)->get();
-        $pCatasConstruct=Val_cat_const_inmu::where('inmueble_id',$id)->select('value_catas_const_id')->get();
-        //$catasConstruct=CatastralConstruccion::find($pCatasConstruct->value_catas_const_id);
-        //$catasTerreno=CatastralTerreno::find($property->value_catastral_terreno_id);
-        //$parish=Parish::find($property->parish_id);
-        var_dump($pCatasConstruct);
-        die();
+        $pCatasConstruct=Val_cat_const_inmu::where('inmueble_id',$property[0]->id)->select('value_catas_const_id')->get();
+
+        $catasConstruct=CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
+
+        $catasTerreno=CatastralTerreno::find($property[0]->value_catastral_terreno_id);
+
+        $parish=Parish::find($property[0]->parish_id);
+        return view ('dev.inmueble.details',array(
+            'property'=>$property,
+            'catasConstruct'=>$catasConstruct,
+            'catasTerreno'=>$catasTerreno,
+            'parish'=>$parish
+    ));
+
     }
 
     /**

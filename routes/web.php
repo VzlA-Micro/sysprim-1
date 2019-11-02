@@ -169,6 +169,10 @@ Route::get('/codigo-qr',function (){
    return view('dev.taxesQr');
 });
 
+Route::get('/cargar-ciu',function (){
+    return view('modules.bank.upload');
+});
+
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 // Group Ciiu module routes
@@ -308,9 +312,10 @@ Route::get('/admin/geolocation', function() {
 })->name('admin.geolocation');
 
 
-Route::get('/dashboard', function() {
-    return view('modules.admin.dashboard');
-})->name('dashboard');
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));
 
 Route::get('/notifications', function() {
     return view('modules.notifications.read');
@@ -377,3 +382,13 @@ Route::get('/ticket-office/payments', function() {
 Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
 
+//Estadisticas
+Route::get('/collection/statistics',array(
+    'as'=>'collection',
+    'uses'=>'DashboardController@collection'
+));
+
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));
