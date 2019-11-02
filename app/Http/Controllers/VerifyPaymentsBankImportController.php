@@ -75,7 +75,7 @@ class VerifyPaymentsBankImportController extends Controller
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
                         //&& $amountThere == $taxe->amount
-                        if ($document == $code) {
+                        if ($document == $code && $amountThere == $taxe->amount && $taxe->status == 'process') {
 
                             $company = Company::find($taxe->company_id);
                             $taxes=Taxe::findOrFail($taxe->id);

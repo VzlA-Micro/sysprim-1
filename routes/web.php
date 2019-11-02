@@ -292,9 +292,10 @@ Route::get('/admin/geolocation', function() {
 })->name('admin.geolocation');
 
 
-Route::get('/dashboard', function() {
-    return view('modules.admin.dashboard');
-})->name('dashboard');
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));
 
 Route::get('/notifications', function() {
     return view('modules.notifications.read');
@@ -361,3 +362,13 @@ Route::get('/ticket-office/payments', function() {
 Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
 
+//Estadisticas
+Route::get('/collection/statistics',array(
+    'as'=>'collection',
+    'uses'=>'DashboardController@collection'
+));
+
+Route::get('/dashboard',array(
+    'as'=>'dashboard',
+    'uses'=>'DashboardController@dashboard'
+));

@@ -18,7 +18,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Bolivares</span>
                         <span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span id="recaudacion" class="timer"></span> Bs.
                         </span>
 					</div>
 				</div>
@@ -31,7 +31,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Petros</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000" data-decimals="10"></span> P.
+                            <span class="timer" data-to="100000000" ></span> P.
                         </span>
 					</div>
 				</div>
@@ -39,12 +39,12 @@
             <div class="col s12 m6 l4">
 				<div class="widget bootstrap-widget stats banesco-green white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-320x0w"></i>
+						<i class="icon-star"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banesco</b></span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span id="banesco" class="" ></span> Bs.
                         </span>
                     </div>
                     <div class="widget-progress">
@@ -65,7 +65,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>100% Banco</b></span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span class="" id="banco100"></span> Bs.
                         </span>
                     </div>
                     <div class="widget-progress">
@@ -86,7 +86,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span class="" id="bod"></span> Bs.
                         </span>
                     </div>
                     <div class="widget-progress">
@@ -107,7 +107,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banco Bicentenario</b></span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span class="" id="bicentenario"></span> Bs.
                         </span>
                     </div>
                     <div class="widget-progress">
@@ -128,7 +128,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000"></span> Bs.
+                            <span class="" id="bnc"></span> Bs.
                         </span>
                     </div>
                     <div class="widget-progress">
@@ -141,14 +141,14 @@
 					</div>
 				</div>
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 m12">
                 <div class="card">
                     <div class="card-content">
                         <canvas id="tax-collection"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 m12">
                 <div class="card">
                     <div class="card-content">
                         <canvas id="bank-earnings"></canvas>
@@ -158,37 +158,15 @@
             <div class="col s12 m6">
                 <ul class="collection with-header">
                     <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
+                    @foreach ($company as $compa)
                     <li class="collection-item">
                         <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b> Jhon Doe</span><br>
-                        <span class=""><b>Monto: </b> 300.000Bs - 0,000352626 P</span><br>
+                        <span class="title"><b>Empresa:</b> {{$compa->companies->name}}</span><br>
+                        <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
                         <a href="">Detalles...</a>
                         {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
                     </li>
-                    <li class="collection-item">
-                        <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b> Jhon Doe</span><br>
-                        <span class=""><b>Monto: </b> 300.000Bs - 0,000352626 P</span><br>
-                        <a href="">Detalles...</a>
-                    </li>
-                    <li class="collection-item">
-                        <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b> Jhon Doe</span><br>
-                        <span class=""><b>Monto: </b> 300.000Bs - 0,000352626 P</span><br>
-                        <a href="">Detalles...</a>
-                    </li>
-                    <li class="collection-item">
-                        <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b> Jhon Doe</span><br>
-                        <span class=""><b>Monto: </b> 300.000Bs - 0,000352626 P</span><br>
-                        <a href="">Detalles...</a>
-                    </li>
-                    <li class="collection-item">
-                        <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b> Jhon Doe</span><br>
-                        <span class=""><b>Monto: </b> 300.000Bs - 0,000352626 P</span><br>
-                        <a href="">Detalles...</a>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col s12 m6">
@@ -197,43 +175,13 @@
                     <li class="collection-item">
                         <div>
                             {{-- <i class="icon-message circle"></i> --}}
-                            <span class="title"><b>1: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
+                            <span class="title"><b>Transferencia:  {{$ptb}} </b></span><br>
                             <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
                         </div>
                     </li>
                     <li class="collection-item">
                         <div>
-                            <span class="title"><b>Producto: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
-                            <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                        </div>
-                    </li>
-                    <li class="collection-item">
-                        <div>
-                            <span class="title"><b>Producto: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
-                            <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                        </div>
-                    </li>
-                    <li class="collection-item">
-                        <div>
-                            <span class="title"><b>Producto: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
-                            <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                        </div>
-                    </li>
-                    <li class="collection-item">
-                        <div>
-                            <span class="title"><b>Producto: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
-                            <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                        </div>
-                    </li>
-                    <li class="collection-item">
-                        <div>
-                            <span class="title"><b>Producto: </b>Camisa normal</span><br>
-                            <span><b>Ventas totales: </b>135</span>
+                            <span class="title"><b>Punto De Venta: </b>{{$ppb}}</span><br>
                             <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
                         </div>
                     </li>
