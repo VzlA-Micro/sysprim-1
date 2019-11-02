@@ -15,7 +15,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-                        <table class="centered highlight responsive-table" id="payments">
+                        <table class="centered highlight responsive-table" id="payments" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Contribuyente</th>

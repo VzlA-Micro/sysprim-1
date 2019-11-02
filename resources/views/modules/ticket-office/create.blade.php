@@ -15,6 +15,7 @@
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s10">
+                            <i class="icon-search prefix"></i>
                             <input id="search" type="search" value="{{$taxe->companies->license}}">
                             <label for="search">Licencia o RIF</label>
                         </div>
@@ -47,62 +48,48 @@
                                    value="">
                         </div>
                         <div class="input-field col s12">
-                            <input type="text" name="fiscal_period" id="fiscal_period"
-                                   value="{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}"
-                                   disabled>
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}" disabled>
                             <label for="fiscal_period">Periodo Fiscal</label>
                         </div>
                         <input type="hidden" name="ciu_id[]" value="">
 
                         @foreach($ciuTaxes as $ciu)
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). .">
-                                <input type="text" name="code" id="code" value="{{$ciu->ciu->code}}" class="code"
-                                       required
-                                       readonly>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). .">
+                                <i class="icon-confirmation_number prefix"></i>
+                                <input type="text" name="code" id="code" value="{{$ciu->ciu->code}}" class="code" required readonly>
                                 <label for="code">Código</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Nombre del Clasificador Industrial Internacional Uniforme del código.">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Nombre del Clasificador Industrial Internacional Uniforme del código.">
+                                <i class="icon-assignment prefix"></i>
                                 <input type="text" name="ciu" id="ciu" value="{{$ciu->ciu->name}}" required readonly>
                                 <label for="ciu">CIIU</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Es el monto constituido por los ingresos brutos efectivamente percibidos en el período impositivo correspondiente, por las actividades económicas u operaciones cumplidas en la jurisdicción del Municipio Iribarren o que deban reputarse como ocurridas en esta jurisdicción de acuerdo con los criterios previstos en la ley nacional, en esta ordenanza o en los acuerdos o convenios celebrados a tales efectos (Ord. AE Art. 7).">
-                                <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id=""
-                                       class="validate money_keyup base" maxlength="18" required readonly>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Es el monto constituido por los ingresos brutos efectivamente percibidos en el período impositivo correspondiente, por las actividades económicas u operaciones cumplidas en la jurisdicción del Municipio Iribarren o que deban reputarse como ocurridas en esta jurisdicción de acuerdo con los criterios previstos en la ley nacional, en esta ordenanza o en los acuerdos o convenios celebrados a tales efectos (Ord. AE Art. 7).">
+                                <i class="icon-attach_money prefix"></i>                            
+                                <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                 <label for="">Base Imponible</label>
                             </div>
-
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Descuento por un Beneficio Fiscal Emitido y/o Aprobado por el Municipio.">
-                                <input type="text" name="deductions[]" id=""
-                                       value="{{number_format($ciu->deductions,2)}}"
-                                       class="validate money_keyup"
-                                       required readonly>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Descuento por un Beneficio Fiscal Emitido y/o Aprobado por el Municipio.">
+                                <i class="icon-attach_money prefix"></i>                            
+                                <input type="text" name="deductions[]" id="" value="{{number_format($ciu->deductions,2)}}"class="validate money_keyup" required readonly>
                                 <label for="">Deducciones</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord.AE Art. 112), para que la retención pueda ser aplicada a su declaración debe pasar previamente por la Gerencia de Recaudación, presentar el soporte para ser validada, se aceptaran solo retenciones emitidas en el Municipio Iribarren.">
-                                <input type="text" name="withholding[]" id=""
-                                       class="validate money_keyup" value="{{number_format($ciu->withholding,2)}}"
-                                       required readonly>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"data-tooltip="El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord.AE Art. 112), para que la retención pueda ser aplicada a su declaración debe pasar previamente por la Gerencia de Recaudación, presentar el soporte para ser validada, se aceptaran solo retenciones emitidas en el Municipio Iribarren.">
+                                <i class="icon-attach_money prefix"></i>                                
+                                <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->withholding,2)}}" required readonly>
                                 <label for="">Retenciones</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="En caso que en un período impositivo determinado, por la aplicación del mínimo tributable en algunos de los anticipos mensuales, surja una diferencia o crédito a favor del sujeto pasivo, la misma le será reconocida mediante acto administrativo como un crédito fiscal, el cual deberá ser descontado del monto del impuesto que le corresponda pagar en posteriores periodos impositivos o del impuesto determinado luego de un procedimiento de determinación tributaria, de ser el caso (Ord. AE Art 44, Parágrafo Único).">
-                                <input type="text" name="fiscal_credits[]" id=""
-                                       class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}"
-                                       required readonly>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="En caso que en un período impositivo determinado, por la aplicación del mínimo tributable en algunos de los anticipos mensuales, surja una diferencia o crédito a favor del sujeto pasivo, la misma le será reconocida mediante acto administrativo como un crédito fiscal, el cual deberá ser descontado del monto del impuesto que le corresponda pagar en posteriores periodos impositivos o del impuesto determinado luego de un procedimiento de determinación tributaria, de ser el caso (Ord. AE Art 44, Parágrafo Único).">
+                                <i class="icon-attach_money prefix"></i>                                
+                                <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
                                 <label for="">Creditos Fiscales</label>
                             </div>
-
                         @endforeach
                         <div class="input-field col s12">
                             <div class="divider"></div>
                         </div>
                     </div>
-
                     <div class="card-footer"></div>
                 </div>
             </div>
@@ -120,9 +107,9 @@
 
                     @foreach($ciuTaxes as $ciu)
                         <li class="collection-item">
+                            {{$ciu->ciu->code}}
                             <div>
-                                {{$ciu->ciu->code}}
-                            <span class="secondary-content">
+                            <span class="secondary-content tuncate">
                                 {{$ciu->ciu->name}}
                             </span>
                             </div>

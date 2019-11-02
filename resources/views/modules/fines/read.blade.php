@@ -18,7 +18,7 @@
                         <h5>Multas Disponibles</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped" id="fines">
+                        <table class="centered striped" id="fines" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>

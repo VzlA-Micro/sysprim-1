@@ -16,7 +16,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-                        <table class="striped centered responsive-table" id="ciu">
+                        <table class="striped centered responsive-table" id="ciu" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>

@@ -29,7 +29,7 @@
                         @if ($taxes === null)
                             <h5 class="center-align">No hay registros para mostrar.</h5>
                         @else
-                        <table class="centered highlight responsive-table" id="history">
+                        <table class="centered highlight responsive-table" id="history" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Código</th>
