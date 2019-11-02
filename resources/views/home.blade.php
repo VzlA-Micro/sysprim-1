@@ -13,7 +13,7 @@
                     <span class="truncate">Mis Empresas</span>
                 </a>
             </div>
-            <div class="col s12 m3">
+            {{-- <div class="col s12 m3">
                 <a href="{{ route('inmueble.my-property') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
@@ -24,7 +24,7 @@
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Mis Vehículos</span>
                 </a>
-            </div>
+            </div> --}}
             @endif
 
             @if(\Auth::user()->role_id ==1 || \Auth::user()->role_id ==4)

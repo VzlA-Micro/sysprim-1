@@ -19,6 +19,7 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
+                            <i class="icon-payment prefix"></i>                                                        
                             <select name="type" id="type" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Transferencia">Transferencia</option>
@@ -28,6 +29,7 @@
                             <label for="type">Forma de Pago</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-account_balance prefix"></i>                                                        
                             <select name="bank" id="bank" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Venezuela">Venezuela</option>
@@ -39,26 +41,27 @@
                             <label for="bank">Banco</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-confirmation_number prefix"></i>                                                        
                             <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." required>
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
-
-                            
+                            <i class="icon-attach_money prefix"></i>                                                        
                             <input type="number" name="amount" id="amount" value="{{$monto}}" readonly pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" required>
-
                             <label for="amount">Monto</label>
                         </div>
-
                         <div class="input-field col s12 m6">
+                            <i class="icon-person prefix"></i>                                                                                    
                             <input type="text" name="name" id="name" pattern="[a-zA-Z]+" title="Solo puede escribir letras." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-preson prefix"></i>                                                        
                             <input type="text" name="surname" id="surname" pattern="[a-zA-Z]+" title="Solo puede escribir números." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s2 m2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                        <div class="input-field col s2 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <i class="icon-public prefix"></i>                                                        
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V-">V</option>
@@ -66,13 +69,13 @@
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
-                        <div class="input-field col s12 m4">
+                        <div class="input-field col s10 m3">
                             <input type="text" name="cedula" id="cedula" pattern="[0-9]+" title="Solo puede escribir números." required>
                             <label for="cedula">Cedula</label>
                         </div>
                         <div class="file-field input-field col s12 m6">
                             <div class="btn purple btn-rounded waves-light">
-                                <span><i class="icon-photo_size_select_actual right"></i>Archivo</span>
+                                <span><i class="icon-file_upload right"></i>Archivo</span>
                                 <input type="file" id="files" name="files">
                             </div>
                             <div class="file-path-wrapper">
@@ -90,7 +93,10 @@
                         </div> --}}
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Register</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">
+                            Register
+                            <i class="icon-send right"></i>
+                        </button>
                     </div>
                 </form>
             </div>

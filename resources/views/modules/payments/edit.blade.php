@@ -19,6 +19,7 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
+                            <i class="icon-payment prefix"></i>                                                                                    
                             <select name="type" id="type" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Transferencia">Transferencia</option>
@@ -28,6 +29,7 @@
                             <label for="type">Forma de Pago</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-account_balance prefix"></i>                                                        
                             <select name="bank" id="bank" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 <option value="Venezuela">Venezuela</option>
@@ -39,10 +41,12 @@
                             <label for="bank">Banco</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-confirmation_number prefix"></i>                                                                                    
                             <input type="text" name="code_ref" id="code_ref" pattern="[0-9]+" title="Solo puede escribir números." value="{{ $paymentsTaxe->bank }}" required>
                             <label for="code_ref">N° de Referencia</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-attach_money prefix"></i>                                                        
                             <input type="number" name="amount" id="amount" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $paymentsTaxe->amount }}" required>
                             <label for="amount">Monto</label>
                         </div>

@@ -1,7 +1,5 @@
 <header>
-
     <nav class="container-fluid iribarren-wine-gradient">
-
         <div class="nav-wrapper">
             <a href="{{ url('/') }}" class="brand-logo font-audiowide">SEMAT</a>
             {{-- Sidenav Trigger --}}
@@ -87,35 +85,39 @@
                             <span>Bienvenido,<br> {{ ucwords($name) }} {{ ucwords($surname) }}</span>
                         </div>
                     </li>
-                    <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i
-                                    class="icon-account_circle left"></i>{{ ucwords('mi cuenta') }}</a></li>
-                    <li class="divider"></li>
-                    <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}"
-                                                                              class="waves-effect waves-black"><i
-                                    class="icon-home left"></i>Home</a></li>
-                    <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notifications</a>
+                    <li class="waves-efect waves-light">
+                        <a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>{{ ucwords('mi cuenta') }}</a>
                     </li>
+                    <li class="divider"></li>
+                    <li class="waves-efect waves-light hide-on-large-only">
+                        <a href="{{ route('home') }}"class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a>
+                    </li>
+                    <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>
                     <li class="divider hide-on-large-only"></li>
                     <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>
                     {{-- <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li> --}}
-                    <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i
-                                    class="icon-work left"></i>Mis Empresas</a></li>
-                    @if (Auth::user()->email === 'sysprim@gmail.com')
-                        <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('users.manage') }}"><i
-                                        class="icon-people_outline"></i>Gestionar Usuarios</a></li>
-                        <li class="waves-efect waves-light hide-on-large-only"><a
-                                    href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar
-                                Empresas</a></li>
-                        <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('payments.manage') }}"><i
-                                        class="icon-payment"></i>Gestionar Pagos</a></li>
-                        <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('fines.manage') }}"><i
-                                        class="icon-warning"></i>Gestionar Multas</a></li>
-                        <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('ciu.manage') }}"><i
-                                        class="icon-assignment"></i>Gestionar CIIU</a></li>
-
+                    @if (\Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
+                        <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('payments.manage') }}"><i class="icon-payment"></i>Gestionar Pagos</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('fines.manage') }}"><i class="icon-warning"></i>Gestionar Multas</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('ticket-office.payments') }}"><i class="icon-personal_video"></i>Taquilla</a></li>
                     @endif
-                    {{-- <li class="waves-efect waves-light"><a href="{{ route('payments.my-payments') }}"><i class="icon-payment left"></i>Mis Pagos</a></li>
-                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-local_shipping left"></i>Mis Vehículos</a></li> --}}
+                    @if (\Auth::user()->role_id == 2)
+                        <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li>
+                        <li class="waves-efect waves-light"><a href=""><i class="icon-local_shipping"></i>Gestionar Vehículos</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('payments.manage') }}"><i class="icon-payment"></i>Gestionar Pagos</a></li>
+                    @endif
+                    @if (\Auth::user()->role_id == 3)
+                        <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
+                        {{-- <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
+                    @endif
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('logout') }}"

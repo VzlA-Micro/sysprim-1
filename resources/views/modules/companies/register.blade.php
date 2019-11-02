@@ -14,7 +14,8 @@
                     </div>
                     <div class="card-content row">
                         @csrf
-                        <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="Seleccione: J = Juridico, G = Gubernamental ó V = Venezolano.">
+                        <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="Seleccione: J = Juridico, G = Gubernamental ó V = Venezolano.">
+                            <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="document_type" id="document_type">
                                 <option value="null" selected disabled>...</option>
                                 <option value="J">J</option>
@@ -23,27 +24,32 @@
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
-                        <div class="input-field col s10 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
+                            <i class="icon-work prefix"></i>                            
                             <input type="text" name="name" id="name" class="validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
+                            <i class="icon-chrome_reader_mode prefix"></i>                                                        
                             <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-date_range prefix"></i>                            
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
+                            <i class="icon-supervisor_account prefix"></i>                                                        
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
                         <div class="input-field col m6 s12">
+                            <i class="icon-public prefix"></i>                                                        
                             <select  name="sector" id="sector" required>
                                 <option value="null" disabled selected>Seleccionar Ubicación</option>
                                 <option value="ESTE">ESTE</option>
@@ -58,6 +64,7 @@
                             <label>Ubicación Geográfica </label>
                         </div>
                         <div class="input-field col m6 s12">
+                            <i class="icon-satellite prefix"></i>                                                        
                             <select  name="parish" id="parish" required>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
                                 @foreach($parish as $parish):
@@ -67,31 +74,32 @@
                             <label>Parroquia</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
+                            <i class="icon-offline_pin prefix"></i>
                             <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
                         <div class="input-field col s10 m6 tooltipped" data-position="bottom" data-tooltip="Ej: 02511234567">
+                            <i class="icon-phone prefix"></i>
                             <label for="phone">Teléfono de la Empresa</label>
                             <input id="phone" type="tel" name="phone" class="validate"  maxlength="11" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" required>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-directions prefix"></i>
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required></textarea>
                             <label for="address">Dirección</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). ">
-                            <select multiple name="ciu_group[]" required id="ciu_group">
-                                <option value="null" disabled >Seleccionar CIU</option>
-                                @foreach($ciu as $ciu):
-                                <option value="{{ $ciu->id }}">{{ $ciu->name }}</option>
-                                @endforeach
-                            </select>
-                            <label>Categoria de actividad ecónomica</label>
+                            <i class="icon-cloud_done prefix"></i>
+                            <input type="text" name="search-ciu" >
+                            <label>CIU</label>
+
                         </div>
                         <div class="input-field col s12 m6">
-                            <select multiple name="ciu[]" required id="ciu">
-
-                            </select>
-                            <label>CIU</label>
+                            <i class="icon-assignment prefix"></i>
+                            <button class="btn btn-large waves-effect waves-light peach col s12 btn-rounded">
+                               Buscar
+                                <i class="icon-search right"></i>
+                            </button>
                         </div>
                         <div class="file-field input-field col s12 12">
                             <div class="btn purple btn-rounded waves-light">
@@ -106,23 +114,23 @@
                             <span>Elige la  ubicación de tu empresa:</span>
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
                         </div>
-
-
                         <div class="input-field col s12 m6">
+                            <i class="icon-my_location prefix"></i>                                                                                    
                             <input id="lat" type="text" name="lat" value="" readonly>
                             <label for="lat">Latitud</label>
                         </div>
-
                         <div class="input-field col s12 m6">
+                            <i class="icon-my_location prefix"></i>                                                        
                             <input id="lng" type="text" name="lng" value="" readonly>
                             <label for="lat">Logintud</label>
                         </div>
-
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">Registrar</button>
+                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">
+                            Registrar
+                            <i class="icon-send right"></i>
+                        </button>
                     </div>
-
                 </form>
             </div>
         </div>

@@ -10,7 +10,6 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
-
                 <a href="#!" class="breadcrumb">Registrar Usuario</a>
             </div>
             <div class="col s12 m8 offset-m2">
@@ -21,7 +20,8 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" value="1" name="confirmed">
-                        <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                        <div class="input-field col s4 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <i class="icon-public prefix"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V">V</option>
@@ -29,19 +29,22 @@
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
-                        <div class="input-field col s10 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                            <i class="icon-person prefix"></i>
                             <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                            <i class="icon-person prefix"></i>
                             <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s2 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
+                        <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
+                            <i class="icon-phone_android prefix"></i>
                             <select name="country_code" id="country_code" required>
                                 <option value="null">...</option>
                                 <option value="+58412">(412)</option>
@@ -52,33 +55,27 @@
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>
-                        <div class="input-field col s10 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
-
-                        <!-- <div class="input-field col s12">
-                            <select name="type" id="type" required>
-                                <option value="null" disabled selected>Elige un tipo...</option>
-                                <option value="natural">Natural</option>
-                                <option value="business">Juridica</option>
-                              </select>
-                              <label for="type">Tipo de Persona</label>
-                        </div> -->
-
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
+                            <i class="icon-mail_outline prefix"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234">
+                            <i class="icon-lock prefix"></i>
                             <input id="password" type="password" name="password" class="validate" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password">Contraseña</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-lock prefix"></i>
                             <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password-confirm">Confirmar contraseña</label>
                         </div>
-                        <div class="input-field col m6 s12">
+                        <div class="input-field col s12">
+                            <i class="icon-recent_actors prefix"></i>
                             <select  name="role" id="role" required>
                                 <option value="null" disabled selected>Selecciona rol</option>
                                 @foreach($Role as $rol):
@@ -89,7 +86,10 @@
                         </div>
                     </div>
                     <div class="card-footer center">
-                        <button type="submit" class="btn btn-rounded peach waves-effect waves-light">Registar</button>
+                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">
+                            <i class="icon-send right"></i>
+                            Registar
+                        </button>
                     </div>
                 </form>
             </div>

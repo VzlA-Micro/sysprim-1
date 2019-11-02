@@ -303,4 +303,15 @@ class CompaniesController extends Controller
         }
         return response()->json($response);
     }
+
+
+    public function findCiiu($ciu){
+        $company_find = FindCompany::where('code',$ciu)->first();
+        if(!$company_find->isEmpty()){
+            $response=array('status'=>'success','company'=>$company_find[0]);
+        }else{
+            $response=array('status'=>'error','message'=>'No encontrado');
+        }
+
+    }
 }

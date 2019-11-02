@@ -67,7 +67,7 @@ class CompanyTaxesController extends Controller
         if(isset($users[0]->id)&&$users[0]->id!=\Auth::user()->id){//si la empresa le pertenece a quien coloco la ruta
             return redirect('companies/my-business');
         }else{
-            if(!is_null($date)&&isset($taxes[0]->fiscal_period)&&$taxes[0]->fiscal_period===$date['fiscal_period']){
+            if(!is_null($date)&&isset($taxes[0]->fiscal_period)&&$taxes[0]->fiscal_period===$date['fiscal_period']&&$taxes[0]->status!='verified'){
                 Session::flash('message','ACTIVIDAD ECONOMICA DECLARADAS POR FAVOR CONCILIE SUS PAGOS.');
                 return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
             }else{
@@ -93,6 +93,9 @@ class CompanyTaxesController extends Controller
        */
 
         $fiscal_period=$request->input('fiscal_period');
+
+
+
 
         $company=$request->input('company_id');
     
@@ -311,7 +314,7 @@ class CompanyTaxesController extends Controller
 
 
         //si tiene descuento
-        if($company_find->desc){
+        /*if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee){
                 if ($company_find->number_employees >= $employee->min) {
@@ -324,12 +327,16 @@ class CompanyTaxesController extends Controller
 
             $amountTaxes=$amountTaxes-$amountDesc;//descuento
         }
+        */
+
+
+
+
 
         $amount=['amountInterest'=>$amountInterest,
             'amountRecargo'=>$amountRecargo,
             'amountCiiu'=>$amountCiiu,
             'amountTotal'=>$amountTaxes,
-            'amountDesc'=>$amountDesc
         ];
 
 
@@ -341,7 +348,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->download(time()."planilla_pago.pdf");
+        return $pdf->stream();
     }
 
     public function paymentsHelp(Request $request){
