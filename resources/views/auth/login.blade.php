@@ -2,6 +2,13 @@
 
 @section('styles')
     <style type="text/css">
+        body {
+            
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            height: 100% !important;
+        }
+
         header,
         main,
         footer {
