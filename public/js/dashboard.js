@@ -15,7 +15,7 @@ $('document').ready(function () {
             console.log('hola3');
             console.log(response);
             if (response !== 'error') {
-                $('#recaudacion').text(,response[0]['total']);
+                $('#recaudacion').text(response[0]['total']);
                 $('#banesco').text(response[0]['banesco']);
                 $('#bnc').text(response[0]['bnc']);
                 $('#bicentenario').text(response[0]['bicentenario']);

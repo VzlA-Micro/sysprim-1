@@ -369,6 +369,7 @@ class CompanyTaxesController extends Controller
         $bank = $request->input('bank');
         $payments_type = $request->input('payments');
 
+        $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
             $bank=57;
         }
@@ -450,7 +451,7 @@ class CompanyTaxesController extends Controller
 
 
 
-        Mail::send('dev.planilla', [], function ($msj) use ($subject, $for, $pdf) {
+        Mail::send('mails.payment-payroll', [], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("grabieldiaz63@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);

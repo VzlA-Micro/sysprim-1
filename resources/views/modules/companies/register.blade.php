@@ -103,7 +103,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                            <input type="text" name="search-ciu" >
+                            <input type="text" name="code" id="code">
 
                             <label>CIU</label>
 

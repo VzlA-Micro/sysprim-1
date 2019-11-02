@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="http://sysprim.com.devel/";
+    var url="https://sysprim.com/";
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '') {
             var rif = $('#document_type').val()+$('#RIF').val();
@@ -215,6 +215,8 @@ $(document).ready(function () {
 
     $('#search-ciu').click(function () {
         var code=$('#code').val();
+
+
         $.ajax({
             type: "GET",
             url: url + "ciu/find/"+code,
@@ -258,7 +260,8 @@ $(document).ready(function () {
                                     icon: "warning",
                                     button: "Ok",
                                 });
-                                $('#ciu').val("");
+                                $('#code').val("");
+
                             }else{
                                 $('#group-ciu').append(template);
                             }
@@ -328,7 +331,7 @@ $(document).ready(function () {
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {
-                        window.location.href=url+"companies/my-business";
+                        window.location.href=url+"ticketOffice/companies/all";
                     });
 
                     $("#preloader").fadeOut('fast');
@@ -443,7 +446,7 @@ function initMap() {
         addMark(e.latLng, map);
     });
 
-    var image ='http://sysprim.com.devel/images/mark-map.png';
+    var image ='https://sysprim.com/images/mark-map.png';
     function addMark(latLng, map) {
         var marker = new google.maps.Marker({
             position: latLng,
