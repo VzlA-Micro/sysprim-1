@@ -72,37 +72,43 @@
                             <label for="phone">Teléfono de la Empresa</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" value="{{ $company->phone }}" required>
                         </div>
+                        <div class="input-field col m6 s12">
+                            <i class="icon-satellite prefix"></i>
+                            <select  name="parish" required>
+                                <option value="null" disabled selected>Seleccionar una parroquia</option>
+                                @foreach($parish as $parish):
+                                @if($parish->id===$company->parish_id)
+                                    <option value="{{ $parish->id }}" selected>{{ $parish->name }}</option>
+                                @else
+                                    <option value="{{ $parish->id }}">{{ $parish->name }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                            <label>Parroquia</label>
+                        </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-directions prefix"></i>
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required>{{ $company->address }}</textarea>
                             <label for="address">Dirección</label>
                         </div>
+
                         <input id="lat" type="hidden" name="lat" value="{{ $company->lat }}">
                         <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">
-                        <div class="input-field col m6 s12">
-                            <i class="icon-satellite prefix"></i>                                                        
-                            <select  name="parish" required>
-                                <option value="null" disabled selected>Seleccionar una parroquia</option>
-                                @foreach($parish as $parish):
-                                    @if($parish->id===$company->parish_id)
-                                            <option value="{{ $parish->id }}" selected>{{ $parish->name }}</option>
-                                        @else
-                                            <option value="{{ $parish->id }}">{{ $parish->name }}</option>
-                                       @endif
-                                @endforeach
-                            </select>
-                            <label>Parroquia</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="icon-assignment prefix"></i>                            
-                            <select multiple name="ciu[]">
 
-                                    @foreach($company->ciu as $ciu_selected)
-                                            <option value="{{ $ciu_selected->id }}" selected>{{ $ciu_selected->name }} </option>
-                                     @endforeach
-                            </select>
-                            <label>Agregar CIU</label>
+                        @foreach($company->ciu as $ciu)
+                        <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="{{$ciu->id}}">
+                        <div class="input-field col s12 m6">
+                            <i class="icon-assignment prefix"></i>
+                            <input type="text" name="search-ciu" id="ciu"  disabled value="{{$ciu->code}}">
+                            <label>CIIU</label>
                         </div>
+                        <div class="input-field col s10 m6"  >
+                            <i class="icon-text_fields prefix"></i>
+                            <label for="phone">Nombre</label>
+                            <textarea name="name-ciu" id="nombre" cols="30" rows="10" class="materialize-textarea" disabled required>{{$ciu->name}}</textarea>
+                        </div>
+                        @endforeach
+
                         <div class="input-field col s12 location-container tooltipped" data-position="left" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
                             <span>Elige la  ubicación de tu empresa:</span>
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>

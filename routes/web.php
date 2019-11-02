@@ -94,6 +94,9 @@ Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 
+
+
+
 // ---------------------------------------------------
 
 // Vehicles module routes
@@ -163,6 +166,9 @@ Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 Route::get('/ciu/manage', function() {
     return view('modules.ciiu-group.menu');
 })->name('ciu.manage');
+
+Route::get('/ciu/find/{ciu} ','CiuController@findCiu');
+
 
 Route::get('/ciu-group/register', function() {
     return view('modules.ciiu-group.register');

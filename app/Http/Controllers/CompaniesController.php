@@ -148,7 +148,7 @@ class CompaniesController extends Controller
     }
 
     public function update(Request $request){
-        /*Falta:eliminar imagenes antigua una vez suba la nueva, */
+        /*Falta:eliminar imagenes antigua una vez suba la nueva*/
 
         $ciu=$request->input('ciu');
         $parish=$request->input('parish');
@@ -305,13 +305,5 @@ class CompaniesController extends Controller
     }
 
 
-    public function findCiiu($ciu){
-        $company_find = FindCompany::where('code',$ciu)->first();
-        if(!$company_find->isEmpty()){
-            $response=array('status'=>'success','company'=>$company_find[0]);
-        }else{
-            $response=array('status'=>'error','message'=>'No encontrado');
-        }
 
-    }
 }
