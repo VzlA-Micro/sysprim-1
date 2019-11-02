@@ -87,12 +87,21 @@ Route::get('/companies/verify/{id}','CompaniesController@verifyTaxes');
 Route::get('/companies/manage', function () {
     return view('modules.companies.manage');
 })->name('companies.manage');
-Route::get('/companies/read', function () {
-    return view('modules.companies.read');
-})->name('companies.read');
+
 Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
+
+
+// Companies taquillero
+
+
+Route::get('ticketOffice/company/register','ticketOfficeController@registerCompany');
+Route::post('ticketOffice/company/save','ticketOfficeController@storeCompany');
+Route::get('ticketOffice/companies/all','ticketOfficeController@allCompanies')->name('companies.read');
+
+
+
 
 
 

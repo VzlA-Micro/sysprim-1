@@ -21,25 +21,23 @@
                         <table class="highlight responsive-table centered" id="companies">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Razon Social</th>
                                     <th>RIF</th>
                                     <th>Licencia</th>
-                                    <th>Teléfono</th>
                                     <th>Dirección</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($companies as $company)
                                 <tr>
-                                    <td>Abastecer CA</td>
-                                    <td>J12325347347</td>
-                                    <td>L124235</td>
-                                    <td>+582511234567</td>
-                                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore delectus, iusto magnam atque aspernatur quis. Voluptatem sapiente harum quis nesciunt.</td>
-                                    <td>
-                                        <a href="" class="btn btn-floating red"><i class="icon-pageview"></i></a>
-                                    </td>
+                                    <td>{{$company->name}}</td>
+                                    <td>{{$company->RIF}}</td>
+                                    <td>{{$company->license}}</td>
+                                    <td>{{$company->address}}</td>
+                                    <td><a href="" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
                                 </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

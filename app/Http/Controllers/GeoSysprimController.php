@@ -24,9 +24,6 @@ class GeoSysprimController extends Controller{
 
         $taxes=Taxe::where('status','verified')->whereMonth('fiscal_period','=',$mounth)->get();
 
-
-
-
         foreach ($taxes as $taxe){
                 $company_find[]=$taxe->companies;
         }

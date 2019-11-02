@@ -106,8 +106,7 @@ $(document).ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-
-                        swal({
+                       swal({
                             title: "¡Bien Hecho!",
                             text: "Empresa Registrada con Éxito.",
                             icon: "success",
@@ -306,6 +305,56 @@ $(document).ready(function () {
 
 
 
+
+
+        $('#company-register-ticket').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: url+"ticketOffice/company/save" ,
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Empresa Registrada con Éxito.",
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        window.location.href=url+"companies/my-business";
+                    });
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+
+
+
+
+
+
+        });
     });
 
 
@@ -332,6 +381,20 @@ $(document).ready(function () {
                     $('#RIF').val(company.rif.substr(1));
                     $('#license').val(company.codigo_licencia);
                     $('#address').val(company.direccion);
+                    $('#phone-company').val(company.telefono_principal);
+
+
+                    if($('#ci-license').val()!==undefined){
+
+                        $('#name_company').val(company.historico_nombre_empresa);
+                        $('#ci-license').val(company.historico_cedula);
+                        $('#phone-user').val(company.telefono_principal);
+                        $('#name-license').val(company.historico_nombre_representante);
+                        $('#email').val(company.email);
+
+
+                    }
+                    M.textareaAutoResize($('#address'));
                     M.updateTextFields();
                 }
 
@@ -352,7 +415,13 @@ $(document).ready(function () {
 
 
 
+
+
+
 });
+
+
+
 
 
 
@@ -411,3 +480,6 @@ function initMap() {
         console.log(marcadores[0].getPosition().lat()+'-'+marcadores[0].getPosition().lng());
     }
 }
+
+
+

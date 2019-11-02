@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GroupCiu;
+use App\Helpers\CedulaVE;
 use App\Notification;
 use App\Parish;
 use Carbon\Carbon;
@@ -296,6 +297,7 @@ class CompaniesController extends Controller
 
     public function findCompany($rif){
         $company_find = FindCompany::where('rif',$rif)->get();
+
         if(!$company_find->isEmpty()){
             $response=array('status'=>'success','company'=>$company_find[0]);
         }else{
