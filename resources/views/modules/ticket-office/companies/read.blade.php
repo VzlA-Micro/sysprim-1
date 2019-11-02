@@ -35,7 +35,7 @@
                                     <td>{{$company->RIF}}</td>
                                     <td>{{$company->license}}</td>
                                     <td>{{$company->address}}</td>
-                                    <td><a href="" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
+                                    <td><a href="{{route('tickOffice.companies.details',['id'=>$company->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -54,7 +54,7 @@
             responsive: true,
             scroller: true,
             "scrollX": true,
-            "pageLength": 2,
+            "pageLength": 10,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

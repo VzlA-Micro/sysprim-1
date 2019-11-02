@@ -140,4 +140,13 @@ class TicketOfficeController extends Controller{
     }
 
 
+
+    public function detailsCompany($id){
+        $company=Company::find($id);
+        $parish=Parish::all();
+        return view('modules.ticket-office.companies.details',['company'=>$company,'parish'=>$parish]);
+    }
+
+
+
 }

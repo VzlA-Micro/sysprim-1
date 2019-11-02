@@ -3,6 +3,9 @@
 @section('content')
     <main>
         <div id="map" style="width:100%; height: 600px; margin-top:2px"></div>
+        <div class="col m6">
+            <button type="button" id="refresh" class="btn btn-rounded">Refrescar<i class="icon-refresh"></i></button>
+        </div>
     </main>
 @endsection
 

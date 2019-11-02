@@ -18,7 +18,6 @@
                         <h5>Registrar Empresa</h5>
                     </div>
                     <div class="card-content row">
-
                         <h5 class="center-align">Datos de la Empresa</h5>
                         <div class="divider"></div>
                         <div class="divider"></div>

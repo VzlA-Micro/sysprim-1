@@ -99,6 +99,7 @@ Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 Route::get('ticketOffice/company/register','ticketOfficeController@registerCompany');
 Route::post('ticketOffice/company/save','ticketOfficeController@storeCompany');
 Route::get('ticketOffice/companies/all','ticketOfficeController@allCompanies')->name('companies.read');
+Route::get('ticketOffice/companies/details/{id}','ticketOfficeController@detailsCompany')->name('tickOffice.companies.details');
 
 
 
