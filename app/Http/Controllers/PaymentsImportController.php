@@ -56,7 +56,7 @@ class PaymentsImportController extends Controller
             }
         }
 
-        $this->verifyPayments();
+        //$this->verifyPayments();
         return redirect('home');
     }
 

@@ -156,6 +156,10 @@ Route::get('/codigo-qr',function (){
    return view('dev.taxesQr');
 });
 
+Route::get('/cargar-ciu',function (){
+    return view('modules.bank.upload');
+});
+
 Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
 
 // Group Ciiu module routes
