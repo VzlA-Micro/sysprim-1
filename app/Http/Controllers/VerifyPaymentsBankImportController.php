@@ -101,19 +101,7 @@ class VerifyPaymentsBankImportController extends Controller
 
 
                             //si tiene descuento
-                            if($company->desc){
-                                $employees = Employees::all();
-                                foreach ($employees as $employee){
-                                    if ($company->number_employees >= $employee->min) {
-                                        if ($company->number_employees <= $employee->max) {
-                                            $amountDesc=$amountTaxes*$employee->value/100;
 
-                                        }
-                                    }
-                                }
-
-                                $amountTaxes=$amountTaxes-$amountDesc;//descuento
-                            }
 
                             $amount=['amountInterest'=>$amountInterest,
                                 'amountRecargo'=>$amountRecargo,
@@ -141,7 +129,7 @@ class VerifyPaymentsBankImportController extends Controller
                             $for = $userCompany[0]->email;
 
 
-                            Mail::send('dev.pago', [], function ($msj) use ($subject, $for, $pdf) {
+                            Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
 
                                 $msj->from("grabieldiaz63@gmail.com", "SEMAT");
                                 $msj->subject($subject);
