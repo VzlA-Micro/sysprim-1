@@ -21,7 +21,7 @@ class ParishTableSeeder extends Seeder
 
 
         DB::table('parish')->insert([
-            'name'=>'JUAN DE VILLEGAS',
+            'name'=>'ANA SOTO',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
