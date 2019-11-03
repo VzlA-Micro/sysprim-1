@@ -96,10 +96,10 @@ Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
 // Companies taquillero
 
 
-Route::get('ticketOffice/company/register','ticketOfficeController@registerCompany')->name('tickOffice.companies.register');
-Route::post('ticketOffice/company/save','ticketOfficeController@storeCompany');
-Route::get('ticketOffice/companies/all','ticketOfficeController@allCompanies')->name('companies.read');
-Route::get('ticketOffice/companies/details/{id}','ticketOfficeController@detailsCompany')->name('tickOffice.companies.details');
+Route::get('ticketOffice/company/register','TicketOfficeController@registerCompany')->name('tickOffice.companies.register');
+Route::post('ticketOffice/company/save','TicketOfficeController@storeCompany');
+Route::get('ticketOffice/companies/all','TicketOfficeController@allCompanies')->name('companies.read');
+Route::get('ticketOffice/companies/details/{id}','TicketOfficeController@detailsCompany')->name('tickOffice.companies.details');
 
 
 
