@@ -129,10 +129,6 @@
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input type="text" name="desc" class="validate total money"  value="{{$amount['amountDesc']}}" readonly>
-                                    <label for="desc">Descuento:(Bs)</label>
-                                </div>
-                                <div class="col s12 m12">
                                     <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
