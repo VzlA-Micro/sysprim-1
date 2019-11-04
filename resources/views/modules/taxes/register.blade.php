@@ -16,9 +16,9 @@
                         <div class="alert alert-success center-align">
                             <strong>Todavia no hay pagos que realizar.</strong>
                         </div>
-                    @elseif(Session::has('message'))
+                    @elseif($date['status']==='process')
                         <div class="alert alert-success center-align">
-                            <strong>{{ session('message') }}</strong>
+                            <strong>ACTIVIDAD ECONOMICA DECLARADA, POR FAVOR CONCILIE SUS PAGOS.</strong>
                         </div>
                     @else
 

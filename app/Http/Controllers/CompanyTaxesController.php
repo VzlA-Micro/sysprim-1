@@ -67,12 +67,7 @@ class CompanyTaxesController extends Controller
         if(isset($users[0]->id)&&$users[0]->id!=\Auth::user()->id){//si la empresa le pertenece a quien coloco la ruta
             return redirect('companies/my-business');
         }else{
-            if(!is_null($date)&&isset($taxes[0]->fiscal_period)&&$taxes[0]->fiscal_period===$date['fiscal_period']&&$taxes[0]->status!='verified'){
-                Session::flash('message','ACTIVIDAD ECONOMICA DECLARADAS POR FAVOR CONCILIE SUS PAGOS.');
-                return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
-            }else{
-                return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
-            }
+            return view('modules.taxes.register',['company'=>$company_find,"date"=>$date]);
         }
 
     }
@@ -387,15 +382,20 @@ class CompanyTaxesController extends Controller
         $taxes->branch='Act.Eco';
         $code = substr($code, 3, 12);
 
+
+
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
-
         $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
+
 
         $taxes->update();
 
         $taxes=Taxe::findOrFail($id);
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+
+
+
 
 
 

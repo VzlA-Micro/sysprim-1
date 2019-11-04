@@ -1,4 +1,4 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 function initMap() {
     findCompanySolvent();
 }
@@ -8,6 +8,7 @@ function initMap() {
 $('#refresh').click(function () {
     findCompanySolvent();
 });
+
 
 
 function findCompanySolvent() {
@@ -39,6 +40,10 @@ function findCompanySolvent() {
                     });
 
                     var infowindow;
+
+
+
+
                     google.maps.event.addListener(marker, 'click', function (marker) {
                         console.log("click");
 
