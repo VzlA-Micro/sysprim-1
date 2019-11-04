@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -15,13 +15,13 @@
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post" class="card" id="company-register-ticket">
                     <ul class="tabs">
-                        <li class="tab col s4"><a href="#user-tab" class="active">Representante Legal</a></li>
-                        <li class="tab col s4"><a href="#company-tab">Datos de la Empresa</a></li>
-                        <li class="tab col s4"><a href="#map-tab">Mapa</a></li>
+                        <li class="tab col s4"><a href="#user-tab"><i class="icon-filter_1"></i> Representante Legal</a></li>
+                        <li class="tab col s4"><a href="#company-tab"><i class="icon-filter_2"></i> Datos de la Empresa</a></li>
+                        <li class="tab col s4"><a href="#map-tab"><i class="icon-filter_3"></i> Mapa</a></li>
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4 class="center-align">Representante Legal</h4>
+                            <h4>Representante Legal</h4>
                         </div>
                         <div class="card-content row">
                             <div class="col s12 center-align">
@@ -216,19 +216,24 @@
                         </div>
                     </div>
                     <div id="map-tab">
-                        <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
-                            <span>Elige la  ubicación de tu empresa:</span>
-                            <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
+                        <div class="card-header center-align">
+                            <h4>Representante Legal</h4>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-my_location prefix"></i>
-                            <input id="lat" type="text" name="lat" value="" readonly>
-                            <label for="lat">Latitud</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-my_location prefix"></i>
-                            <input id="lng" type="text" name="lng" value="" readonly>
-                            <label for="lat">Logintud</label>
+                        <div class="card-content row">
+                            <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
+                                <span>Elige la  ubicación de tu empresa:</span>
+                                <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <input id="lat" type="text" name="lat" value="" readonly>
+                                <label for="lat">Latitud</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <input id="lng" type="text" name="lng" value="" readonly>
+                                <label for="lat">Logintud</label>
+                            </div>
                         </div>
                         <div class="card-footer center">
                             <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">
