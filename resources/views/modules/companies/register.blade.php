@@ -15,12 +15,13 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s3 m3">
-                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="Seleccione: J = Juridico, G = Gubernamental ó V = Venezolano."></i>
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
                             <select name="document_type" id="document_type">
                                 <option value="null" selected disabled>...</option>
                                 <option value="J">J</option>
                                 <option value="V">V</option>
                                 <option value="G">G</option>
+                                <option value="G">E</option>
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
