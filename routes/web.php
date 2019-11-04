@@ -306,10 +306,14 @@ Route::get('/readEmployees',array(
 //Geosysprim
 Route::get('/geosysprim/home','GeoSysprimController@home')->name('geosysprim');
 Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanySolvent');
+Route::get('/geosysprim/find-company/process','GeoSysprimController@findCompanyProcess');
 
 Route::get('/admin/geolocation', function() {
     return view('modules.map.home');
 })->name('admin.geolocation');
+
+
+
 
 
 Route::get('/dashboard',array(

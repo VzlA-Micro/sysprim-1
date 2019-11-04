@@ -79,6 +79,8 @@ class TaxesNumber{
 
 
 
+
+
         $sp_code=$sum1_code;
         if($sum1_code<100){
             $sp_code=$sum1_code*100;
@@ -122,7 +124,6 @@ class TaxesNumber{
 
 
 
-
         for($i=0;$i<strlen($date_format);$i++){
             $suma_date+=$date_format[$i];
             $pos=$i+1;
@@ -147,12 +148,10 @@ class TaxesNumber{
         $dat_date=$dat_bank+$sp_date+$prod1_date;
 
 
-
-         $amount=$amount*100;
-
+        $amount=$amount*100;
 
 
-         $amount_format=str_pad($amount, 12,"0",  STR_PAD_LEFT);
+        $amount_format=str_pad($amount, 12,"0",  STR_PAD_LEFT);
 
         for($i=0;$i<strlen($amount_format);$i++){
                         $suma_amount+=$amount_format[$i];
@@ -161,15 +160,13 @@ class TaxesNumber{
             }
 
 
-
         $sum1_amount=$suma_amount+$producto_amount;
 
         $sp_amount=$sum1_amount;
 
-        if($sum1_date<100){
-            $sp_amount=$suma_amount*100;
+        if($sum1_amount<100){
+            $sp_amount=$sum1_amount*100;
         }
-
 
         $prod1_amount=$suma_amount*$producto_amount;
 
@@ -190,7 +187,6 @@ class TaxesNumber{
         }else if($dat1<100){
             $dat1=$dat1*10;
         }
-
 
         return $dat1;
     }

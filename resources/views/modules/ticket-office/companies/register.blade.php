@@ -87,7 +87,7 @@
                                 <label for="email">E-mail</label>
                             </div>
                             <div class="input-field col s12 right-align">
-                                <a href="#company-tab" class="btn peach waves-effect waves-light">
+                                <a href="#" id='user-next' class="btn peach waves-effect waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>
@@ -201,13 +201,13 @@
                             
                             </div>
                             <div class="input-field col s6 left-align">
-                                <a href="#user-tab" class="btn peach waves-effect waves light">
+                                <a href="#" id="company-previous" class="btn peach waves-effect waves light">
                                     Anterior
                                     <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
-                                <a href="#map-tab" class="btn peach waves-effect waves light">
+                                <a href="#" class="btn peach waves-effect waves light" id="company-next">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>

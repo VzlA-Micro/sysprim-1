@@ -37,10 +37,9 @@
             <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Home</a></li>
             <li class="divider hide-on-large-only"></li>
             <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>     
-            <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
-            <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
-            <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
-            <li><a href="" class="waves-effect waves-blue">Gestionar Algo</a></li>
+            <li><a href="#" class="waves-effect waves-blue" id="company-solvent">PAGOS VERIFICADOS</a></li>
+            <li><a href="#" id='company-process' class="waves-effect waves-blue">PAGOS EN PROCESO</a></li>
+
             <li><a href="{{ route('home') }}" class="waves-effect waves-blue">Volver a SEMAT</a></li>
         </ul>
     </nav>

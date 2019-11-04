@@ -80,7 +80,7 @@
                         @else
                         <div class="input-field col s12 m4">
                             <i class="icon-attach_money prefix"></i>
-                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->deductions-$ciu->withholding-$ciu->fiscal_credits}}" readonly>
+                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
                         </div>
                         @endif

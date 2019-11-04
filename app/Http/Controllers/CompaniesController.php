@@ -83,7 +83,6 @@ class CompaniesController extends Controller
             'code_catastral' => 'required',
             'sector' => 'required',
             'number_employees' => 'required',
-            'phone' => 'required|min:7',
             ]);
 
         $company = new Company();

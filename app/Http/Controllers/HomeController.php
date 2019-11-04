@@ -30,8 +30,6 @@ class HomeController extends Controller
      */
     public function index(Request $request){
 
-
-
         if(\Auth::user()->confirmed!=0){
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);

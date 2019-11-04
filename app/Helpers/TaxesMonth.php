@@ -48,44 +48,75 @@ class TaxesMonth{
                     'mount_pay' =>$mes.'-'.$now->format('Y'),
                     'fiscal_period'=>$now->format('Y-m-d'),
                     'mora'=>$mora,
-                    'diffDayMora'=>$diffDayMora
+                    'diffDayMora'=>$diffDayMora,
+                    'status'=>'new_pay'
                 );
         } else {//si tiene datos
             $fiscal_period = Carbon::parse($companyTaxes[0]->fiscal_period);//utilizo el ultimo pago realido valido y lo tomo como refencia
-            $now = Carbon::now();//fecha del computador
-
+            $now_pay = Carbon::now();//fecha de pago
+            $now_date=Carbon::now()->format('Y-m-d');
 
             if($company->typeCompany==='R'){
-                if($now->format('d')<=$dayMoraEspecial){
+                if($now_pay->format('d')<=$dayMoraEspecial){
                     $mora=false;
                 }else{
                     $mora=true;
-                    $diffDayMora=$now->format('d')-$dayMoraEspecial;
+                    $diffDayMora=$now_pay->format('d')-$dayMoraEspecial;
                 }
             }else{
-                if($now->format('d')<=$dayMoraNormal){
+                if($now_pay->format('d')<=$dayMoraNormal){
                     $mora=false;
                 }else{
-                    $diffDayMora=$now->format('d')-$dayMoraNormal;
+                    $diffDayMora=$now_pay->format('d')-$dayMoraNormal;
                     $mora=true;
                 }
             }
 
 
+
+
+
+
             if ($companyTaxes[0]->status!==null) {
-                $now->subMonth(1);
-                if ($companyTaxes[0]->status === 'verified' && $companyTaxes[0]->fiscal_period==$now->format('Y-m-d')) {
+                $now_pay->subMonth(1);
+                if ($companyTaxes[0]->status ==='verified' && $fiscal_period->format('m')===$now_pay->format('m')) {
                     $date = null;
                     $mes=null;
-                } else{
-                    $mes=self::$mounths[($now->format('m'))-1];
-                    $date = array(
-                        'mount_pay' => $mes.'-'.$now->format('Y'),
-                        'fiscal_period'=>$now->format('Y-m-d'),
-                        'mora'=>$mora,
-                        'diffDayMora'=>$diffDayMora);
+                }else{
+                    $date_company=$companyTaxes[0]->created_at->format('Y-m-d');
+                    if($companyTaxes[0]->status=='process'&&$date_company!==$now_date){
+                        $mes=self::$mounths[($now_pay->format('m'))-1];
+                        $date = array(
+                            'mount_pay' => $mes.'-'.$now_pay->format('Y'),
+                            'fiscal_period'=>$now_pay->format('Y-m-d'),
+                            'mora'=>$mora,
+                            'diffDayMora'=>$diffDayMora,
+                            'status'=>'cancel'
+                        );
 
+
+                    }else if($companyTaxes[0]->status=='process'&&$date_company===$now_date){
+                        $mes=self::$mounths[($now_pay->format('m'))-1];
+                        $date = array(
+                            'mount_pay' => $mes.'-'.$now_pay->format('Y'),
+                            'fiscal_period'=>$now_pay->format('Y-m-d'),
+                            'mora'=>$mora,
+                            'diffDayMora'=>$diffDayMora,
+                            'status'=>'process'
+                        );
+                    }else if($companyTaxes[0]->status ==='verified' && $fiscal_period->format('m')!=$now_pay->format('m')){
+                        $mes=self::$mounths[($now_pay->format('m'))-1];
+                        $date = array(
+                            'mount_pay' => $mes.'-'.$now_pay->format('Y'),
+                            'fiscal_period'=>$now_pay->format('Y-m-d'),
+                            'mora'=>$mora,
+                            'diffDayMora'=>$diffDayMora,
+                            'status'=>'new_pay'
+                        );
+                    }
                 }
+
+
             }
 
         }
@@ -95,7 +126,6 @@ class TaxesMonth{
         }else{
             return $date;
         }
-
 
     }
 

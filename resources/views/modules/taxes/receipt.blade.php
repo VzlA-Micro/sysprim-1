@@ -187,29 +187,6 @@
 			</tr>
 		@endif
 
-
-			@if($ciu->credit_fiscal!=0)
-				<tr>
-					<td></td>
-					<td style="font-size: 10px !important;">Crédito Fiscal</td>
-					<td></td>
-					<td></td>
-					<td style="font-size: 10px !important;"></td>
-					<td style="font-size: 10px !important;">{{number_format($ciu->credit_fiscal,2)}}</td>
-					@if($taxes->companies->typeCompany=='R')
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding+$ciu->credits_fiscal,2)}}
-						</td>
-					@else
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding+$ciu->credits_fiscal,2)}}
-						</td>
-					@endif
-				</tr>
-			@endif
-
-
-
 			@if($ciu->deductions!=0)
 				<tr>
 					<td></td>
@@ -220,20 +197,45 @@
 					<td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
 					@if($taxes->companies->typeCompany=='R')
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions,2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions,2)}}
 						</td>
 					@else
 						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->credits_fiscal-$ciu->deductions,2)}}
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions,2)}}
+						</td>
+					@endif
+				</tr>
+			@endif
+
+			@if($ciu->fiscal_credits!=0)
+				<tr>
+					<td></td>
+					<td style="font-size: 10px !important;">Crédito Fiscal</td>
+					<td></td>
+					<td></td>
+					<td style="font-size: 10px !important;"></td>
+					<td style="font-size: 10px !important;">{{number_format($ciu->fiscal_credits,2)}}</td>
+					@if($taxes->companies->typeCompany=='R')
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
+						</td>
+					@else
+						<td style="font-size: 10px !important;">
+							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
 						</td>
 					@endif
 				</tr>
 			@endif
 
 
-
-
 		@endforeach
+
+
+
+
+
+
+
 
 		<tr>
 			<td></td>
@@ -242,14 +244,14 @@
 			<td></td>
 			<td></td>
 			<td>TOTAL</td>
-			<td style="font-size: 14px !important; text-align: left">{{number_format($amount['amountTotal'],2)}}</td>
+			<td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2)}}</td>
 		</tr>
 		</tbody>
 
 
 		<hr>
 		<tr>
-			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($total_taxes))."."}}</td>
+			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
 		</tr>
 	</table>
 	<table>
