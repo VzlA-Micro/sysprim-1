@@ -2,7 +2,7 @@
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper container">
             <a href="{{ url('/') }}" class="brand-logo left font-audiowide">
-                <!-- <img src="{{ asset('images/alcaldia_logo.png') }}" alt=""> -->
+                <!-- <img src="{{ asset('images/iribarren_logo.png') }}" alt=""> -->
                 Iribarren
             </a>
             {{-- Sidenav Trigger --}}
