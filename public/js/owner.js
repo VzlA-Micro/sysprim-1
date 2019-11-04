@@ -39,16 +39,11 @@ $(document).ready(function() {
     $('.tooltipped').tooltip();
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
-
+    $('.tabs').tabs({
+        // swipeable:true
+    });
     $('#modal1').modal();
 
     $('.modal').modal();
-    $('.carousel.carousel-slider').carousel({
-        fullWidth: true,
-        // indicators: true
-    });
-    setInterval(function() {
-        $('.carousel.carousel-slider').carousel('next');
-      }, 3500); // every 2 seconds
 
 });
