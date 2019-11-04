@@ -8,7 +8,9 @@ function initMap() {
 $('#refresh').click(function () {
     findCompanySolvent();
 });
-
+$('#company-solvent').click(function () {
+    findCompanySolvent();
+});
 
 $('#company-process').click(function () {
     $.ajax({
