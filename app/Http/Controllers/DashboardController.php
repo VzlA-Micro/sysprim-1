@@ -609,7 +609,8 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $company=Taxe::orderByDesc('id')->take(8)->get();
+        $company=Taxe::where('status','verified')
+        ->orderByDesc('id')->take(8)->get();
         //$companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();
         $ptb=Taxe::where('code','like','%ptb%')
             ->where('status','verified')->get();

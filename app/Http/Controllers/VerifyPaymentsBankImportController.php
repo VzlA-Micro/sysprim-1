@@ -143,7 +143,7 @@ class VerifyPaymentsBankImportController extends Controller
 
                             Mail::send('dev.pago', [], function ($msj) use ($subject, $for, $pdf) {
 
-                                $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                                $msj->from("grabieldiaz63@gmail.com", "SEMAT ALCALDIA DE IRRI");
                                 $msj->subject($subject);
                                 $msj->to($for);
                                 $msj->attachData($pdf->output(), time().'Planilla_Verificada.pdf');
