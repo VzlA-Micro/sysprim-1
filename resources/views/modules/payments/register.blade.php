@@ -104,6 +104,6 @@
     </div>
 @endsection
 @section('scripts')
-
     <script src="{{ asset('js/dev/payments.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

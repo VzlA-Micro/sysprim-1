@@ -28,15 +28,15 @@
                                 <form method="post" action="#" class="row">
                                     @csrf
                                     <div class="input-field col s12">
-                                        <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate">
+                                        <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate number-and-capital-letter-only">
                                         <label for="name">Nombre</label>    
                                     </div>
                                     <div class="input-field col s12">
                                         <input type="text" name="surname" id="surname" value="{{ Auth::user()->surname }}" class="validate">
-                                        <label for="surname">Apellido</label>    
+                                        <label for="surname number-and-capital-letter-only">Apellido</label>    
                                     </div>
                                     <div class="input-field col s12">
-                                        <input type="text" name="phone" id="phone" value="{{ Auth::user()->phone }}" class="validate">
+                                        <input type="text" name="phone" id="phone" value="{{ Auth::user()->phone }}" class="validate number-only">
                                         <label for="phone">Teléfono</label> 
                                     </div>
                                     <div class="input-field col s12">
@@ -66,4 +66,5 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/dev/profile.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

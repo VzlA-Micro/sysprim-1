@@ -59,4 +59,5 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/dev/ciiu.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

@@ -25,7 +25,7 @@
                         <input id="id" type="hidden" value="{{$user->id}}" name="id">
                         <div class="input-field col s10 m6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
-                            <input id="cedula" type="text" name="cedula" class="validate" readonly pattern="[0-9VvEe]+"
+                            <input id="cedula" type="text" name="cedula" class="validate number-only" readonly pattern="[0-9VE]+"
                                    title="Solo puede escribir números." value="{{$user->ci}}" required>
                             <label for="cedula">Cedula</label>
                         </div>
@@ -48,7 +48,7 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" readonly class="validate" pattern="[0-9+]+"
                                    value="{{$user->phone}}" title="Solo puede escribir números."
-                                   placeholder="Ej. 1234567" maxlength="13" minlength="13" required>
+                                   placeholder="Ej. 1234567" maxlength="13" minlength="7" required>
                         </div>
                         <!-- <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
@@ -91,4 +91,5 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/dev/user.js')}}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

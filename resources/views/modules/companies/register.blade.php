@@ -26,17 +26,17 @@
                             <label for="document_type">Documento</label>
                         </div>
                         <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required>
+                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[\d]" maxlength="10" minlength="8" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
-                            <input type="text" name="name" id="name" class="validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
+                            <input type="text" name="name" id="name" class="validate" pattern="[A-Za-z0-9 ]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-chrome_reader_mode prefix tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3"></i>                                                        
-                            <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required>
+                            <input type="text" name="license" id="license" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
                         <div class="input-field col s3 m3">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-directions prefix"></i>
@@ -104,14 +104,12 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                            <input type="text" name="code" id="code">
+                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
 
                             <label>CIU</label>
 
                         </div>
                         <div class="input-field col s12 m6">
-
-                            <i class="icon-assignment prefix"></i>
                             <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
                                Buscar
                                 <i class="icon-search right"></i>
@@ -145,7 +143,7 @@
                         <div class="input-field col s12 m6">
                             <i class="icon-my_location prefix"></i>                                                        
                             <input id="lng" type="text" name="lng" value="" readonly>
-                            <label for="lat">Logintud</label>
+                            <label for="lng">Logintud</label>
                         </div>
                     </div>
                     <div class="card-action center-align">
@@ -162,5 +160,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/company.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>
 @endsection

@@ -209,4 +209,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

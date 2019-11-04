@@ -21,7 +21,7 @@
                         @csrf
                         <input type="hidden" value="1" name="confirmed">
                         <div class="input-field col s4 m3">
-                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero"></i>
+                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V">V</option>
@@ -30,7 +30,7 @@
                             <label for="nationality">Nacionalidad</label>
                         </div>
                         <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
@@ -98,4 +98,5 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('js/dev/user.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

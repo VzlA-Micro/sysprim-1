@@ -252,4 +252,5 @@
     <script src="{{ asset('js/dev/company.js') }}"></script>
     <script src="{{ asset('js/dev/user.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
