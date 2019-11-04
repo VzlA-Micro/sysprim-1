@@ -139,9 +139,9 @@ class CompanyTaxesController extends Controller
             if($date['mora']){//si tiene mora
                 $extra=Extras::orderBy('id', 'desc')->take(1)->get();
                 if($company_find->typeCompany==='R'){
-                    $tax_rate=$taxes+(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
+                    $tax_rate=$taxes+(float)$withholding_format-(float)$deductions_format-(float)$fiscal_credits_format;
                 }else{
-                    $tax_rate=$taxes-(float)$withholding_format-(float)$fiscal_credits_format-(float)$deductions_format;
+                    $tax_rate=$taxes-$withholding_format-(float)-(float)$deductions_format-(float)$fiscal_credits_format;
                 }
 
                 $tax_rate=$tax_rate*$extra[0]->tax_rate/100;
@@ -152,6 +152,8 @@ class CompanyTaxesController extends Controller
                 $tax_rate=0;
                 $interest=0;
             }
+
+
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
@@ -195,34 +197,23 @@ class CompanyTaxesController extends Controller
                 $amountInterest+=$ciu->interest;
                 $amountRecargo+=$ciu->tax_rate;
 
+
                 if($company_find->TypeCompany==='R'){
                     $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
                 }else{
-                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+
+                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+
                 }
         }
+
+
+
+
 
         $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
 
 
-
-        //si tiene descuento
-        if($company_find->desc){
-            $employees = Employees::all();
-            foreach ($employees as $employee){
-                if ($company_find->number_employees >= $employee->min) {
-                    if ($company_find->number_employees <= $employee->max) {
-                        $amountDesc=$amountTaxes*$employee->value/100;
-
-                    }
-                }
-            }
-
-
-
-
-            $amountTaxes=round($amountTaxes-$amountDesc,2);//descuento
-        }
 
         $amount=['amountInterest'=>$amountInterest,
             'amountRecargo'=>$amountRecargo,
@@ -299,13 +290,11 @@ class CompanyTaxesController extends Controller
             if($company_find->TypeCompany==='R'){
                 $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
             }else{
-                $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
+                $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
             }
         }
 
         $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
-
-
 
 
         //si tiene descuento
