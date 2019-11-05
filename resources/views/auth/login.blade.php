@@ -123,7 +123,7 @@
         $('.fullBackground').fullClip({
             images: ['images/bg-1.jpg','images/bg-2.jpg','images/bg-3.jpg'],
             transitionTime: 3000,
-            wait: 3000
+            // wait: 3000
         });
 
         $('.sidenav#side-login').sidenav({
