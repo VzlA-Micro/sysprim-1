@@ -63,28 +63,36 @@
                                     <td>{{$ciu->ciu->name}}</td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                             -->
+                                            <!-- <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>   -->
                                             <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                             -->
+                                            <!-- <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>   -->
                                             <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                                 -->
+                                            <!-- <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i> -->   
                                             <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->withholding,2)}}" required readonly>
                                             <!-- <label for="">Retenciones</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                                 -->
+                                            <!-- <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>   -->
                                             <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
                                             <!-- <label for="">Creditos Fiscales</label> -->
                                         </div>
