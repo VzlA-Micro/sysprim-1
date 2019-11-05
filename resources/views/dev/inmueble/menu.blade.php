@@ -13,7 +13,7 @@
                 <div class="col s12 m4">
                     <a href="{{ route('show.inmueble', ['id' => $inmueble->id]) }}" class="btn-app white purple-text">
                         <i class="icon-location_city"></i>
-                        <span class="truncate">{{ $inmueble->name }}</span>
+                        <span class="truncate">{{ $inmueble->codigo_catastral }}</span>
                     </a>
                 </div>
             @endforeach
