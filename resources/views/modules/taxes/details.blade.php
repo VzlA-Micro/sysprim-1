@@ -51,46 +51,62 @@
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="base[]" id="base" class="validate money" value="{{ $ciu->base }}" readonly>
                             <label for="base">Base Imponible</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->deductions }}" readonly>
                             <label for="deductions">Deducciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->withholding }}" readonly>
                             <label for="withholdings">Retenciones</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->fiscal_credits }}" readonly>
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
 
                         @if($taxes->companies->typeCompany=='R')
                         <div class="input-field col s12 m4">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
                         </div>
                         @else
                         <div class="input-field col s12 m4">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
                         </div>
                         @endif
                         <div class="input-field col s12 m4">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->tax_rate}}" readonly>
                             <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12 m4">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
                             <label for="interest">Interes por mora<b> (Bs)</b></label>
                         </div>
