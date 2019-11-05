@@ -18,6 +18,11 @@
     src: url('../fonts/BlackOpsOne-Regular.ttf');
 }
 
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/Ubuntu-Regular.ttf');
+}
+
 .font-lato {
     font-family: 'Lato';
 }
@@ -32,4 +37,8 @@
 
 .font-blackops {
     font-family: 'BlackOps' !important;
+}
+
+.font-ubuntu {
+    font-family: 'Ubuntu' !important;
 }

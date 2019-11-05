@@ -54,8 +54,8 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row show-on-down-only hide-on-med-and-up">
-            <div class="col s12 m4 offset-m4 animated bounceInDown">
+        <div class="row show-on-medium-and-down hide-on-large-only">
+            <div class="col s12 m6 offset-m3 animated bounceInDown">
                 @if(session('notification'))
                 <div class="alert alert-success" style="margin-top: 1.5rem">
                     <span>{{ session('notification') }}</span>

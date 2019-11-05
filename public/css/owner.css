@@ -3,7 +3,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  font-family: "Nunito";
+  font-family: "Ubuntu" !important;
 }
 
 main {
@@ -256,6 +256,10 @@ button.btn-app:hover {
   font-family: "BlackOps";
   src: url("../fonts/BlackOpsOne-Regular.ttf");
 }
+@font-face {
+  font-family: "Ubuntu";
+  src: url("../fonts/Ubuntu-Regular.ttf");
+}
 .font-lato {
   font-family: "Lato";
 }
@@ -270,6 +274,10 @@ button.btn-app:hover {
 
 .font-blackops {
   font-family: "BlackOps" !important;
+}
+
+.font-ubuntu {
+  font-family: "Ubuntu" !important;
 }
 
 .dropdown-content li > span {
