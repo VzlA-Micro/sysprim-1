@@ -16,7 +16,7 @@
                         <div class="input-field col s3 m3  tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
                             <i class="icon-public prefix"></i>
                             <select name="nationality" id="nationality" required>
-                                <option value="null">...</option>
+                                <option value="null" disabled selected>...</option>
                                 <option value="V">V</option>
                                 <option value="E">E</option>
                             </select>
@@ -38,8 +38,8 @@
                         </div>
                         <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet">
                             <i class="icon-phone_android prefix"></i>                            
-                            <select name="country_code" id="country_code" required>
-                                <option value="null">...</option>
+                            <select name="country_code" id="country_code_user" required>
+                                <option value="null" disabled selected>...</option>
                                 <option value="+58412">(412)</option>
                                 <option value="+58414">(414)</option>
                                 <option value="+58416">(416)</option>
@@ -49,8 +49,8 @@
                             <label for="country_code">Operadora</label>
                         </div>
                         <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
-                            <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <label for="phone_user" >Teléfono</label>
+                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
                             <i class="icon-mail_outline prefix"></i>
