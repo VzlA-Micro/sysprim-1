@@ -26,6 +26,17 @@
             footer {
                 padding-right: 0 !important;
             }
+
+            .fullBackground {
+              background-position:center center;
+              background-attachment:fixed;
+              background-size: cover;
+              position:absolute;
+              top:0;
+              left:0;
+              width:100% !important;
+              height:100%; 
+            }
         }
         .fullBackground {
               background-position:center center;
