@@ -25,18 +25,18 @@
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
-                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[\d]" maxlength="10" minlength="8" title="Solo puede escribir números." required>
+                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
-                            <input type="text" name="name" id="name" class="validate" pattern="[A-Za-z0-9 ]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
+                            <input type="text" name="name" id="name" class="validate" pattern="[A-Za-z0-9,. ]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-chrome_reader_mode prefix tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3"></i>                                                        
-                            <input type="text" name="license" id="license" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required>
+                            <input type="text" name="license" id="license" class="validate number-and-capital-letter-only" minlength="6" maxlength="10" pattern="[0-9A-Z-]+" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -81,8 +81,8 @@
                         </div>
                         <div class="input-field col s3 m3">
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
-                            <select name="country_code" id="country_code" required>
-                                <option value="null">...</option>
+                            <select name="country_code" id="country_code_company" required>
+                                <option value="null" selected disabled>...</option>
                                 <option value="+58412">(412)</option>
                                 <option value="+58414">(414)</option>
                                 <option value="+58416">(416)</option>
@@ -105,9 +105,7 @@
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
                             <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
-
-                            <label>CIU</label>
-
+                            <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
@@ -131,7 +129,7 @@
                                 <input class="file-path validate" type="text" placeholder="Elige una imagen de referencia de la empresa (LOGO, FACHADA)">
                             </div>
                         </div>
-                        <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
+                        <div class="input-field col s12 location-container tooltipped " id="div-map" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
                             <span>Elige la  ubicación de tu empresa:</span>
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
                         </div>

@@ -1,11 +1,15 @@
 $(document).ready(function () {
     $('#ci').blur(function () {
-        CheckCedula();
+        if($('#ci').val()!==''&&$('#document_type').val()===null){
+            CheckCedula();
+        }
     });
 
 
     $('#nationality').change(function () {
-        CheckCedula();
+        if($('#ci').val()!==''&&$('#document_type').val()===null){
+            CheckCedula();
+        }
     });
 
 
@@ -93,7 +97,7 @@ $(document).ready(function () {
     function findUser(nationality, ci) {
         $.ajax({
             method: "GET",
-            url: "https://sysprim.com/users/find/"+nationality+"/"+ci,
+            url: "http://sysprim.com.devel/users/find/"+nationality+"/"+ci,
             success: function (response) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');

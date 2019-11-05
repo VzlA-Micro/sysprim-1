@@ -55,7 +55,7 @@ $(document).ready(function () {
             fiscal_credits=fiscal_credits.replace(/\./g,'');
 
             var total_deductions=parseFloat(deductions)+parseFloat(withholdings)+parseFloat(fiscal_credits);
-            var total=Math.floor(parseFloat(base)*alicuota)/100;
+            var total=Math.floor(parseFloat(base)*alicuota);
             if(total!==0){
                 if(total_deductions>=total){
                     swal({
