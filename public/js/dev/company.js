@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="http://sysprim.com.devel/";
+    var url="https://sysprim.com/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== ''&&$('#document_type').val()!==null) {
@@ -171,6 +171,21 @@ $(document).ready(function () {
     });
 
 
+
+    $('#phone_company').keyup(function () {
+        if($('#country_code_company').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
+                icon: "info",
+                button: "Ok",
+            });
+
+            $('#phone_company').val('');
+        }
+    });
+
+
     $('#ciu_group').change(function () {
        var id=$(this).val();
             console.log(id);
@@ -338,46 +353,63 @@ $(document).ready(function () {
 
         $('#company-register-ticket').submit(function (e) {
             e.preventDefault();
-            $.ajax({
-                url: url+"ticketOffice/company/save" ,
-                cache:false,
-                contentType:false,
-                processData:false,
-                data:new FormData(this),
-                method: "POST",
+            if($('#sector').val()!==null&&$('#parish').val()!==null){
+                $.ajax({
+                    url: url+"ticketOffice/company/save" ,
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data:new FormData(this),
+                    method: "POST",
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Empresa Registrada con Éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            window.location.href=url+"ticketOffice/companies/all";
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+            }else{
+                if($('#sector').val()===null){
                     swal({
-                        title: "¡Bien Hecho!",
-                        text: "Empresa Registrada con Éxito.",
-                        icon: "success",
+                        title: "Información",
+                        text: "Seleciona un sector para completar el registro.",
+                        icon: "info",
                         button: "Ok",
-                    }).then(function (accept) {
-                        window.location.href=url+"ticketOffice/companies/all";
                     });
-
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-                },
-                error: function (err) {
-                    console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+                }else{
                     swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
+                        title: "Información",
+                        text: "Seleciona la parroquia para completar el registro.",
+                        icon: "info",
                         button: "Ok",
                     });
                 }
-            });
 
-
+            }
         });
 
 
@@ -473,8 +505,16 @@ $(document).ready(function () {
                 $('#code').focus();
                 $('#code').val('');
             }else{
-                var focalizar = $("div#div-map").position().top;
-                $('html,body').animate({scrollTop: focalizar}, 1000);
+
+                if($('#user-next').val()!==undefined){
+                    $('ul.tabs').tabs();
+                    $('ul.tabs').tabs("select", "map-tab");
+
+                }else{
+                    var focalizar = $("div#div-map").position().top;
+                    $('html,body').animate({scrollTop: focalizar}, 1000);
+                }
+
 
             }
         });

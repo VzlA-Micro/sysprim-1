@@ -68,7 +68,6 @@ class TicketOfficeController extends Controller{
         $lng=$request->input('lng');
 
 
-
         $validate = $this->validate($request, [
             'name_company' => 'required',
             'license' => 'required',

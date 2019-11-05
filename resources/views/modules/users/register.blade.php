@@ -45,19 +45,19 @@
                         </div>
                         <div class="input-field col s3 m3">
                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
-                            <select name="country_code" id="country_code" required>
-                                <option value="null">...</option>
+                            <select name="country_code" id="country_code_user" required>
+                                <option value="null" selected disabled>...</option>
                                 <option value="+58412">(412)</option>
                                 <option value="+58414">(414)</option>
                                 <option value="+58416">(416)</option>
                                 <option value="+58424">(424)</option>
                                 <option value="+58426">(426)</option>
                             </select>
-                            <label for="country_code">Operadora</label>
+                            <label for="country_code_user">Operadora</label>
                         </div>
                         <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
-                            <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <label for="phone_user">Teléfono</label>
+                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>

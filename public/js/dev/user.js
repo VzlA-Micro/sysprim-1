@@ -1,16 +1,52 @@
 $(document).ready(function () {
+    var url = "https://sysprim.com/";
+
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#document_type').val()===null){
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
+    });
+
+    $('#ci').keyup(function () {
+        if($('#nationality').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
+                icon: "info",
+                button: "Ok",
+            });
+
+            $('#ci').val('')
+        }
+
     });
 
 
     $('#nationality').change(function () {
-        if($('#ci').val()!==''&&$('#document_type').val()===null){
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
     });
+
+
+    $('#phone_user').keyup(function () {
+        console.log('eje');
+        console.log($('#country_code_user').val());
+        if($('#country_code_user').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
+                icon: "info",
+                button: "Ok",
+            });
+
+            $('#phone_user').val('');
+        }
+    });
+
+
+
+
 
 
     function CheckCedula() {
@@ -19,7 +55,7 @@ $(document).ready(function () {
             var nationality = $('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: "https://sysprim.com/users/verify-ci/"+nationality+ci,
+                url: url+"users/verify-ci/"+nationality+ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -60,7 +96,7 @@ $(document).ready(function () {
             var email = $('#email').val();
             $.ajax({
                 method: "GET",
-                url: "https://sysprim.com/users/verify-email/"+email,
+                url: url+"users/verify-email/"+email,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -97,7 +133,7 @@ $(document).ready(function () {
     function findUser(nationality, ci) {
         $.ajax({
             method: "GET",
-            url: "http://sysprim.com.devel/users/find/"+nationality+"/"+ci,
+            url: url+"users/find/"+nationality+"/"+ci,
             success: function (response) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -127,7 +163,7 @@ $(document).ready(function () {
         });
     }
 
-    var url = "https://sysprim.com/";
+
     $('#gestionUser').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
