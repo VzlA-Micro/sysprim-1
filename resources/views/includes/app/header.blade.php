@@ -76,13 +76,21 @@
                     <li><a href="{{ route('register') }}">{{ __('Registrarse') }}</a></li>
                 @endif
                 @else
+
                     @php 
                         $name = strtolower(Auth::user()->name);
                         $surname = strtolower(Auth::user()->surname);
                     @endphp 
                     <li>
-                        <div class="user-view grey-text darken-2">
-                            <span>Bienvenido,<br> {{ ucwords($name) }} {{ ucwords($surname) }}</span>
+                        <div class="user-view">
+                          <div class="background">
+                            <img src="{{ asset('images/bg-user.jpg') }}">
+                          </div>
+                          <a href="!#"><span class="black-text name">Bienvenido, </span></a>
+                          <a href="#email"><span class="black-text email"style="font-weight: 800">
+                            {{ ucwords($name) . " " . ucwords($surname) }}
+                            </span>
+                          </a>
                         </div>
                     </li>
                     <li class="waves-efect waves-light">

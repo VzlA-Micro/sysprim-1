@@ -29,7 +29,9 @@
                             <label for="opening_date">Fecha de Fin</label>
                         </div>
                         <div class="input-field col s12">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input type="number" name="valueUndTributo" id="valueUndTributo" required>
                             <label for="valueUndTributo">Valor de unidad tributaria</label>
                         </div>

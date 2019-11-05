@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/receipt.css') }}">        
+    <link rel="stylesheet" href="{{ asset('css/receipt.css') }}">
 @endsection
 
 @section('content')
@@ -17,81 +17,123 @@
                         <div class="input-field col s10">
                             <i class="icon-search prefix"></i>
                             <input id="search" type="search" value="{{$taxe->companies->license}}">
-                            <label for="search">Licencia o RIF</label>
+                            <label for="search">CODIGO QR</label>
                         </div>
                         <div class="input-field col s2 center-align">
                             <button class="btn btn-floating peach">
                                 <i class="icon-search"></i>
                             </button>
                         </div>
-                        
-                            <div class="col 12 padding-1 left-align">
-                            <ul>
-                                <li><b>Fecha: </b>{{ $taxe->created_at }}</li>
-                                <li><b>Licencia: </b>{{ $taxe->companies->license }}</li>
-                                <li><b>Nombre: </b>{{ $taxe->companies->name }}</li>
-                                <li><b>RIF: </b>{{ $taxe->companies->RIF }}</li>
-                            </ul>
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">Periodo Fiscal</label>
                         </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">Fecha</label>
+                        </div>
+
+
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">Licencia o codigo</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">NOMBRE</label>
+                        </div>
+
+
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">Direccion</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-event_available prefix"></i>
+                            <input type="text" name="fiscal_period" id="fiscal_period" value="" disabled>
+                            <label for="fiscal_period">Pers.Responsable</label>
+                        </div>
+
+                        <div class="divider"></div>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" id="company_id" name="company_id" value="">
                         <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
                         <input type="hidden" name="ciu_id[]" value="">
-                        <div class="input-field col s12">
-                            <i class="icon-event_available prefix"></i>
-                            <input type="text" name="fiscal_period" id="fiscal_period" value="{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}" disabled>
-                            <label for="fiscal_period">Periodo Fiscal</label>
-                        </div>
+
                         <table class="centered striped">
                             <thead>
-                                <tr>
-                                    <th>Código CIIU</th>
-                                    <th>Nombre CIIU</th>
-                                    <th>Base Imponible</th>
-                                    <th>Retenciones</th>
-                                    <th>Deducciones</th>
-                                    <th>Créditos Fiscales</th>
-                                    <th>Total</th>
-                                </tr>
+                            <tr>
+                                <th>Código CIIU</th>
+                                <th>Nombre CIIU</th>
+                                <th>Base Imponible</th>
+                                <th>Retenciones</th>
+                                <th>Deducciones</th>
+                                <th>Créditos Fiscales</th>
+                                <th>Total</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($ciuTaxes as $ciu)
+                            @foreach($ciuTaxes as $ciu)
                                 <tr>
                                     <td>{{$ciu->ciu->code}}</td>
                                     <td>{{$ciu->ciu->name}}</td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                             -->
+                                        <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
                                             <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                             -->
-                                            <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
+                                         <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
+                                            <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                                 -->
-                                            <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->withholding,2)}}" required readonly>
+                                         <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
+                                            <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->deductions,2)}}" required readonly>
                                             <!-- <label for="">Retenciones</label> -->
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-field col s12">
-                                            <!-- <i class="icon-attach_money prefix"></i>                                 -->
+                                         <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
                                             <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
                                             <!-- <label for="">Creditos Fiscales</label> -->
                                         </div>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <div class="input-field col s12">
+                                            <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
+                                            <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
+                                            <!-- <label for="">Creditos Fiscales</label> -->
+                                        </div>
+                                    </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -101,11 +143,11 @@
                                 <h4><span class="green-text">Total: </span>000000.00 BSS</h4>
                             </div>
                             <div class="col s12 right-align">
-                            @if($taxe->status!='verified')
-                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded blue waves-effect waves-light modal-trigger">PAGAR</a>
-                            @else
-                                <a href=""  class="btn btn-rounded col s12 blue waves-effect waves-light">GENERAR PLANILLA</a>
-                            @endif
+                                @if($taxe->status!='verified')
+                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded blue waves-effect waves-light modal-trigger">PAGAR</a>
+                                @else
+                                    <a href=""  class="btn btn-rounded col s12 blue waves-effect waves-light">GENERAR PLANILLA</a>
+                                @endif
                             </div>
                             {{-- Modal structure --}}
                             <div id="modal1" class="modal modal-fixed-footer">

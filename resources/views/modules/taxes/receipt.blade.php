@@ -87,7 +87,7 @@
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->phone}}</td>
+    		<td style="width:35%;font-size: 11px !important;">{{"0".substr($taxes->companies->phone,3,10)}}</td>
 
     	</tr>
     	<tr>
@@ -269,7 +269,7 @@
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->digit}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->companies->license}}</td>
-			<td style="font-size: 12px !important;text-align: center;">{{$taxes->amount}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
 		</tr>
 	</table>
 
@@ -356,15 +356,18 @@
 			</tr>
 			<tr>
 				@if($firm)
-				<td style="width:40%;text-align: center; font-size: 10px;">
-					FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
-					DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
-					DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
-				@else
 					<td style="width:40%;text-align: center; font-size: 10px;">
 						FIRMA DEL GERENTE DE RECAUDACIÓN DEL SEMAT.<br> JURO QUE LOS DATOS EN ESTA
 						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.
+					</td>
+				@else
+
+					<td style="width:40%;text-align: center; font-size: 10px;">
+						FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
+						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
 						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
+
 				@endif
 			</tr>
 		</table>

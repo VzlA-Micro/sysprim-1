@@ -43,7 +43,7 @@ class CompanyTaxesController extends Controller
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)
             ->where('status','verified')->orWhere('status','process')
-            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
         return view('modules.payments.history',['taxes'=>$taxes]);
 
@@ -332,7 +332,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->stream();
+        return $pdf->download();
     }
 
     public function paymentsHelp(Request $request){

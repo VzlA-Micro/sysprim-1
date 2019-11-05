@@ -22,7 +22,10 @@
     @guest
         @include('includes.auth.header')
     @endguest
-    <main @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login') {{-- id="foo" --}} @endif>
+    <main @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login') class="fullBackground" @endif>
+        @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')
+            
+        @endif
         @yield('content')
     </main>
 
