@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('css/fullclip.css') }}">
     <style type="text/css">
         body {
             
@@ -26,6 +27,17 @@
                 padding-right: 0 !important;
             }
         }
+        .fullBackground {
+              background-position:center center;
+              background-attachment:scroll;
+              background-size: cover;
+              position:relative;
+              top:0;
+              left:0;
+              width:80%;
+              height:100%; 
+            }
+
     </style>
 @endsection
 
@@ -95,14 +107,13 @@
 
 @section('scripts')
     <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/jquery.backstretch.min.js') }}"></script>
+    <script src="{{ asset('js/fullclip.js') }}"></script>
     <script>
-        $.backstretch([
-            "images/bg-1.jpg",
-            "images/bg-4.jpeg",
-            "images/bg-2.jpg",
-            "images/bg-3.jpeg"
-        ], {duration: 3000, fade: 750});
+        $('.fullBackground').fullClip({
+            images: ['images/bg-1.jpg','images/bg-2.jpg','images/bg-3.jpg'],
+            transitionTime: 3000,
+            wait: 3000
+        });
 
         $('.sidenav#side-login').sidenav({
             edge:'right',

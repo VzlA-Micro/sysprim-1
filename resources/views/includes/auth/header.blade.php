@@ -1,5 +1,5 @@
-<header>
-    <nav class="container-fluid iribarren-wine-gradient">
+<header class=" z-depth-1">
+    <nav class="container-fluid iribarren-wine-gradient z-depth-1">
         <div class="nav-wrapper container">
             <a href="{{ url('/') }}" class="brand-logo left font-audiowide">
                 <!-- <img src="{{ asset('images/iribarren_logo.png') }}" alt=""> -->
