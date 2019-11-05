@@ -1,47 +1,30 @@
 $(document).ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
+
     $('#RIF').blur(function () {
-        if ($('#RIF').val() !== '') {
-            var rif = $('#document_type').val()+$('#RIF').val();
-            console.log(rif);
+        if ($('#RIF').val() !== ''&&$('#document_type').val()!==null) {
+            verifyRIF();
+        }
+    });
 
-            $.ajax({
-                method: "GET",
-                url: url+"company/verify-rif/" + rif,
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
-                    if (response.status === 'error') {
-                        swal({
-                            title: "¡Oh no!",
-                            text: response.message,
-                            icon: "error",
-                            button: "Ok",
-                        });
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                        $('#RIF').val("");
-                        $('#RIF').addClass('validate');
-                    }else{
-                        findCompany(rif);
-                    }
 
-                },
-                error: function (err) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                    $('#RIF').val(' ');
 
-                }
+    $('#RIF').keyup(function () {
+        if($('#document_type').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar el tipo de documento, antes de ingresar el número de RIF.",
+                icon: "info",
+                button: "Ok",
             });
+            $('#RIF').val('');
+        }
+    });
+
+
+    $('#document_type').change(function () {
+        if ($('#RIF').val() !== ''&&$('#document_type').val()!==null) {
+            verifyRIF();
         }
     });
 
@@ -88,67 +71,103 @@ $(document).ready(function () {
         }
     });
 
+
+
     $('#company-register').on('submit',function (e) {
         e.preventDefault();
-        console.log($('#lat').val());
         if($('#lat').val()!==""){
-            if($('#ciu').val()!==undefined){
-                $.ajax({
-                    url: url+"companies/save" ,
-                    cache:false,
-                    contentType:false,
-                    processData:false,
-                    data:new FormData(this),
-                    method: "POST",
+            if($('#sector').val()!==null&&$('#parish').val()!==null){
+                if($('#ciu').val()!==undefined){
+                    $.ajax({
+                        url: url+"companies/save" ,
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        data:new FormData(this),
+                        method: "POST",
 
-                    beforeSend: function () {
-                        $("#preloader").fadeIn('fast');
-                        $("#preloader-overlay").fadeIn('fast');
-                    },
-                    success: function (response) {
-                       swal({
-                            title: "¡Bien Hecho!",
-                            text: "Empresa Registrada con Éxito.",
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function (accept) {
-                            window.location.href=url+"companies/my-business";
-                        });
+                        beforeSend: function () {
+                            $("#preloader").fadeIn('fast');
+                            $("#preloader-overlay").fadeIn('fast');
+                        },
+                        success: function (response) {
+                            swal({
+                                title: "¡Bien Hecho!",
+                                text: "Empresa Registrada con Éxito.",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function (accept) {
+                                window.location.href=url+"companies/my-business";
+                            });
 
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
 
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                            icon: "error",
-                            button: "Ok",
-                        });
-                    }
-                });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                            swal({
+                                title: "¡Oh no!",
+                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                icon: "error",
+                                button: "Ok",
+                            });
+                        }
+                    });
+                }else{
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Debe tener al menos un ciiu para poder registrar una empresa..",
+                        icon: "warning",
+                        button: "Ok",
+                    });
+                }
+
             }else{
-                swal({
-                    title: "¡Oh no!",
-                    text: "Debe tener al menos un ciiu para poder registrar una empresa..",
-                    icon: "warning",
-                    button: "Ok",
-                });
-            }
 
+                if($('#sector').val()===null){
+                    swal({
+                        title: "Información",
+                        text: "Seleciona un sector para completar el registro.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }else{
+                    swal({
+                        title: "Información",
+                        text: "Seleciona la parroquia para completar el registro.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+
+            }
         }else{
             swal({
-                title: "¡Oh no!",
+                title: "Información",
                 text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
-                icon: "warning",
+                icon: "info",
                 button: "Ok",
             });
         }
 
+    });
+
+
+
+    $('#phone').keyup(function () {
+        if($('#country_code_company').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
+                icon: "info",
+                button: "Ok",
+            });
+
+            $('#phone').val('');
+        }
     });
 
 
@@ -215,7 +234,7 @@ $(document).ready(function () {
 
     $('#search-ciu').click(function () {
         var code=$('#code').val();
-
+        var band=true;
 
         $.ajax({
             type: "GET",
@@ -261,14 +280,21 @@ $(document).ready(function () {
                                     button: "Ok",
                                 });
                                 $('#code').val("");
-
-                            }else{
-                                $('#group-ciu').append(template);
+                                band=false;
                             }
+
                         });
+
+
+                        if(band){
+                            $('#group-ciu').append(template);
+                            confirmCiu();
+                        }
+
 
                     }else{
                         $('#group-ciu').append(template);
+                        confirmCiu();
                     }
 
                     $('.delete-ciu').click(function () {
@@ -380,6 +406,81 @@ $(document).ready(function () {
 
 
 
+
+    function verifyRIF(){
+        var rif = $('#document_type').val()+$('#RIF').val();
+        $.ajax({
+            method: "GET",
+            url: url+"company/verify-rif/" + rif,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+                if (response.status === 'error') {
+                    swal({
+                        title: "Información",
+                        text: response.message,
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    $('#RIF').val("");
+                    $('#RIF').addClass('validate');
+                }else{
+                    findCompany(rif);
+                }
+
+            },
+            error: function (err) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+                $('#RIF').val(' ');
+            }
+        });
+    }
+
+
+    function confirmCiu() {
+        swal({
+            title: "¡Bien Hecho!",
+            text: "CIIU  ingresado con éxito, ¿Desea añadir otro CIIU? ",
+            icon: "info",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "red"
+
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (aceptar) {
+            if(aceptar){
+                $('#code').focus();
+                $('#code').val('');
+            }else{
+                var focalizar = $("div#div-map").position().top;
+                $('html,body').animate({scrollTop: focalizar}, 1000);
+
+            }
+        });
+
+    }
+
     function findCompany(rif){
 
         $.ajax({
@@ -431,13 +532,6 @@ $(document).ready(function () {
             }
         });
     }
-
-
-
-
-
-
-
 
 });
 
