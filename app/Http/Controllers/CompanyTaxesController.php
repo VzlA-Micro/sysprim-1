@@ -332,7 +332,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->stream();
+        return $pdf->download();
     }
 
     public function paymentsHelp(Request $request){
