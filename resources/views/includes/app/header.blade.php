@@ -86,8 +86,8 @@
                           <div class="background">
                             <img src="{{ asset('images/bg-user.jpg') }}">
                           </div>
-                          <a href="!#"><span class="grey-text text-lighten-1 name">Bienvenido, </span></a>
-                          <a href="#email"><span class="grey-text text-lighten-1 email">
+                          <a href="!#"><span class="black-text name">Bienvenido, </span></a>
+                          <a href="#email"><span class="black-text email"style="font-weight: 800">
                             {{ ucwords($name) . " " . ucwords($surname) }}
                             </span>
                           </a>
