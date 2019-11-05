@@ -46,6 +46,12 @@
                     <span class="truncate">Pagar mis Multas</span>
                 </a>
             </div> --}}
+            <div class="col s12 m4">
+                <a href="{{route('payments.history',['company'=>session('company')])}}" class="btn-app white orange-text">
+                    <i class="icon-format_list_bulleted"></i>
+                    <span class="truncate">Historial de Pagos</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection
