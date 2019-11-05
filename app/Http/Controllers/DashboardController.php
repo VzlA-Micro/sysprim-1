@@ -609,22 +609,22 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $company=Taxe::orderByDesc('id')->take(8)->get();
+        $company = Taxe::orderByDesc('id')->take(8)->get();
         //$companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();
-        $ptb=Taxe::where('code','like','%ptb%')
-            ->where('status','verified')->get();
-        $countPtb=count($ptb);
+        $ptb = Taxe::where('code', 'like', '%ptb%')
+            ->where('status', 'verified')->get();
+        $countPtb = count($ptb);
 
 
-        $ppb=Taxe::where('code','like','%ppb%')
-                    ->where('status','verified')->get();
-        $countPpb=count($ppb);
+        $ppb = Taxe::where('code', 'like', '%ppb%')
+            ->where('status', 'verified')->get();
+        $countPpb = count($ppb);
 
 
-        return view('modules.admin.dashboard',array(
-            'company'=>$company,
-            'ptb'=>$countPtb,
-            'ppb'=>$countPpb)
+        return view('modules.admin.dashboard', array(
+                'company' => $company,
+                'ptb' => $countPtb,
+                'ppb' => $countPpb)
         );
     }
 }

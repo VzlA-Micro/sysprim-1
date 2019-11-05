@@ -352,6 +352,11 @@ Route::post('/inmueble/save',array(
     'uses'=>'InmuebleController@store'
 ));
 
+Route::post('/inmueble/verification',array(
+    'as'=>'verificationCode',
+    'uses'=>'InmuebleController@verification'
+));
+
 Route::get('/inmueble/show/{id}',array(
     'as'=>'show.inmueble',
     'uses'=>'InmuebleController@show'
