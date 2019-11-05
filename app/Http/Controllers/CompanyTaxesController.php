@@ -355,7 +355,7 @@ class CompanyTaxesController extends Controller
 
         $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
-            $bank=57;
+            $bank="57";
         }
 
         $amount_format = str_replace('.', '', $amount);
