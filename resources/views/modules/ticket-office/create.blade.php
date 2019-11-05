@@ -101,7 +101,7 @@
                                          <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
+                                            <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
@@ -110,7 +110,7 @@
                                          <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->withholding,2)}}" required readonly>
+                                            <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->deductions,2)}}" required readonly>
                                             <!-- <label for="">Retenciones</label> -->
                                         </div>
                                     </td>
