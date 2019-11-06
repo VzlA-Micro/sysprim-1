@@ -332,6 +332,8 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
+
+
         return $pdf->stream();
     }
 
@@ -345,8 +347,6 @@ class CompanyTaxesController extends Controller
 
 
 
-
-
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
 
@@ -357,7 +357,6 @@ class CompanyTaxesController extends Controller
         if($payments_type==='PPV'){
             $bank="66";
         }
-
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
@@ -372,16 +371,16 @@ class CompanyTaxesController extends Controller
         $code = substr($code, 3, 12);
 
 
-
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
         $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
-
 
         $taxes->update();
 
         $taxes=Taxe::findOrFail($id);
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+
+
 
 
 

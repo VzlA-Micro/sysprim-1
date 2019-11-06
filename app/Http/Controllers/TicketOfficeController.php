@@ -11,7 +11,7 @@ use App\Parish;
 use App\Company;
 use App\User;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class TicketOfficeController extends Controller{
@@ -19,11 +19,23 @@ class TicketOfficeController extends Controller{
 
 
     public function QrTaxes($id){
-        $taxe=Taxe::findOrFail($id);
+        $id=Crypt::decrypt($id);
+        $taxe=Taxe::with('companies')->where('id',$id)->get();
         $calculateTaxes=Calculate::calculateTaxes($id);
-        $ciuTaxes=CiuTaxes::where('taxe_id',$id)->get();
-        return view('modules.ticket-office.create',['taxe'=>$taxe,'calculate'=>$calculateTaxes,'ciuTaxes'=>$ciuTaxes]);
+        $ciuTaxes=CiuTaxes::with('ciu')->where('taxe_id',$id)->get();
+        return response()->json(['taxe'=>$taxe,'calculate'=>$calculateTaxes,'ciu'=>$ciuTaxes]);
     }
+
+    public function cashier(){
+        return view('modules.ticket-office.create');
+    }
+
+
+
+
+
+
+
 
 
     public function registerTaxes(Request $request){

@@ -27,7 +27,7 @@
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Puede escribir: J, G ó V y números. Ej: J1234567890">
                             <i class="icon-perm_contact_calendar prefix"></i>                            
-                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9JGV]+" title="Puede escribir: J = Juridico, G = Gubernamental, V = Venezolano y números." value="{{ $company->RIF }}" required disabled>
+                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9JGVE]+" title="Puede escribir:<br>J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero.<br> Y números." value="{{ $company->RIF }}" required disabled>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">

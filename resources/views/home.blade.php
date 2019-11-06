@@ -34,12 +34,12 @@
                         <span class="truncate">Gestionar Usuarios</span>
                     </a>
                 </div>
-                <div class="col s12 m3">
+                <!-- <div class="col s12 m3">
                     <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
                         <i class="icon-work"></i>
                         <span class="truncate">Gestionar Empresas</span>
                     </a>
-                </div>
+                </div> -->
                 <div class="col s12 m3">
                     <a href="{{ route('payments.manage') }}" class="btn-app white orange-text text-darken-2">
                         <i class="icon-payment"></i>

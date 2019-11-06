@@ -55,7 +55,7 @@
             responsive: true,
             scroller: true,
             "scrollX": true,
-            "pageLength": 2,
+            "pageLength": 10,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

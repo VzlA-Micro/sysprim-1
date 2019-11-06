@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -304,7 +304,6 @@ $(document).ready(function () {
             });
 
         } else {
-            console.log("epa");
             acum = "<option disabled selected>Selecione una Rama</option>";
             $("#ciu").html(acum);
             $('select').formSelect();
@@ -325,8 +324,6 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-
-
                 if (response.status !== 'error') {
                     var subr = response.ciu.name.substr(0, 3);
                     var template = `<div>

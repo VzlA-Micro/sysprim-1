@@ -4,12 +4,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mis Empresas</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Historial de Pagos</a>
-                <a href="" class="breadcrumb">Conciliar Pago</a>
+                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
+                <a href="#!" class="breadcrumb">{{ session('company') }}</a>
+                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="breadcrumb">Mis Pagos</a>
+                <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="">Historial de Pagos</a>
+                <a href="#!" class="breadcrumb">Conciliar Pago</a>
             </div>
             <div class="col s12 m8 offset-m2">
                 <form action="{{route('savePaymentsTaxes')}}" method="post" class="card">

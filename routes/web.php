@@ -392,8 +392,10 @@ Route::get('/ticket-office/view', function() {
     return view('modules.ticket-office.create');
 })->name('ticket-office.payments');
 
-Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
+Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
+Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
+
 Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
 
 //Estadisticas
