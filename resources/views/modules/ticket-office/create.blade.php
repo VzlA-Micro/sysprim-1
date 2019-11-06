@@ -71,67 +71,75 @@
                         <input type="hidden" name="ciu_id[]" value="">
 
                         <table class="centered striped">
-                            <thead>
-                            <tr>
-                                <th>Código CIIU</th>
-                                <th>Nombre CIIU</th>
-                                <th>Base Imponible</th>
-                                <th>Retenciones</th>
-                                <th>Deducciones</th>
-                                <th>Créditos Fiscales</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
                             <tbody>
                             @foreach($ciuTaxes as $ciu)
                                 <tr>
+                                    <td>Código CIIU</td>
                                     <td>{{$ciu->ciu->code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nombre CIIU</td>
                                     <td>{{$ciu->ciu->name}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Base Imponible</td>
                                     <td>
                                         <div class="input-field col s12">
-                                        <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                            </i>
-                                            <input type="text" value="{{number_format($ciu->base,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
-                                            <!-- <label for="">Base Imponible</label> -->
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12">
-                                         <i class="prefix">
+                                            <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
                                             <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
                                             <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="input-field col s12">
-                                         <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                            </i>
-                                            <input type="text" name="withholding[]" id="" class="validate money_keyup" value="{{number_format($ciu->deductions,2)}}" required readonly>
-                                            <!-- <label for="">Retenciones</label> -->
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12">
-                                         <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                            </i>
-                                            <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
-                                            <!-- <label for="">Creditos Fiscales</label> -->
-                                        </div>
-                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td>Base Imponible</td>
                                     <td>
                                         <div class="input-field col s12">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="fiscal_credits[]" id="" class="validate money_keyup" value="{{number_format($ciu->credits_fiscal,2)}}" required readonly>
-                                            <!-- <label for="">Creditos Fiscales</label> -->
+                                            <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
+                                            <!-- <label for="">Base Imponible</label> -->
                                         </div>
                                     </td>
+                                </tr>
+
+
+
+                                <tr>
+                                    <td>Base Imponible</td>
+                                    <td>
+                                        <div class="input-field col s12">
+                                            <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
+                                            <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
+                                            <!-- <label for="">Base Imponible</label> -->
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>Base Imponible</td>
+                                    <td>
+                                        <div class="input-field col s12">
+                                            <i class="prefix">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                            </i>
+                                            <input type="text" value="{{number_format($ciu->withholding,2)}}" name="base[]" id="" class="validate money_keyup base" maxlength="18" required readonly>
+                                            <!-- <label for="">Base Imponible</label> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><div class="divider"></div> </td>
                                 </tr>
                             @endforeach
                             </tbody>

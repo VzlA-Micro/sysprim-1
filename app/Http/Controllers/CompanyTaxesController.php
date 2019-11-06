@@ -332,7 +332,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->download();
+        return $pdf->stream();
     }
 
     public function paymentsHelp(Request $request){
@@ -355,7 +355,7 @@ class CompanyTaxesController extends Controller
 
         $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
-            $bank="57";
+            $bank="66";
         }
 
         $amount_format = str_replace('.', '', $amount);
@@ -382,8 +382,6 @@ class CompanyTaxesController extends Controller
 
         $taxes=Taxe::findOrFail($id);
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
-
-
 
 
 

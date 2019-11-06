@@ -10,6 +10,7 @@
                 <a href="" class="breadcrumb">Nombre de la empresa</a>
                 <a href="" class="breadcrumb">Mis Pagos</a>
             </div>
+
             <div class="col s12 m4">
                 <a href="{{route('payments.create',['company'=>session('company')])}}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
