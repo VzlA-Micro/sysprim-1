@@ -7,8 +7,8 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
                 {{-- <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ $company->name }}</a> --}}
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
+                <a href="" class="breadcrumb">{{ session('company') }}</a>
+                <a href="!#" class="breadcrumb">Mis Pagos</a>
             </div>
             <div class="col s12 m4">
                 <a href="{{route('payments.create',['company'=>session('company')])}}" class="btn-app white green-text">
@@ -47,7 +47,7 @@
                 </a>
             </div> --}}
             <div class="col s12 m4">
-                <a href="{{route('payments.history',['company'=>session('company')])}}" class="btn-app white orange-text">
+                <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>
                 </a>
