@@ -334,7 +334,7 @@ class CompanyTaxesController extends Controller
             ]);
 
 
-        return $pdf->stream();
+        return $pdf->download('recibo.pdf');
     }
 
     public function paymentsHelp(Request $request){
@@ -381,12 +381,6 @@ class CompanyTaxesController extends Controller
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
 
 
-
-
-
-
-
-
         $company_find=Company::find($taxes->company_id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
@@ -406,7 +400,7 @@ class CompanyTaxesController extends Controller
         $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
 
         //si tiene descuento
-        if($company_find->desc){
+        /*if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee){
                 if ($company_find->number_employees >= $employee->min) {
@@ -418,7 +412,7 @@ class CompanyTaxesController extends Controller
             }
 
             $amountTaxes=$amountTaxes-$amountDesc;//descuento
-        }
+        }*/
 
         $amount=['amountInterest'=>$amountInterest,
             'amountRecargo'=>$amountRecargo,
