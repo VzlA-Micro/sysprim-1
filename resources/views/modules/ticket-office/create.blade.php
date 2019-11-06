@@ -86,6 +86,7 @@
                             <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
                             <input type="hidden" name="ciu_id[]" value="">
                             @foreach($ciuTaxes as $ciu)
+<<<<<<< HEAD
                             <div class="input-field col s12 m2">
                                 <i class="icon-assignment prefix"></i>
                                 <input type="text" name="code" id="code" value="{{$ciu->ciu->code}}" readonly>

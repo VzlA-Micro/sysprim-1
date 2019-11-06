@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
 use Illuminate\Support\Facades\Mail;
-class CompanyTaxesController extends Controller
+class PropertyTaxesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -43,7 +43,7 @@ class CompanyTaxesController extends Controller
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)
             ->where('status','verified')->orWhere('status','process')
-            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
 
         return view('modules.payments.history',['taxes'=>$taxes]);
 
@@ -93,7 +93,7 @@ class CompanyTaxesController extends Controller
 
 
         $company=$request->input('company_id');
-    
+
         $company_find=Company::find($company);
 
         $ciu_id=$request->input('ciu_id');
@@ -157,11 +157,11 @@ class CompanyTaxesController extends Controller
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
-                'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
-                'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total, 'mora'=>$mora,
-                'tax_rate'=>$tax_rate,
-                'interest'=>$interest
-            ]);
+                    'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
+                    'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total, 'mora'=>$mora,
+                    'tax_rate'=>$tax_rate,
+                    'interest'=>$interest
+                ]);
         }
         $data = array([
             'status' => 'success',
@@ -194,17 +194,17 @@ class CompanyTaxesController extends Controller
 
 
         foreach ($ciuTaxes as $ciu){
-                $amountInterest+=$ciu->interest;
-                $amountRecargo+=$ciu->tax_rate;
+            $amountInterest+=$ciu->interest;
+            $amountRecargo+=$ciu->tax_rate;
 
 
-                if($company_find->TypeCompany==='R'){
-                    $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
-                }else{
+            if($company_find->TypeCompany==='R'){
+                $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+            }else{
 
-                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
+                $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
 
-                }
+            }
         }
 
 
@@ -220,7 +220,7 @@ class CompanyTaxesController extends Controller
             'amountCiiu'=>$amountCiiu,
             'amountTotal'=>$amountTaxes,
             'amountDesc'=>$amountDesc
-            ];
+        ];
 
 
         return view('modules.taxes.details',
@@ -331,8 +331,8 @@ class CompanyTaxesController extends Controller
             'ciuTaxes'=>$ciuTaxes,
             'amount'=>$amount,
             'firm'=>false
-            ]);
-        return $pdf->download();
+        ]);
+        return $pdf->stream();
     }
 
     public function paymentsHelp(Request $request){
@@ -355,7 +355,7 @@ class CompanyTaxesController extends Controller
 
         $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
-            $bank="57";
+            $bank=57;
         }
 
         $amount_format = str_replace('.', '', $amount);
@@ -461,20 +461,20 @@ class CompanyTaxesController extends Controller
 
     }
 
-        /*foreach($taxes->taxesCiu as $ciu){
-            if($ciu->pivot->base == 0){
-                $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
-            }
-            else{
-                $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
+    /*foreach($taxes->taxesCiu as $ciu){
+        if($ciu->pivot->base == 0){
+            $monto+=($ciu->min_tribu_men * $ciu->pivot->unid_tribu)+$ciu->pivot->mora;
+        }
+        else{
+            $monto+=($ciu->alicuota * $ciu->pivot->base/100)+$ciu->pivot->mora;
 
-            }
-          return view('modules.payments.help',array(
-            'taxes'=>$taxes,
-            'id'=>$id,
-            'monto'=>$monto
-        ));
-        }*/
+        }
+      return view('modules.payments.help',array(
+        'taxes'=>$taxes,
+        'id'=>$id,
+        'monto'=>$monto
+    ));
+    }*/
 
 
 
