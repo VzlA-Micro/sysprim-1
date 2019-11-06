@@ -42,7 +42,7 @@ class CompanyTaxesController extends Controller
 
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)
-            ->where('status','verified')->orWhere('status','process')
+            ->where('status','verified')->orWhere('status','process')->where('company_id',$company[0]->id)
             ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
         return view('modules.payments.history',['taxes'=>$taxes]);
