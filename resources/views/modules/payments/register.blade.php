@@ -7,7 +7,7 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
                 <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ session('company') }}</a>
-                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="breadcrumb">Mis Pagos</a>
+                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="breadcrumb">Mis Declaraciones</a>
                 <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="breadcrumb">Historial de Pagos</a>
                 <a href="#!" class="breadcrumb">Conciliar Pago</a>
             </div>

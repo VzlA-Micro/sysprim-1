@@ -15,7 +15,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-                        <table class="centered highlight responsive-table" id="payments" style="width: 100%">
+                        <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Contribuyente</th>
@@ -53,7 +53,6 @@
     <script>
         $('#payments').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
             "pageLength": 10,
             language: {
