@@ -90,12 +90,15 @@
 
 
 
+
                             <div id="ciu">
 
 
 
                             </div>
                            <!-- <div class="input-field col s12 m2">
+                            <div class="input-field col s12 m2">
+>>>>>>> c1b60444e71dbbb41aa783ea5cf936918a96619f
                                 <i class="icon-assignment prefix"></i>
                                 <input type="text" name="code" id="code" value="" readonly>
                                 <label for="code"></label>
@@ -108,28 +111,28 @@
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>   
+                                </i>
                                 <input type="text" name="base[]" id="base" class="validate money" value="" readonly>
                                 <label for="base">Base Imponible</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>   
+                                </i>
                                 <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
                                 <label for="deductions">Deducciones</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>   
+                                </i>
                                 <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
                                 <label for="withholdings">Retenciones</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>   
+                                </i>
                                 <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
                                 <label for="fiscal_credits">Creditos Fiscales</label>
                             </div>
@@ -200,7 +203,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')

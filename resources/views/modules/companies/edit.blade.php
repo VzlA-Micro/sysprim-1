@@ -20,15 +20,25 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" name="id" name="id" value="{{ $company->id }}">
+                        <div class="input-field col s4 m3">
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
+                            <select name="document_type" id="document_type">
+                                <option value="null" selected disabled>...</option>
+                                <option value="J">J</option>
+                                <option value="V">V</option>
+                                <option value="G">G</option>
+                                <option value="G">E</option>
+                            </select>
+                            <label for="document_type">Documento</label>
+                        </div>
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required>
+                            <label for="RIF">RIF</label>
+                        </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Razón social o nombre de la empresa.">
                             <i class="icon-work prefix"></i>                                                        
                             <input type="text" name="name" id="name" class="validate"  pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" value="{{ $company->name }}" required disabled>
                             <label for="name">Razón Social</label>
-                        </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Puede escribir: J, G ó V y números. Ej: J1234567890">
-                            <i class="icon-perm_contact_calendar prefix"></i>                            
-                            <input type="text" name="RIF" id="RIF" class="validate" pattern="[0-9JGVE]+" title="Puede escribir:<br>J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero.<br> Y números." value="{{ $company->RIF }}" required disabled>
-                            <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                             <i class="icon-chrome_reader_mode prefix"></i>                                                                                    
@@ -67,10 +77,22 @@
                             <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->code_catastral }}" required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Ej: 02511234567">
-                            <i class="icon-phone prefix"></i>                            
-                            <label for="phone">Teléfono de la Empresa</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 025161234567" value="{{ $company->phone }}" required>
+                        <div class="input-field col s4 m3">
+                            <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
+                            <select name="country_code" id="country_code_company" required>
+                                <option value="null" selected disabled>...</option>
+                                <option value="+58412">(412)</option>
+                                <option value="+58414">(414)</option>
+                                <option value="+58416">(416)</option>
+                                <option value="+58424">(424)</option>
+                                <option value="+58426">(426)</option>
+                                <option value="+58426">(251)</option>
+                            </select>
+                            <label for="country_code">Operadora</label>
+                        </div>
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                            <label for="phone">Teléfono</label>
+                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-satellite prefix"></i>
@@ -96,16 +118,22 @@
                         <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">
 
                         @foreach($company->ciu as $ciu)
-                        <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="{{$ciu->id}}">
                         <div class="input-field col s12 m6">
-                            <i class="icon-assignment prefix"></i>
-                            <input type="text" name="search-ciu" id="ciu"  disabled value="{{$ciu->code}}">
-                            <label>CIIU</label>
+                            <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
+                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
+                            <label for="code">CIIU</label>
                         </div>
-                        <div class="input-field col s10 m6"  >
-                            <i class="icon-text_fields prefix"></i>
-                            <label for="phone">Nombre</label>
-                            <textarea name="name-ciu" id="nombre" cols="30" rows="10" class="materialize-textarea" disabled required>{{$ciu->name}}</textarea>
+                        <div class="input-field col s12 m6">
+                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                               Buscar
+                                <i class="icon-search right"></i>
+                            </a>
+                        </div>
+
+                        <div id="group-ciu">
+
+
+
                         </div>
                         @endforeach
 

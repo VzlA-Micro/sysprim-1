@@ -29,7 +29,7 @@
                         @if ($taxes === null)
                             <h5 class="center-align">No hay registros para mostrar.</h5>
                         @else
-                        <table class="centered highlight responsive-table" id="history" style="width: 100%">
+                        <table class="centered highlight" id="history" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -81,7 +81,6 @@
     <script>
         $('#history').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
             "pageLength": 2,
             language: {

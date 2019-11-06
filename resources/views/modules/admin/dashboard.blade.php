@@ -199,5 +199,5 @@
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script> 
     <script src="{{ asset('js/dev/geosysprim.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>   
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script> 
 @endsection
