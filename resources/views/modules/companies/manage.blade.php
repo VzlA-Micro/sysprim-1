@@ -11,13 +11,13 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('companies.manage') }}" class="breadcrumb">Gestionar Empresas</a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('tickOffice.companies.register') }}" class="btn-app white teal-text text-darken-2">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Empresa</span>
                 </a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('companies.read') }}" class="btn-app white indigo-text">
                     <i class="icon-playlist_add_check"></i>
                     <span class="truncate">Ver Empresas</span>

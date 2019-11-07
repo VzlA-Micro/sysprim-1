@@ -11,13 +11,13 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('payments.verify.manage') }}" class="breadcrumb">Verificación de Pagos</a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('bank.upload') }}" class="btn-app white amber-text">
                     <i class="icon-file_upload"></i>
                     <span class="truncate">Cargar Pagos</span>
                 </a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="#" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver ???</span>

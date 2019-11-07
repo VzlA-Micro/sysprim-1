@@ -11,13 +11,13 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('userRegister') }}" class="btn-app white amber-text">
                     <i class="icon-person_add"></i>
                     <span class="truncate">Registrar Usuario</span>
                 </a>
             </div>
-            <div class="col s12 m4">
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('userRead') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver Usuarios</span>
