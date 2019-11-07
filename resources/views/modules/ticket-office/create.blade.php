@@ -14,31 +14,28 @@
                 <a href="#!" class="breadcrumb">Pagar Impuestos</a>
 
             </div>
-            <div class="col s12">
+            <div class="col s12" id="content">
+
                 <form action="" method="post" class="card">
                     <ul class="tabs">
-                        <li class="tab col s4"><a href="#user-company-tab"><i class="icon-filter_1"></i> Representante y Empresa</a></li>
-                        <li class="tab col s4"><a href="#details-tab"><i class="icon-filter_2"></i> Detalles</a></li>
-                        <li class="tab col s4"><a href="#payment-tab"><i class="icon-filter_3"></i> Pagar Impuestos</a></li>
+                        <li class="tab col s4 " id="one"><a href="#user-company-tab"><i class="icon-filter_1"></i> DATOS
+                                GENERALES</a></li>
+                        <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
+                                Detalles</a></li>
+                        <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>
+                                CONCILIAR PAGO</a></li>
                     </ul>
                     <div id="user-company-tab">
                         <div class="card-header center-align">
-                            <h4>Representante y Empresa</h4>
+
+                            <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
-                            <div class="input-field col s10">
-                                <i class="icon-search prefix"></i>
-                                <input id="search" type="search" value="">
-                                <label for="search">CODIGO QR</label>
-                            </div>
-                            <div class="input-field col s2 center-align">
-                                <button class="btn btn-floating peach">
-                                    <i class="icon-search"></i>
-                                </button>
-                            </div>
+
+
                             <div class="input-field col s4">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="license" id="license" value="" >
+                                <input type="text" name="license" id="license" value="">
                                 <label for="license">Licencia o Código</label>
                             </div>
 
@@ -48,39 +45,54 @@
                                 <label for="name_company">Razon Social</label>
                             </div>
 
-                            <div class="input-field col s8 m4 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <div class="input-field col s8 m4 tooltipped" data-position="bottom"
+                                 data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                                 <i class="icon-perm_contact_calendar prefix tooltipped"></i>
-                                <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required readonly>
+                                <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+"
+                                       maxlength="10" minlength="6" title="Solo puede escribir números." required
+                                       readonly>
                                 <label for="RIF">RIF</label>
                             </div>
 
                             <div class="input-field col s12 m4">
                                 <i class="icon-directions prefix"></i>
-                                <input type="text" name="address" id="address" value="" >
+                                <input type="text" name="address" id="address" value="">
                                 <label for="address">Direccion</label>
                             </div>
                             <div class="input-field col s4 m4 ">
                                 <i class="icon-supervisor_account prefix"></i>
-                                <input type="text" name="person" id="person" value="" >
+                                <input type="text" name="person" id="person" value="">
                                 <label for="fiscal_period">Pers. Responsable</label>
                             </div>
 
                             <div class="input-field col s4 m4">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period" id="fiscal_period" value="" >
+                                <input type="text" name="fiscal_period" id="fiscal_period" value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
+
                             <div class="col s12 right-align">
-                                <a href="" class="btn peach waves-effect waves-light">
-                                    <i class="icon-navigate_next right"></i>
-                                    Siguiente
-                                </a>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field col s2 center-align">
+                                            <button data-target="modal-tick" class="btn modal-trigger " id="scan">
+                                                Escanear QR
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col s6">
+                                        <a href="#" class="btn peach waves-effect waves-light">
+                                            <i class="icon-navigate_next right"></i>
+                                            Siguiente
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div id="details-tab">
                         <div class="card-header center-align">
-                            <h4>Detalles</h4>
+                            <h4>DETALLES DE DECLARACIÓN </h4>
                         </div>
                         <div class="card-content row">
                             @csrf
@@ -89,14 +101,11 @@
                             <input type="hidden" name="ciu_id[]" value="">
 
 
-
-
                             <div id="ciu">
 
 
-
                             </div>
-                           <!-- <div class="input-field col s12 m2">
+                        <!-- <div class="input-field col s12 m2">
                             <div class="input-field col s12 m2">
 >>>>>>> c1b60444e71dbbb41aa783ea5cf936918a96619f
                                 <i class="icon-assignment prefix"></i>
@@ -141,21 +150,16 @@
                         </div>
                         <div class="card-footer ">
                             <div class="row">
-                                <div class="col s12 right-align">
-                                    <h4><span class="green-text">Total: </span>000000.00 BSS</h4>
-                                </div>
-                                <div class="col s12 right-align">
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col s6 left-align">
-                                    <a href="" class="btn peach waves-effect waves-light">
+                                    <a href="#" class="btn peach waves-effect waves-light">
                                         <i class="icon-navigate_before left"></i>
                                         Anterior
                                     </a>
                                 </div>
                                 <div class="col s6 right-align">
-                                    <a href="" class="btn peach waves-effect waves-light">
+                                    <a href="#" class="btn peach waves-effect waves-light" id="details-next">
                                         <i class="icon-navigate_next right"></i>
                                         Siguiente
                                     </a>
@@ -163,43 +167,78 @@
                             </div>
                         </div>
                     </div>
+                </form>
+                <form id="register-payment" class="card" method="GET" action="#">
                     <div id="payment-tab">
                         <div class="card-header center-align">
-                            <h4>Pagar Impuestos</h4>
+                            <h4>CONCILIAR PAGO</h4>
                         </div>
                         <div class="card-content row">
-                            <input type="hidden" name="taxes_id" value="">
+                            <input type="hidden" name="taxes_id" id="taxes_id" value="">
                             <div class="input-field col s12 m6 ">
                                 <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="lot" id="lot" value="" class="validate" required >
+                                <input type="text" name="lot" id="lot" value="" class="validate" required>
                                 <label for="lot">Lote</label>
                             </div>
                             <div class="input-field col s12 m6 ">
+
                                 <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="ref" id="ref" value="" class="validate" required >
+                                <input type="text" name="ref" id="ref" value="" class="validate" required>
                                 <label for="ref">Referencia</label>
-                            </div>
-                            <div class="input-field col s12 m6 ">
-                                <i class="icon-touch_app prefix "></i>
-                                <input type="text" name="amount" id="amount" value="" class="validate" required>
-                                <label for="amount">Monto</label>
                             </div>
                             <div class="input-field col s12 m6 ">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
+                                <input type="text" name="amount" id="amount" value="" class="validate" required>
+                                <label for="amount">Monto de punto de Venta</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 ">
+                                <i class="icon-touch_app prefix "></i>
+
                                 <select>
                                     <option>100%banco</option>
                                     <option>BOD</option>
                                 </select>
                                 <label for="code">Banco</label>
                             </div>
+                            <div class="input-field col s12 m12">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="amount_total" id="amount_total" value="" class="validate money"
+                                       required>
+                                <label for="amount_total">Total a Pagar</label>
+                            </div>
                         </div>
                         <div class="card-footer center-align">
-                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">Registrar<i class="icon-send right"></i></button>
+                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">Conciliar pago<i class="icon-send right"></i></button>
                         </div>
                     </div>
                 </form>
+
+            </div>
+        </div>
+
+
+        <div id="modal-tick" class="modal">
+            <div class="modal-content">
+                <h4 class="center-align">Escanear QR</h4>
+                <div class="col l12">
+                    <div class="col l12">
+                        <img src="{{asset('images/scan.gif')}}" class="img-responsive">
+                    </div>
+                    <div class="input-field col s10">
+                        <i class="icon-search prefix"></i>
+                        <input id="search" type="search" value="">
+                        <label for="search">CODIGO QR</label>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
             </div>
         </div>
     </div>

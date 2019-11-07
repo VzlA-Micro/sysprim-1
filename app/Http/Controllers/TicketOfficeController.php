@@ -13,38 +13,65 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Encryption\DecryptException;
+
 
 class TicketOfficeController extends Controller{
 
 
 
     public function QrTaxes($id){
-        $id=Crypt::decrypt($id);
-        $taxe=Taxe::with('companies')->where('id',$id)->get();
-        $calculateTaxes=Calculate::calculateTaxes($id);
-        $ciuTaxes=CiuTaxes::with('ciu')->where('taxe_id',$id)->get();
-        return response()->json(['taxe'=>$taxe,'calculate'=>$calculateTaxes,'ciu'=>$ciuTaxes]);
+        try {
+            $id=Crypt::decrypt($id);
+            $taxe=Taxe::with('companies')->where('id',$id)->get();
+            if($taxe[0]->status==='verified'){
+                return response()->json(['status'=>'verified','taxe'=>null,'calculate'=>null,'ciu'=>null]);
+            }else{
+                $calculateTaxes=Calculate::calculateTaxes($id);
+                $ciuTaxes=CiuTaxes::with('ciu')->where('taxe_id',$id)->get();
+                return response()->json(['status'=>'process','taxe'=>$taxe,'calculate'=>$calculateTaxes,'ciu'=>$ciuTaxes]);
+            }
+        } catch (DecryptException $e) {
+            return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+        }
     }
 
     public function cashier(){
         return view('modules.ticket-office.create');
     }
 
-
-
-
-
-
-
-
-
-    public function registerTaxes(Request $request){
+    public function paymentTaxes(Request $request){
         $id_taxes=$request->input('taxes_id');
+
 
         $lot=$request->input('lot');
         $amount=$request->input('amount');
         $ref=$request->input('ref');
         $taxe=Taxe::findOrFail($id_taxes);
+
+        $amountPayment=0;
+
+        $amount_format=str_replace('.','',$amount);
+        $amount=str_replace(',','.',$amount_format);
+
+        $payments = $taxe->payments()->orderByDesc('id')->take(1)->get();
+
+        if ($payments->isEmpty()) {
+
+
+            $amountPayment=$taxe->amount-$amount;
+            $data=['status'=>'success','payment'=>$amountPayment];
+        }else{
+            $amountPayment=$payments[0]->amount+$amount;
+            if($amountPayment>=$taxe->amount){
+                $data=['status'=>'success'];
+            }else{
+                $amountPayment=$taxe->amount-$amountPayment;
+
+                $data=['status'=>'success','payment'=>$amountPayment];
+            }
+        }
+
         $taxe->status='verified';
         $taxe->update();
         $payments=new Payments();
@@ -53,6 +80,7 @@ class TicketOfficeController extends Controller{
         $payments->amount=$amount;
         $payments->ref=$ref;
         $payments->save();
+        return response()->json($data);
     }
 
 
