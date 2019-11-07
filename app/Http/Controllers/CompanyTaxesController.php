@@ -42,7 +42,7 @@ class CompanyTaxesController extends Controller
 
         $company=Company::where('name',$company)->get();
         $taxes=Taxe::where('company_id',$company[0]->id)
-            ->where('status','verified')->orWhere('status','process')
+            ->where('status','verified')->orWhere('status','process')->where('company_id',$company[0]->id)
             ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
         return view('modules.payments.history',['taxes'=>$taxes]);
@@ -332,7 +332,9 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
-        return $pdf->download();
+
+
+        return $pdf->download('recibo.pdf');
     }
 
     public function paymentsHelp(Request $request){
@@ -345,8 +347,6 @@ class CompanyTaxesController extends Controller
 
 
 
-
-
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
 
@@ -355,9 +355,8 @@ class CompanyTaxesController extends Controller
 
         $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
-            $bank="57";
+            $bank="66";
         }
-
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
@@ -372,22 +371,14 @@ class CompanyTaxesController extends Controller
         $code = substr($code, 3, 12);
 
 
-
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
         $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
-
 
         $taxes->update();
 
         $taxes=Taxe::findOrFail($id);
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
-
-
-
-
-
-
 
 
         $company_find=Company::find($taxes->company_id);
@@ -409,7 +400,7 @@ class CompanyTaxesController extends Controller
         $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
 
         //si tiene descuento
-        if($company_find->desc){
+        /*if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee){
                 if ($company_find->number_employees >= $employee->min) {
@@ -421,7 +412,7 @@ class CompanyTaxesController extends Controller
             }
 
             $amountTaxes=$amountTaxes-$amountDesc;//descuento
-        }
+        }*/
 
         $amount=['amountInterest'=>$amountInterest,
             'amountRecargo'=>$amountRecargo,

@@ -31,7 +31,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
-                            <input type="text" name="name" id="name" class="validate" pattern="[A-Za-z0-9,. ()]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
+                            <input type="text" name="name" id="name" class="validate"   required>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -49,23 +49,9 @@
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
+
                         <div class="input-field col m6 s12">
-                            <i class="icon-public prefix"></i>                                                        
-                            <select  name="sector" id="sector" required>
-                                <option value="null" disabled selected>Seleccionar Ubicación</option>
-                                <option value="ESTE">ESTE</option>
-                                <option value="OESTE">OESTE</option>
-                                <option value="CENTRO">CENTRO</option>
-                                <option value="NORTE">NORTE</option>
-                                <option value="SUR">SUR</option>
-                                <option value="INDUSI">ZONA INDUSTRIAL I</option>
-                                <option value="INDUSII">ZONA INDUSTRIAL II</option>
-                                <option value="INDUSIII">ZONA INDUSTRIAL III</option>
-                            </select>
-                            <label>Ubicación Geográfica </label>
-                        </div>
-                        <div class="input-field col m6 s12">
-                            <i class="icon-satellite prefix"></i>                                                        
+                            <i class="icon-satellite prefix"></i>
                             <select  name="parish" id="parish" required>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
                                 @foreach($parish as $parish):
@@ -74,6 +60,29 @@
                             </select>
                             <label>Parroquia</label>
                         </div>
+
+                        <!--
+
+                        <option value="null" disabled selected>Seleccionar Ubicación</option>
+                                <option value="ESTE">ESTE</option>
+                                <option value="OESTE">OESTE</option>
+                                <option value="CENTRO">CENTRO</option>
+                                <option value="NORTE">NORTE</option>
+                                <option value="SUR">SUR</option>
+                                <option value="INDUSI">ZONA INDUSTRIAL I</option>
+                                <option value="INDUSII">ZONA INDUSTRIAL II</option>
+                                <option value="INDUSIII">ZONA INDUSTRIAL III</option>
+
+                        -->
+
+                        <div class="input-field col m6 s12">
+                            <i class="icon-public prefix"></i>                                                        
+                            <select  name="sector" id="sector" required>
+
+                            </select>
+                            <label>Ubicación Geográfica </label>
+                        </div>
+
                         <div class="input-field col s12 m6">
                             <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
                             <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>

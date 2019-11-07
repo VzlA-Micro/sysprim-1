@@ -11,7 +11,7 @@
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
                 <a href="#!" class="breadcrumb">{{ session('company') }}</a>
-                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="breadcrumb">Mis Declaraaciones</a>
+                <a href="{{ route('companies.my-payments', ['company' => session('company')]) }}" class="breadcrumb">Mis Pagos</a>
                 <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="breadcrumb">Historial de Pagos</a>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -87,7 +87,7 @@
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "No hay registros que mostrar.",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
