@@ -406,3 +406,35 @@ Route::get('/dashboard',array(
     'as'=>'dashboard',
     'uses'=>'DashboardController@dashboard'
 ));
+
+
+// Security routes
+
+Route::get('/security', 
+    function() {
+        return view('modules.security.manage');
+    }
+)->name('security.manage');
+
+// Roles routes 
+
+Route::get('/roles/manage', function() {
+    return view('modules.security.roles.manage');
+})->name('roles.manage');
+
+
+// Permissions routes
+
+Route::get('/permissions/manage', function() {
+    return view('modules.security.permissions.manage');
+})->name('permissions.manage');
+
+// Modules routes 
+Route::get('/modules/manage', function() {
+    return view('modules.security.modules.manage');
+})->name('modules.manage');
+
+
+Route::get('/bitacora', function() {
+    return view('modules.security.history');
+})->name('bitacora');
