@@ -16,9 +16,9 @@ class CreateValCatConstInmuTable extends Migration
         Schema::create('val_cat_const_inmu', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('value_catas_const_id')->unsigned();
-            $table->integer('inmueble_id')->unsigned();
+            $table->integer('property_id')->unsigned();
             $table->foreign('value_catas_const_id')->references('id')->on('value_catastral_construccion');
-            $table->foreign('inmueble_id')->references('id')->on('inmueble');
+            $table->foreign('property_id')->references('id')->on('property');
             $table->timestamps();
         });
     }

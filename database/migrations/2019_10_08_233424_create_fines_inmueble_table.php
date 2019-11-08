@@ -13,13 +13,13 @@ class CreateFinesInmuebleTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines_inmueble', function (Blueprint $table) {
+        Schema::create('fines_property', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('inmueble_id')->unsigned();
+            $table->integer('property_id')->unsigned();
             $table->integer('fine_id')->unsigned();
             $table->float('unid_tribu_value',12);
             $table->foreign('fine_id')->references('id')->on('fines');
-            $table->foreign('inmueble_id')->references('id')->on('inmueble');
+            $table->foreign('property_id')->references('id')->on('property');
             $table->timestamps();
         });
     }
