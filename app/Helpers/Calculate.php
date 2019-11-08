@@ -17,8 +17,10 @@ class Calculate{
 
 
         $taxes=Taxe::findOrFail($id);
+        $companyTaxe=$taxes->companies()->get();
         $ciuTaxes=CiuTaxes::where('taxe_id',$id)->get();
-        $company_find=Company::find($taxes->company_id);
+
+        $company_find = Company::find($companyTaxe[0]->id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora=Extras::orderBy('id', 'desc')->take(1)->get();
         $extra=['tasa'=>$mora[0]->tax_rate];

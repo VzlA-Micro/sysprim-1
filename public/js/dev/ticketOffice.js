@@ -34,8 +34,10 @@ $(document).ready(function () {
 
                         var taxe = response.taxe[0];
                         var ciu = response.ciu;
-                        var company = taxe.companies;
+                        var company = taxe.companies[0];
 
+
+                        console.log(company);
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",

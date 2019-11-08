@@ -18,11 +18,15 @@
 
                 <form action="" method="post" class="card" id="register-taxes">
                     <ul class="tabs">
-<<                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS GENERALES</a></li>
+
+                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
+                                GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
-                        <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>
-                                CONCILIAR PAGO</a></li>
+
+
+                        <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
+                                PAGO</a></li>
                     </ul>
                     <div id="general-tab">
                         <div class="card-header center-align">
@@ -30,7 +34,6 @@
                             <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
-
 
 
                             <div class="input-field col s12">
@@ -76,7 +79,8 @@
                                 <div class="row">
                                     <div class="col s6">
                                         <div class="input-field left-align">
-                                            <button data-target="modal-tick" class="btn btn-rounded green modal-trigger " id="scan">
+                                            <button data-target="modal-tick"
+                                                    class="btn btn-rounded green modal-trigger " id="scan">
                                                 Escanear QR
                                                 <i class="icon-filter_center_focus right"></i>
                                             </button>
@@ -88,7 +92,7 @@
                                                 <i class="icon-navigate_next right"></i>
                                                 Siguiente
                                             </a>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +199,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="amount" id="amount" value="" class="validate money_keyup" required>
+                                <input type="text" name="amount" id="amount" value="" class="validate money_keyup"
+                                       required>
                                 <label for="amount">Monto de punto de Venta</label>
                             </div>
 
@@ -217,7 +222,8 @@
                             </div>
                         </div>
                         <div class="card-footer center-align">
-                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">Conciliar pago<i class="icon-send right"></i></button>
+                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                Conciliar pago<i class="icon-send right"></i></button>
                         </div>
                     </div>
                 </form>
