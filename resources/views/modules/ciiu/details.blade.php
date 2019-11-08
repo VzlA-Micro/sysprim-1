@@ -24,14 +24,17 @@
                         <input id="idGroupCiiu" type="hidden" name="idGroupCiiu" value="{{ $groupCiu->id }}">
 
                         <div class="input-field col s12">
+                            <i class="icon-check prefix"></i>
                             <input id="groupCiiu" type="text" name="groupCiiu" readonly value="{{ $groupCiu->name }}">
                             <label for="name">Nombre Del Grupo CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-check prefix"></i>
                             <input id="name" type="text" name="name" required value="{{ $ciu->name }}">
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-confirmation_number prefix"></i>
                             <input id="code" type="text" name="code" required value="{{ $ciu->code }}">
                             <label for="code">Codigo</label>
                         </div>

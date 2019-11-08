@@ -106,9 +106,9 @@
                     {{-- <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li> --}}
                     @if (\Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
                         <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li>
+                        <!-- <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li> -->
                         <li class="waves-efect waves-light"><a href="{{ route('payments.manage') }}"><i class="icon-payment"></i>Gestionar Pagos</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('fines.manage') }}"><i class="icon-warning"></i>Gestionar Multas</a></li>
+                        <!-- <li class="waves-efect waves-light"><a href="{{ route('fines.manage') }}"><i class="icon-warning"></i>Gestionar Multas</a></li> -->
                         <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>

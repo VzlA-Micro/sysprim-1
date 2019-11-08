@@ -83,7 +83,7 @@
                     </a>
                 </div>
                 <div class="col s12 m3 animated bounceIn">
-                    <a href="#" class="btn-app white pink-text text-darken-4">
+                    <a href="{{ route('ticket-office.payments') }}" class="btn-app white pink-text text-darken-4">
                         <i class="icon-personal_video"></i>
                         <span class="truncate">Taquilla</span>
                     </a>
