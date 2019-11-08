@@ -93,6 +93,7 @@ class CompaniesController extends Controller
         } else {
             $company->image = null;
         }
+
         $company->name = strtoupper($name);
         $company->address = strtoupper($address);
         $company->rif = $rif;

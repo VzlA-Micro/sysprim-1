@@ -22,6 +22,8 @@
                             <li><b>Tipo de Construccion: </b>{{ $catasConstruct->name }}</li>
                             <li><b>Lugar: </b>{{ $catasTerreno->name }}</li>
                             <li><b>Parroquia: </b>{{ $parish->name }}</li>
+                            <li><b>Area De Construccion: </b>{{ $property[0]->area_build}} MT2</li>
+                            <li><b>Area De Terreno: </b>{{ $property[0]->area_ground}} MT2</li>
                             <li><b></b></li>
                         </ul>
                     </div>
@@ -41,7 +43,7 @@
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">
-                        <a href="" class="btn-app white green-text">
+                        <a href="{{route('inmueble.my-propertys')}}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Pagos</span>
                         </a>
