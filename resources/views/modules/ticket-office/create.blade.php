@@ -196,10 +196,9 @@
 
                             <div class="input-field col s12 m6 ">
                                 <i class="icon-touch_app prefix "></i>
-
-                                <select>
-                                    <option>100%banco</option>
-                                    <option>BOD</option>
+                                <select id="bank" name="bank">
+                                    <option value="33">100%BANCO</option>
+                                    <option value="44">BOD</option>
                                 </select>
                                 <label for="code">Banco</label>
                             </div>
