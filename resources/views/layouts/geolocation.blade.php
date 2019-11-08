@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
     @yield('styles')
-    <title>Geolocalización - SysPRIM</title>
+    <title>Geolocalización - GeoSEMAT</title>
 </head>
 <body>
     @include('includes.map.header')

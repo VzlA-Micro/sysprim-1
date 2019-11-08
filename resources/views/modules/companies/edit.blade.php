@@ -35,12 +35,12 @@
                             <input type="text" name="RIF" id="RIF" value="{{$company->document}}" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required readonly>
                             <label for="RIF">RIF</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Razón social o nombre de la empresa.">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
                             <i class="icon-work prefix"></i>                                                        
                             <input type="text" name="name" id="name" class="validate"  pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" value="{{ $company->name }}" required readonly>
                             <label for="name">Razón Social</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                             <i class="icon-chrome_reader_mode prefix"></i>                                                                                    
                             <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->license }}" required readonly>
                             <label for="license">Licencia</label>
@@ -72,7 +72,7 @@
                             </select>
                             <label>Ubicación Geográfica </label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="left" data-tooltip="Código que revela la ubicación exacta del inmueble.">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                             <i class="icon-offline_pin prefix"></i>                            
                             <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->code_catastral }}" disabled required>
                             <label for="code_catastral">Código Catastral</label>
@@ -120,32 +120,25 @@
                         @foreach($company->ciu as $ciu)
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
+                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+" value="{{ $ciu->code }}" disabled="">
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
-                               Buscar
-                                <i class="icon-search right"></i>
-                            </a>
-                        </div>
-
-                        <div id="group-ciu">
-
-
-
+                            <i class="icon-check prefix"></i>
+                            <textarea name="name" id="name" cols="30" rows="10" class="materialize-textarea" disabled>{{ $ciu->name }}</textarea>
+                            <label for="name">Nombre</label>
                         </div>
                         @endforeach
 
-                        <div class="input-field col s12 location-container tooltipped" data-position="left" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
+                        <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
                             <span>Elige la  ubicación de tu empresa:</span>
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">
-                            <i class="icon-send right"></i>
-                            Actualizar
+                        <button onclick="window.history.back();" class="btn btn-rounded btn-large waves-effect waves-light peach">
+                            <i class="icon-navigate_before right"></i>
+                            Atras
                         </button>
                     </div>
                 </form>

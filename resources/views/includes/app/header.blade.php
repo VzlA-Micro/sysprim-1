@@ -113,7 +113,7 @@
                         <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('ticket-office.payments') }}"><i class="icon-personal_video"></i>Taquilla</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('ticket-office.payments') }}"><i class="icon-personal_video"></i>Taquilla</a></li><li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
                     @endif
                     @if (\Auth::user()->role_id == 2)
                         <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>

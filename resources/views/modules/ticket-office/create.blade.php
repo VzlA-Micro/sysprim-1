@@ -18,8 +18,7 @@
 
                 <form action="" method="post" class="card" id="register-taxes">
                     <ul class="tabs">
-                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
-                                GENERALES</a></li>
+<<                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
                         <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>
@@ -32,21 +31,24 @@
                         </div>
                         <div class="card-content row">
 
-                            <div class="input-field col s4">
+
+
+                            <div class="input-field col s12">
+
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="license" id="license" value="">
                                 <label for="license">Licencia o Código</label>
                             </div>
 
-                            <div class="input-field col s12  m4">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="name_company" id="name_company" value="" readonly>
                                 <label for="name_company">Razon Social</label>
                             </div>
 
-                            <div class="input-field col s8 m4 tooltipped" data-position="bottom"
+                            <div class="input-field col s8 m6 tooltipped" data-position="bottom"
                                  data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
-                                <i class="icon-perm_contact_calendar prefix tooltipped"></i>
+                                <i class="icon-perm_contact_calendar prefix"></i>
                                 <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+"
                                        maxlength="10" minlength="6" title="Solo puede escribir números." required
                                        readonly>
@@ -73,17 +75,21 @@
                             <div class="col s12 right-align">
                                 <div class="row">
                                     <div class="col s6">
-                                        <div class="input-field col s2 center-align">
-                                            <button data-target="modal-tick" class="btn modal-trigger " id="scan">
+                                        <div class="input-field left-align">
+                                            <button data-target="modal-tick" class="btn btn-rounded green modal-trigger " id="scan">
                                                 Escanear QR
+                                                <i class="icon-filter_center_focus right"></i>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="col s6">
-                                        <a href="#" class="btn peach waves-effect waves-light">
-                                            <i class="icon-navigate_next right"></i>
-                                            Siguiente
-                                        </a>
+                                        <div class="input-field">
+                                            <a href="#" class="btn peach waves-effect waves-light">
+                                                <i class="icon-navigate_next right"></i>
+                                                Siguiente
+                                            </a>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +230,7 @@
             <div class="modal-content">
                 <h4 class="center-align">Escanear QR</h4>
                 <div class="col l12">
-                    <div class="col l12">
+                    <div class="col s12 center-align">
                         <img src="{{asset('images/scan.gif')}}" class="img-responsive">
                     </div>
                     <div class="input-field col s10">
@@ -232,7 +238,6 @@
                         <input id="search" type="search" value="">
                         <label for="search">CODIGO QR</label>
                     </div>
-
                 </div>
 
             </div>
