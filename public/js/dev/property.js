@@ -16,14 +16,14 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-                console.log(response);
+                console.log(response[0][0]);
                 swal({
                     title: "¡Bien Hecho!",
                     text: 'Codigo Encontrado',
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    $('')
+                    $('#address').val(response[0]['direction']);
                 });
                 ;
 

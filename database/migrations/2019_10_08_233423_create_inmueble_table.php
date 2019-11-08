@@ -19,7 +19,8 @@ class CreateInmuebleTable extends Migration
             $table->integer('value_catastral_terreno_id')->unsigned();
             $table->string('codigo_catastral',20);
             $table->string('direccion');
-            $table->float('area');
+            $table->float('area_ground');
+            $table->float('area_build');
             $table->string('lat',20);
             $table->string('lng',20);
             $table->foreign('parish_id')->references('id')->on('parish');
