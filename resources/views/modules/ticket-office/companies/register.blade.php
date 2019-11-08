@@ -134,21 +134,7 @@
                                 <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
                                 <label for="number_employees">Numero de Empleados</label>
                             </div>
-                            <div class="input-field col m6 s12">
-                                <i class="icon-public prefix"></i>
-                                <select  name="sector" id="sector" required>
-                                    <option value="null" disabled selected>Seleccionar Ubicación</option>
-                                    <option value="ESTE">ESTE</option>
-                                    <option value="OESTE">OESTE</option>
-                                    <option value="CENTRO">CENTRO</option>
-                                    <option value="NORTE">NORTE</option>
-                                    <option value="SUR">SUR</option>
-                                    <option value="INDUSI">ZONA INDUSTRIAL I</option>
-                                    <option value="INDUSII">ZONA INDUSTRIAL II</option>
-                                    <option value="INDUSIII">ZONA INDUSTRIAL III</option>
-                                </select>
-                                <label>Ubicación Geográfica </label>
-                            </div>
+
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
                                 <select  name="parish" id="parish" required>
@@ -159,6 +145,28 @@
                                 </select>
                                 <label>Parroquia</label>
                             </div>
+
+                            <div class="input-field col m6 s12">
+                                <i class="icon-public prefix"></i>
+
+                                  <select  name="sector" id="sector" required>
+                                      <!--
+                                 <option value="null" disabled selected>Seleccionar Ubicación</option>
+                                 <option value="ESTE">ESTE</option>
+                                 <option value="OESTE">OESTE</option>
+                                 <option value="CENTRO">CENTRO</option>
+                                 <option value="NORTE">NORTE</option>
+                                 <option value="SUR">SUR</option>
+                                 <option value="INDUSI">ZONA INDUSTRIAL I</option>
+                                 <option value="INDUSII">ZONA INDUSTRIAL II</option>
+                                 <option value="INDUSIII">ZONA INDUSTRIAL III</option>
+                                    -->
+                             </select>
+
+                                <label>Ubicación Geográfica </label>
+                            </div>
+
+
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                                 <i class="icon-offline_pin prefix"></i>
                                 <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>

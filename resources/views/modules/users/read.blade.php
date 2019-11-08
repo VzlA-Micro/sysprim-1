@@ -37,7 +37,11 @@
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
-                                        <i class="icon-check" style="font-size: 20px"></i>
+                                        @if(\Auth::user()->confirmed == 1)
+                                        <i class="icon-check green-text" style="font-size: 20px"></i>
+                                        @else
+                                        <i class="icon-close red-text" style="font-size: 20px"></i>
+                                        @endif
                                     </td>
                                     <td>
                                         <a href="{{url('/users/details/'.$user->id)}}" class="btn btn-floating orange waves-effect waves-light">
@@ -61,7 +65,7 @@
         $('#users').DataTable({
             responsive: true,
             "scrollX": true,
-            "pageLength": 2,
+            "pageLength": 10,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

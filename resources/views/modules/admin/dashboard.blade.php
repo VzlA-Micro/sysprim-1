@@ -10,7 +10,7 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="" class="breadcrumb">Estadísticas</a>
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 m6" data-aos="zoom-in">
 				<div class="widget bootstrap-widget stats">
 					<div class="widget-stats-icon green white-text">
                         <i class="icon-thumb_up"></i>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -91,7 +91,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -112,7 +112,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -199,5 +199,5 @@
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script> 
     <script src="{{ asset('js/dev/geosysprim.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script>   
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap" type="text/javascript"></script> 
 @endsection

@@ -374,12 +374,12 @@
 		<table style="width: 100%;margin-bottom:-30px;">
 			<tr>
 				<td style="width: 80%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate("https://sysprim.com/ticket-office/QrTaxes/".$taxes->id)) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 20%;">
-					@if($taxes->bank!=57)
+					@if($taxes->bank!=66)
 						<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
 					@endif
 				</td>

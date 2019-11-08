@@ -409,9 +409,11 @@ Route::get('/ticket-office/payments', function() {
 Route::get('/ticket-office/view', function() {
     return view('modules.ticket-office.create');
 })->name('ticket-office.payments');
+Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
+Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 
-Route::get('/ticket-office/QrTaxes/{id}', 'TicketOfficeController@QrTaxes')->name('taxesQr');
-Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')->name('taxesQr.save');
+Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
+
 Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
 
 //Estadisticas
@@ -424,3 +426,35 @@ Route::get('/dashboard',array(
     'as'=>'dashboard',
     'uses'=>'DashboardController@dashboard'
 ));
+
+
+// Security routes
+
+Route::get('/security', 
+    function() {
+        return view('modules.security.manage');
+    }
+)->name('security.manage');
+
+// Roles routes 
+
+Route::get('/roles/manage', function() {
+    return view('modules.security.roles.manage');
+})->name('roles.manage');
+
+
+// Permissions routes
+
+Route::get('/permissions/manage', function() {
+    return view('modules.security.permissions.manage');
+})->name('permissions.manage');
+
+// Modules routes 
+Route::get('/modules/manage', function() {
+    return view('modules.security.modules.manage');
+})->name('modules.manage');
+
+
+Route::get('/bitacora', function() {
+    return view('modules.security.history');
+})->name('bitacora');

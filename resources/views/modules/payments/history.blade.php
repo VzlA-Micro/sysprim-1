@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mis Empresas</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Historial de Pagos</a>
+                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
+                <a href="#!" class="breadcrumb">{{ session('company') }}</a>
+                <a href="{{ route('companies.my-payments', ['company' => session('company')]) }}" class="breadcrumb">Mis Pagos</a>
+                <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="breadcrumb">Historial de Pagos</a>
             </div>
             <div class="col s12 m10 offset-m1">
                 @if(Session::has('message'))
@@ -29,7 +29,7 @@
                         @if ($taxes === null)
                             <h5 class="center-align">No hay registros para mostrar.</h5>
                         @else
-                        <table class="centered highlight responsive-table" id="history" style="width: 100%">
+                        <table class="centered highlight" id="history" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -81,14 +81,13 @@
     <script>
         $('#history').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
             "pageLength": 2,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "No hay registros que mostrar.",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

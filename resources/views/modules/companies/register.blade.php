@@ -14,7 +14,7 @@
                     </div>
                     <div class="card-content row">
                         @csrf
-                        <div class="input-field col s3 m3">
+                        <div class="input-field col s4 m3">
                             <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
                             <select name="document_type" id="document_type">
                                 <option value="null" selected disabled>...</option>
@@ -25,13 +25,13 @@
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
-                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                             <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
-                            <input type="text" name="name" id="name" class="validate" pattern="[A-Za-z0-9,. ()]+" title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required>
+                            <input type="text" name="name" id="name" class="validate"   required>
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -49,23 +49,9 @@
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
+
                         <div class="input-field col m6 s12">
-                            <i class="icon-public prefix"></i>                                                        
-                            <select  name="sector" id="sector" required>
-                                <option value="null" disabled selected>Seleccionar Ubicación</option>
-                                <option value="ESTE">ESTE</option>
-                                <option value="OESTE">OESTE</option>
-                                <option value="CENTRO">CENTRO</option>
-                                <option value="NORTE">NORTE</option>
-                                <option value="SUR">SUR</option>
-                                <option value="INDUSI">ZONA INDUSTRIAL I</option>
-                                <option value="INDUSII">ZONA INDUSTRIAL II</option>
-                                <option value="INDUSIII">ZONA INDUSTRIAL III</option>
-                            </select>
-                            <label>Ubicación Geográfica </label>
-                        </div>
-                        <div class="input-field col m6 s12">
-                            <i class="icon-satellite prefix"></i>                                                        
+                            <i class="icon-satellite prefix"></i>
                             <select  name="parish" id="parish" required>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
                                 @foreach($parish as $parish):
@@ -74,12 +60,35 @@
                             </select>
                             <label>Parroquia</label>
                         </div>
+
+                        <!--
+
+                        <option value="null" disabled selected>Seleccionar Ubicación</option>
+                                <option value="ESTE">ESTE</option>
+                                <option value="OESTE">OESTE</option>
+                                <option value="CENTRO">CENTRO</option>
+                                <option value="NORTE">NORTE</option>
+                                <option value="SUR">SUR</option>
+                                <option value="INDUSI">ZONA INDUSTRIAL I</option>
+                                <option value="INDUSII">ZONA INDUSTRIAL II</option>
+                                <option value="INDUSIII">ZONA INDUSTRIAL III</option>
+
+                        -->
+
+                        <div class="input-field col m6 s12">
+                            <i class="icon-public prefix"></i>                                                        
+                            <select  name="sector" id="sector" required>
+
+                            </select>
+                            <label>Ubicación Geográfica </label>
+                        </div>
+
                         <div class="input-field col s12 m6">
                             <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
                             <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
-                        <div class="input-field col s3 m3">
+                        <div class="input-field col s4 m3">
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
                             <select name="country_code" id="country_code_company" required>
                                 <option value="null" selected disabled>...</option>
@@ -92,7 +101,7 @@
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>
-                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>

@@ -15,7 +15,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-                        <table class="striped centered responsive-table" id="ciu" style="width: 100%">
+                        <table class="striped centered" id="ciu" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
@@ -43,9 +43,8 @@
     <script>
         $('#ciu').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
-            "iDisplayLength": 2,
+            "pageLength": 10,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

@@ -18,7 +18,7 @@
                         <h5>Empresas Registradas</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight responsive-table centered" id="companies"  style="width: 100%">
+                        <table class="highlight centered" id="companies"  style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Razon Social</th>
@@ -52,7 +52,6 @@
     <script>
         $('#companies').DataTable({
             responsive: true,
-            scroller: true,
             "scrollX": true,
             "pageLength": 10,
             language: {

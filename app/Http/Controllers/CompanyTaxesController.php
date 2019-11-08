@@ -43,10 +43,10 @@ class CompanyTaxesController extends Controller
     public function history($company)
     {
 
+        $company=Company::where('name',$company)->get();
+        $taxes=Taxe::where('company_id',$company[0]->id)
+            ->where('status','verified')->orWhere('status','process')->where('company_id',$company[0]->id)
 
-        $company = Company::where('name', $company)->get();
-        $taxes = Taxe::where('company_id', $company[0]->id)
-            ->where('status', 'verified')->orWhere('status', 'process')
             ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
         return view('modules.payments.history', ['taxes' => $taxes]);
@@ -315,26 +315,26 @@ class CompanyTaxesController extends Controller
             'amountTotal' => $amountTaxes,
         ];
 
+        $pdf = \PDF::loadView('modules.taxes.receipt',[
+            'taxes'=>$taxes,
+            'fiscal_period'=>$fiscal_period,
+            'extra'=>$extra,
+            'ciuTaxes'=>$ciuTaxes,
+            'amount'=>$amount,
+            'firm'=>false
+            ]);
 
-        $pdf = \PDF::loadView('modules.taxes.receipt', [
-            'taxes' => $taxes,
-            'fiscal_period' => $fiscal_period,
-            'extra' => $extra,
-            'ciuTaxes' => $ciuTaxes,
-            'amount' => $amount,
-            'firm' => false
-        ]);
-        return $pdf->download();
+
+        return $pdf->download('recibo.pdf');
     }
 
-    public function paymentsHelp(Request $request)
-    {
-        $amountInterest = 0;//total de intereses
-        $amountRecargo = 0;//total de recargos
-        $amountCiiu = 0;//total de ciiu
-        $amountDesc = 0;//Descuento
-        $amountTaxes = 0;//total a de impuesto
-        $amountTotal = 0;
+    public function paymentsHelp(Request $request){
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
 
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
@@ -342,11 +342,10 @@ class CompanyTaxesController extends Controller
         $bank = $request->input('bank');
         $payments_type = $request->input('payments');
 
-        $payments_type = strtoupper($payments_type);
-        if ($payments_type === 'PPV') {
-            $bank = 57;
+        $payments_type=strtoupper($payments_type);
+        if($payments_type==='PPV'){
+            $bank="66";
         }
-
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
@@ -365,13 +364,15 @@ class CompanyTaxesController extends Controller
         $date = date("d-m-Y", strtotime($taxes->created_at));
         $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
-
         $taxes->update();
 
-        $taxes = Taxe::findOrFail($id);
-        $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
 
-        $company_find = Company::find($taxes->company_id);
+        $taxes=Taxe::findOrFail($id);
+        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+
+
+        $company_find=Company::find($taxes->company_id);
+
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['tasa' => $mora[0]->tax_rate];
@@ -390,7 +391,8 @@ class CompanyTaxesController extends Controller
         $amountTaxes = $amountInterest + $amountRecargo + $amountCiiu;//Total
 
         //si tiene descuento
-        if ($company_find->desc) {
+
+        /*if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee) {
                 if ($company_find->number_employees >= $employee->min) {
@@ -401,8 +403,9 @@ class CompanyTaxesController extends Controller
                 }
             }
 
-            $amountTaxes = $amountTaxes - $amountDesc;//descuento
-        }
+            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+        }*/
+
 
         $amount = ['amountInterest' => $amountInterest,
             'amountRecargo' => $amountRecargo,
