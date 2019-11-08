@@ -17,7 +17,11 @@ class Company extends Model{
             ->withPivot('ciu_id');
     }
     public function taxesCompanies(){
-        return $this->hasMany('App\Taxe','company_id');
+
+        return $this->belongsToMany('App\Taxe','company_taxes')
+            ->withPivot('taxe_id');
+
+        return $this->hasMany('','company_id');
     }
 
     public function fineCompany(){

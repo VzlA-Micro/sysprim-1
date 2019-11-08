@@ -16,22 +16,21 @@
             </div>
             <div class="col s12" id="content">
 
-                <form action="" method="post" class="card">
+                <form action="" method="post" class="card" id="register-taxes">
                     <ul class="tabs">
-                        <li class="tab col s4 " id="one"><a href="#user-company-tab"><i class="icon-filter_1"></i> DATOS
+                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
                         <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>
                                 CONCILIAR PAGO</a></li>
                     </ul>
-                    <div id="user-company-tab">
+                    <div id="general-tab">
                         <div class="card-header center-align">
 
                             <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
-
 
                             <div class="input-field col s4">
                                 <i class="icon-confirmation_number prefix"></i>
@@ -94,7 +93,7 @@
                         <div class="card-header center-align">
                             <h4>DETALLES DE DECLARACIÓN </h4>
                         </div>
-                        <div class="card-content row">
+                        <div class="card-content row" id="details">
                             @csrf
                             <input type="hidden" id="company_id" name="company_id" value="">
                             <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
@@ -190,7 +189,7 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="amount" id="amount" value="" class="validate" required>
+                                <input type="text" name="amount" id="amount" value="" class="validate money_keyup" required>
                                 <label for="amount">Monto de punto de Venta</label>
                             </div>
 
@@ -207,7 +206,7 @@
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
                                 <input type="text" name="amount_total" id="amount_total" value="" class="validate money"
-                                       required>
+                                       required readonly>
                                 <label for="amount_total">Total a Pagar</label>
                             </div>
                         </div>
