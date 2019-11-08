@@ -362,6 +362,24 @@ Route::get('/inmueble/show/{id}',array(
     'uses'=>'InmuebleController@show'
 ));
 
+Route::get('/inmueble/mi-inmueble','InmuebleController@myProperty')->name('inmueble.my-propertys');
+
+Route::get('/inmueble/my-inmueble/{id}',array(
+    'uses'=>'PropertyTaxesController@create',
+    'as'=>'propertyStatement'
+));
+
+Route::get('/inmueble/delaracion/{id}',array(
+    'uses'=>'PropertyTaxesController@create',
+    'as'=>'propertyStatement'
+));
+
+Route::get('/inmueble/statement/{id}',array(
+    'uses'=>'PropertyTaxesController@create',
+    'as'=>'propertyStatement'
+));
+
+
 //verifyPaymentsBanks
 
 Route::get('/fileBank-register', function() {

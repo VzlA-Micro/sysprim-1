@@ -21,11 +21,6 @@ class CreateTaxesTable extends Migration
             $table->double('amount',11,2)->nullable();
             $table->string('status')->nullable();
             $table->date('fiscal_period');
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('company');
-
-
-
             $table->timestamps();
         });
     }

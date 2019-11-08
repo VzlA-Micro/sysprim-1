@@ -182,6 +182,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        App\Providers\declarationProviderService::class,
     ],
 
     /*

@@ -13,17 +13,18 @@ class CreateInmuebleTable extends Migration
      */
     public function up()
     {
-        Schema::create('inmueble', function (Blueprint $table) {
+        Schema::create('property', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parish_id')->unsigned();
-            $table->integer('value_catastral_terreno_id')->unsigned();
-            $table->string('codigo_catastral',20);
-            $table->string('direccion');
-            $table->float('area');
+            $table->integer('value_cadastral_ground_id')->unsigned();
+            $table->string('code_cadastral',20);
+            $table->string('address');
+            $table->float('area_ground');
+            $table->float('area_build');
             $table->string('lat',20);
             $table->string('lng',20);
             $table->foreign('parish_id')->references('id')->on('parish');
-            $table->foreign('value_catastral_terreno_id')->references('id')->on('value_catastral_terreno');
+            $table->foreign('value_cadastral_ground_id')->references('id')->on('value_catastral_terreno');
             $table->timestamps();
         });
     }

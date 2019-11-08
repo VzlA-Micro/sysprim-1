@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateValCatConstInmuTable extends Migration
+class CreatePropertyTaxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateValCatConstInmuTable extends Migration
      */
     public function up()
     {
-        Schema::create('val_cat_const_inmu', function (Blueprint $table) {
+        Schema::create('property_taxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('value_catas_const_id')->unsigned();
             $table->integer('property_id')->unsigned();
-            $table->foreign('value_catas_const_id')->references('id')->on('value_catastral_construccion');
+            $table->integer('taxes_id')->unsigned();
             $table->foreign('property_id')->references('id')->on('property');
-            $table->timestamps();
+            $table->foreign('taxes_id')->references('id')->on('taxes');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateValCatConstInmuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('property_taxes');
     }
 }

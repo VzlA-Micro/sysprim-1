@@ -28,6 +28,12 @@ class InmuebleController extends Controller
         return view('dev.inmueble.menu', ['inmuebles' => $inmueble_find]);
     }
 
+    public function myProperty()
+    {
+        $inmuebles = UserInmueble::where('user_id', \Auth::user()->id)->select('inmueble_id')->get();
+        $inmueble_find = Inmueble::whereIn('id', $inmuebles)->get();
+        return view('dev.inmueble.menuPayments', ['inmuebles' => $inmueble_find]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -50,9 +56,19 @@ class InmuebleController extends Controller
      */
     public function store(Request $request)
     {
-        $code_cadastral = $request->input('codigo_cadastral');
+        $code_cadastral =
+            $request->input('C1') .
+            '-' . $request->input('C2') .
+            '-' . $request->input('C3') .
+            '-' . $request->input('C4') .
+            '-' . $request->input('C5') .
+            '-' . $request->input('C6') .
+            '-' . $request->input('C7') .
+            '-' . $request->input('C8');
+
         $location_cadastral = $request->input('location_cadastral');
-        $area = $request->input('area');
+        $area_build = $request->input('area_build');
+        $area_ground = $request->input('area_ground');
         $parish = $request->input('parish');
         $address = $request->input('address');
         $lat = $request->input('lat');
@@ -65,7 +81,8 @@ class InmuebleController extends Controller
         $property->value_catastral_terreno_id = $location_cadastral;
         $property->codigo_catastral = $code_cadastral;
         $property->direccion = $address;
-        $property->area = $area;
+        $property->area_build = $area_build;
+        $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
 

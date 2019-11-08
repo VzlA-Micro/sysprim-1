@@ -47,39 +47,62 @@ class TicketOfficeController extends Controller{
         $lot=$request->input('lot');
         $amount=$request->input('amount');
         $ref=$request->input('ref');
+        $bank=$request->input('bank');
         $taxe=Taxe::findOrFail($id_taxes);
 
+
+
         $amountPayment=0;
+        $acum=0;
+
 
         $amount_format=str_replace('.','',$amount);
         $amount=str_replace(',','.',$amount_format);
-
-        $payments = $taxe->payments()->orderByDesc('id')->take(1)->get();
-
-        if ($payments->isEmpty()) {
-
-
-            $amountPayment=$taxe->amount-$amount;
-            $data=['status'=>'success','payment'=>$amountPayment];
-        }else{
-            $amountPayment=$payments[0]->amount+$amount;
-            if($amountPayment>=$taxe->amount){
-                $data=['status'=>'success'];
-            }else{
-                $amountPayment=$taxe->amount-$amountPayment;
-
-                $data=['status'=>'success','payment'=>$amountPayment];
-            }
-        }
-
-        $taxe->status='verified';
-        $taxe->update();
         $payments=new Payments();
         $payments->taxe_id=$id_taxes;
         $payments->lot=$lot;
         $payments->amount=$amount;
         $payments->ref=$ref;
+        $payments->bank=$bank;
         $payments->save();
+
+
+        $paymentsTaxe= $taxe->payments()->get();
+
+
+
+        if ($paymentsTaxe->isEmpty()) {
+            $amountPayment=$taxe->amount-$amount;
+
+            if($amountPayment==0){
+                $data=['status'=>'success'];
+                $taxe->status='verified';
+                $taxe->update();
+            }else{
+                $data=['status'=>'process','payment'=>$amountPayment];
+            }
+
+        }else{
+
+            foreach ($paymentsTaxe as $payment){
+                $acum=$acum+$payment->amount;
+            }
+
+
+
+            if($acum>=$taxe->amount){
+                $data=['status'=>'success','payment'=>0];
+                $taxe->status='verified';
+                $taxe->update();
+            }else{
+                $amountPayment=$taxe->amount-$acum;
+
+
+                $data=['status'=>'process','payment'=>$amountPayment];
+            }
+        }
+
+
         return response()->json($data);
     }
 
