@@ -17,7 +17,7 @@ class CreateInmuebleTable extends Migration
             $table->increments('id');
             $table->integer('parish_id')->unsigned();
             $table->integer('value_cadastral_ground_id')->unsigned();
-            $table->string('code_cadastral',20);
+            $table->string('code_cadastral',35);
             $table->string('address');
             $table->float('area_ground');
             $table->float('area_build');

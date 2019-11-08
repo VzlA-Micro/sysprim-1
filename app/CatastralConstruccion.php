@@ -11,6 +11,6 @@ class CatastralConstruccion extends Model
 
     public function property(){
         return $this->belongsToMany('App\Inmueble','val_cat_const_inmu')
-            ->withPivot('inmueble_id');
+            ->withPivot('property_id');
     }
 }

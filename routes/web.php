@@ -312,10 +312,6 @@ Route::get('/admin/geolocation', function() {
     return view('modules.map.home');
 })->name('admin.geolocation');
 
-
-
-
-
 Route::get('/dashboard',array(
     'as'=>'dashboard',
     'uses'=>'DashboardController@dashboard'
@@ -330,39 +326,34 @@ Route::get('/notifications/details', function() {
 
 
 
-
-
-
-
-
-
-
 Route::get('/payments/verify/manage', function() {
     return view('modules.bank.manage');
 })->name('payments.verify.manage');
 
 //Inmuebles
-Route::get('/inmueble/my-property','InmuebleController@index')->name('inmueble.my-property');
+Route::get('/inmueble/my-property','PropertyController@index')->name('inmueble.my-property');
+
 Route::get('/inmueble-register',array(
     'as'=>'registerInmueble',
-    'uses'=>'InmuebleController@create'
+    'uses'=>'PropertyController@create'
 ));
+
 Route::post('/inmueble/save',array(
     'as'=>'saveInmueble',
-    'uses'=>'InmuebleController@store'
+    'uses'=>'PropertyController@store'
 ));
 
 Route::post('/inmueble/verification',array(
     'as'=>'verificationCode',
-    'uses'=>'InmuebleController@verification'
+    'uses'=>'PropertyController@verification'
 ));
 
 Route::get('/inmueble/show/{id}',array(
     'as'=>'show.inmueble',
-    'uses'=>'InmuebleController@show'
+    'uses'=>'PropertyController@show'
 ));
 
-Route::get('/inmueble/mi-inmueble','InmuebleController@myProperty')->name('inmueble.my-propertys');
+Route::get('/inmueble/mi-inmueble','PropertyController@myProperty')->name('inmueble.my-propertys');
 
 Route::get('/inmueble/my-inmueble/{id}',array(
     'uses'=>'PropertyTaxesController@create',

@@ -17,6 +17,7 @@ use App\CatastralConstruccion;
 use App\CatastralTerreno;
 use App\Val_cat_const_inmu;
 use App\Tributo;
+use TijsVerkoyen\CssToInlineStyles\Css\Property\Property;
 
 
 class Declaration
@@ -40,16 +41,19 @@ class Declaration
         //if (($monthCurrent <= $march && $monthCurrent >= $january) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
             $property =Inmueble::where('id', $id)->get();
 
-            $buildProperty = Val_cat_const_inmu::where('inmueble_id', $property[0]->id)->get();
+            $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
 
             $cadastralBuild = CatastralConstruccion::where('id', $buildProperty[0]->value_catas_const_id)->get();
 
-            $cadastralGround = CatastralTerreno::where('id', $property[0]->value_catastral_terreno_id)->get();
+            $cadastralGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
 
             $tributo = Tributo::all();
+
             if ($property[0]->area_ground !== 0) {
+
                 $totalGround = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $tributo[0]->value;
-            var_dump($totalGround);
+
+
             } else {
                 $totalGround=0;
             }

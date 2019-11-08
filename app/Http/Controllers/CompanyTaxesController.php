@@ -94,23 +94,21 @@ class CompanyTaxesController extends Controller
        */
 
         $fiscal_period = $request->input('fiscal_period');
-
         $company = $request->input('company_id');
-
         $company_find = Company::find($company);
-
         $ciu_id = $request->input('ciu_id');
         $min_tribu_men = $request->input('min_tribu_men');
         $deductions = $request->input('deductions');
         $withholding = $request->input('withholding');
         $base = $request->input('base');
         $fiscal_credits = $request->input('fiscal_credits');
+
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;
-
         $taxe->company_id = $company;
         $taxe->save();
+
         $id = DB::getPdo()->lastInsertId();
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $date = TaxesMonth::verify($company, false);

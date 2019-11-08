@@ -84,10 +84,7 @@ class PropertyTaxesController extends Controller
        */
 
         $fiscal_period = $request->input('fiscal_period');
-
-
         $company = $request->input('company_id');
-
         $company_find = Company::find($company);
 
         $ciu_id = $request->input('ciu_id');
@@ -96,6 +93,7 @@ class PropertyTaxesController extends Controller
         $withholding = $request->input('withholding');
         $base = $request->input('base');
         $fiscal_credits = $request->input('fiscal_credits');
+
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;

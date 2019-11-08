@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inmueble extends Model
 {
-    protected $table='inmueble';
+    protected $table='property';
 
     public function user(){
-        return $this->belongsToMany('App\User','user_inmueble')
+        return $this->belongsToMany('App\User','user_property')
             ->withPivot('user_id');
     }
 

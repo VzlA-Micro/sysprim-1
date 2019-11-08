@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#verification').on('submit', function (e) {
         e.preventDefault();
@@ -49,7 +49,7 @@ $('document').ready(function () {
     $('#property').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: url + "/inmueble/save",
+            url: url + "inmueble/save",
             cache: false,
             contentType: false,
             processData: false,

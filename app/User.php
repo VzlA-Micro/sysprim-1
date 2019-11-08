@@ -45,8 +45,8 @@ class User extends Authenticatable
     }
 
     public function property(){
-        return $this->belongsToMany('App\Inmueble','user_inmueble')
-            ->withPivot('inmueble_id');
+        return $this->belongsToMany('App\Inmueble','user_property')
+            ->withPivot('property_id');
     }
 
 
