@@ -25,9 +25,9 @@
                         </div>
                         <div class="col m6">
                             <ul>
-                                <li><b>Nombre: </b>{{ $taxes->companies->name }}</li>
-                                <li><b>RIF: </b>{{ $taxes->companies->RIF }}</li>
-                                <li><b>Licencia: </b>{{ $taxes->companies->license }}</li>
+                                <li><b>Nombre: </b>{{ $taxes->companies[0]->name }}</li>
+                                <li><b>RIF: </b>{{ $taxes->companies[0]->RIF }}</li>
+                                <li><b>Licencia: </b>{{ $taxes->companies[0]->license }}</li>
                             </ul>
                         </div>
                     </div>
@@ -60,8 +60,8 @@
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <`input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->deductions }}" readonly>
+                            </i>
+                            <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->deductions }}" readonly>
                             <label for="deductions">Deducciones</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -79,7 +79,7 @@
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
 
-                        @if($taxes->companies->typeCompany=='R')
+                        @if($taxes->companies[0]->typeCompany=='R')
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -156,15 +156,21 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
-                                @if($taxes->status!='process')
+                                @if($taxes->status!='verified')
                                 <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i>
                                 </a>
-                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
+                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </a>
+
+
+
+
+
+
                                 {{-- Modal structure --}}
                                @endif
                                 <div id="modal1" class="modal modal-fixed-footer">

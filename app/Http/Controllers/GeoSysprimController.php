@@ -23,10 +23,15 @@ class GeoSysprimController extends Controller{
         $mounth=$date_now->format('m');
 
         $taxes=Taxe::where('status','verified')->whereMonth('fiscal_period','=',$mounth)->get();
-
-        foreach ($taxes as $taxe){
-                $company_find[]=$taxe->companies;
+        if(!$taxes->isEmpty()){
+            foreach ($taxes as $taxe){
+                    $company_find[]=$taxe->companies[0];
+            }
+        }else{
+            $company_find=null;
         }
+
+
         return response()->json(['taxes'=>$taxes,'company'=>$company_find]);
     }
 
@@ -36,9 +41,14 @@ class GeoSysprimController extends Controller{
 
         $taxes=Taxe::where('status','process')->whereDate('created_at','=',$date_now)->get();
 
-        foreach ($taxes as $taxe){
-            $company_find[]=$taxe->companies;
+        if(!$taxes->isEmpty()){
+            foreach ($taxes as $taxe){
+                $company_find[]=$taxe->companies;
+            }
+        }else{
+            $company_find=null;
         }
+
 
         return response()->json(['taxes'=>$taxes,'company'=>$company_find]);
     }

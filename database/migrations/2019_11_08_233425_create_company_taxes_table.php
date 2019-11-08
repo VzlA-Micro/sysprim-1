@@ -16,9 +16,9 @@ class CreateCompanyTaxesTable extends Migration
         Schema::create('company_taxes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id')->unsigned();
-            $table->integer('taxes_id')->unsigned();
+            $table->integer('taxe_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('company');
-            $table->foreign('taxes_id')->references('id')->on('taxes');
+            $table->foreign('taxe_id')->references('id')->on('taxes');
         });
     }
 

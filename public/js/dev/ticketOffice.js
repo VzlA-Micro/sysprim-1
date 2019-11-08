@@ -20,6 +20,7 @@ $(document).ready(function () {
                             button: "Ok",
                         });
 
+
                         $('#search').val('');
                     }else if(response.status==='verified'){
                         swal({
@@ -137,16 +138,17 @@ $(document).ready(function () {
                           
                        `;
 
-                            console.log(taxe);
+
                             $('ul.tabs').tabs();
                             $('#amount_total').val(taxe.amount);
                             M.textareaAutoResize($('#' + subr));
                             $('.modal').modal();
-                            $('#ciu').append(template);
+                            $('#details').append(template);
                         }
                         formatMoney();
                         M.updateTextFields();
                         $('#search').val('');
+
                     }
 
 
@@ -173,38 +175,103 @@ $(document).ready(function () {
 
     $('#register-payment').submit(function (e) {
         e.preventDefault();
-        $.ajax({
-            url: url + "ticket-office/payment/save",
-            contentType: false,
-            processData: false,
-            data: new FormData(this),
-            method: "POST",
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
-                console.log(response);
+        var amount=$('#amount_total').val();
+        var amount_pay=$('#amount').val();
+        if(amount_pay>amount){
+            swal({
+                title: "Error",
+                text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
+                icon: "error",
+                button: "Ok",
+            });
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+        }else{
+            $.ajax({
+                url: url + "ticket-office/payment/save",
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
 
-            },
-            error: function (err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: "Ok",
-                });
-            }
-        });
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    console.log(response);
+
+                    if(response.status==='process'){
+                        $('#amount_total').val(response.payment);
+
+                        $('#amount_total').val(function (index, value ) {
+                            return number_format(value, 2);
+                        });
+
+                        swal({
+                            title: "Información",
+                            text: "Para conciliar esta planilla " +
+                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:"+$('#amount_total').val()+"Bs",
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+                    }else{
+                        swal({
+                            title: "¡Bien hecho!",
+                            text: "Planilla ingresa y conciliada con éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            $('#amount_total').val('');
+                            reset();
+                        });
+
+
+                    }
+
+
+                    $('#ref').val('');
+                    $('#lot').val('');
+                    $('#amount').val('');
+
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+        }
+
+
 
     });
+
+
+    function  reset() {
+        $('#details').text('');
+
+        $('ul.tabs').tabs("select", "general-tab");
+        $('#three').addClass('disabled');
+        $('#two').addClass('disabled');
+        $('#register-taxes')[0].reset();
+
+    }
+
 
     $('#details-next').click(function () {
         swal({
@@ -244,6 +311,15 @@ $(document).ready(function () {
 
 
 
+
+    $('input[type="text"].money_keyup').on('keyup', function (event) {
+        $(event.target).val(function (index, value ) {
+            return value.replace(/\D/g, "")
+                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+        });
+    });
+
     function formatMoney() {
         $('input[type="text"].money').each(function () {
             $(this).val(function (index, value ) {
@@ -251,33 +327,33 @@ $(document).ready(function () {
             });
         });
 
-
-
         $('#amount').text(function (index, value ) {
             return number_format(value, 2);
         });
 
-        function number_format(amount, decimals) {
 
-            amount += ''; // por si pasan un numero en vez de un string
-            amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+    }
 
-            decimals = decimals || 0; // por si la variable no fue fue pasada
+    function number_format(amount, decimals) {
 
-            // si no es un numero o es igual a cero retorno el mismo cero
-            if (isNaN(amount) || amount === 0)
-                return parseFloat(0).toFixed(decimals);
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
 
-            // si es mayor o menor que cero retorno el valor formateado como numero
-            amount = '' + amount.toFixed(decimals);
+        decimals = decimals || 0; // por si la variable no fue fue pasada
 
-            var amount_parts = amount.split('.'),
-                regexp = /(\d+)(\d{3})/;
+        // si no es un numero o es igual a cero retorno el mismo cero
+        if (isNaN(amount) || amount === 0)
+            return parseFloat(0).toFixed(decimals);
 
-            while (regexp.test(amount_parts[0]))
-                amount_parts[0] = amount_parts[0].replace(regexp, '$1' + '.' + '$2');
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(decimals);
 
-            return amount_parts.join(',');
-        }
+        var amount_parts = amount.split('.'),
+            regexp = /(\d+)(\d{3})/;
+
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + '.' + '$2');
+
+        return amount_parts.join(',');
     }
 });

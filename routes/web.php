@@ -432,6 +432,12 @@ Route::get('/security',
 Route::get('/roles/manage', function() {
     return view('modules.security.roles.manage');
 })->name('roles.manage');
+Route::get('/roles/register', function() {
+    return view('modules.security.roles.register');
+})->name('roles.register');
+Route::get('/roles/read', function() {
+    return view('modules.security.roles.read');
+})->name('roles.read');
 
 
 // Permissions routes
@@ -439,11 +445,23 @@ Route::get('/roles/manage', function() {
 Route::get('/permissions/manage', function() {
     return view('modules.security.permissions.manage');
 })->name('permissions.manage');
+Route::get('/permissions/register', function() {
+    return view('modules.security.permissions.register');
+})->name('permissions.register');
+Route::get('/permissions/read', function() {
+    return view('modules.security.permissions.read');
+})->name('permissions.read');
 
 // Modules routes 
 Route::get('/modules/manage', function() {
     return view('modules.security.modules.manage');
 })->name('modules.manage');
+Route::get('/modules/register', function() {
+    return view('modules.security.modules.register');
+})->name('modules.register');
+Route::get('/modules/read', function() {
+    return view('modules.security.modules.read');
+})->name('modules.read');
 
 
 Route::get('/bitacora', function() {

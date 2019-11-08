@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 class Company extends Model{
     protected $table='company';
-    protected $appends=['desc','typeCompany'];
+    protected $appends=['desc','typeCompany','typeDocument','document','operator','numberPhone'];
     public function users(){
     return $this->belongsToMany('App\User','users_company')
         ->withPivot('user_id');
@@ -17,7 +17,8 @@ class Company extends Model{
             ->withPivot('ciu_id');
     }
     public function taxesCompanies(){
-        return $this->hasMany('App\Taxe','company_id');
+        return $this->belongsToMany('App\Taxe','company_taxes')
+            ->withPivot('taxe_id');
     }
 
     public function fineCompany(){
@@ -38,6 +39,23 @@ class Company extends Model{
 
     public function getTypeCompanyAttribute(){
         return $this->typeCompany=substr($this->license,0,1);
+    }
+
+    public function getTypeDocumentAttribute(){
+        return $this->typeDocument=substr($this->RIF,0,1);
+    }
+
+    public function getDocumentAttribute(){
+        return $this->document=substr($this->RIF,1,11);
+    }
+
+
+    public function getOperatorAttribute(){
+        return $this->operator=substr($this->phone,0,6);
+    }
+
+    public function getNumberPhoneAttribute(){
+        return $this->phone=substr($this->phone,6,11);
     }
 
 }

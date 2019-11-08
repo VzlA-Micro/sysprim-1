@@ -44,10 +44,7 @@ class CompanyTaxesController extends Controller
     {
 
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('company_id',$company[0]->id)
-            ->where('status','verified')->orWhere('status','process')->where('company_id',$company[0]->id)
-
-            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+        $taxes=Taxe::where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
         return view('modules.payments.history', ['taxes' => $taxes]);
 
@@ -66,7 +63,8 @@ class CompanyTaxesController extends Controller
 
         $date = TaxesMonth::verify($company[0]->id, false);
         $users = $company_find->users()->get();
-        $taxes = Taxe::where('company_id', $company[0]->id)->orderBy('id', 'desc')->take(1)->get();
+        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
+
 
 
         if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
@@ -155,6 +153,8 @@ class CompanyTaxesController extends Controller
             }
 
 
+            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
+
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
@@ -190,8 +190,13 @@ class CompanyTaxesController extends Controller
 
 
         $taxes = Taxe::findOrFail($id);
+        $companyTaxe=$taxes->companies()->get();
+
+
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-        $company_find = Company::find($taxes->company_id);
+        $company_find = Company::find($companyTaxe[0]->id);
+
+
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['tasa' => $mora[0]->tax_rate];
@@ -274,8 +279,17 @@ class CompanyTaxesController extends Controller
         $amountTotal = 0;
 
         $taxes = Taxe::findOrFail($id);
+        $companyTaxe=$taxes->companies()->get();
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-        $company_find = Company::find($taxes->company_id);
+
+
+
+        $company_find = Company::find($companyTaxe[0]->id);
+
+
+
+
+
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['tasa' => $mora[0]->tax_rate];
@@ -370,10 +384,11 @@ class CompanyTaxesController extends Controller
 
 
         $taxes=Taxe::findOrFail($id);
+
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+        $companyTaxe=$taxes->companies()->get();
 
-
-        $company_find=Company::find($taxes->company_id);
+        $company_find=Company::find($companyTaxe[0]->id);
 
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
