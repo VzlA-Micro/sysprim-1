@@ -46,12 +46,12 @@
                         <span class="truncate">Gestionar Pagos</span>
                     </a>
                 </div>
-                <div class="col s12 m3 animated bounceIn">
+                <!-- <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('fines.manage') }}" class="btn-app white deep-orange-text">
                         <i class="icon-warning"></i>
                         <span class="truncate">Gestionar Multas</span>
                     </a>
-                </div>
+                </div> -->
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('tax-unit.manage') }}" class="btn-app white blue-text text-darken-2">
                         <i class="icon-attach_money"></i>
@@ -83,7 +83,7 @@
                     </a>
                 </div>
                 <div class="col s12 m3 animated bounceIn">
-                    <a href="{{ route('ticket-office.payments') }}" class="btn-app white pink-text text-darken-4">
+                    <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
                         <i class="icon-personal_video"></i>
                         <span class="truncate">Taquilla</span>
                     </a>
