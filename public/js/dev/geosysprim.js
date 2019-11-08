@@ -1,4 +1,4 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 function initMap() {
     findCompanySolvent();
 }
@@ -20,16 +20,15 @@ $('#company-process').click(function () {
 
         },
         success: function (response) {
+            console.log(response);
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {lat: 10.0736954, lng: -69.3498597},
+            });
 
-            if(response.taxes!==null){
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 13,
-                    center: {lat: 10.0736954, lng: -69.3498597},
-                });
-
+            if(response.company!==null){
 
                 for (var i = 0; i < response.company.length; i++) {
-
 
                     var lat = parseFloat(response.company[i].lat);
                     var lng = parseFloat(response.company[i].lng);
@@ -37,7 +36,7 @@ $('#company-process').click(function () {
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: response.company[i].name,
-                        icon: 'https://sysprim.com/images/mark-companies.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;
@@ -72,6 +71,11 @@ $('#company-process').click(function () {
 
 
                 }
+
+
+
+
+
             }
 
 
@@ -95,12 +99,13 @@ function findCompanySolvent() {
 
         },
         success: function (response) {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {lat: 10.0736954, lng: -69.3498597},
+            });
 
-            if(response.taxes!==null){
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 13,
-                    center: {lat: 10.0736954, lng: -69.3498597},
-                });
+            if(response.company!==null){
+
 
 
                 for (var i = 0; i < response.company.length; i++) {
@@ -112,7 +117,7 @@ function findCompanySolvent() {
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: response.company[i].name,
-                        icon: 'https://sysprim.com/images/mark-companies.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;

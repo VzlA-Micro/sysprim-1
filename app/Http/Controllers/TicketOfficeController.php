@@ -96,9 +96,7 @@ class TicketOfficeController extends Controller{
                 $taxe->update();
             }else{
                 $amountPayment=$taxe->amount-$acum;
-
-
-                $data=['status'=>'process','payment'=>$amountPayment];
+                $data=['status'=>'process','payment'=>number_format($amountPayment,2)];
             }
         }
 

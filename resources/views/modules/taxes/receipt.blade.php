@@ -68,31 +68,31 @@
     <table style="width: 100%; border-collapse: collapse;">
     	<tr style="">
     		<td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->name}}</td>
+    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies[0]->name}}</td>
     		<td style="width:20%;font-size: 12px !important;"><b>Codigo Catastral:</b></td>
-    		<td style="width:30%;font-size: 11px !important;">{{$taxes->companies->code_catastral}}</td>
+    		<td style="width:30%;font-size: 11px !important;">{{$taxes->companies[0]->code_catastral}}</td>
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies->RIF}}</td>
+    		<td style="width:35%;font-size: 11px !important;">{{$taxes->companies[0]->RIF}}</td>
     		<td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
-    		<td style="width:30%;font-size: 11px !important">{{$taxes->companies->license}}</td>
+    		<td style="width:30%;font-size: 11px !important">{{$taxes->companies[0]->license}}</td>
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
-    		<td style="width:35%;font-size: 11px !important">{{$taxes->companies->address}}</td>
+    		<td style="width:35%;font-size: 11px !important">{{$taxes->companies[0]->address}}</td>
 
 			<td style="width:15%;font-size: 12px !important;"><b></b></td>
 			<td style="width:35%;font-size: 11px !important;"></td>
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Telf. Empresa:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{"0".substr($taxes->companies->phone,3,10)}}</td>
+    		<td style="width:35%;font-size: 11px !important;">{{"0".substr($taxes->companies[0]->phone,3,10)}}</td>
 
     	</tr>
     	<tr>
     		<td style="width:15%;font-size: 12px !important;"><b>Pers.Rsponsable:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{ $taxes->companies->users[0]->name.''.$taxes->companies->users[0]->surname }}</td>
+    		<td style="width:35%;font-size: 11px !important;">{{ $taxes->companies[0]->users[0]->name.''.$taxes->companies[0]->users[0]->surname }}</td>
     		<td style="width:20%;font-size: 12px !important;"><b></b></td>
     		<td style="width:30%;font-size: 11px !important;"></td>
     	</tr>
@@ -175,7 +175,7 @@
 				<td></td>
 				<td style="font-size: 10px !important;"></td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->withholding,2)}}</td>
-				@if($taxes->companies->typeCompany=='R')
+				@if($taxes->companies[0]->typeCompany=='R')
 					<td style="font-size: 10px !important;">
 						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding,2)}}
 					</td>
@@ -215,7 +215,7 @@
 					<td></td>
 					<td style="font-size: 10px !important;"></td>
 					<td style="font-size: 10px !important;">{{number_format($ciu->fiscal_credits,2)}}</td>
-					@if($taxes->companies->typeCompany=='R')
+					@if($taxes->companies[0]->typeCompany=='R')
 						<td style="font-size: 10px !important;">
 							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
 						</td>
@@ -268,7 +268,7 @@
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->code}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->digit}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-			<td style="font-size: 12px !important;text-align: center;">{{$taxes->companies->license}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{$taxes->companies[0]->license}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
 		</tr>
 	</table>
