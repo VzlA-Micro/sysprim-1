@@ -10,9 +10,9 @@ window.onload = function() {
         zoom: 13,
         center: {lat:10.0736954, lng:-69.3498597}
     });
-    map.addListener('click', function(e) {
+    /*map.addListener('click', function(e) {
         addMark(e.latLng, map);
-    });
+    });*/
     addMark(myLatLng,map);
     // quita un valor de un array
     function removeItemFromArr ( arr, item ) {
@@ -33,12 +33,12 @@ window.onload = function() {
             title: "ESTOY AQUÍ",
         });
 
-        google.maps.event.addListener(marker, 'click', function () {
+        /*google.maps.event.addListener(marker, 'click', function () {
             removeItemFromArr(marcadores, marker);
             marker.setMap(null); //borramos el marcador del mapa
             $('#lgn').val(" ");
             $('#lat').val(" ");
-        });
+        });*/
 
 
         marcadores.push(marker);

@@ -159,6 +159,7 @@ class CompaniesController extends Controller
         $numberEmployees=$request->input('number_employees');
         $sector=$request->input('sector');
         $phone=$request->input('phone');
+        $country_code=$request->input('country_code');
         $id=$request->input('id');
         $lat=$request->input('lat');
         $lng=$request->input('lng');
@@ -190,6 +191,7 @@ class CompaniesController extends Controller
         $company->code_catastral=strtoupper($code_catastral);
         $company->parish_id=$parish;
         $company->sector = $sector;
+        $company->phone=$country_code.$phone;
         $company->number_employees = $numberEmployees;
         $company->update();
         $company->ciu()->sync($ciu);

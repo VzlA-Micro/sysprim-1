@@ -21,6 +21,8 @@ class TaxesMonth{
 
         $companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();//busco el ultimo pago realizado por la empresa
 
+
+
         if ($companyTaxes->isEmpty()) {//si no tiene pagos
 
             $fiscal_period = Carbon::parse('2019-12-01');//utilizo la fecha que se creo el registro como referencia si esta atrasado o no
@@ -52,9 +54,12 @@ class TaxesMonth{
                     'status'=>'new_pay'
                 );
         } else {//si tiene datos
+
+
             $fiscal_period = Carbon::parse($companyTaxes[0]->fiscal_period);//utilizo el ultimo pago realido valido y lo tomo como refencia
             $now_pay = Carbon::now();//fecha de pago
             $now_date=Carbon::now()->format('Y-m-d');
+
 
             if($company->typeCompany==='R'){
                 if($now_pay->format('d')<=$dayMoraEspecial){

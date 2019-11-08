@@ -25,8 +25,6 @@ class DatabaseSeeder extends Seeder
                     RolPermissionTableSeeder::class,
                     CatastralTerrenoTableSeeder::class,
                     CatastralConstruccionTableSeeder::class,
-
-
         ]);
     }
 }
