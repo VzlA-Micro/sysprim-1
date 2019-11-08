@@ -165,16 +165,16 @@
                              data-tooltip="V: Venezolano; E: Extrangero">
                             <i class="icon-public prefix"></i>
                             <select name="nationality" id="nationality" required disabled>
-                                <option value="null">...</option>
-                                <option value="V">V</option>
-                                <option value="E">E</option>
+                                <option value="null" >...</option>
+                                <option value="V" @if ($company->users[0]->typeDocument=='V'){{"selected"}}@endif>V</option>
+                                <option value="E" @if ($company->users[0]->typeDocument=='E'){{"selected"}}@endif>E</option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
                         <div class="input-field col s8 m8 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
                             <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
-                                   title="Solo puede escribir números." required value="{{$company->users[0]->ci }}"
+                                   title="Solo puede escribir números." required value="{{$company->users[0]->document }}"
                                    readonly>
                             <label for="ci">Cedula</label>
                         </div>
@@ -196,26 +196,25 @@
                                    value="{{$company->users[0]->surname}}" required readonly>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s3 m4 tooltipped" data-position="bottom"
-                             data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
-                            <i class="icon-phone_android prefix"></i>
-                            <select name="country_code" id="country_code" required disabled>
-                                <option value="null">...</option>
-                                <option value="+58412">(412)</option>
-                                <option value="+58414">(414)</option>
-                                <option value="+58416">(416)</option>
-                                <option value="+58424">(424)</option>
-                                <option value="+58426">(426)</option>
+                        <div class="input-field col s4 m3">
+                            <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
+                            <select name="country_code" id="country_code_company" required disabled>
+                                <option value="null" selected disabled>...</option>
+                                <option value="+58412" @if ($company->users[0]->operator=='+58412'){{"selected"}}@endif >(412)</option>
+                                <option value="+58414" @if ($company->users[0]->operator=='+58414'){{"selected"}}@endif>(414)</option>
+                                <option value="+58416" @if ($company->users[0]->operator=='+58416'){{"selected"}}@endif>(416)</option>
+                                <option value="+58424" @if ($company->users[0]->operator=='+58424'){{"selected"}}@endif>(424)</option>
+                                <option value="+58426" @if ($company->users[0]->operator=='+58426'){{"selected"}}@endif>(426)</option>
+                                <option value="+58251" @if ($company->users[0]->operator=='+58251'){{"selected"}}@endif>(251)</option>
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>
-                        <div class="input-field col s9 m8 tooltipped" data-position="bottom"
-                             data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s8 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+"
-                                   title="Solo puede escribir números." value="{{$company->users[0]->phone}}"
-                                   maxlength="7" minlength="7" required readonly>
+                            <input id="phone" type="tel" name="phone" value="{{ $company->users[0]->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
                         </div>
+
+
                         <div class="input-field col s12 tooltipped" data-position="bottom"
                              data-tooltip="Ej: correo@mail.com">
                             <i class="icon-mail_outline prefix"></i>
