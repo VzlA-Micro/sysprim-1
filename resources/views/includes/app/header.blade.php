@@ -113,7 +113,23 @@
                         <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('ticket-office.payments') }}"><i class="icon-personal_video"></i>Taquilla</a></li><li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
+                        <li class="no-padding">
+                            <ul class="collapsible collapsible-accordion">
+                                <li class="bold">
+                                    <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Atencion al Cliente</a></li>
+                                            <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li>
+                                            <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
+                                            <li><a href="{{ route('ticket-office.payments') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
+                                            <li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
                     @endif
                     @if (\Auth::user()->role_id == 2)
                         <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>

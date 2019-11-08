@@ -39,6 +39,8 @@ $(document).ready(function() {
     $('.tooltipped').tooltip();
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
+    $('.collapsible').collapsible();
+ 
     $('.tabs').tabs({
         // swipeable:true
     });
