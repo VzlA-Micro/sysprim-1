@@ -13,13 +13,13 @@
                 <a href="{{ route('roles.manage') }}" class="breadcrumb">Gestionar Roles</a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('roles.manage') }}" class="btn-app white blue-text text-darken-4">
+                <a href="{{ route('roles.register') }}" class="btn-app white blue-text text-darken-4">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Rol</span>
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('roles.manage') }}" class="btn-app white orange-text">
+                <a href="{{ route('roles.read') }}" class="btn-app white orange-text">
                     <i class="icon-playlist_add_check"></i>
                     <span class="truncate">Consultar Roles</span>
                 </a>
