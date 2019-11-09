@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/receipt.css') }}">
 @endsection
 
 @section('content')
+
     @php setlocale(LC_MONETARY, 'en_US');@endphp
     <div class="container-fluid">
         <div class="row">
@@ -16,12 +16,12 @@
             </div>
             <div class="col s12" id="content">
 
-                <form action="" method="post" class="card" id="register-taxes">
+                <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
                     <ul class="tabs">
 
                         <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
-                        <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
+                        <li class="tab col s4" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
 
 
@@ -37,17 +37,23 @@
 
 
                             <div class="input-field col s12">
-
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="license" id="license" value="">
+                                <input type="text" name="search-code" id="search-code">
                                 <label for="license">Licencia o Código</label>
                             </div>
+
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="name_company" id="name_company" value="" readonly>
                                 <label for="name_company">Razon Social</label>
                             </div>
+
+
+
+                            <input type="text" id="company_id" value="" name="company_id" class="hide">
+
+
 
                             <div class="input-field col s8 m6 tooltipped" data-position="bottom"
                                  data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
@@ -71,7 +77,7 @@
 
                             <div class="input-field col s4 m4">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period" id="fiscal_period" value="">
+                                <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period" value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
 
@@ -88,7 +94,7 @@
                                     </div>
                                     <div class="col s6">
                                         <div class="input-field">
-                                            <a href="#" class="btn peach waves-effect waves-light">
+                                            <a href="#" class="btn peach waves-effect waves-light" id="general-next">
                                                 <i class="icon-navigate_next right"></i>
                                                 Siguiente
                                             </a>
@@ -105,9 +111,7 @@
                         </div>
                         <div class="card-content row" id="details">
                             @csrf
-                            <input type="hidden" id="company_id" name="company_id" value="">
                             <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
-                            <input type="hidden" name="ciu_id[]" value="">
 
 
                             <div id="ciu">

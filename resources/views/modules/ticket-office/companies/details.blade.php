@@ -156,7 +156,7 @@
 
 
             <div class="col m4">
-                <form action="#" id="userUpdate" method="post" class="card">
+                <form action="#" id="form-user" method="post" class="card">
                     <div class="card-header center-align">
                         <h5>CONSTRIBUYENTE</h5>
                     </div>

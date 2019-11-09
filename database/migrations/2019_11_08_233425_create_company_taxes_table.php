@@ -18,7 +18,7 @@ class CreateCompanyTaxesTable extends Migration
             $table->integer('company_id')->unsigned();
             $table->integer('taxe_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('company');
-            $table->foreign('taxe_id')->references('id')->on('taxes');
+            $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
