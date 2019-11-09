@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
                 <a href="{{ route('payments.manage') }}" class="breadcrumb">Gestionar Pagos</a>
                 <a href="#!" class="breadcrumb">Ver Pagos</a>
             </div>

@@ -20,7 +20,13 @@
                 </a>
             </div> -->
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticket-office.payments') }}" class="btn-app white grey-text text-darken-2">
+                <a href="" class="btn-app white pink-text text-darken-2">
+                    <i class="icon-person"></i>
+                    <span class="truncate">Gestionar Contribuyentes</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('payments.manage') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
                 </a>
