@@ -484,3 +484,8 @@ Route::get('/modules/read', function() {
 Route::get('/bitacora', function() {
     return view('modules.security.history');
 })->name('bitacora');
+
+Route::get('/configuraciones/gestion', function() {
+    return view('modules.settings.manage');
+})->name('settings.manage');
+

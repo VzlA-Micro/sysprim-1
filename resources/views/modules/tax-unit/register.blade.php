@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                 <a href="{{ route('tax-unit.manage') }}" class="breadcrumb">Gestionar Unidad Tributaria</a>
                 <a href="{{ route('tax-unit.register') }}" class="breadcrumb">Registrar</a>
             </div>

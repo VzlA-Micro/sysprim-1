@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                 <a href="{{ route('ciu.manage') }}" class="breadcrumb">Gestionar CIIU</a>
                 <a href="#!" class="breadcrumb">Ver Grupos CIIU</a>
             </div>
