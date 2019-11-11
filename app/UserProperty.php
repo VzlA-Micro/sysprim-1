@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserInmueble extends Model
+class UserProperty extends Model
 {
     //
-    protected $table='user_inmueble';
+    protected $table='user_property';
 }

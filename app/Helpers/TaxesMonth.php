@@ -77,11 +77,6 @@ class TaxesMonth{
                 }
             }
 
-
-
-
-
-
             if ($companyTaxes[0]->status!==null) {
                 $now_pay->subMonth(1);
                 if ($companyTaxes[0]->status ==='verified' && $fiscal_period->format('m')===$now_pay->format('m')) {
@@ -138,9 +133,7 @@ class TaxesMonth{
     public  static  function createNotification($name,$mes,$data){
         $notifications=Notification::where('type_notification','date-'.$mes)->where('title',$name)->get();
         if($data!=null&&($notifications->isEmpty()||$notifications[0]->title!=$name)){
-
         }
-
     }
 
     public static function convertFiscalPeriod($fiscal_period){
@@ -148,5 +141,4 @@ class TaxesMonth{
         $fiscal_period_format=self::$mounths[($fiscal_period->format('m'))-1]."-".$fiscal_period->format('Y');
         return $fiscal_period_format;
     }
-
 }
