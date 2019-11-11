@@ -5,21 +5,26 @@ namespace App\Http\Controllers;
 use App\Ciu;
 use App\Company;
 use App\Extras;
+use App\Inmueble;
 use App\Notification;
 use App\Tributo;
+use App\Val_cat_const_inmu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Helpers\TaxesNumber;
 use App\Taxe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
+use App\Helpers\TaxesNumber;
 use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
 use Illuminate\Support\Facades\Mail;
 use App\Helpers\Declaration;
+use App\CatastralTerreno;
+use App\CatastralConstruccion;
+use App\PropertyTaxes;
 
 class PropertyTaxesController extends Controller
 {
@@ -63,8 +68,34 @@ class PropertyTaxesController extends Controller
     public function create($id)
     {
         $declaration=Declaration::VerifyDeclaration($id);
-        var_dump($declaration);
 
+        $property=Inmueble::where('id',$id)->get();
+        $constProperty=Val_cat_const_inmu::where('property_id',$property[0]->id)->get();
+        $catasGround=CatastralTerreno::where('id',$property[0]->value_cadastral_ground_id)->get();
+        $catasBuild=CatastralConstruccion::where('id',$constProperty[0]->value_catas_const_id)->get();
+
+        $taxes=new Taxe();
+        $taxes->code=TaxesNumber::generateNumberTaxes('TEM');
+        $taxes->fiscal_period=Carbon::now()->format('Y-m-d');
+        $taxes->save();
+
+        $taxesId=DB::getPdo()->lastInsertId();
+
+        $taxes=Taxe::where('id',$taxesId)->get();
+        $propertyTaxes=new PropertyTaxes();
+        $propertyTaxes->property_id=$property[0]->id;
+        $propertyTaxes->taxes_id=$taxesId;
+        $period_fiscal= Carbon::now()->year;
+
+
+        return view('dev.paymentProperty.details',array(
+            'property'=>$property,
+            'declaration'=>$declaration,
+            'ground'=>$catasGround,
+            'build'=>$catasBuild,
+            'taxes'=>$taxes,
+            'period'=>$period_fiscal
+        ));
     }
 
     /**
@@ -84,10 +115,7 @@ class PropertyTaxesController extends Controller
        */
 
         $fiscal_period = $request->input('fiscal_period');
-
-
         $company = $request->input('company_id');
-
         $company_find = Company::find($company);
 
         $ciu_id = $request->input('ciu_id');
@@ -96,6 +124,7 @@ class PropertyTaxesController extends Controller
         $withholding = $request->input('withholding');
         $base = $request->input('base');
         $fiscal_credits = $request->input('fiscal_credits');
+
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;

@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Parish;
 use App\CatastralTerreno;
 use App\Inmueble;
-use App\UserInmueble;
+use App\UserProperty;
 use App\Val_cat_const_inmu;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Builder\Property;
+//use PhpParser\Builder\Property;
 use App\CatastralConstruccion;
-use App\PropertyTmp;
 
-class InmuebleController extends Controller
+class PropertyController extends Controller
 {
 
     /**
@@ -23,15 +22,15 @@ class InmuebleController extends Controller
      */
     public function index()
     {
-        $inmuebles = UserInmueble::where('user_id', \Auth::user()->id)->select('inmueble_id')->get();
-        $inmueble_find = Inmueble::whereIn('id', $inmuebles)->get();
+        $inmuebles = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
+        $inmueble_find =Inmueble::whereIn('id', $inmuebles)->get();
         return view('dev.inmueble.menu', ['inmuebles' => $inmueble_find]);
     }
 
     public function myProperty()
     {
-        $inmuebles = UserInmueble::where('user_id', \Auth::user()->id)->select('inmueble_id')->get();
-        $inmueble_find = Inmueble::whereIn('id', $inmuebles)->get();
+        $inmuebles = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
+        $inmueble_find =Inmueble::whereIn('id', $inmuebles)->get();
         return view('dev.inmueble.menuPayments', ['inmuebles' => $inmueble_find]);
     }
     /**
@@ -78,9 +77,9 @@ class InmuebleController extends Controller
         $property = new Inmueble();
 
         $property->parish_id = $parish;
-        $property->value_catastral_terreno_id = $location_cadastral;
-        $property->codigo_catastral = $code_cadastral;
-        $property->direccion = $address;
+        $property->value_cadastral_ground_id = $location_cadastral;
+        $property->code_cadastral = $code_cadastral;
+        $property->address = $address;
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -92,9 +91,15 @@ class InmuebleController extends Controller
 
         $valCat = new Val_cat_const_inmu();
         $valCat->value_catas_const_id = $typeConst;
-        $valCat->inmueble_id = $id;
-        $property->user()->attach(['inmueble_id' => $id], ['user_id' => \Auth::user()->id]);
+        $valCat->property_id = $id;
         $valCat->save();
+
+        $useProperty= new UserProperty();
+        $useProperty->user_id=\Auth::user()->id;
+        $useProperty->property_id=$id;
+        $useProperty->save();
+
+
     }
 
     /**
@@ -106,11 +111,12 @@ class InmuebleController extends Controller
     public function show($id)
     {
         $property = Inmueble::where('id', $id)->get();
-        $pCatasConstruct = Val_cat_const_inmu::where('inmueble_id', $property[0]->id)->select('value_catas_const_id')->get();
+        $pCatasConstruct = Val_cat_const_inmu::where('property_id', $property[0]->id)->select('value_catas_const_id')->get();
 
         $catasConstruct = CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
 
-        $catasTerreno = CatastralTerreno::find($property[0]->value_catastral_terreno_id);
+        $catasTerreno = CatastralTerreno::find($property[0]->value_cadastral_ground_id);
+
 
         $parish = Parish::find($property[0]->parish_id);
         return view('dev.inmueble.details', array(

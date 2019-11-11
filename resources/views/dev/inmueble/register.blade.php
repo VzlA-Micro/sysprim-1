@@ -8,13 +8,14 @@
                 <a href="#!" class="breadcrumb">Registrar Inmueble</a>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
+                @csrf
                 <form class="card" action="#" method="post" id="property" class="" enctype="multipart/form-data">
 
                     <div class="card-header center-align">
                         <h5>Registrar Inmueble</h5>
                     </div>
                     <div class="card-content row">
-                        @csrf
+
 
                         <div class="center">
                             <span style="font-size:20px">Codigo Catastral</span>
