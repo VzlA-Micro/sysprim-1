@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
                                 $('#details-tab').css("overflow-x", "hidden");
                                 $('#details-tab').css("overflow-y", "scroll");
-                                $('#details-tab').css("height", "700px");
+                                $('#details-tab').css("height", "800px");
                             }
                         });
 
@@ -180,6 +180,10 @@ $(document).ready(function () {
 
         var amount=$('#amount_total').val();
         var amount_pay=$('#amount').val();
+
+
+
+
         if(amount_pay>amount){
             swal({
                 title: "Error",
@@ -219,6 +223,7 @@ $(document).ready(function () {
                         });
 
 
+
                     }else{
                         swal({
                             title: "¡Bien hecho!",
@@ -227,6 +232,12 @@ $(document).ready(function () {
                             button: "Ok",
                         }).then(function (accept) {
                             $('#amount_total').val('');
+
+                            if($('#company_id').val()!==''){
+                                window.open(url+'/ticket-office/pdf/taxes/'+$('#taxes_id').val(), "RECIBO DE PAGO", "width=500, height=600")
+                            }
+
+
                             reset();
                         });
 
@@ -301,6 +312,9 @@ $(document).ready(function () {
             if (aceptar) {
                 if($('#company_id').val()!==''){
                     registerTaxes();
+                    $('#three').removeClass('disabled');
+                    $('ul.tabs').tabs("select", "payment-tab");
+
                 }else{
                     $('#three').removeClass('disabled');
                     $('ul.tabs').tabs("select", "payment-tab");
@@ -348,11 +362,17 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-                console.log(response);
+                var taxes=response.taxe;
+                $('#amount_total').val(taxes.amountTotal);
+
+                $('#taxes_id').val(taxes.id_taxes);
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
 
+                M.updateTextFields();
+                formatMoney();
             },
             error: function (err) {
                 console.log(err);
@@ -409,6 +429,52 @@ $(document).ready(function () {
 
 
 
+    $('#fiscal_period').change(function () {
+        var company=$('#company_id').val();
+        var fiscal_period=$('#fiscal_period').val();
+
+        if(fiscal_period===''){
+            $.ajax({
+                method: "GET",
+                url: url + "ticket-office/find/fiscal-period/"+fiscal_period+"/"+company,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+
+                    if (response.status === 'error') {
+                        swal({
+                            title:"Información" ,
+                            text: 'La empresa ' + $('#name_company').val()+'ya declaro el periodo de '+ $('#fiscal_period').val()+', seleccione un periodo fiscal valido',
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $('#fiscal_period').val(' ')
+                    }
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },error: function (err) {
+                    $('#license').val('');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+
+        }
+
+
+    });
 
     $('#search-code').blur(function () {
         if ($('#search-code').val() !== '') {
@@ -432,7 +498,7 @@ $(document).ready(function () {
 
 
                     }else {
-                        console.log(response);
+
                         var company = response.company[0];
                         var user = response.company[0].users[0];
                         var ciu = response.company[0].ciu;
@@ -441,7 +507,7 @@ $(document).ready(function () {
                         $('#RIF').val(company.RIF);
                         $('#company_id').val(company.id);
                         $('#person').val(user.name + " " + user.surname);
-
+                        M.updateTextFields();
                         for (var i = 0; i < ciu.length; i++) {
 
                             var subr = ciu[i].name.substr(0, 3);
@@ -449,7 +515,7 @@ $(document).ready(function () {
 
                             var template = `<div>
                       
-                               <input type="text" id="min_tribu_men" name="min_tribu_men[]" value="${ciu[i].min_tribu_men}">
+                               <input type="text" id="min_tribu_men" name="min_tribu_men[]" class="hide" value="${ciu[i].min_tribu_men}">
                                 <input type="text"  name="ciu_id" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
                                 <div class="input-field col s12 m6">
                                     <i class="icon-assignment prefix"></i>
@@ -544,6 +610,27 @@ $(document).ready(function () {
 
 
 
+    $('#general-next').click(function () {
+        if ($('#company_id').val()==='') {
+            swal({
+                title: "Información",
+                text: 'Debe ingresar una empresa,  para con continuar con el registro.',
+                icon: "info",
+                button: "Ok",
+            });
+        } else if ($('#fiscal_period').val() === '') {
+            swal({
+                title: "Información",
+                text: 'Debe seleccionar un periodo fiscal, para continuar con el registro.',
+                icon: "info",
+                button: "Ok",
+            });
+
+        }
+
+        $('#two').removeClass('disabled');
+        $('ul.tabs').tabs("select", "details-tab");
+    });
 
 
 

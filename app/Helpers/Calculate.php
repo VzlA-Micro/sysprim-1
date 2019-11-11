@@ -41,7 +41,7 @@ class Calculate{
 
 
         //si tiene descuento
-        if($company_find->desc){
+       /* if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee){
                 if ($company_find->number_employees >= $employee->min) {
@@ -54,7 +54,7 @@ class Calculate{
 
 
             $amountTaxes=round($amountTaxes-$amountDesc,2);//descuento
-        }
+        }*/
 
         $amount=['amountInterest'=>$amountInterest,
             'amountRecargo'=>$amountRecargo,

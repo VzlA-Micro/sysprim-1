@@ -62,6 +62,8 @@ class CompanyTaxesController extends Controller
         $company_find = Company::find($company[0]->id);
 
         $date = TaxesMonth::verify($company[0]->id, false);
+
+
         $users = $company_find->users()->get();
         $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
@@ -106,6 +108,7 @@ class CompanyTaxesController extends Controller
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;
+        $taxe->status='temporal';
         $taxe->save();
         $id = DB::getPdo()->lastInsertId();
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
@@ -286,8 +289,6 @@ class CompanyTaxesController extends Controller
 
 
 
-
-
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['tasa' => $mora[0]->tax_rate];
@@ -337,6 +338,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
+
 
 
         return $pdf->download('recibo.pdf');
