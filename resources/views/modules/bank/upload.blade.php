@@ -6,7 +6,7 @@
             <div class="col s12 m6 offset-m3">
                 <form action="{{ route('saveReferenceBank') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>Cargar Estados de cuenta</h5>
+                        <h5>Cargar Archivo de Banco</h5>
                     </div>
                     <div class="card-content row">
                         @csrf

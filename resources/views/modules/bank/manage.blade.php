@@ -17,12 +17,12 @@
                     <span class="truncate">Cargar Pagos</span>
                 </a>
             </div>
-            <div class="col s12 m4 animated bounceIn">
+            <!-- <div class="col s12 m4 animated bounceIn">
                 <a href="#" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver ???</span>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 @endsection

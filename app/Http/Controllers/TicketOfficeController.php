@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Encryption\DecryptException;
+use App\Helpers\TaxesNumber;
+use App\Tributo;
+use App\Helpers\TaxesMonth;
+use App\Ciu;
+
 
 
 class TicketOfficeController extends Controller{
@@ -36,7 +41,11 @@ class TicketOfficeController extends Controller{
         }
     }
 
-    public function cashier(){
+    public function cashier(){;
+
+
+
+
         return view('modules.ticket-office.create');
     }
 
@@ -206,6 +215,120 @@ class TicketOfficeController extends Controller{
         $parish=Parish::all();
         return view('modules.ticket-office.companies.details',['company'=>$company,'parish'=>$parish]);
     }
+
+    //find-license
+
+    public function findCode($code){
+        $company = Company::where('license',$code)->with('ciu')->with('users')->get();
+
+        if($company->isEmpty()){
+            $response=array('status'=>'error','message'=>'La Licencia '.$code.' no esta registrar, debe registrar una empresa.');
+        }else{
+            $response=array('status'=>'success','company'=>$company);
+        }
+
+
+
+        return response()->json($response);
+    }
+
+
+
+    //taxes
+
+
+
+    public function registerTaxes(Request $request){
+
+        $datos=$request->all();
+
+        $fiscal_period = $datos['fiscal_period'];
+
+        $company = $datos['company_id'];
+
+        $company_find = Company::find($company);
+
+        $ciu_id = $datos['ciu_id'];
+        $min_tribu_men = $datos['min_tribu_men'];
+        $deductions = $datos['deductions'];
+
+        $withholding = $datos['withholding'];
+        $base = $datos['base'];
+        $fiscal_credits = $datos['fiscal_credits'];
+
+
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->fiscal_period = $fiscal_period;
+
+        $taxe->save();
+        $id = DB::getPdo()->lastInsertId();
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $date = TaxesMonth::verify($company, false);
+
+
+
+        for ($i = 0; $i < count($base); $i++) {
+            //format a base
+            $base_format = str_replace('.', '', $base[$i]);
+            $base_format = str_replace(',', '.', $base_format);
+            //format a deductions
+            $deductions_format = str_replace('.', '', $deductions[$i]);
+            $deductions_format = str_replace(',', '.', $deductions_format);
+            //format withdolding
+            $withholding_format = str_replace('.', '', $withholding[$i]);
+
+            $withholding_format = str_replace(',', '.', $withholding_format);
+            //format fiscal credits
+            $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
+            $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+            $ciu = Ciu::find($ciu_id[$i]);
+
+            if ($base[$i] == 0) {
+                $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
+                $unid_total = $unid_tribu[0]->value;
+            } else {
+                $taxes = $ciu->alicuota * $base_format / 100;
+                $unid_total = 0;
+            }
+
+            if ($date['mora']) {//si tiene mora
+                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
+                if ($company_find->typeCompany === 'R') {
+                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
+                } else {
+                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
+                }
+
+                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
+                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
+                $mora = 0;
+            } else {
+                $mora = 0;
+                $tax_rate = 0;
+                $interest = 0;
+            }
+
+
+            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
+
+
+            $taxe->taxesCiu()->attach(['taxe_id'=>$id],
+                ['ciu_id'=>$ciu_id[$i],
+                    'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
+                    'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total, 'mora'=>$mora,
+                    'tax_rate'=>$tax_rate,
+                    'interest'=>$interest
+                ]);
+
+
+
+
+        }
+    }
+
+
+
 
 
 

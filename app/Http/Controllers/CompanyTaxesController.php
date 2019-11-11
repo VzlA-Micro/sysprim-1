@@ -104,7 +104,7 @@ class CompanyTaxesController extends Controller
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;
-        $taxe->company_id = $company;
+
         $taxe->save();
 
         $id = DB::getPdo()->lastInsertId();
@@ -191,8 +191,6 @@ class CompanyTaxesController extends Controller
 
         $taxes = Taxe::findOrFail($id);
         $companyTaxe=$taxes->companies()->get();
-
-
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
         $company_find = Company::find($companyTaxe[0]->id);
 

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -34,8 +34,10 @@ $(document).ready(function () {
 
                         var taxe = response.taxe[0];
                         var ciu = response.ciu;
-                        var company = taxe.companies;
+                        var company = taxe.companies[0];
 
+
+                        console.log(company);
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
@@ -102,7 +104,7 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].deductions}" readonly>
+                                <input type="text" name="deductions[]" id="deductions" class="validate money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].deductions}" readonly>
                                 <label for="deductions">Deducciones</label>
                             </div>
                              
@@ -110,7 +112,7 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].fiscal_credits}" readonly>
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].fiscal_credits}" readonly>
                                 <label for="fiscal_credits">Creditos Fiscales</label>
                             </div>
                            
@@ -118,7 +120,7 @@ $(document).ready(function () {
                             <i class="prefix">
                                 <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                             </i>   
-                            <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].interest}" readonly>
+                            <input type="text" name="interest[]" id="interest" class="validate money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].interest}" readonly>
                             <label for="interest">Interes por mora<b> (Bs)</b></label>
                         </div>
                       
@@ -127,7 +129,7 @@ $(document).ready(function () {
                             <i class="prefix">
                                 <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                             </i>   
-                            <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].tax_rate}" readonly>
+                            <input type="text" name="tasa[]" id="tasa" class="validate recargo money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="${ciu[i].tax_rate}" readonly>
                             <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
                         </div>
                         <div class="dividir">
@@ -274,6 +276,8 @@ $(document).ready(function () {
 
 
     $('#details-next').click(function () {
+
+
         swal({
             title: "Información",
             text: "Recuerde verificar al monto antes de realizar el pago, una vez confirmado, no se podrá revertir los cambios.",
@@ -295,8 +299,15 @@ $(document).ready(function () {
             }
         }).then(function (aceptar) {
             if (aceptar) {
-                $('#three').removeClass('disabled');
-                $('ul.tabs').tabs("select", "payment-tab");
+                if($('#company_id').val()!==''){
+                    registerTaxes();
+                }else{
+                    $('#three').removeClass('disabled');
+                    $('ul.tabs').tabs("select", "payment-tab");
+                }
+
+
+
             }
         });
 
@@ -319,6 +330,44 @@ $(document).ready(function () {
                 .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
         });
     });
+
+    function registerTaxes() {
+
+        console.log(form);
+        var form=new FormData(document.getElementById('register-taxes'));
+        form.append('fiscal_period',$('#fiscal_period').val());
+        $.ajax({
+            url: url + "ticket-office/taxes/save",
+            contentType: false,
+            processData: false,
+            data:form ,
+            method: "POST",
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+                console.log(response);
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            },
+            error: function (err) {
+                console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+    }
+
 
     function formatMoney() {
         $('input[type="text"].money').each(function () {
@@ -356,4 +405,219 @@ $(document).ready(function () {
 
         return amount_parts.join(',');
     }
+
+
+
+
+
+    $('#search-code').blur(function () {
+        if ($('#search-code').val() !== '') {
+            var code = $('#search-code').val();
+            $.ajax({
+                method: "GET",
+                url: url + "ticket-office/find/code/" + code,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+                    if (response.status === 'error') {
+                        swal({
+                            title:"Información" ,
+                            text: response.message,
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+                    }else {
+                        console.log(response);
+                        var company = response.company[0];
+                        var user = response.company[0].users[0];
+                        var ciu = response.company[0].ciu;
+                        $('#name_company').val(company.name);
+                        $('#address').val(company.address);
+                        $('#RIF').val(company.RIF);
+                        $('#company_id').val(company.id);
+                        $('#person').val(user.name + " " + user.surname);
+
+                        for (var i = 0; i < ciu.length; i++) {
+
+                            var subr = ciu[i].name.substr(0, 3);
+                            $('ul.tabs').tabs();
+
+                            var template = `<div>
+                      
+                               <input type="text" id="min_tribu_men" name="min_tribu_men[]" value="${ciu[i].min_tribu_men}">
+                                <input type="text"  name="ciu_id" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="search-ciu" id="ciu"  value="${ciu[i].code}">
+                                    <label>CIIU</label>
+                                </div>
+                                <div class="input-field col s10 m6"  >
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " >${ciu[i].name}</textarea>
+                                </div>
+                                
+                               <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                    </i>   
+                                    <input type="text" name="base[]" id="base" class="validate money money_keyup" value="">
+                                    <label for="base">Base Imponible</label>
+                                </div>
+                                
+                                                        
+                              <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="withholding[]" id="withholdings" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="withholdings">Retenciones</label>
+                              </div>                               
+                             
+                     
+                             <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="deductions[]" id="deductions" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="deductions">Deducciones</label>
+                            </div>
+                             
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="fiscal_credits">Creditos Fiscales</label>
+                            </div>
+                           
+                 
+                   
+                       </div>
+           
+            
+                       </div>
+                          
+                       `;
+
+
+                            $('#details').append(template);
+
+                            $('input[type="text"].money_keyup').on('keyup', function (event) {
+                                $(event.target).val(function (index, value ) {
+                                    return value.replace(/\D/g, "")
+                                        .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                                });
+                            });
+
+                            M.updateTextFields();
+
+
+                        }
+                    }
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },error: function (err) {
+                    $('#license').val('');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+    });
+
+
+
+
+
+
+
+
+
+    function userUpdate() {
+        $.ajax({
+            url: url + "users/update",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: new FormData(this),
+            method: "POST",
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: response.message,
+                    icon: "success",
+                    button: "Ok",
+                }).then(function (accept) {
+                    window.location.href = url + "users/manage";
+                });
+                ;
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            },
+            error: function (err) {
+                console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+    }
+
+
+    var date=new Date();
+
+    $('.fiscal_period').datepicker({
+        maxDate:  date,
+        // defaultDate: date,
+        format: 'yyyy-mm-dd', // Configure the date format
+        yearRange: [1900,date.getFullYear()],
+        showClearBtn: false,
+        i18n: {
+            cancel: 'Cerrar',
+            clear: 'Reiniciar',
+            done: 'Hecho',
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+        },
+        disableDayFn: function(date) {
+            if(date.getDate() == 1) // getDay() returns a value from 0 to 6, 1 represents Monday
+                return false;
+            else
+                return true;
+        }
+    });
 });
+
+

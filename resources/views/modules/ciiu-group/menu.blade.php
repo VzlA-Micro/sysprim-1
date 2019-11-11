@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                 <a href="#!" class="breadcrumb">Gestionar CIIU</a>
             </div>
             <div class="col s12 m4 animated bounceIn">

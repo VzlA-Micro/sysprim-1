@@ -402,10 +402,18 @@ Route::get('/ticket-office/view', function() {
 })->name('ticket-office.payments');
 Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
 Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
-
 Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
+Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
+
+
+Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+
+
+
 
 Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
+
+
 
 //Estadisticas
 Route::get('/collection/statistics',array(
@@ -467,3 +475,8 @@ Route::get('/modules/read', function() {
 Route::get('/bitacora', function() {
     return view('modules.security.history');
 })->name('bitacora');
+
+Route::get('/configuraciones/gestion', function() {
+    return view('modules.settings.manage');
+})->name('settings.manage');
+

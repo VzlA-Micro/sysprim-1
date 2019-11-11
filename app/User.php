@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends=['typeDocument','document','operator','numberPhone'];
+
+
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -61,6 +65,23 @@ class User extends Authenticatable
     }
     public function ConfirmedPayments($user) {
         $this->notify(new Payments($user));
+    }
+
+    public function getTypeDocumentAttribute(){
+        return $this->typeDocument=substr($this->ci,0,1);
+    }
+
+    public function getDocumentAttribute(){
+        return $this->document=substr($this->ci,1,11);
+    }
+
+
+    public function getOperatorAttribute(){
+        return $this->operator=substr($this->phone,0,6);
+    }
+
+    public function getNumberPhoneAttribute(){
+        return $this->phone=substr($this->phone,6,11);
     }
 
 }

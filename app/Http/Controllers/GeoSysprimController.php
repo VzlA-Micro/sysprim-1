@@ -37,13 +37,12 @@ class GeoSysprimController extends Controller{
 
 
     public function findCompanyProcess(){
-        $date_now=Carbon::now();
 
-        $taxes=Taxe::where('status','process')->whereDate('created_at','=',$date_now)->get();
+        $taxes=Taxe::where('status','process')->whereDate('created_at','=',Carbon::now()->format('Y-m-d'))->get();
 
         if(!$taxes->isEmpty()){
             foreach ($taxes as $taxe){
-                $company_find[]=$taxe->companies;
+                $company_find[]=$taxe->companies[0];
             }
         }else{
             $company_find=null;

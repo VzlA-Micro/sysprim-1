@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                 <a href="{{ route('ciu.manage') }}" class="breadcrumb">Gestionar Grupo CIIU</a>
                 <a href="{{ route('ciu-branch.manage') }}" class="breadcrumb">Gestionar Ramo CIIU</a>
                 <a href="#!" class="breadcrumb">Registrar Ramo CIIU</a>
@@ -37,12 +38,16 @@
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input id="alicuota" type="text" name="alicuota" required>
                             <label for="alicuota">Alicuota</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-attach_money prefix"></i>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input id="mTM" type="text" name="mTM" required>
                             <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>

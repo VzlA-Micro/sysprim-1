@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
+                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                 <a href="{{ route('ciu.manage') }}" class="breadcrumb">Gestionar Grupo CIIU</a>
                 <a href="{{ route('ciu-branch.manage') }}" class="breadcrumb">Gestionar Ramo CIIU</a>
                 <a href="#!" class="breadcrumb">Ver Ramos CIIU's</a>
@@ -24,22 +25,31 @@
                         <input id="idGroupCiiu" type="hidden" name="idGroupCiiu" value="{{ $groupCiu->id }}">
 
                         <div class="input-field col s12">
+                            <i class="icon-check prefix"></i>
                             <input id="groupCiiu" type="text" name="groupCiiu" readonly value="{{ $groupCiu->name }}">
                             <label for="name">Nombre Del Grupo CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-check prefix"></i>
                             <input id="name" type="text" name="name" required value="{{ $ciu->name }}">
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-confirmation_number prefix"></i>
                             <input id="code" type="text" name="code" required value="{{ $ciu->code }}">
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input id="alicuota" type="text" name="alicuota" required value="{{ $ciu->alicuota }}">
                             <label for="code">Alicuota</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>   
                             <input id="mTM" type="text" name="mTM" required value="{{ $ciu->min_tribu_men }}">
                             <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>
