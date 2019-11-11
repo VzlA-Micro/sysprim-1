@@ -84,6 +84,8 @@ class TaxesMonth{
                     $date = null;
                     $mes=null;
                 }else{
+
+
                     $date_company=$companyTaxes[0]->created_at->format('Y-m-d');
                     if($companyTaxes[0]->status=='process'&&$date_company!==$now_date){
                         $mes=self::$mounths[($now_pay->format('m'))-1];

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -207,6 +207,9 @@ $(document).ready(function () {
                 success: function (response) {
                     console.log(response);
 
+
+
+
                     if(response.status==='process'){
                         $('#amount_total').val(response.payment);
 
@@ -362,6 +365,8 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+            console.log(response);
+
                 var taxes=response.taxe;
                 $('#amount_total').val(taxes.amountTotal);
 
@@ -433,7 +438,7 @@ $(document).ready(function () {
         var company=$('#company_id').val();
         var fiscal_period=$('#fiscal_period').val();
 
-        if(fiscal_period===''){
+        if(fiscal_period!==''){
             $.ajax({
                 method: "GET",
                 url: url + "ticket-office/find/fiscal-period/"+fiscal_period+"/"+company,
@@ -516,7 +521,7 @@ $(document).ready(function () {
                             var template = `<div>
                       
                                <input type="text" id="min_tribu_men" name="min_tribu_men[]" class="hide" value="${ciu[i].min_tribu_men}">
-                                <input type="text"  name="ciu_id" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
+                                <input type="text"  name="ciu_id[]" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
                                 <div class="input-field col s12 m6">
                                     <i class="icon-assignment prefix"></i>
                                     <input type="text" name="search-ciu" id="ciu"  value="${ciu[i].code}">
@@ -532,8 +537,8 @@ $(document).ready(function () {
                                     <i class="prefix">
                                         <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                     </i>   
-                                    <input type="text" name="base[]" id="base" class="validate money money_keyup" value="">
-                                    <label for="base">Base Imponible</label>
+                                    <input type="text" name="base[]" id="base_${subr}" class="validate money money_keyup" value="">
+                                    <label for="base_${subr}">Base Imponible</label>
                                 </div>
                                 
                                                         
@@ -541,8 +546,8 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="withholding[]" id="withholdings" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="withholdings">Retenciones</label>
+                                <input type="text" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="withholdings_${subr}">Retenciones</label>
                               </div>                               
                              
                      
@@ -550,16 +555,16 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="deductions[]" id="deductions" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="deductions">Deducciones</label>
+                                <input type="text" name="deductions[]" id="deductions_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="deductions_${subr}">Deducciones</label>
                             </div>
                              
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="fiscal_credits">Creditos Fiscales</label>
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="fiscal_credits_${subr}">Creditos Fiscales</label>
                             </div>
                            
                  
@@ -611,6 +616,7 @@ $(document).ready(function () {
 
 
     $('#general-next').click(function () {
+
         if ($('#company_id').val()==='') {
             swal({
                 title: "Información",
@@ -626,10 +632,12 @@ $(document).ready(function () {
                 button: "Ok",
             });
 
+        }else{
+            $('#two').removeClass('disabled');
+            $('ul.tabs').tabs("select", "details-tab");
         }
 
-        $('#two').removeClass('disabled');
-        $('ul.tabs').tabs("select", "details-tab");
+
     });
 
 

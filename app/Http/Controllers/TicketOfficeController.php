@@ -241,13 +241,10 @@ class TicketOfficeController extends Controller{
 
     public function registerTaxes(Request $request){
 
-        $datos=$request->all();
-
+        $datos=$request->all();;
         $fiscal_period = $datos['fiscal_period'];
         $company = $datos['company_id'];
         $company_find = Company::find($company);
-
-
 
         $ciu_id = $datos['ciu_id'];
         $min_tribu_men = $datos['min_tribu_men'];
@@ -333,14 +330,17 @@ class TicketOfficeController extends Controller{
                 ]);
 
 
-                $taxesCalculate=Calculate::calculateTaxes($id);
-                $taxesCalculate['id_taxes']=$id;
-                $taxe_update=Taxe::find($id);
-                $taxe_update->amount=$taxesCalculate['amountTotal'];
-                $taxe_update->update();
-                return response()->json(['taxe'=>$taxesCalculate]);
-        }
 
+
+        }
+        $taxesCalculate=Calculate::calculateTaxes($id);
+        $taxesCalculate['id_taxes']=$id;
+        $taxe_update=Taxe::find($id);
+        $taxe_update->amount=$taxesCalculate['amountTotal'];
+        $taxe_update->update();
+
+
+        return response()->json(['taxe'=>$taxesCalculate]);
     }
 
 
