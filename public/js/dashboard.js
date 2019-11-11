@@ -47,7 +47,7 @@ function chartsMonth(data) {
                 "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novienbre", "Diciembre"
             ],
             "datasets": [{ // Sets de datos que tendra la chart
-                // "label": "Ventas",
+                "label": "",
                 "data": [
                     data[1]['enero'],
                     data[1]['febrero'],
