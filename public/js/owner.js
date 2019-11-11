@@ -40,6 +40,7 @@ $(document).ready(function() {
     // $('.parallax').parallax();
     $('.materialboxed').materialbox();
     $('.collapsible').collapsible();
+    $('.fixed-action-btn').floatingActionButton();
  
     $('.tabs').tabs({
         // swipeable:true

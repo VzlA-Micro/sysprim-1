@@ -121,14 +121,13 @@
     <script src="{{ asset('js/fullclip.js') }}"></script>
     <script>
         $('.fullBackground').fullClip({
-            images: ['images/bg-1.jpg','images/bg-2.jpg','images/bg-3.jpg'],
+            images: ['images/bg-1.jpg','images/bg-3.jpg','images/bg-2.jpg', 'images/bg-4.jpg'],
             transitionTime: 3000,
             // wait: 3000
         });
 
         $('.sidenav#side-login').sidenav({
             edge:'right',
-
         });
 
     </script>
