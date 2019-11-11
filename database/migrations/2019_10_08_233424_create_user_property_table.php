@@ -17,6 +17,7 @@ class CreateUserPropertyTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('property_id')->unsigned();
+            $table->string('status',14)->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('property_id')->references('id')->on('property');
             $table->timestamps();

@@ -25,6 +25,7 @@ use App\Helpers\Declaration;
 use App\CatastralTerreno;
 use App\CatastralConstruccion;
 use App\PropertyTaxes;
+use App\Alicuota;
 
 class PropertyTaxesController extends Controller
 {
@@ -73,6 +74,7 @@ class PropertyTaxesController extends Controller
         $constProperty=Val_cat_const_inmu::where('property_id',$property[0]->id)->get();
         $catasGround=CatastralTerreno::where('id',$property[0]->value_cadastral_ground_id)->get();
         $catasBuild=CatastralConstruccion::where('id',$constProperty[0]->value_catas_const_id)->get();
+        $alicuota=Alicuota::where('id',$property[0]->type_inmueble_id)->get();
 
         $taxes=new Taxe();
         $taxes->code=TaxesNumber::generateNumberTaxes('TEM');
@@ -94,7 +96,8 @@ class PropertyTaxesController extends Controller
             'ground'=>$catasGround,
             'build'=>$catasBuild,
             'taxes'=>$taxes,
-            'period'=>$period_fiscal
+            'period'=>$period_fiscal,
+            'alicuota'=>$alicuota
         ));
     }
 

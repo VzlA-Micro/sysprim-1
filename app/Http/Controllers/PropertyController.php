@@ -11,6 +11,7 @@ use App\Val_cat_const_inmu;
 use Illuminate\Support\Facades\DB;
 //use PhpParser\Builder\Property;
 use App\CatastralConstruccion;
+use App\Alicuota;
 
 class PropertyController extends Controller
 {
@@ -24,6 +25,7 @@ class PropertyController extends Controller
     {
         $inmuebles = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
         $inmueble_find =Inmueble::whereIn('id', $inmuebles)->get();
+
         return view('dev.inmueble.menu', ['inmuebles' => $inmueble_find]);
     }
 
@@ -43,7 +45,13 @@ class PropertyController extends Controller
         $catastralTerre = CatastralTerreno::all();
         $catastralConst = CatastralConstruccion::all();
         $parish = Parish::all();
-        return view('dev.inmueble.register', ['parish' => $parish, 'catasTerreno' => $catastralTerre, 'catasConstruccion' => $catastralConst]);
+        $alicuota= Alicuota::all();
+        return view('dev.inmueble.register', [
+            'parish' => $parish,
+            'catasTerreno' => $catastralTerre,
+            'catasConstruccion' => $catastralConst,
+            'alicuota'=>$alicuota
+        ]);
     }
 
 
@@ -73,6 +81,7 @@ class PropertyController extends Controller
         $lat = $request->input('lat');
         $lng = $request->input('lng');
         $typeConst = $request->input('type_const');
+        $type=$request->input('type');
 
         $property = new Inmueble();
 
@@ -84,6 +93,7 @@ class PropertyController extends Controller
         $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
+        $property->type_inmueble_id=$type;
 
         $property->save();
 
