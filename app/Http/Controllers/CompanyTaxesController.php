@@ -44,8 +44,11 @@ class CompanyTaxesController extends Controller
     {
 
         $company=Company::where('name',$company)->get();
-        $taxes=Taxe::where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
 
+        $company=Company::find($company[0]->id);
+        foreach ($company->taxesCompanies as $taxe ){
+            $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+        }
         return view('modules.payments.history', ['taxes' => $taxes]);
 
     }
@@ -62,6 +65,8 @@ class CompanyTaxesController extends Controller
         $company_find = Company::find($company[0]->id);
 
         $date = TaxesMonth::verify($company[0]->id, false);
+
+
         $users = $company_find->users()->get();
         $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
@@ -104,7 +109,7 @@ class CompanyTaxesController extends Controller
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;
-
+        $taxe->status='temporal';
         $taxe->save();
 
         $id = DB::getPdo()->lastInsertId();
@@ -286,8 +291,6 @@ class CompanyTaxesController extends Controller
 
 
 
-
-
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $mora = Extras::orderBy('id', 'desc')->take(1)->get();
         $extra = ['tasa' => $mora[0]->tax_rate];
@@ -337,6 +340,7 @@ class CompanyTaxesController extends Controller
             'amount'=>$amount,
             'firm'=>false
             ]);
+
 
 
         return $pdf->download('recibo.pdf');

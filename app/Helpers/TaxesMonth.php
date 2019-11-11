@@ -1,5 +1,6 @@
 <?php
 namespace App\Helpers;
+use App\Taxe;
 use Illuminate\Support\Facades\DB;
 use App\Company;
 use App\Notification;
@@ -83,6 +84,8 @@ class TaxesMonth{
                     $date = null;
                     $mes=null;
                 }else{
+
+
                     $date_company=$companyTaxes[0]->created_at->format('Y-m-d');
                     if($companyTaxes[0]->status=='process'&&$date_company!==$now_date){
                         $mes=self::$mounths[($now_pay->format('m'))-1];
@@ -113,6 +116,18 @@ class TaxesMonth{
                             'diffDayMora'=>$diffDayMora,
                             'status'=>'new_pay'
                         );
+                    }else if($companyTaxes[0]->status==='temporal'){
+                        $mes=self::$mounths[($now_pay->format('m'))-1];
+                        $date = array(
+                            'mount_pay' => $mes.'-'.$now_pay->format('Y'),
+                            'fiscal_period'=>$now_pay->format('Y-m-d'),
+                            'mora'=>$mora,
+                            'diffDayMora'=>$diffDayMora,
+                            'status'=>'new_pay'
+                        );
+
+                        $taxe_find=Taxe::find($companyTaxes[0]->id);
+                        $taxe_find->delete();
                     }
                 }
 

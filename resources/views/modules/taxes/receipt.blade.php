@@ -266,7 +266,15 @@
 
 		<tr>
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->code}}</td>
-			<td style="font-size: 12px !important;text-align: center;">{{$taxes->digit}}</td>
+			<td style="font-size: 12px !important;text-align: center;">
+				@if($taxes->digit)
+
+					{{$taxes->digit}}
+
+				@else
+					{{"000"}}
+				@endif
+			</td>
 			<td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->companies[0]->license}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
@@ -342,8 +350,10 @@
 			<tr>
 
 				@if($firm)
+
 					<td style="width: 40%;text-align: center;">
 						<img src="{{asset('images/pdf/firma.png')}}" style="width:180px; height:80px;">
+
 					</td>
 				@else
 

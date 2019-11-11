@@ -404,9 +404,9 @@ Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('ca
 Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
-
-
 Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 
 
 

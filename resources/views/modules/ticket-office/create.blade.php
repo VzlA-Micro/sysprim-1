@@ -21,7 +21,7 @@
 
                         <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
-                        <li class="tab col s4" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
+                        <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
 
 

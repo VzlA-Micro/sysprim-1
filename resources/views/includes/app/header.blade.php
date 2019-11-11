@@ -135,7 +135,7 @@
                                             <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
                                             <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                             <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
-                                            <li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>
+                                            <!--<li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
                                         </ul>
                                     </div>
                                 </li>
