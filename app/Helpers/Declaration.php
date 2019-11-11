@@ -32,14 +32,13 @@ class Declaration
         $january = 01;
         $march = 03;
 
-        $day=Carbon::now()->format('d');
+        $day = Carbon::now()->format('d');
 
-        $mes=11;
-        var_dump($id);
+        $mes = 11;
 
-        if (($mes<=12 && $mes>=11) && ($day>=01 && $day<=31) ){
-        //if (($monthCurrent <= $march && $monthCurrent >= $january) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
-            $property =Inmueble::where('id', $id)->get();
+        if (($mes <= 12 && $mes >= 11) && ($day >= 01 && $day <= 31)) {
+            //if (($monthCurrent <= $march && $monthCurrent >= $january) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
+            $property = Inmueble::where('id', $id)->get();
 
             $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
 
@@ -51,26 +50,36 @@ class Declaration
 
             if ($property[0]->area_ground !== 0) {
 
-                $totalGround = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $tributo[0]->value;
+                $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $tributo[0]->value;
 
+                $totalGround = number_format($totalground, 2,',','.');
 
             } else {
-                $totalGround=0;
+                $totalGround = 0;
             }
             if ($property[0]->area_build !== 0) {
                 $baseImponibleForBuild = $property[0]->area_build * $cadastralGround[0]->value_terreno_construccion * $tributo[0]->value;
                 $valueBuild = $cadastralBuild[0]->value_edificacion * $tributo[0]->value;
-                $totalBuild = $baseImponibleForBuild + $valueBuild;
-                var_dump($totalBuild);
+                $totalbuild = $baseImponibleForBuild + $valueBuild;
+                $totalBuild=number_format($totalbuild,2,',','.');
+
             } else {
                 $totalBuild = 0;
             }
 
-            $declaration=$totalGround+$totalBuild;
+            $declaration = $totalground + $totalbuild;
+            $Declaration= number_format($declaration,2,',','.');
+
         } else {
-            $declaration=false;
+            $declaration = false;
         }
 
-        return $declaration;
+        $amounts = array(
+            'totalGround' => $totalGround,
+            'totalBuild' => $totalBuild,
+            'declaration' => $Declaration
+        );
+
+        return $amounts;
     }
 }
