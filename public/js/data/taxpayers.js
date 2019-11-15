@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
@@ -164,7 +164,7 @@ $(document).ready(function () {
     }
 
 
-    $('#gestionUser').on('submit', function (e) {
+    $('#register').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
             url: url + "user/save",
@@ -186,7 +186,7 @@ $(document).ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url + "users/manage";
+                    window.location.href = url + "taxpayers/manage";
                 });
                 ;
 
@@ -208,14 +208,99 @@ $(document).ready(function () {
         });
     });
 
+    $('#btn-edit').click(function () {
+        $('#phone').removeAttr('disabled');
+        $('#email').removeAttr('disabled');
+        $(this).hide();
+        $('#btn-update').removeClass('hide');
+    });
+
+    $('#btn-reset-password').click(function() {
+        var id = $('#id').val();
+        var ci = $('#ci').val();
+        swal({
+            icon: "info",
+            title: "Resetear Contraseña",
+            text: "¿Está seguro que desea resetear la contraseña? <br> Si lo hace, no podrá revertir los cambios.",
+            buttons: {
+                confirm: {
+                    text: "Resetear",
+                    value: true,
+                    visible: true,
+                    className: "red-gradient"
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true, 
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(confirm => {
+            if(confirm) {
+                $.ajax({
+                    method: 'POST',
+                    datType: 'json',
+                    data: {
+                        id: id,
+                        ci: ci
+                    },
+                    url: url + "taxpayers/reset-password",
+                    success: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: "Reseteo Exitoso",
+                            text: "Se ha reseteado la contraseña éxitosamente.",
+                            icon: "success",
+                            timer: 3000,
+                            buttons: {
+                                confirm: {
+                                    text: "Aceptar",
+                                    className: "green-gradient"
+                                }
+                            }
+                        })
+                        .then(exit => {
+                            location.href = url + 'taxpayers/manage';
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            text: "No se ha reseteado la contraseña",
+                            icon: "info",
+                            buttons: {
+                                confirm: {
+                                    text: "Aceptar",
+                                    className: "blue-gradient"
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                swal({
+                    text: "No se ha reseteado la contraseña",
+                    icon: "info",
+                    buttons: {
+                        confirm: {
+                            text: "Aceptar",
+                            className: "blue-gradient"
+                        }
+                    }
+                });
+            }
+        }); 
+    });
 
     var statusBoton = false;
 
-        $('#userUpdate').on('submit', function (e) {
+        $('#update').on('submit', function (e) {
             e.preventDefault();
             if (statusBoton==true){
                 $.ajax({
-                    url: url + "users/update",
+                    url: url + "taxpayers/update",
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -234,7 +319,7 @@ $(document).ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
-                            window.location.href = url + "users/manage";
+                            window.location.href = url + "taxpayers/manage";
                         });
                         ;
 

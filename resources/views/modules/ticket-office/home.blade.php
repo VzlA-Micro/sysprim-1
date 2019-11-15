@@ -20,7 +20,7 @@
                 </a>
             </div> -->
             <div class="col s12 m3 animated bounceIn">
-                <a href="" class="btn-app white pink-text text-darken-2">
+                <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-person"></i>
                     <span class="truncate">Gestionar Contribuyentes</span>
                 </a>

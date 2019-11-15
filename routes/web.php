@@ -478,3 +478,18 @@ Route::get('/configuraciones/gestion', function() {
     return view('modules.settings.manage');
 })->name('settings.manage');
 
+// -------------- Colaborator routes
+Route::get('/taxpayers/manage', function() {
+    return view('modules.taxpayers.manage');
+})->name('taxpayers.manage');
+
+Route::get('/taxpayers/register', function() {
+    return view('modules.taxpayers.register');
+})->name('taxpayers.register');
+
+Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
+Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
+Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
+Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
+
+

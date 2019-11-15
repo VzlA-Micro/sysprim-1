@@ -140,5 +140,35 @@ class UserController extends Controller{
         $user->update();
     }
 
+    public function showTaxpayer() {
+        $users = User::where('role_id',3)->get();
+        return view('modules.taxpayers.read', array(
+            'users' => $users
+        ));
+    }
 
+    public function detailsTaxpayer($id) {
+        $user = User::find($id);
+        return view('modules.taxpayers.details', array(
+            'user' => $user
+        ));
+    }
+
+    public function updateTaxpayer(Request $request) {
+        $id= $request->input('id');
+        $phone= $request->input('phone');
+        $email= $request->input('email');
+        $user=User::find($id);
+        $user->phone=$phone;
+        $user->email=$email;
+        $user->update();
+    }
+
+    public function resetTaxpayerPassword(Request $request) {
+        $id= $request->input('id');
+        $user=User::find($id);
+        $password = Hash::make($user->ci);
+        $user->password = $password;
+        $user->update();
+    }
 }
