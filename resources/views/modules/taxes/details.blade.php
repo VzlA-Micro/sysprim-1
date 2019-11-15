@@ -15,20 +15,23 @@
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
+                        <h5> Periodo Fiscal:<span> {{ $fiscal_period }}</span></h5>
                     </div>
                     <div class="row padding-2 left-align">
-                        <div class="col m6">
-                            <ul>
-                                <li><b>Periodo Fiscal: </b>{{ $fiscal_period }}</li>
-                                <li><b>Fecha: </b>{{ $taxes->created_at }}</li>
-                            </ul>
-                        </div>
                         <div class="col m6">
                             <ul>
                                 <li><b>Nombre: </b>{{ $taxes->companies[0]->name }}</li>
                                 <li><b>RIF: </b>{{ $taxes->companies[0]->RIF }}</li>
                                 <li><b>Licencia: </b>{{ $taxes->companies[0]->license }}</li>
+                                <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                             </ul>
+                            <ul>
+
+
+                            </ul>
+                        </div>
+                        <div class="col m6">
+
                         </div>
                     </div>
 
@@ -129,7 +132,7 @@
                                     <tr>
                                         <td>{{$ciu->code}}</td>
                                         <td>{{$ciu->name}}</td>
-                                        <td>{{$ciu->alicuota."%"}}</td>
+                                        <td>{{($ciu->alicuota*100)."%"}}</td>
                                         <td>{{$ciu->min_tribu_men}}</td>
                                     </tr>
                                     @endforeach

@@ -24,17 +24,21 @@ $(document).ready(function () {
         }
     });*/
     $('input[type="text"].money_keyup').on('keyup', function (event) {
-        $(event.target).val(function (index, value ) {
-            return value.replace(/\D/g, "")
-                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-        });
+        if($(this).val()==0&&$(this).val().toString().length>=2){
+            $(this).val('');
+        }else{
+            $(event.target).val(function (index, value ) {
+                return value.replace(/\D/g, "")
+                    .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                    .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+            });
+        }
+
     });
 
 
-    $('.base').blur(function () {
 
-    });
+
     $('#taxes-register').submit(function (e) {
         e.preventDefault();
 

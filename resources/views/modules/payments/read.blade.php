@@ -17,6 +17,7 @@
                 <div class="card">
                     <div class="card-content">
                         <table class="centered highlight" id="payments" style="width: 100%">
+
                             <thead>
                                 <tr>
                                     <th>Contribuyente</th>
@@ -29,17 +30,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach($taxes as $taxe)
                                 <tr>
-                                    <td>Jhon Doe</td>
-                                    <td>Transferencia</td>
-                                    <td>Venezuela</td>
-                                    <td>22/06/2019</td>
-                                    <td>5000BS</td>
-                                    <td>12353646246</td>
+                                    <td>{{$taxe->taxes->companies[0]->name}}</td>
+                                    <td>{{$taxe->taxes->typePayment}}</td>
+                                    <td>{{$taxe->taxes->bankName}}</td>
+                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                    <td>{{number_format($taxe->amount,2)}}</td>
+                                    <td>{{$taxe->ref}}</td>
                                     {{-- <td>
                                         <a href="" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
                                     </td> --}}
                                 </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

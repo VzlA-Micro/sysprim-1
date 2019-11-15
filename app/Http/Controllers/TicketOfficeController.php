@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Calculate;
 use App\Payments;
 use App\Taxe;
+use Faker\Provider\Payment;
 use Illuminate\Http\Request;
 use App\CiuTaxes;
 use App\Parish;
@@ -385,6 +386,13 @@ class TicketOfficeController extends Controller{
         ]);
 
         return $pdf->stream();
+    }
+
+    public function taxesAll(){
+        $taxes=Payments::with('taxes')->get();
+
+
+        return view('modules.payments.read',['taxes'=>$taxes]);
     }
 
 

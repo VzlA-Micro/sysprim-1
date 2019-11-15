@@ -46,9 +46,17 @@ class CompanyTaxesController extends Controller
         $company=Company::where('name',$company)->get();
 
         $company=Company::find($company[0]->id);
-        foreach ($company->taxesCompanies as $taxe ){
-            $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+        if(!$company->taxesCompanies->isEmpty()){
+            foreach ($company->taxesCompanies as $taxe ){
+                $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+            }
+
+        }else{
+            $taxes=null;
         }
+
+
+
         return view('modules.payments.history', ['taxes' => $taxes]);
 
     }

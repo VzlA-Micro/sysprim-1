@@ -148,9 +148,7 @@ Route::get('/payments/manage', function() {
 Route::get('/payments/register', function() {
     return view('modules.payments.create');
 })->name('payments.register');
-Route::get('/payments/read', function() {
-    return view('modules.payments.read');
-})->name('payments.read');
+Route::get('/payments/read', 'TicketOfficeController@taxesAll')->name('payments.read');
 Route::get('/payments/details', function() {
     return view('modules.payments.details');
 })->name('payments.details');

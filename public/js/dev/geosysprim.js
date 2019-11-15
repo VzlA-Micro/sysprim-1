@@ -1,4 +1,4 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 function initMap() {
     findCompanySolvent();
 }
@@ -36,7 +36,7 @@ $('#company-process').click(function () {
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: response.company[i].name,
-                        icon: 'https://sysprim.com/images/mark-companies.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;
@@ -117,7 +117,7 @@ function findCompanySolvent() {
                         position: {lat: lat, lng: lng},
                         map: map,
                         title: response.company[i].name,
-                        icon: 'https://sysprim.com/images/mark-companies.png'
+                        icon: 'http://sysprim.com.devel/images/mark-companies.png'
                     });
 
                     var infowindow;

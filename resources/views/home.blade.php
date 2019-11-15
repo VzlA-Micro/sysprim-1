@@ -119,4 +119,14 @@
             @endif
         </div>
     </div>
+
+
 @endsection
+
+<script>
+    if(navigator.onLine){
+        console.info('Conectado a internet');
+    } else {
+        console.info('Sin conexión a internet');
+    }
+</script>

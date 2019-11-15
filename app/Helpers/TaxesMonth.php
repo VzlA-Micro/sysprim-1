@@ -16,7 +16,7 @@ class TaxesMonth{
         $date = null;
         $company = Company::find($id);
 
-        $dayMoraEspecial=20;//el dia de cobro para lo que tienen mora y son agente de retencion
+        $dayMoraEspecial=5;//el dia de cobro para lo que tienen mora y son agente de retencion
         $dayMoraNormal=14;//el dia de cobro para lo que no son agente de retención
         $diffDayMora=0;
 
@@ -47,6 +47,8 @@ class TaxesMonth{
                     }
                 }
                 $now->subMonth(1);
+                $now->setDay(1);
+
                 $date =array(
                     'mount_pay' =>$mes.'-'.$now->format('Y'),
                     'fiscal_period'=>$now->format('Y-m-d'),
@@ -54,6 +56,7 @@ class TaxesMonth{
                     'diffDayMora'=>$diffDayMora,
                     'status'=>'new_pay'
                 );
+
         } else {//si tiene datos
 
 
@@ -80,6 +83,7 @@ class TaxesMonth{
 
             if ($companyTaxes[0]->status!==null) {
                 $now_pay->subMonth(1);
+                $now_pay->setDay(1);
                 if ($companyTaxes[0]->status ==='verified' && $fiscal_period->format('m')===$now_pay->format('m')) {
                     $date = null;
                     $mes=null;

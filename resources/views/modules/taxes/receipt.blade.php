@@ -43,7 +43,7 @@
 	            <td style="width: 25%;" rowspan="2">
 					<img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
 					<span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
-					<span style="font-size: 10px !important;">{{$taxes->created_at}}</span><br>
+					<span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
 
 	             </td>
 	        </tr><!-- 
@@ -91,8 +91,8 @@
 
     	</tr>
     	<tr>
-    		<td style="width:15%;font-size: 12px !important;"><b>Pers.Rsponsable:</b></td>
-    		<td style="width:35%;font-size: 11px !important;">{{ $taxes->companies[0]->users[0]->name.''.$taxes->companies[0]->users[0]->surname }}</td>
+    		<td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
+    		<td style="width:35%;font-size: 11px !important;">{{ $taxes->companies[0]->users[0]->email }}</td>
     		<td style="width:20%;font-size: 12px !important;"><b></b></td>
     		<td style="width:30%;font-size: 11px !important;"></td>
     	</tr>
@@ -136,9 +136,9 @@
 				<td style="width: 10%;font-size: 10px !important;">{{$ciu->ciu->code}}</td>
 				<td style="width: 30%;font-size: 10px;!important;">{{$ciu->ciu->name}}</td>
 				<td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
-				<td style="width: 10%;font-size: 10px; !important;">{{$taxes->fiscal_period}}</td>
+				<td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
 				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
-				<td style="width: 15%;font-size: 10px;!important">{{$ciu->ciu->alicuota."%"}}</td>
+				<td style="width: 15%;font-size: 10px;!important">{{($ciu->ciu->alicuota*100)."%"}}</td>
 				<td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
 			</tr>
 
