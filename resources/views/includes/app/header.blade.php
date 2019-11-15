@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}" class="brand-logo font-audiowide">SEMAT</a>
+            <a href="{{ url('/') }}" class="brand-logo font-ubuntu">SEMAT</a>
             {{-- Sidenav Trigger --}}
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}

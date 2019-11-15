@@ -102,8 +102,8 @@
                                     <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y fehacientes, igualmente autorizo suficientemente al <b>Servicio Municipal de Administración Tributaria (SEMAT)</b> a efecto de verificar la veracidad de lo aquí declarado.<br>A los <b>Numero</b> días del mes de <b>Mes</b> del año <b>Año</b>.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Yo Declaro</a>
+                                    <a href="#!" class="modal-close btn btn-flat waves-effect waves-green">Cancelar</a>
+                                    <a href="#!" class="modal-close btn peach waves-effect waves-light ">Yo Declaro</a>
                                 </div>
                               </div>
                         </div>
