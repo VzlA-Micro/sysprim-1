@@ -20,6 +20,13 @@ Route::get('/', function () {
     }
 });
 
+
+Route::get('/online','HomeController@online');
+
+
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

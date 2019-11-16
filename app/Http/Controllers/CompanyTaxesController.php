@@ -138,6 +138,9 @@ class CompanyTaxesController extends Controller
             //format fiscal credits
             $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
             $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+
+
+
             $ciu = Ciu::find($ciu_id[$i]);
 
             if ($base[$i] == 0) {

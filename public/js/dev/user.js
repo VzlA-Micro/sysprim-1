@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
+
+        alert(online());
+
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
@@ -15,7 +18,6 @@ $(document).ready(function () {
                 icon: "info",
                 button: "Ok",
             });
-
             $('#ci').val('')
         }
 
@@ -78,6 +80,9 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
+                        console.log(rr)
+
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     swal({
@@ -151,6 +156,7 @@ $(document).ready(function () {
                 }
             },
             error: function (err) {
+
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -265,6 +271,30 @@ $(document).ready(function () {
             }
 
         });
+
+
+    function online() {
+      $.ajax({
+            async: false,
+            method: "GET",
+            url: url+"online",
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+              return   online=true;
+            },
+            error: function (err) {
+               return  online = false;
+            }
+        });
+
+
+       return online;
+    }
+
+
 
 
 });

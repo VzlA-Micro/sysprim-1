@@ -45,4 +45,8 @@ class HomeController extends Controller
             return redirect('/')->with('notification','Verifica tu correo para entrar en el sistema');
         }
     }
+
+    public function online(){
+        return $datos=['status'=>200,'online'];
+    }
 }
