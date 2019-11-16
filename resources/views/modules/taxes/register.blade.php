@@ -35,11 +35,13 @@
                             </div>
 
                             <div class="input-field col s12">
-                                <input type="text" name="fiscal_period" id="fiscal_period"
-                                       value="{{$date['mount_pay']}}" disabled>
+                                <i class="icon-date_range prefix"></i>
+                                <input type="text" name="fiscal_period_view" id="fiscal_period_view"
+                                       value="{{$date['mount_pay']}}" readonly>
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
 
+                            <div class="divider"></div>
                             @foreach($company->ciu as $ciu)
                                 <div class="ciu-company">
                                     <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
@@ -104,11 +106,11 @@
                                 <div id="declaracion" class="modal">
                                 <div class="modal-content left-align">
                                     <h5 class="center-align">Declaracción Jurada</h5>
-                                    <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y fehacientes, igualmente autorizo suficientemente al <b>Servicio Municipal de Administración Tributaria (SEMAT)</b> a efecto de verificar la veracidad de lo aquí declarado.<br>A los <b>Numero</b> días del mes de <b>Mes</b> del año <b>Año</b>.</p>
+                                    <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y fehacientes, igualmente autorizo suficientemente al <b>Servicio Municipal de Administración Tributaria (SEMAT)</b> a efecto de verificar la veracidad de lo aquí declarado.<br>A los <b>{{\Carbon\Carbon::now()->format('d')}}</b> días del mes <b>{{\Carbon\Carbon::now()->format('m')}}</b> del año <b>{{\Carbon\Carbon::now()->format('Y')}}</b>.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="accept">Yo Declaro</a>
+                                    <a href="#!" class="modal-close btn btn-flat waves-effect waves-green">Cancelar</a>
+                                    <a href="#!" class="modal-close btn peach waves-effect waves-light " id="accept">Yo Declaro</a>
                                 </div>
                               </div>
                         </div>

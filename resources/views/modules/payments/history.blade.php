@@ -45,24 +45,34 @@
 
                                     <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                     @if($taxe->status==='process')
-                                        <td>SIN CONCILIAR AÚN</td>
+                                        <td>
+
+                                            <button class="btn green">
+                                                <i class="icon-more_horiz left"></i>
+                                                SIN CONCILIAR AÚN
+                                            </button>
+                                        </td>
                                         <td><a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a></td>
-                                    @else
-                                            <td>
-                                                <button class="btn disabled">
-                                                    <i class="icon-more_horiz left"></i>
-                                                    {{ $taxe->status }}
-                                                </button>
-                                            </td>
-                                            @if($taxe->status==='verified')
-                                                <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview left"></i>Detalles</a>
-                                                </td>
-                                            @else
-                                                <td>
-                                                    <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>
-                                                </td>
-                                            @endif
+                                    @elseif($taxe->status==='verified')
+                                        <td>
+                                            <button class="btn green">
+                                                <i class="icon-more_horiz left"></i>
+                                                VERIFICADA.
+                                            </button>
+                                        </td>
+
+                                        <td>
+                                            <a href="{{url('payments/taxes/'.$taxe->id)  }}" class="btn indigo waves-effect waves-light"><i class="icon-pageview left"></i>Detalles</a>
+                                           <!-- <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                        </td>
+
+                                    @elseif($taxe->status=='cancel')
+                                        <td>
+                                            <button class="btn green">
+                                                <i class="icon-more_horiz left"></i>
+                                                CANCELADA.
+                                            </button>
+                                        </td>
                                     @endif
                                 </tr>
                                 @endforeach

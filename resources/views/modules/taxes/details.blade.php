@@ -161,19 +161,19 @@
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
                                 @if($taxes->status!='verified')
-                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
-                                    <i class="icon-refresh right"></i>
-                                </a>
-                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
+                                    <i class="icon-refresh right"></i></a>
+
+                                   <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
+                                        Descargar Calculo.
+                                        <i class="icon-cloud_download right"></i>
+                                    </a>-->
+
+                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger ">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </a>
-
-
-
-
-
 
                                 {{-- Modal structure --}}
                                @endif

@@ -118,7 +118,7 @@ Route::get('ticketOffice/companies/details/{id}','TicketOfficeController@details
 
 // Vehicles module routes
 Route::get('/vehicles/my-vehicles', function() {
-    return view('modules.vehicles.manage        ');
+    return view('modules.vehicles.manage');
 })->name('vehicles.my-vehicles');
 Route::get('/vehicles/register', function() {
     return view('modules.vehicles.register');
@@ -143,6 +143,7 @@ Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
 Route::get('/payments/calculate/{id}','CompanyTaxesController@calculate')->name('taxes.calculate');
+Route::post('/payments/download/calculate','CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
 Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
 
 Route::get('/payments/reconcile', function () {
@@ -411,6 +412,9 @@ Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes'
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
 Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+
+
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 
 

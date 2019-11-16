@@ -44,12 +44,20 @@ class TicketOfficeController extends Controller{
     }
 
     public function cashier(){;
-
-
-
-
         return view('modules.ticket-office.create');
     }
+
+    public function findUser($ci){
+            $user=User::where('ci', $ci)->get();
+            if(!$user->isEmpty()){
+                $response=array('status'=>'success',['user'=>$user[0]]);
+            }else{
+                $response=array('status'=>'error','message'=>'No Encontrada.');
+            }
+            return response()->json($response);
+    }
+
+
 
     public function paymentTaxes(Request $request){
         $id_taxes=$request->input('taxes_id');
@@ -168,32 +176,9 @@ class TicketOfficeController extends Controller{
         $company->created_at='2019-09-14';
         $company->save();
 
-
-
         $id_company = DB::getPdo()->lastInsertId();
 
-
-
-        $nacionality=$request->input('nationality');
-        $ci= $request->input('ci');
-        $nameUser= $request->input('name_user');
-        $surname= $request->input('surname');
-        $phone= $request->input('phone_user');
-        $country_code= $request->input('country_code_user');
-        $email= $request->input('email');
-        $password=Hash::make($nacionality.$ci);
-
-        $user=new User();
-        $user->ci=$nacionality.$ci;
-        $user->name=$nameUser;
-        $user->surname=$surname;
-        $user->phone=$country_code.$phone;
-        $user->confirmed=1;
-        $user->role_id=3;
-        $user->email=$email;
-        $user->password=$password;
-        $user->save();
-        $id_user = DB::getPdo()->lastInsertId();
+        $id_user =$request->input('user_id');
 
         $company->users()->attach(['company_id' => $id_company], ['user_id' => $id_user]);
         foreach ($ciu as $ciu) {
@@ -390,10 +375,11 @@ class TicketOfficeController extends Controller{
 
     public function taxesAll(){
         $taxes=Payments::with('taxes')->get();
-
-
         return view('modules.payments.read',['taxes'=>$taxes]);
     }
+
+
+
 
 
 

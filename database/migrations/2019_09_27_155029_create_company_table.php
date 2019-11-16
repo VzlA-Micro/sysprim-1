@@ -20,8 +20,8 @@ class CreateCompanyTable extends Migration
             $table->string('code_catastral',20);
             $table->string('license',20);
             $table->date('opening_date')->nullable();
-            $table->string('lat',20);
-            $table->string('lng',20);
+            $table->string('lat',20)->nullable();
+            $table->string('lng',20)->nullable();
             $table->text('address');
             $table->integer('number_employees')->nullable();
             $table->string('sector',100)->nullable();

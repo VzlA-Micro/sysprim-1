@@ -316,8 +316,6 @@ $(document).ready(function () {
         var code = $('#code').val();
 
 
-        console.log(code);
-
         var band = true;
         if(code!==""){
             $.ajax({
@@ -334,7 +332,7 @@ $(document).ready(function () {
                                 <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="${response.ciu.id}">
                                 <div class="input-field col s12 m5">
                                     <i class="icon-assignment prefix"></i>
-                                    <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}">
+                                    <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >
                                     <label>CIIU</label>
                                 </div>
                                 <div class="input-field col s10 m6"  >
@@ -486,23 +484,6 @@ $(document).ready(function () {
     });
 
 
-    $('#user-next').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "company-tab");
-    });
-
-
-    $('#company-next').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "map-tab");
-    });
-
-
-    $('#company-previous').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "user-tab");
-    });
-
 
     function verifyRIF() {
         var rif = $('#document_type').val() + $('#RIF').val();
@@ -645,6 +626,69 @@ $(document).ready(function () {
         }
     });
 
+
+    //tab ticktffice
+    $('#user-next').click(function () {
+
+        if($('#ci').val()==='' || $('#name_user').val()===''){
+            swal({
+                title: "Información",
+                text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
+                icon: "info",
+                button: "Ok",
+            });
+        }else{
+
+
+            $('#company-tab-two').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "company-tab");
+
+        }
+
+    });
+
+
+    $('#company-next').click(function (){
+        var band=true;
+
+        $('.company-validate').each(function () {
+            if($(this).val()===''||$(this).val()===null) {
+                swal({
+                    title: "Información",
+                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                    icon: "info",
+                    button: "Ok",
+                });
+
+                band = false;
+            }else if($('#ciu').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
+                    icon: "info",
+                    button: "Ok",
+                });
+                band=false;
+            }
+
+        });
+
+        if(band){
+            $('#map-tab-three').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "map-tab");
+        }
+
+    });
+
+
+    $('#company-previous').click(function () {
+        $('ul.tabs').tabs();
+        $('ul.tabs').tabs("select", "user-tab");
+    });
+
+
 });
 
 
@@ -686,9 +730,9 @@ function initMap() {
             marker.setMap(null);
 
             swal({
-                title: "¡Oh no!",
+                title: "Información",
                 text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-                icon: "error",
+                icon: "info",
                 button: "Ok",
             });
         } else {

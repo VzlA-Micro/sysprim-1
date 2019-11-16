@@ -5,8 +5,10 @@ $(document).ready(function () {
 
 
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
             CheckCedula();
+        }else{
+
         }
     });
 
@@ -28,6 +30,7 @@ $(document).ready(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
+
     });
 
 
@@ -65,9 +68,9 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.status === 'error') {
                         swal({
-                            title: "¡Oh no!",
+                            title: "Información",
                             text: response.message,
-                            icon: "error",
+                            icon: "info",
                             button: "Ok",
                         });
 

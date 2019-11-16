@@ -462,13 +462,122 @@ class CompanyTaxesController extends Controller
 
     }
 
-    public function calculate($id)
-    {
+    public function calculate($id){
         $taxes = Taxe::findOrFail($id);
         $taxes->delete();
         return redirect('payments/create/' . session('company'));
+    }
+
+
+
+
+    public function downloadCalculate(Request $request){
+        $amountInterest=0;//total de intereses
+        $amountRecargo=0;//total de recargos
+        $amountCiiu=0;//total de ciiu
+        $amountDesc=0;//Descuento
+        $amountTaxes=0;//total a de impuesto
+        $amountTotal=0;
+
+        $id = $request->input('taxes_id');
+        $amount = $request->input('total');
+
+        $amount_format = str_replace('.', '', $amount);
+        $amount_format = str_replace(',', '.', $amount_format);
+        $taxes = Taxe::find($id);
+
+
+
+
+        $taxes->amount = $amount_format;
+        $code = 'PCC00000000';
+        $taxes->code = $code;
+        $taxes->status = 'calculate';
+        $taxes->branch = 'Act.Eco';
+        $code = substr($code, 3, 12);
+        $taxes->update();
+
+
+
+
+        $taxes=Taxe::findOrFail($id);
+        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+        $companyTaxe=$taxes->companies()->get();
+        $company_find=Company::find($companyTaxe[0]->id);
+
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra = ['tasa' => $mora[0]->tax_rate];
+
+        foreach ($ciuTaxes as $ciu) {
+            $amountInterest += $ciu->interest;
+            $amountRecargo += $ciu->tax_rate;
+
+            if ($company_find->TypeCompany === 'R') {
+                $amountCiiu += $ciu->totalCiiu + $ciu->withholding - $ciu->deductions - $ciu->fiscal_credits;
+            } else {
+                $amountCiiu += $ciu->totalCiiu - $ciu->withholding - $ciu->fiscal_credits - $ciu->dedutions;
+            }
+        }
+
+        $amountTaxes = $amountInterest + $amountRecargo + $amountCiiu;//Total
+
+        //si tiene descuento
+
+        /*if($company_find->desc){
+            $employees = Employees::all();
+            foreach ($employees as $employee) {
+                if ($company_find->number_employees >= $employee->min) {
+                    if ($company_find->number_employees <= $employee->max) {
+                        $amountDesc = $amountTaxes * $employee->value / 100;
+
+                    }
+                }
+            }
+
+            $amountTaxes=$amountTaxes-$amountDesc;//descuento
+        }*/
+
+
+        $amount = ['amountInterest' => $amountInterest,
+            'amountRecargo' => $amountRecargo,
+            'amountCiiu' => $amountCiiu,
+            'amountTotal' => $amountTaxes,
+            'amountDesc' => $amountDesc
+        ];
+
+
+        $pdf = \PDF::loadView('modules.taxes.receipt-calculate',[
+            'taxes'=>$taxes,
+            'fiscal_period'=>$fiscal_period,
+            'extra'=>$extra,
+            'ciuTaxes'=>$ciuTaxes,
+            'amount'=>$amount,
+            'firm'=>true
+        ]);
+
+
+        $taxes->delete();
+        return $pdf->stream('recibo.pdf');
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*foreach($taxes->taxesCiu as $ciu){
         if($ciu->pivot->base == 0){

@@ -332,6 +332,8 @@ $(document).ready(function () {
 
 
 
+
+
     $('#scan').click(function () {
         $('#search').focus();
         $('#search').val("");
@@ -392,6 +394,16 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
 
 
     function formatMoney() {
@@ -713,6 +725,95 @@ $(document).ready(function () {
                 return true;
         }
     });
+
+
+
+
+    $('#ci').blur(function () {
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+            CheckCedula();
+        }
+    });
+
+    $('#ci').keyup(function () {
+        if($('#nationality').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
+                icon: "info",
+                button: "Ok",
+            });
+            $('#ci').val('')
+        }
+
+    });
+
+
+    $('#nationality').change(function () {
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+            CheckCedula();
+        }
+
+    });
+
+    function CheckCedula() {
+        if ($('#ci').val() !== '') {
+            var ci = $('#ci').val();
+            var nationality = $('#nationality').val();
+            $.ajax({
+                method: "GET",
+                url: url+"/ticket-office/find/user/"+nationality+ci,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+
+
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Información",
+                            text: "El Contribuyente no esta registrado, Debe registrar el contribuyente antes para poder incluir una empresa.",
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+                    } else {
+                        console.log(response);
+
+                        var user=response[0].user;
+                        $('#name_user').val(user.name);
+                        $('#user_id').val(user.id);
+                        $('#surname').val(user.surname);
+                        $('#email').val(user.email);
+                        M.updateTextFields();
+                    }
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                },
+                error: function (err) {
+                    console.log(rr)
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+    }
+
+
+
+
 });
 
 

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    var url = "http://sysprim.com.devel/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
@@ -69,6 +71,10 @@ $(document).ready(function () {
     });
 
 
+    $('#download-calculate').click(function () {
+        $('#register-taxes').attr('action',url+'payments/download/calculate');
+        $('#register-taxes')[0].submit();
+    });
 
 
 
