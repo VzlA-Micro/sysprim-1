@@ -370,6 +370,15 @@ Route::get('/inmueble/statement/{id}',array(
     'as'=>'propertyStatement'
 ));
 
+Route::post('/inmueble/calcu',array(
+    'uses'=>'PropertyTaxesController@calcu',
+    'as'=>'propertyCalcu'
+));
+
+Route::post('/inmueble/calcuFraccionado',array(
+    'uses'=>'PropertyTaxesController@calcuFraccionado',
+    'as'=>'propertyCalcuFraccionado'
+));
 
 //verifyPaymentsBanks
 

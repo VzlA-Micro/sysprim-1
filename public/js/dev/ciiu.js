@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com/";
     $('#ciiu').on('submit',function (e) {
         e.preventDefault();
         $.ajax({

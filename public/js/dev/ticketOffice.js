@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {

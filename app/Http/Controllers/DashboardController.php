@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $banesco = 0;
         $banco100 = 0;
         $bnc = 0;
-        $bod = 0;
+        $bod= 0;
         $bicentenario = 0;
         $enero = 0;
         $febrero = 0;
@@ -114,21 +114,29 @@ class DashboardController extends Controller
 
         $taxe = Taxe::where('status', 'verified')
             ->sum('amount');
-        $banesco = Taxe::where('status', 'verified')
+        $taxes=number_format($taxe, 2, ',', '.');
+
+        $banesco1 = Taxe::where('status', 'verified')
             ->where('bank', 55)
             ->sum('amount');
-        $banco100 = Taxe::where('status', 'verified')
+        $banesco=number_format($banesco1, 2, ',', '.');
+
+        $banco1001 = Taxe::where('status', 'verified')
             ->where('bank', 33)
             ->sum('amount');
-        $bnc = Taxe::where('status', 'verified')
+        $banco100=number_format($banco1001, 2, ',', '.');
+        $bnc1 = Taxe::where('status', 'verified')
             ->where('bank', 99)
             ->sum('amount');
-        $bod = Taxe::where('status', 'verified')
+        $bnc=number_format($bnc1, 2, ',', '.');
+        $bod1 = Taxe::where('status', 'verified')
             ->where('bank', 44)
             ->sum('amount');
-        $bicentenario = Taxe::where('status', 'verified')
+        $bod=number_format($bod1, 2, ',', '.');
+        $bicentenario1 = Taxe::where('status', 'verified')
             ->where('bank', 77)
             ->sum('amount');
+        $bicentenario=number_format($bicentenario, 2, ',', '.');
 
 
         //Recaudacion por meses
@@ -177,6 +185,8 @@ class DashboardController extends Controller
             ->whereMonth('created_at', '=', '11')
             ->whereYear('created_at', '=', $year)
             ->sum('amount');
+
+        //$noviembre=number_format($noviembre1, 2, ',', '.');
         $diciembre = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '12')
             ->whereYear('created_at', '=', $year)
@@ -502,7 +512,7 @@ class DashboardController extends Controller
             ->sum('amount');
 
         $collection = array(
-            'total' => $taxe,
+            'total' => $taxes,
             'banesco' => $banesco,
             'banco100' => $banco100,
             'bnc' => $bnc,
@@ -581,7 +591,7 @@ class DashboardController extends Controller
             'noviembre' => $bodNoviembre,
             'diciembre' => $bodDiciembre
         );
-
+        //number_format($total, 2, ',', '.');
         $banco100Month = array(
             'enero' => $banco100Enero,
             'febrero' => $banco100Febrero,

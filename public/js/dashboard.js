@@ -59,7 +59,7 @@ function chartsMonth(data) {
                     data[1]['agosto'],
                     data[1]['septiembre'],
                     data[1]['octubre'],
-                    data[1]['noviembre'],
+                    addCommas(data[1]['noviembre']),
                     data[1]['diciembre']],
                 "fill": false,
                 "borderColor": "rgb(0,0,0,.5)",
@@ -229,3 +229,15 @@ function chartsMonth(data) {
     });
 }
 
+function addCommas (nStr)
+{
+    nStr += '';
+    x = nStr.split ('.');
+    x1 = x [0];
+    x2 = x.length> 1? '.' + x [1]: '';
+    var rgx = / (\ d +) (\ d {3}) /;
+    while (rgx.test (x1)) {
+        x1 = x1.replace (rgx, '$ 1' + ',' + '$ 2');
+    }
+    return x1 + x2;
+}

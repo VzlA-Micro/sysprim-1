@@ -87,10 +87,10 @@
                                 </table>
                                 <p><b>Modo De Pago: </b></p>
                                 <div class="col s12 m6 ">
-                                    <button id="fraccionado" class="btn  btn-rounded peach waves-effect waves-light ">Pago Fraccionado</button>
+                                    <button type="button" id="fraccionado" class="btn btn-rounded peach waves-effect waves-light ">Pago Fraccionado</button>
                                 </div>
                                 <div class="col s12 m6 ">
-                                    <button id="fraccionado" class="btn  btn-rounded peach waves-effect waves-light ">20% Descuento</button>
+                                    <button type="button" id="descuento" class="btn btn-rounded peach waves-effect waves-light ">20% Descuento</button>
                                 </div>
                             </div>
                             <div class="col l6 s12">
@@ -103,7 +103,7 @@
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input type="text" name="total" class="validate total money"  value="{{$declaration ['declaration']}}" readonly>
+                                    <input id="total" type="text" name="total" class="validate"  value="{{$declaration ['declaration']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
@@ -188,6 +188,6 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/dev/taxesProperty.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
