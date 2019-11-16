@@ -195,7 +195,7 @@
                                                 </a>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                Pago por Transferencia Bancaria
+                                                <h5>Pago por Transferencia Bancaria</h5>
                                                 <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
                                                 <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
                                                     Transferencia
@@ -208,7 +208,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                Pago por Deposito Bancario
+                                                <h5>Pago por Deposito Bancario</h5>
                                                 <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
                                                 <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
                                                     Deposito

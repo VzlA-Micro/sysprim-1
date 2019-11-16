@@ -501,7 +501,7 @@ Route::get('/taxpayers/manage', function() {
 Route::get('/taxpayers/register', function() {
     return view('modules.taxpayers.register');
 })->name('taxpayers.register');
-
+Route::post('/taxpayers/save', 'UserController@storeTaxayer')->name('taxpayers.save');
 Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
 Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
 Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
