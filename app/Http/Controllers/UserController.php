@@ -162,6 +162,30 @@ class UserController extends Controller{
         ));
     }
 
+    public function storeTaxpayer(Request $request) {
+        $nacionality= $request->input('nationality');
+        $ci= $request->input('ci');
+        $name= $request->input('name');
+        $surname= $request->input('surname');
+        $phone= $request->input('phone');
+        $country_code= $request->input('country_code');
+        $role= $request->input('role');
+        $email= $request->input('email');
+        $fullCi = $nacionality.$ci;
+        $password=Hash::make($fullCi);
+
+        $user=new User();
+        $user->ci=$nacionality.$ci;
+        $user->name=$name;
+        $user->surname=$surname;
+        $user->phone=$country_code.$phone;
+        $user->confirmed=1;
+        $user->role_id=$role;
+        $user->email=$email;
+        $user->password=$password;
+        $user->save();
+    }
+
     public function updateTaxpayer(Request $request) {
         $id= $request->input('id');
         $phone= $request->input('phone');

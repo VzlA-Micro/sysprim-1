@@ -167,7 +167,7 @@ $(document).ready(function () {
     $('#register').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: url + "user/save",
+            url: url + "taxpayers/save",
             cache: false,
             contentType: false,
             processData: false,
