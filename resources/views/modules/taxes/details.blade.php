@@ -184,6 +184,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 m4 center-align">
+                                                <h5>Pago por Taquilla SEMAT</h5>
                                                 <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
                                                 <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
                                                     Taquilla
@@ -191,7 +192,7 @@
                                                 </a>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                <div class="img"></div>
+                                                Pago por Transferencia Bancaria
                                                 <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
                                                 <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
                                                     Transferencia
@@ -204,6 +205,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m4 center-align">
+                                                Pago por Deposito Bancario
                                                 <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
                                                 <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
                                                     Deposito

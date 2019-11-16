@@ -45,11 +45,13 @@
                             <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->license }}" required readonly>
                             <label for="license">Licencia</label>
                         </div>
+                         @if($company->opening_date)
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>                                                        
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required disabled>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
+                        @endif
                         <div class="input-field col s12 m6">
                             <i class="icon-supervisor_account prefix"></i>                                                                                    
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" value="{{ $company->number_employees }}" disabled>
