@@ -768,22 +768,33 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-
-
-
-
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
                             text: "El Contribuyente no esta registrado, Debe registrar el contribuyente antes para poder incluir una empresa.",
                             icon: "info",
-                            button: "Ok",
-                        });
+                            buttons: {
+                                confirm: {
+                                    text: "Registrarlo",
+                                    value: true,
+                                    visible: true,
+                                    className: "green"
 
+                                },
+                                cancel: {
+                                    text: "Cancelar",
+                                    value: false,
+                                    visible: true,
+                                    className: "grey lighten-2"
+                                }
+                            }
+                        }).then(function (aceptar) {
+                            if(aceptar){
+                                window.location.href = url + "taxpayers/register";
+                            }
+                        })
 
                     } else {
-                        console.log(response);
-
                         var user=response[0].user;
                         $('#name_user').val(user.name);
                         $('#user_id').val(user.id);

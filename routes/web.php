@@ -74,6 +74,10 @@ Route::post('/users/update/',array(
     'uses'=>'UserController@update'
 ));
 
+Route::get('/avatar/{filename}', 'UserController@getImage')->name('users.getImage');
+Route::post('/set-image/{filename}', 'UserController@changeImage')->name('users.setImage');
+
+
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 
