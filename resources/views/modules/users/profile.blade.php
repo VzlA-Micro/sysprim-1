@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/imageUpload.css') }}">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -11,7 +15,20 @@
                 <div class="card">
                     <div class="card-content row">
                         <div class="col s12 m6 center-align">
-                            <img src="{{ asset('images/user.jpg') }}" alt="" srcset="" class="circle responsive-img">
+                            @if (Storage::disk('users')->has(Auth::user()->image))
+                            <div class="wrapper center">
+                                <form action="" method="post" id="change-image">
+                                    @csrf
+                                    <input type="hidden" name="id" id="id" value="{{ Auth::user()->id }}">
+                                    <input type="file" name="image" id="image" value="{{ Auth::user()->image }}" style="display: none">
+                                    <button class="no-image" id="img-result" style="background-image: url('{{ route('users.getImage', ['filename' => Auth::user()->image]) }}') !important">Upload Image</button>
+                                </form>
+                            </div>
+                            @else
+                            <div class="wrapper">
+                                <button class="no-image" id="img-result" style="background-image: url('{{ asset('images/user.png') }}') !important">Upload Image</button>
+                            </div>
+                            @endif
                         </div>
                         <div class="col s12 m6">
                             <h4 class="center-align">{{ Auth::user()->name . " " . Auth::user()->surname }}</h4>
@@ -25,7 +42,7 @@
                             </div>
 
                             <div id="user_form" >
-                                <form method="post" action="#" class="row">
+                                <form method="post" action="#" class="row" id="update" enctype="multipart/form-data">
                                     @csrf
                                     <div class="input-field col s12">
                                         <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate number-and-capital-letter-only">
@@ -67,4 +84,6 @@
 @section('scripts')
     <script src="{{ asset('js/dev/profile.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/imageUpload.js') }}"></script>
+
 @endsection

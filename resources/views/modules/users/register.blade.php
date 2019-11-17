@@ -13,7 +13,7 @@
                 <a href="#!" class="breadcrumb">Registrar Usuario</a>
             </div>
             <div class="col s12 m8 offset-m2">
-                <form action="#" id="gestionUser" method="post" class="card">
+                <form action="#" id="gestionUser" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Registrar Usuario</h5>
                     </div>

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\UploadedFile;
 use App\User;
 use App\Helpers\CedulaVE;
 use App\Role;
@@ -64,21 +68,25 @@ class UserController extends Controller{
         $surname= $request->input('surname');
         $phone= $request->input('phone');
         $country_code= $request->input('country_code');
+        $image = $request->file('image');
         $role= $request->input('role');
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
 
         $user=new User();
-
         $user->ci=$nacionality.$ci;
         $user->name=$name;
         $user->surname=$surname;
         $user->phone=$country_code.$phone;
         $user->confirmed=1;
         $user->role_id=$role;
+        if($image) {
+            $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
+            Storage::disk('users')->put($image_name, File::get($image));
+            $user->image = $image_name;
+        }
         $user->email=$email;
         $user->password=$password;
-
         $user->save();
 
     }
@@ -154,6 +162,30 @@ class UserController extends Controller{
         ));
     }
 
+    public function storeTaxpayer(Request $request) {
+        $nacionality= $request->input('nationality');
+        $ci= $request->input('ci');
+        $name= $request->input('name');
+        $surname= $request->input('surname');
+        $phone= $request->input('phone');
+        $country_code= $request->input('country_code');
+        $role= $request->input('role');
+        $email= $request->input('email');
+        $fullCi = $nacionality.$ci;
+        $password=Hash::make($fullCi);
+
+        $user=new User();
+        $user->ci=$nacionality.$ci;
+        $user->name=$name;
+        $user->surname=$surname;
+        $user->phone=$country_code.$phone;
+        $user->confirmed=1;
+        $user->role_id=$role;
+        $user->email=$email;
+        $user->password=$password;
+        $user->save();
+    }
+
     public function updateTaxpayer(Request $request) {
         $id= $request->input('id');
         $phone= $request->input('phone');
@@ -170,5 +202,34 @@ class UserController extends Controller{
         $password = Hash::make($user->ci);
         $user->password = $password;
         $user->update();
+    }
+
+    public function getImage($filename){
+        $file=Storage::disk('users')->get($filename);
+        return new Response($file,200);
+    }
+
+    public function changeImage(Request $request) {
+        $id = $request->input('id');
+        $image = $request->file('image');
+        $user=User::find($id);
+        $old_image = $user->image;
+        if($old_image == null) {
+            if($image) {
+                $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
+                Storage::disk('users')->put($image_name, File::get($image));
+                $user->image = $image_name;
+            }
+            $user->update();
+        }
+        else{
+            Storage::disk('users')->delete($old_image);
+            if($image) {
+                $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
+                Storage::disk('users')->put($image_name, File::get($image));
+                $user->image = $image_name;
+            }
+            $user->update();
+        }
     }
 }

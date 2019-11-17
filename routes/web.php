@@ -20,6 +20,13 @@ Route::get('/', function () {
     }
 });
 
+
+Route::get('/online','HomeController@online');
+
+
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -67,6 +74,10 @@ Route::post('/users/update/',array(
     'uses'=>'UserController@update'
 ));
 
+Route::get('/avatar/{filename}', 'UserController@getImage')->name('users.getImage');
+Route::post('/set-image/{filename}', 'UserController@changeImage')->name('users.setImage');
+
+
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 
@@ -111,7 +122,7 @@ Route::get('ticketOffice/companies/details/{id}','TicketOfficeController@details
 
 // Vehicles module routes
 Route::get('/vehicles/my-vehicles', function() {
-    return view('modules.vehicles.manage        ');
+    return view('modules.vehicles.manage');
 })->name('vehicles.my-vehicles');
 Route::get('/vehicles/register', function() {
     return view('modules.vehicles.register');
@@ -136,6 +147,7 @@ Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('
 Route::post('/payments/taxes','CompanyTaxesController@store')->name('taxes.save');
 Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
 Route::get('/payments/calculate/{id}','CompanyTaxesController@calculate')->name('taxes.calculate');
+Route::post('/payments/download/calculate','CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
 Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
 
 Route::get('/payments/reconcile', function () {
@@ -148,9 +160,7 @@ Route::get('/payments/manage', function() {
 Route::get('/payments/register', function() {
     return view('modules.payments.create');
 })->name('payments.register');
-Route::get('/payments/read', function() {
-    return view('modules.payments.read');
-})->name('payments.read');
+Route::get('/payments/read', 'TicketOfficeController@taxesAll')->name('payments.read');
 Route::get('/payments/details', function() {
     return view('modules.payments.details');
 })->name('payments.details');
@@ -415,6 +425,9 @@ Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes'
 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
 Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+
+
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 
 
@@ -497,7 +510,7 @@ Route::get('/taxpayers/manage', function() {
 Route::get('/taxpayers/register', function() {
     return view('modules.taxpayers.register');
 })->name('taxpayers.register');
-
+Route::post('/taxpayers/save', 'UserController@storeTaxayer')->name('taxpayers.save');
 Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
 Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
 Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');

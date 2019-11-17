@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 class Company extends Model{
     protected $table='company';
-    protected $appends=['desc','typeCompany','typeDocument','document','operator','numberPhone'];
+    protected $appends=['desc','typeCompany','typeDocument',
+                        'document',
+                        'operator',
+                        'numberPhone',
+
+                        ];
+
+
+
     public function users(){
     return $this->belongsToMany('App\User','users_company')
         ->withPivot('user_id');

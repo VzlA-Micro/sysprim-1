@@ -15,20 +15,23 @@
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
+                        <h5> Periodo Fiscal:<span> {{ $fiscal_period }}</span></h5>
                     </div>
                     <div class="row padding-2 left-align">
-                        <div class="col m6">
-                            <ul>
-                                <li><b>Periodo Fiscal: </b>{{ $fiscal_period }}</li>
-                                <li><b>Fecha: </b>{{ $taxes->created_at }}</li>
-                            </ul>
-                        </div>
                         <div class="col m6">
                             <ul>
                                 <li><b>Nombre: </b>{{ $taxes->companies[0]->name }}</li>
                                 <li><b>RIF: </b>{{ $taxes->companies[0]->RIF }}</li>
                                 <li><b>Licencia: </b>{{ $taxes->companies[0]->license }}</li>
+                                <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                             </ul>
+                            <ul>
+
+
+                            </ul>
+                        </div>
+                        <div class="col m6">
+
                         </div>
                     </div>
 
@@ -129,7 +132,7 @@
                                     <tr>
                                         <td>{{$ciu->code}}</td>
                                         <td>{{$ciu->name}}</td>
-                                        <td>{{$ciu->alicuota."%"}}</td>
+                                        <td>{{($ciu->alicuota*100)."%"}}</td>
                                         <td>{{$ciu->min_tribu_men}}</td>
                                     </tr>
                                     @endforeach
@@ -160,17 +163,17 @@
                                 @if($taxes->status!='verified')
                                 <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
-                                    <i class="icon-refresh right"></i>
-                                </a>
+                                    <i class="icon-refresh right"></i></a>
+
+                                   <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
+                                        Descargar Calculo.
+                                        <i class="icon-cloud_download right"></i>
+                                    </a>-->
+
                                     <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </a>
-
-
-
-
-
 
                                 {{-- Modal structure --}}
                                @endif
@@ -184,6 +187,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 m4 center-align">
+                                                <h5>Pago por Taquilla SEMAT</h5>
                                                 <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
                                                 <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
                                                     Taquilla
@@ -191,7 +195,7 @@
                                                 </a>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                <div class="img"></div>
+                                                <h5>Pago por Transferencia Bancaria</h5>
                                                 <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
                                                 <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
                                                     Transferencia
@@ -204,6 +208,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m4 center-align">
+                                                <h5>Pago por Deposito Bancario</h5>
                                                 <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
                                                 <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
                                                     Deposito

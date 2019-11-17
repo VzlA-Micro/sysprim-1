@@ -1,5 +1,9 @@
 $(document).ready(function () {
+<<<<<<< HEAD
     var url = "http://sysprim.com/";
+=======
+    var url = "http://sysprim.com.devel/";
+>>>>>>> 7e4be31df1c22f746136296f224c9a13b6521d9f
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -332,6 +336,8 @@ $(document).ready(function () {
 
 
 
+
+
     $('#scan').click(function () {
         $('#search').focus();
         $('#search').val("");
@@ -392,6 +398,16 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
 
 
     function formatMoney() {
@@ -713,6 +729,106 @@ $(document).ready(function () {
                 return true;
         }
     });
+
+
+
+
+    $('#ci').blur(function () {
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+            CheckCedula();
+        }
+    });
+
+    $('#ci').keyup(function () {
+        if($('#nationality').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
+                icon: "info",
+                button: "Ok",
+            });
+            $('#ci').val('')
+        }
+
+    });
+
+
+    $('#nationality').change(function () {
+        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+            CheckCedula();
+        }
+
+    });
+
+    function CheckCedula() {
+        if ($('#ci').val() !== '') {
+            var ci = $('#ci').val();
+            var nationality = $('#nationality').val();
+            $.ajax({
+                method: "GET",
+                url: url+"/ticket-office/find/user/"+nationality+ci,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Información",
+                            text: "El Contribuyente no esta registrado, Debe registrar el contribuyente antes para poder incluir una empresa.",
+                            icon: "info",
+                            buttons: {
+                                confirm: {
+                                    text: "Registrarlo",
+                                    value: true,
+                                    visible: true,
+                                    className: "green"
+
+                                },
+                                cancel: {
+                                    text: "Cancelar",
+                                    value: false,
+                                    visible: true,
+                                    className: "grey lighten-2"
+                                }
+                            }
+                        }).then(function (aceptar) {
+                            if(aceptar){
+                                window.location.href = url + "taxpayers/register";
+                            }
+                        })
+
+                    } else {
+                        var user=response[0].user;
+                        $('#name_user').val(user.name);
+                        $('#user_id').val(user.id);
+                        $('#surname').val(user.surname);
+                        $('#email').val(user.email);
+                        M.updateTextFields();
+                    }
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                },
+                error: function (err) {
+                    console.log(rr)
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+    }
+
+
+
+
 });
 
 

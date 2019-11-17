@@ -132,11 +132,11 @@ a[x-apple-data-detectors] {
                    <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#FFFFFF;border-radius:0px; border-top-right-radius: 4px;border-top-left-radius: 4px;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff"> 
                      <tr style="border-collapse:collapse;"> 
                       <td align="center" style="Margin:0;padding-bottom:5px;padding-left:30px;padding-right:30px;padding-top:35px;">
-                        <img src="https://www.sysprim.com/images/alcaldia_logo.png" style="width: 110px; height: 50px;" alt="">
+                        <img src="https://sysprim.com/images/alcaldia_logo.png" style="width: 110px; height: 50px;" alt="">
                       </td> 
                       <td align="center" style="Margin:0;padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:35px;"><h1 style="Margin:0;line-height:40px;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;font-size:32px;font-style:normal;font-weight:normal;color:#111111;"></h1></td> 
                       <td align="center" style="Margin:0;padding-bottom:5px;padding-left:30px;padding-right:30px;padding-top:35px;">
-                        <img src="https://www.sysprim.com/images/semat_logo.png" style="width: 110px; height: 50px;" alt="">
+                        <img src="https://sysprim.com/images/semat_logo.png" style="width: 110px; height: 50px;" alt="">
                       </td> 
                      </tr> 
                      <tr style="border-collapse:collapse;"> 
@@ -171,7 +171,7 @@ a[x-apple-data-detectors] {
                       <td class="es-m-txt-l" bgcolor="#ffffff" align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:18px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;">Estimado contribuyente de SEMAT - Iribarren, se ha adjuntado su planilla de autoliquidación.</p></td> 
                      </tr> 
                      <tr style="border-collapse:collapse;"> 
-                      <td class="es-m-txt-l" bgcolor="#ffffff" align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:18px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;"><b>IMPORTANTE:</b> Recuerde que esta planilla solo es válida para 00-00-0000. Si no coincide con la fecha, no tiene valídez.</p></td> 
+                      <td class="es-m-txt-l" bgcolor="#ffffff" align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:18px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;"><b>IMPORTANTE:</b> Recuerde que esta planilla solo es válida para <?php echo date("d/m/Y"); ?>. Si no coincide con la fecha, no tiene valídez.</p></td>
                      </tr> 
                      <!-- <tr style="border-collapse:collapse;"> 
                       <td align="center" style="Margin:0;padding-left:10px;padding-right:10px;padding-top:35px;padding-bottom:35px;"><span class="es-button-border" style="border-style:solid;border-color:#a51d1d;background:1px;border-width:1px;display:inline-block;border-radius:2px;width:auto;"><a href="https://viewstripo.email/" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:20px;color:#FFFFFF;border-style:solid;border-color:#a51d1d;border-width:15px 30px;display:inline-block;background:#a51d1d;border-radius:2px;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;"> Confirm Account</a></span></td> 
@@ -184,7 +184,7 @@ a[x-apple-data-detectors] {
                      </tr>  -->
                      <tr style="border-collapse:collapse;"> 
                       <td class="es-m-txt-l" align="left" style="padding:0;Margin:0;padding-top:20px;padding-left:30px;padding-right:30px;"><!-- <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:18px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:27px;color:#666666;">If you have any questions, just reply to this email—we're always happy to help out.</p> -->
-                        <img src="https://www.sysprim.com/images/images/jonas_logo.jpg" style="width: 120px; height: 90px;" alt="">
+                        <img src="https://sysprim.com/images/jonas_logo.jpg" style="width: 120px; height: 90px;" alt="">
                       </td> 
                      </tr> 
                      <tr style="border-collapse:collapse;"> 
@@ -273,7 +273,7 @@ a[x-apple-data-detectors] {
                       <td align="center" style="padding:0;Margin:0;padding-top:25px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666;">&nbsp;<strong><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;font-size:14px;text-decoration:underline;color:#111111;">SEMAT - Alcaldia de Iribarren</a></strong>.</p></td> 
                      </tr> 
                      <tr style="border-collapse:collapse;"> 
-                      <td align="left" style="padding:0;Margin:0;padding-top:25px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666;">Ceej - 1234 Main Street - Anywhere, MA - 56789</p></td> 
+                      <td align="left" style="padding:0;Margin:0;padding-top:25px;"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#666666;"></p></td>
                      </tr> 
                    </table></td> 
                  </tr> 

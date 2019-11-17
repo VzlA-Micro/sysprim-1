@@ -1,13 +1,11 @@
 $(document).ready(function () {
-<<<<<<< HEAD
-    var url = "http://sysprim.com.devel/";
-=======
-    var url = "http://sysprim.com/";
->>>>>>> e1c08c5d46c05e2ca1442355639fed1cc0d7dc5f
+    var url = "https://sysprim.com/";
 
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
             CheckCedula();
+        }else{
+
         }
     });
 
@@ -19,7 +17,6 @@ $(document).ready(function () {
                 icon: "info",
                 button: "Ok",
             });
-
             $('#ci').val('')
         }
 
@@ -30,6 +27,7 @@ $(document).ready(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
+
     });
 
 
@@ -67,9 +65,9 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.status === 'error') {
                         swal({
-                            title: "¡Oh no!",
+                            title: "Información",
                             text: response.message,
-                            icon: "error",
+                            icon: "info",
                             button: "Ok",
                         });
 
@@ -82,6 +80,9 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
+                        console.log(rr)
+
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     swal({
@@ -155,6 +156,7 @@ $(document).ready(function () {
                 }
             },
             error: function (err) {
+
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -170,12 +172,15 @@ $(document).ready(function () {
 
     $('#gestionUser').on('submit', function (e) {
         e.preventDefault();
+        var formData = new FormData(this); // Creating FormData object.
+        var image = $('#image')[0].files[0]; // Getting file input data
+        formData.append('file',image);
         $.ajax({
             url: url + "user/save",
             cache: false,
             contentType: false,
             processData: false,
-            data: new FormData(this),
+            data: formData,
             method: "POST",
 
             beforeSend: function () {
@@ -212,6 +217,27 @@ $(document).ready(function () {
         });
     });
 
+
+    $('#image').change(function() {
+        var file = this.files[0];
+        var mimetype = file.type;
+        var match = ["image/jpeg", "image/png", "image/jpg"];
+        if(!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))){
+            swal({
+                text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
+                icon: "warning",
+                button: {
+                    text: "Aceptar",
+                    visible: true,
+                    value: true,
+                    className: "green",
+                    closeModal: true
+                }
+            });
+            $(this).val('');
+            return false;
+        }
+    });
 
     var statusBoton = false;
 
@@ -269,6 +295,33 @@ $(document).ready(function () {
             }
 
         });
+
+
+    function online() {
+      $.ajax({
+            async: false,
+            method: "GET",
+            url: url+"online",
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+              return   online=true;
+            },
+            error: function (err) {
+               return  online = false;
+            }
+        });
+
+
+       return online;
+    }
+
+
+
+
+
 
 
 });
