@@ -27,6 +27,7 @@
                </div> --}}
             @endif
 
+
             @if(\Auth::user()->role_id ==1 || \Auth::user()->role_id ==4)
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
@@ -34,6 +35,7 @@
                         <span class="truncate">Gestionar Usuarios</span>
                     </a>
                 </div>
+
                 <!-- <div class="col s12 m3">
                     <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
                         <i class="icon-work"></i>

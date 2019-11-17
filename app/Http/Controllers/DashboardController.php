@@ -619,7 +619,22 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $company = Taxe::orderByDesc('id')->take(8)->get();
+        /*$data=['coins'=>'PTR','fiats'=>'Bs'];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://petroapp-price.petro.gob.ve/price/");
+        curl_setopt($ch, CURLOPT_HTTPHEADER,array(
+            'Content-Type'=>'application/json',
+            'coins'=>'PTR',
+            'fiats'=>'Bs'));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        $res = curl_exec($ch);
+        curl_close($ch);
+        */
+
+
+
+        $company = Taxe::where('status','verified')->orderByDesc('id')->take(5)->get();
+
         //$companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();
         $ptb = Taxe::where('code', 'like', '%ptb%')
             ->where('status', 'verified')->get();

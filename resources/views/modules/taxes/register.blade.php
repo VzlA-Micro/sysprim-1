@@ -92,9 +92,20 @@
                             El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Economica Art. 112).
                         </div>
                         <div class="card-action center-align">
-                            <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light peach">Registrar
+                            <a href="#declaracion" class="btn btn-large btn-rounded waves-effect waves-light peach modal-trigger">Declarar
                                 <i class="icon-send right"></i>
-                            </button>
+                            </a>
+                              <!-- Modal Structure -->
+                                <div id="declaracion" class="modal">
+                                <div class="modal-content left-align">
+                                    <h5 class="center-align">Declaracción Jurada</h5>
+                                    <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y fehacientes, igualmente autorizo suficientemente al <b>Servicio Municipal de Administración Tributaria (SEMAT)</b> a efecto de verificar la veracidad de lo aquí declarado.<br>A los <b>Numero</b> días del mes de <b>Mes</b> del año <b>Año</b>.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-close btn btn-flat waves-effect waves-green">Cancelar</a>
+                                    <a href="#!" class="modal-close btn peach waves-effect waves-light ">Yo Declaro</a>
+                                </div>
+                              </div>
                         </div>
                     @endif
                 </form>

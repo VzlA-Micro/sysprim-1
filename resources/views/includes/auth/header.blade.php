@@ -2,7 +2,7 @@
     @if (Route::currentRouteName() == "login" || Route::currentRouteName() == "")
     <ul class="sidenav sidenav-fixed hide-on-small-only z-depth-1" id="side-login">
         <li>
-            <a href="" class="logo-container font-audiowide center-align">
+            <a href="" class="logo-container font-ubuntu center-align">
                 <img src="{{ asset('images/iribarren_logo.png') }}" alt="" srcset="">                    
             </a>
         </li>

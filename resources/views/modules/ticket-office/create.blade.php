@@ -21,7 +21,7 @@
 
                         <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
-                        <li class="tab col s4" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
+                        <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
 
 
@@ -255,9 +255,21 @@
             </div>
         </div>
     </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large light-blue darken-4">
+            <i class="large fas fa-cash-register"></i>
+        </a>
+        <ul>
+            <li><a class="btn-floating light-blue darken-1 tooltipped" data-position="left" data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
+            <li><a class="btn-floating light-blue darken-2 tooltipped" data-position="left" data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
+            <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left" data-tooltip="Ver pagos"><i class="fas fa-money-check"></i></a></li>
+        </ul>
+    </div>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
+    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
 @endsection

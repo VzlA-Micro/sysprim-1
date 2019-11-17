@@ -18,7 +18,7 @@ use App\Helpers\TaxesNumber;
 use App\Tributo;
 use App\Helpers\TaxesMonth;
 use App\Ciu;
-
+use App\Extras;
 
 
 class TicketOfficeController extends Controller{
@@ -28,6 +28,7 @@ class TicketOfficeController extends Controller{
     public function QrTaxes($id){
         try {
             $id=Crypt::decrypt($id);
+
             $taxe=Taxe::with('companies')->where('id',$id)->get();
             if($taxe[0]->status==='verified'){
                 return response()->json(['status'=>'verified','taxe'=>null,'calculate'=>null,'ciu'=>null]);
@@ -240,12 +241,9 @@ class TicketOfficeController extends Controller{
 
     public function registerTaxes(Request $request){
 
-        $datos=$request->all();
-
+        $datos=$request->all();;
         $fiscal_period = $datos['fiscal_period'];
-
         $company = $datos['company_id'];
-
         $company_find = Company::find($company);
 
         $ciu_id = $datos['ciu_id'];
@@ -258,11 +256,15 @@ class TicketOfficeController extends Controller{
 
 
         $taxe = new Taxe();
-        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->code = TaxesNumber::generateNumberTaxes('PPV81');
         $taxe->fiscal_period = $fiscal_period;
-
+        $taxe->branch='Act.Eco';
+        $taxe->bank='66';
         $taxe->save();
+
+
         $id = DB::getPdo()->lastInsertId();
+
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $date = TaxesMonth::verify($company, false);
 
@@ -313,10 +315,16 @@ class TicketOfficeController extends Controller{
             $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
 
 
+
+
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                ['ciu_id'=>$ciu_id[$i],
-                    'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
-                    'fiscal_credits'=>$fiscal_credits_format,'unid_tribu'=>$unid_total, 'mora'=>$mora,
+                [   'ciu_id'=>$ciu_id[$i],
+                    'base'=>$base_format,
+                    'deductions'=>$deductions_format,
+                    'withholding'=>$withholding_format,
+                    'fiscal_credits'=>$fiscal_credits_format,
+                    'unid_tribu'=>$unid_total,
+                    'mora'=>$mora,
                     'tax_rate'=>$tax_rate,
                     'interest'=>$interest
                 ]);
@@ -325,6 +333,58 @@ class TicketOfficeController extends Controller{
 
 
         }
+        $taxesCalculate=Calculate::calculateTaxes($id);
+        $taxesCalculate['id_taxes']=$id;
+        $taxe_update=Taxe::find($id);
+        $taxe_update->amount=$taxesCalculate['amountTotal'];
+        $taxe_update->update();
+
+
+        return response()->json(['taxe'=>$taxesCalculate]);
+    }
+
+
+
+
+    public function verifyTaxes($fiscal_period,$company_id){
+        $band=true;
+        $company=Company::where('id','=',$company_id)->with('taxesCompanies')->get();
+        foreach ($company[0]->taxesCompanies as $taxes){
+            if($taxes->fiscal_period==$fiscal_period&&$taxes->status!==null){
+                $band=false;
+            }
+        }
+        $fiscal_period=TaxesMonth::convertFiscalPeriod($fiscal_period);
+        if($band){
+            $response=array('status'=>'success');
+        }else{
+            $response=array('status'=>'error','fiscal_period'=>$fiscal_period);
+        }
+        return response()->json($response);
+    }
+
+
+    public function pdfTaxes($id){
+        $taxes = Taxe::findOrFail($id);
+        $companyTaxe=$taxes->companies()->get();
+        $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
+        $company_find = Company::find($companyTaxe[0]->id);
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra = ['tasa' => $mora[0]->tax_rate];
+
+        $amount=Calculate::calculateTaxes($id);
+
+        $pdf = \PDF::loadView('modules.taxes.receipt',[
+            'taxes'=>$taxes,
+            'fiscal_period'=>$fiscal_period,
+            'extra'=>$extra,
+            'ciuTaxes'=>$ciuTaxes,
+            'amount'=>$amount,
+            'firm'=>true
+        ]);
+
+        return $pdf->stream();
     }
 
 

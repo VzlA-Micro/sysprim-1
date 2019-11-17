@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
             <div class="col s12 m6" data-aos="zoom-in">
 				<div class="widget bootstrap-widget stats">
 					<div class="widget-stats-icon green white-text">
-                        <i class="icon-thumb_up"></i>
+                        <i class="i-bss"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Bolivares</span>
@@ -26,12 +26,12 @@
             <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats">
 					<div class="widget-stats-icon red white-text">
-						<i class="icon-Petro_sign"></i>
+						<i class="i-petro-logo"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Petros</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000" ></span> P.
+                            <span class="timer" data-to="100000000" ></span><i class="i-petro"> </i>
                         </span>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
             <div class="col s12 m6 l4">
 				<div class="widget bootstrap-widget stats banesco-green white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="i-banesco"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banesco</b></span>
@@ -60,7 +60,7 @@
             <div class="col s12 m6 l4">
 				<div class="widget bootstrap-widget stats x100-banco-yellow white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>100% Banco</b></span>
@@ -81,7 +81,7 @@
             <div class="col s12 m6 l4">
 				<div class="widget bootstrap-widget stats bod-green white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="i-bod"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
@@ -102,7 +102,7 @@
             <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats red-gradient white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="i-bicentenario" style="font-size: 30px"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>Banco Bicentenario</b></span>
@@ -123,7 +123,7 @@
             <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats bnc-blue white-text">
 					<div class="widget-stats-icon white-text">
-						<i class="icon-star"></i>
+						<i class="i-bnc"></i>
 					</div>
 					<div class="widget-stats-content">
 						<span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
@@ -144,28 +144,31 @@
             <div class="col s12 m12">
                 <div class="card">
                     <div class="card-content">
-                        <canvas id="tax-collection"></canvas>
+                        <canvas id="tax-collection" style="position: relative; height:40vh; width:80vw"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col s12 m12">
                 <div class="card">
                     <div class="card-content">
-                        <canvas id="bank-earnings"></canvas>
+                        <canvas id="bank-earnings" style="position: relative; height:40vh; width:80vw"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6">
                 <ul class="collection with-header">
                     <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
-                  <!-- @foreach ($company as $compa)
+                  @foreach ($company as $compa)
+
+
                     <li class="collection-item">
                         <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b></span><br>
+                        <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
                         <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
                         <a href="">Detalles...</a>
                         {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
-                    </li>-->
+                    </li>
+
                     @endforeach
                 </ul>
             </div>
