@@ -1,4 +1,4 @@
-$(document).ready(function () {s
+$(document).ready(function () {
     var url = "https://sysprim.com/";
 
     $('#search').change(function () {
