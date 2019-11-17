@@ -187,9 +187,9 @@ $(document).ready(function () {
                     });
                 } else {
                     swal({
-                        title: "¡Oh no!",
+                        title: "Información",
                         text: "Debe tener al menos un ciiu para poder registrar una empresa..",
-                        icon: "warning",
+                        icon: "info",
                         button: "Ok",
                     });
                 }

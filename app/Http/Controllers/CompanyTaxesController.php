@@ -46,9 +46,11 @@ class CompanyTaxesController extends Controller
         $company=Company::where('name',$company)->get();
 
         $company=Company::find($company[0]->id);
+
         if(!$company->taxesCompanies->isEmpty()){
+
             foreach ($company->taxesCompanies as $taxe ){
-                $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+                $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
             }
 
         }else{
@@ -553,7 +555,7 @@ class CompanyTaxesController extends Controller
             'extra'=>$extra,
             'ciuTaxes'=>$ciuTaxes,
             'amount'=>$amount,
-            'firm'=>true
+            'firm'=>false
         ]);
 
 
