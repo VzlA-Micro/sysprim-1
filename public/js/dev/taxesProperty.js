@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
     var descuento = false;
     var fraccion = false;
     var total = $('#total').val();

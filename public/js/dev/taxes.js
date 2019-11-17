@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];

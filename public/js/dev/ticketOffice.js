@@ -1,9 +1,6 @@
 $(document).ready(function () {
-<<<<<<< HEAD
-    var url = "http://sysprim.com/";
-=======
-    var url = "http://sysprim.com.devel/";
->>>>>>> 7e4be31df1c22f746136296f224c9a13b6521d9f
+
+    var url = "https://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {

@@ -1,5 +1,5 @@
 window.onload = function() {
-    var image ='http://sysprim.com/images/mark-map.png';
+    var image ='https://sysprim.com/images/mark-map.png';
 
     var lat=parseFloat($('#lat').val());
     var lng=parseFloat($('#lng').val());
