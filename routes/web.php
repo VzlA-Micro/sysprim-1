@@ -324,10 +324,18 @@ Route::get('/dashboard',array(
 Route::get('/notifications', function() {
     return view('modules.notifications.read');
 })->name('notifications.read');
+Route::get('/notifications/register', function() {
+    return view('modules.notifications.register');
+})->name('notifications.register');
+Route::get('/notifications/show', function() {
+    return view('modules.notifications.show');
+})->name('notifications.show');
 Route::get('/notifications/details', function() {
     return view('modules.notifications.details');
 })->name('notifications.details');
-
+Route::get('/notifications/manage', function() {
+    return view('modules.notifications.manage');
+})->name('notifications.manage');
 
 
 Route::get('/payments/verify/manage', function() {
@@ -492,10 +500,13 @@ Route::get('/taxpayers/manage', function() {
 Route::get('/taxpayers/register', function() {
     return view('modules.taxpayers.register');
 })->name('taxpayers.register');
-Route::post('/taxpayers/save', 'UserController@storeTaxayer')->name('taxpayers.save');
+Route::post('/taxpayers/save', 'UserController@storeTaxpayer')->name('taxpayers.save');
 Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
 Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
 Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
 Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
 
 
+Route::get('/help', function() {
+    return view('modules.helps.manage');
+})->name('helps.manage');

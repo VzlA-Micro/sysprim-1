@@ -68,7 +68,6 @@ class UserController extends Controller{
         $surname= $request->input('surname');
         $phone= $request->input('phone');
         $country_code= $request->input('country_code');
-        $image = $request->file('image');
         $role= $request->input('role');
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
@@ -80,11 +79,6 @@ class UserController extends Controller{
         $user->phone=$country_code.$phone;
         $user->confirmed=1;
         $user->role_id=$role;
-        if($image) {
-            $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
-            Storage::disk('users')->put($image_name, File::get($image));
-            $user->image = $image_name;
-        }
         $user->email=$email;
         $user->password=$password;
         $user->save();

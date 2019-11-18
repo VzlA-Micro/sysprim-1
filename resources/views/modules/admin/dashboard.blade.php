@@ -37,8 +37,8 @@
 				</div>
 			</div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats banesco-green white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text banesco-green">
 						<i class="i-banesco"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate animated banesco-green slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -58,8 +58,8 @@
 				</div>
             </div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats x100-banco-yellow white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text x100-banco-yellow">
 						<i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate animated x100-banco-yellow slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -79,8 +79,8 @@
 				</div>
             </div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats bod-green white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text bod-green">
 						<i class="i-bod"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -91,7 +91,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate bod-green animated slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -100,8 +100,8 @@
 				</div>
             </div>
             <div class="col s12 m6">
-				<div class="widget bootstrap-widget stats red-gradient white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text red-gradient">
 						<i class="i-bicentenario" style="font-size: 30px"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -112,7 +112,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate animated red-gradient slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">
@@ -121,8 +121,8 @@
 				</div>
             </div>
             <div class="col s12 m6">
-				<div class="widget bootstrap-widget stats bnc-blue white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text bnc-blue">
 						<i class="i-bnc"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate animated bnc-blue slideInLeft" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">

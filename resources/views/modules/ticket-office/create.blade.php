@@ -261,10 +261,32 @@
             <i class="large fas fa-cash-register"></i>
         </a>
         <ul>
-            <li><a class="btn-floating light-blue darken-1 tooltipped" data-position="left" data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
+            <li><a class="btn-floating light-blue darken-1 tooltipped modal-trigger" href="#open-atm" data-position="left" data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
             <li><a class="btn-floating light-blue darken-2 tooltipped" data-position="left" data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
             <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left" data-tooltip="Ver pagos"><i class="fas fa-money-check"></i></a></li>
         </ul>
+        <form method="post" id="open-atm" class="modal">
+            <div class="modal-content">
+                <h4>Punto de venta</h4>
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="text" name="lote" id="lote">
+                        <label for="lote">Nro. Lote</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <select name="bank-point" id="bank-point">
+                            <option value="" disabled selected>Elige una opción</option>
+                            <option value="1">Punto 1</option>
+                            <option value="2">Punto 2</option>
+                        </select>
+                        <label for="bank-point">Punto de Venta</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn green">Enviar<i class="icon-send right"></i></a>
+            </div>
+        </form>
     </div>
 @endsection
 
@@ -272,4 +294,9 @@
     <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
     <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#bank-point').formSelect();
+        })
+    </script>
 @endsection

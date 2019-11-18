@@ -90,6 +90,12 @@
                         <span class="truncate">Seguridad</span>
                     </a>
                 </div>
+                <div class="col s12 m3 animated bounceIn">
+                    <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
+                        <i class="icon-notifications"></i>
+                        <span class="truncate">Gestionar Notificaciones</span>
+                    </a>
+                </div>
             @endif
             @if( \Auth::user()->role_id ==2)
                 <div class="col s12 m3 animated bounceIn">

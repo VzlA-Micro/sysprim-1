@@ -48,7 +48,7 @@
                          @if($company->opening_date)
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>                                                        
-                            <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required disabled>
+                            <input type="text" name="opening_date" id="opening_date" class="datepicker" value="{{ $company->opening_date }}" required readonly>
                             <label for="opening_date">Fecha de Apertura</label>
                         </div>
                         @endif
@@ -76,7 +76,7 @@
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                             <i class="icon-offline_pin prefix"></i>                            
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->code_catastral }}" disabled required>
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->code_catastral }}" readonly required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
                         <div class="input-field col s4 m3">
