@@ -27,15 +27,24 @@ $('document').ready(function () {
                     method: "GET",
                     url: 'http://sysprim.com.devel/bs',
                     dataType: 'json',
-                    beforeSend:function(){
+                    beforeSend: function () {
                         console.log('enviando')
                     },
                     success: function (responses) {
                         console.log('success');
-                        var total=responses[0]/value['data']['PTR']['BS'];
+                        var total = responses[0] / value['data']['PTR']['BS'];
+                        var eur = value['data']['PTR']['EUR'];
+                        var rub = value['data']['PTR']['RUB'];
+                        var cny = value['data']['PTR']['CNY'];
+                        var usd = value['data']['PTR']['USD'];
+
                         console.log(value['data']['PTR']['BS']);
-                        console.log(total);
+                        console.log(response);
                         $('#petro').text(total);
+                        console.log(eur);
+                        console.log(rub);
+                        console.log(cny);
+                        console.log(usd);
                     },
                     error: function (e) {
                         console.log(e);

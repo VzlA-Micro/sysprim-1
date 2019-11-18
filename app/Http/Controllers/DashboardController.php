@@ -651,7 +651,7 @@ class DashboardController extends Controller
     public function amountApproximate()
     {
         $date = Carbon::now();
-        $taxe = Taxe::where('status', 'verified')
+        $taxe = Taxe::where('status', 'process')
             ->whereDay('created_at',$date->day)
             ->sum('amount');
         return response()->json([
