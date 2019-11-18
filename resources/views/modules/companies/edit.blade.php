@@ -110,11 +110,19 @@
                             </select>
                             <label>Parroquia</label>
                         </div>
+                        @if($company->opening_date)
                         <div class="input-field col s12 m6">
                             <i class="icon-directions prefix"></i>
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required readonly>{{ $company->address }}</textarea>
                             <label for="address">Dirección</label>
                         </div>
+                        @else
+                            <div class="input-field col s12 m12">
+                                <i class="icon-directions prefix"></i>
+                                <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required readonly>{{ $company->address }}</textarea>
+                                <label for="address">Dirección</label>
+                            </div>
+                        @endif
 
                         <input id="lat" type="hidden" name="lat" value="{{ $company->lat }}">
                         <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">

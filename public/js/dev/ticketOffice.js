@@ -1,4 +1,4 @@
-$(document).ready(function () {s
+$(document).ready(function () {
     var url = "https://sysprim.com/";
 
     $('#search').change(function () {
@@ -822,6 +822,30 @@ $(document).ready(function () {s
         }
     }
 
+
+
+
+
+    function openPoint(){
+        swal({
+            title: "PUNTO DE VENTA 1/2",
+            text: "Introduzca el numero de lote del punto de venta:",
+            icon:"info",
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Escribe un numero",
+                    type: "number",
+                },
+            },
+        }).then(function (valor) {
+
+            console.log(valor);
+
+        });
+
+
+    }
 
 
 
