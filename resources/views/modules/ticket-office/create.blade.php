@@ -19,7 +19,7 @@
                 <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
                     <ul class="tabs">
 
-                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
+                        <li class="tab col s4 disabled" id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
@@ -28,7 +28,7 @@
                         <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
                                 PAGO</a></li>
                     </ul>
-                    <div id="general-tab">
+                    <div id="general-tab ">
                         <div class="card-header center-align">
 
                             <h4>DATOS GENERALES</h4>
