@@ -31,7 +31,7 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Petros</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000" ></span><i class="i-petro"> </i>
+                            <span class="timer" id="petro"></span> <i class="i-petro"> </i>
                         </span>
 					</div>
 				</div>
@@ -158,14 +158,17 @@
             <div class="col s12 m6">
                 <ul class="collection with-header">
                     <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
-                  <!-- @foreach ($company as $compa)
+                  @foreach ($company as $compa)
+
+
                     <li class="collection-item">
                         <span class="new badge red" data-badge-caption="Pendiente"></span>
-                        <span class="title"><b>Empresa:</b></span><br>
+                        <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
                         <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
                         <a href="">Detalles...</a>
                         {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
-                    </li>-->
+                    </li>
+
                     @endforeach
                 </ul>
             </div>

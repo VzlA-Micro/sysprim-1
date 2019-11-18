@@ -18,7 +18,7 @@ use App\CatastralTerreno;
 use App\Val_cat_const_inmu;
 use App\Tributo;
 use TijsVerkoyen\CssToInlineStyles\Css\Property\Property;
-
+use App\Alicuota;
 
 class Declaration
 {
@@ -39,6 +39,8 @@ class Declaration
         if (($mes <= 12 && $mes >= 11) && ($day >= 01 && $day <= 31)) {
             //if (($monthCurrent <= $march && $monthCurrent >= $january) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
             $property = Inmueble::where('id', $id)->get();
+            $alicuota=Alicuota::where('id',$property[0]->type_inmueble_id)->get();
+
 
             $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
 
@@ -68,16 +70,18 @@ class Declaration
             }
 
             $declaration = $totalground + $totalbuild;
-            $Declaration= number_format($declaration,2,',','.');
+            $porcentaje=$declaration*$alicuota[0]->value;
+            $total=$declaration+$porcentaje;
+            $Total= number_format($total,2,',','.');
 
         } else {
-            $declaration = false;
+            $Total = 0;
         }
 
         $amounts = array(
             'totalGround' => $totalGround,
             'totalBuild' => $totalBuild,
-            'declaration' => $Declaration
+            'declaration' => $Total
         );
 
         return $amounts;

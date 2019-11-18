@@ -138,6 +138,7 @@
                                             <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
                                             <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                             <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
+                                            <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-payment left"></i>Gestionar Contribuyente</a></li>
                                             <!--<li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
                                         </ul>
                                     </div>
@@ -147,10 +148,24 @@
                         <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
                     @endif
                     @if (\Auth::user()->role_id == 2)
-                        <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li>
-                        <li class="waves-efect waves-light"><a href=""><i class="icon-local_shipping"></i>Gestionar Vehículos</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('payments.manage') }}"><i class="icon-payment"></i>Gestionar Pagos</a></li>
+                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
+                        <li class="no-padding">
+                            <ul class="collapsible collapsible-accordion">
+                                <li class="bold">
+                                    <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                        <!-- <li><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Atencion al Cliente</a></li> -->
+                                            <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
+                                            <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
+                                            <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
+                                        <!--<li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
+                                            <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-person left"></i>Gestionar Contribuyente</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
                     @endif
                     @if (\Auth::user()->role_id == 3)
                         <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>

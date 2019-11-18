@@ -14,7 +14,7 @@
                 </a>
             </div>
            <div class="col s12 m3 animated bounceIn">
-                <a href="#" class="btn-app white grey-text text-darken-2">
+                <a href="{{ route('inmueble.my-property') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
@@ -97,32 +97,32 @@
                     </a>
                 </div>
             @endif
+
             @if( \Auth::user()->role_id ==2)
                 <div class="col s12 m3 animated bounceIn">
-                    <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
-                        <i class="icon-people_outline"></i>
-                        <span class="truncate">Gestionar Usuarios</span>
+                    <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
+                        <i class="icon-personal_video"></i>
+                        <span class="truncate">Taquilla</span>
                     </a>
                 </div>
                 <div class="col s12 m3 animated bounceIn">
-                    <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
-                        <i class="icon-work"></i>
-                        <span class="truncate">Gestionar Empresas</span>
+                    <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
+                        <i class="icon-file_upload"></i>
+                        <span class="truncate">Verificación de Pagos</span>
                     </a>
                 </div>
-                <div class="col s12 m3 animated bounceIn">
+
+                <!--<div class="col s12 m3 animated bounceIn">
                     <a href="" class="btn-app white orange-text deeptext-darken-2">
                         <i class="icon-local_shipping"></i>
                         <span class="truncate">Gestionar Vehiculos</span>
-                    </a>
-                </div>
-                <div class="col s12 m3 animated bounceIn">
-                    <a href="{{ route('payments.manage') }}" class="btn-app white orange-text text-darken-2">
-                        <i class="icon-payment"></i>
-                        <span class="truncate">Gestionar Pagos</span>
-                    </a>
-                </div>
+                   </a>
+
+                </div> -->
             @endif
         </div>
     </div>
+
+
 @endsection
+

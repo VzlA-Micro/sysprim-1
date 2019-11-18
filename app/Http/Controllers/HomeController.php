@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use App\Helpers\TaxesMonth;
 use App\Helpers\CedulaVE;
+use Psy\Util\Json;
+
 class HomeController extends Controller
 {
     /**
@@ -29,7 +31,6 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request){
-
         if(\Auth::user()->confirmed!=0){
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
@@ -44,5 +45,9 @@ class HomeController extends Controller
             Auth::logout();
             return redirect('/')->with('notification','Verifica tu correo para entrar en el sistema');
         }
+    }
+
+    public function online(){
+        return $datos=['status'=>200,'online'];
     }
 }

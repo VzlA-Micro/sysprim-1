@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class AlicuotaTableSeeder extends Seeder
 {
@@ -13,25 +15,25 @@ class AlicuotaTableSeeder extends Seeder
     {
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Construidos',
-            'value_edificacion'=>0.01,
+            'value'=>0.01,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Vacios',
-            'value_edificacion'=>0.01,
+            'value'=>0.01,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Vacios Ociosos',
-            'value_edificacion'=>0.03,
+            'value'=>0.03,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Construcciones',
-            'value_edificacion'=>0.01,
+            'value'=>0.01,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);

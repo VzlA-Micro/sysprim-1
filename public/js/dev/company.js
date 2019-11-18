@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -187,9 +187,9 @@ $(document).ready(function () {
                     });
                 } else {
                     swal({
-                        title: "¡Oh no!",
+                        title: "Información",
                         text: "Debe tener al menos un ciiu para poder registrar una empresa..",
-                        icon: "warning",
+                        icon: "info",
                         button: "Ok",
                     });
                 }
@@ -314,23 +314,25 @@ $(document).ready(function () {
 
     $('#search-ciu').click(function () {
         var code = $('#code').val();
-        var band = true;
 
-        $.ajax({
-            type: "GET",
-            url: url + "ciu/find/" + code,
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
-                if (response.status !== 'error') {
-                    var subr = response.ciu.name.substr(0, 3);
-                    var template = `<div>
+
+        var band = true;
+        if(code!==""){
+            $.ajax({
+                type: "GET",
+                url: url + "ciu/find/" + code,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    if (response.status !== 'error') {
+                        var subr = response.ciu.name.substr(0, 3);
+                        var template = `<div>
                                 <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="${response.ciu.id}">
                                 <div class="input-field col s12 m5">
                                     <i class="icon-assignment prefix"></i>
-                                    <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}">
+                                    <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >
                                     <label>CIIU</label>
                                 </div>
                                 <div class="input-field col s10 m6"  >
@@ -347,67 +349,74 @@ $(document).ready(function () {
                         `;
 
 
-                    if ($('.ciu').val() !== undefined) {
-                        $('.ciu').each(function (index, value) {
-                            if ($(this).val() == response.ciu.id) {
-                                swal({
-                                    title: "¡Oh no!",
-                                    text: "El ciiu " + response.ciu.code + " ya  esta ingresado en esta empresa.",
-                                    icon: "warning",
-                                    button: "Ok",
-                                });
-                                $('#code').val("");
-                                band = false;
+                        if ($('.ciu').val() !== undefined) {
+                            $('.ciu').each(function (index, value) {
+                                if ($(this).val() == response.ciu.id) {
+                                    swal({
+                                        title: "¡Oh no!",
+                                        text: "El ciiu " + response.ciu.code + " ya  esta ingresado en esta empresa.",
+                                        icon: "warning",
+                                        button: "Ok",
+                                    });
+                                    $('#code').val("");
+                                    band = false;
+                                }
+
+                            });
+
+
+                            if (band) {
+                                $('#group-ciu').append(template);
+                                confirmCiu();
                             }
 
-                        });
 
-
-                        if (band) {
+                        } else {
                             $('#group-ciu').append(template);
                             confirmCiu();
                         }
 
+                        $('.delete-ciu').click(function () {
+                            $(this).parent().parent().text("");
+                        });
 
+                        M.textareaAutoResize($('#' + subr));
+                        M.updateTextFields();
                     } else {
-                        $('#group-ciu').append(template);
-                        confirmCiu();
+                        swal({
+                            title: "Información",
+                            text: "El campo del codigo CIIU no debe estar vacio para iniciar la busquedad.",
+                            icon: "info",
+                            button: "Ok",
+                        });
                     }
 
-                    $('.delete-ciu').click(function () {
-                        $(this).parent().parent().text("");
-                    });
 
-                    M.textareaAutoResize($('#' + subr));
-                    M.updateTextFields();
-                } else {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Oh no! ",
-                        text: "El ciiu ingresado no está registrado, verifica. quizás te equivocaste al ingresarlo al sistema.",
-                        icon: "warning",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
                         button: "Ok",
                     });
-
                 }
+            });
+        }else{
+            swal({
+                title: "Información",
+                text: "Debe ingresar un CIIU valido.",
+                icon: "info",
+                button: "Ok",
+            });
+        }
 
-
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-
-            },
-            error: function (err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: "Ok",
-                });
-            }
-        });
 
 
         $('#company-register-ticket').submit(function (e) {
@@ -474,23 +483,6 @@ $(document).ready(function () {
 
     });
 
-
-    $('#user-next').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "company-tab");
-    });
-
-
-    $('#company-next').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "map-tab");
-    });
-
-
-    $('#company-previous').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "user-tab");
-    });
 
 
     function verifyRIF() {
@@ -627,6 +619,76 @@ $(document).ready(function () {
         });
     }
 
+    $('#number_employees').change(function () {
+        var value=$(this).val();
+        if(value < 0){
+            $(this).val(1);
+        }
+    });
+
+
+    //tab ticktffice
+    $('#user-next').click(function () {
+
+        if($('#ci').val()==='' || $('#name_user').val()===''){
+            swal({
+                title: "Información",
+                text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
+                icon: "info",
+                button: "Ok",
+            });
+        }else{
+
+
+            $('#company-tab-two').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "company-tab");
+
+        }
+
+    });
+
+
+    $('#company-next').click(function (){
+        var band=true;
+
+        $('.company-validate').each(function () {
+            if($(this).val()===''||$(this).val()===null) {
+                swal({
+                    title: "Información",
+                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                    icon: "info",
+                    button: "Ok",
+                });
+
+                band = false;
+            }else if($('#ciu').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
+                    icon: "info",
+                    button: "Ok",
+                });
+                band=false;
+            }
+
+        });
+
+        if(band){
+            $('#map-tab-three').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "map-tab");
+        }
+
+    });
+
+
+    $('#company-previous').click(function () {
+        $('ul.tabs').tabs();
+        $('ul.tabs').tabs("select", "user-tab");
+    });
+
+
 });
 
 
@@ -668,9 +730,9 @@ function initMap() {
             marker.setMap(null);
 
             swal({
-                title: "¡Oh no!",
+                title: "Información",
                 text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-                icon: "error",
+                icon: "info",
                 button: "Ok",
             });
         } else {

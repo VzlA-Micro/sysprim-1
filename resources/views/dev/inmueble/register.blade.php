@@ -108,6 +108,17 @@
                                    required>
                             <label for="area">Area De Construcción</label>
                         </div>
+
+                        <div class="input-field col m6 s12">
+                            <select name="type" id="type" required>
+                                <option value="null" disabled selected>Seleccionar Tipo De Inmueble</option>
+                                @foreach($alicuota as $value):
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                            <label>Tipo De Inmueble</label>
+                        </div>
+
                         <div class="input-field col m6 s12">
                             <select name="parish" id="parish" required>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>

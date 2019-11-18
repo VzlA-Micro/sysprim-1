@@ -56,37 +56,16 @@
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>
-                            <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
-                            <label for="deductions">Deducciones</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
-                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
+                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
                             <label for="withholdings">Retenciones</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
-                            <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
 
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
-                            <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
-                            <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
-                        </div>
-                        <div class="input-field col s12 m4">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
+                            <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
                             <label for="interest">Interes por mora<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12">
@@ -97,14 +76,22 @@
                             <div class="col l6 s12">
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
                                     <tr>
-                                        <th>CODIGO</th>
                                         <th>NOMBRE</th>
                                         <th>ALICUOTA</th>
-                                        <th>MININIMO TRIBUTABLE</th>
+                                    </tr>
+                                    <tr>
+                                        <th>{{$alicuota[0]->name}}</th>
+                                        <th>{{$alicuota[0]->value}} %</th>
                                     </tr>
 
                                 </table>
-                                <p><b>RECARGO: </b></p>
+                                <p><b>Modo De Pago: </b></p>
+                                <div class="col s12 m6 ">
+                                    <button type="button" id="fraccionado" class="btn btn-rounded peach waves-effect waves-light ">Pago Fraccionado</button>
+                                </div>
+                                <div class="col s12 m6 ">
+                                    <button type="button" id="descuento" class="btn btn-rounded peach waves-effect waves-light ">20% Descuento</button>
+                                </div>
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
@@ -116,7 +103,7 @@
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input type="text" name="total" class="validate total money"  value="{{$declaration ['declaration']}}" readonly>
+                                    <input id="total" type="text" name="total" class="validate"  value="{{$declaration ['declaration']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
@@ -201,6 +188,6 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/dev/taxesProperty.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

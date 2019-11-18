@@ -25,6 +25,7 @@ use App\Helpers\Declaration;
 use App\CatastralTerreno;
 use App\CatastralConstruccion;
 use App\PropertyTaxes;
+use App\Alicuota;
 
 class PropertyTaxesController extends Controller
 {
@@ -67,34 +68,36 @@ class PropertyTaxesController extends Controller
 
     public function create($id)
     {
-        $declaration=Declaration::VerifyDeclaration($id);
+        $declaration = Declaration::VerifyDeclaration($id);
 
-        $property=Inmueble::where('id',$id)->get();
-        $constProperty=Val_cat_const_inmu::where('property_id',$property[0]->id)->get();
-        $catasGround=CatastralTerreno::where('id',$property[0]->value_cadastral_ground_id)->get();
-        $catasBuild=CatastralConstruccion::where('id',$constProperty[0]->value_catas_const_id)->get();
+        $property = Inmueble::where('id', $id)->get();
+        $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
+        $catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
+        $catasBuild = CatastralConstruccion::where('id', $constProperty[0]->value_catas_const_id)->get();
+        $alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
 
-        $taxes=new Taxe();
-        $taxes->code=TaxesNumber::generateNumberTaxes('TEM');
-        $taxes->fiscal_period=Carbon::now()->format('Y-m-d');
+        $taxes = new Taxe();
+        $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
         $taxes->save();
 
-        $taxesId=DB::getPdo()->lastInsertId();
+        $taxesId = DB::getPdo()->lastInsertId();
 
-        $taxes=Taxe::where('id',$taxesId)->get();
-        $propertyTaxes=new PropertyTaxes();
-        $propertyTaxes->property_id=$property[0]->id;
-        $propertyTaxes->taxes_id=$taxesId;
-        $period_fiscal= Carbon::now()->year;
+        $taxes = Taxe::where('id', $taxesId)->get();
+        $propertyTaxes = new PropertyTaxes();
+        $propertyTaxes->property_id = $property[0]->id;
+        $propertyTaxes->taxes_id = $taxesId;
+        $period_fiscal = Carbon::now()->year;
 
 
-        return view('dev.paymentProperty.details',array(
-            'property'=>$property,
-            'declaration'=>$declaration,
-            'ground'=>$catasGround,
-            'build'=>$catasBuild,
-            'taxes'=>$taxes,
-            'period'=>$period_fiscal
+        return view('dev.paymentProperty.details', array(
+            'property' => $property,
+            'declaration' => $declaration,
+            'ground' => $catasGround,
+            'build' => $catasBuild,
+            'taxes' => $taxes,
+            'period' => $period_fiscal,
+            'alicuota' => $alicuota
         ));
     }
 
@@ -491,4 +494,28 @@ class PropertyTaxesController extends Controller
         $pdf = \PDF::loadView('modules.companies.carnet');
         return $pdf->stream();
     }
-}
+
+    public function calcu(Request $request)
+    {
+        $value = strval($request->input('value'));
+        $valor = str_replace('.', '', $value);
+        $valor1 = str_replace(',', '.', $valor);
+        $descuento = $valor1 * 0.20;
+        $total = $valor1 - $descuento;
+        $total1 = number_format($total, 2, ',', '.');
+
+        return response()->json(['value' => $total1]);
+
+    }
+        public function calcuFraccionado(Request $request)
+        {
+            $value = strval($request->input('value'));
+            $valor = str_replace('.', '', $value);
+            $valor1 = str_replace(',', '.', $valor);
+            $total = $valor1 / 4;
+            $fraccionado = number_format($total, 2, ',', '.');
+
+            return response()->json(['value' => $fraccionado]);
+        }
+
+    }

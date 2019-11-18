@@ -1,8 +1,62 @@
 var url = "http://sysprim.com.devel/";
 var controller = "collection/statistics";
 
+
 $('document').ready(function () {
+    function api() {
+        const url = 'https://petroapp-price.petro.gob.ve/price/';
+        const data = {
+            "coins": ["PTR", "BTC"],
+            "fiats": ["USD", "EUR", "RUB", "CNY", "BS"]
+        };
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .catch(error => {
+                console.error('Error:', error);
+
+            })
+            .then(response => {
+                value = response;
+                $.ajax({
+                    method: "GET",
+                    url: 'http://sysprim.com.devel/bs',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log('enviando')
+                    },
+                    success: function (responses) {
+                        console.log('success');
+                        var total = responses[0] / value['data']['PTR']['BS'];
+                        var eur = value['data']['PTR']['EUR'];
+                        var rub = value['data']['PTR']['RUB'];
+                        var cny = value['data']['PTR']['CNY'];
+                        var usd = value['data']['PTR']['USD'];
+
+                        console.log(value['data']['PTR']['BS']);
+                        console.log(response);
+                        $('#petro').text(total);
+                        console.log(eur);
+                        console.log(rub);
+                        console.log(cny);
+                        console.log(usd);
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+                console.log(value);
+            });
+
+    }
+
     console.log('hola1');
+    api();
     $.ajax({
         method: "GET",
         url: url + controller,
@@ -34,6 +88,7 @@ $('document').ready(function () {
 
 
     });
+
 });
 
 function chartsMonth(data) {
@@ -95,86 +150,86 @@ function chartsMonth(data) {
 
     var bankEarningsChart = document.querySelector("#bank-earnings");
     var bankEarningsOptions = {
-           responsive: true,
-           maintainAspectRatio: false,
-           legend: {
-              position: "bottom"
-           },
-           hover: {
-              mode: "label"
-           },
-           scales: {
-              xAxes: [
-                 {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            position: "bottom"
+        },
+        hover: {
+            mode: "label"
+        },
+        scales: {
+            xAxes: [
+                {
                     display: true,
                     gridLines: {
-                       color: "#f3f3f3",
-                       drawTicks: false
+                        color: "#f3f3f3",
+                        drawTicks: false
                     },
                     scaleLabel: {
-                       display: true,
-                       labelString: "Mes"
+                        display: true,
+                        labelString: "Mes"
                     }
-                 }
-              ],
-              yAxes: [
-                 {
+                }
+            ],
+            yAxes: [
+                {
                     display: true,
                     gridLines: {
-                       color: "#f3f3f3",
-                       drawTicks: false
+                        color: "#f3f3f3",
+                        drawTicks: false
                     },
                     scaleLabel: {
-                       display: true,
-                       labelString: "Recaudación en BS"
+                        display: true,
+                        labelString: "Recaudación en BS"
                     }
-                 }
-              ]
-           },
-           title: {
-              display: true,
-              text: "Recaudación Mensual",
-              fontSize: 25
-           }
-        };
+                }
+            ]
+        },
+        title: {
+            display: true,
+            text: "Recaudación Mensual",
+            fontSize: 25
+        }
+    };
 
     var bankData = {
-       labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novienbre", "Diciembre"],
-       datasets: [
-          {
-             label: "My First dataset",
-             data: [65, 59, 80, 81, 56, 55, 40],
-             fill: false,
-             borderColor: "#e91e63",
-             pointBorderColor: "#e91e63",
-             pointBackgroundColor: "#FFF",
-             pointBorderWidth: 2,
-             pointHoverBorderWidth: 2,
-             pointRadius: 4
-          },
-          {
-             label: "My Second dataset",
-             data: [28, 48, 40, 19, 86, 27, 90],
-             fill: false,
-             borderColor: "#03a9f4",
-             pointBorderColor: "#03a9f4",
-             pointBackgroundColor: "#FFF",
-             pointBorderWidth: 2,
-             pointHoverBorderWidth: 2,
-             pointRadius: 4
-          },
-          {
-             label: "My Third dataset - No bezier",
-             data: [45, 25, 16, 36, 67, 18, 76],
-             fill: false,
-             borderColor: "#ffc107",
-             pointBorderColor: "#ffc107",
-             pointBackgroundColor: "#FFF",
-             pointBorderWidth: 2,
-             pointHoverBorderWidth: 2,
-             pointRadius: 4
-          }
-       ]
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novienbre", "Diciembre"],
+        datasets: [
+            {
+                label: "My First dataset",
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: "#e91e63",
+                pointBorderColor: "#e91e63",
+                pointBackgroundColor: "#FFF",
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointRadius: 4
+            },
+            {
+                label: "My Second dataset",
+                data: [28, 48, 40, 19, 86, 27, 90],
+                fill: false,
+                borderColor: "#03a9f4",
+                pointBorderColor: "#03a9f4",
+                pointBackgroundColor: "#FFF",
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointRadius: 4
+            },
+            {
+                label: "My Third dataset - No bezier",
+                data: [45, 25, 16, 36, 67, 18, 76],
+                fill: false,
+                borderColor: "#ffc107",
+                pointBorderColor: "#ffc107",
+                pointBackgroundColor: "#FFF",
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointRadius: 4
+            }
+        ]
     };
 
     var bankEarnings = new Chart(bankEarningsChart, {
@@ -297,5 +352,17 @@ function chartsMonth(data) {
         },
         options: bankEarningsOptions
     });
+}
+
+function addCommas(nStr) {
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x [0];
+    x2 = x.length > 1 ? '.' + x [1] : '';
+    var rgx = / (\ d +) (\ d {3}) /;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$ 1' + ',' + '$ 2');
+    }
+    return x1 + x2;
 }
 

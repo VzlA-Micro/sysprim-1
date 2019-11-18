@@ -60,7 +60,6 @@ class CompaniesController extends Controller
         $license = $request->input('license');
         $parish = $request->input('parish');
         $country_code = $request->input('country_code');
-        $openingDate = $request->input('opening_date');
         $rif = $request->input('document_type').$request->input('RIF');
         $address = $request->input('address');
         $code_catastral = $request->input('code_catastral');
@@ -78,7 +77,6 @@ class CompaniesController extends Controller
             'license' => 'required',
             'RIF' => 'required|min:8',
             'address' => 'required',
-            'opening_date' => 'required',
             'parish' => 'required|integer',
             'code_catastral' => 'required',
             'sector' => 'required',
@@ -102,7 +100,6 @@ class CompaniesController extends Controller
         $company->lng = $lng;
         $company->code_catastral = strtoupper($code_catastral);
         $company->parish_id = $parish;
-        $company->opening_date = $openingDate;
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
         $company->phone = $country_code.$phone;

@@ -1,9 +1,11 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
             CheckCedula();
+        }else{
+
         }
     });
 
@@ -15,7 +17,6 @@ $(document).ready(function () {
                 icon: "info",
                 button: "Ok",
             });
-
             $('#ci').val('')
         }
 
@@ -26,6 +27,7 @@ $(document).ready(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
+
     });
 
 
@@ -63,9 +65,9 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.status === 'error') {
                         swal({
-                            title: "¡Oh no!",
+                            title: "Información",
                             text: response.message,
-                            icon: "error",
+                            icon: "info",
                             button: "Ok",
                         });
 
@@ -78,6 +80,9 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
+                        console.log(rr)
+
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     swal({
@@ -151,6 +156,7 @@ $(document).ready(function () {
                 }
             },
             error: function (err) {
+
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -289,6 +295,33 @@ $(document).ready(function () {
             }
 
         });
+
+
+    function online() {
+      $.ajax({
+            async: false,
+            method: "GET",
+            url: url+"online",
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+              return   online=true;
+            },
+            error: function (err) {
+               return  online = false;
+            }
+        });
+
+
+       return online;
+    }
+
+
+
+
+
 
 
 });

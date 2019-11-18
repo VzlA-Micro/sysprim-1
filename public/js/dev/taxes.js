@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    var url="http://sysprim.com.devel/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
@@ -24,56 +26,54 @@ $(document).ready(function () {
         }
     });*/
     $('input[type="text"].money_keyup').on('keyup', function (event) {
-        $(event.target).val(function (index, value ) {
-            return value.replace(/\D/g, "")
-                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+        var total=$(this).val();
+        if($(this).val()==0&&$(this).val().toString().length>=2){
+            $(this).val('');
+        }else if($(this).val().toString().length>=2&&total[0]==0){
+            $(this).val('');
+        } else{
+            $(event.target).val(function (index, value ) {
+                return value.replace(/\D/g, "")
+                    .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                    .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+            });
+        }
+
+    });
+
+
+    function resetValue(){
+        $('input[type="text"].money_keyup').each(function () {
+            if($(this).val()==''){
+                $(this).val('0');
+            }
         });
-    });
+    }
 
 
-    $('.base').blur(function () {
-
-    });
     $('#taxes-register').submit(function (e) {
         e.preventDefault();
 
-        var band=false;
+    });
 
-        $('.code').each(function () {
-            var code=$(this).val();
-            console.log(code);
-            var base=$('#base_'+code).val();
-            var alicuota=$('#alicuota_'+code).val();
-            var deductions=$('#deductions_'+code).val();
-            var withholdings=$('#withholdings_'+code).val();
-            var fiscal_credits=$('#fiscal_credits_'+code).val();
+    $('.base').change(function () {
+        if($(this).val()!=0){
+            console.log($(this).val());
+            $('.min > input.money_keyup').prop('readonly',false);
+            $(this).parent().siblings().removeClass('min');
 
-            base = base.replace(/\./g,'');
-            deductions=deductions.replace(/\./g,'');
-            withholdings=withholdings.replace(/\./g,'');
-            fiscal_credits=fiscal_credits.replace(/\./g,'');
+        }else{
 
-            var total_deductions=parseFloat(deductions)+parseFloat(withholdings)+parseFloat(fiscal_credits);
-            var total=Math.floor(parseFloat(base)*alicuota);
-            if(total!==0){
-                if(total_deductions>=total){
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Verifica los datos ingresados.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                    band=true;
-                }
-            }
-        });
-
-
-        if(!band){
-            $(('#taxes-register'))[0].submit();
+            $(this).parent().siblings().addClass('min');
+            $('.min > input.money_keyup').prop('readonly',true);
         }
 
+    });
+
+
+    $('#download-calculate').click(function () {
+        $('#register-taxes').attr('action',url+'payments/download/calculate');
+        $('#register-taxes')[0].submit();
     });
 
 
@@ -137,6 +137,98 @@ $(document).ready(function () {
             return amount_parts.join(',');
         }
     }
+
+
+    $('#accept').click(function () {
+        var band=false;
+        $('.base').each(function () {
+            if($(this).val()==="") {
+                swal({
+                    title: "Información",
+                    text: "El campo base imponible no puede estar vacio, por favor ingrese un monto valido.",
+                    icon: "info",
+                    button: "Ok",
+                });
+
+                band=true;
+            }else{
+                $('.deductions').each(function () {
+                    console.log($(this).val());
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+                $('.withholding').each(function () {
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+                $('.credits_fiscal').each(function () {
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+            }
+        });
+
+
+
+        if(!band){
+            verify();
+        }
+
+
+
+
+
+
+    });
+
+
+
+
+
+    function verify() {
+        var band=false;
+
+        $('.code').each(function () {
+            var code=$(this).val();
+            console.log(code);
+            var base=$('#base_'+code).val();
+            var alicuota=$('#alicuota_'+code).val();
+            var deductions=$('#deductions_'+code).val();
+            var withholdings=$('#withholdings_'+code).val();
+            var fiscal_credits=$('#fiscal_credits_'+code).val();
+
+            base = base.replace(/\./g,'');
+            deductions=deductions.replace(/\./g,'');
+            withholdings=withholdings.replace(/\./g,'');
+            fiscal_credits=fiscal_credits.replace(/\./g,'');
+
+            var total_deductions=parseFloat(deductions)+parseFloat(withholdings)+parseFloat(fiscal_credits);
+            var total=Math.floor(parseFloat(base)*alicuota);
+            if(total!==0){
+                if(total_deductions>=total){
+                    swal({
+                        title: "Información",
+                        text: "Verifique los datos ingresados.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    band=true;
+                }
+            }
+        });
+
+
+        if(!band){
+            $(('#taxes-register'))[0].submit();
+        }
+    }
+
+
+
+
     //Calculos de total a pagar
     $('.bank').click(function () {
         $('#bank').val($(this).attr('data-bank'));

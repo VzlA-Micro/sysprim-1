@@ -1,4 +1,4 @@
-@extends('layouts.app')
+-@extends('layouts.app')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -39,11 +39,11 @@
                             <input type="text" name="license" id="license" class="validate number-and-capital-letter-only" minlength="6" maxlength="10" pattern="[0-9A-Z-]+" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="license">Licencia</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <!--<div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>                            
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" required>
                             <label for="opening_date">Fecha de Apertura</label>
-                        </div>
+                        </div>-->
                         <div class="input-field col s12 m6">
                             <i class="icon-supervisor_account prefix tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87)."></i>                                                        
                             <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
@@ -105,15 +105,15 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m12">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea" required></textarea>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required></textarea>
                             <label for="address">Dirección</label>
                         </div>
 
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
+                            <input type="text" name="code" id="code" class="validate number-only" value="" pattern="[0-9]+">
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
