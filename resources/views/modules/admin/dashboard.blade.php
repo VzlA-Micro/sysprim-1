@@ -31,14 +31,14 @@
 					<div class="widget-stats-content">
 						<span class="widget-stats-title">Recaudación Total en Petros</span>
 						<span class="widget-stats-number">
-                            <span class="timer" data-to="100000000" ></span><i class="i-petro"> </i>
+                            <span class="timer" id="petro"></span> <i class="i-petro"> </i>
                         </span>
 					</div>
 				</div>
 			</div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats banesco-green white-text">
-					<div class="widget-stats-icon white-text">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text banesco-green">
 						<i class="i-banesco"></i>
 					</div>
 					<div class="widget-stats-content">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="widget-progress">
 						<div class="progress">
-							<div class="determinate animated slideInLeft" style="width: 30%"></div>
+							<div class="determinate animated slideInLeft banesco-green" style="width: 30%"></div>
 						</div>
 					</div>
 					<div class="widget-description">

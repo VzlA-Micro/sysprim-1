@@ -619,19 +619,6 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        /*$data=['coins'=>'PTR','fiats'=>'Bs'];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://petroapp-price.petro.gob.ve/price/");
-        curl_setopt($ch, CURLOPT_HTTPHEADER,array(
-            'Content-Type'=>'application/json',
-            'coins'=>'PTR',
-            'fiats'=>'Bs'));
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        $res = curl_exec($ch);
-        curl_close($ch);
-        */
-
-
 
         $company = Taxe::where('status','verified')->orderByDesc('id')->take(5)->get();
 
@@ -652,4 +639,23 @@ class DashboardController extends Controller
                 'ppb' => $countPpb)
         );
     }
+
+    public function bs()
+    {
+        $taxe = Taxe::where('status', 'verified')
+            ->sum('amount');
+        return response()->json([
+            $taxe]);
+    }
+
+    public function amountApproximate()
+    {
+        $date = Carbon::now();
+        $taxe = Taxe::where('status', 'verified')
+            ->whereDay('created_at',$date->day)
+            ->sum('amount');
+        return response()->json([
+            $taxe]);
+    }
+
 }

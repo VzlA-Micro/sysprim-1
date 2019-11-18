@@ -448,6 +448,16 @@ Route::get('/dashboard',array(
     'uses'=>'DashboardController@dashboard'
 ));
 
+Route::get('bs',array(
+   'as'=>'bs',
+   'uses'=>'DashboardController@bs'
+));
+
+Route::get('amountApproximate',array(
+    'as'=>'amountApproximate',
+    'uses'=>'DashboardController@amountApproximate'
+));
+
 
 // Security routes
 
