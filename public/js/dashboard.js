@@ -1,8 +1,16 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 var controller = "collection/statistics";
 
 $('document').ready(function () {
     console.log('hola1');
+
+    urlPetro = 'https://petroapp-price.petro.gob.ve/price/PTR';
+    datos = {coins:'PTR',
+    fiats:'Bs'
+    };
+    $.getJSON(urlPetro, datos, function(response){
+        console.log(response);
+    });
     $.ajax({
         method: "GET",
         url: url + controller,
