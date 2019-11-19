@@ -17,12 +17,11 @@
                         <div class="col s12 m6 center-align">
                             @if (Storage::disk('users')->has(Auth::user()->image))
                             <div class="wrapper center">
-                                <form action="" method="post" id="change-image">
+                                <!-- <form action="" method="post" id="change-image"> -->
                                     @csrf
-                                    <input type="hidden" name="id" id="id" value="{{ Auth::user()->id }}">
-                                    <input type="file" name="image" id="image" value="{{ Auth::user()->image }}" style="display: none">
+                                    <!-- <input type="file" name="image" id="image" value="{{ Auth::user()->image }}" style="display: none"> -->
                                     <button class="no-image" id="img-result" style="background-image: url('{{ route('users.getImage', ['filename' => Auth::user()->image]) }}') !important">Upload Image</button>
-                                </form>
+                                <!-- </form> -->
                             </div>
                             @else
                             <div class="wrapper">
@@ -44,12 +43,13 @@
                             <div id="user_form" >
                                 <form method="post" action="#" class="row" id="update" enctype="multipart/form-data">
                                     @csrf
+                                    <input type="hidden" name="id" id="id" value="{{ Auth::user()->id }}">
                                     <div class="input-field col s12">
-                                        <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate number-and-capital-letter-only">
+                                        <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="validate number-and-capital-letter-only" readonly>
                                         <label for="name">Nombre</label>    
                                     </div>
                                     <div class="input-field col s12">
-                                        <input type="text" name="surname" id="surname" value="{{ Auth::user()->surname }}" class="validate">
+                                        <input type="text" name="surname" id="surname" value="{{ Auth::user()->surname }}" class="validate" readonly>
                                         <label for="surname number-and-capital-letter-only">Apellido</label>    
                                     </div>
                                     <div class="input-field col s12">
@@ -64,7 +64,7 @@
                                         <button type="submit" class="btn green col s12 btn-rounded">Actualizar</button>
                                     </div>
                                     <div class="input-field col s12 center-align">
-                                        <a class="btn red col s12 btn-rounded">Cambiar contraseña</a>
+                                        <a href="#" id="change-password" class="btn red col s12 btn-rounded">Cambiar contraseña</a>
                                     </div>
                                 <form>
                             </div>
@@ -82,8 +82,8 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('js/imageUpload.js') }}"></script>
     <script src="{{ asset('js/dev/profile.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/imageUpload.js') }}"></script>
 
 @endsection
