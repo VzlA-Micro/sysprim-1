@@ -75,7 +75,10 @@ Route::post('/users/update/',array(
 ));
 
 Route::get('/avatar/{filename}', 'UserController@getImage')->name('users.getImage');
-Route::post('/set-image/{filename}', 'UserController@changeImage')->name('users.setImage');
+Route::post('/users/setImage', 'UserController@changeImage')->name('users.setImage');
+Route::post('/profile/update', 'UserController@updateProfile')->name('profile.update');
+Route::post('/profile/setPassword', 'UserController@resetUserPassword')->name('profile.setPassword');
+
 
 
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');

@@ -117,7 +117,6 @@
 @endsection
 
 @section('scripts')
-    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/fullclip.js') }}"></script>
     <script>
         $('.fullBackground').fullClip({

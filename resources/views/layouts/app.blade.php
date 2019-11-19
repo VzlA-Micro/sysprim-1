@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/material-components.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('css/fontello.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
     @yield('styles')

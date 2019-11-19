@@ -142,6 +142,24 @@ class UserController extends Controller{
         $user->update();
     }
 
+    public function updateProfile(Request $request) {
+        $id= $request->input('id');
+        $phone= $request->input('phone');
+        $email= $request->input('email');
+        $user=User::find($id);
+        $user->phone='+'.$phone;
+        $user->email=$email;
+        $user->update();
+    }
+
+    public function resetUserPassword(Request $request) {
+        $id = $request->input('id');
+        $password=Hash::make($request->input('password'));
+        $user=User::find($id);
+        $user->password=$password;
+        $user->update();
+    }
+
     public function showTaxpayer() {
         $users = User::where('role_id',3)->get();
         return view('modules.taxpayers.read', array(
@@ -208,9 +226,9 @@ class UserController extends Controller{
         $image = $request->file('image');
         $user=User::find($id);
         $old_image = $user->image;
-        if($old_image == null) {
+        if($old_image == null){
             if($image) {
-                $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
+                $image_name = $user->ci . "." . $image->clientExtension(); // Nombre de la imagen
                 Storage::disk('users')->put($image_name, File::get($image));
                 $user->image = $image_name;
             }
@@ -219,7 +237,7 @@ class UserController extends Controller{
         else{
             Storage::disk('users')->delete($old_image);
             if($image) {
-                $image_name = $ci . "." . $image->clientExtension(); // Nombre de la imagen
+                $image_name = $user->ci . "." . $image->clientExtension(); // Nombre de la imagen
                 Storage::disk('users')->put($image_name, File::get($image));
                 $user->image = $image_name;
             }

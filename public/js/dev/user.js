@@ -173,8 +173,6 @@ $(document).ready(function () {
     $('#gestionUser').on('submit', function (e) {
         e.preventDefault();
         var formData = new FormData(this); // Creating FormData object.
-        var image = $('#image')[0].files[0]; // Getting file input data
-        formData.append('file',image);
         $.ajax({
             url: url + "user/save",
             cache: false,
@@ -217,27 +215,6 @@ $(document).ready(function () {
         });
     });
 
-
-    $('#image').change(function() {
-        var file = this.files[0];
-        var mimetype = file.type;
-        var match = ["image/jpeg", "image/png", "image/jpg"];
-        if(!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))){
-            swal({
-                text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
-                icon: "warning",
-                button: {
-                    text: "Aceptar",
-                    visible: true,
-                    value: true,
-                    className: "green",
-                    closeModal: true
-                }
-            });
-            $(this).val('');
-            return false;
-        }
-    });
 
     var statusBoton = false;
 
