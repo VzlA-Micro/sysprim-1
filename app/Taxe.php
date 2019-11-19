@@ -3,13 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
-
-class Taxe extends Model{
+class Taxe extends Model implements Auditable {
     protected $table="taxes";
+    use \OwenIt\Auditing\Auditable;
     protected $appends = ['total', 'typePayment', 'bankName'];
+
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
             ->withPivot('ciu_id','fiscal_credits','withholding','deductions','base','unid_tribu','mora','tax_rate','interest');

@@ -14,23 +14,20 @@
                 <a href="#!" class="breadcrumb">Pagar Impuestos</a>
 
             </div>
-            <div class="col s12" id="content">
-
+            <div class="col s12">
                 <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
                     <ul class="tabs">
-
-                        <li class="tab col s4 disabled" id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
+                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
-
-
                         <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
                                 PAGO</a></li>
                     </ul>
-                    <div id="general-tab ">
-                        <div class="card-header center-align">
 
+
+                    <div id="general-tab" class="content">
+                        <div class="card-header center-align">
                             <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
@@ -50,9 +47,7 @@
                             </div>
 
 
-
                             <input type="text" id="company_id" value="" name="company_id" class="hide">
-
 
 
                             <div class="input-field col s8 m6 tooltipped" data-position="bottom"
@@ -66,18 +61,19 @@
 
                             <div class="input-field col s12 m4">
                                 <i class="icon-directions prefix"></i>
-                                <input type="text" name="address" id="address" value="">
+                                <input type="text" name="address" id="address" value="" readonly>
                                 <label for="address">Direccion</label>
                             </div>
                             <div class="input-field col s4 m4 ">
                                 <i class="icon-supervisor_account prefix"></i>
-                                <input type="text" name="person" id="person" value="">
+                                <input type="text" name="person" id="person" value="" readonly>
                                 <label for="fiscal_period">Pers. Responsable</label>
                             </div>
 
                             <div class="input-field col s4 m4">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period" value="">
+                                <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"
+                                       value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
 
@@ -184,21 +180,32 @@
                 <form id="register-payment" class="card" method="GET" action="#">
                     <div id="payment-tab">
                         <div class="card-header center-align">
-                            <h4>CONCILIAR PAGO</h4>
+                            <h4>REGISTRAR PAGO</h4>
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="taxes_id" id="taxes_id" value="">
                             <div class="input-field col s12 m6 ">
                                 <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="lot" id="lot" value="" class="validate" required>
-                                <label for="lot">Lote</label>
+                                <input type="text" name="lot" id="lot" value="" class="validate" required readonly>
+                                <label for="lot">LOTE</label>
                             </div>
-                            <div class="input-field col s12 m6 ">
 
+
+                            <div class="input-field col s12 m6 ">
+                                <i class="icon-confirmation_number prefix "></i>
+                                <input type="text" name="name_bank" id="name_bank" value="" class="validate" required
+                                       readonly>
+                                <label for="bank">BANCO</label>
+                            </div>
+                            <input type="text" name="bank" id="bank" value="" class="validate hide" required>
+
+                            <div class="input-field col s12 m6 ">
                                 <i class="icon-confirmation_number prefix "></i>
                                 <input type="text" name="ref" id="ref" value="" class="validate" required>
                                 <label for="ref">Referencia</label>
                             </div>
+
+
                             <div class="input-field col s12 m6 ">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -208,14 +215,7 @@
                                 <label for="amount">Monto de punto de Venta</label>
                             </div>
 
-                            <div class="input-field col s12 m6 ">
-                                <i class="icon-touch_app prefix "></i>
-                                <select id="bank" name="bank">
-                                    <option value="33">100%BANCO</option>
-                                    <option value="44">BOD</option>
-                                </select>
-                                <label for="code">Banco</label>
-                            </div>
+
                             <div class="input-field col s12 m12">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -227,33 +227,14 @@
                         </div>
                         <div class="card-footer center-align">
                             <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
-                                Conciliar pago<i class="icon-send right"></i></button>
+                                REGISTRAR PAGO<i class="icon-send right"></i></button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
+    </div>
 
-
-        <div id="modal-tick" class="modal">
-            <div class="modal-content">
-                <h4 class="center-align">Escanear QR</h4>
-                <div class="col l12">
-                    <div class="col s12 center-align">
-                        <img src="{{asset('images/scan.gif')}}" class="img-responsive">
-                    </div>
-                    <div class="input-field col s10">
-                        <i class="icon-search prefix"></i>
-                        <input id="search" type="search" value="">
-                        <label for="search">CODIGO QR</label>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
     </div>
 
     <div class="fixed-action-btn">
@@ -261,32 +242,13 @@
             <i class="large fas fa-cash-register"></i>
         </a>
         <ul>
-            <li><a class="btn-floating light-blue darken-1 tooltipped modal-trigger" href="#open-atm" data-position="left" data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
-            <li><a class="btn-floating light-blue darken-2 tooltipped" data-position="left" data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
-            <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left" data-tooltip="Ver pagos"><i class="fas fa-money-check"></i></a></li>
+            <li><a class="btn-floating light-blue darken-1 tooltipped" data-position="left" id="open-cashier"
+                   data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
+            <li><a class="btn-floating light-blue darken-2 tooltipped"  id="close-cashier" data-position="left"
+                   data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
+            <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left" data-tooltip="Ver pagos"><i
+                            class="fas fa-money-check"></i></a></li>
         </ul>
-        <form method="post" id="open-atm" class="modal">
-            <div class="modal-content">
-                <h4>Punto de venta</h4>
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                        <input type="text" name="lote" id="lote">
-                        <label for="lote">Nro. Lote</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <select name="bank-point" id="bank-point">
-                            <option value="" disabled selected>Elige una opción</option>
-                            <option value="1">Punto 1</option>
-                            <option value="2">Punto 2</option>
-                        </select>
-                        <label for="bank-point">Punto de Venta</label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn green">Enviar<i class="icon-send right"></i></a>
-            </div>
-        </form>
     </div>
 @endsection
 
@@ -294,9 +256,4 @@
     <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
     <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function(){
-            $('#bank-point').formSelect();
-        })
-    </script>
 @endsection

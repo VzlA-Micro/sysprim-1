@@ -122,7 +122,7 @@ class CompanyTaxesController extends Controller
         $taxe->status='temporal';
         $taxe->save();
 
-        $id = DB::getPdo()->lastInsertId();
+        $id = $taxe->id;
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $date = TaxesMonth::verify($company, false);
 

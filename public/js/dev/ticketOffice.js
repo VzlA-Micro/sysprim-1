@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -12,7 +12,7 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status==='error'){
+                    if (response.status === 'error') {
                         swal({
                             title: "Error",
                             text: "El código de planilla ingresado no es validado, por favor ingrese  una planilla valida.",
@@ -22,7 +22,7 @@ $(document).ready(function () {
 
 
                         $('#search').val('');
-                    }else if(response.status==='verified'){
+                    } else if (response.status === 'verified') {
                         swal({
                             title: "Información",
                             text: "La planilla ingresada ya fue conciliada, por favor ingrese un código de  planilla valida.",
@@ -30,7 +30,7 @@ $(document).ready(function () {
                             button: "Ok",
                         });
                         $('#search').val('');
-                    }else{
+                    } else {
 
                         var taxe = response.taxe[0];
                         var ciu = response.ciu;
@@ -45,7 +45,7 @@ $(document).ready(function () {
                             button: "Ok",
                         }).then(function (accept) {
 
-                            if(accept){
+                            if (accept) {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
@@ -174,17 +174,14 @@ $(document).ready(function () {
     });
 
 
-
     $('#register-payment').submit(function (e) {
         e.preventDefault();
 
-        var amount=$('#amount_total').val();
-        var amount_pay=$('#amount').val();
+        var amount = $('#amount_total').val();
+        var amount_pay = $('#amount').val();
 
 
-
-
-        if(amount_pay>amount){
+        if (amount_pay > amount) {
             swal({
                 title: "Error",
                 text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
@@ -192,7 +189,7 @@ $(document).ready(function () {
                 button: "Ok",
             });
 
-        }else{
+        } else {
             $.ajax({
                 url: url + "ticket-office/payment/save",
                 contentType: false,
@@ -208,26 +205,23 @@ $(document).ready(function () {
                     console.log(response);
 
 
-
-
-                    if(response.status==='process'){
+                    if (response.status === 'process') {
                         $('#amount_total').val(response.payment);
 
-                        $('#amount_total').val(function (index, value ) {
+                        $('#amount_total').val(function (index, value) {
                             return number_format(value, 2);
                         });
 
                         swal({
                             title: "Información",
                             text: "Para conciliar esta planilla " +
-                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:"+$('#amount_total').val()+"Bs",
+                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total').val() + "Bs",
                             icon: "info",
                             button: "Ok",
                         });
 
 
-
-                    }else{
+                    } else {
                         swal({
                             title: "¡Bien hecho!",
                             text: "Planilla ingresa y conciliada con éxito.",
@@ -235,13 +229,10 @@ $(document).ready(function () {
                             button: "Ok",
                         }).then(function (accept) {
                             $('#amount_total').val('');
-
-                            if($('#company_id').val()!==''){
-                                window.open(url+'/ticket-office/pdf/taxes/'+$('#taxes_id').val(), "RECIBO DE PAGO", "width=500, height=600")
+                            if ($('#company_id').val() !== '') {
+                                window.open(url + '/ticket-office/pdf/taxes/' + $('#taxes_id').val(), "RECIBO DE PAGO", "width=500, height=600")
                             }
-
-
-                            reset();
+                            location.reload();
                         });
 
 
@@ -251,7 +242,6 @@ $(document).ready(function () {
                     $('#ref').val('');
                     $('#lot').val('');
                     $('#amount').val('');
-
 
 
                     $("#preloader").fadeOut('fast');
@@ -274,11 +264,10 @@ $(document).ready(function () {
         }
 
 
-
     });
 
 
-    function  reset() {
+    function reset() {
         $('#details').text('');
 
         $('ul.tabs').tabs("select", "general-tab");
@@ -313,16 +302,15 @@ $(document).ready(function () {
             }
         }).then(function (aceptar) {
             if (aceptar) {
-                if($('#company_id').val()!==''){
+                if ($('#company_id').val() !== '') {
                     registerTaxes();
                     $('#three').removeClass('disabled');
                     $('ul.tabs').tabs("select", "payment-tab");
 
-                }else{
+                } else {
                     $('#three').removeClass('disabled');
                     $('ul.tabs').tabs("select", "payment-tab");
                 }
-
 
 
             }
@@ -331,19 +319,14 @@ $(document).ready(function () {
     });
 
 
-
-
-
     $('#scan').click(function () {
         $('#search').focus();
         $('#search').val("");
     });
 
 
-
-
     $('input[type="text"].money_keyup').on('keyup', function (event) {
-        $(event.target).val(function (index, value ) {
+        $(event.target).val(function (index, value) {
             return value.replace(/\D/g, "")
                 .replace(/([0-9])([0-9]{2})$/, '$1,$2')
                 .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
@@ -353,13 +336,13 @@ $(document).ready(function () {
     function registerTaxes() {
 
         console.log(form);
-        var form=new FormData(document.getElementById('register-taxes'));
-        form.append('fiscal_period',$('#fiscal_period').val());
+        var form = new FormData(document.getElementById('register-taxes'));
+        form.append('fiscal_period', $('#fiscal_period').val());
         $.ajax({
             url: url + "ticket-office/taxes/save",
             contentType: false,
             processData: false,
-            data:form ,
+            data: form,
             method: "POST",
 
             beforeSend: function () {
@@ -367,9 +350,9 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-            console.log(response);
+                console.log(response);
 
-                var taxes=response.taxe;
+                var taxes = response.taxe;
                 $('#amount_total').val(taxes.amountTotal);
 
                 $('#taxes_id').val(taxes.id_taxes);
@@ -396,24 +379,14 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     function formatMoney() {
         $('input[type="text"].money').each(function () {
-            $(this).val(function (index, value ) {
+            $(this).val(function (index, value) {
                 return number_format(value, 2);
             });
         });
 
-        $('#amount').text(function (index, value ) {
+        $('#amount').text(function (index, value) {
             return number_format(value, 2);
         });
 
@@ -444,16 +417,14 @@ $(document).ready(function () {
     }
 
 
-
-
     $('#fiscal_period').change(function () {
-        var company=$('#company_id').val();
-        var fiscal_period=$('#fiscal_period').val();
+        var company = $('#company_id').val();
+        var fiscal_period = $('#fiscal_period').val();
 
-        if(fiscal_period!==''){
+        if (fiscal_period !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "ticket-office/find/fiscal-period/"+fiscal_period+"/"+company,
+                url: url + "ticket-office/find/fiscal-period/" + fiscal_period + "/" + company,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -463,8 +434,8 @@ $(document).ready(function () {
 
                     if (response.status === 'error') {
                         swal({
-                            title:"Información" ,
-                            text: 'La empresa ' + $('#name_company').val()+'ya declaro el periodo de '+ $('#fiscal_period').val()+', seleccione un periodo fiscal valido',
+                            title: "Información",
+                            text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
                             icon: "info",
                             button: "Ok",
                         });
@@ -474,7 +445,7 @@ $(document).ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-                },error: function (err) {
+                }, error: function (err) {
                     $('#license').val('');
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -507,14 +478,14 @@ $(document).ready(function () {
 
                     if (response.status === 'error') {
                         swal({
-                            title:"Información" ,
+                            title: "Información",
                             text: response.message,
                             icon: "info",
                             button: "Ok",
                         });
 
 
-                    }else {
+                    } else {
 
                         var company = response.company[0];
                         var user = response.company[0].users[0];
@@ -592,7 +563,7 @@ $(document).ready(function () {
                             $('#details').append(template);
 
                             $('input[type="text"].money_keyup').on('keyup', function (event) {
-                                $(event.target).val(function (index, value ) {
+                                $(event.target).val(function (index, value) {
                                     return value.replace(/\D/g, "")
                                         .replace(/([0-9])([0-9]{2})$/, '$1,$2')
                                         .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
@@ -609,7 +580,7 @@ $(document).ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-                },error: function (err) {
+                }, error: function (err) {
                     $('#license').val('');
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -625,11 +596,9 @@ $(document).ready(function () {
     });
 
 
-
-
     $('#general-next').click(function () {
 
-        if ($('#company_id').val()==='') {
+        if ($('#company_id').val() === '') {
             swal({
                 title: "Información",
                 text: 'Debe ingresar una empresa,  para con continuar con el registro.',
@@ -644,16 +613,13 @@ $(document).ready(function () {
                 button: "Ok",
             });
 
-        }else{
+        } else {
             $('#two').removeClass('disabled');
             $('ul.tabs').tabs("select", "details-tab");
         }
 
 
     });
-
-
-
 
 
     function userUpdate() {
@@ -700,13 +666,13 @@ $(document).ready(function () {
     }
 
 
-    var date=new Date();
+    var date = new Date();
 
     $('.fiscal_period').datepicker({
-        maxDate:  date,
+        maxDate: date,
         // defaultDate: date,
         format: 'yyyy-mm-dd', // Configure the date format
-        yearRange: [1900,date.getFullYear()],
+        yearRange: [1900, date.getFullYear()],
         showClearBtn: false,
         i18n: {
             cancel: 'Cerrar',
@@ -718,8 +684,8 @@ $(document).ready(function () {
             weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
             weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
         },
-        disableDayFn: function(date) {
-            if(date.getDate() == 1) // getDay() returns a value from 0 to 6, 1 represents Monday
+        disableDayFn: function (date) {
+            if (date.getDate() == 1) // getDay() returns a value from 0 to 6, 1 represents Monday
                 return false;
             else
                 return true;
@@ -727,16 +693,14 @@ $(document).ready(function () {
     });
 
 
-
-
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if ($('#ci').val() !== '' && $('#nationality').val() !== null) {
             CheckCedula();
         }
     });
 
     $('#ci').keyup(function () {
-        if($('#nationality').val()===null){
+        if ($('#nationality').val() === null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
@@ -750,7 +714,7 @@ $(document).ready(function () {
 
 
     $('#nationality').change(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if ($('#ci').val() !== '' && $('#nationality').val() !== null) {
             CheckCedula();
         }
 
@@ -762,7 +726,7 @@ $(document).ready(function () {
             var nationality = $('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: url+"/ticket-office/find/user/"+nationality+ci,
+                url: url + "/ticket-office/find/user/" + nationality + ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -789,13 +753,13 @@ $(document).ready(function () {
                                 }
                             }
                         }).then(function (aceptar) {
-                            if(aceptar){
+                            if (aceptar) {
                                 window.location.href = url + "taxpayers/register";
                             }
                         })
 
                     } else {
-                        var user=response[0].user;
+                        var user = response[0].user;
                         $('#name_user').val(user.name);
                         $('#user_id').val(user.id);
                         $('#surname').val(user.surname);
@@ -823,32 +787,145 @@ $(document).ready(function () {
     }
 
 
+    console.log(localStorage.getItem('epale'));
 
 
-
-    function openPoint(){
+    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
         swal({
-            title: "PUNTO DE VENTA 1/2",
-            text: "Introduzca el numero de lote del punto de venta:",
-            icon:"info",
-            content: {
-                element: "input",
-                attributes: {
-                    placeholder: "Escribe un numero",
-                    type: "number",
-                },
-            },
-        }).then(function (valor) {
-
-            console.log(valor);
-
+            title: "Información",
+            text: "Debe abrir caja, para empezar a registrar pagos.",
+            icon: "info",
         });
+        $('.content').css('display', 'none');
+    } else {
+
+        var bank = localStorage.getItem('bank');
+        var lot = localStorage.getItem('lot');
 
 
+        if (bank === "44") {
+            $('#name_bank').val('BOD');
+        } else {
+            $('#name_bank').val("100%BANCO");
+        }
+
+        $('#bank').val(bank);
+        $('#lot').val(lot);
+
+        M.updateTextFields();
+
+        $('#content').css('display', 'block');
     }
 
 
 
+    $('#close-cashier').click(function () {
+       if(localStorage.getItem('bank')!==null){
+
+
+           swal({
+               title: "Información",
+               text: "¿Estas seguro?, Si cierras las caja, no podras revertir los cambios.",
+               icon: "warning",
+               buttons: {
+                   confirm: {
+                       text: "Si",
+                       value: true,
+                       visible: true,
+                       className: "green"
+
+                   },
+                   cancel: {
+                       text: "No",
+                       value: false,
+                       visible: true,
+                       className: "grey lighten-2"
+                   }
+               }
+           }).then(function (aceptar) {
+               if (aceptar) {
+                   localStorage.removeItem('bank');
+                   localStorage.removeItem('lot');
+                   location.href=url+'payments/read';
+               }
+
+
+           });
+
+
+       }else{
+           swal({
+               title: "Información",
+               text: "Acción cancelada,debe abrir la caja para poder cerrarla.",
+               icon: 'info'
+           });
+
+       }
+
+
+
+
+    });
+
+    $('#open-cashier').click(function () {
+        if(localStorage.getItem('bank')==null){
+            swal({
+                title: "PUNTO DE VENTA 1/2",
+                text: "Introduzca el numero de lote del punto de venta:",
+                icon: "info",
+                content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "Escribe un numero",
+                        type: "number",
+                    },
+                },
+            }).then(function (name) {
+                if (name===null||isNaN(name)||name<=0) {
+                    swal({
+                        title: "Información",
+                        text: "Acción cancelada,debe ingresar un numero de lote valido.",
+                        icon: 'info'
+                    });
+                }else{
+                    localStorage.setItem('lot', name);
+                    swal({
+                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2",
+                        icon: "info",
+                        buttons: {
+                            cancel: true,
+                            BANCO: {text: "100%BANCO", value: "33", className: "blue"},
+                            BOD: {text: "BOD", value: "44", className: "green width"},
+                        }
+                    }).then(function (bank) {
+                        if(bank===null){
+                            swal({
+                                title: "Información",
+                                text: "Acción cancelada,debe ingresar un punto.",
+                                icon: 'info'
+                            });
+                        }else{
+                            localStorage.setItem('bank', bank);
+                            swal({
+                                title: "Bien hecho",
+                                text: "Ya puedes empezar a registrar pagos valido.",
+                                icon: "success",
+                            });
+                            location.reload();
+                        }
+                    })
+                }
+            });
+
+        }else{
+            swal({
+                title: "Información",
+                text: "Acción cancelada,debe abrir caja.",
+                icon: 'info'
+            });
+        }
+    });
 });
+
 
 

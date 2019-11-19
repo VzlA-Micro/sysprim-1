@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">            
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
+    <style>
+
+    </style>
 @endsection
 
 @section('content')
@@ -12,35 +15,41 @@
                 <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
                 <a href="{{ route('payments.manage') }}" class="breadcrumb">Gestionar Pagos</a>
                 <a href="#!" class="breadcrumb">Ver Pagos</a>
+
+
             </div>
+
+
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
+                        <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
                         <table class="centered highlight" id="payments" style="width: 100%">
-
                             <thead>
                                 <tr>
+                                    <th>Fecha</th>
                                     <th>Contribuyente</th>
                                     <th>Forma de Pago</th>
                                     <th>Banco</th>
-                                    <th>Fecha</th>
-                                    <th>Monto</th>
+                                    <th>Lote</th>
                                     <th>N°. Referencia</th>
-                                    {{-- <th>Detalles</th> --}}
+                                    <th>Monto</th>
+                                    <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($taxes as $taxe)
                                 <tr>
+                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                     <td>{{$taxe->taxes->companies[0]->name}}</td>
                                     <td>{{$taxe->taxes->typePayment}}</td>
                                     <td>{{$taxe->taxes->bankName}}</td>
-                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                    <td>{{number_format($taxe->amount,2)}}</td>
+                                    <td>{{$taxe->lot}}</td>
                                     <td>{{$taxe->ref}}</td>
-                                    {{-- <td>
-                                        <a href="" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
-                                    </td> --}}
+                                    <td>{{number_format($taxe->amount,2)}}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -54,8 +63,20 @@
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{asset('js/jszip.min.js')}}"></script>
+    <script src="{{asset('js/pdfmake.min.js')}}"></script>
+    <script src="{{asset('js/vfs_fonts.js')}}"></script>
+    <script src="{{asset('js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('js/buttons.print.min.js')}}"></script>
     <script>
+
+        var name=$('.email').text();
+        var amount_total=$('#amount_total').val();
+        console.log(name);
+
         $('#payments').DataTable({
+            dom: 'Bfrtip',
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
@@ -86,7 +107,57 @@
                     "copy": "Copiar",
                     "colvis": "Visibilidad"
                 }
-            }
+            },
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'REGISTROS DE PAGO',
+                    className:'btn orange waves-effect waves-light',
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'REGISTROS DE PAGO',
+                    download: 'open',
+                    className:'btn orange waves-effect waves-light',
+                    messageTop: 'Usuario:'+ name,
+                    messageBottom: 'TOTAL RECAUDADO:'+ amount_total+".Bs",
+                    customize:function(doc) {
+                        doc.styles.title = {
+                            fontSize: '25',
+                            alignment: 'center'
+                        },
+                        doc.styles['td:nth-child(2)'] = {
+                            width: '100px',
+                            'max-width': '100px'
+                        },
+                            doc.styles.tableHeader.fontSize = 14,
+                            doc.defaultStyle.alignment = 'left'
+
+                    },
+                    exportOptions: {
+                        columns: [ 0, 1, 2,3,4,5,6 ]
+                    }
+                },
+
+
+
+                {
+                    extend: 'copyHtml5',
+                    title: 'REGISTROS DE PAGO',
+                    className:'btn orange waves-effect waves-light',
+
+                },
+
+
+                {
+                    extend: 'csvHtml5',
+                    title: 'REGISTROS DE PAGO',
+                    className:'btn orange waves-effect waves-light',
+                },
+
+
+
+            ]
         });
     </script>
 @endsection
