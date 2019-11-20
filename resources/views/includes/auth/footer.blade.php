@@ -6,7 +6,7 @@
         hola
     </div>
 </footer> --}}
-<footer class="page-footer iribarren-wine-gradient">
+<footer style="z-index: 1" class="page-footer iribarren-wine-gradient">
     <div class="container">
         <div class="row">
             <div class="col s12 m3 center-align social">

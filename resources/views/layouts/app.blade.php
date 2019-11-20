@@ -12,17 +12,18 @@
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
-    @include('includes.preloader')
+    @include('includes.preloader')    
     @auth
         @include('includes.app.header')
     @endauth
     @guest
         @include('includes.auth.header')
     @endguest
-    <main @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login') class="fullBackground" @endif>
+    <main>
         @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')
             
         @endif
@@ -35,7 +36,10 @@
     @guest
         @include('includes.auth.footer')
     @endguest
-
+    
+    @auth
+        @include('includes.petro-data')      
+    @endauth
 
     @include('includes.scripts')
     @yield('scripts')

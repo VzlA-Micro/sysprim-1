@@ -208,6 +208,25 @@ button.btn-app:hover {
   background-color: #2bbbad;
 }
 
+.fixed-plugin {
+  position: absolute;
+  top: 180px;
+  right: 0;
+  width: 64px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1031;
+  border-radius: 8px 0 0 8px;
+  text-align: center;
+}
+.fixed-plugin i {
+  color: #FFFFFF;
+  padding: 15px;
+  border-radius: 0 0 6px 6px;
+  width: auto;
+  font-size: 40px;
+  line-height: 50px;
+}
+
 .sidenav {
   -webkit-background-size: cover;
   background-size: cover;

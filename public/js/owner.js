@@ -41,13 +41,13 @@ $(document).ready(function() {
     $('.materialboxed').materialbox();
     $('.collapsible').collapsible();
     $('.fixed-action-btn').floatingActionButton();
- 
-    $('.tabs').tabs({
-        // swipeable:true
-    });
-    $('#modal1').modal();
-
+    $('.tabs').tabs();
     $('.modal').modal();
-
+    $('.dropdown-trigger#petro-trigger').dropdown({
+        alignment: 'left',
+        hover: true,
+        coverTrigger: false,
+        constrainWidth: false,
+    });
 
 });

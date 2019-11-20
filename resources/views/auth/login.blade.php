@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/fullclip.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/subtle-slideshow.css') }}">
     <style type="text/css">
         body {
             
@@ -26,34 +26,26 @@
             footer {
                 padding-right: 0 !important;
             }
-
-            .fullBackground {
-              background-position:center center;
-              background-attachment:fixed;
-              background-size: cover;
-              position:absolute;
-              top:0;
-              left:0;
-              width:100% !important;
-              height:100%; 
-            }
         }
-        .fullBackground {
-              background-position:center center;
-              background-attachment:scroll;
-              background-size: cover;
-              position:relative;
-              top:0;
-              left:0;
-              width:80%;
-              height:100%; 
-            }
-
     </style>
 @endsection
 
 @section('content')
     <div class="container-fluid">
+        <div id="slides">
+          <div class="slide">
+            <span class="animate down" style="background-image: url({{ asset('images/bg-1.jpg') }})"></span>
+          </div>
+          <div class="slide">
+            <span class="animate in" style="background-image: url({{ asset('images/bg-2.jpg') }})"></span>
+          </div>
+          <div class="slide">
+            <span class="animate down" style="background-image: url({{ asset('images/bg-3.jpg') }})"></span>
+          </div>
+          <div class="slide>
+            <span class="animate out" style="background-image: url({{ asset('images/bg-4.jpg') }})"></span>
+          </div>
+        </div>
         <div class="row show-on-medium-and-down hide-on-large-only">
             <div class="col s12 m6 offset-m3 animated bounceInDown">
                 @if(session('notification'))
@@ -63,7 +55,10 @@
                 @endif
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
-                        <h5>{{ __('Iniciar Sesión') }}</h5>
+                        <h5>
+                            <img src="{{ asset('images/iribarren_logo.png') }}" class="responsive-img" alt="" srcset="">                    
+                            
+                        </h5>
                     </div>
                     <div class="card-content row">
                         @csrf
@@ -99,7 +94,7 @@
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
                                 <i class="icon-send right"></i>
-                                {{ __('Iniciar Sesión') }}
+                                {{ __('Ingresar') }}
                         </button>
                     </div>
                     <div class="card-footer center-align">
@@ -117,17 +112,20 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/fullclip.js') }}"></script>
+    <script src="{{ asset('js/jquery.subtle-slideshow.js') }}"></script>
     <script>
-        $('.fullBackground').fullClip({
-            images: ['images/bg-1.jpg','images/bg-3.jpg','images/bg-2.jpg', 'images/bg-4.jpg'],
-            transitionTime: 3000,
-            // wait: 3000
-        });
-
         $('.sidenav#side-login').sidenav({
             edge:'right',
         });
+
+        $('#slides').slideshow({
+            randomize: false,      // Randomize the play order of the slides.
+            slideDuration: 6000,  // Duration of each induvidual slide.
+            fadeDuration: 1000,    // Duration of the fading transition. Should be shorter than slideDuration.
+            animate: true,        // Turn css animations on or off.
+            pauseOnTabBlur: true, // Pause the slideshow when the tab is out of focus. This prevents glitches with setTimeout().
+            enableLog: false      // Enable log messages to the console. Useful for debugging.
+          });
 
     </script>
 @endsection

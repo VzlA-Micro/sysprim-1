@@ -116,7 +116,6 @@
                             </div>
                         <!-- <div class="input-field col s12 m2">
                             <div class="input-field col s12 m2">
->>>>>>> c1b60444e71dbbb41aa783ea5cf936918a96619f
                                 <i class="icon-assignment prefix"></i>
                                 <input type="text" name="code" id="code" value="" readonly>
                                 <label for="code"></label>
@@ -393,5 +392,9 @@
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
-    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#bank-point').formSelect();
+        })
+    </script>
 @endsection
