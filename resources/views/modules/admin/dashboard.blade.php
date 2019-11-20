@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
 @section('content')
+    @include('includes.petro-data')      
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">

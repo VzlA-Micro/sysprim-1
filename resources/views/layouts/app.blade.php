@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
@@ -35,9 +36,7 @@
     @guest
         @include('includes.auth.footer')
     @endguest
-
-    @include('includes.petro-data')    
-
+    
     @include('includes.scripts')
     @yield('scripts')
 </body>
