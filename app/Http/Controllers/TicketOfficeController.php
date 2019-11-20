@@ -20,8 +20,8 @@ use App\Tributo;
 use App\Helpers\TaxesMonth;
 use App\Ciu;
 use App\Extras;
-
-
+use OwenIt\Auditing\Models\Audit;
+use Carbon\Carbon;
 class TicketOfficeController extends Controller{
 
 
@@ -68,9 +68,6 @@ class TicketOfficeController extends Controller{
         $ref=$request->input('ref');
         $bank=$request->input('bank');
         $taxe=Taxe::findOrFail($id_taxes);
-
-
-
         $amountPayment=0;
         $acum=0;
 
@@ -96,6 +93,7 @@ class TicketOfficeController extends Controller{
             if($amountPayment==0){
                 $data=['status'=>'success'];
                 $taxe->status='verified';
+                $taxe->bank=$bank;
                 $taxe->update();
             }else{
                 $data=['status'=>'process','payment'=>$amountPayment];
@@ -112,6 +110,7 @@ class TicketOfficeController extends Controller{
             if($acum>=$taxe->amount){
                 $data=['status'=>'success','payment'=>0];
                 $taxe->status='verified';
+                $taxe->bank=$bank;
                 $taxe->update();
             }else{
                 $amountPayment=$taxe->amount-$acum;
@@ -249,7 +248,8 @@ class TicketOfficeController extends Controller{
         $taxe->save();
 
 
-        $id = DB::getPdo()->lastInsertId();
+        $id = $taxe->id;
+
 
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $date = TaxesMonth::verify($company, false);
@@ -374,9 +374,26 @@ class TicketOfficeController extends Controller{
     }
 
     public function taxesAll(){
-        $taxes=Payments::with('taxes')->get();
-        return view('modules.payments.read',['taxes'=>$taxes]);
+        $amount_taxes=0;
+        $taxes=Audit::where('user_id',\Auth::user()->id)
+            ->where('event','created')
+                ->where('auditable_type','App\Payments')
+                    ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+        foreach ($taxes as $taxe){
+            $id_taxes[]=$taxe->auditable_id;
+        }
+        $taxes=Payments::with('taxes')->whereIn('id',$id_taxes)->get();
+
+
+        foreach($taxes as $taxe){
+            $amount_taxes+=$taxe->amount;
+        }
+
+
+        return view('modules.payments.read',['taxes'=>$taxes,'amount_taxes'=>$amount_taxes]);
     }
+
+
 
 
 

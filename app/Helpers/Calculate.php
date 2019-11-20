@@ -16,8 +16,12 @@ class Calculate{
         $amountTotal=0;
 
 
-        $taxes=Taxe::findOrFail($id);
+        $taxes=Taxe::find($id);
+
+
         $companyTaxe=$taxes->companies()->get();
+
+
         $ciuTaxes=CiuTaxes::where('taxe_id',$id)->get();
 
         $company_find = Company::find($companyTaxe[0]->id);

@@ -173,6 +173,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TaxesNumberServiceProvider::class,
         App\Providers\VerifyTaxesMonthServiceProvider::class,
@@ -183,6 +184,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         App\Providers\declarationProviderService::class,
+
     ],
 
     /*
