@@ -34,7 +34,7 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Periodo Fiscal</th>
-                                    <th>Estado</th>
+                                    <th class="tooltipped" data-position="right" data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>

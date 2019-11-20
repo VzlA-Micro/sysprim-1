@@ -147,7 +147,7 @@
 }
 
 #slides {
-  position: relative;
+  position: fixed;
   width: 1px;
   height: 1px;
   left: -9999px;
@@ -164,7 +164,7 @@
 
 #slideshow .slide, #slideshow span, #slideshow .static-content {
   display: block;
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;

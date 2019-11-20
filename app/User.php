@@ -8,10 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\MyResetPassword;
 use App\Notifications\VerifyEmailNotification;
 use App\Notifications\Payments;
-class User extends Authenticatable
+use OwenIt\Auditing\Contracts\Auditable;
+class User extends Authenticatable  implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use Notifiable;
 
+    protected $auditEvents = [
+        'created',
+        'updated',
+        'deleted',
+        'restored',
+    ];
     /**
      * The attributes that are mass assignable.
      *

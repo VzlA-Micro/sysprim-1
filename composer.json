@@ -13,7 +13,9 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "laravelista/lumen-vendor-publish": "5.8.*",
         "maatwebsite/excel": "^3.1",
+        "owen-it/laravel-auditing": "^9.3",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "uxweb/sweet-alert": "^2.0",
         "villca/numeros-en-letras": "^1.2"

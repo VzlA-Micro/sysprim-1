@@ -39,6 +39,9 @@
                         </a>
                     @endif
                 </div>
+                <li>
+                    <a href="{{ route('helps.manage') }}" class="tooltipped" data-tooltip="Ayuda" data-position="bottom"><i class="icon-info"></i></a>
+                </li>
                 {{-- User dropdown trigger --}}
                 <li>
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">

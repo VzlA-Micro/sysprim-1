@@ -181,14 +181,9 @@
                                     <div class="modal-content">
                                         <h4 class="center-align">Formas de pago</h4>
                                         <div class="row">
-                                            <div class="col s12 center-align">
-                                                <p>Por favor, elija la forma en como desea pagar su actividad .</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col s12 m4 center-align">
                                                 <h5>Pago por Taquilla SEMAT</h5>
-                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img">
                                                 <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
                                                     Taquilla
                                                     <i class="icon-payment right"></i>
@@ -196,7 +191,7 @@
                                             </div>
                                             <div class="col s12 m4 center-align">
                                                 <h5>Pago por Transferencia Bancaria</h5>
-                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img">
                                                 <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
                                                     Transferencia
                                                     <i class="icon-compare_arrows right"></i>
@@ -209,7 +204,7 @@
                                             </div>
                                             <div class="col s12 m4 center-align">
                                                 <h5>Pago por Deposito Bancario</h5>
-                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img">
                                                 <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
                                                     Deposito
                                                     <i class="icon-account_balance right"></i>

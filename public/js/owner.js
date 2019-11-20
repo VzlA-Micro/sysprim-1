@@ -41,37 +41,13 @@ $(document).ready(function() {
     $('.materialboxed').materialbox();
     $('.collapsible').collapsible();
     $('.fixed-action-btn').floatingActionButton();
- 
-    $('.tabs').tabs({
-        // swipeable:true
-    });
-    $('#modal1').modal();
-
+    $('.tabs').tabs();
     $('.modal').modal();
+    $('.dropdown-trigger#petro-trigger').dropdown({
+        alignment: 'left',
+        hover: true,
+        coverTrigger: false,
+        constrainWidth: false,
+    });
 
-    api();
-
-
-    function api(){
-        const url = 'https://petroapp-price.petro.gob.ve/price/';
-        const data = {
-            "coins": ["PTR", "BTC"],
-            "fiats" : ["USD", "EUR", "RUB", "CNY", "BS"]
-        };
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-            .catch(error => {
-                console.error('Error:', error);
-
-            })
-            .then(response => {
-                console.log(response);
-            });
-    }
 });

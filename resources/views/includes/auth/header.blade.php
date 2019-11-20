@@ -16,7 +16,6 @@
                 <form action="{{ route('login') }}" method="post" class="" >
                     <div class="row">
                         <div class="col s12 center-align">
-                            <h5>{{ __('Iniciar Sesión') }}</h5>
                             
                         </div>
                     </div>
@@ -54,7 +53,7 @@
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
                             <i class="icon-send right"></i>
-                            {{ __('Iniciar Sesión') }}
+                            {{ __('Ingresar') }}
                         </button>
                     </div>
                     <div class="card-footer center-align">

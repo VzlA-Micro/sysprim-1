@@ -9,20 +9,20 @@
     <link rel="stylesheet" href="{{ asset('css/material-components.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('css/fontello.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
-    @include('includes.preloader')
+    @include('includes.preloader')    
     @auth
         @include('includes.app.header')
     @endauth
     @guest
         @include('includes.auth.header')
     @endguest
-    <main @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login') class="fullBackground" @endif>
+    <main>
         @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')
             
         @endif
@@ -36,6 +36,7 @@
         @include('includes.auth.footer')
     @endguest
 
+    @include('includes.petro-data')    
 
     @include('includes.scripts')
     @yield('scripts')

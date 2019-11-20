@@ -25,7 +25,6 @@
                         <ul>
                             <li><b>RIF: </b>{{ $company->RIF }}</li>
                             <li><b>Licencia: </b>{{ $company->license }}</li>
-                            <li><b>Fecha de Apertura: </b>{{ $company->opening_date }}</li>
                             <li><b>Dirección: </b>{{ $company->address }}</li>
                             <li><b></b></li>
                         </ul>
