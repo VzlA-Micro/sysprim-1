@@ -551,6 +551,6 @@ Route::get('/help', function() {
     return view('modules.helps.manage');
 })->name('helps.manage');
 
-Route::get('/taxes/payment', function() {
-
-})->name('taxes.payment');
+Route::get('/taxes/payments', function() {
+    return view('modules.taxes.payments');
+})->name('taxes.payments');

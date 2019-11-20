@@ -37,10 +37,6 @@
         @include('includes.auth.footer')
     @endguest
     
-    @auth
-        @include('includes.petro-data')      
-    @endauth
-
     @include('includes.scripts')
     @yield('scripts')
 </body>
