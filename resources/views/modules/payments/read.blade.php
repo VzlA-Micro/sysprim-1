@@ -15,10 +15,7 @@
                 <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
                 <a href="{{ route('payments.manage') }}" class="breadcrumb">Gestionar Pagos</a>
                 <a href="#!" class="breadcrumb">Ver Pagos</a>
-
-
             </div>
-
 
             <div class="col s12">
                 <div class="card">
@@ -26,34 +23,49 @@
                         <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
                         <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Contribuyente</th>
-                                    <th>Forma de Pago</th>
-                                    <th>Banco</th>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Contribuyente</th>
+                                <th>Forma de Pago</th>
+                                <th>Banco</th>
+                                @if($taxes[0]->lot)
                                     <th>Lote</th>
-                                    <th>N°. Referencia</th>
-                                    <th>Monto</th>
-                                    <th>Detalles</th>
-                                </tr>
+                                @else
+                                    <th>Status</th>
+                                @endif
+                                <th>N°. Referencia</th>
+                                <th>Monto</th>
+                                <th>Detalles</th>
+                            </tr>
                             </thead>
                             <tbody>
 
                             @if($taxes)
-                                    @foreach($taxes as $taxe)
-                                        <tr>
-                                            <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                            <td>{{$taxe->taxes->companies[0]->name}}</td>
-                                            <td>{{$taxe->taxes->typePayment}}</td>
-                                            <td>{{$taxe->taxes->bankName}}</td>
+                                @foreach($taxes as $taxe)
+                                    <tr>
+                                        <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                        <td>{{$taxe->taxes->companies[0]->name}}</td>
+                                        <td>{{$taxe->type_payment}}</td>
+                                        <td>{{$taxe->taxes->bankName}}</td>
+                                        @if($taxe->lot)
                                             <td>{{$taxe->lot}}</td>
-                                            <td>{{$taxe->ref}}</td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        @else
+                                            @if($taxe->taxes->status=='verified')
+                                                <td>Verificado <i class="icon-check green-text" style="font-size: 20px"></i></td>
+                                            @elseif($taxe->taxes->status=='process')
+                                                <td>Sin Conciliar aún.<i class="icon-alarm blue-text" style="font-size: 20px"></i></td>
+                                            @else
+                                                <td>Cancelado.<i class="icon-close red-text" style="font-size: 20px"></i></td>
+                                            @endif
+                                        @endif
+                                        <td>{{$taxe->ref}}</td>
+                                        <td>{{number_format($taxe->amount,2)}}</td>
+                                        <td>
+                                            <a href="{{url('payments/taxes/'.$taxe->taxes->id)  }}" class="btn btn-floating orange waves-effect waves-light"><i
+                                                        class="icon-pageview"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endif
                             </tbody>
                         </table>
@@ -74,8 +86,8 @@
     <script src="{{asset('js/buttons.print.min.js')}}"></script>
     <script>
 
-        var name=$('.email').text();
-        var amount_total=$('#amount_total').val();
+        var name = $('.email').text();
+        var amount_total = $('#amount_total').val();
         console.log(name);
 
         $('#payments').DataTable({
@@ -84,26 +96,26 @@
             "scrollX": true,
             "pageLength": 10,
             language: {
-                "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Mostrar _MENU_ registros",
-                "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
-                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix":    "",
-                "sSearch":         "Buscar:",
-                "sUrl":            "",
-                "sInfoThousands":  ",",
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":     "Último",
-                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {
-                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 },
                 "buttons": {
@@ -115,39 +127,43 @@
                 {
                     extend: 'excelHtml5',
                     title: 'REGISTROS DE PAGO',
-                    className:'btn orange waves-effect waves-light',
+                    className: 'btn orange waves-effect waves-light',
                 },
                 {
                     extend: 'pdfHtml5',
                     title: 'REGISTROS DE PAGO',
                     download: 'open',
-                    className:'btn orange waves-effect waves-light',
-                    messageTop: 'Usuario:'+ name,
-                    messageBottom: 'TOTAL RECAUDADO:'+ amount_total+".Bs",
-                    customize:function(doc) {
+                    className: 'btn orange waves-effect waves-light',
+                    messageTop: 'Usuario:' + name,
+
+
+                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
+
+
+
+                    customize: function (doc) {
                         doc.styles.title = {
                             fontSize: '25',
                             alignment: 'center'
                         },
-                        doc.styles['td:nth-child(2)'] = {
-                            width: '100px',
-                            'max-width': '100px'
-                        },
+                            doc.styles['td:nth-child(2)'] = {
+                                width: '100px',
+                                'max-width': '100px'
+                            },
                             doc.styles.tableHeader.fontSize = 14,
                             doc.defaultStyle.alignment = 'left'
 
                     },
                     exportOptions: {
-                        columns: [ 0, 1, 2,3,4,5,6 ]
+                        columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
-
 
 
                 {
                     extend: 'copyHtml5',
                     title: 'REGISTROS DE PAGO',
-                    className:'btn orange waves-effect waves-light',
+                    className: 'btn orange waves-effect waves-light',
 
                 },
 
@@ -155,9 +171,8 @@
                 {
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',
-                    className:'btn orange waves-effect waves-light',
+                    className: 'btn orange waves-effect waves-light',
                 },
-
 
 
             ]

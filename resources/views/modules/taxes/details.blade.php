@@ -160,7 +160,8 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
-                                @if($taxes->status!='verified')
+
+                                @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
                                 <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i></a>
@@ -174,9 +175,20 @@
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </a>
-
                                 {{-- Modal structure --}}
                                @endif
+
+                                @if(\Auth::user()->role_id===1)
+                                    <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-light ">
+
+                                        CANCELAR PLANILLA
+                                        <i class="icon-close right"></i></a>
+                                    <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light">
+                                        CONCILIAR PAGO
+                                        <i class="icon-verified_user right"></i></a>
+                                @endif
+
+
                                 <div id="modal1" class="modal modal-fixed-footer">
                                     <div class="modal-content">
                                         <h4 class="center-align">Formas de pago</h4>

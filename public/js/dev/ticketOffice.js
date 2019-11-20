@@ -201,7 +201,8 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    console.log(response);
+
+
                     if (response.status === 'process') {
                         $('#amount_total').val(response.payment);
 
@@ -234,12 +235,8 @@ $(document).ready(function () {
 
 
                     }
-
-
                     $('#ref').val('');
-                    $('#lot').val('');
                     $('#amount').val('');
-
 
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -324,12 +321,13 @@ $(document).ready(function () {
                         });
 
 
+
+
                     }
 
 
-                    $('#ref').val('');
-                    $('#lot').val('');
-                    $('#amount').val('');
+                    $('#ref_tr').val('');
+                    $('#amount_tr').val('');
 
 
                     $("#preloader").fadeOut('fast');

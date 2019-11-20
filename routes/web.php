@@ -163,7 +163,7 @@ Route::get('/payments/manage', function() {
 Route::get('/payments/register', function() {
     return view('modules.payments.create');
 })->name('payments.register');
-Route::get('/payments/read', 'TicketOfficeController@taxesAll')->name('payments.read');
+
 Route::get('/payments/details', function() {
     return view('modules.payments.details');
 })->name('payments.details');
@@ -430,6 +430,16 @@ Route::get('/ticket-office/payments', function() {
 Route::get('/ticket-office/view', function() {
     return view('modules.ticket-office.create');
 })->name('ticket-office.payments');
+
+Route::get('/ticket-office/view', function() {
+    return view('modules.ticket-office.create');
+})->name('ticket-office.payments');
+
+
+Route::get('/ticket-office/type-payment', function() {
+    return view('modules.payments.type_payment');
+})->name('ticket-office.type.payments');
+
 Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
 Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
@@ -437,10 +447,9 @@ Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')
 Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
 Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
 Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-
-
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
-
+Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
+Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
 
 
 

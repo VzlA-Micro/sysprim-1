@@ -59,6 +59,9 @@ class TicketOfficeController extends Controller{
 
 
 
+
+
+
     public function paymentTaxes(Request $request){
         $id_taxes=$request->input('taxes_id');
 
@@ -262,6 +265,7 @@ class TicketOfficeController extends Controller{
         $taxe->fiscal_period = $fiscal_period;
         $taxe->branch='Act.Eco';
         $taxe->bank='66';
+
         $taxe->save();
 
 
@@ -391,14 +395,12 @@ class TicketOfficeController extends Controller{
     }
 
     public function taxesAll(){
+
         $amount_taxes=0;
         $taxes=Audit::where('user_id',\Auth::user()->id)
             ->where('event','created')
                 ->where('auditable_type','App\Payments')
                     ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-
-
-
 
         if(!$taxes->isEmpty()){
             foreach ($taxes as $taxe){
@@ -409,9 +411,10 @@ class TicketOfficeController extends Controller{
                 $taxes=Payments::with('taxes')->whereIn('id',$id_taxes)->get();
 
                 foreach($taxes as $taxe){
-
                     $amount_taxes+=$taxe->amount;
                 }
+
+
             }else{
                 $amount_taxes=null;
                 $taxes=null;
@@ -427,7 +430,15 @@ class TicketOfficeController extends Controller{
 
 
 
+    public function payments($type){
+        $payment=Payments::with('taxes')->where('type_payment','=',$type)->get();
+        return view('modules.payments.read',['taxes'=>$payment,'amount_taxes'=>0]);
+    }
 
+
+    public function changeStatustaxes($id){
+
+    }
 
 
 

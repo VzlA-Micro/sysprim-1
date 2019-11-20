@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -19,14 +19,22 @@
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('payments.read') }}" class="btn-app white indigo-text">
-                    <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Ver Pagos</span>
-                </a>
+
+                @if(\Auth::user()->role_id===1)
+                    <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white indigo-text">
+                        <i class="icon-format_list_bulleted"></i>
+                        <span class="truncate">Ver Pagos</span>
+                    </a>
+                @else
+                    <a href="{{ route('ticket-office.payment') }}" class="btn-app white indigo-text">
+                        <i class="icon-format_list_bulleted"></i>
+                        <span class="truncate">Ver Pagos</span>
+                    </a>
+                @endif
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-    
+
 @endsection
