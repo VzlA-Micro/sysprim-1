@@ -752,4 +752,74 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   color: #a51d1d;
 }
 
+.payment-form .btn-radio {
+  display: block;
+  border-radius: 2px !important;
+  position: relative;
+  padding: 15px 5px !important;
+  margin: 1rem 0 0 0;
+  min-width: 80px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #26a69a;
+  font-size: 14px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  -webkit-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+}
+.payment-form .btn-radio > i {
+  font-size: 50px;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.payment-form .btn-radio > i > img {
+  width: 50px;
+  height: 50px;
+}
+.payment-form .btn-radio:hover {
+  background-color: #2bbbad;
+}
+.payment-form input:checked + label.btn-radio {
+  background-color: #fff !important;
+  color: #333;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.8);
+  -webkit-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+.payment-form input:checked + label.btn-radio[for=banesco] {
+  color: #4f886a !important;
+}
+.payment-form input:checked + label.btn-radio[for=bnc] {
+  color: #003C81 !important;
+}
+.payment-form input:checked + label.btn-radio[for=bicentenario] {
+  color: #c62828 !important;
+}
+.payment-form input:checked + label.btn-radio[for=percent-banco] {
+  color: #EC7022 !important;
+}
+.payment-form input:checked + label.btn-radio[for=bod] {
+  color: #72C267 !important;
+}
+.payment-form input:checked + label.btn-radio:after {
+  content: "✓";
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 30px;
+  border-radius: 100%;
+  background-color: #fff;
+  z-index: 999;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  -webkit-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
 /*# sourceMappingURL=owner.css.map */
