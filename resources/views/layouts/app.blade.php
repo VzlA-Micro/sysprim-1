@@ -22,7 +22,6 @@
     @guest
         @include('includes.auth.header')
     @endguest
-
     <main>
         @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')
             
@@ -37,6 +36,7 @@
         @include('includes.auth.footer')
     @endguest
 
+    @include('includes.petro-data')    
 
     @include('includes.scripts')
     @yield('scripts')
