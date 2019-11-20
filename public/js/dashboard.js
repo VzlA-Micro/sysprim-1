@@ -37,20 +37,21 @@ $('document').ready(function () {
                         var rub = value['data']['PTR']['RUB'];
                         var cny = value['data']['PTR']['CNY'];
                         var usd = value['data']['PTR']['USD'];
+                        var bs = value['data']['PTR']['BS'];
 
-                        console.log(value['data']['PTR']['BS']);
-                        console.log(response);
                         $('#petro').text(total);
-                        console.log('euro' + eur);
-                        console.log('rublo' + rub);
-                        console.log('yuan' + cny);
-                        console.log('dolar' + usd);
+                        $('#bs').text('Bolivar '+total);
+                        $('#eur').text('Euros '+eur);
+                        $('#cny').text('Yuan '+cny);
+                        $('#rub').text('Ruplas '+rub);
+                        $('#usd').text('Dolar '+usd);
+
                     },
                     error: function (e) {
                         console.log(e);
                     }
                 });
-                console.log(value);
+
             });
 
     }
@@ -76,6 +77,7 @@ $('document').ready(function () {
                 $('#bod').text(response[0]['bod']);
                 $('#banco100').text(response[0]['banco100']);
                 chartsMonth(response);
+                topTaxes(response[11]);
             }
         },
         error: function (e) {
@@ -153,7 +155,8 @@ function chartsMonth(data) {
         type: "line", // Tipo de chart
         data: { // Incluye lo referente a datos
             "labels": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-            "datasets": [{ // Sets de datos que tendra la chart
+            "datasets": [ // Sets de datos que tendra la chart
+                {
                 "label": "Actividad Economica",
                 "data": [
                     data[7]['enero'],
@@ -168,26 +171,28 @@ function chartsMonth(data) {
                     data[7]['octubre'],
                     data[7]['noviembre'],
                     data[7]['diciembre']],
-                "fill": false,
+
                 "borderColor": "#ba0f1a",
+                    "fill":false,
                 "backgroundColor":
                     "#e91e63",
+                "borderCapStyle":"round",
                 "lineTension": 0.1
             }, {
                 "label": "Inmueble Urbano",
                 "data": [
-                    data[2]['enero'],
-                    data[2]['febrero'],
-                    data[2]['marzo'],
-                    data[2]['abril'],
-                    data[2]['mayo'],
-                    data[2]['junio'],
-                    data[2]['julio'],
-                    data[2]['agosto'],
-                    data[2]['septiembre'],
-                    data[2]['octubre'],
-                    data[2]['noviembre'],
-                    data[2]['diciembre']],
+                    data[8]['enero'],
+                    data[8]['febrero'],
+                    data[8]['marzo'],
+                    data[8]['abril'],
+                    data[8]['mayo'],
+                    data[8]['junio'],
+                    data[8]['julio'],
+                    data[8]['agosto'],
+                    data[8]['septiembre'],
+                    data[8]['octubre'],
+                    data[8]['noviembre'],
+                    data[8]['diciembre']],
                 "fill":
                     false,
                 "borderColor":
@@ -202,18 +207,18 @@ function chartsMonth(data) {
                     "label":
                         "Vehiculo",
                     "data": [
-                        data[6]['enero'],
-                        data[6]['febrero'],
-                        data[6]['marzo'],
-                        data[6]['abril'],
-                        data[6]['mayo'],
-                        data[6]['junio'],
-                        data[6]['julio'],
-                        data[6]['agosto'],
-                        data[6]['septiembre'],
-                        data[6]['octubre'],
-                        data[6]['noviembre'],
-                        data[6]['diciembre']],
+                        data[9]['enero'],
+                        data[9]['febrero'],
+                        data[9]['marzo'],
+                        data[9]['abril'],
+                        data[9]['mayo'],
+                        data[9]['junio'],
+                        data[9]['julio'],
+                        data[9]['agosto'],
+                        data[9]['septiembre'],
+                        data[9]['octubre'],
+                        data[9]['noviembre'],
+                        data[9]['diciembre']],
                     "fill":
                         false,
                     "borderColor":
@@ -254,20 +259,20 @@ function chartsMonth(data) {
                     "label":
                         "Eventos",
                     "data": [
-                        data[3]['enero'],
-                        data[3]['febrero'],
-                        data[3]['marzo'],
-                        data[3]['abril'],
-                        data[3]['mayo'],
-                        data[3]['junio'],
-                        data[3]['julio'],
-                        data[3]['agosto'],
-                        data[3]['septiembre'],
-                        data[3]['octubre'],
-                        data[3]['noviembre'],
-                        data[3]['diciembre']],
+                        data[10]['enero'],
+                        data[10]['febrero'],
+                        data[10]['marzo'],
+                        data[10]['abril'],
+                        data[10]['mayo'],
+                        data[10]['junio'],
+                        data[10]['julio'],
+                        data[10]['agosto'],
+                        data[10]['septiembre'],
+                        data[10]['octubre'],
+                        data[10]['noviembre'],
+                        data[10]['diciembre']],
                     "fill":
-                        true,
+                        false,
                     "borderColor":
                         "#9c27b0",
                     "backgroundColor":
@@ -279,6 +284,7 @@ function chartsMonth(data) {
             ]
         },
         options: {
+
             title: {
                 display: true,
                 text: "Recaudo Por Impuestos Mensual",
@@ -498,15 +504,35 @@ function chartsMonth(data) {
     });
 }
 
-function addCommas(nStr) {
-    nStr += '';
-    x = nStr.split('.');
-    x1 = x [0];
-    x2 = x.length > 1 ? '.' + x [1] : '';
-    var rgx = / (\ d +) (\ d {3}) /;
-    while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$ 1' + ',' + '$ 2');
-    }
-    return x1 + x2;
+function topTaxes(data) {
+    console.log(data);
+    var circularChart = new Chart($('#donus'), {
+        type: 'doughnut', //Gráfica circular
+        data: {
+            labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta'], //Etiquetas
+            datasets: [
+                {
+                    data: [
+                        data['ptb'],
+                        data['ppc'],
+                        data['ppe'],
+                        data['ppv'],
+                        ], //Cantidad de la ¿rebanada?
+                    backgroundColor: [ //Color del segmento
+                        "#8BC34A",
+                        "#03A9F4",
+                        "#FFCE56",
+                        "#9c27b0"
+                    ],
+                    hoverBackgroundColor: [ //Color al hacer hover al segmento
+                        "#7CB342",
+                        "#039BE5",
+                        "#FFA000",
+                        "#9c27b0"
+                    ]
+                }]
+        }
+    });
 }
+
 

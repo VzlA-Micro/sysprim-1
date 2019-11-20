@@ -192,11 +192,18 @@
                     </li>
                     <li class="collection-item">
                         <div>
-                            <span class="title"><b>Punto De Venta: </b>{{$ppb}}</span><br>
+                            <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
                             <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <canvas id="donus" style="position: relative; height:120vh; width:160vw"></canvas>
+                    </div>
+                </div>
             </div>
             <div class="col s12">
                 <div id="map" style="width: 100%; height: 400px"></div>

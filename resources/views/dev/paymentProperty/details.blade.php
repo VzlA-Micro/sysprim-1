@@ -25,8 +25,8 @@
                         </div>
                         <div class="col m6">
                             <ul>
-                                <li><b>Codigo Catastral: </b>{{ $property[0]->code_cadastral }}</li>
-                                <li><b>Direccion: </b>{{ $property[0]->address }}</li>
+                                <li><b>Codigo Catastral: </b>{{ $property->code_cadastral }}</li>
+                                <li><b>Direccion: </b>{{ $property->address }}</li>
                                 <li><b></b></li>
                             </ul>
                         </div>
@@ -39,7 +39,7 @@
                     <form method="post" action="{{ route('paymentsProperty.help') }}" id='register-taxes'
                           class="card-content row">
                         @csrf
-                        <input type="text" name="idProperty" value="{{$property[0]->id}}">
+                        <input type="text" name="idProperty" value="{{$property->id}}">
                         <input type="hidden" name="totalGround" id="totalGround" class="validate money"
                                value="{{$build[0]['name']}}" readonly>
 

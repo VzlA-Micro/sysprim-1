@@ -607,6 +607,11 @@ class DashboardController extends Controller
             'diciembre' => $banco100Diciembre
         );
         $actividad = $this->actividadTaxes();
+        $property = $this->propertyTaxes();
+        $vehicle = $this->vehicleTaxes();
+        $event = $this->eventTaxes();
+        $top = $this->topPayments();
+
         return response()->json([
             $collection,
             $collectionMonth,
@@ -615,14 +620,19 @@ class DashboardController extends Controller
             $bicentenarioMonth,
             $bodMonth,
             $banco100Month,
-            $actividad
+            $actividad,
+            $property,
+            $vehicle,
+            $event,
+            $top
         ]);
     }
 
     public function dashboard()
     {
 
-        $company = Taxe::where('status', 'verified')->orderByDesc('id')->take(5)->get();
+        $company = Taxe::where('status', 'verified')
+            ->where('branch', 'Act.Eco')->orderByDesc('id')->take(5)->get();
 
         //$companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();
         $ptb = Taxe::where('code', 'like', '%ptb%')
@@ -630,7 +640,7 @@ class DashboardController extends Controller
         $countPtb = count($ptb);
 
 
-        $ppb = Taxe::where('code', 'like', '%ppb%')
+        $ppb = Taxe::where('code', 'like', '%ppv%')
             ->where('status', 'verified')->get();
         $countPpb = count($ppb);
 
@@ -638,7 +648,7 @@ class DashboardController extends Controller
         return view('modules.admin.dashboard', array(
                 'company' => $company,
                 'ptb' => $countPtb,
-                'ppb' => $countPpb)
+                'ppv' => $countPpb)
         );
     }
 
@@ -752,14 +762,11 @@ class DashboardController extends Controller
             'noviembre' => $Act_Noviembre,
             'diciembre' => $Act_Diciembre
         );
-
         return $actividad;
     }
 
     public function propertyTaxes()
     {
-
-
         $year = Carbon::now()->format('Y');
 
         $pro_Enero = 0;
@@ -778,80 +785,303 @@ class DashboardController extends Controller
         $pro_Enero = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '01')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
         $pro_Febrero = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '02')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
         $pro_Marzo = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '03')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
         $pro_Abril = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '04')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
         $pro_Mayo = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '05')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $A_Junio = Taxe::where('status', 'verified')
+        $pro_Junio = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '06')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Julio = Taxe::where('status', 'verified')
+        $pro_Julio = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '07')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Agosto = Taxe::where('status', 'verified')
+        $pro_Agosto = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '08')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Septiembre = Taxe::where('status', 'verified')
+        $pro_Septiembre = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '09')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Octubre = Taxe::where('status', 'verified')
+        $pro_Octubre = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '10')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Noviembre = Taxe::where('status', 'verified')
+        $pro_Noviembre = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '11')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
-        $Act_Diciembre = Taxe::where('status', 'verified')
+        $pro_Diciembre = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', '12')
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
+            ->where('branch', 'Inm.Urbano')
             ->sum('amount');
 
-        $actividad = array(
-            'enero' => $Act_Enero,
-            'febrero' => $Act_Febrero,
-            'marzo' => $Act_Marzo,
-            'abril' => $Act_Abril,
-            'mayo' => $Act_Mayo,
-            'junio' => $Act_Junio,
-            'julio' => $Act_Julio,
-            'agosto' => $Act_Agosto,
-            'septiembre' => $Act_Septiembre,
-            'octubre' => $Act_Octubre,
-            'noviembre' => $Act_Noviembre,
-            'diciembre' => $Act_Diciembre
+        $property = array(
+            'enero' => $pro_Enero,
+            'febrero' => $pro_Febrero,
+            'marzo' => $pro_Marzo,
+            'abril' => $pro_Abril,
+            'mayo' => $pro_Mayo,
+            'junio' => $pro_Junio,
+            'julio' => $pro_Julio,
+            'agosto' => $pro_Agosto,
+            'septiembre' => $pro_Septiembre,
+            'octubre' => $pro_Octubre,
+            'noviembre' => $pro_Noviembre,
+            'diciembre' => $pro_Diciembre
         );
-
-        return $actividad;
+        return $property;
     }
 
+    public function vehicleTaxes()
+    {
+        $year = Carbon::now()->format('Y');
+
+        $veh_Enero = 0;
+        $veh_Febrero = 0;
+        $veh_Marzo = 0;
+        $veh_Abril = 0;
+        $veh_Mayo = 0;
+        $veh_Junio = 0;
+        $veh_Julio = 0;
+        $veh_Agosto = 0;
+        $veh_Septiembre = 0;
+        $veh_Octubre = 0;
+        $veh_Noviembre = 0;
+        $veh_Diciembre = 0;
+
+        $veh_Enero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Febrero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Marzo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Abril = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Mayo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Junio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Julio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Agosto = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Septiembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Octubre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Noviembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+        $veh_Diciembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Pat. Veh')
+            ->sum('amount');
+
+        $vehicle = array(
+            'enero' => $veh_Enero,
+            'febrero' => $veh_Febrero,
+            'marzo' => $veh_Marzo,
+            'abril' => $veh_Abril,
+            'mayo' => $veh_Mayo,
+            'junio' => $veh_Junio,
+            'julio' => $veh_Julio,
+            'agosto' => $veh_Agosto,
+            'septiembre' => $veh_Septiembre,
+            'octubre' => $veh_Octubre,
+            'noviembre' => $veh_Noviembre,
+            'diciembre' => $veh_Diciembre
+        );
+
+        return $vehicle;
+    }
+
+
+    public function eventTaxes()
+    {
+
+
+        $year = Carbon::now()->format('Y');
+
+        $event_Enero = 0;
+        $event_Febrero = 0;
+        $event_Marzo = 0;
+        $event_Abril = 0;
+        $event_Mayo = 0;
+        $event_Junio = 0;
+        $event_Julio = 0;
+        $event_Agosto = 0;
+        $event_Septiembre = 0;
+        $event_Octubre = 0;
+        $event_Noviembre = 0;
+        $event_Diciembre = 0;
+
+        $event_Enero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Febrero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Marzo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Abril = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Mayo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Junio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Julio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Agosto = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Septiembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Octubre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Noviembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+        $event_Diciembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Event')
+            ->sum('amount');
+
+        $event = array(
+            'enero' => $event_Enero,
+            'febrero' => $event_Febrero,
+            'marzo' => $event_Marzo,
+            'abril' => $event_Abril,
+            'mayo' => $event_Mayo,
+            'junio' => $event_Junio,
+            'julio' => $event_Julio,
+            'agosto' => $event_Agosto,
+            'septiembre' => $event_Septiembre,
+            'octubre' => $event_Octubre,
+            'noviembre' => $event_Noviembre,
+            'diciembre' => $event_Diciembre
+        );
+
+        return $event;
+    }
+
+    public function topPayments()
+    {
+
+        $ppv = Taxe::where('code', 'like', '%ppv%')
+            ->where('status', 'verified')->get();
+        $countPpv = count($ppv);
+
+
+        $ppe = Taxe::where('code', 'like', '%ppe%')
+            ->where('status', 'verified')->get();
+        $countPpe = count($ppe);
+
+        $ptb = Taxe::where('code', 'like', '%ptb%')
+            ->where('status', 'verified')->get();
+        $countPtb = count($ptb);
+
+
+        $ppc = Taxe::where('code', 'like', '%ppc%')
+            ->where('status', 'verified')->get();
+        $countPpc = count($ppc);
+        $top = array(
+            'ppv' => $countPpv,
+            'ppe' => $countPpe,
+            'ptb' => $countPtb,
+            'ppc' => $countPpc
+        );
+        return $top;
+
+    }
 }
