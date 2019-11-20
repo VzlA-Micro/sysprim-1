@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $banesco = 0;
         $banco100 = 0;
         $bnc = 0;
-        $bod= 0;
+        $bod = 0;
         $bicentenario = 0;
         $enero = 0;
         $febrero = 0;
@@ -114,29 +114,29 @@ class DashboardController extends Controller
 
         $taxe = Taxe::where('status', 'verified')
             ->sum('amount');
-        $taxes=number_format($taxe, 2, ',', '.');
+        $taxes = number_format($taxe, 2, ',', '.');
 
         $banesco1 = Taxe::where('status', 'verified')
             ->where('bank', 55)
             ->sum('amount');
-        $banesco=number_format($banesco1, 2, ',', '.');
+        $banesco = number_format($banesco1, 2, ',', '.');
 
         $banco1001 = Taxe::where('status', 'verified')
             ->where('bank', 33)
             ->sum('amount');
-        $banco100=number_format($banco1001, 2, ',', '.');
+        $banco100 = number_format($banco1001, 2, ',', '.');
         $bnc1 = Taxe::where('status', 'verified')
             ->where('bank', 99)
             ->sum('amount');
-        $bnc=number_format($bnc1, 2, ',', '.');
+        $bnc = number_format($bnc1, 2, ',', '.');
         $bod1 = Taxe::where('status', 'verified')
             ->where('bank', 44)
             ->sum('amount');
-        $bod=number_format($bod1, 2, ',', '.');
+        $bod = number_format($bod1, 2, ',', '.');
         $bicentenario1 = Taxe::where('status', 'verified')
             ->where('bank', 77)
             ->sum('amount');
-        $bicentenario=number_format($bicentenario, 2, ',', '.');
+        $bicentenario = number_format($bicentenario, 2, ',', '.');
 
 
         //Recaudacion por meses
@@ -606,6 +606,7 @@ class DashboardController extends Controller
             'noviembre' => $banco100Noviembre,
             'diciembre' => $banco100Diciembre
         );
+        $actividad = $this->actividadTaxes();
         return response()->json([
             $collection,
             $collectionMonth,
@@ -613,14 +614,15 @@ class DashboardController extends Controller
             $bncMonth,
             $bicentenarioMonth,
             $bodMonth,
-            $banco100Month
+            $banco100Month,
+            $actividad
         ]);
     }
 
     public function dashboard()
     {
 
-        $company = Taxe::where('status','verified')->orderByDesc('id')->take(5)->get();
+        $company = Taxe::where('status', 'verified')->orderByDesc('id')->take(5)->get();
 
         //$companyTaxes = $company->taxesCompanies()->orderByDesc('id')->take(1)->get();
         $ptb = Taxe::where('code', 'like', '%ptb%')
@@ -652,10 +654,204 @@ class DashboardController extends Controller
     {
         $date = Carbon::now();
         $taxe = Taxe::where('status', 'process')
-            ->whereDay('created_at',$date->day)
+            ->whereDay('created_at', $date->day)
             ->sum('amount');
         return response()->json([
             $taxe]);
+    }
+
+    public function actividadTaxes()
+    {
+        $year = Carbon::now()->format('Y');
+
+        $Act_Enero = 0;
+        $Act_Febrero = 0;
+        $Act_Marzo = 0;
+        $Act_Abril = 0;
+        $Act_Mayo = 0;
+        $Act_Junio = 0;
+        $Act_Julio = 0;
+        $Act_Agosto = 0;
+        $Act_Septiembre = 0;
+        $Act_Octubre = 0;
+        $Act_Noviembre = 0;
+        $Act_Diciembre = 0;
+
+        $Act_Enero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Febrero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Marzo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Abril = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Mayo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Junio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Julio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Agosto = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Septiembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Octubre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Noviembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Diciembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+
+        $actividad = array(
+            'enero' => $Act_Enero,
+            'febrero' => $Act_Febrero,
+            'marzo' => $Act_Marzo,
+            'abril' => $Act_Abril,
+            'mayo' => $Act_Mayo,
+            'junio' => $Act_Junio,
+            'julio' => $Act_Julio,
+            'agosto' => $Act_Agosto,
+            'septiembre' => $Act_Septiembre,
+            'octubre' => $Act_Octubre,
+            'noviembre' => $Act_Noviembre,
+            'diciembre' => $Act_Diciembre
+        );
+
+        return $actividad;
+    }
+
+    public function propertyTaxes()
+    {
+
+
+        $year = Carbon::now()->format('Y');
+
+        $pro_Enero = 0;
+        $pro_Febrero = 0;
+        $pro_Marzo = 0;
+        $pro_Abril = 0;
+        $pro_Mayo = 0;
+        $pro_Junio = 0;
+        $pro_Julio = 0;
+        $pro_Agosto = 0;
+        $pro_Septiembre = 0;
+        $pro_Octubre = 0;
+        $pro_Noviembre = 0;
+        $pro_Diciembre = 0;
+
+        $pro_Enero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $pro_Febrero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $pro_Marzo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $pro_Abril = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $pro_Mayo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $A_Junio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Julio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Agosto = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Septiembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Octubre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Noviembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+        $Act_Diciembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+
+        $actividad = array(
+            'enero' => $Act_Enero,
+            'febrero' => $Act_Febrero,
+            'marzo' => $Act_Marzo,
+            'abril' => $Act_Abril,
+            'mayo' => $Act_Mayo,
+            'junio' => $Act_Junio,
+            'julio' => $Act_Julio,
+            'agosto' => $Act_Agosto,
+            'septiembre' => $Act_Septiembre,
+            'octubre' => $Act_Octubre,
+            'noviembre' => $Act_Noviembre,
+            'diciembre' => $Act_Diciembre
+        );
+
+        return $actividad;
     }
 
 }

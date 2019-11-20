@@ -60,7 +60,38 @@ class VerifyPaymentsBankImportController extends Controller
                     $amountTotalThere = str_replace(',', '.', $amountTotal);
 
                     $band = false;
-                } else {
+                }
+                if ($codeBank=='00116' && $band==false){
+                    $typeRegisterBank = substr($otra, 0, 1);
+                    $document = substr($otra, 1, 10);
+                    $reference = substr($otra, 11, 16);
+                    $amount = substr($otra, 27, 14);
+                    $amountTwo = str_replace(',', '', $amount);
+                    $amountThere = str_replace(',', '.', $amount);
+                    $viaPayments = substr($otra, 41, 3);
+
+                    echo $typeRegisterBank.'<br>';
+                    echo $codeBank.'<br>';
+                    echo $codeAccount.'<br>';
+                    echo $date.'<br>';
+                    echo $amountTotalTwo.'<br>';
+                    echo $amountTotalThere.'<br>';
+
+                    echo 'este es el que es'.ltrim($amountTotal, '0');
+
+                    echo $typeRegisterBank.'<br>';
+                    echo $document.'<br>';
+                    echo $reference.'<br>';
+                    echo $amount.'<br>';
+                    echo 'este es el que es'.ltrim($amount, '0').'<br>';
+                    //echo $amountTwo.'<br>';
+                    //echo $amountThere.'<br>';
+                    echo $viaPayments.'<br>';
+
+                }
+
+                else {
+
                     $typeRegisterBank = substr($otra, 0, 1);
                     $document = substr($otra, 1, 10);
                     $reference = substr($otra, 11, 16);
@@ -75,7 +106,7 @@ class VerifyPaymentsBankImportController extends Controller
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
                         //&& $amountThere == $taxe->amount
-                        if ($document == $code && $amountThere == $taxe->amount && $taxe->status == 'process') {
+                        if ($document == $code && $taxe->status == 'process') {
 
                             $company = Company::find($taxe->company_id);
                             $taxes=Taxe::findOrFail($taxe->id);

@@ -155,6 +155,14 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col s12 m12">
+                <div class="card">
+                    <div class="card-content">
+                        <canvas id="typeTaxes" style="position: relative; height:40vh; width:80vw"></canvas>
+                    </div>
+                </div>
+            </div>
             <div class="col s12 m6">
                 <ul class="collection with-header">
                     <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>

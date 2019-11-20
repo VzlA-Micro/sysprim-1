@@ -41,10 +41,10 @@ $('document').ready(function () {
                         console.log(value['data']['PTR']['BS']);
                         console.log(response);
                         $('#petro').text(total);
-                        console.log(eur);
-                        console.log(rub);
-                        console.log(cny);
-                        console.log(usd);
+                        console.log('euro' + eur);
+                        console.log('rublo' + rub);
+                        console.log('yuan' + cny);
+                        console.log('dolar' + usd);
                     },
                     error: function (e) {
                         console.log(e);
@@ -138,7 +138,150 @@ function chartsMonth(data) {
         options: {
             title: {
                 display: true,
-                text: "Recaudos de Impuestos Mensuales",
+                text: "Recaudo de Impuestos Mensual",
+                fontSize: 25
+            },
+            legend: {
+                position: 'bottom'
+            },
+            resonsive: true
+        }
+    });
+
+    var taxCollectionChart = document.querySelector("#typeTaxes");
+    var taxCollection = new Chart(taxCollectionChart, {
+        type: "line", // Tipo de chart
+        data: { // Incluye lo referente a datos
+            "labels": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            "datasets": [{ // Sets de datos que tendra la chart
+                "label": "Actividad Economica",
+                "data": [
+                    data[7]['enero'],
+                    data[7]['febrero'],
+                    data[7]['marzo'],
+                    data[7]['abril'],
+                    data[7]['mayo'],
+                    data[7]['junio'],
+                    data[7]['julio'],
+                    data[7]['agosto'],
+                    data[7]['septiembre'],
+                    data[7]['octubre'],
+                    data[7]['noviembre'],
+                    data[7]['diciembre']],
+                "fill": false,
+                "borderColor": "#ba0f1a",
+                "backgroundColor":
+                    "#e91e63",
+                "lineTension": 0.1
+            }, {
+                "label": "Inmueble Urbano",
+                "data": [
+                    data[2]['enero'],
+                    data[2]['febrero'],
+                    data[2]['marzo'],
+                    data[2]['abril'],
+                    data[2]['mayo'],
+                    data[2]['junio'],
+                    data[2]['julio'],
+                    data[2]['agosto'],
+                    data[2]['septiembre'],
+                    data[2]['octubre'],
+                    data[2]['noviembre'],
+                    data[2]['diciembre']],
+                "fill":
+                    false,
+                "borderColor":
+                    "#2dce8a",
+                "borderCapStyle":"round",
+                "backgroundColor":
+                "#2dce8a",
+                "lineTension":
+                    0.1
+            },
+                {
+                    "label":
+                        "Vehiculo",
+                    "data": [
+                        data[6]['enero'],
+                        data[6]['febrero'],
+                        data[6]['marzo'],
+                        data[6]['abril'],
+                        data[6]['mayo'],
+                        data[6]['junio'],
+                        data[6]['julio'],
+                        data[6]['agosto'],
+                        data[6]['septiembre'],
+                        data[6]['octubre'],
+                        data[6]['noviembre'],
+                        data[6]['diciembre']],
+                    "fill":
+                        false,
+                    "borderColor":
+                        "#34beff",
+                    "backgroundColor":
+                        "#34beff",
+                    "lineTension":
+                        0.1
+                }
+                ,
+                {
+                    "label":
+                        "Publicidad",
+                    "data": [
+                        data[5]['enero'],
+                        data[5]['febrero'],
+                        data[5]['marzo'],
+                        data[5]['abril'],
+                        data[5]['mayo'],
+                        data[5]['junio'],
+                        data[5]['julio'],
+                        data[5]['agosto'],
+                        data[5]['septiembre'],
+                        data[5]['octubre'],
+                        data[5]['noviembre'],
+                        data[5]['diciembre']],
+                    "fill":
+                        false,
+                    "borderColor":
+                        "#3b52ff",
+                    "backgroundColor":
+                        "#3b52ff",
+                    "lineTension":
+                        0.1
+                }
+                ,
+                {
+                    "label":
+                        "Eventos",
+                    "data": [
+                        data[3]['enero'],
+                        data[3]['febrero'],
+                        data[3]['marzo'],
+                        data[3]['abril'],
+                        data[3]['mayo'],
+                        data[3]['junio'],
+                        data[3]['julio'],
+                        data[3]['agosto'],
+                        data[3]['septiembre'],
+                        data[3]['octubre'],
+                        data[3]['noviembre'],
+                        data[3]['diciembre']],
+                    "fill":
+                        true,
+                    "borderColor":
+                        "#9c27b0",
+                    "backgroundColor":
+                        "#9c27b0",
+                    "lineTension":
+                        0.1
+                }
+
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Recaudo Por Impuestos Mensual",
                 fontSize: 25
             },
             legend: {
@@ -231,6 +374,7 @@ function chartsMonth(data) {
             }
         ]
     };
+
 
     var bankEarnings = new Chart(bankEarningsChart, {
         type: "line", // Tipo de chart
