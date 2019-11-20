@@ -15,14 +15,15 @@
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
-    @include('includes.preloader')
+    @include('includes.preloader')    
     @auth
         @include('includes.app.header')
     @endauth
     @guest
         @include('includes.auth.header')
     @endguest
-    <main @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login') class="fullBackground" @endif>
+
+    <main>
         @if(Route::currentRouteName() == '' || Route::currentRouteName() == 'login')
             
         @endif

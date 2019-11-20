@@ -293,7 +293,6 @@
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
-    <script src="https://kit.fontawesome.com/e3f4029a28.js" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
             $('#bank-point').formSelect();
