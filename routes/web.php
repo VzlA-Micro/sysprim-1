@@ -541,3 +541,7 @@ Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword'
 Route::get('/help', function() {
     return view('modules.helps.manage');
 })->name('helps.manage');
+
+Route::get('/taxes/payment', function() {
+
+})->name('taxes.payment');
