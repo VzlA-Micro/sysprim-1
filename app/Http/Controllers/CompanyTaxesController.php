@@ -49,9 +49,10 @@ class CompanyTaxesController extends Controller
 
         if(!$company->taxesCompanies->isEmpty()){
 
-            foreach ($company->taxesCompanies as $taxe ){
-                $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
-            }
+           /* foreach ($company->taxesCompanies as $taxe ){
+                $taxes[]=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+            }*/
+
 
         }else{
             $taxes=null;
@@ -59,7 +60,7 @@ class CompanyTaxesController extends Controller
 
 
 
-        return view('modules.payments.history', ['taxes' => $taxes]);
+        return view('modules.payments.history', ['taxes' => $company]);
 
     }
 
@@ -76,10 +77,9 @@ class CompanyTaxesController extends Controller
 
         $date = TaxesMonth::verify($company[0]->id, false);
 
-
         $users = $company_find->users()->get();
-        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
+        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
 
         if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
@@ -449,8 +449,12 @@ class CompanyTaxesController extends Controller
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
-        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra, 'ciuTaxes' => $ciuTaxes,
-            'amount' => $amount, 'firm' => false
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes,
+            'fiscal_period' => $fiscal_period,
+            'extra' => $extra,
+            'ciuTaxes' => $ciuTaxes,
+            'amount' => $amount,
+            'firm' => false
         ]);
 
 

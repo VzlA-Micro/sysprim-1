@@ -21,7 +21,7 @@
                                 GENERALES</a></li>
                         <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
                                 Detalles</a></li>
-                        <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
+                        <li class="tab col s4 " id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
                                 PAGO</a></li>
                     </ul>
 
@@ -162,7 +162,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s6 left-align">
-                                    <a href="#" class="btn peach waves-effect waves-light">
+                                    <a href="#" class="btn peach waves-effect waves-light" id="previous-details">
                                         <i class="icon-navigate_before left"></i>
                                         Anterior
                                     </a>
@@ -177,60 +177,198 @@
                         </div>
                     </div>
                 </form>
-                <form id="register-payment" class="card" method="GET" action="#">
-                    <div id="payment-tab">
-                        <div class="card-header center-align">
-                            <h4>REGISTRAR PAGO</h4>
-                        </div>
-                        <div class="card-content row">
-                            <input type="hidden" name="taxes_id" id="taxes_id" value="">
-                            <div class="input-field col s12 m6 ">
-                                <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="lot" id="lot" value="" class="validate" required readonly>
-                                <label for="lot">LOTE</label>
-                            </div>
 
 
-                            <div class="input-field col s12 m6 ">
-                                <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="name_bank" id="name_bank" value="" class="validate" required
-                                       readonly>
-                                <label for="bank">BANCO</label>
-                            </div>
-                            <input type="text" name="bank" id="bank" value="" class="validate hide" required>
-
-                            <div class="input-field col s12 m6 ">
-                                <i class="icon-confirmation_number prefix "></i>
-                                <input type="text" name="ref" id="ref" value="" class="validate" required>
-                                <label for="ref">Referencia</label>
-                            </div>
-
-
-                            <div class="input-field col s12 m6 ">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>
-                                <input type="text" name="amount" id="amount" value="" class="validate money_keyup"
-                                       required>
-                                <label for="amount">Monto de punto de Venta</label>
-                            </div>
-
-
-                            <div class="input-field col s12 m12">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>
-                                <input type="text" name="amount_total" id="amount_total" value="" class="validate money"
-                                       required readonly>
-                                <label for="amount_total">Total a Pagar</label>
-                            </div>
-                        </div>
-                        <div class="card-footer center-align">
-                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
-                                REGISTRAR PAGO<i class="icon-send right"></i></button>
-                        </div>
+                <div id="payment-tab" class="card">
+                    <div class="card-header center-align">
+                        <h4>REGISTRAR PAGO</h4>
                     </div>
-                </form>
+
+                    <div class="card-content row">
+                        <h5>Forma de pago:</h5>
+                        <ul class="collapsible" style="box-shadow: none !important;">
+                            <li>
+                                <div class="collapsible-header"><i class="icon-payment"></i>TRANSFERENCIA</div>
+
+                                <div class="collapsible-body">
+
+                                    <form id="register-payment-tr" method="POST" action="#">
+                                        <div class="row">
+                                            <input type="hidden" name="taxes_id" id="taxes_id_tr" value="">
+                                            <div class="input-field col m6 s12">
+                                                <i class="icon-satellite prefix"></i>
+                                                    <select name="bank">
+                                                        <option value="44">BOD</option>
+                                                        <option value="77">Banco Bicentenario</option>
+                                                        <option value="55">Banesco</option>
+                                                        <option value="99">BNC</option>
+                                                        <option value="33">100% Banco</option>
+                                                    </select>
+                                                <label>Banco</label>
+                                            </div>
+
+                                            <div class="input-field col m6 s12">
+                                                <i class="icon-satellite prefix"></i>
+                                                <select name="bank_destinations">
+                                                          <option value="44">BOD</option>
+                                                            <option value="77">Banco Bicentenario</option>
+                                                            <option value="55">Banesco</option>
+                                                            <option value="99">BNC</option>
+                                                            <option value="33">100% Banco</option>
+                                                </select>
+                                                <label>Destino</label>
+                                            </div>
+
+
+                                            <input type="text" name="type_payment" id="type_payment" value="TRANSFERENCIA" class="validate hide" required>
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="icon-confirmation_number prefix "></i>
+                                                <input type="text" name="ref" id="ref" value="" class="validate"
+                                                       required>
+                                                <label for="ref">Referencia</label>
+                                            </div>
+
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="icon-person  prefix "></i>
+                                                <input type="text" name="person" id="person" value="" class="validate"
+                                                       required>
+                                                <label for="ref">Nombre</label>
+                                            </div>
+
+
+                                            <div class="input-field col s4 m2">
+                                                <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
+                                                <select name="country_code" id="country_code_company" required>
+                                                    <option value="null" selected disabled>...</option>
+                                                    <option value="+58412">(412)</option>
+                                                    <option value="+58414">(414)</option>
+                                                    <option value="+58416">(416)</option>
+                                                    <option value="+58424">(424)</option>
+                                                    <option value="+58426">(426)</option>
+                                                    <option value="+58426">(251)</option>
+                                                </select>
+                                                <label for="country_code">Operadora</label>
+                                            </div>
+                                            <div class="input-field col s8 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                                                <label for="phone">Teléfono</label>
+                                                <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                                            </div>
+
+
+
+                                            <div class="input-field col s12 m6">
+                                                <i class="prefix">
+                                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
+                                                         alt="">
+                                                </i>
+                                                <input type="text" name="amount" id="amount_tr" value=""
+                                                       class="validate money_keyup"
+                                                       required>
+                                                <label for="amount_tr">Monto</label>
+                                            </div>
+
+
+
+                                            <div class="input-field col s12 m6">
+                                                <i class="prefix">
+                                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
+                                                         alt="">
+                                                </i>
+                                                <input type="text" name="amount_total" id="amount_total_tr" value=""
+                                                       class="validate money"
+                                                       required>
+                                                <label for="amount_total_tr">Total a Pagar</label>
+                                            </div>
+
+                                            <div class="card-footer center-align">
+                                                <button type="submit"
+                                                        class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                                    REGISTRAR PAGO<i class="icon-send right"></i></button>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header"><i class="icon-payment"></i>PUNTO DE VENTA</div>
+                                <div class="collapsible-body">
+                                    <form id="register-payment" method="GET" action="#">
+                                        <div class="row">
+                                            <input type="text" name="type_payment" id="type_payment" value="PUNTO DE VENTAS" class="validate hide" required>
+                                            <input type="hidden" name="taxes_id" id="taxes_id" value="">
+
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="icon-confirmation_number prefix "></i>
+                                                <input type="text" name="lot" id="lot" value="" class="validate"
+                                                       required readonly>
+                                                <label for="lot">LOTE</label>
+                                            </div>
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="icon-confirmation_number prefix "></i>
+                                                <input type="text" name="name_bank" id="name_bank" value=""
+                                                       class="validate" required
+                                                       readonly>
+                                                <label for="bank">BANCO</label>
+                                            </div>
+                                            <input type="text" name="bank" id="bank" value="" class="validate hide"
+                                                   required>
+
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="icon-confirmation_number prefix "></i>
+                                                <input type="text" name="ref" id="ref" value="" class="validate"
+                                                       required>
+                                                <label for="ref">Referencia</label>
+                                            </div>
+
+
+                                            <div class="input-field col s12 m6 ">
+                                                <i class="prefix">
+                                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
+                                                         alt="">
+                                                </i>
+                                                <input type="text" name="amount" id="amount" value=""
+                                                       class="validate money_keyup"
+                                                       required>
+                                                <label for="amount">Monto de punto de Venta</label>
+                                            </div>
+
+
+                                            <div class="input-field col s12 m12">
+                                                <i class="prefix">
+                                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
+                                                         alt="">
+                                                </i>
+                                                <input type="text" name="amount_total" id="amount_total" value=""
+                                                       class="validate money"
+                                                       required readonly>
+                                                <label for="amount_total">Total a Pagar</label>
+                                            </div>
+
+                                            <div class="card-footer center-align">
+                                                <button type="submit"
+                                                        class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                                    REGISTRAR PAGO<i class="icon-send right"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+
+                        </ul>
+
+
+                        @if(\Auth::user()->id===2)
+
+                        @endif
+
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -244,7 +382,7 @@
         <ul>
             <li><a class="btn-floating light-blue darken-1 tooltipped" data-position="left" id="open-cashier"
                    data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
-            <li><a class="btn-floating light-blue darken-2 tooltipped"  id="close-cashier" data-position="left"
+            <li><a class="btn-floating light-blue darken-2 tooltipped" id="close-cashier" data-position="left"
                    data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
             <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left" data-tooltip="Ver pagos"><i
                             class="fas fa-money-check"></i></a></li>

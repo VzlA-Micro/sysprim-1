@@ -23,7 +23,7 @@
                     @else
 
                         <div class="card-header center-align">
-                            <h5>Declarar actividad Economica</h5>
+                            <h5>Declarar actividad Económica</h5>
                         </div>
 
                         <div class="card-content row">
@@ -96,7 +96,7 @@
                         </div>-->
                         <div class="card-footer">
                             <b>NOTA:</b> Para que la retención pueda ser aplicada a su declaración debe pasar previamente por la Gerencia de Recaudación y presentar el soporte para ser validada, se aceptaran solo retenciones emitidas en la Jurisdicción del Municipio Iribarren.
-                            El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Economica Art. 112).
+                            El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Económica Art. 112).
                         </div>
                         <div class="card-action center-align">
                             <a href="#declaracion" class="btn btn-large btn-rounded waves-effect waves-light peach modal-trigger">Declarar

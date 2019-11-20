@@ -67,50 +67,67 @@ class TicketOfficeController extends Controller{
         $amount=$request->input('amount');
         $ref=$request->input('ref');
         $bank=$request->input('bank');
+        $bank_destinations=$request->input('bank_destinations');
+        $person=$request->input('person');
+        $country_code = $request->input('country_code');
+        $phone=$request->input('phone');
+        $payments_type=$request->input('payments_type');
+
+
+
         $taxe=Taxe::findOrFail($id_taxes);
         $amountPayment=0;
         $acum=0;
 
-
         $amount_format=str_replace('.','',$amount);
         $amount=str_replace(',','.',$amount_format);
         $payments=new Payments();
+
+
         $payments->taxe_id=$id_taxes;
         $payments->lot=$lot;
         $payments->amount=$amount;
         $payments->ref=$ref;
         $payments->bank=$bank;
+        $payments->name=$person;
+        $payments->phone=$country_code.$phone;
+        $payments->type_payment=$payments_type;
         $payments->save();
 
-
         $paymentsTaxe= $taxe->payments()->get();
-
-
 
         if ($paymentsTaxe->isEmpty()) {
             $amountPayment=$taxe->amount-$amount;
 
             if($amountPayment==0){
                 $data=['status'=>'success'];
-                $taxe->status='verified';
-                $taxe->bank=$bank;
+
+                if($bank_destinations!==null){
+                    $taxe->bank=$bank_destinations;
+                }else{
+                    $taxe->status='verified';
+                    $taxe->bank=$bank;
+                }
+
                 $taxe->update();
             }else{
                 $data=['status'=>'process','payment'=>$amountPayment];
             }
-
         }else{
-
             foreach ($paymentsTaxe as $payment){
                 $acum=$acum+$payment->amount;
             }
 
-
-
             if($acum>=$taxe->amount){
                 $data=['status'=>'success','payment'=>0];
-                $taxe->status='verified';
-                $taxe->bank=$bank;
+
+                if($bank_destinations!==null){
+                    $taxe->bank=$bank_destinations;
+                    $taxe->status='process';
+                }else{
+                    $taxe->bank=$bank;
+                    $taxe->status='verified';
+                }
                 $taxe->update();
             }else{
                 $amountPayment=$taxe->amount-$acum;
@@ -379,14 +396,29 @@ class TicketOfficeController extends Controller{
             ->where('event','created')
                 ->where('auditable_type','App\Payments')
                     ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-        foreach ($taxes as $taxe){
-            $id_taxes[]=$taxe->auditable_id;
-        }
-        $taxes=Payments::with('taxes')->whereIn('id',$id_taxes)->get();
 
 
-        foreach($taxes as $taxe){
-            $amount_taxes+=$taxe->amount;
+
+
+        if(!$taxes->isEmpty()){
+            foreach ($taxes as $taxe){
+                $id_taxes[]=$taxe->auditable_id;
+            }
+
+            if(count($id_taxes)!==0){
+                $taxes=Payments::with('taxes')->whereIn('id',$id_taxes)->get();
+
+                foreach($taxes as $taxe){
+
+                    $amount_taxes+=$taxe->amount;
+                }
+            }else{
+                $amount_taxes=null;
+                $taxes=null;
+            }
+        }else{
+            $amount_taxes=null;
+            $taxes=null;
         }
 
 

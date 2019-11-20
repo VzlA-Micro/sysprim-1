@@ -38,20 +38,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($taxes as $taxe)
-                                <tr>
-                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                    <td>{{$taxe->taxes->companies[0]->name}}</td>
-                                    <td>{{$taxe->taxes->typePayment}}</td>
-                                    <td>{{$taxe->taxes->bankName}}</td>
-                                    <td>{{$taxe->lot}}</td>
-                                    <td>{{$taxe->ref}}</td>
-                                    <td>{{number_format($taxe->amount,2)}}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
+
+                            @if($taxes)
+                                    @foreach($taxes as $taxe)
+                                        <tr>
+                                            <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                            <td>{{$taxe->taxes->companies[0]->name}}</td>
+                                            <td>{{$taxe->taxes->typePayment}}</td>
+                                            <td>{{$taxe->taxes->bankName}}</td>
+                                            <td>{{$taxe->lot}}</td>
+                                            <td>{{$taxe->ref}}</td>
+                                            <td>{{number_format($taxe->amount,2)}}</td>
+                                            <td>
+                                                <a href="#" class="btn btn-floating orange waves-effect waves-light"><i class="icon-pageview"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>

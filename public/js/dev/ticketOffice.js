@@ -180,7 +180,6 @@ $(document).ready(function () {
         var amount = $('#amount_total').val();
         var amount_pay = $('#amount').val();
 
-
         if (amount_pay > amount) {
             swal({
                 title: "Error",
@@ -203,8 +202,6 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     console.log(response);
-
-
                     if (response.status === 'process') {
                         $('#amount_total').val(response.payment);
 
@@ -267,6 +264,96 @@ $(document).ready(function () {
     });
 
 
+
+    $('#register-payment-tr').submit(function (e) {
+        e.preventDefault();
+
+        var amount = $('#amount_total_tr').val();
+        var amount_pay = $('#amount_tr').val();
+
+        if (amount_pay > amount) {
+            swal({
+                title: "Error",
+                text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
+                icon: "error",
+                button: "Ok",
+            });
+
+        } else {
+            $.ajax({
+                url: url + "ticket-office/payment/save",
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.status === 'process') {
+                        $('#amount_total_tr').val(response.payment);
+
+                        $('#amount_total_tr').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        swal({
+                            title: "Información",
+                            text: "Para conciliar esta planilla " +
+                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total_tr').val() + "Bs",
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+                    } else {
+                        swal({
+                            title: "¡Bien hecho!",
+                            text: "Planilla ingresa y conciliada con éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            $('#amount_total_tr').val('');
+                            if ($('#company_id').val() !== '') {
+                                window.open(url + '/ticket-office/pdf/taxes/' + $('#taxes_id_tr').val(), "RECIBO DE PAGO", "width=500, height=600")
+                            }
+                            location.reload();
+                        });
+
+
+                    }
+
+
+                    $('#ref').val('');
+                    $('#lot').val('');
+                    $('#amount').val('');
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+        }
+
+
+    });
+
     function reset() {
         $('#details').text('');
 
@@ -278,44 +365,87 @@ $(document).ready(function () {
     }
 
 
+
+
+
+
+
+
     $('#details-next').click(function () {
+        var band=false;
 
 
-        swal({
-            title: "Información",
-            text: "Recuerde verificar al monto antes de realizar el pago, una vez confirmado, no se podrá revertir los cambios.",
-            icon: "info",
-            buttons: {
-                confirm: {
-                    text: "Confirmar.",
-                    value: true,
-                    visible: true,
-                    className: "red"
-
-                },
-                cancel: {
-                    text: "No",
-                    value: false,
-                    visible: true,
-                    className: "grey lighten-2"
-                }
-            }
-        }).then(function (aceptar) {
-            if (aceptar) {
-                if ($('#company_id').val() !== '') {
-                    registerTaxes();
-                    $('#three').removeClass('disabled');
-                    $('ul.tabs').tabs("select", "payment-tab");
-
-                } else {
-                    $('#three').removeClass('disabled');
-                    $('ul.tabs').tabs("select", "payment-tab");
-                }
+        console.log($('.base').val());
 
 
+        $('.base').each(function () {
+            if($(this).val()==="") {
+                swal({
+                    title: "Información",
+                    text: "El campo base imponible no puede estar vacio, por favor ingrese un monto valido.",
+                    icon: "info",
+                    button: "Ok",
+                });
+
+                band=true;
+            }else{
+                $('.deductions').each(function () {
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+                $('.withholding').each(function () {
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+                $('.credits_fiscal').each(function () {
+                    if($(this).val()==''){
+                        $(this).val('0');
+                    }
+                });
+                M.updateTextFields();
             }
         });
 
+
+
+        if(!band){
+            swal({
+                title: "Información",
+                text: "Recuerde verificar al monto antes de realizar el pago, una vez confirmado, no se podrá revertir los cambios.",
+                icon: "info",
+                buttons: {
+                    confirm: {
+                        text: "Confirmar.",
+                        value: true,
+                        visible: true,
+                        className: "red"
+
+                    },
+                    cancel: {
+                        text: "No",
+                        value: false,
+                        visible: true,
+                        className: "grey lighten-2"
+                    }
+                }
+            }).then(function (aceptar) {
+                if (aceptar) {
+                    if ($('#company_id').val() !== '') {
+                        registerTaxes();
+                        $('#three').removeClass('disabled');
+                        $('ul.tabs').tabs("select", "payment-tab");
+
+                    } else {
+                        $('#three').removeClass('disabled');
+                        $('ul.tabs').tabs("select", "payment-tab");
+                    }
+
+
+                }
+            });
+        }
     });
 
 
@@ -326,16 +456,25 @@ $(document).ready(function () {
 
 
     $('input[type="text"].money_keyup').on('keyup', function (event) {
-        $(event.target).val(function (index, value) {
-            return value.replace(/\D/g, "")
-                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-        });
+        var total=$(this).val();
+
+        if($(this).val()==0&&$(this).val().toString().length>=2){
+            $(this).val('');
+        }else if($(this).val().toString().length>=2&&total[0]==0){
+            $(this).val('');
+        }else{
+            $(event.target).val(function (index, value) {
+                return value.replace(/\D/g, "")
+                    .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                    .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+            });
+        }
+
+
     });
 
     function registerTaxes() {
 
-        console.log(form);
         var form = new FormData(document.getElementById('register-taxes'));
         form.append('fiscal_period', $('#fiscal_period').val());
         $.ajax({
@@ -354,8 +493,9 @@ $(document).ready(function () {
 
                 var taxes = response.taxe;
                 $('#amount_total').val(taxes.amountTotal);
-
+                $('#amount_total_tr').val(taxes.amountTotal);
                 $('#taxes_id').val(taxes.id_taxes);
+                $('#taxes_id_tr').val(taxes.id_taxes);
 
 
                 $("#preloader").fadeOut('fast');
@@ -520,7 +660,7 @@ $(document).ready(function () {
                                     <i class="prefix">
                                         <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                     </i>   
-                                    <input type="text" name="base[]" id="base_${subr}" class="validate money money_keyup" value="">
+                                    <input type="text" name="base[]" id="base_${subr}" class="validate money money_keyup base " value="">
                                     <label for="base_${subr}">Base Imponible</label>
                                 </div>
                                 
@@ -529,7 +669,7 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <input type="text" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
                                 <label for="withholdings_${subr}">Retenciones</label>
                               </div>                               
                              
@@ -538,7 +678,7 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="deductions[]" id="deductions_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <input type="text" name="deductions[]" id="deductions_${subr}" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
                                 <label for="deductions_${subr}">Deducciones</label>
                             </div>
                              
@@ -546,7 +686,7 @@ $(document).ready(function () {
                                 <i class="prefix">
                                     <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                 </i>   
-                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
                                 <label for="fiscal_credits_${subr}">Creditos Fiscales</label>
                             </div>
                            
@@ -560,14 +700,35 @@ $(document).ready(function () {
                        `;
 
 
+
                             $('#details').append(template);
+                            $('.base').change(function () {
+                                var total=$(this).val();
+                                if($(this).val()!=0){
+                                    console.log($(this).val());
+                                    $('.min > input.money_keyup').prop('readonly',false);
+                                    $(this).parent().siblings().removeClass('min');
+                                }else{
+                                    $(this).parent().siblings().addClass('min');
+                                    $('.min > input.money_keyup').prop('readonly',true);
+                                }
+
+                            });
+
 
                             $('input[type="text"].money_keyup').on('keyup', function (event) {
-                                $(event.target).val(function (index, value) {
-                                    return value.replace(/\D/g, "")
-                                        .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-                                });
+                                var total=$(this).val();
+                                if($(this).val()==0&&$(this).val().toString().length>=2){
+                                    $(this).val('');
+                                }else if($(this).val().toString().length>=2&&total[0]==0){
+                                    $(this).val('');
+                                }else{
+                                    $(event.target).val(function (index, value) {
+                                        return value.replace(/\D/g, "")
+                                            .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                                    });
+                                }
                             });
 
                             M.updateTextFields();
@@ -717,9 +878,7 @@ $(document).ready(function () {
         if ($('#ci').val() !== '' && $('#nationality').val() !== null) {
             CheckCedula();
         }
-
     });
-
     function CheckCedula() {
         if ($('#ci').val() !== '') {
             var ci = $('#ci').val();
@@ -925,6 +1084,15 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+    $('#previous-details').click(function () {
+
+        $('ul.tabs').tabs("select", "general-tab");
+    });
+
+
 });
 
 
