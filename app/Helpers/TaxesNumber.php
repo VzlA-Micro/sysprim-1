@@ -200,11 +200,10 @@ class TaxesNumber{
             $number_generated=strtoupper(str_pad(1, 8, '0', STR_PAD_LEFT));
             return $type_payments.$number_generated;
         }else{
-            $code_type=substr($code[0]->code,0,5);
             $correlative=substr($code[0]->code,5,13);
             $number_integer=(int)$correlative;//LOS COVIERTOS A UN ENTERO PARA PORDER SUMARLA 1 Y SEGUIR LA SECUENCIA
             $number_generated=strtoupper(str_pad($number_integer+1, 8, '0', STR_PAD_LEFT));
-            return $code_type.$number_generated;
+            return $type_payments.$number_generated;
         }
     }
 

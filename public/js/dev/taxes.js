@@ -226,11 +226,107 @@ $(document).ready(function () {
 
 
     $('.type_payment_event').click(function () {
-        var type=$(this).val();
+        $('#two-payments').addClass('disabled');
+        $('#three-payments').addClass('disabled');
+        var type = $(this).val();
         $('#type_payment').val(type.toUpperCase());
 
+        if (type === 'ppb') {
+            ConfirmtypePayment();
+        }
+
+        if (type === 'ptb') {
+            $('#bod-div').addClass('hide');
+        } else {
+            $('#bod-div').removeClass('hide');
+        }
+
+        setTimeout(function () {
+            if (type !== 'ppv') {
+                $('#two-payments').removeClass('disabled');
+                $('ul.tabs').tabs("select", "payment-bank");
+            } else {
+                $('#three-payments').removeClass('disabled');
+                $('ul.tabs').tabs("select", "payment-receipt");
+            }
+        }, 250);
+    });
 
 
+    $('.bank-div').click(function () {
+        var type = $(this).val();
+        $('#bank_payment').val(type);
+        setTimeout(function () {
+            $('#three-payments').removeClass('disabled');
+            $('ul.tabs').tabs("select", "payment-receipt");
+        }, 250);
 
     });
+
+
+    $('#div-send').click(function () {
+        $('#form-payment')[0].submit()
+    });
+
+
+    $('#previous-receipt').click(function () {
+        var type = $('#type_payment').val();
+        if (type !== 'PPV') {
+            $('ul.tabs').tabs("select", "payment-bank");
+        } else {
+            $('ul.tabs').tabs("select", "payment-method");
+
+        }
+    });
+
+
+
+    //si esta moroso
+    console.log($('#interest').val());
+    if ($('#interest').val() !== "0.00"&&$('#interest').val()!==undefined) {
+        swal({
+            title: "Información",
+            text: "Se le notifica que se generará una Multa por pago extemporaneo,para cada período declarado fuera del lapso establecido Debe cancelar previamente la declaración de impuesto de Act.Economica anticipada y seguidamente la Multa generada.Pasar por el SEMAT a pagar la multa.",
+            icon: "info",
+            button: "Ok",
+        });
+    }
+
+
+    $('#previous-bank').click(function () {
+        $('ul.tabs').tabs("select", "payment-method");
+    });
+
+    function ConfirmtypePayment() {
+        swal({
+            title: "Información",
+            text: "Debe eliger la forma en que va hacer su deposito:",
+            icon: "warning",
+            buttons: {
+                CHEQUE: {
+                    text: "CHEQUE",
+                    value: 'PPC',
+                    visible: true,
+                    className: "green"
+
+                },
+                CANCEL: {
+                    text: "EFECTIVO",
+                    value: 'PPE',
+                    visible: true,
+                    className: "green"
+                },
+
+
+            }
+        }).then(function (value) {
+            if (value !== null) {
+                $('#type_payment').val(value);
+            } else {
+                ConfirmtypePayment();
+            }
+        });
+    }
+
+
 });

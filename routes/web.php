@@ -143,7 +143,7 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
-Route::post('/payments/help', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
+
 
 
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
@@ -152,6 +152,13 @@ Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
 Route::get('/payments/calculate/{id}','CompanyTaxesController@calculate')->name('taxes.calculate');
 Route::post('/payments/download/calculate','CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
 Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
+Route::post('/payments/register','CompanyTaxesController@payments')->name('payments.store');
+Route::post('/payments/taxes/save', 'CompanyTaxesController@taxesSave')->name('company.taxes.save');
+Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
+
+
+
+
 
 Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
@@ -186,7 +193,7 @@ Route::get('/cargar-ciu',function (){
     return view('modules.bank.upload');
 });
 
-Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
+
 
 // Group Ciiu module routes
 
@@ -213,7 +220,6 @@ Route::post('/ciu-branch/save','CiuController@create')->name('ciu-branch.save');
 Route::get('/ciu-branch/read','CiuController@show')->name('ciu-branch.read');
 Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
 Route::post('/ciu-branch/update/{id}','CiuController@update')->name('ciu-branch.update');
-
 Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
 
 // Payments Taxes Module

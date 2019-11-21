@@ -22,8 +22,6 @@
                         <strong>{{ session('message') }}</strong>
                     </div>
                 @endif
-
-
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Historial de Pagos</h5>
@@ -60,7 +58,7 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{url('pdf/'.$taxe->id)}}"
+                                                <td><a href="{{route('taxes.download',[$taxe->id])}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
@@ -76,7 +74,7 @@
                                                     <a href="{{url('payments/taxes/'.$taxe->id)  }}"
                                                        class="btn indigo waves-effect waves-light"><i
                                                                 class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{url('pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>
 
                                             @elseif($taxe->status=='cancel')

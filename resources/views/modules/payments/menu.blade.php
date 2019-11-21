@@ -49,7 +49,7 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Historial de Pagos</span>
+                    <span class="truncate">Declaraciones y Pagos.</span>
                 </a>
             </div>
         </div>

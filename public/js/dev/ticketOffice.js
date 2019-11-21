@@ -558,7 +558,6 @@ $(document).ready(function () {
     $('#fiscal_period').change(function () {
         var company = $('#company_id').val();
         var fiscal_period = $('#fiscal_period').val();
-
         if (fiscal_period !== '') {
             $.ajax({
                 method: "GET",
@@ -1005,8 +1004,6 @@ $(document).ready(function () {
                    localStorage.removeItem('lot');
                    location.href=url+'payments/read';
                }
-
-
            });
 
 
