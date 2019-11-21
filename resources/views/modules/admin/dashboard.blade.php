@@ -47,14 +47,6 @@
                             <span id="banesco" class="" ></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-						<div class="progress">
-							<div class="determinate animated banesco-green slideInLeft" style="width: 30%"></div>
-						</div>
-					</div>
-					<div class="widget-description">
-						 20% Increase in 30 Days 
-					</div>
 				</div>
             </div>
             <div class="col s12 m6 l4">
@@ -68,38 +60,9 @@
                             <span class="" id="banco100"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-						<div class="progress">
-							<div class="determinate animated x100-banco-yellow slideInLeft" style="width: 30%"></div>
-						</div>
-					</div>
-					<div class="widget-description">
-						 20% Increase in 30 Days 
-					</div>
 				</div>
             </div>
             <div class="col s12 m6 l4">
-				<div class="widget bootstrap-widget stats">
-					<div class="widget-stats-icon white-text bod-green">
-						<i class="i-bod"></i>
-					</div>
-					<div class="widget-stats-content">
-						<span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-						<span class="widget-stats-number">
-                            <span class="" id="bod"></span> Bs.
-                        </span>
-                    </div>
-                    <div class="widget-progress">
-						<div class="progress">
-							<div class="determinate bod-green animated slideInLeft" style="width: 30%"></div>
-						</div>
-					</div>
-					<div class="widget-description">
-						 20% Increase in 30 Days 
-					</div>
-				</div>
-            </div>
-            <div class="col s12 m6">
 				<div class="widget bootstrap-widget stats">
 					<div class="widget-stats-icon white-text red-gradient">
 						<i class="i-bicentenario" style="font-size: 30px"></i>
@@ -110,14 +73,19 @@
                             <span class="" id="bicentenario"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-						<div class="progress">
-							<div class="determinate animated red-gradient slideInLeft" style="width: 30%"></div>
-						</div>
+				</div>
+            </div>
+            <div class="col s12 m6">
+				<div class="widget bootstrap-widget stats">
+					<div class="widget-stats-icon white-text bod-green">
+						<i class="i-bod"></i>
 					</div>
-					<div class="widget-description">
-						 20% Increase in 30 Days 
-					</div>
+					<div class="widget-stats-content">
+						<span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
+						<span class="widget-stats-number">
+                            <span class="" id="bod"></span> Bs.
+                        </span>
+                    </div>
 				</div>
             </div>
             <div class="col s12 m6">
@@ -131,14 +99,6 @@
                             <span class="" id="bnc"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-						<div class="progress">
-							<div class="determinate animated bnc-blue slideInLeft" style="width: 30%"></div>
-						</div>
-					</div>
-					<div class="widget-description">
-						 20% Increase in 30 Days 
-					</div>
 				</div>
             </div>
             <div class="col s12 m12">
@@ -152,6 +112,14 @@
                 <div class="card">
                     <div class="card-content">
                         <canvas id="bank-earnings" style="position: relative; height:40vh; width:80vw"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m12">
+                <div class="card">
+                    <div class="card-content">
+                        <canvas id="typeTaxes" style="position: relative; height:40vh; width:80vw"></canvas>
                     </div>
                 </div>
             </div>
@@ -184,11 +152,18 @@
                     </li>
                     <li class="collection-item">
                         <div>
-                            <span class="title"><b>Punto De Venta: </b>{{$ppb}}</span><br>
+                            <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
                             <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <canvas id="donus" style="position: relative; height:120vh; width:160vw"></canvas>
+                    </div>
+                </div>
             </div>
             <div class="col s12">
                 <div id="map" style="width: 100%; height: 400px"></div>

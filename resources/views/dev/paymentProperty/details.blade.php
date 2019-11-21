@@ -25,8 +25,8 @@
                         </div>
                         <div class="col m6">
                             <ul>
-                                <li><b>Codigo Catastral: </b>{{ $property[0]->code_cadastral }}</li>
-                                <li><b>Direccion: </b>{{ $property[0]->address }}</li>
+                                <li><b>Codigo Catastral: </b>{{ $property->code_cadastral }}</li>
+                                <li><b>Direccion: </b>{{ $property->address }}</li>
                                 <li><b></b></li>
                             </ul>
                         </div>
@@ -36,36 +36,44 @@
                     <div class="card-header center-align">
                         <h5>Detalles de pago de inmueble</h5>
                     </div>
-                    <form method="post" action="" id='register-taxes' class="card-content row">
+                    <form method="post" action="{{ route('paymentsProperty.help') }}" id='register-taxes'
+                          class="card-content row">
                         @csrf
+                        <input type="text" name="idProperty" value="{{$property->id}}">
+                        <input type="hidden" name="totalGround" id="totalGround" class="validate money"
+                               value="{{$build[0]['name']}}" readonly>
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="base[]" id="base" class="validate money" value="{{$declaration['totalGround']}}" readonly>
-                            <label for="base">Total Terreno</label>
+                            </i>
+                            <input type="text" name="totalGround" id="totalGround" class="validate money"
+                                   value="{{$declaration['totalGround']}}" readonly>
+                            <label for="totalGround">Total Terreno</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input type="text" name="base[]" id="base" class="validate money" value="{{$declaration['totalBuild']}}" readonly>
-                            <label for="base">Total Construcción</label>
+                            <input type="text" name="totalBuild" id="totalBuild" class="validate money"
+                                   value="{{$declaration['totalBuild']}}" readonly>
+                            <label for="totalBuild">Total Construcción</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
-                            <label for="withholdings">Retenciones</label>
+                            </i>
+                            <input type="text" name="withholding" id="withholdings" class="validate money"
+                                   pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
+                            <label for="withholdings">Exedente</label>
                         </div>
 
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
+                            </i>
+                            <input type="text" name="interest" id="interest" class="validate money"
+                                   pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
                             <label for="interest">Interes por mora<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12">
@@ -87,46 +95,48 @@
                                 </table>
                                 <p><b>Modo De Pago: </b></p>
                                 <div class="col s12 m6 ">
-                                    <button type="button" id="fraccionado" class="btn btn-rounded peach waves-effect waves-light ">Pago Fraccionado</button>
+                                    <button type="button" id="fraccionado"
+                                            class="btn btn-rounded peach waves-effect waves-light ">Pago Fraccionado
+                                    </button>
                                 </div>
                                 <div class="col s12 m6 ">
-                                    <button type="button" id="descuento" class="btn btn-rounded peach waves-effect waves-light ">20% Descuento</button>
+                                    <button type="button" id="descuento"
+                                            class="btn btn-rounded peach waves-effect waves-light ">20% Descuento
+                                    </button>
                                 </div>
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest"  class="validate money" value="0"  readonly>
+                                    <input type="text" name="interest" class="validate money" value="0" readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="recargo" class="validate money" value="0"  readonly>
-                                    <label for="recargo">Recargo  Interes:(Bs)</label>
+                                    <input type="text" name="recargo" class="validate money" value="0" readonly>
+                                    <label for="recargo">Recargo Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input id="total" type="text" name="total" class="validate"  value="{{$declaration ['declaration']}}" readonly>
+                                    <input id="total" type="text" name="total" class="validate"
+                                           value="{{$declaration ['declaration']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
                                 <input type="hidden" id="payments" name="payments" value="1">
-                                <input type="hidden" name="taxes_id"  value="" >
+                                <input type="hidden" name="taxes_id" value="{{$taxes[0]->id}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
 
-                                <a href=""  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                <a href="" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i>
                                 </a>
-                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
+                                <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"
+                                   class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </a>
-
-
-
-
 
 
                                 {{-- Modal structure --}}
@@ -141,16 +151,22 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 m4 center-align">
-                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
-                                                <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
+                                                <img src="{{ asset('images/png/001-point-of-service.png') }}"
+                                                     class="responsive-img circle">
+                                                <a href="#" data-target='ppv'
+                                                   class="btn btn-large yellow darken-4 waves-effect waves-light tick payments"
+                                                   data-payments="PPV">
                                                     Taquilla
                                                     <i class="icon-payment right"></i>
                                                 </a>
                                             </div>
                                             <div class="col s12 m4 center-align">
                                                 <div class="img"></div>
-                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
-                                                <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
+                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}"
+                                                     class="responsive-img circle">
+                                                <a href="#" data-target='ptb'
+                                                   class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments"
+                                                   data-payments="PTB">
                                                     Transferencia
                                                     <i class="icon-compare_arrows right"></i>
                                                 </a>
@@ -161,16 +177,20 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
-                                                <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
+                                                <img src="{{ asset('images/png/030-bank.png') }}"
+                                                     class="responsive-img circle">
+                                                <a href="#" data-target='ppb'
+                                                   class="btn btn-large red waves-effect waves-light dropdown-trigger payments"
+                                                   data-payments="PPB">
                                                     Deposito
                                                     <i class="icon-account_balance right"></i>
                                                 </a>
                                                 {{-- Dropdown trigger --}}
                                                 <ul id='ppb' class='dropdown-content'>
-                                                    <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a></li>
+                                                    <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a>
+                                                    </li>
                                                     <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
-                                                    <li><a href="#!" data-bank="44"  class="bank">BOD</a></li>
+                                                    <li><a href="#!" data-bank="44" class="bank">BOD</a></li>
                                                     <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
                                                     <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
                                                 </ul>

@@ -401,6 +401,10 @@ Route::post('/inmueble/calcuFraccionado',array(
     'as'=>'propertyCalcuFraccionado'
 ));
 
+Route::post('/paymentProperty', array(
+    'uses'=>'PropertyTaxesController@paymentsHelp',
+    'as'=>'paymentsProperty.help'));
+
 //verifyPaymentsBanks
 
 Route::get('/fileBank-register', function() {
