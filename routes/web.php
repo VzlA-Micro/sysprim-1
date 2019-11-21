@@ -473,6 +473,10 @@ Route::get('amountApproximate',array(
     'uses'=>'DashboardController@amountApproximate'
 ));
 
+Route::get('dearTaxes',array(
+    'as'=>'dearTaxes',
+    'uses'=>'DashboardController@dearTaxes'
+));
 
 // Security routes
 
