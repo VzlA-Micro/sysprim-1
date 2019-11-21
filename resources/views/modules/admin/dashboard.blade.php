@@ -31,7 +31,7 @@
                     <div class="widget-stats-content">
                         <span class="widget-stats-title">Recaudación Total en Petros</span>
                         <span class="widget-stats-number">
-                            <span class="timer" id="petro"></span> <i class="i-petro"> </i>
+                            <span class="timer" id="petro"></span>  </i>
                         </span>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="col s12 m6">
                     <ul class="collection with-header">
-                        <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
+                        <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
                         @foreach ($company as $compa)
 
 
@@ -143,7 +143,7 @@
                 </div>
                 <div class="col s12 m6">
                     <ul class="collection with-header">
-                        <li class="collection-header"><h4>Top de Formas de Pago</h4></li>
+                        <li class="collection-header"><h5>Formas de Pago</h5></li>
                         <li class="collection-item">
                             <div>
                                 {{-- <i class="icon-message circle"></i> --}}
@@ -160,13 +160,13 @@
                         <li class="collection-item">
                             <div>
                                 {{-- <i class="icon-message circle"></i> --}}
-                                <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
+                                <span class="title"><b>Cheque: {{$ppc}} </b></span><br>
                                 <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
                             </div>
                         </li>
                         <li class="collection-item">
                             <div>
-                                <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
+                                <span class="title"><b>Efectivo: </b>{{$ppe}}</span><br>
                                 <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
                             </div>
                         </li>

@@ -2,7 +2,25 @@ var url = "http://sysprim.com.devel/";
 var controller = "collection/statistics";
 
 
+
 $('document').ready(function () {
+
+    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
+    $('#eur').html('Euros '+0+'<i class="fas fa-euro-sign left"></i>');
+    $('#cny').html('Yuan '+0+'<i class="fas fa-yen-sign left"></i>');
+    $('#rub').html('Ruplas '+0+'<i class="fas fa-ruble-sign left"></i>');
+    $('#usd').html('Dolar '+0+'<i class="fas fa-dollar-sign left"></i>');
+
+    var preloader="<div class='preloader-wrapper center small active'>"+
+        "<div class='spinner-layer spinner-green-only'>"+
+        "<div class='circle-clipper left'>"+
+        "<div class='circle'></div>"+
+        "</div><div class='gap-patch'>"+
+        "<div class='circle'></div>"+
+        "</div><div class='circle-clipper right'>"+
+        "<div class='circle'></div>"+
+        "</div></div></div>";
+    $('#petro').html(preloader);
     function api() {
         const url = 'https://petroapp-price.petro.gob.ve/price/';
         const data = {
@@ -28,7 +46,7 @@ $('document').ready(function () {
                     url: 'http://sysprim.com.devel/bs',
                     dataType: 'json',
                     beforeSend: function () {
-                        console.log('enviando')
+
                     },
                     success: function (responses) {
                         console.log('success');
@@ -39,8 +57,9 @@ $('document').ready(function () {
                         var usd = value['data']['PTR']['USD'];
                         var bs = value['data']['PTR']['BS'];
 
-                        $('#petro').html(total);
-                        $('#bs').html('Bolivar '+total+'<i class="i-bss left"></i>');
+                        $('#petro').html(total+" <i class='i-petro'>");
+
+                        $('#bs').html('Bolivar '+bs+'<i class="i-bss left"></i>');
                         $('#eur').html('Euros '+eur+'<i class="fas fa-euro-sign left"></i>');
                         $('#cny').html('Yuan '+cny+'<i class="fas fa-yen-sign left"></i>');
                         $('#rub').html('Ruplas '+rub+'<i class="fas fa-ruble-sign left"></i>');
@@ -57,14 +76,15 @@ $('document').ready(function () {
     }
 
     console.log('hola1');
-    api();
+
     $.ajax({
         method: "GET",
         url: url + controller,
         dataType: 'json',
 
         beforeSend: function () {
-            console.log('hola2');
+            $("#preloader").fadeIn('fast');
+            $("#preloader-overlay").fadeIn('fast');
         },
         success: function (response) {
             console.log('hola3');
@@ -79,6 +99,7 @@ $('document').ready(function () {
                 chartsMonth(response);
                 topTaxes(response[11]);
                 dear(response[12]);
+                api();
             }
         },
         error: function (e) {

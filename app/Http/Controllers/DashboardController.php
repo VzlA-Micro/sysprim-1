@@ -648,15 +648,26 @@ class DashboardController extends Controller
         $countPtb = count($ptb);
 
 
-        $ppb = Taxe::where('code', 'like', '%ppv%')
+        $ppv = Taxe::where('code', 'like', '%ppv%')
             ->where('status', 'verified')->get();
-        $countPpb = count($ppb);
+        $countPpv = count($ppv);
+
+        $ppe = Taxe::where('code', 'like', '%ppe%')
+            ->where('status', 'verified')->get();
+        $countPpe = count($ppe);
+
+
+        $ppc = Taxe::where('code', 'like', '%ppc%')
+            ->where('status', 'verified')->get();
+        $countPpc = count($ppc);
         $dear = $this->dearTaxes();
 
         return view('modules.admin.dashboard', array(
                 'company' => $company,
                 'ptb' => $countPtb,
-                'ppv' => $countPpb,
+                'ppv' => $countPpv,
+                'ppc' => $countPpc,
+                'ppe' => $countPpe,
                 'dear' => $dear
             )
         );
