@@ -43,7 +43,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($taxes->taxesCompanies as $taxe)
+                                @foreach($taxes as $taxe)
                                     @if($taxe->status=='verified' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>

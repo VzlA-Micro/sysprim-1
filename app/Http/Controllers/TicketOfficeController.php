@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FindCompany;
 use App\Helpers\Calculate;
 use App\Payments;
 use App\Taxe;
@@ -22,6 +23,8 @@ use App\Ciu;
 use App\Extras;
 use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+
 class TicketOfficeController extends Controller{
 
 
@@ -31,8 +34,17 @@ class TicketOfficeController extends Controller{
             $id=Crypt::decrypt($id);
 
             $taxe=Taxe::with('companies')->where('id',$id)->get();
+
             if($taxe[0]->status==='verified'){
                 return response()->json(['status'=>'verified','taxe'=>null,'calculate'=>null,'ciu'=>null]);
+            }elseif($taxe[0]->status==='cancel') {
+                return response()->json(['status'=>'cancel','taxe'=>null,'calculate'=>null,'ciu'=>null]);
+            }elseif($taxe[0]->created_at->format('d-m-Y')!==Carbon::now()->format('d-m-Y')){
+                $taxe_find=Taxe::find($taxe[0]->id);
+                $taxe_find->status='cancel';
+                $taxe_find->update();
+                return response()->json(['status'=>'old','taxe'=>null,'calculate'=>null,'ciu'=>null]);
+
             }else{
                 $calculateTaxes=Calculate::calculateTaxes($id);
                 $ciuTaxes=CiuTaxes::with('ciu')->where('taxe_id',$id)->get();
@@ -319,11 +331,6 @@ class TicketOfficeController extends Controller{
             }
 
 
-            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
-
-
-
-
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 [   'ciu_id'=>$ciu_id[$i],
                     'base'=>$base_format,
@@ -336,10 +343,10 @@ class TicketOfficeController extends Controller{
                     'interest'=>$interest
                 ]);
 
-
-
-
         }
+
+        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
+
         $taxesCalculate=Calculate::calculateTaxes($id);
         $taxesCalculate['id_taxes']=$id;
         $taxe_update=Taxe::find($id);
@@ -431,17 +438,66 @@ class TicketOfficeController extends Controller{
 
 
     public function payments($type){
+
         $payment=Payments::with('taxes')->where('type_payment','=',$type)->get();
+        if($payment->isEmpty()){
+           $payment=null;
+        }
         return view('modules.payments.read',['taxes'=>$payment,'amount_taxes'=>0]);
     }
 
 
-    public function changeStatustaxes($id){
+    public function changeStatustaxes($id,$status){
+        $taxes=Taxe::find($id);
 
+        $taxes->status=$status;
+        $taxes->update();
+        if($status==='verified'){
+            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+            $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+            $extra = ['tasa' => $mora[0]->tax_rate];
+            $amount=Calculate::calculateTaxes($id);
+            $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
+            $companyTaxe=$taxes->companies()->get();
+            $company_find = Company::find($companyTaxe[0]->id);
+
+
+
+            $pdf = \PDF::loadView('modules.taxes.receipt',[
+                'taxes'=>$taxes,
+                'fiscal_period'=>$fiscal_period,
+                'extra'=>$extra,
+                'ciuTaxes'=>$ciuTaxes,
+                'amount'=>$amount,
+                'firm'=>true
+            ]);
+
+            $user= $company_find->users()->get();
+
+
+            $subject = "Planilla Verificada";
+            $for = $user[0]->email;
+
+            Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
+
+                $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                $msj->subject($subject);
+                $msj->to($for);
+                $msj->attachData($pdf->output(), time().'Planilla_Verificada.pdf');
+            });
+        }
+
+
+        return response()->json(['status'=>$taxes->statusName]);
     }
 
 
 
+    public function paymentsDetails($id){
+        $payment=Payments::with('taxes')->where('id','=',$id)->get();
+
+        return view('modules.payments.details',['payments'=>$payment[0]]);
+    }
 
 
 

@@ -1,44 +1,134 @@
 $('document').ready(function () {
-    var url="http://sysprim.com/.devel";
-    $('#payments').on('submit',function (e) {
-        e.preventDefault();
-            $.ajax({
-                url: url+"paymentsTaxes/save",
-                cache:false,
-                contentType:false,
-                processData:false,
-                data:new FormData(this),
-                method: "POST",
+    var url = "https://sysprim.com/";
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
 
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: response.message,
-                        icon: "success",
-                        button: "Ok",
-                    });
+    $('.reconcile').click(function () {
+        var status=$(this).data('status');
+        var taxes_id=$('#taxes_id').val();
+        var message;
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+        if(status==='verified'){
+            message='verificada';
+        }else{
+            message='cancelada';
+        }
+
+        swal({
+            title: "Información",
+            text: '¿Estas seguro?, el estado de esta planilla cambiaria  a "'+ message+'".',
+            icon: "warning",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "green"
 
                 },
-                error: function (err) {
-                    console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
                 }
-            });
-      });
+            }
+        }).then(function (aceptar) {
+            if (aceptar) {
+
+
+
+                console.log(taxes_id);
+                console.log(status);
+                $.ajax({
+                    method: "GET",
+                    url: url + "ticket-office/payments/change/"+ taxes_id +"/"+ status ,
+
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+
+
+                        if (response.status) {
+                            swal({
+                                title: "¡Bien hecho!",
+                                text: "La planilla fue "+ response.status +" con exito.",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function (accept) {
+                                location.reload();
+                            });
+                        }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $('#license').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+
+
+            }
+        });
+
+
+
+    });
+
+
+/*
+        $.ajax({
+            method: "GET",
+            url: url + "ticket-office/fin" + fiscal_period + "/" + company,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+
+
+                if (response.status === 'error') {
+                    swal({
+                        title: "Información",
+                        text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $('#fiscal_period').val(' ')
+                }
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            }, error: function (err) {
+                $('#license').val('');
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
+
+
+*/
+
+
+
+
 });
 

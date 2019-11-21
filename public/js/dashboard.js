@@ -1,4 +1,4 @@
-var url = "http://sysprim.com.devel/";
+var url = "https://sysprim.com/";
 var controller = "collection/statistics";
 
 

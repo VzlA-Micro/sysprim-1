@@ -364,22 +364,36 @@
 
                                             </div>
                                         </form>
-                                        @endif
+
                                     </div>
                                 </li>
-
-
+                                @endif
                         </ul>
-
-
                     </div>
                 </div>
 
             </div>
         </div>
+        <div id="modal-tick" class="modal">
+            <div class="modal-content">
+                <h4 class="center-align">Escanear QR</h4>
+                <div class="col l12">
+                    <div class="col s12 center-align">
+                        <img src="{{asset('images/scan.gif')}}" class="img-responsive">
+                    </div>
+                    <div class="input-field col s10">
+                        <i class="icon-search prefix"></i>
+                        <input id="search" type="search" value="">
+                        <label for="search">CODIGO QR</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
 
-    </div>
 
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large light-blue darken-4">
