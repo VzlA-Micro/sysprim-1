@@ -39,12 +39,12 @@ $('document').ready(function () {
                         var usd = value['data']['PTR']['USD'];
                         var bs = value['data']['PTR']['BS'];
 
-                        $('#petro').text(total);
-                        $('#bs').text('Bolivar '+total);
-                        $('#eur').text('Euros '+eur);
-                        $('#cny').text('Yuan '+cny);
-                        $('#rub').text('Ruplas '+rub);
-                        $('#usd').text('Dolar '+usd);
+                        $('#petro').html(total);
+                        $('#bs').html('Bolivar '+total+'<i class="i-bss left"></i>');
+                        $('#eur').html('Euros '+eur+'<i class="fas fa-euro-sign left"></i>');
+                        $('#cny').html('Yuan '+cny+'<i class="fas fa-yen-sign left"></i>');
+                        $('#rub').html('Ruplas '+rub+'<i class="fas fa-ruble-sign left"></i>');
+                        $('#usd').html('Dolar '+usd+'<i class="fas fa-dollar-sign left"></i>');
 
                     },
                     error: function (e) {
@@ -506,11 +506,10 @@ function chartsMonth(data) {
 }
 
 function topTaxes(data) {
-    console.log(data);
     var circularChart = new Chart($('#donus'), {
         type: 'doughnut', //Gráfica circular
         data: {
-            labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta'], //Etiquetas
+             //Etiquetas
             datasets: [
                 {
                     data: [
@@ -531,7 +530,8 @@ function topTaxes(data) {
                         "#FFA000",
                         "#9c27b0"
                     ]
-                }]
+                }],
+            labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta']
         }
     });
 }

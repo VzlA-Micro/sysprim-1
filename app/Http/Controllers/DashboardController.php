@@ -1134,7 +1134,7 @@ class DashboardController extends Controller
         }
 
         $increment = $totalCollection - $acum;
-        
+
         $dearTaxesCompany = array(
             'taxes' => 'Actividad Economica',
             'Recaudado' => number_format($raised, 2, ',', '.'),

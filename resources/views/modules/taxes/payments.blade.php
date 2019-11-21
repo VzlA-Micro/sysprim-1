@@ -79,18 +79,18 @@
 									</label>
 								</div>
 								<div class="col s12 m4">
-									<input type="radio" id="bod" name="method" value="">
-									<label class="btn-radio bod-green" for="bod">
-										<i class="i-bod"></i>
-									</label>
-								</div>
-								<div class="col s12 m4">
 									<input type="radio" id="percent-banco" name="method" value="">
 									<label class="btn-radio x100-banco-yellow" for="percent-banco">
 										<i class="i-percent-banco"></i>
 									</label>
 								</div>
-								<div class="col s12 m4">
+								<div class="col s12 m6">
+									<input type="radio" id="bod" name="method" value="">
+									<label class="btn-radio bod-green" for="bod">
+										<i class="i-bod"></i>
+									</label>
+								</div>
+								<div class="col s12 m6">
 									<input type="radio" id="bicentenario" name="method" value="">
 									<label class="btn-radio red darken-3" for="bicentenario">
 										<i class="i-bicentenario"></i>

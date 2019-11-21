@@ -47,14 +47,7 @@
                             <span id="banesco" class=""></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-                        <div class="progress">
-                            <div class="determinate animated banesco-green slideInLeft" style="width: 30%"></div>
-                        </div>
-                    </div>
-                    <div class="widget-description">
-                        20% Increase in 30 Days
-                    </div>
+
                 </div>
             </div>
             <div class="col s12 m6 l4">
@@ -68,38 +61,10 @@
                             <span class="" id="banco100"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-                        <div class="progress">
-                            <div class="determinate animated x100-banco-yellow slideInLeft" style="width: 30%"></div>
-                        </div>
-                    </div>
-                    <div class="widget-description">
-                        20% Increase in 30 Days
-                    </div>
+
                 </div>
             </div>
             <div class="col s12 m6 l4">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text bod-green">
-                        <i class="i-bod"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bod"></span> Bs.
-                        </span>
-                    </div>
-                    <div class="widget-progress">
-                        <div class="progress">
-                            <div class="determinate bod-green animated slideInLeft" style="width: 30%"></div>
-                        </div>
-                    </div>
-                    <div class="widget-description">
-                        20% Increase in 30 Days
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
                 <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon white-text red-gradient">
                         <i class="i-bicentenario" style="font-size: 30px"></i>
@@ -110,13 +75,18 @@
                             <span class="" id="bicentenario"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-                        <div class="progress">
-                            <div class="determinate animated red-gradient slideInLeft" style="width: 30%"></div>
-                        </div>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="widget bootstrap-widget stats">
+                    <div class="widget-stats-icon white-text bod-green">
+                        <i class="i-bod"></i>
                     </div>
-                    <div class="widget-description">
-                        20% Increase in 30 Days
+                    <div class="widget-stats-content">
+                        <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
+                        <span class="widget-stats-number">
+                            <span class="" id="bod"></span> Bs.
+                        </span>
                     </div>
                 </div>
             </div>
@@ -131,137 +101,145 @@
                             <span class="" id="bnc"></span> Bs.
                         </span>
                     </div>
-                    <div class="widget-progress">
-                        <div class="progress">
-                            <div class="determinate animated bnc-blue slideInLeft" style="width: 30%"></div>
+                </div>
+            </div>
+                <div class="col s12 m12">
+                    <div class="card">
+                        <div class="card-content">
+                            <canvas id="tax-collection" style="position: relative; height:40vh; width:80vw"></canvas>
                         </div>
                     </div>
-                    <div class="widget-description">
-                        20% Increase in 30 Days
+                </div>
+                <div class="col s12 m12">
+                    <div class="card">
+                        <div class="card-content">
+                            <canvas id="bank-earnings" style="position: relative; height:40vh; width:80vw"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <canvas id="tax-collection" style="position: relative; height:40vh; width:80vw"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <canvas id="bank-earnings" style="position: relative; height:40vh; width:80vw"></canvas>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <canvas id="typeTaxes" style="position: relative; height:40vh; width:80vw"></canvas>
+                <div class="col s12 m12">
+                    <div class="card">
+                        <div class="card-content">
+                            <canvas id="typeTaxes" style="position: relative; height:40vh; width:80vw"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m6">
-                <ul class="collection with-header">
-                    <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
-                    @foreach ($company as $compa)
+                <div class="col s12 m6">
+                    <ul class="collection with-header">
+                        <li class="collection-header"><h4>Últimas Empresas que han pagado</h4></li>
+                        @foreach ($company as $compa)
 
 
+                            <li class="collection-item">
+                                <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
+                                <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
+                                <a href="">Detalles...</a>
+                                {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
+                            </li>
+
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="col s12 m6">
+                    <ul class="collection with-header">
+                        <li class="collection-header"><h4>Top de Formas de Pago</h4></li>
                         <li class="collection-item">
-                            <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
-                            <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
-                            <a href="">Detalles...</a>
-                            {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
+                            <div>
+                                {{-- <i class="icon-message circle"></i> --}}
+                                <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
+                                <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
+                            </div>
                         </li>
-
-                    @endforeach
-                </ul>
-            </div>
-            <div class="col s12 m6">
-                <ul class="collection with-header">
-                    <li class="collection-header"><h4>Top de Formas de Pago</h4></li>
-                    <li class="collection-item">
-                        <div>
-                            {{-- <i class="icon-message circle"></i> --}}
-                            <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
-                            <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
+                        <li class="collection-item">
+                            <div>
+                                <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
+                                <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div>
+                                {{-- <i class="icon-message circle"></i> --}}
+                                <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
+                                <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div>
+                                <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
+                                <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-content">
+                            <h5 class="center">Formas de Pago</h5>
+                            <canvas id="donus" style="position: relative; height:120vh; width:160vw"></canvas>
                         </div>
-                    </li>
-                    <li class="collection-item">
-                        <div>
-                            <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
-                            <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-content">
-                        <canvas id="donus" style="position: relative; height:120vh; width:160vw"></canvas>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Impuesto</th>
-                                <th>Recaudado</th>
-                                <th>En Espera</th>
-                                <th>Total</th>
-                                <th>Porcentaje</th>
-                                <th>Estimado</th>
-                                <th>Incremento</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{{$dear['taxes']}}</td>
-                                <td>{{$dear['Recaudado']}} Bs</td>
-                                <td>{{$dear['Espera']}} Bs</td>
-                                <td>{{$dear['Total']}} Bs</td>
-                                <td>
-                                    <div>
-                                        {{$dear['Porcentaje']}}%
-                                        <div class="progress">
-                                            <div class="determinate bg-danger"
-                                                 style="width:{{$dear['Porcentaje']}}%"></div>
+                <div class="col s12 m12">
+                    <div class="card">
+                        <div class="card-content">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Impuesto</th>
+                                    <th>Recaudado</th>
+                                    <th>En Espera</th>
+                                    <th>Total</th>
+                                    <th>Porcentaje</th>
+                                    <th>Estimado</th>
+                                    <th>Incremento</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{$dear['taxes']}}</td>
+                                    <td>{{$dear['Recaudado']}} Bs</td>
+                                    <td>{{$dear['Espera']}} Bs</td>
+                                    <td>{{$dear['Total']}} Bs</td>
+                                    <td>
+                                        <div>
+                                            {{$dear['Porcentaje']}}%
+                                            <div class="progress">
+                                                <div class="determinate bg-danger"
+                                                     style="width:{{$dear['Porcentaje']}}%"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{$dear['Estimado']}} Bs</td>
-                                <td><i class="icon-arrow_upward text-success"> </i>{{$dear['Incremento']}} Bs</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                    <td>{{$dear['Estimado']}} Bs</td>
+                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['Incremento']}} Bs</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-content">
-                        <canvas id="dear" style="position: relative; height:160vh; width:160vw"></canvas>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-content">
+                            <canvas id="dear" style="position: relative; height:160vh; width:160vw"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12">
-                <div id="map" style="width: 100%; height: 400px"></div>
+                <div class="col s12">
+                    <div id="map" style="width: 100%; height: 400px"></div>
+                </div>
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script src="{{ asset('js/jquery.countTo.js') }}"></script>
-    <script src="{{ asset('js/aos.js') }}"></script>
-    <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
-    <script src="{{ asset('js/dev/geosysprim.js') }}"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"
-            type="text/javascript"></script>
+
+        @endsection
+        @section('scripts')
+            <script src="{{ asset('js/jquery.countTo.js') }}"></script>
+            <script src="{{ asset('js/aos.js') }}"></script>
+            <script src="{{ asset('js/Chart.min.js') }}"></script>
+            <script src="{{ asset('js/dashboard.js') }}"></script>
+            <script src="{{ asset('js/dev/geosysprim.js') }}"></script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"
+                    type="text/javascript"></script>
 @endsection
