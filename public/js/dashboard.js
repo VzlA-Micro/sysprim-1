@@ -78,6 +78,7 @@ $('document').ready(function () {
                 $('#banco100').text(response[0]['banco100']);
                 chartsMonth(response);
                 topTaxes(response[11]);
+                dear(response[12]);
             }
         },
         error: function (e) {
@@ -505,11 +506,10 @@ function chartsMonth(data) {
 }
 
 function topTaxes(data) {
-    console.log(data);
     var circularChart = new Chart($('#donus'), {
         type: 'doughnut', //Gráfica circular
         data: {
-            labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta'], //Etiquetas
+             //Etiquetas
             datasets: [
                 {
                     data: [
@@ -530,7 +530,48 @@ function topTaxes(data) {
                         "#FFA000",
                         "#9c27b0"
                     ]
-                }]
+                }],
+            labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta']
+        }
+    });
+}
+
+function dear(data) {
+    var taxCollectionChart = $("#dear");
+    var taxCollection = new Chart(taxCollectionChart, {
+        type: "bar", // Tipo de chart
+        data: { // Incluye lo referente a datos
+            "labels": [ // Etiquetas para la leyenda
+                "Estimado", "Incremento", "Total",],
+            "datasets": [{ // Sets de datos que tendra la chart
+                "label": "",
+                "data": [
+                    data['estimado'],
+                    data['incremento'],
+                    data['total']
+                ],
+
+                "fill": false,
+                "borderColor": "rgb(0,0,0,.5)",
+                "backgroundColor": [
+                    "#e91e63",
+                    "#9c27b0",
+                    "#4caf50",
+
+                ],
+                "lineTension": 0.1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Estimado",
+                fontSize: 25
+            },
+            legend: {
+                position: 'bottom'
+            },
+            resonsive: true
         }
     });
 }
