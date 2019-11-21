@@ -26,16 +26,16 @@
 						<div class="card-content">
 							<div class="row">
 								<div class="col s12 m4">
-									<input type="radio" id="ppv" name="method" value="">
-									<label class="btn-radio peach" for="ppv">
+									<input type="radio" id="ppv" name="method" value="ppv" class="type_payment_event">
+									<label class="btn-radio peach" for="ppv" >
 										<i class="">
 											<img src="{{ asset('images/png/001-point-of-service.png') }}" alt="">
 										</i>
-										<span class="truncate black-text">Taquilla SEMAT</span>
+										<span class="truncate black-text">Por Taquilla SEMAT</span>
 									</label>
 								</div>
 								<div class="col s12 m4">
-									<input type="radio" id="ptb" name="method" value="">
+									<input type="radio" id="ptb" name="method" value="ptb" class="type_payment_event">
 									<label class="btn-radio peach" for="ptb">
 										<i class="">
 											<img src="{{ asset('images/png/009-smartphone-1.png') }}" alt="">
@@ -44,15 +44,20 @@
 									</label>
 								</div>
 								<div class="col s12 m4">
-									<input type="radio" id="ppb" name="method" value="">
+									<input type="radio" id="ppb" name="method" value="ppb" class="type_payment_event">
 									<label class="btn-radio peach" for="ppb">
 										<i class="">
 											<img src="{{ asset('images/png/030-bank.png') }}" alt="">
 										</i>
-										<span class="truncate black-text">Punto de Venta</span>
+										<span class="truncate black-text">Deposito Bancario</span>
 									</label>
 								</div>
 							</div>
+
+
+
+							<input type="text" class="" id="type_payment">
+
 							<div class="row">
 								<div class="col s12 right-align">
 									<a href="" class="btn peach waves-effect waves-light">
@@ -61,6 +66,8 @@
 									</a>
 								</div>
 							</div>
+
+
 						</div>
 					</div>
 					<div id="payment-bank">
@@ -133,5 +140,5 @@
 @endsection
 
 @section('scripts')
-    
+	<script src="{{asset('js/dev/taxes.js')}}"></script>
 @endsection

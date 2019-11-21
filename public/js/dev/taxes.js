@@ -243,4 +243,14 @@ $(document).ready(function () {
         $('#payments').val($(this).attr('data-payments'));
         $('#register-taxes')[0].submit();
     });
+
+
+    $('.type_payment_event').click(function () {
+        var type=$(this).val();
+        $('#type_payment').val(type.toUpperCase());
+
+
+
+
+    });
 });
