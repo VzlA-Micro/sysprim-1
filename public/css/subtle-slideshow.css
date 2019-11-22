@@ -167,13 +167,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  right: 100px;
   bottom: 0;
 }
 
 #slideshow .slide span {
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left;
 }
 
 #slideshow .slide span.animate.right, #slideshow .slide span.animate.left {

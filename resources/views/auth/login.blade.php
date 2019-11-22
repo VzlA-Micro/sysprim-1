@@ -34,16 +34,16 @@
     <div class="container-fluid">
         <div id="slides">
           <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bg-1.jpg') }})"></span>
+            <span class="animate down" style="background-image: url({{ asset('images/jonas1.jpg') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate in" style="background-image: url({{ asset('images/bg-2.jpg') }})"></span>
+            <span class="animate in" style="background-image: url({{ asset('images/semat1.jpg') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bg-3.jpg') }})"></span>
+            <span class="animate down" style="background-image: url({{ asset('images/semat2.jpg') }})"></span>
           </div>
-          <div class="slide>
-            <span class="animate out" style="background-image: url({{ asset('images/bg-4.jpg') }})"></span>
+          <div class="slide">
+            <span class="animate out" style="background-image: url({{ asset('images/jonas2.jpg') }})"></span>
           </div>
         </div>
         <div class="row show-on-medium-and-down hide-on-large-only">
