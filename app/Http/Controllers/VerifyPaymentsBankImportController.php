@@ -122,7 +122,7 @@ class VerifyPaymentsBankImportController extends Controller
                                 $amountInterest+=$ciu->interest;
                                 $amountRecargo+=$ciu->tax_rate;
 
-                                if($company->TypeCompany==='R'){
+                                if($company->typeCompany==='R'){
                                     $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
                                 }else{
                                     $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
