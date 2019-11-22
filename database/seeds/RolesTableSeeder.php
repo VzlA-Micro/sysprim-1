@@ -21,7 +21,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'name'=>'Ticket Office',
+            'name'=>'Taquillero',
             'description'=>'persona encargada de la taquilla de atencion al usuario',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
@@ -35,7 +35,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'name'=>'Admin',
+            'name'=>'Administrador',
             'description'=>'Persona que se encarga de admintrar el sistema',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
