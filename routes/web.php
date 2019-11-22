@@ -464,6 +464,8 @@ Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
 Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
 Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
+Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
 Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
 
 

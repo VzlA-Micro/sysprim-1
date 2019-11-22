@@ -98,9 +98,11 @@ class UserController extends Controller{
     {
         $user = User::find($id);
         $role = Role::where('id',$user->role_id)->get();
-        return view('modules.users.details',array(
+
+
+        return view('modules.users.edit',array(
             'user'=>$user,
-            'role'=>$role
+            'roles'=>$role
         ));
     }
 

@@ -54,8 +54,10 @@ class Taxe extends Model implements Auditable {
 
         if ($type == 'PPV') {
             return  $this->typePayment = "PUNTO DE VENTA";
-        } else if ($type == "PPB") {
-            return $this->typePayment = "DEPOSITO BANCARIO";
+        } else if ($type == "PPC") {
+            return $this->typePayment = "DEPOSITO BANCARIO(CHEQUE)";
+        }else if ($type == "PPE") {
+            return $this->typePayment = "DEPOSITO BANCARIO(EFECTIVO)";
         } else if ($type == 'PPT') {
             return $this->typePayment = "TRASNFERENCIA BANCARIA";
         }

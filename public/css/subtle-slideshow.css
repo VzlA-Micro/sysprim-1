@@ -167,7 +167,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 100px;
+  right: 0;
   bottom: 0;
 }
 
@@ -227,4 +227,11 @@
 #slideshow span.animate.paused {
   -webkit-animation-play-state: paused;
   animation-play-state: paused;
+}
+
+@media only screen and (max-width: 992px) {
+  #slideshow .slide span {
+  background-size: cover;
+  background-position: center;
+}
 }
