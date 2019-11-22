@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
@@ -80,7 +80,7 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
-                        console.log(rr)
+                        console.log(err);
 
 
                     $("#preloader").fadeOut('fast');

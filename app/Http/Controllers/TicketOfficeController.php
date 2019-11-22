@@ -495,8 +495,13 @@ class TicketOfficeController extends Controller{
 
     public function paymentsDetails($id){
         $payment=Payments::with('taxes')->where('id','=',$id)->get();
-
         return view('modules.payments.details',['payments'=>$payment[0]]);
+    }
+
+
+    public function paymentsWeb(){
+        $taxes=Taxe::with('companies')->where('status','!=','cancel')->orderBy('id','desc')->get();
+        return view('modules.payments.read_web',['taxes'=>$taxes]);
     }
 
 
