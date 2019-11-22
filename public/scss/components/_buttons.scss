@@ -50,3 +50,12 @@ button.btn-app {
         line-height: 50px;
     }
 }
+
+.fixed-action-btn {
+    &.left {
+        right: 0;
+        bottom: 23px;
+        left: 323px;
+
+    }
+}

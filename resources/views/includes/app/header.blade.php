@@ -169,7 +169,7 @@
                     @endif
                     @if (\Auth::user()->role_id == 3)
                         <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li>
+                        {{-- <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
                         {{-- <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
                     @endif
