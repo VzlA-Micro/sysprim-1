@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -383,7 +383,7 @@ $(document).ready(function () {
     }
 
 
-    
+
     $('#details-next').click(function () {
         var band=false;
 
