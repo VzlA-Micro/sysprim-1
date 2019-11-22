@@ -21,7 +21,7 @@
             		<div class="card-content row">
             			@csrf
                         <input type="hidden" value="1" name="confirmed">
-                        <div class="input-field col s4 m3">
+                        <div class="input-field col s6 m3">
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
@@ -30,8 +30,8 @@
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
-                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." required>
+                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" maxlength="8" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6">
@@ -44,7 +44,7 @@
                             <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s3 m3">
+                        <div class="input-field col s6 m3">
                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
                             <select name="country_code" id="country_code_user" required>
                                 <option value="null" selected disabled>...</option>
@@ -56,7 +56,7 @@
                             </select>
                             <label for="country_code_user">Operadora</label>
                         </div>
-                        <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
                             <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>

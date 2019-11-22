@@ -1,6 +1,6 @@
 $('documents').ready(function () {
 
-    var url="http://sysprim.com.devel/";
+    var url="https://sysprim.com/";
     $('#verifyPaymentsBank').on('submit',function (e) {
         e.preventDefault();
             $.ajax({

@@ -1,6 +1,6 @@
 {{-- <footer class="page-footer iribarren-wine-gradient">
     <div class="container center-align">
-        Copyright - Tecnova 2019
+        Copyright - SEMAT - Alcaldía de Iribarren
     </div>
     <div class="container">
         hola
@@ -25,7 +25,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container center-align">
-            Copyright - Tecnova 2019
+            Copyright - SEMAT 2019
         </div>
     </div>
 </footer>

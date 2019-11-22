@@ -121,23 +121,30 @@
                         <div class="col l12 s12">
                             <div class="col l6 s12">
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
-                                    <tr>
-                                        <th>CODIGO</th>
-                                        <th>NOMBRE</th>
-                                        <th>ALICUOTA</th>
-                                        <th>MININIMO TRIBUTABLE</th>
-                                    </tr>
-                                    @php $unid=$ciu->unid_tribu;@endphp
-                                    @foreach($taxes->taxesCiu as $ciu)
-                                    <tr>
-                                        <td>{{$ciu->code}}</td>
-                                        <td>{{$ciu->name}}</td>
-                                        <td>{{($ciu->alicuota*100)."%"}}</td>
-                                        <td>{{$ciu->min_tribu_men}}</td>
-                                    </tr>
-                                    @endforeach
+                                    <thead>
+                                        <tr>
+                                            <th>CODIGO</th>
+                                            <th>NOMBRE</th>
+                                            <th>ALICUOTA</th>
+                                            <th>MININIMO TRIBUTABLE</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                        @php $unid=$ciu->unid_tribu;@endphp
+                                        @foreach($taxes->taxesCiu as $ciu)
+                                        <tr class="centered">
+                                            <td>{{$ciu->code}}</td>
+                                            <td>{{$ciu->name}}</td>
+                                            <td>{{($ciu->alicuota*100)."%"}}</td>
+                                            <td>{{$ciu->min_tribu_men}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
+                                <div class="col s12">
                                 <p><b>RECARGO: </b>{{$extra['tasa']."%"}}</p>
+                                    
+                                </div>
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
@@ -157,7 +164,7 @@
                                 <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding: 1rem">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
 
@@ -171,22 +178,13 @@
                                         <i class="icon-cloud_download right"></i>
                                     </a>-->
 
-                                    <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
+                                    <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
                                 </button>
                                 {{-- Modal structure --}}
                                @endif
 
-                                @if(\Auth::user()->role_id===1)
-                                    <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-light ">
-
-                                        CANCELAR PLANILLA
-                                        <i class="icon-close right"></i></a>
-                                    <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light">
-                                        CONCILIAR PAGO
-                                        <i class="icon-verified_user right"></i></a>
-                                @endif
 
 
                                 <div id="modal1" class="modal modal-fixed-footer">

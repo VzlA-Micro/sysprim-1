@@ -160,6 +160,9 @@ Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF'
 
 
 
+
+
+
 Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
 })->name('payments.reconcile');
@@ -459,7 +462,12 @@ Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'Ti
 Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
+Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
 Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+
+
+
 
 
 

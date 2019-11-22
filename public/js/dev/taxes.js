@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
@@ -282,8 +282,8 @@ $(document).ready(function () {
 
 
     //si esta moroso
-    console.log($('#interest').val());
-    if ($('#interest').val() !== "0.00"&&$('#interest').val()!==undefined) {
+
+    if ($('#interest').val() !== "0.00"&&$('#interest').val()!==undefined&&$('#continue').val()!==undefined) {
         swal({
             title: "Información",
             text: "Se le notifica que se generará una Multa por pago extemporaneo,para cada período declarado fuera del lapso establecido Debe cancelar previamente la declaración de impuesto de Act.Economica anticipada y seguidamente la Multa generada.Pasar por el SEMAT a pagar la multa.",

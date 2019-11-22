@@ -21,54 +21,65 @@
                 <div class="card">
                     <div class="card-content">
                         <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
-                        <table class="centered highlight" id="payments" style="width: 100%">
-                            <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Contribuyente</th>
-                                <th>Forma de Pago</th>
-                                <th>Banco</th>
-                                @if($taxes[0]->lot)
-                                    <th>Lote</th>
-                                @else
-                                    <th>Status</th>
-                                @endif
-                                <th>N°. Referencia</th>
-                                <th>Monto</th>
-                                <th>Detalles</th>
-                            </tr>
-                            </thead>
-                            <tbody>
 
-                            @if($taxes)
-                                @foreach($taxes as $taxe)
-                                    <tr>
-                                        <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                        <td>{{$taxe->taxes->companies[0]->name}}</td>
-                                        <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->taxes->bankName}}</td>
-                                        @if($taxe->lot)
-                                            <td>{{$taxe->lot}}</td>
-                                        @else
-                                            @if($taxe->taxes->status=='verified')
-                                                <td>Verificado <i class="icon-check green-text" style="font-size: 20px"></i></td>
-                                            @elseif($taxe->taxes->status=='process')
-                                                <td>Sin Conciliar aún.<i class="icon-alarm blue-text" style="font-size: 20px"></i></td>
+                        @if($taxes===null)
+                            <h4 class="center">No hay registro que mostrar.</h4>
+                        @else
+
+                            <table class="centered highlight" id="payments" style="width: 100%">
+                                <thead>
+
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Contribuyente</th>
+                                    <th>Forma de Pago</th>
+                                    <th>Banco</th>
+                                    @if($taxes[0]->lot)
+                                        <th>Lote</th>
+                                    @else
+                                        <th>Status</th>
+                                    @endif
+                                    <th>N°. Referencia</th>
+                                    <th>Monto</th>
+                                    <th>Detalles</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @if($taxes)
+                                    @foreach($taxes as $taxe)
+                                        <tr>
+                                            <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                            <td>{{$taxe->taxes->companies[0]->name}}</td>
+                                            <td>{{$taxe->type_payment}}</td>
+                                            <td>{{$taxe->taxes->bankName}}</td>
+                                            @if($taxe->lot)
+                                                <td>{{$taxe->lot}}</td>
                                             @else
-                                                <td>Cancelado.<i class="icon-close red-text" style="font-size: 20px"></i></td>
+                                                @if($taxe->taxes->status=='verified')
+                                                    <td>Verificado <i class="icon-check green-text"
+                                                                      style="font-size: 20px"></i></td>
+                                                @elseif($taxe->taxes->status=='process')
+                                                    <td>Sin Conciliar aún.<i class="icon-alarm blue-text"
+                                                                             style="font-size: 20px"></i></td>
+                                                @else
+                                                    <td>Cancelado.<i class="icon-close red-text"
+                                                                     style="font-size: 20px"></i></td>
+                                                @endif
                                             @endif
-                                        @endif
-                                        <td>{{$taxe->ref}}</td>
-                                        <td>{{number_format($taxe->amount,2)}}</td>
-                                        <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->taxes->id)  }}" class="btn btn-floating orange waves-effect waves-light"><i
-                                                        class="icon-pageview"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                            </tbody>
-                        </table>
+                                            <td>{{$taxe->ref}}</td>
+                                            <td>{{number_format($taxe->amount,2)}}</td>
+                                            <td>
+                                                <a href="{{route('ticket-office.payment.details',[$taxe->id])  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -109,9 +120,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {
@@ -138,7 +149,6 @@
 
 
                     messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
 
 
                     customize: function (doc) {

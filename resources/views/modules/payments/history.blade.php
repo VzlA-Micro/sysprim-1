@@ -43,7 +43,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($taxes->taxesCompanies as $taxe)
+                                @foreach($taxes as $taxe)
                                     @if($taxe->status=='verified' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>
@@ -119,9 +119,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {

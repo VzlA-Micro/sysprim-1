@@ -63,7 +63,7 @@
 		                            <i class="icon-send right"></i>
 		                            Editar
 		                        </a>
-		                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light hide" id="btn-update">
+		                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light" style="display: none" id="btn-update">
 		                            <i class="icon-update right"></i>
 		                            Actualizar
 		                        </button>

@@ -4,8 +4,11 @@
     <main>
         <div id="map" style="width:100%; height: 600px; margin-top:2px"></div>
         <div class="col m6">
-            <button type="button" id="refresh" class="btn btn-rounded">Refrescar<i class="icon-refresh"></i></button>
-        </div>
+        <div class="fixed-action-btn">
+  			<a class="btn-floating btn-large red" id="refresh">
+  				<i class="icon-refresh"></i>
+  			</a>
+  		</div>
     </main>
 @endsection
 

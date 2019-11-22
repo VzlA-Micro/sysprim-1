@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -25,17 +25,34 @@ $(document).ready(function () {
                     } else if (response.status === 'verified') {
                         swal({
                             title: "Información",
-                            text: "La planilla ingresada ya fue conciliada, por favor ingrese un código de  planilla valida.",
+                            text: "La planilla ingresada ya fue conciliada, por favor ingrese un código de  planilla valido.",
                             icon: "info",
                             button: "Ok",
                         });
                         $('#search').val('');
+
+                    }else if(response.status === 'cancel'){
+                        swal({
+                            title: "Información",
+                            text: "La planilla ingresada esta cancelada, por favor ingrese un código de  planilla valido.",
+                            icon: "warning",
+                            button: "Ok",
+                        });
+                        $('#search').val('');
+                    }else if(response.status === 'old'){
+                        swal({
+                            title: "Información",
+                            text: "La planilla ingresada ya expiró, por favor ingrese un código de  planilla valido.",
+                            icon: "warning",
+                            button: "Ok",
+                        });
+                        $('#search').val('');
+
                     } else {
 
                         var taxe = response.taxe[0];
                         var ciu = response.ciu;
                         var company = taxe.companies[0];
-
 
                         console.log(company);
                         swal({
@@ -63,6 +80,7 @@ $(document).ready(function () {
                         $('#address').val(company.address);
                         $('#RIF').val(company.RIF);
                         $('#taxes_id').val(taxe.id);
+                        $('#taxes_id_tr').val(taxe.id);
                         for (var i = 0; i < ciu.length; i++) {
 
                             var subr = ciu[i].ciu.name.substr(0, 3);
@@ -143,6 +161,8 @@ $(document).ready(function () {
 
                             $('ul.tabs').tabs();
                             $('#amount_total').val(taxe.amount);
+                            $('#amount_total_tr').val(taxe.amount);
+
                             M.textareaAutoResize($('#' + subr));
                             $('.modal').modal();
                             $('#details').append(template);
@@ -472,7 +492,6 @@ $(document).ready(function () {
     });
 
     function registerTaxes() {
-
         var form = new FormData(document.getElementById('register-taxes'));
         form.append('fiscal_period', $('#fiscal_period').val());
         $.ajax({
@@ -1083,7 +1102,6 @@ $(document).ready(function () {
 
 
     $('#previous-details').click(function () {
-
         $('ul.tabs').tabs("select", "general-tab");
     });
 

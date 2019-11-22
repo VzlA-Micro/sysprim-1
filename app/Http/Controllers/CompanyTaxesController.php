@@ -53,15 +53,12 @@ class CompanyTaxesController extends Controller
            /* foreach ($company->taxesCompanies as $taxe ){
                 $taxes[]=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
             }*/
-
-
         }else{
             $taxes=null;
         }
 
 
-
-        return view('modules.payments.history', ['taxes' => $company]);
+        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
 
     }
 
@@ -172,9 +169,6 @@ class CompanyTaxesController extends Controller
             }
 
 
-            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
-
-
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
                 'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
@@ -184,6 +178,7 @@ class CompanyTaxesController extends Controller
             ]);
 
         }
+        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
 
         $data = array([
             'status' => 'success',
