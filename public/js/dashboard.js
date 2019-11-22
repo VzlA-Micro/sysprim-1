@@ -1,9 +1,36 @@
 var url = "https://sysprim.com/";
 var controller = "collection/statistics";
 
+var width = $(window).width();
+var height = $(window).height();
+
+var bar="bar";
+var pie="pie";
+var line="line";
+
+var type;
+
+if ((width>=300 && width <=1000) &&( height>=640 && height<= 1200) ){
+    type=bar ;
+}else{
+    type= line;
+}
+
+function isMobile(){
+    return (
+        (navigator.userAgent.match(/Android/i)) ||
+        (navigator.userAgent.match(/webOS/i)) ||
+        (navigator.userAgent.match(/iPhone/i)) ||
+        (navigator.userAgent.match(/iPod/i)) ||
+        (navigator.userAgent.match(/iPad/i)) ||
+        (navigator.userAgent.match(/BlackBerry/i))
+    );
+}
 
 
 $('document').ready(function () {
+
+
 
     $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
     $('#eur').html('Euros '+0+'<i class="fas fa-euro-sign left"></i>');
@@ -43,7 +70,7 @@ $('document').ready(function () {
                 value = response;
                 $.ajax({
                     method: "GET",
-                    url: 'http://sysprim.com.devel/bs',
+                    url: url+'bs',
                     dataType: 'json',
                     beforeSend: function () {
 
@@ -75,7 +102,7 @@ $('document').ready(function () {
 
     }
 
-    console.log('hola1');
+
 
     $.ajax({
         method: "GET",
@@ -120,6 +147,7 @@ function chartsMonth(data) {
 // Charts
     var taxCollectionChart = document.querySelector("#tax-collection");
     var taxCollection = new Chart(taxCollectionChart, {
+
         type: "bar", // Tipo de chart
         data: { // Incluye lo referente a datos
             "labels": [ // Etiquetas para la leyenda
@@ -174,7 +202,8 @@ function chartsMonth(data) {
 
     var taxCollectionChart = document.querySelector("#typeTaxes");
     var taxCollection = new Chart(taxCollectionChart, {
-        type: "line", // Tipo de chart
+
+        type: type, // Tipo de chart
         data: { // Incluye lo referente a datos
             "labels": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
             "datasets": [ // Sets de datos que tendra la chart
@@ -405,7 +434,7 @@ function chartsMonth(data) {
 
 
     var bankEarnings = new Chart(bankEarningsChart, {
-        type: "line", // Tipo de chart
+        type: type, // Tipo de chart
         data: { // Incluye lo referente a datos
             "labels": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novienbre", "Diciembre"],
             "datasets": [{ // Sets de datos que tendra la chart

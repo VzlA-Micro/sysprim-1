@@ -113,7 +113,7 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="bank-earnings" style="position: relative; height:40vh; width:80vw"></canvas>
+                            <canvas id="bank-earnings"  style="position: relative; height:100vh; width:80vw"></canvas>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="typeTaxes" style="position: relative; height:40vh; width:80vw"></canvas>
+                            <canvas id="typeTaxes"  style="position: relative; height:100vh; width:80vw"></canvas>
                         </div>
                     </div>
                 </div>

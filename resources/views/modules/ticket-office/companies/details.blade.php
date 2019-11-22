@@ -34,7 +34,8 @@
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
-                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+
+                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                             <input type="text" name="RIF" id="RIF" value="{{$company->document}}" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required readonly>
                             <label for="RIF">RIF</label>
                         </div>
@@ -99,7 +100,7 @@
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-satellite prefix"></i>
-                            <select  name="parish" required disabled>
+                            <select  name="parish" id="parish" required disabled>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
                                 @foreach($parish as $parish):
                                 @if($parish->id===$company->parish_id)
@@ -123,11 +124,11 @@
 
                         <div class="input-field col s12 m6">
                                 <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                                <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+">
+                                <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+" disabled>
                                 <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                                <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                                <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu" disabled>
                                     Buscar
                                     <i class="icon-search right"></i>
                                 </a>
@@ -233,6 +234,25 @@
                     </div>
                 </form>
             </div>
+
+           <!-- <div class="col s12 m4">
+                <a href="#" class="btn btn-large waves-effect waves-light green col s12 " id="update-company">
+                    Actualizar
+                    <i class="icon-refresh right"></i>
+                </a>
+            </div>
+            <div class="col s12 m4">
+                <a href="#" class="btn btn-large waves-effect waves-light blue col s12 " id="add-ciiu">
+                    Añadir CIIU
+                    <i class="icon-add right"></i>
+                </a>
+            </div>
+            <div class="col s12 m4">
+                <a href="#" class="btn btn-large waves-effect waves-light red col s12 " id="delete-ciiu">
+                    Eliminar CIIU
+                    <i class="icon-delete right"></i>
+                </a>
+            </div>-->
             <div class="col s12 location-container tooltipped" data-position="left"
                  data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
                 <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
