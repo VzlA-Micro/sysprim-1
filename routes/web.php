@@ -143,7 +143,7 @@ Route::get('/payments/my-payments', function() {
     return view('modules.payments.menu');
 })->name('payments.my-payments'); // Ruta de adorno, no borrar
 
-Route::post('/payments/help', 'CompanyTaxesController@paymentsHelp')->name('payments.help');
+
 
 
 Route::get('/payments/create/{company}','CompanyTaxesController@create')->name('payments.create');
@@ -152,6 +152,16 @@ Route::get('/payments/taxes/{id}','CompanyTaxesController@show');
 Route::get('/payments/calculate/{id}','CompanyTaxesController@calculate')->name('taxes.calculate');
 Route::post('/payments/download/calculate','CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
 Route::get('/payments/history/{company}','CompanyTaxesController@history')->name('payments.history');
+Route::post('/payments/register','CompanyTaxesController@payments')->name('payments.store');
+Route::post('/payments/taxes/save', 'CompanyTaxesController@taxesSave')->name('company.taxes.save');
+Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
+
+
+
+
+
+
+
 
 Route::get('/payments/reconcile', function () {
     return view('modules.payments.register');
@@ -163,7 +173,7 @@ Route::get('/payments/manage', function() {
 Route::get('/payments/register', function() {
     return view('modules.payments.create');
 })->name('payments.register');
-Route::get('/payments/read', 'TicketOfficeController@taxesAll')->name('payments.read');
+
 Route::get('/payments/details', function() {
     return view('modules.payments.details');
 })->name('payments.details');
@@ -186,7 +196,7 @@ Route::get('/cargar-ciu',function (){
     return view('modules.bank.upload');
 });
 
-Route::get('/pdf/{id}','CompanyTaxesController@getPdf');
+
 
 // Group Ciiu module routes
 
@@ -213,7 +223,6 @@ Route::post('/ciu-branch/save','CiuController@create')->name('ciu-branch.save');
 Route::get('/ciu-branch/read','CiuController@show')->name('ciu-branch.read');
 Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
 Route::post('/ciu-branch/update/{id}','CiuController@update')->name('ciu-branch.update');
-
 Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
 
 // Payments Taxes Module
@@ -434,6 +443,16 @@ Route::get('/ticket-office/payments', function() {
 Route::get('/ticket-office/view', function() {
     return view('modules.ticket-office.create');
 })->name('ticket-office.payments');
+
+Route::get('/ticket-office/view', function() {
+    return view('modules.ticket-office.create');
+})->name('ticket-office.payments');
+
+
+Route::get('/ticket-office/type-payment', function() {
+    return view('modules.payments.type_payment');
+})->name('ticket-office.type.payments');
+
 Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
 Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
@@ -441,9 +460,13 @@ Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes')
 Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
 Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
 Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-
-
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
+Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
+Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
+Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+
+
 
 
 
@@ -473,6 +496,10 @@ Route::get('amountApproximate',array(
     'uses'=>'DashboardController@amountApproximate'
 ));
 
+Route::get('dearTaxes',array(
+    'as'=>'dearTaxes',
+    'uses'=>'DashboardController@dearTaxes'
+));
 
 // Security routes
 

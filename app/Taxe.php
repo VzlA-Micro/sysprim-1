@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment', 'bankName'];
+    protected $appends = ['total', 'typePayment', 'bankName','statusName'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
@@ -29,6 +29,21 @@ class Taxe extends Model implements Auditable {
     public function getTotalAttribute(){
 
 
+
+    }
+
+    public function getStatusNameAttribute(){
+        if($this->status=='process'){
+
+            return $this->statusName="SIN CONCILIAR AÚN";
+
+        }else if($this->status=='verified'){
+
+            return $this->statusName="VERIFICADA";
+
+        }else if ($this->status=='cancel'){
+            return $this->statusName='CANCELADA';
+        }
 
     }
 

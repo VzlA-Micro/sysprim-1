@@ -39,7 +39,7 @@
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
-                    <form method="post" action="{{ route('payments.help') }}" id='register-taxes' class="card-content row">
+                    <form method="post" action="{{ route('company.taxes.save')}}" id='register-taxes' class="card-content row">
                         @csrf
                         @foreach($ciuTaxes as $ciu)
                         <div class="input-field col s12 m6">
@@ -148,7 +148,7 @@
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest"  class="validate money" value="{{$amount['amountInterest']}}"  readonly>
+                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{$amount['amountInterest']}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
@@ -167,7 +167,8 @@
                         <div class="row" style="padding: 1rem">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
-                                @if($taxes->status!='verified')
+
+                                @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
                                 <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i></a>
@@ -177,13 +178,15 @@
                                         <i class="icon-cloud_download right"></i>
                                     </a>-->
 
-                                    <a href="{{-- {{ route('payments.help',['id'=>$taxes->id]) }} --}}#modal1"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger ">
+                                    <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>
-                                </a>
-
+                                </button>
                                 {{-- Modal structure --}}
                                @endif
+
+
+
                                 <div id="modal1" class="modal modal-fixed-footer">
                                     <div class="modal-content">
                                         <h4 class="center-align">Formas de pago</h4>

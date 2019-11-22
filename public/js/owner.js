@@ -10,7 +10,7 @@ $(document).ready(function() {
     });
     $('.sidenav').sidenav();
     $('select').formSelect();
-
+    $('.collapsible').collapsible();
     // Datepicker settings
     var date = new Date();
     // var year = date.getFullYear();

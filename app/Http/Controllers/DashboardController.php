@@ -611,6 +611,13 @@ class DashboardController extends Controller
         $vehicle = $this->vehicleTaxes();
         $event = $this->eventTaxes();
         $top = $this->topPayments();
+        $dear= $this->dearTaxes();
+
+        $dearTaxes=array(
+          'estimado'=>$dear['estimado'],
+          'incremento'=>$dear['incremento'],
+          'total'=>$dear['total']
+        );
 
         return response()->json([
             $collection,
@@ -624,7 +631,8 @@ class DashboardController extends Controller
             $property,
             $vehicle,
             $event,
-            $top
+            $top,
+            $dear
         ]);
     }
 
@@ -640,15 +648,28 @@ class DashboardController extends Controller
         $countPtb = count($ptb);
 
 
-        $ppb = Taxe::where('code', 'like', '%ppv%')
+        $ppv = Taxe::where('code', 'like', '%ppv%')
             ->where('status', 'verified')->get();
-        $countPpb = count($ppb);
+        $countPpv = count($ppv);
 
+        $ppe = Taxe::where('code', 'like', '%ppe%')
+            ->where('status', 'verified')->get();
+        $countPpe = count($ppe);
+
+
+        $ppc = Taxe::where('code', 'like', '%ppc%')
+            ->where('status', 'verified')->get();
+        $countPpc = count($ppc);
+        $dear = $this->dearTaxes();
 
         return view('modules.admin.dashboard', array(
                 'company' => $company,
                 'ptb' => $countPtb,
-                'ppv' => $countPpb)
+                'ppv' => $countPpv,
+                'ppc' => $countPpc,
+                'ppe' => $countPpe,
+                'dear' => $dear
+            )
         );
     }
 
@@ -1083,5 +1104,61 @@ class DashboardController extends Controller
         );
         return $top;
 
+    }
+
+    public function dearTaxes()
+    {
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m');
+        $company = Company::all();
+        $tributo = Tributo::latest()->value('value');
+        $acum = 0;
+        $percentage = 0;
+
+        $raised = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', $month)
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+
+        $wait = Taxe::where('status', 'process')
+            ->whereMonth('created_at', '=', $month)
+            ->whereYear('created_at', '=', $year)
+            ->where('branch', 'Act.Eco')
+            ->sum('amount');
+
+
+        $totalCollection = $raised + $wait;
+
+
+
+        if ($raised > 0) {
+            $percentage = $raised / $totalCollection * 100;
+        }
+        foreach ($company as $compa) {
+            $co = $compa->ciu()->get();
+            $countCiu = count($co);
+            for ($i = 0; $i < $countCiu; $i++) {
+                $min = $compa->ciu()->value('min_tribu_men');
+                $acum += $min * $tributo;
+            }
+        }
+
+        $increment = $totalCollection - $acum;
+
+        $dearTaxesCompany = array(
+            'taxes' => 'Actividad Economica',
+            'Recaudado' => number_format($raised, 2, ',', '.'),
+            'Espera' => number_format($wait, 2, ',', '.'),
+            'Total' => number_format($totalCollection, 2, ',', '.'),
+            'Porcentaje' => $percentage,
+            'Estimado' => number_format($acum, 2, ',', '.'),
+            'Incremento'=> number_format($increment, 2, ',', '.'),
+            'total'=>$totalCollection,
+            'estimado'=>$acum,
+            'incremento'=>$increment
+        );
+
+        return $dearTaxesCompany;
     }
 }

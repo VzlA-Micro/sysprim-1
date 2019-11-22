@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ciu;
 use App\Company;
 use App\Extras;
+use App\Helpers\Calculate;
 use App\Notification;
 use App\Tributo;
 use Carbon\Carbon;
@@ -49,17 +50,15 @@ class CompanyTaxesController extends Controller
 
         if(!$company->taxesCompanies->isEmpty()){
 
-            foreach ($company->taxesCompanies as $taxe ){
-                $taxes=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
-            }
-
+           /* foreach ($company->taxesCompanies as $taxe ){
+                $taxes[]=Taxe::where('id',$taxe->id)->where('status','verified')->orWhere('status','process')->where('id',$taxe->id)->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->orderBy('id', 'desc')->get();
+            }*/
         }else{
             $taxes=null;
         }
 
 
-
-        return view('modules.payments.history', ['taxes' => $taxes]);
+        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
 
     }
 
@@ -76,10 +75,9 @@ class CompanyTaxesController extends Controller
 
         $date = TaxesMonth::verify($company[0]->id, false);
 
-
         $users = $company_find->users()->get();
-        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
+        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
 
         if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
@@ -171,9 +169,6 @@ class CompanyTaxesController extends Controller
             }
 
 
-            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
-
-
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 ['ciu_id'=>$ciu_id[$i],
                 'base'=>$base_format,'deductions'=>$deductions_format,'withholding'=>$withholding_format,
@@ -183,6 +178,7 @@ class CompanyTaxesController extends Controller
             ]);
 
         }
+        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
 
         $data = array([
             'status' => 'success',
@@ -285,7 +281,8 @@ class CompanyTaxesController extends Controller
         //
     }
 
-    public function getPDF($id)
+    //descargar pdf de taxes
+    public function downloadPDF($id)
     {
         $amountInterest = 0;//total de intereses
         $amountRecargo = 0;//total de recargos
@@ -293,7 +290,6 @@ class CompanyTaxesController extends Controller
         $amountDesc = 0;//Descuento
         $amountTaxes = 0;//total a de impuesto
         $amountTotal = 0;
-
         $taxes = Taxe::findOrFail($id);
         $companyTaxe=$taxes->companies()->get();
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
@@ -359,7 +355,69 @@ class CompanyTaxesController extends Controller
         return $pdf->download('recibo.pdf');
     }
 
-    public function paymentsHelp(Request $request){
+
+    //registrar el taxes con su forma de pago
+    public function payments( Request $request){
+
+
+        $id_taxes=$request->input('id_taxes');
+        $type_payment=$request->input('type_payment');
+        $bank_payment=$request->input('bank_payment');
+        $taxes = Taxe::findOrFail($id_taxes);
+
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "81");
+        $taxes->code=$code;
+        $code = substr($code, 3, 12);
+
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+
+
+        if($type_payment!='PPV'){
+            $taxes->bank=$bank_payment;
+            $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
+        }
+
+        $taxes->status="process";
+        $taxes->update();
+
+        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+        $extra = ['tasa' => $mora[0]->tax_rate];
+
+
+        $amount=Calculate::calculateTaxes($id_taxes);
+        $ciuTaxes = CiuTaxes::where('taxe_id', $id_taxes)->get();
+
+        $subject = "PLANILLA DE PAGO";
+        $for = \Auth::user()->email;
+        $pdf = \PDF::loadView('modules.taxes.receipt',
+            ['taxes' => $taxes,
+            'fiscal_period' => $fiscal_period,
+            'extra' => $extra,
+            'ciuTaxes' => $ciuTaxes,
+            'amount' => $amount,
+            'firm' => false
+        ]);
+
+        Mail::send('mails.payment-payroll', [], function ($msj) use ($subject, $for, $pdf) {
+            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+            $msj->attachData($pdf->output(), time() . "planilla.pdf");
+        });
+
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+    }
+
+
+
+
+
+
+
+    //Guardar el taxes
+    public function taxesSave(Request $request){
         $amountInterest=0;//total de intereses
         $amountRecargo=0;//total de recargos
         $amountCiiu=0;//total de ciiu
@@ -370,34 +428,37 @@ class CompanyTaxesController extends Controller
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
 
-        $bank = $request->input('bank');
+        /*$bank = $request->input('bank');
         $payments_type = $request->input('payments');
+
 
         $payments_type=strtoupper($payments_type);
         if($payments_type==='PPV'){
             $bank="66";
         }
+
+        $code = TaxesNumber::generateNumberTaxes($payments_type . "81");
+        */
+
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
-        $code = TaxesNumber::generateNumberTaxes($payments_type . "81");
-
-
-        $taxes->code = $code;
-        $taxes->bank = $bank;
-        $taxes->status = 'process';
+        $taxes->status = 'temporal';
         $taxes->branch = 'Act.Eco';
-        $code = substr($code, 3, 12);
+        //$code = substr($code, 3, 12);
 
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
-        $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
+       // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
         $taxes->update();
 
+        return view('modules.taxes.payments',['taxes_id'=>$id]);
 
+
+        /*
         $taxes=Taxe::findOrFail($id);
 
         $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
@@ -424,7 +485,7 @@ class CompanyTaxesController extends Controller
 
         //si tiene descuento
 
-        /*if($company_find->desc){
+        if($company_find->desc){
             $employees = Employees::all();
             foreach ($employees as $employee) {
                 if ($company_find->number_employees >= $employee->min) {
@@ -438,7 +499,7 @@ class CompanyTaxesController extends Controller
             $amountTaxes=$amountTaxes-$amountDesc;//descuento
         }*/
 
-
+        /*
         $amount = ['amountInterest' => $amountInterest,
             'amountRecargo' => $amountRecargo,
             'amountCiiu' => $amountCiiu,
@@ -449,10 +510,13 @@ class CompanyTaxesController extends Controller
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
-        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes, 'fiscal_period' => $fiscal_period, 'extra' => $extra, 'ciuTaxes' => $ciuTaxes,
-            'amount' => $amount, 'firm' => false
+        $pdf = \PDF::loadView('modules.taxes.receipt', ['taxes' => $taxes,
+            'fiscal_period' => $fiscal_period,
+            'extra' => $extra,
+            'ciuTaxes' => $ciuTaxes,
+            'amount' => $amount,
+            'firm' => false
         ]);
-
 
         Mail::send('mails.payment-payroll', [], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("grabieldiaz63@gmail.com", "SEMAT");
@@ -460,7 +524,11 @@ class CompanyTaxesController extends Controller
             $msj->to($for);
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
+
         return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+        */
+
+
 
     }
 

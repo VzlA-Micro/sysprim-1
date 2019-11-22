@@ -107,7 +107,10 @@ class VerifyPaymentsBankImportController extends Controller
                         $code = substr($taxe->code, 3, 10);
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
+                            $pCode=substr($taxe->code,0,2);
+                            if($pCode=='ppc'){
 
+                            }else{
                             $company = Company::find($taxe->company_id);
                             $taxes=Taxe::findOrFail($taxe->id);
 
@@ -168,6 +171,7 @@ class VerifyPaymentsBankImportController extends Controller
                                 $msj->attachData($pdf->output(), time().'Planilla_Verificada.pdf');
                             });
                         }
+                        }
                     }
                 }
             }
@@ -177,6 +181,7 @@ class VerifyPaymentsBankImportController extends Controller
 
     public function verifyPayments()
     {
+
         $taxes = Taxe::where('status','verified')
         ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
         return view('dev.verifyPaymentsBank.read',['taxes'=>$taxes]);
