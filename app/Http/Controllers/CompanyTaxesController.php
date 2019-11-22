@@ -365,6 +365,12 @@ class CompanyTaxesController extends Controller
         $bank_payment=$request->input('bank_payment');
         $taxes = Taxe::findOrFail($id_taxes);
 
+
+
+
+
+
+
         $code = TaxesNumber::generateNumberTaxes($type_payment . "81");
         $taxes->code=$code;
         $code = substr($code, 3, 12);
@@ -427,6 +433,10 @@ class CompanyTaxesController extends Controller
 
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
+
+
+
+
 
         /*$bank = $request->input('bank');
         $payments_type = $request->input('payments');

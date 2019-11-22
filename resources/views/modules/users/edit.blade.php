@@ -18,13 +18,15 @@
                 {{-- Agregar los valores de la base de datos con la consulta --}}
                 <form action="#" id="userUpdate" method="post" class="card">
                     <div class="card-header center-align">
-                        <h5>Editar Usuario</h5>
+                        <h5>Detalles Usuario</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <input id="id" type="hidden" value="{{$user->id}}" name="id">
+
                         <div class="input-field col s10 m6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
+                            <i class="icon-person prefix"></i>
                             <input id="cedula" type="text" name="cedula" class="validate number-only" readonly pattern="[0-9VE]+"
                                    title="Solo puede escribir números." value="{{$user->ci}}" required>
                             <label for="cedula">Cedula</label>
@@ -50,13 +52,14 @@
                                    value="{{$user->phone}}" title="Solo puede escribir números."
                                    placeholder="Ej. 1234567" maxlength="13" minlength="7" required>
                         </div>
-                        <!-- <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
+                             <i class="icon-security prefix"></i>
                             <input id="rol" type="text" name="rol" readonly class="validate"
-                                   title="Solo puede agregar letras (con acentos)." value="{{$role[0]->name}}" required>
+                                   title="Solo puede agregar letras (con acentos)." value="{{$roles[0]->name}}" required>
                             <label for="rol">Rol De Usuario</label>
-                        </div> -->
-                        <div class="input-field col m6 s12">
+                        </div>
+                        <!--<div class="input-field col m6 s12">
                             <i class="icon-recent_actors prefix"></i>
                             <select  name="roles" id="roles"  required>
                                 <option value="null" disabled selected>Selecciona rol</option>
@@ -65,25 +68,21 @@
                                 @endforeach
                             </select>
                             <label for="roles">Rol Usuario</label>
-                        </div>
+                        </div>-->
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                    data-tooltip="Ej: correo@mail.com">
+                            <i class="icon-mail_outline prefix"></i>
                             <input id="emailEdit" type="text" name="emailEdit" readonly class="validate"
                                    value="{{ $user->email }}" required>
                             <label for="emailEdit">E-mail</label>
                         </div>
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                             data-tooltip="Ej: correo@mail.com">
-                            <input id="passwordEdit" type="password" name="passwordEdit" readonly class="validate"
-                                   value="{{ $user->email }}" required>
-                            <label for="passwordEdit">Password</label>
-                        </div>
 
                     </div>
-                    <div class="card-footer center">
+                    <!--<div class="card-footer center">
                         <button type="submit" id="actualizar" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
-                        <!--<button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>-->
+                        <!--<button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
                     </div>
+                        -->
                 </form>
             </div>
         </div>

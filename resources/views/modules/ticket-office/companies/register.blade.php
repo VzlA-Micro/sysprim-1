@@ -212,7 +212,7 @@
                             </div>
                         </div>
                         <div class="card-footer center">
-                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">
+                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-company">
                                 <i class="icon-send right"></i>
                                 Registar
                             </button>

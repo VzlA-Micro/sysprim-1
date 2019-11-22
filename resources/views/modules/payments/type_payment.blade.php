@@ -32,9 +32,9 @@
 
 
             <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white indigo-text">
+                <a href="{{route('ticket-office.pay.web')}}" class="btn-app white indigo-text">
                     <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Pagos Web</span>
+                    <span class="truncate">Planillas Web</span>
                 </a>
             </div>
 

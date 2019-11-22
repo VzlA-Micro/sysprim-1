@@ -248,7 +248,7 @@ $(document).ready(function () {
                         }).then(function (accept) {
                             $('#amount_total').val('');
                             if ($('#company_id').val() !== '') {
-                                window.open(url + '/ticket-office/pdf/taxes/' + $('#taxes_id').val(), "RECIBO DE PAGO", "width=500, height=600")
+                                window.open(url + 'ticket-office/pdf/taxes/' + $('#taxes_id').val(), "RECIBO DE PAGO", "width=500, height=600")
                             }
                             location.reload();
                         });
@@ -381,11 +381,6 @@ $(document).ready(function () {
         $('#register-taxes')[0].reset();
 
     }
-
-
-
-
-
 
 
 
@@ -901,7 +896,7 @@ $(document).ready(function () {
             var nationality = $('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: url + "/ticket-office/find/user/" + nationality + ci,
+                url: url + "ticket-office/find/user/" + nationality + ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -945,7 +940,7 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeOut('fast');
                 },
                 error: function (err) {
-                    console.log(rr)
+                    console.log(err);
 
 
                     $("#preloader").fadeOut('fast');
@@ -1021,7 +1016,7 @@ $(document).ready(function () {
                if (aceptar) {
                    localStorage.removeItem('bank');
                    localStorage.removeItem('lot');
-                   location.href=url+'payments/read';
+                   location.href=url+'ticket-office/payments';
                }
            });
 

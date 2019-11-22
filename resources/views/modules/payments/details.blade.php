@@ -137,6 +137,8 @@
                             </div>
 
                         </div>
+
+                        @if(\Auth::user()->role_id===1)
                         <div class="row">
                             <div class="input-field col s12">
                                 <a href="#"  class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile" data-status="cancel">
@@ -154,6 +156,8 @@
 
                             </div>
                         </div>
+
+                        @endif
                         <div class="card-footer center">
 
 

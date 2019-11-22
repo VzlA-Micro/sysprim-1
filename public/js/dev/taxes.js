@@ -265,6 +265,9 @@ $(document).ready(function () {
 
 
     $('#div-send').click(function () {
+        $("#preloader").fadeIn('fast');
+        $("#preloader-overlay").fadeIn('fast');
+
         $('#form-payment')[0].submit()
     });
 
@@ -327,6 +330,9 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
 
 
 });

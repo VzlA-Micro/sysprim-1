@@ -144,6 +144,9 @@ $(document).ready(function () {
 
     $('#company-register').on('submit', function (e) {
         e.preventDefault();
+
+
+
         if ($('#lat').val() !== "") {
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
                 if ($('#ciu').val() !== undefined) {
@@ -158,6 +161,7 @@ $(document).ready(function () {
                         beforeSend: function () {
                             $("#preloader").fadeIn('fast');
                             $("#preloader-overlay").fadeIn('fast');
+                            $('#button-company').attr('disabled','disabled');
                         },
                         success: function (response) {
                             swal({
@@ -171,9 +175,10 @@ $(document).ready(function () {
 
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
-
+                            $('#button-company').removeAttr('disabled','');
                         },
                         error: function (err) {
+                            $('#button-company').removeAttr('disabled','');
                             console.log(err);
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
@@ -322,10 +327,13 @@ $(document).ready(function () {
                 type: "GET",
                 url: url + "ciu/find/" + code,
                 beforeSend: function () {
+                    $('#search-ciu').attr('disabled','disabled');
+
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+                    $('#search-ciu').removeAttr('disabled','');
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
@@ -397,6 +405,7 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
+                    $('#search-ciu').removeAttr('disabled','');
                     console.log(err);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -420,6 +429,8 @@ $(document).ready(function () {
 
 
         $('#company-register-ticket').submit(function (e) {
+
+
             e.preventDefault();
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
                 $.ajax({
@@ -433,6 +444,7 @@ $(document).ready(function () {
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
+                        $('#button-company').attr('disabled','disabled');
                     },
                     success: function (response) {
                         swal({
@@ -443,12 +455,13 @@ $(document).ready(function () {
                         }).then(function (accept) {
                             window.location.href = url + "ticketOffice/companies/all";
                         });
-
+                        $('#button-company').removeAttr('disabled','');
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
 
                     },
                     error: function (err) {
+                        $('#button-company').removeAttr('disabled','');
                         console.log(err);
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');

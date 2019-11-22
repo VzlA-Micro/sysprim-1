@@ -80,7 +80,7 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
-                        console.log(rr)
+                        console.log(err);
 
 
                     $("#preloader").fadeOut('fast');

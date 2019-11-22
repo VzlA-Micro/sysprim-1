@@ -1,8 +1,13 @@
 $(window).on("load", function () {
+
+
     $("#preloader").fadeOut("fast");
     $("#preloader-overlay").fadeOut("fast");
 });
 $(document).ready(function() {
+
+
+
     $(".dropdown-trigger").dropdown({
         coverTrigger: false,
         constrainWidth: false,
