@@ -4,7 +4,7 @@
     <main>
         <div id="map" style="width:100%; height: 600px; margin-top:2px"></div>
         <div class="col m6">
-        <div class="fixed-action-btn">
+        <div class="fixed-action-btn left">
   			<a class="btn-floating btn-large red" id="refresh">
   				<i class="icon-refresh"></i>
   			</a>

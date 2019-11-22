@@ -36,7 +36,7 @@
                                 <label for="nationality">Nacionalidad</label>
                             </div>
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <input id="ci" type="text" name="ci" maxlength="8" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">

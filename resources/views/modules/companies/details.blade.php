@@ -31,18 +31,18 @@
                     </div>
                     <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
-                            <div class="col s12 m6 center-align">
+                            <div class="col s12 center-align">
                                 <a href="{{ route('companies.edit', ['id' => $company->id]) }}" class="btn blue btn-rounded waves-light">
                                     Más Detalles
                                     <i class="icon-more_horiz right"></i>
                                 </a>
                             </div>
-                           <div class="col s12 m6 center-align">
+                           {{-- <div class="col s12 m6 center-align">
                                 <a href="" class="btn green btn-rounded waves-light col s12">
                                     Descargar Carnet
                                     <i class="icon-perm_contact_calendar right"></i>
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

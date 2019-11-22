@@ -1145,6 +1145,9 @@ class DashboardController extends Controller
         }
 
         $increment = $totalCollection - $acum;
+        if($increment<0){
+            $increment=0;
+        }
 
         $dearTaxesCompany = array(
             'taxes' => 'Actividad Economica',

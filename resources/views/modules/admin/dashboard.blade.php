@@ -183,7 +183,7 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <table>
+                            <table class="responsive-table">
                                 <thead>
                                 <tr>
                                     <th>Impuesto</th>

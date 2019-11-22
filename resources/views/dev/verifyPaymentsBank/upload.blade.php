@@ -6,7 +6,7 @@
             <div class="col s12 m8 offest-m2 l4 offset-l4">
                 <form id="verifyPaymentsBank" method="post" action="{{route('saveFileBank')}}" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>Cargar Estados de cuenta</h5>
+                        <h5>Cargar Archivo</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
