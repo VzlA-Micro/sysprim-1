@@ -25,7 +25,7 @@
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="user_id" value="" id="user_id">
-                            <div class="input-field col s4 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
                                 <i class="icon-public prefix"></i>
                                 <select name="nationality" id="nationality" required>
                                     <option value="null" selected disabled>...</option>
@@ -140,7 +140,7 @@
                                 <input type="text" name="code_catastral" id="code_catastral" class="validate company-validate" data-validate="Código Catastral" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas."  required>
                                 <label for="code_catastral">Código Catastral</label>
                             </div>
-                            <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
                                 <i class="icon-phone_android prefix"></i>
                                 <select name="country_code_company" id="country_code_company" required>
                                     <option value="null" disabled selected>...</option>
@@ -153,7 +153,7 @@
                                 </select>
                                 <label for="country_code_company">Operadora</label>
                             </div>
-                            <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                                 <label for="phone_company">Teléfono</label>
                                 <input id="phone_company" type="tel" name="phone_company"  data-validate="Teléfono" class="validate company-validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                             </div>
@@ -193,7 +193,7 @@
                     </div>
                     <div id="map-tab">
                         <div class="card-header center-align">
-                            <h4>Representante Legal</h4>
+                            <h4>Ubicación</h4>
                         </div>
                         <div class="card-content row">
                             <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">

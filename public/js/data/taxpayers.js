@@ -164,7 +164,7 @@ $(document).ready(function () {
     }
 
 
-    $('#register').on('submit', function (e) {
+    $('#register').submit(function (e) {
         e.preventDefault();
         $.ajax({
             url: url + "taxpayers/save",
@@ -209,10 +209,10 @@ $(document).ready(function () {
     });
 
     $('#btn-edit').click(function () {
+        $(this).hide();
         $('#phone').removeAttr('disabled');
         $('#email').removeAttr('disabled');
-        $(this).hide();
-        $('#btn-update').removeClass('hide');
+        $('#btn-update').show();
     });
 
     $('#btn-reset-password').click(function() {
@@ -294,11 +294,8 @@ $(document).ready(function () {
         }); 
     });
 
-    var statusBoton = false;
-
-        $('#update').on('submit', function (e) {
+        $('#update').submit(function (e) {
             e.preventDefault();
-            if (statusBoton==true){
                 $.ajax({
                     url: url + "taxpayers/update",
                     cache: false,
@@ -339,16 +336,6 @@ $(document).ready(function () {
                         });
                     }
                 });
-            }
-
-            if (statusBoton == false) {
-                $('#phone').removeAttr('readonly');
-                $('#emailEdit').removeAttr('readonly');
-                $('#passwordEdit').removeAttr('readonly');
-                $('#rol').attr('readonly','disabled');
-                statusBoton=true;
-            }
-
         });
 
 

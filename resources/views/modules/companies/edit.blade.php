@@ -130,7 +130,7 @@
                         @foreach($company->ciu as $ciu)
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
-                            <input type="text" name="code" id="code" class="validate number-only" pattern="[0-9]+" value="{{ $ciu->code }}" disabled="">
+                            <input type="text" name="code" id="code" maxlength="6" class="validate number-only" pattern="[0-9]+" value="{{ $ciu->code }}" disabled="">
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
