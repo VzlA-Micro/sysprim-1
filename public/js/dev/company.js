@@ -335,13 +335,13 @@ $(document).ready(function () {
                                     <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >
                                     <label>CIIU</label>
                                 </div>
-                                <div class="input-field col s10 m6"  >
+                                <div class="input-field col s10 m5"  >
                                     <i class="icon-text_fields prefix"></i>
                                     <label for="phone">Nombre</label>
                                      <textarea name="name-ciu" id="${subr}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
                                 </div>
 
-                                <div class="input-field col s12 m1">
+                                <div class="input-field col s12 m2">
                                     <button  class="btn waves-effect waves-light peach col s12 delete-ciu"><i class="icon-close"></i>
                                     </button>
                                 </div>

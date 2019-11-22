@@ -92,7 +92,7 @@
         $('#history').DataTable({
             responsive: true,
             "scrollX": true,
-            "pageLength": 2,
+            "pageLength": 10,
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -107,8 +107,8 @@
                 "sInfoThousands":  ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":     "Último",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
                     "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },

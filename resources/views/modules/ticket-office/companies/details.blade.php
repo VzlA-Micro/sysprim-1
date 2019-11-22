@@ -23,7 +23,7 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" name="id" name="id" value="{{ $company->id }}">
-                        <div class="input-field col s4 m3">
+                        <div class="input-field col s6 m3">
                             <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
                             <select name="document_type" id="document_type" disabled>
                                 <option value="null" selected disabled>...</option>
@@ -34,7 +34,7 @@
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
-                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                             <input type="text" name="RIF" id="RIF" value="{{$company->document}}" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required readonly>
                             <label for="RIF">RIF</label>
                         </div>
@@ -80,7 +80,7 @@
                             <input type="text" name="code_catastral" id="code_catastral" class="validate" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." value="{{ $company->code_catastral }}" disabled required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
-                        <div class="input-field col s4 m3">
+                        <div class="input-field col s6 m3">
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
                             <select name="country_code" id="country_code_company" required disabled>
                                 <option value="null" selected disabled>...</option>
@@ -93,7 +93,7 @@
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>
-                        <div class="input-field col s8 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" value="{{ $company->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
                         </div>
@@ -156,12 +156,20 @@
 
 
             <div class="col m4">
-                <form action="#" id="form-user" method="post" class="card">
+                <form action="#" id="form-user" method="post" class="card testimonial-card">
                     <div class="card-header center-align">
                         <h5>CONSTRIBUYENTE</h5>
                     </div>
+                    <div class="card-up"></div>
+                    <div class="avatar avatar-centered">
+                        @if (Storage::disk('users')->has($company->users[0]->image))
+                        <img src="{{ route('users.getImage', ['filename' => $company->users[0]->image]) }}" alt="" class="circle responsive-img">
+                        @else
+                        <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                        @endif
+                    </div>
                     <div class="card-content row">
-                        <div class="input-field col s4 m4 tooltipped" data-position="bottom"
+                        <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="V: Venezolano; E: Extrangero">
                             <i class="icon-public prefix"></i>
                             <select name="nationality" id="nationality" required disabled>
@@ -171,7 +179,7 @@
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
-                        <div class="input-field col s8 m8 tooltipped" data-position="bottom"
+                        <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
                             <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
                                    title="Solo puede escribir números." required value="{{$company->users[0]->document }}"
@@ -196,7 +204,7 @@
                                    value="{{$company->users[0]->surname}}" required readonly>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s4 m3">
+                        <div class="input-field col s6 >
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
                             <select name="country_code" id="country_code_company" required disabled>
                                 <option value="null" selected disabled>...</option>
@@ -209,7 +217,7 @@
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>
-                        <div class="input-field col s8 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                        <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" value="{{ $company->users[0]->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
                         </div>
@@ -236,7 +244,7 @@
                         <h5>Historial de Pagos</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered highlight responsive-table" id="history" style="width: 100%">
+                        <table class="centered highlight" id="history" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Código</th>
