@@ -70,7 +70,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/alcaldia_logo.png') }}" alt="" srcset="">                    
+                    <img src="{{ asset('images/semat.png') }}" alt="" srcset="">                    
                 </a>
             </li>
             @guest
