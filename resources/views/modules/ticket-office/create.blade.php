@@ -214,7 +214,7 @@
                                             <div class="input-field col s12 m6 ">
                                                 <i class="icon-confirmation_number prefix "></i>
                                                 <input type="text" name="ref" id="ref" value="" class="validate"
-                                                       required minlength="10" maxlength="10">
+                                                       required minlength="5" maxlength="10">
                                                 <label for="ref">Referencia</label>
                                             </div>
 
