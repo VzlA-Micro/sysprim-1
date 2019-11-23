@@ -105,6 +105,7 @@ Route::get('/companies/manage', function () {
 Route::get('/company/edit/{id}','CompaniesController@edit');
 Route::post('/company/update','CompaniesController@update')->name('companies.update');
 Route::get('/company/verify/{id}','CompaniesController@verifyTaxes');
+Route::post('/company/addCiiu','Companiescontroller@addCiiu')->name('companies.addCiiu');
 
 
 // Companies taquillero
