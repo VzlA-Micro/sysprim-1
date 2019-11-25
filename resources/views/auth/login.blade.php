@@ -56,7 +56,7 @@
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>
-                            <img src="{{ asset('images/iribarren_logo.png') }}" class="responsive-img" alt="" srcset="">                    
+                            <img src="{{ asset('images/semat.png') }}" class="responsive-img" alt="" srcset="">                    
                             
                         </h5>
                     </div>

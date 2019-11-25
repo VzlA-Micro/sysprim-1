@@ -28,6 +28,7 @@ class CreateCompanyTable extends Migration
             $table->string('phone',15)->nullable();
             $table->string('image',255)->nullable();
             $table->integer('parish_id')->unsigned();
+            $table->string('status',10)->nullable();
             $table->foreign('parish_id')->references('id')->on('parish');
             $table->timestamps();
         });

@@ -141,11 +141,8 @@ $(document).ready(function () {
         }
     });
 
-
     $('#company-register').on('submit', function (e) {
         e.preventDefault();
-
-
 
         if ($('#lat').val() !== "") {
             if ($('#sector').val() !== null && $('#parish').val() !== null) {

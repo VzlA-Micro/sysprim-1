@@ -1,10 +1,12 @@
-var url="http://sysprim.com.devel/";
+var url = "http://sysprim.com.devel/";
+var addCiiu = false;
 $('document').ready(function () {
+
     $('#update-company').on('click', function () {
 
         $('#document_type').prop("disabled", false);
         $('select').formSelect();
-        $('#RIF').removeAttr('disabled');
+        $('#RIF').removeAttr('readonly');
         $('#name').removeAttr('readonly');
         $('#license').removeAttr('readonly');
         $('#opening_date').removeAttr('disabled');
@@ -18,17 +20,46 @@ $('document').ready(function () {
         $('#address').removeAttr('disabled');
         $('#phone').removeAttr('disabled');
     });
-    $('#add-ciiu').on('click', function () {
+    if (addCiiu == false) {
+        $('#add-ciiu').on('click', function () {
 
-        $('#code').prop("disabled", false);
-        $('#search-ciu').removeAttr('disabled');
+            $('#code').prop("disabled", false);
+            $('#search-ciu').removeAttr('disabled');
+            $('#code').focus();
+            addCiiu = true;
 
+        });
+    }
+if (addCiiu==true){
+        $('#add-ciiu').on('click', function () {
+        console.log('else')
+        var ciu = $('#ciu').val();
+        var id = $('#id');
+        $.ajax({
+            type: "POST",
+            url: url + "company/addCiiu",
+            data: {
+                id: id,
+                ciu: ciu
+            },
+            dataType:"JSON",
+
+            beforeSend:function () {
+                console.log('hola');
+            },
+            success:function (data) {
+                console.log(data);
+            },
+            error:function (e) {
+                console.log(e);
+            }
+
+        });
     });
-
+}
 
     $('#search-ciu').click(function () {
         var code = $('#code').val();
-
 
         var band = true;
         if (code !== "") {
@@ -40,7 +71,6 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    console.log(response);
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
@@ -63,7 +93,6 @@ $('document').ready(function () {
                             </div>
                         `;
 
-
                         if ($('.ciu').val() !== undefined) {
                             $('.ciu').each(function (index, value) {
                                 if ($(this).val() == response.ciu.id) {
@@ -79,12 +108,10 @@ $('document').ready(function () {
 
                             });
 
-
                             if (band) {
                                 $('#group-ciu').append(template);
                                 confirmCiu();
                             }
-
 
                         } else {
                             $('#group-ciu').append(template);

@@ -107,7 +107,7 @@ class CompaniesController extends Controller
 
         $company->save();
 
-        $id = DB::getPdo()->lastInsertId();
+        $id = $company->id;
 
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
         foreach ($ciu as $ciu) {
@@ -304,6 +304,19 @@ class CompaniesController extends Controller
             $response=array('status'=>'error','message'=>'No encontrado');
         }
         return response()->json($response);
+    }
+
+    public function addCiiu(Request $request)
+    {
+        $ciu=$request->input('ciu');
+        $id=$request->input('id');
+
+        var_dump($ciu);
+        die();
+
+        foreach ($ciu as $value){
+
+        }
     }
 
 

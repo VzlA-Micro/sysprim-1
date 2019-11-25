@@ -26,7 +26,7 @@ class VerifyPaymentsBankImportController extends Controller
 {
 
     public function importFile(Request $request)
-    {
+    { /*
 
         $amountInterest=0;//total de intereses
         $amountRecargo=0;//total de recargos
@@ -103,7 +103,7 @@ class VerifyPaymentsBankImportController extends Controller
 
                     $carbon = Carbon::now();
                     $taxes = Taxe::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-                    foreach ($taxes as $taxe) {
+                   foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
@@ -111,39 +111,23 @@ class VerifyPaymentsBankImportController extends Controller
                             if($pCode=='ppc'){
 
                             }else{
+
                                 $company=Company::find($taxe->company_id);
                                 $taxes=Taxe::findOrFail($taxe->id);
+
+                              $taxes=Taxe::findOrFail($taxe->id);
 
                             $ciuTaxes=CiuTaxes::where('taxe_id',$taxe->id)->get();
                             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
                             $mora=Extras::orderBy('id', 'desc')->take(1)->get();
                             $extra=['tasa'=>$mora[0]->tax_rate];
 
+
                             foreach ($ciuTaxes as $ciu){
                                 $amountInterest+=$ciu->interest;
                                 $amountRecargo+=$ciu->tax_rate;
 
-                                if($company->typeCompany==='R'){
-                                    $amountCiiu+=$ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits;
-                                }else{
-                                    $amountCiiu+=$ciu->totalCiiu-$ciu->withholding-$ciu->fiscal_credits-$ciu->dedutions;
-                                }
-                            }
 
-                            $amountTaxes=$amountInterest+$amountRecargo+$amountCiiu;//Total
-
-
-
-
-                            //si tiene descuento
-
-
-                            $amount=['amountInterest'=>$amountInterest,
-                                'amountRecargo'=>$amountRecargo,
-                                'amountCiiu'=>$amountCiiu,
-                                'amountTotal'=>$amountTaxes,
-                                'amountDesc'=>$amountDesc
-                            ];
 
 
                             $pdf = \PDF::loadView('modules.taxes.receipt',[
@@ -178,6 +162,7 @@ class VerifyPaymentsBankImportController extends Controller
             }
             fclose($arch);
         }
+                   */
     }
 
     public function verifyPayments()
