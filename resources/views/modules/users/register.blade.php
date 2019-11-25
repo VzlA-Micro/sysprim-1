@@ -79,7 +79,7 @@
                             <select  name="role" id="role" required>
                                 <option value="null" disabled selected>Selecciona rol</option>
                                 @foreach($Role as $rol):
-                                <option value="{{$rol->id }}">{{ $rol->name}}</option>
+                                    <option value="{{$rol->id }}">{{ $rol->name}}</option>
                                 @endforeach
                             </select>
                             <label>Rol Usuario</label>

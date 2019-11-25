@@ -105,13 +105,12 @@
                         <div class="card-header center-align">
                             <h4>DETALLES DE DECLARACIÓN </h4>
                         </div>
-                        <div class="card-content row" id="details">
+                        <div class="card-content" id="details">
                             @csrf
                             <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
 
 
                             <div id="ciu">
-
 
                             </div>
                         <!-- <div class="input-field col s12 m2">
@@ -214,8 +213,8 @@
                                             <div class="input-field col s12 m6 ">
                                                 <i class="icon-confirmation_number prefix "></i>
                                                 <input type="text" name="ref" id="ref" value="" class="validate"
-                                                       required minlength="5" maxlength="10">
-                                                <label for="ref">Referencia</label>
+                                                       required minlength="3" maxlength="10">
+                                                <label for="ref">Terminal</label>
                                             </div>
 
 
@@ -367,7 +366,7 @@
 
                                     </div>
                                 </li>
-                                @endif
+                            @endif
                         </ul>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ class UserController extends Controller{
     public function verifyCi($ci){
         $user=User::where('ci', $ci)->get();
         if(!$user->isEmpty()){
-            $response=array('status'=>'error','message'=>'Esta cedula ya existe en el sistema. Por favor, ingresa una cedula valida.');
+            $response=array('status'=>'error','message'=>'Esta cedula ya existe en el sistema. Ingrese una cedula valida.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
@@ -97,12 +97,10 @@ class UserController extends Controller{
     public function edit($id)
     {
         $user = User::find($id);
-        $role = Role::where('id',$user->role_id)->get();
-
-
+        $role = Role::all();
         return view('modules.users.edit',array(
             'user'=>$user,
-            'roles'=>$role
+            'Role'=>$role
         ));
     }
 
@@ -133,10 +131,10 @@ class UserController extends Controller{
         $role= $request->input('roles');
         $email= $request->input('emailEdit');
         $password=Hash::make($request->input('passwordEdit'));
-
         $user=User::find($id);
 
         $user->phone=$phone;
+
         $user->role_id=$role;
         $user->email=$email;
         $user->password=$password;
@@ -163,7 +161,7 @@ class UserController extends Controller{
     }
 
     public function showTaxpayer() {
-        $users = User::where('role_id',3)->get();
+        $users = User::all();
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));
@@ -171,6 +169,7 @@ class UserController extends Controller{
 
     public function detailsTaxpayer($id) {
         $user = User::find($id);
+
         return view('modules.taxpayers.details', array(
             'user' => $user
         ));
@@ -245,5 +244,19 @@ class UserController extends Controller{
             }
             $user->update();
         }
+    }
+
+    public function enableDisableAccount($id,$status){
+        $user=User::find($id);
+        if($status==='enabled'){
+            $user->confirmed=1;
+            $user->status_account='authorized';
+        }else{
+            $user->status_account='block';
+        }
+
+
+        $user->update();
+        return response()->json(['status',$status]);
     }
 }

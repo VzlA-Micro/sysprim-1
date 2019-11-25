@@ -37,10 +37,10 @@
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
-                                        @if(\Auth::user()->confirmed == 1)
-                                        <i class="icon-check green-text" style="font-size: 20px"></i>
+                                        @if($user->confirmed == 1)
+                                      Verificado <i class="icon-check green-text" style="font-size: 20px"></i>
                                         @else
-                                        <i class="icon-close red-text" style="font-size: 20px"></i>
+                                        Sin Verificar<i class="icon-close red-text" style="font-size: 20px"></i>
                                         @endif
                                     </td>
                                     <td>

@@ -111,13 +111,14 @@ class VerifyPaymentsBankImportController extends Controller
                             if($pCode=='ppc'){
 
                             }else{
-                            $company = Company::find($taxe->company_id);
-                            $taxes=Taxe::findOrFail($taxe->id);
+                                $company=Company::find($taxe->company_id);
+                                $taxes=Taxe::findOrFail($taxe->id);
 
                             $ciuTaxes=CiuTaxes::where('taxe_id',$taxe->id)->get();
                             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
                             $mora=Extras::orderBy('id', 'desc')->take(1)->get();
                             $extra=['tasa'=>$mora[0]->tax_rate];
+
                             foreach ($ciuTaxes as $ciu){
                                 $amountInterest+=$ciu->interest;
                                 $amountRecargo+=$ciu->tax_rate;

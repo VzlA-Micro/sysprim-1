@@ -54,6 +54,13 @@ Route::get('/users/register', function() {
     return view('modules.users.register');
 })->name('users.register');
 
+
+Route::get('/users/account/{id}/{status}','UserController@enableDisableAccount');
+
+
+
+
+
 Route::get('/users/read',array(
     'as'=>'userRead',
     'uses'=>'UserController@show'
