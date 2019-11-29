@@ -139,7 +139,7 @@
                                             <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                             <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
                                             <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-payment left"></i>Gestionar Contribuyente</a></li>
-                                            <!--<li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
+                                            <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
                                         </ul>
                                     </div>
                                 </li>
@@ -159,7 +159,7 @@
                                             <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
                                             <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                             <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
-                                        <!--<li><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
+                                        <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
                                             <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-person left"></i>Gestionar Contribuyente</a></li>
                                         </ul>
                                     </div>
@@ -169,8 +169,8 @@
                     @endif
                     @if (\Auth::user()->role_id == 3)
                         <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
-                        {{-- <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
-                        {{-- <li class="waves-efect waves-light"><a href="{{ route('inmueble.my-property') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
+                        {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
+                        {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
                         <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
                     @endif
                     <li class="divider hide-on-large-only"></li>

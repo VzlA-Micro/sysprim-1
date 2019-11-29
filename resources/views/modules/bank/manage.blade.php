@@ -7,9 +7,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('payments.verify.manage') }}" class="breadcrumb">Verificación de Pagos</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Verificación de Pagos</a></li>
+                </ul>
             </div>
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('bank.upload') }}" class="btn-app white amber-text">
@@ -17,12 +19,12 @@
                     <span class="truncate">Cargar Pagos</span>
                 </a>
             </div>
-            <!-- <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white indigo-text">
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('bank.read') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
-                    <span class="truncate">Ver ???</span>
+                    <span class="truncate">Ver Pagos Verificados</span>
                 </a>
-            </div> -->
+            </div>
         </div>
     </div>
 @endsection

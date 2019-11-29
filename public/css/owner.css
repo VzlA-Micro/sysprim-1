@@ -332,60 +332,112 @@ button.btn-app:hover {
   color: #444444 !important;
 }
 
-nav .breadcrumb-nav,
+/* nav .breadcrumb-nav,
 nav.breadcrumb-nav,
 .breadcrumb-nav {
-  background-color: transparent;
-  width: 100%;
-  height: 44px !important;
-  padding: 10px !important;
-  border-radius: 2px;
-  margin-top: 1rem !important;
-  margin-bottom: 0.2rem !important;
+    background-color: transparent;
+    width: 100%;
+    height: 44px !important;
+    padding: 10px !important;
+    border-radius: 2px;
+    margin-top: 1rem !important;
+    margin-bottom: 0.2rem !important;
 }
 
 .breadcrumb {
+    font-size: 16px;
+    color: #666666;
+    display: inline-block;
+
+    &:hover {
+        color: #444444 !important;
+    }
+
+    & i, 
+    & [class^=mdi-],
+    & [class*=mdi-],
+    & [class^=icon-],
+    & [class*=icon-],
+    & i.material-icons {
+        display: inline-block;
+        float: left;
+        font-size: 16px;
+    }
+
+    &:before {
+        content: "" !important;
+        color: #666666;
+        vertical-align: top;
+        display: inline-block;
+        font-family: "icomaterialize" !important;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 18px;
+        margin: 0 10px 0 8px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &:first-child:before {
+        display: none;
+    }
+
+    &:last-child {
+        color: #333333;
+        font-weight: bold;
+        cursor: default;
+    }
+}
+ */
+ul.breadcrumb {
   font-size: 16px;
-  color: #666666;
+  width: 100%;
+  list-style: none;
+  margin: 0.4rem 0;
+  padding: 10px 0 !important;
+  border-radius: 2px;
+  background-color: transparent;
+  margin-top: 0.5rem !important;
+}
+ul.breadcrumb .breadcrumb-item {
+  color: #333333;
   display: inline-block;
+  margin: 0;
+  padding: 0.2rem 0;
 }
-.breadcrumb:hover {
-  color: #444444 !important;
-}
-.breadcrumb i, .breadcrumb [class^=mdi-], .breadcrumb [class*=mdi-], .breadcrumb [class^=icon-], .breadcrumb [class*=icon-], .breadcrumb i.material-icons {
+ul.breadcrumb .breadcrumb-item i, ul.breadcrumb .breadcrumb-item [class^=mdi-], ul.breadcrumb .breadcrumb-item [class*=mdi-], ul.breadcrumb .breadcrumb-item [class^=icon-], ul.breadcrumb .breadcrumb-item [class*=icon-], ul.breadcrumb .breadcrumb-item i.material-icons {
   display: inline-block;
   float: left;
-  font-size: 16px;
-}
-.breadcrumb:before {
-  content: "" !important;
-  color: #666666;
+  font-size: 20px;
   vertical-align: top;
-  display: inline-block;
-  font-family: "icomaterialize" !important;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 18px;
-  margin: 0 10px 0 8px;
-  -webkit-font-smoothing: antialiased;
+  line-height: 22px;
+  margin-right: 5px;
 }
-.breadcrumb:first-child:before {
-  display: none;
+ul.breadcrumb .breadcrumb-item:hover {
+  color: #444444 !important;
+  font-weight: bold;
 }
-.breadcrumb:last-child {
+ul.breadcrumb .breadcrumb-item:last-child a {
   color: #333333;
   font-weight: bold;
   cursor: default;
 }
-
-@media only screen and (max-width: 992px) {
-  .breadcrumb:last-child {
-    color: #333333;
-    font-weight: bold;
-    cursor: default;
-    margin-bottom: 2rem;
-  }
+ul.breadcrumb .breadcrumb-item:not(:last-child) {
+  margin-right: 0.5rem;
 }
+ul.breadcrumb .breadcrumb-item:not(:last-child) a {
+  color: #333333 !important;
+}
+ul.breadcrumb .breadcrumb-item:not(:first-child)::before {
+  color: #333333;
+  content: "" !important;
+  padding-right: 0.5rem;
+  vertical-align: top;
+  font-family: "icomaterialize" !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+}
+
 input:not([type]),
 input[type=text]:focus:not(.browser-default),
 input[type=password]:focus:not(.browser-default),

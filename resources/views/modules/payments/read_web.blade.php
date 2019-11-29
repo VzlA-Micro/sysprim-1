@@ -10,10 +10,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="{{ route('payments.manage') }}" class="breadcrumb">Gestionar Pagos</a>
-                <a href="#!" class="breadcrumb">Ver Pagos</a>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.payment') }}">Ver Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas Web</a></li>
+                </ul>
             </div>
 
             <div class="col s12">

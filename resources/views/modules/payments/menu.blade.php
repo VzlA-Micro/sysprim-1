@@ -3,15 +3,16 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
-                {{-- <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ $company->name }}</a> --}}
-                <a href="" class="breadcrumb">{{ session('company') }}</a>
-                <a href="!#" class="breadcrumb">Mis Declaraciones</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
+                </ul>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{route('payments.create',['company'=>session('company')])}}" class="btn-app white green-text">
+                <a href="{{ route('payments.create',['company'=>session('company')]) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
                     <span class="truncate">Declarar mi Actividad Económica</span>
                 </a>

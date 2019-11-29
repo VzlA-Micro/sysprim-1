@@ -3,13 +3,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
-                <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="breadcrumb">{{ $company->name }}</a>
-                <a href="#!" class="breadcrumb">Modificar</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ $company->name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.edit', ['id' => $company->id]) }}">Editar</a></li>
+                </ul>
             </div>
-            <div class="col s12 m8 l8 offset-m3 offset-l2">
+            <div class="col s12 m12 l10 offset-l1">
                 <form action="{{ route('companies.update') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Editar datos de mi empresa</h5>

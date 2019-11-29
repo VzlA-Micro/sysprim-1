@@ -7,8 +7,11 @@
     @include('includes.petro-data')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="" class="breadcrumb">Estadísticas</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Estadísticas</a></li>
+                </ul>
             </div>
             <div class="col s12 m6" data-aos="zoom-in">
                 <div class="widget bootstrap-widget stats">
