@@ -20,6 +20,7 @@ class CreateCompanyCiuTable extends Migration
             $table->foreign('ciu_id')->references('id')->on('ciu');
             $table->foreign('company_id')->references('id')->on('company');
             $table->string('status',10)->nullable();
+            $table->timestamps();
         });
     }
 

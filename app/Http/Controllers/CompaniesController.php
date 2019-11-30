@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use App\UserCompany;
 use App\Payments;
 use App\FindCompany;
+use App\CiuCompany;
 use Alert;
 class CompaniesController extends Controller
 {
@@ -308,15 +309,18 @@ class CompaniesController extends Controller
 
     public function addCiiu(Request $request)
     {
+        $company= new CiuCompany();
         $ciu=$request->input('ciu');
         $id=$request->input('id');
 
-        var_dump($ciu);
-        die();
-
         foreach ($ciu as $value){
-
+            $company->ciu_id=$value;
+            $company->company_id=$id;
+            $company->save();
         }
+
+        return response()->json(true);
+
     }
 
 

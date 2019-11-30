@@ -1,9 +1,9 @@
 var url = "http://sysprim.com.devel/";
 var addCiiu = false;
+
 $('document').ready(function () {
 
     $('#update-company').on('click', function () {
-
         $('#document_type').prop("disabled", false);
         $('select').formSelect();
         $('#RIF').removeAttr('readonly');
@@ -20,43 +20,58 @@ $('document').ready(function () {
         $('#address').removeAttr('disabled');
         $('#phone').removeAttr('disabled');
     });
-    if (addCiiu == false) {
-        $('#add-ciiu').on('click', function () {
 
+    $('#add-ciiu').on('click', function () {
+        if (addCiiu == false) {
             $('#code').prop("disabled", false);
             $('#search-ciu').removeAttr('disabled');
             $('#code').focus();
             addCiiu = true;
+        } else {
+            console.log('else');
+            var ciu = [];
+            var id = $('#id').val();
 
-        });
-    }
-if (addCiiu==true){
-        $('#add-ciiu').on('click', function () {
-        console.log('else')
-        var ciu = $('#ciu').val();
-        var id = $('#id');
-        $.ajax({
-            type: "POST",
-            url: url + "company/addCiiu",
-            data: {
-                id: id,
-                ciu: ciu
-            },
-            dataType:"JSON",
+            console.log(id);
 
-            beforeSend:function () {
-                console.log('hola');
-            },
-            success:function (data) {
-                console.log(data);
-            },
-            error:function (e) {
-                console.log(e);
-            }
+            $('.ciu').each(function () {
+                ciu.push($(this).val());
+            });
+            $.ajax({
+                type: "POST",
+                url: url + "company/addCiiu",
+                data: {
+                    id: id,
+                    ciu: ciu
+                },
+                dataType: "JSON",
 
-        });
+                beforeSend: function () {
+                    console.log('hola');
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    $('#bDelete').remove();
+
+                    if (data == true) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Has Añadido Los Nuevos CIIU Con Exito",
+                            icon: "success",
+                            button: "Ok",
+                        });
+
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+
+            });
+        }
     });
-}
+
 
     $('#search-ciu').click(function () {
         var code = $('#code').val();
@@ -74,19 +89,19 @@ if (addCiiu==true){
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
-                                <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="${response.ciu.id}">
-                                <div class="input-field col s12 m5">
+                                <input type="hidden" name="ciuAdd[]" id="ciuAdd" class="ciu" value="${response.ciu.id}">
+                                <div class="input-field col s12 m4">
                                     <i class="icon-assignment prefix"></i>
                                     <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >
                                     <label>CIIU</label>
                                 </div>
-                                <div class="input-field col s10 m6"  >
+                                <div class="input-field col s10 m7"  >
                                     <i class="icon-text_fields prefix"></i>
                                     <label for="phone">Nombre</label>
                                      <textarea name="name-ciu" id="${subr}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
                                 </div>
 
-                                <div class="input-field col s12 m1">
+                                <div class="input-field col s12 m1" id="bDelete">
                                     <button  class="btn waves-effect waves-light peach col s12 delete-ciu"><i class="icon-close"></i>
                                     </button>
                                 </div>
@@ -133,10 +148,8 @@ if (addCiiu==true){
                         });
                     }
 
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-
                 },
                 error: function (err) {
                     console.log(err);
@@ -160,7 +173,6 @@ if (addCiiu==true){
         }
     });
 
-
     function confirmCiu() {
         swal({
             title: "¡Bien Hecho!",
@@ -172,7 +184,6 @@ if (addCiiu==true){
                     value: true,
                     visible: true,
                     className: "red"
-
                 },
                 cancel: {
                     text: "No",
@@ -181,25 +192,7 @@ if (addCiiu==true){
                     className: "grey lighten-2"
                 }
             }
-        }).then(function (aceptar) {
-            if (aceptar) {
-                $('#code').focus();
-                $('#code').val('');
-            } else {
-
-                if ($('#user-next').val() !== undefined) {
-                    $('ul.tabs').tabs();
-                    $('ul.tabs').tabs("select", "map-tab");
-
-                } else {
-                    var focalizar = $("div#div-map").position().top;
-                    $('html,body').animate({scrollTop: focalizar}, 1000);
-                }
-
-
-            }
-        });
-
+        }).then();
     }
 
     $('#delete-ciiu').on('click', function () {
@@ -282,10 +275,7 @@ window.onload = function () {
             $('#lng').val(marcadores[0].getPosition().lng());//coloca la marca
             $('#lat').val(marcadores[0].getPosition().lat);//a quien le coloco la multa
         }
-
     }
-
-
 }
 
 

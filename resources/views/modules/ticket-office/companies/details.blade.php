@@ -22,7 +22,7 @@
                     @endforeach
                     <div class="card-content row">
                         @csrf
-                        <input type="hidden" name="id" name="id" value="{{ $company->id }}">
+                        <input type="hidden" name="id" id="id" value="{{ $company->id }}">
                         <div class="input-field col s6 m3">
                             <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom"
                                data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
@@ -153,11 +153,8 @@
                                       required readonly>{{ $company->address }}</textarea>
                             <label for="address">Dirección</label>
                         </div>
-
                         <input id="lat" type="hidden" name="lat" value="{{ $company->lat }}">
                         <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">
-
-
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom"
                                data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
@@ -190,11 +187,8 @@
 
                         </div>
                     </div>
-
                 </form>
             </div>
-
-
             <div class="col m4">
                 <form action="#" id="form-user" method="post" class="card testimonial-card">
                     <div class="card-header center-align">
