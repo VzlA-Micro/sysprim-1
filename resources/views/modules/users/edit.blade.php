@@ -11,12 +11,12 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
-                    <li class="breadcrumb-item"><a href="">Ver Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.read') }}">Ver Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="">Detalles</a></li>
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
                 </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
 
 
 

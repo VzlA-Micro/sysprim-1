@@ -14,13 +14,13 @@
                 </ul>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('userRegister') }}" class="btn-app white amber-text">
+                <a href="{{ route('users.register') }}" class="btn-app white amber-text">
                     <i class="icon-person_add"></i>
                     <span class="truncate">Registrar Usuario</span>
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('userRead') }}" class="btn-app white indigo-text">
+                <a href="{{ route('users.read') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver Usuarios</span>
                 </a>

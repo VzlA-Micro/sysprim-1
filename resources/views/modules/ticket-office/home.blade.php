@@ -16,7 +16,7 @@
                 </a>
             </div>
              <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('inmueble.my-property') }}" class="btn-app white grey-text text-darken-2">
+                <a href="{{ route('properties.my-properties') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Taquilla</span>
                 </a>

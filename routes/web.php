@@ -33,15 +33,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // User module routes
-Route::get('/user/register',array(
-    'uses'=>'UserController@create',
-    'as'=>'userRegister'
-));
-
-Route::post('/user/save',array(
-    'uses'=>'UserController@store',
-    'as'=>'userSave'
-));
+Route::get('/users/register','UserController@create')->name('users.register');
+Route::post('/users/save', 'UserController@store')->name('users.save');
 
 Route::get('/users/verify/{code}','UserController@verify');
 Route::get('/profile', function() {
@@ -50,26 +43,14 @@ Route::get('/profile', function() {
 Route::get('/users/manage', function() {
     return view('modules.users.menu');
 })->name('users.manage');
-Route::get('/users/register', function() {
+/*Route::get('/users/register', function() {
     return view('modules.users.register');
-})->name('users.register');
+})->name('users.register');*/
 
 
 Route::get('/users/account/{id}/{status}','UserController@enableDisableAccount');
-
-
-
-
-
-Route::get('/users/read',array(
-    'as'=>'userRead',
-    'uses'=>'UserController@show'
-));
-
-Route::get('/users/details/{id}',array(
-    'as'=>'detailsUser',
-    'uses'=>'UserController@edit'
-));
+Route::get('/users/read','UserController@show')->name('users.read');
+Route::get('/users/details/{id}','UserController@edit')->name('users.details');
 
 Route::get('/users/editar/{id}',array(
     'as'=>'editarUser',

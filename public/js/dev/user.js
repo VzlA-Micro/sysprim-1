@@ -175,7 +175,7 @@ $(document).ready(function () {
         e.preventDefault();
         var formData = new FormData(this); // Creating FormData object.
         $.ajax({
-            url: url + "user/save",
+            url: url + "users/save",
             cache: false,
             contentType: false,
             processData: false,

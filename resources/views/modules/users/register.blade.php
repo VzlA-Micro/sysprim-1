@@ -11,10 +11,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
-                    <li class="breadcrumb-item"><a href="">Registrar Usuario</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.register') }}">Registrar Usuario</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
                 <form action="#" id="gestionUser" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Registrar Usuario</h5>

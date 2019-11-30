@@ -46,7 +46,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{url('/users/details/'.$user->id)}}" class="btn btn-floating orange waves-effect waves-light">
+                                        <a href="{{ route('users.details', ['id' => $user->id]) }}" class="btn btn-floating orange waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
