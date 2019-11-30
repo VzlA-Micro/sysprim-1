@@ -13,6 +13,7 @@ $(document).ready(function() {
         constrainWidth: false,
         alignment: 'right',
     });
+
     $('.sidenav').sidenav();
     $('select').formSelect();
     $('.collapsible').collapsible();

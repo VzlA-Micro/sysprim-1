@@ -8,11 +8,13 @@
     @php setlocale(LC_MONETARY, 'en_US');@endphp
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="#!" class="breadcrumb">Pagar Impuestos</a>
-
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.payments') }}">Pagar Impuestos</a></li>
+                </ul>
             </div>
             <div class="col s12">
                 <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
@@ -105,13 +107,12 @@
                         <div class="card-header center-align">
                             <h4>DETALLES DE DECLARACIÓN </h4>
                         </div>
-                        <div class="card-content row" id="details">
+                        <div class="card-content" id="details">
                             @csrf
                             <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
 
 
                             <div id="ciu">
-
 
                             </div>
                         <!-- <div class="input-field col s12 m2">
@@ -214,8 +215,8 @@
                                             <div class="input-field col s12 m6 ">
                                                 <i class="icon-confirmation_number prefix "></i>
                                                 <input type="text" name="ref" id="ref" value="" class="validate"
-                                                       required minlength="5" maxlength="10">
-                                                <label for="ref">Referencia</label>
+                                                       required minlength="3" maxlength="10">
+                                                <label for="ref">Terminal</label>
                                             </div>
 
 
@@ -367,7 +368,7 @@
 
                                     </div>
                                 </li>
-                                @endif
+                            @endif
                         </ul>
                     </div>
                 </div>

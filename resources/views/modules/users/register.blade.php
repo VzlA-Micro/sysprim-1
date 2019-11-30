@@ -7,12 +7,14 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('users.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
-                <a href="#!" class="breadcrumb">Registrar Usuario</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.register') }}">Registrar Usuario</a></li>
+                </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
                 <form action="#" id="gestionUser" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Registrar Usuario</h5>
@@ -79,7 +81,7 @@
                             <select  name="role" id="role" required>
                                 <option value="null" disabled selected>Selecciona rol</option>
                                 @foreach($Role as $rol):
-                                <option value="{{$rol->id }}">{{ $rol->name}}</option>
+                                    <option value="{{$rol->id }}">{{ $rol->name}}</option>
                                 @endforeach
                             </select>
                             <label>Rol Usuario</label>

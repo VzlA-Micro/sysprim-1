@@ -63,6 +63,7 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+                    console.log(response);
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
@@ -72,16 +73,32 @@ $(document).ready(function () {
                         });
 
                         $('#ci').addClass('invalid');
-                        $('#ci').val('');
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
-                    } else {
+                    } else if(response.status==='update'&&response.user[0].id!=$('#user_id').val()) {
+
+                        swal({
+                            title: "Información",
+                            text: "Esta cedula ya existe en el sistema. Por favor, ingresa una cedula valida.",
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $('#ci').addClass('invalid');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        $('#ci').val('');
+
+                    }else if (response.user[0].id==$('#user_id').val()){
+                        $('#ci').addClass('invalid');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }else if(response.status==='success'){
                         findUser(nationality, ci);
                     }
 
                 },
                 error: function (err) {
-                        console.log(err);
+                    console.log(err);
 
 
                     $("#preloader").fadeOut('fast');
@@ -120,7 +137,6 @@ $(document).ready(function () {
                         });
                     }
 
-                    $('#email').val('');
                 },
                 error: function (err) {
                     $("#preloader").fadeOut('fast');
@@ -175,7 +191,7 @@ $(document).ready(function () {
         e.preventDefault();
         var formData = new FormData(this); // Creating FormData object.
         $.ajax({
-            url: url + "users/save",
+            url: url + "user/save",
             cache: false,
             contentType: false,
             processData: false,
@@ -218,70 +234,69 @@ $(document).ready(function () {
 
 
     var statusBoton = false;
-        $('#userUpdate').on('submit', function (e) {
+    $('#userUpdate').on('submit', function (e) {
+        e.preventDefault();
+        console.log("epa");
+        if (statusBoton==true){
+            $.ajax({
+                url: url + "users/update",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
 
-            e.preventDefault();
-            console.log("epa");
-            if (statusBoton==true){
-                $.ajax({
-                    url: url + "users/update",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: new FormData(this),
-                    method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
 
-                    beforeSend: function () {
-                        $("#preloader").fadeIn('fast');
-                        $("#preloader-overlay").fadeIn('fast');
-                    },
-                    success: function (response) {
-
-                        swal({
-                            title: "¡Bien Hecho!",
-                            text: response.message,
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function (accept) {
-                            window.location.href = url + "users/manage";
-                        });
-
-
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                            icon: "error",
-                            button: "Ok",
-                        });
-                    }
-                });
-            }
-
-            if (statusBoton == false) {
-                $('#phone_user').removeAttr('readonly');
-                $('#email').removeAttr('readonly');
-                $('#name').removeAttr('readonly');
-                $('#surname').removeAttr('readonly');
-                $('#ci').removeAttr('readonly');
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: response.message,
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        window.location.href = url + "users/manage";
+                    });
 
 
-                $('#rol').attr('readonly','disabled');
-                statusBoton=true;
-            }
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-        });
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+
+        if (statusBoton == false) {
+            $('#phone_user').removeAttr('readonly');
+            $('#email').removeAttr('readonly');
+            $('#name').removeAttr('readonly');
+            $('#surname').removeAttr('readonly');
+            $('#ci').removeAttr('readonly');
+
+
+            $('#rol').attr('readonly','disabled');
+            statusBoton=true;
+        }
+
+    });
 
 
     function online() {
-      $.ajax({
+        $.ajax({
             async: false,
             method: "GET",
             url: url+"online",
@@ -290,15 +305,15 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-              return   online=true;
+                return   online=true;
             },
             error: function (err) {
-               return  online = false;
+                return  online = false;
             }
         });
 
 
-       return online;
+        return online;
     }
 
 

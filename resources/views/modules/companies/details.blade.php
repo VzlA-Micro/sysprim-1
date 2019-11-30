@@ -4,11 +4,12 @@
     @include('sweet::alert')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                {{-- Configurar nombre si es usuario o es administrador --}}
-                <a href="{{ route('companies.my-business') }}" class="breadcrumb">Mis Empresas</a>
-                <a href="" class="breadcrumb">{{ $company->name }}</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ $company->name }}</a></li>
+                </ul>
             </div>
             <div class="col s12 m8">
                 <div class="card">
@@ -53,7 +54,7 @@
                     <div class="col s12">
                         <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
-                            <span class="truncate">Mis Pagos</span>
+                            <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
                     <!-- <div class="col s12">

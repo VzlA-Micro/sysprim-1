@@ -7,11 +7,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <<a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="{{ route('taxpayers.manage') }}" class="breadcrumb">Gestionar Contribuyentes</a>
-                <a href="{{ route('taxpayers.read') }}" class="breadcrumb">Ver Contribuyentes</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Contribuyentes</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Contribuyente</a></li>
+                </ul>
             </div>
 			<div class="col s12">
                 <div class="card">
@@ -38,10 +40,10 @@
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
-                                        @if(\Auth::user()->confirmed == 1)
-                                        <i class="icon-check green-text" style="font-size: 20px"></i>
+                                        @if($user->confirmed == 1)
+                                        Verificado <i class="icon-check green-text" style="font-size: 20px"></i>
                                         @else
-                                        <i class="icon-close red-text" style="font-size: 20px"></i>
+                                        Sin Verificar<i class="icon-close red-text" style="font-size: 20px"></i>
                                         @endif
                                     </td>
                                     <td>

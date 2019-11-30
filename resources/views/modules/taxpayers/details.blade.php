@@ -7,12 +7,14 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <<a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="{{ route('taxpayers.manage') }}" class="breadcrumb">Gestionar Contribuyentes</a>
-                <a href="{{ route('taxpayers.read') }}" class="breadcrumb">Ver Contribuyentes</a>
-                <a href="#!" class="breadcrumb">Detalles</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Contribuyentes</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Contribuyente</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
+                </ul>
             </div>
             <div class="col s12 m10 offset-m1">
             	<form action="#" method="post" class="card" id="update">
@@ -48,17 +50,54 @@
                             <input id="email" type="email" name="email" class="validate" value="{{ $user->email }}" disabled required>
                             <label for="email">E-mail</label>
                         </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
+                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
+                            <label for="status">Estado de Cuenta:</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
+                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
+                            <label for="status">Estado de Email:</label>
+                        </div>
+
+
                         <input type="hidden" name="role" id="role" value="3">
             		</div>
             		<div class="card-footer">
             			<div class="row">
-            				<div class="col s12 m6 center-align">
+
+
+                            @if($user->confirmed==0||$user->status_account=='block')
+                            <div class="col s12 m4 center-align">
+                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
+                                    <i class="icon-check right"></i>
+                                    Habilitar Cuenta.
+                                </button>
+                            </div>
+
+                            @else
+                                <div class="col s12 m4 center-align">
+                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
+                                        <i class="icon-send right"></i>
+                                        Deshabilitar
+                                    </button>
+                                </div>
+
+                            @endif
+
+
+
+
+            				<div class="col s12 m4 center-align">
             					<a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
 		                            <i class="icon-send right"></i>
 		                            Resetear Contraseña
 		                        </a>
             				</div>
-            				<div class="col s12 m6 center-align">
+            				<div class="col s12 m4 center-align">
 		                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light" id="btn-edit">
 		                            <i class="icon-send right"></i>
 		                            Editar

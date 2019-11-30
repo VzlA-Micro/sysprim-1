@@ -26,7 +26,7 @@ class User extends Authenticatable  implements Auditable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','surname','image','phone','ci','confirmed_code','confirmed','role_id'
+        'name', 'email', 'password', 'surname', 'image', 'phone', 'ci', 'confirmed_code', 'confirmed', 'role_id'
     ];
 
     /**
@@ -38,8 +38,7 @@ class User extends Authenticatable  implements Auditable
         'password', 'remember_token',
     ];
 
-    protected $appends=['typeDocument','document','operator','numberPhone'];
-
+    protected $appends = ['typeDocument', 'document', 'operator', 'numberPhone', 'statusName', 'statusEmail'];
 
 
     /**
@@ -51,16 +50,17 @@ class User extends Authenticatable  implements Auditable
         'email_verified_at' => 'datetime',
     ];
 
-    public function companies(){
-        return $this->belongsToMany('App\Company','users_company')
+    public function companies()
+    {
+        return $this->belongsToMany('App\Company', 'users_company')
             ->withPivot('company_id');
     }
 
-    public function property(){
-        return $this->belongsToMany('App\Inmueble','user_property')
+    public function property()
+    {
+        return $this->belongsToMany('App\Inmueble', 'user_property')
             ->withPivot('property_id');
     }
-
 
 
     public function sendPasswordResetNotification($token)
@@ -68,28 +68,54 @@ class User extends Authenticatable  implements Auditable
         $this->notify(new MyResetPassword($token));
     }
 
-    public function VerifyEmail ($token) {
+    public function VerifyEmail($token)
+    {
         $this->notify(new VerifyEmailNotification($token));
     }
-    public function ConfirmedPayments($user) {
+
+    public function ConfirmedPayments($user)
+    {
         $this->notify(new Payments($user));
     }
 
-    public function getTypeDocumentAttribute(){
-        return $this->typeDocument=substr($this->ci,0,1);
+    public function getTypeDocumentAttribute()
+    {
+        return $this->typeDocument = substr($this->ci, 0, 1);
     }
 
     public function getDocumentAttribute(){
-        return $this->document=substr($this->ci,1,11);
+        return $this->document = substr($this->ci, 1, 11);
     }
 
 
-    public function getOperatorAttribute(){
-        return $this->operator=substr($this->phone,0,6);
+    public function getOperatorAttribute()
+    {
+        return $this->operator = substr($this->phone, 0, 6);
     }
 
-    public function getNumberPhoneAttribute(){
-        return $this->phone=substr($this->phone,6,11);
+    public function getNumberPhoneAttribute()
+    {
+        return $this->phone = substr($this->phone, 6, 11);
+    }
+
+
+
+    public function getstatusNameAttribute(){
+        if($this->status_account=="authorized"){
+
+            return $this->statusName="Autorizado";
+        }else if($this->status_account=='block'){
+            return $this->statusName="Bloqueado.";
+        }
+    }
+
+
+    public function getstatusEmailAttribute(){
+        if($this->confirmed){
+            return $this->statusEmail='Confirmado.';
+        }else{
+            return $this->statusEmail='Sin Confirmar.';
+        }
     }
 
 }

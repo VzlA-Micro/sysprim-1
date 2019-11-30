@@ -3,10 +3,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('fines.manage') }}" class="breadcrumb">Gestionar Multas</a>
-                <a href="{{ route('fines.register') }}" class="breadcrumb">Registrar Multa</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('fines.manage') }}">Gestionar Multas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('fines.register') }}">Registrar Multa</a></li>
+                </ul>
             </div>
             <div class="col s12 m8 offset-m2">
                 <form id="register" action="{{ route('fines.save') }}" method="post" class="card">

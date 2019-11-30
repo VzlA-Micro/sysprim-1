@@ -31,7 +31,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request){
-        if(\Auth::user()->confirmed!=0){
+        if(\Auth::user()->status_account==='block'){
+            Auth::logout();
+            return redirect('/')->with('notification','Su usuario ha sido bloqueado, para poder desbloquearlo debe  dirigirse a la oficinas del semat.');
+        }else if(\Auth::user()->confirmed!=0){
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
                 foreach ($user->companies as $company){

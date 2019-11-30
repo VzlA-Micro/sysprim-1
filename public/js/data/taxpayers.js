@@ -188,7 +188,7 @@ $(document).ready(function () {
                 }).then(function (accept) {
                     window.location.href = url + "taxpayers/manage";
                 });
-                ;
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -295,6 +295,7 @@ $(document).ready(function () {
     });
 
         $('#update').submit(function (e) {
+
             e.preventDefault();
                 $.ajax({
                     url: url + "taxpayers/update",
@@ -336,7 +337,77 @@ $(document).ready(function () {
                         });
                     }
                 });
+
         });
 
+
+
+    $('#button-enable').click(function () {
+        var user_id=$('#id').val();
+        var value=$(this).val();
+
+
+        swal({
+            icon: "info",
+            title: "Activar Cuenta",
+            text: "¿Está seguro de habilitar esta cuenta? Si lo hace, no podrá revertir los cambios.",
+            buttons: {
+                confirm: {
+                    text: "Habilitar",
+                    value: true,
+                    visible: true,
+                    className: "red-gradient"
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (accept) {
+
+            if(accept){
+                $.ajax({
+                    method: "GET",
+                    url: url+"users/account/"+user_id+"/"+value,
+
+                    success: function (response) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "La cuenta fue habilitada con éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            location.reload();
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+
+                    },
+                    error: function (err) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+            }
+
+        });
+
+
+
+
+
+
+
+    });
 
 });

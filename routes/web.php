@@ -33,15 +33,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // User module routes
-Route::get('/user/register',array(
-    'uses'=>'UserController@create',
-    'as'=>'userRegister'
-));
-
-Route::post('/user/save',array(
-    'uses'=>'UserController@store',
-    'as'=>'userSave'
-));
+Route::get('/users/register','UserController@create')->name('users.register');
+Route::post('/users/save', 'UserController@store')->name('users.save');
 
 Route::get('/users/verify/{code}','UserController@verify');
 Route::get('/profile', function() {
@@ -50,19 +43,14 @@ Route::get('/profile', function() {
 Route::get('/users/manage', function() {
     return view('modules.users.menu');
 })->name('users.manage');
-Route::get('/users/register', function() {
+/*Route::get('/users/register', function() {
     return view('modules.users.register');
-})->name('users.register');
+})->name('users.register');*/
 
-Route::get('/users/read',array(
-    'as'=>'userRead',
-    'uses'=>'UserController@show'
-));
 
-Route::get('/users/details/{id}',array(
-    'as'=>'detailsUser',
-    'uses'=>'UserController@edit'
-));
+Route::get('/users/account/{id}/{status}','UserController@enableDisableAccount');
+Route::get('/users/read','UserController@show')->name('users.read');
+Route::get('/users/details/{id}','UserController@edit')->name('users.details');
 
 Route::get('/users/editar/{id}',array(
     'as'=>'editarUser',
@@ -362,29 +350,17 @@ Route::get('/payments/verify/manage', function() {
 })->name('payments.verify.manage');
 
 //Inmuebles
-Route::get('/inmueble/my-property','PropertyController@index')->name('inmueble.my-property');
-
-Route::get('/inmueble-register',array(
-    'as'=>'registerInmueble',
-    'uses'=>'PropertyController@create'
-));
-
-Route::post('/inmueble/save',array(
-    'as'=>'saveInmueble',
-    'uses'=>'PropertyController@store'
-));
-
-Route::post('/inmueble/verification',array(
-    'as'=>'verificationCode',
-    'uses'=>'PropertyController@verification'
-));
+Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
+Route::get('/properties/register','PropertyController@create')->name('properties.register');
+Route::post('/properties/save','PropertyController@store')->name('properties.save');
+Route::post('/properties/verification','PropertyController@verification')->name('properties.verification');
 
 Route::get('/inmueble/show/{id}',array(
     'as'=>'show.inmueble',
     'uses'=>'PropertyController@show'
 ));
-
 Route::get('/inmueble/mi-inmueble','PropertyController@myProperty')->name('inmueble.my-propertys');
+
 
 Route::get('/inmueble/my-inmueble/{id}',array(
     'uses'=>'PropertyTaxesController@create',
@@ -415,21 +391,18 @@ Route::post('/paymentProperty', array(
     'uses'=>'PropertyTaxesController@paymentsHelp',
     'as'=>'paymentsProperty.help'));
 
+
+Route::get('estates/my-prperties', 'PropertyController@myProperty');
+
 //verifyPaymentsBanks
 
 Route::get('/fileBank-register', function() {
     return view('dev.verifyPaymentsBank.upload');
 })->name('bank.upload');
 
-Route::post('/fileBank/save',array(
-    'as'=>'saveFileBank',
-    'uses'=>'VerifyPaymentsBankImportController@importFile'
-));
+Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
 
-Route::get('/verified/payments',array(
-    'as'=>'verifiedPayments',
-    'uses'=>'VerifyPaymentsBankImportController@verifyPayments'
-));
+Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
 
 //taquilla
 Route::get('/home/ticketOffice', function() {
