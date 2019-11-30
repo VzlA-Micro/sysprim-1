@@ -55,5 +55,8 @@ $(document).ready(function() {
         coverTrigger: false,
         constrainWidth: false,
     });
-
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        indicators: true
+    });
 });

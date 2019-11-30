@@ -51,16 +51,14 @@ Route::get('/users/manage', function() {
 Route::get('/users/account/{id}/{status}','UserController@enableDisableAccount');
 Route::get('/users/read','UserController@show')->name('users.read');
 Route::get('/users/details/{id}','UserController@edit')->name('users.details');
+Route::post('/users/reset-password/', 'UserController@resetUserPassword')->name('users.reset-password');
+Route::post('/users/update/','UserController@update')->name('users.update');
 
 Route::get('/users/editar/{id}',array(
     'as'=>'editarUser',
     'uses'=>'UserController@editar'
 ));
 
-Route::post('/users/update/',array(
-    'as'=>'updateUser',
-    'uses'=>'UserController@update'
-));
 
 Route::get('/avatar/{filename}', 'UserController@getImage')->name('users.getImage');
 Route::post('/users/setImage', 'UserController@changeImage')->name('users.setImage');
@@ -548,6 +546,11 @@ Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword'
 Route::get('/help', function() {
     return view('modules.helps.manage');
 })->name('helps.manage');
+Route::get('/help/register-company', function() {
+    return view('modules.helps.register-company');
+})->name('help.register-company');
+
+
 
 Route::get('/taxes/payments', function() {
     return view('modules.taxes.payments');
