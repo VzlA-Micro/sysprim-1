@@ -320,5 +320,9 @@ class CompaniesController extends Controller
     }
 
 
-
+    public function getCarnet($id){
+        $company = Company::findOrFail($id);
+        $pdf = \PDF::loadView('modules.companies.carnet', ['company'=> $company]);
+        return $pdf->stream();
+    }
 }

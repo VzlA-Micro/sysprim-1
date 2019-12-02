@@ -680,9 +680,5 @@ class CompanyTaxesController extends Controller
     //     return view();
     // }
 
-    public function getCarnet()
-    {
-        $pdf = \PDF::loadView('modules.companies.carnet');
-        return $pdf->stream();
-    }
+    
 }

@@ -445,7 +445,7 @@ Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeControlle
 
 
 
-Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
+Route::get('/companies/carnet/{id}', 'CompaniesController@getCarnet')->name('companies.carnet');
 
 
 

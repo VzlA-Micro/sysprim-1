@@ -7,11 +7,11 @@
     <title>Carnet - Alguien</title>
 </head>
 <body>
-    <table style="width:100%; border: solid 1px black">
+    <table style="width:100%; border: solid 1px black; font-family: Helvetica;">
         <tbody>
             <tr>
                 <td style="width: 25%; text-align: left;">
-                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 110px; height: 50px;" alt="">
+                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 130px; height: 60px;" alt="">
                 </td>
                 <td style="width: 50%; text-align: center;">
                     <span style="font-size: 12px !important;">
@@ -21,12 +21,12 @@
 					</span>
                 </td>
                 <td style="width: 25%; text-align: right;">
-                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 110px; height: 50px;" alt="">
+                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 130px; height: 60px;" alt="">
                 </td>
             </tr>
             <tr>
                 <td colspan="3" style="text-align: center; border-bottom: 1px solid #000; padding: 15px; border-top: 1px solid #000">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, eaque?
+                    CARNET DE ???
                 </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                     <b>Razón Social: </b>
                 </td>
                 <td style="width:60%; text-align: left;" colspan="">
-                    <span>Nombre va aqui</span>
+                    <span>{{ $company->name }}</span>
                 </td>
                 <td style="width:20%;" rowspan="5">
                     <img src="{{ asset('images/qr.png') }}" style="width: 150px; height: 150px; margin: auto;" alt="">
@@ -45,7 +45,7 @@
                     <b>RIF: </b>
                 </td>
                 <td style="width:60%; text-align: left;">
-                    <span>J-131361361</span>
+                    <span>{{ $company->RIF }}</span>
                 </td>
             </tr>
             <tr>
@@ -53,7 +53,7 @@
                     <b>Dirección: </b>
                 </td>
                 <td style="width:60%; text-align: left;">
-                    <span>Direccion va aqui</span>
+                    <span>{{ $company->address }}</span>
                 </td>
             </tr>
             <tr>
@@ -61,7 +61,7 @@
                     <b>Licencia: </b>
                 </td>
                 <td style="width:60%; text-align: left;">
-                    <span>12153123627</span>
+                    <span>{{ $company->license }}</span>
                 </td>
             </tr>
             <tr>
