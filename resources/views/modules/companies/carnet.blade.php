@@ -10,64 +10,71 @@
     <table style="width:100%; border: solid 1px black">
         <tbody>
             <tr>
-                <td style="width: 33%; text-align: left;">
+                <td style="width: 25%; text-align: left;">
                     <img src="{{ asset('images/semat_logo.png') }}" style="width: 110px; height: 50px;" alt="">
                 </td>
-                <td style="width: 33%; text-align: center;">
+                <td style="width: 50%; text-align: center;">
                     <span style="font-size: 12px !important;">
                         República Bolivariana de Venezuela <br>
                         Alcaldía Bolivariana del Municipio Iribarren <br>
                         Barquisimeto - Edo. Lara
 					</span>
                 </td>
-                <td style="width: 33%; text-align: right;">
+                <td style="width: 25%; text-align: right;">
                     <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 110px; height: 50px;" alt="">
                 </td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
-                    <b>Nombre: </b>
+                <td colspan="3" style="text-align: center; border-bottom: 1px solid #000; padding: 15px; border-top: 1px solid #000">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, eaque?
                 </td>
-                <td style="20%; text-align: left;">
+            </tr>
+            <tr>
+                <td style="width:15%; text-align: left;">
+                    <b>Razón Social: </b>
+                </td>
+                <td style="width:60%; text-align: left;" colspan="">
                     <span>Nombre va aqui</span>
                 </td>
-                <td style="20%"></td>
+                <td style="width:20%;" rowspan="5">
+                    <img src="{{ asset('images/qr.png') }}" style="width: 150px; height: 150px; margin: auto;" alt="">
+                </td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
-                    <b>Derección: </b>
+                <td style="width:15%; text-align: left;">
+                    <b>RIF: </b>
                 </td>
-                <td style="20%; text-align: left;">
+                <td style="width:60%; text-align: left;">
+                    <span>J-131361361</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:15%; text-align: left;">
+                    <b>Dirección: </b>
+                </td>
+                <td style="width:60%; text-align: left;">
                     <span>Direccion va aqui</span>
                 </td>
-                <td style="20%"></td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
+                <td style="width:15%; text-align: left;">
                     <b>Licencia: </b>
                 </td>
-                <td style="20%; text-align: left;">
+                <td style="width:60%; text-align: left;">
                     <span>12153123627</span>
                 </td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
-                    <b>RIF: </b>
+                <td style="width:15%;">
+                    <img src="{{ asset('images/logo.png') }}" style="width: 120px; height: 80px;" alt="">
                 </td>
-                <td style="20%; text-align: left;">
-                    <span>J-131361361</span>
-                </td>
-                <td style="20%"></td>
-            </tr>
-            <tr>
-                <td style="20%">
-                    <img src="{{ asset('images/logo.png') }}" style="width: 220px; height: 100px;" alt="">
-                </td>
-                <td style="20%">
+                <td style="width:60%">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam omnis deleniti placeat aspernatur sit minima atque dolore in officiis esse.
                 </td>
-                <td style="40%">
-                    <img src="{{ asset('images/qr.png') }}" style="width: 200px; height: 200px;" alt="">
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 3px; border-top: 1px solid #000">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, eaque?
                 </td>
             </tr>
         </tbody>
