@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     @yield('styles')
     <title>Geolocalización - GeoSEMAT</title>
 </head>
