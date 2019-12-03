@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -66,7 +66,6 @@ $(document).ready(function () {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
-
 
 
                             }
@@ -276,8 +275,6 @@ $(document).ready(function () {
             });
 
         }
-
-
     });
 
 
@@ -445,18 +442,12 @@ $(document).ready(function () {
                 }
             }).then(function (aceptar) {
                 if (aceptar) {
-                    if ($('#company_id').val() !== '') {
-                        registerTaxes();
-                        $('#three').removeClass('disabled');
-                        $('ul.tabs').tabs("select", "payment-tab");
-
-                    } else {
-                        $('#three').removeClass('disabled');
-                        $('ul.tabs').tabs("select", "payment-tab");
-                    }
-
+                    registerTaxes();
 
                 }
+
+
+
             });
         }
     });
@@ -503,11 +494,33 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
 
-                var taxes = response.taxe;
-                $('#amount_total').val(taxes.amountTotal);
-                $('#amount_total_tr').val(taxes.amountTotal);
-                $('#taxes_id').val(taxes.id_taxes);
-                $('#taxes_id_tr').val(taxes.id_taxes);
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "La planilla ha sido generado con éxito,¿Desea seguir generando planilla?",
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: "Si",
+                            value: true,
+                            visible: true,
+                            className: "red"
+
+                        },
+                        cancel: {
+                            text: "No",
+                            value: false,
+                            visible: true,
+                            className: "grey lighten-2"
+                        }
+                    }
+                }).then(function (aceptar) {
+                    if (aceptar) {
+                        reset();
+                    }else{
+                        window.location.href=url+'ticket-office/taxes';
+                    }
+                });
+
 
 
                 $("#preloader").fadeOut('fast');
@@ -704,7 +717,7 @@ $(document).ready(function () {
                  
                    
                        </div>
-           
+          
             
                       <div class="divider" style="height:3px !important;"></div>
                           
@@ -788,9 +801,9 @@ $(document).ready(function () {
             });
 
         } else {
-            $('#two').removeClass('disabled');
-            $('ul.tabs').tabs("select", "details-tab");
-        }
+
+        }$('#two').removeClass('disabled');
+        $('ul.tabs').tabs("select", "details-tab");
 
 
     });
@@ -819,7 +832,7 @@ $(document).ready(function () {
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });
-                ;
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -958,10 +971,8 @@ $(document).ready(function () {
         }
     }
 
-
+/*
     console.log(localStorage.getItem('epale'));
-
-
     if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
         swal({
             title: "Información",
@@ -988,8 +999,6 @@ $(document).ready(function () {
 
         $('#content').css('display', 'block');
     }
-
-
 
     $('#close-cashier').click(function () {
        if(localStorage.getItem('bank')!==null){
@@ -1096,11 +1105,19 @@ $(document).ready(function () {
         }
     });
 
+    */
+
 
 
     $('#previous-details').click(function () {
         $('ul.tabs').tabs("select", "general-tab");
     });
+
+
+    var url = "http://sysprim.com.devel/";
+
+
+
 
 
 });

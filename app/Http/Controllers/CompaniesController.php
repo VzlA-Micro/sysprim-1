@@ -310,14 +310,9 @@ class CompaniesController extends Controller
     {
         $ciu=$request->input('ciu');
         $id=$request->input('id');
-
         var_dump($ciu);
-        die();
-
-        foreach ($ciu as $value){
-
-        }
     }
+
 
 
 

@@ -11,18 +11,19 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
                 <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="#!" class="breadcrumb">Pagar Impuestos</a>
+                <a href="#!" class="breadcrumb">Generar Planilla</a>
 
             </div>
             <div class="col s12">
                 <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
                     <ul class="tabs">
-                        <li class="tab col s4 " id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
+                        <li class="tab col s6" id="one"><a href="#general-tab"><i class="icon-filter_1"></i> DATOS
                                 GENERALES</a></li>
-                        <li class="tab col s4 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
-                                Detalles</a></li>
-                        <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
-                                PAGO</a></li>
+                        <li class="tab col s6 disabled" id="two"><a href="#details-tab"><i class="icon-filter_2"></i>
+                                DETALLES</a>
+                        </li>
+                       <!-- <li class="tab col s4 disabled" id="three"><a href="#payment-tab"><i class="icon-filter_3"></i>CONCILIAR
+                                PAGO</a></li>-->
                     </ul>
 
 
@@ -47,6 +48,7 @@
                             </div>
 
 
+
                             <input type="text" id="company_id" value="" name="company_id" class="hide">
 
 
@@ -59,11 +61,13 @@
                                 <label for="RIF">RIF</label>
                             </div>
 
+
                             <div class="input-field col s12 m4">
                                 <i class="icon-directions prefix"></i>
                                 <input type="text" name="address" id="address" value="" readonly>
                                 <label for="address">Direccion</label>
                             </div>
+
                             <div class="input-field col s4 m4 ">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="person" id="person" value="" readonly>
@@ -81,11 +85,11 @@
                                 <div class="row">
                                     <div class="col s6">
                                         <div class="input-field left-align">
-                                            <button data-target="modal-tick"
+                                            <!--<button data-target="modal-tick"
                                                     class="btn btn-rounded green modal-trigger " id="scan">
                                                 Escanear QR
                                                 <i class="icon-filter_center_focus right"></i>
-                                            </button>
+                                            </button>-->
                                         </div>
                                     </div>
                                     <div class="col s6">
@@ -168,7 +172,7 @@
                                 <div class="col s6 right-align">
                                     <a href="#" class="btn peach waves-effect waves-light" id="details-next">
                                         <i class="icon-navigate_next right"></i>
-                                        Siguiente
+                                        Generar Planilla
                                     </a>
                                 </div>
                             </div>
@@ -176,7 +180,7 @@
                     </div>
                 </form>
 
-
+        <!--
                 <div id="payment-tab" class="card">
                     <div class="card-header center-align">
                         <h4>REGISTRAR PAGO</h4>
@@ -370,8 +374,10 @@
                         </ul>
                     </div>
                 </div>
+                -->
 
-            </div>
+           </div>
+
         </div>
         <div id="modal-tick" class="modal">
             <div class="modal-content">
@@ -394,7 +400,7 @@
     </div>
 
 
-    <div class="fixed-action-btn">
+   <!-- <div class="fixed-action-btn">
         <a class="btn-floating btn-large light-blue darken-4">
             <i class="large fas fa-cash-register"></i>
         </a>
@@ -407,6 +413,7 @@
                             class="fas fa-money-check"></i></a></li>
         </ul>
     </div>
+    -->
 @endsection
 
 @section('scripts')

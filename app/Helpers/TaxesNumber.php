@@ -208,5 +208,20 @@ class TaxesNumber{
     }
 
 
+    public static  function generateNumberPayment($type_payments){
+        $code=DB::table('payments')->select('code')//->where('code','LIKE',"%".$type_payments."%")
+                        ->orderByDesc('id')->take(1)->get();
+        if($code->isEmpty()){
+            $number_generated=strtoupper(str_pad(1, 8, '0', STR_PAD_LEFT));
+            return $type_payments.$number_generated;
+        }else{
+            $correlative=substr($code[0]->code,5,13);
+            $number_integer=(int)$correlative;//LOS COVIERTOS A UN ENTERO PARA PORDER SUMARLA 1 Y SEGUIR LA SECUENCIA
+            $number_generated=strtoupper(str_pad($number_integer+1, 8, '0', STR_PAD_LEFT));
+            return $type_payments.$number_generated;
+        }
+    }
+
+
 
 }

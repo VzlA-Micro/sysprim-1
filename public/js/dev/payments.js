@@ -1,7 +1,6 @@
 $('document').ready(function () {
     var url = "https://sysprim.com/";
 
-
     $('.reconcile').click(function () {
         var status=$(this).data('status');
         var taxes_id=$('#taxes_id').val();

@@ -3,7 +3,6 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
     <style>
-
     </style>
 @endsection
 
@@ -40,6 +39,7 @@
                                         <th>Status</th>
                                     @endif
                                     <th>N°. Referencia</th>
+                                    <th>Planilla</th>
                                     <th>Monto</th>
                                     <th>Detalles</th>
                                 </tr>
@@ -67,13 +67,24 @@
                                                                      style="font-size: 20px"></i></td>
                                                 @endif
                                             @endif
+
                                             <td>{{$taxe->ref}}</td>
+                                            <td>
+                                                <p>
+                                                    <label>
+                                                        <input type="checkbox" name="payroll" class="payroll" value="{{$taxe->taxes->id}}" />
+                                                        <span></span>
+                                                    </label>
+                                                </p>
+                                            </td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
                                             <td>
                                                 <a href="{{route('ticket-office.payment.details',[$taxe->id])  }}"
                                                    class="btn btn-floating orange waves-effect waves-light"><i
                                                             class="icon-pageview"></i></a>
                                             </td>
+
+
                                         </tr>
                                     @endforeach
                                 @endif
@@ -82,19 +93,26 @@
                         @endif
                     </div>
                 </div>
+                <div class="col l12">
+                    <a href="#" class="btn " id="generate-receipt">Generar Planilla</a>
+                </div>
             </div>
+
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
     <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
     <script src="{{asset('js/jszip.min.js')}}"></script>
     <script src="{{asset('js/pdfmake.min.js')}}"></script>
     <script src="{{asset('js/vfs_fonts.js')}}"></script>
     <script src="{{asset('js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('js/buttons.print.min.js')}}"></script>
+
     <script>
 
         var name = $('.email').text();

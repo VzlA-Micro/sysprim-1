@@ -23,7 +23,8 @@ class Taxe extends Model implements Auditable {
 
 
     public function payments(){
-        return $this->hasMany('App\Payments');
+        return $this->belongsToMany('App\Payment','payments_taxes')
+            ->withPivot('payment_id');
     }
 
     public function getTotalAttribute(){

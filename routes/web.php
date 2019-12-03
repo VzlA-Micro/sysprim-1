@@ -475,6 +475,10 @@ Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')-
 Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
 Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
 Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
+Route::get('/ticket-office/taxes/','TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
+Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
+
 
 
 
@@ -586,3 +590,6 @@ Route::get('/help', function() {
 Route::get('/taxes/payments', function() {
     return view('modules.taxes.payments');
 })->name('taxes.payments');
+
+
+

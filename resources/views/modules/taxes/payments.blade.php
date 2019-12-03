@@ -97,7 +97,6 @@
 										<i class="i-percent-banco"></i>
 									</label>
 								</div>
-
 							</div>
 							<div class="row">
                                 <div class="col s6 left-align">

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\FindCompany;
 use App\Helpers\Calculate;
-use App\Payments;
+use App\Payment;
 use App\Taxe;
-use Faker\Provider\Payment;
 use Illuminate\Http\Request;
 use App\CiuTaxes;
 use App\Parish;
@@ -24,7 +23,6 @@ use App\Extras;
 use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-
 class TicketOfficeController extends Controller{
 
 
@@ -50,6 +48,7 @@ class TicketOfficeController extends Controller{
                 $ciuTaxes=CiuTaxes::with('ciu')->where('taxe_id',$id)->get();
                 return response()->json(['status'=>'process','taxe'=>$taxe,'calculate'=>$calculateTaxes,'ciu'=>$ciuTaxes]);
             }
+
         } catch (DecryptException $e) {
             return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
         }
@@ -87,68 +86,95 @@ class TicketOfficeController extends Controller{
         $country_code = $request->input('country_code');
         $phone=$request->input('phone');
         $payments_type=$request->input('payments_type');
+        $taxes_data = substr($id_taxes, 0, -1);
+        $taxes_explode=explode('-',$taxes_data);
 
+        $amount_total=0;
 
-
-        $taxe=Taxe::findOrFail($id_taxes);
         $amountPayment=0;
         $acum=0;
 
         $amount_format=str_replace('.','',$amount);
         $amount=str_replace(',','.',$amount_format);
-        $payments=new Payments();
 
 
-        $payments->taxe_id=$id_taxes;
+        $payments=new Payment();
         $payments->lot=$lot;
+        $payments_number=TaxesNumber::generateNumberPayment($payments_type . "81");
+
+
+
+        if($payments_type==='PPT'){
+            $payments->type_payment='TRANSFERENCIA BANCARIA';
+        }else if($payments_type=='PPB'){
+            $payments->type_payment='DEPOSITO BANCARIO';
+        }else{
+            $payments->type_payment='PUNTO DE VENTA';
+        }
+
+        $payments->code=$payments_number;
+
+        if($bank!=null){
+            $code = substr($payments_number, 3, 12);
+            $payments->digit=TaxesNumber::generateNumberSecret($amount,Carbon::now()->format('Y-m-d'),$bank,$code);
+        }
+
+
+
+
         $payments->amount=$amount;
         $payments->ref=$ref;
         $payments->bank=$bank;
         $payments->name=$person;
         $payments->phone=$country_code.$phone;
-        $payments->type_payment=$payments_type;
         $payments->save();
+        $payment_id=$payments->id;
+
+
+        for($i=0;$i<count($taxes_explode);$i++){
+            $taxe=Taxe::findOrFail($taxes_explode[$i]);
+            $amount_total+=$taxe->amount;
+            $taxe_id=$taxes_explode[$i];
+            $taxe->payments()->attach(['taxe_id'=>$taxe_id],['payment_id'=>$payment_id]);
+        }
+
 
         $paymentsTaxe= $taxe->payments()->get();
 
-        if ($paymentsTaxe->isEmpty()) {
-            $amountPayment=$taxe->amount-$amount;
-
-            if($amountPayment==0){
-                $data=['status'=>'success'];
-
-                if($bank_destinations!==null){
-                    $taxe->bank=$bank_destinations;
-                }else{
-                    $taxe->status='verified';
-                    $taxe->bank=$bank;
-                }
-
-                $taxe->update();
-            }else{
-                $data=['status'=>'process','payment'=>$amountPayment];
-            }
-        }else{
-            foreach ($paymentsTaxe as $payment){
+        foreach ($paymentsTaxe as $payment){
                 $acum=$acum+$payment->amount;
-            }
+        }
 
-            if($acum>=$taxe->amount){
+
+
+
+
+
+        if($acum>=$amount_total){
                 $data=['status'=>'success','payment'=>0];
 
-                if($bank_destinations!==null){
-                    $taxe->bank=$bank_destinations;
-                    $taxe->status='process';
-                }else{
-                    $taxe->bank=$bank;
-                    $taxe->status='verified';
+                for($i=0;$i<count($taxes_explode);$i++){
+
+
+                    $taxes_find=Taxe::findOrFail($taxes_explode[$i]);
+
+                    if($bank_destinations!==null){
+                        $taxes_find->bank=$bank_destinations;
+                        $taxes_find->status='process';
+                    }else if($payments_type=='PPB'){
+                        $taxes_find->status='process';
+                    }else{
+                        $taxes_find->status='verified';
+                        $taxes_find->bank=$bank;
+                    }
+                    $taxes_find->update();
                 }
-                $taxe->update();
-            }else{
-                $amountPayment=$taxe->amount-$acum;
+        }else{
+                $amountPayment=$amount_total-$acum;
                 $data=['status'=>'process','payment'=>number_format($amountPayment,2)];
-            }
         }
+
+
 
 
         return response()->json($data);
@@ -216,8 +242,6 @@ class TicketOfficeController extends Controller{
             $company->ciu()->attach(['company_id' => $id_company], ['ciu_id' => $ciu]);
         }
 
-
-
     }
 
 
@@ -256,9 +280,37 @@ class TicketOfficeController extends Controller{
 
 
 
+
+    public function getTaxes(){
+        $taxes=Audit::where('user_id',\Auth::user()->id)
+            ->where('event','created')
+            ->where('auditable_type','App\Taxe')
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+
+        if(!$taxes->isEmpty()){
+            foreach ($taxes as $taxe){
+                $id_taxes[]=$taxe->auditable_id;
+            }
+            if(count($id_taxes)!==0){
+                $taxes=Taxe::where('status','=','temporal')->whereIn('id',$id_taxes)->get();
+
+
+            }else{
+                $amount_taxes=null;
+                $taxes=null;
+            }
+        }else{
+            $amount_taxes=null;
+            $taxes=null;
+        }
+
+        return view('modules.ticket-office.taxes.taxes-tickoffice',['taxes'=>$taxes]);
+    }
+
     public function registerTaxes(Request $request){
 
-        $datos=$request->all();;
+        $datos=$request->all();
+
         $fiscal_period = $datos['fiscal_period'];
         $company = $datos['company_id'];
         $company_find = Company::find($company);
@@ -350,9 +402,9 @@ class TicketOfficeController extends Controller{
         $taxesCalculate=Calculate::calculateTaxes($id);
         $taxesCalculate['id_taxes']=$id;
         $taxe_update=Taxe::find($id);
+        $taxe_update->status='temporal';
         $taxe_update->amount=$taxesCalculate['amountTotal'];
         $taxe_update->update();
-
 
         return response()->json(['taxe'=>$taxesCalculate]);
     }
@@ -447,11 +499,37 @@ class TicketOfficeController extends Controller{
     }
 
 
+
+    public function generateReceipt($taxes_data){
+        $taxes_data = substr($taxes_data, 0, -1);
+        $taxes_explode=explode('-',$taxes_data);
+        $ciuTaxes=CiuTaxes::whereIn('taxe_id',$taxes_explode)->with('ciu')->with('taxes')->get();
+        $pdf = \PDF::loadView('modules.ticket-office.receipt-ticketoffice',['taxes'=>$ciuTaxes]);
+        return $pdf->stream();
+    }
+
+
+    public function calculatePayments($taxes_data){
+        $taxes_data = substr($taxes_data, 0, -1);
+        $taxes_explode=explode('-',$taxes_data);
+        $taxes=Taxe::whereIn('id',$taxes_explode)->get();
+        $amount=0;
+        foreach ($taxes as $tax){
+            $amount+=$tax->amount;
+        }
+        return response()->json(['status'=>'success','amount'=>$amount]);
+    }
+
+
+
+
+
     public function changeStatustaxes($id,$status){
         $taxes=Taxe::find($id);
-
         $taxes->status=$status;
         $taxes->update();
+
+
         if($status==='verified'){
             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
             $mora = Extras::orderBy('id', 'desc')->take(1)->get();
@@ -460,7 +538,6 @@ class TicketOfficeController extends Controller{
             $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
             $companyTaxe=$taxes->companies()->get();
             $company_find = Company::find($companyTaxe[0]->id);
-
 
 
             $pdf = \PDF::loadView('modules.taxes.receipt',[
@@ -479,7 +556,6 @@ class TicketOfficeController extends Controller{
             $for = $user[0]->email;
 
             Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
-
                 $msj->from("grabieldiaz63@gmail.com", "SEMAT");
                 $msj->subject($subject);
                 $msj->to($for);
