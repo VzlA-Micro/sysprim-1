@@ -158,6 +158,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Actualizar Mis Empresas']);
         // Permission::create(['name' => 'Eliminar Mis Empresas']);
 
+
         // Mis Inmuebles
         Permission::create(['name' => 'Mis Inmuebles']);
         Permission::create(['name' => 'Registar Mis Inmuebles']);
@@ -187,12 +188,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Mis Pagos - Vehiculos']);
         Permission::create(['name' => 'Declarar Vehiculos']);
         Permission::create(['name' => 'Ver Declaraciones - Vehiculos']);
-
-
-
-        Permission::create(['name' => 'Detalles Mis Empresas']);
-        Permission::create(['name' => 'Actualizar Mis Empresas']);
-        // Permission::create(['name' => 'Eliminar Mis Empresas']);
 
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
@@ -240,10 +235,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Contribuyente
         $roleTaxpayer = Role::create(['name' => 'Contribuyente']);
         $roleTaxpayer->givePermissionTo([
-            'Mis Empresas',
-            'Registar Mis Empresas',
-            'Consultar Mis Empresas',
-            'Detalles Mis Empresas',
+            'Mis Empresas','Registar Mis Empresas','Consultar Mis Empresas','Detalles Mis Empresas',
             'Actualizar Mis Empresas',
             'Mis Inmuebles',
             'Registar Mis Inmuebles',
