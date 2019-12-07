@@ -89,6 +89,7 @@ class RegisterController extends Controller
         $id=$user->id;
         $user=User::find($id);
         $user->VerifyEmail($data['confirmation_code']);
+        $user->syncRoles(3);
       return $user;
 
     }

@@ -184,6 +184,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         App\Providers\declarationProviderService::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -242,7 +244,9 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         'CedulaVe'=>App\Helpers\CedulaVE::class,
-        'Calculate'=>App\Helpers\Calculate::class
+        'Calculate'=>App\Helpers\Calculate::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

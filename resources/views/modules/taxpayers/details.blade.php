@@ -66,10 +66,10 @@
 
                         <input type="hidden" name="role" id="role" value="3">
             		</div>
+                    @can('Actualizar Contribuyentes')
             		<div class="card-footer">
             			<div class="row">
-
-
+                            @can('Habilitar/Deshabilitar Contribuyentes')
                             @if($user->confirmed==0||$user->status_account=='block')
                             <div class="col s12 m4 center-align">
                                 <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
@@ -87,16 +87,17 @@
                                 </div>
 
                             @endif
+                            @endcan
 
 
-
-
+                            @can('Resetar Contribuyentes')
             				<div class="col s12 m4 center-align">
             					<a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
 		                            <i class="icon-send right"></i>
 		                            Resetear Contraseña
 		                        </a>
             				</div>
+                            @endcan
             				<div class="col s12 m4 center-align">
 		                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light" id="btn-edit">
 		                            <i class="icon-send right"></i>
@@ -109,6 +110,7 @@
             				</div>
             			</div>
                     </div>
+                    @endcan
             	</form>
             </div>
         </div>

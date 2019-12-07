@@ -13,19 +13,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('notifications.manage') }}">Gestionar Notificaciones</a></li>
                 </ul>
             </div>
+            @can('Registrar Notificaciones')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('notifications.register') }}" class="btn-app white green-text text-darken-2">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Notificación</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Notificaciones')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('notifications.show') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver Notificaciones</span>
                 </a>
             </div>
-
+            @endcan
         </div>
     </div>
 @endsection

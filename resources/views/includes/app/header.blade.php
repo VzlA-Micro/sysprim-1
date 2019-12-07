@@ -106,73 +106,69 @@
                     <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>
                     <li class="divider hide-on-large-only"></li>
                     <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>
-                    {{-- <li class="waves-efect waves-light"><a href=""><i class="icon-group_add left"></i>Gestionar Usuarios</a></li> --}}
-                    @if (\Auth::user()->role_id == 1 || Auth::user()->role_id == 4)
-                        <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
-                        <!-- <li class="waves-efect waves-light"><a href="{{ route('companies.manage') }}"><i class="icon-work"></i>Gestionar Empresas</a></li> -->
-                        <!-- <li class="waves-efect waves-light"><a href="{{ route('fines.manage') }}"><i class="icon-warning"></i>Gestionar Multas</a></li> -->
-                        <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                        <li class="no-padding">
-                            <ul class="collapsible collapsible-accordion">
-                                <li class="bold">
-                                    <a href="#!" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración <i class="icon-arrow_drop_down right"></i></a>
-                                    <div class="collapsible-body">
-                                        <ul>
-                                            <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
-                                            <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-assignment"></i>Gestionar Unidad Tributaria</a></li>
-                                            
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="no-padding">
-                            <ul class="collapsible collapsible-accordion">
-                                <li class="bold">
-                                    <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
-                                    <div class="collapsible-body">
-                                        <ul>
-                                            <!-- <li><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Atencion al Cliente</a></li> -->
-                                            <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
-                                            <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
-                                            <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
-                                            <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-payment left"></i>Gestionar Contribuyente</a></li>
-                                            <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
-                    @endif
-                    @if (\Auth::user()->role_id == 2)
-                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                        <li class="no-padding">
-                            <ul class="collapsible collapsible-accordion">
-                                <li class="bold">
-                                    <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
-                                    <div class="collapsible-body">
-                                        <ul>
-                                        <!-- <li><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Atencion al Cliente</a></li> -->
-                                            <!-- <li><a href=""><i class="icon-person left"></i>Gestionar Contribuyentes</a></li> -->
-                                            <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
-                                            <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
+                    @can('Gestionar Usuarios')
+                    <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
+                    @endcan
+                    @can('GeoSEMAT')
+                    <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
+                    @endcan
+                    @can('Estadisticas')
+                    <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
+                    @endcan
+                    @can('Verificar Pagos - Archivo')
+                    <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
+                    @endcan
+                    @can('Configuración')
+                    <li class="no-padding">
+                        <ul class="collapsible collapsible-accordion">
+                            <li class="bold">
+                                <a href="#!" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración <i class="icon-arrow_drop_down right"></i></a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                        @can('Gestionar CIIU')
+                                        <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
+                                        @endcan
+                                        @can('Gestionar Unidad Tribuaria')
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-assignment"></i>Gestionar Unidad Tributaria</a></li>    
+                                        @endcan
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('Taquilla')
+                    <li class="no-padding">
+                        <ul class="collapsible collapsible-accordion">
+                            <li class="bold">
+                                <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                        @can('Gestionar Empresas')
+                                        <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
+                                        @endcan
+                                        @can('Gestionar Pagos')
+                                        <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
+                                        @endcan
+                                        @can('Gestionar Contribuyentes')
+                                        <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-payment left"></i>Gestionar Contribuyente</a></li>
+                                        @endcan
                                         <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
-                                            <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-person left"></i>Gestionar Contribuyente</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                    @if (\Auth::user()->role_id == 3)
-                        <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
-                        {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
-                        {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
-                        <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
-                    @endif
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('Seguridad')
+                    <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
+                    @endcan
+                    @can('Mis Empresas')
+                    <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
+                    @endcan
+                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
+                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
+                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('logout') }}"

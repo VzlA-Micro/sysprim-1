@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('tickOffice.companies.details',['id'=>$company->id]) }}">Detalles</a></li>
                     <li class="breadcrumb-item"><a href="#!">{{ $company->name }}</a></li>
                 </ul>
             </div>
@@ -298,36 +298,44 @@
             </form>
         </div>
         <div class="col s12 m4">
+            @can('Actualizar Empresas')
             <div class="col s12 m12">
                 <a href="#" class="btn btn-large waves-effect waves-light green col s12 " id="update-company">
                     Actualizar
                     <i class="icon-refresh right"></i>
                 </a>
             </div>
+            @endcan
+            @can('Añadir CIIU Empresas')
             <div class="col s12 m12">
                 <a href="#" class="btn btn-large waves-effect waves-light blue col s12 " id="add-ciiu">
                     Añadir CIIU
                     <i class="icon-add right"></i>
                 </a>
             </div>
+            @endcan
+            @can('Eliminar CIIU Empresas')
             <div class="col s12 m12">
                 <a href="#" class="btn btn-large waves-effect waves-light red col s12 " id="delete-ciiu">
                     Eliminar CIIU
                     <i class="icon-delete right"></i>
                 </a>
             </div>
+            @endcan
+            @can('Habilitar/Deshabilitar CIIU Empresas')
             <div class="col s12 m12">
                 <a href="#" class="btn btn-large waves-effect waves-light orange col s12 " id="delete-ciiu">
                     Deshabilitar CIIU
                     <i class="icon-delete right"></i>
                 </a>
             </div>
+            @endcan
         </div>
         <div class="col s12 location-container tooltipped" data-position="left"
              data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
         </div>
-
+        @can('Historial de Pago Empresas')
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-header center-align">
@@ -381,6 +389,7 @@
                 </div>
             </div>
         </div>
+        @endcan
 
 
     </div>
