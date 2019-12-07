@@ -8,12 +8,12 @@ class Fine extends Model{
     protected $table='fines';
     //
 
-    public function Company(){
+    public function company(){
         return $this->belongsToMany('App\Company','fines_company')
-            ->withPivot('company_id','fine_id','unid_tribu_value'); 
+            ->withPivot('fine_id','unid_tribu_value');
     }
 
-    public function FineCompany (){
+    public function fineCompany (){
         return $this->hasMany('App\FineCompany'); 
     }
 

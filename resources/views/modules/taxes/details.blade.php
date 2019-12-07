@@ -3,14 +3,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Pagar Impuestos</a>
-                <a href="" class="breadcrumb">Detalles de Pago</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" class="breadcrumb">Mi Empresa</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="breadcrumb">Mi Pagos</a></li>
+                    <li class="breadcrumb-item"> <a href="" class="breadcrumb">Pagar Impuestos</a></li>
+                    <li class="breadcrumb-item"></li>
+                </ul>
             </div>
+
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
@@ -161,7 +162,7 @@
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
                                 <input type="hidden" id="payments" name="payments" value="1">
-                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
+                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" id="taxes_id">
                             </div>
                         </div>
                         <div class="row" style="padding: 1rem">
@@ -183,7 +184,54 @@
                                     <i class="icon-more_horiz right"></i>
                                 </button>
                                 {{-- Modal structure --}}
-                               @endif
+
+
+
+                                @endif
+                                @if(\Auth::user()->role_id===1)
+
+
+
+                                    @if(!$taxes->payments->isEmpty())
+                                    <div class="row">
+
+                                            @if($taxes->status==='process')
+
+                                                <button class="btn green col s12">
+                                                    <i class="icon-more_horiz left "></i>
+                                                    ESTADO:  SIN CONCILIAR AÚN
+                                                </button>
+                                            @elseif($taxes->status==='verified')
+
+                                                <button class="btn blue col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO:  VERIFICADA.
+                                                </button>
+
+
+                                            @elseif($taxes->status=='cancel')
+
+                                                <button class="btn red col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO: CANCELADA.
+                                                </button>
+                                            @endif
+
+                                        <div class="input-field col s12">
+                                            @if($taxes->status=='process')
+                                                <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-ligt reconcile" data-status="cancel">
+                                                    ANULAR PLANILLA.
+                                                    <i class="icon-close right"></i></a>
+
+                                                <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light reconcile" data-status="verified">
+                                                    VERIFICAR PLANILLA.
+                                                    <i class="icon-verified_user right"></i></a>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+
+                                @endif
 
 
 
@@ -242,5 +290,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

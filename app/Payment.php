@@ -24,7 +24,7 @@ class Payment extends Model implements Auditable{
         if($this->bank==44){
             return $this->bankName="BOD";
         }else if($this->bank==77){
-            return $this->bankName="BINCENTENARIO";
+            return $this->bankName="BICENTENARIO";
         }else if ($this->bank==99){
             return $this->bankName="BNC";
         }else if($this->bank==33){

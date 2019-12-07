@@ -7,11 +7,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
-                <a href="{{ route('ciu.manage') }}" class="breadcrumb">Gestionar CIIU</a>
-                <a href="#!" class="breadcrumb">Ver Grupos CIIU</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu.manage') }}">Gestionar CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-group.read') }}">Ver Grupos CIIU</a></li>
+                </ul>
             </div>
             <div class="col s12">
                 <div class="card">

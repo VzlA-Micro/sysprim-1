@@ -26,14 +26,14 @@ class PropertyController extends Controller
         $inmuebles = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
         $inmueble_find =Inmueble::whereIn('id', $inmuebles)->get();
 
-        return view('dev.inmueble.menu', ['inmuebles' => $inmueble_find]);
+        return view('modules.properties.manage', ['inmuebles' => $inmueble_find]);
     }
 
     public function myProperty()
     {
         $inmuebles = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
         $inmueble_find =Inmueble::whereIn('id', $inmuebles)->get();
-        return view('dev.inmueble.menuPayments', ['inmuebles' => $inmueble_find]);
+        return view('modules.properties-payments.manage', ['inmuebles' => $inmueble_find]);
     }
     /**
      * Show the form for creating a new resource.
@@ -46,7 +46,7 @@ class PropertyController extends Controller
         $catastralConst = CatastralConstruccion::all();
         $parish = Parish::all();
         $alicuota= Alicuota::all();
-        return view('dev.inmueble.register', [
+        return view('modules.properties.register', [
             'parish' => $parish,
             'catasTerreno' => $catastralTerre,
             'catasConstruccion' => $catastralConst,
@@ -129,7 +129,7 @@ class PropertyController extends Controller
 
 
         $parish = Parish::find($property[0]->parish_id);
-        return view('dev.inmueble.details', array(
+        return view('modules.properties.details', array(
             'property' => $property,
             'catasConstruct' => $catasConstruct,
             'catasTerreno' => $catasTerreno,

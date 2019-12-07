@@ -371,7 +371,6 @@ $(document).ready(function () {
 
     function reset() {
         $('#details').text('');
-
         $('ul.tabs').tabs("select", "general-tab");
         $('#three').addClass('disabled');
         $('#two').addClass('disabled');
@@ -585,45 +584,59 @@ $(document).ready(function () {
     $('#fiscal_period').change(function () {
         var company = $('#company_id').val();
         var fiscal_period = $('#fiscal_period').val();
-        if (fiscal_period !== '') {
-            $.ajax({
-                method: "GET",
-                url: url + "ticket-office/find/fiscal-period/" + fiscal_period + "/" + company,
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
 
 
-                    if (response.status === 'error') {
+        console.log(company);
+        if(company!==''){
+            if (fiscal_period !== '') {
+                $.ajax({
+                    method: "GET",
+                    url: url + "ticket-office/find/fiscal-period/" + fiscal_period + "/" + company,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+
+
+                        if (response.status === 'error') {
+                            swal({
+                                title: "Información",
+                                text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
+                                icon: "info",
+                                button: "Ok",
+                            });
+                            $('#fiscal_period').val(' ')
+                        }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $('#license').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                         swal({
-                            title: "Información",
-                            text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
-                            icon: "info",
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
                             button: "Ok",
                         });
-                        $('#fiscal_period').val(' ')
                     }
+                });
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
 
-                }, error: function (err) {
-                    $('#license').val('');
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                }
+            }
+        }else{
+            $('#fiscal_period').val('');
+            swal({
+                title: "Información",
+                text: 'Debe ingresar una licencia valida de una empresa, para generar una planilla.',
+                icon: "info",
+                button: "Ok",
             });
-
-
         }
+
 
 
     });
@@ -801,9 +814,9 @@ $(document).ready(function () {
             });
 
         } else {
-
-        }$('#two').removeClass('disabled');
-        $('ul.tabs').tabs("select", "details-tab");
+            $('#two').removeClass('disabled');
+            $('ul.tabs').tabs("select", "details-tab");
+        }
 
 
     });
@@ -1116,7 +1129,36 @@ $(document).ready(function () {
 
     var url = "http://sysprim.com.devel/";
 
+    function ConfirmtypePayment() {
+        swal({
+            title: "Información",
+            text: "Debe eliger la forma en que va hacer su deposito:",
+            icon: "warning",
+            buttons: {
+                CHEQUE: {
+                    text: "CHEQUE",
+                    value: 'PPC',
+                    visible: true,
+                    className: "green"
 
+                },
+                CANCEL: {
+                    text: "EFECTIVO",
+                    value: 'PPE',
+                    visible: true,
+                    className: "green"
+                },
+
+
+            }
+        }).then(function (value) {
+            if (value !== null) {
+                $('#type_payment').val(value);
+            } else {
+                ConfirmtypePayment();
+            }
+        });
+    }
 
 
 

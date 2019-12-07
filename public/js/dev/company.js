@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -143,7 +143,7 @@ $(document).ready(function () {
 
     $('#company-register').on('submit', function (e) {
         e.preventDefault();
-
+        $('#button-company').attr('disabled','disabled');
         if ($('#lat').val() !== "") {
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
                 if ($('#ciu').val() !== undefined) {
@@ -158,7 +158,6 @@ $(document).ready(function () {
                         beforeSend: function () {
                             $("#preloader").fadeIn('fast');
                             $("#preloader-overlay").fadeIn('fast');
-                            $('#button-company').attr('disabled','disabled');
                         },
                         success: function (response) {
                             swal({
@@ -169,10 +168,8 @@ $(document).ready(function () {
                             }).then(function (accept) {
                                 window.location.href = url + "companies/my-business";
                             });
-
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
-                            $('#button-company').removeAttr('disabled','');
                         },
                         error: function (err) {
                             $('#button-company').removeAttr('disabled','');
@@ -390,7 +387,7 @@ $(document).ready(function () {
                     } else {
                         swal({
                             title: "Información",
-                            text: "El campo del codigo CIIU no debe estar vacio para iniciar la busquedad.",
+                            text: "El CIIU ingresado no se encuentra registrado.",
                             icon: "info",
                             button: "Ok",
                         });
@@ -426,10 +423,9 @@ $(document).ready(function () {
 
 
         $('#company-register-ticket').submit(function (e) {
-
-
             e.preventDefault();
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
+                $('#button-company').attr('disabled','disabled');
                 $.ajax({
                     url: url + "ticketOffice/company/save",
                     cache: false,
@@ -441,7 +437,7 @@ $(document).ready(function () {
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
-                        $('#button-company').attr('disabled','disabled');
+
                     },
                     success: function (response) {
                         swal({
@@ -452,7 +448,6 @@ $(document).ready(function () {
                         }).then(function (accept) {
                             window.location.href = url + "ticketOffice/companies/all";
                         });
-                        $('#button-company').removeAttr('disabled','');
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
 

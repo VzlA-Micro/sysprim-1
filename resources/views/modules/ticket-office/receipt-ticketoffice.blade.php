@@ -178,51 +178,52 @@
 				$interest+=$taxe->interest;
 				$amount_total+=$taxe->totalCiiu;
 			@endphp
+			@if($taxe->tax_rate!=0)
+
+			<tr>
+				<td style="width: 10%;font-size: 10px !important;">{{$taxe->ciu->code}}</td>
+				<td style="font-size: 10px !important;">RECARGO</td>
+				<td></td>
+
+				<td style="width: 10%;font-size: 10px; !important;">{{$taxe->taxes->fiscal_period}}</td>
+				<td style="width: 15%;font-size: 10px;!important">{{substr($taxe->taxes->code,3,13)}}</td>
+				<td style="font-size: 10px !important;"></td>
+				<td style="font-size: 10px !important;">{{number_format($taxe->tax_rate,2)}}</td>
+			</tr>
+
+			<tr>
+				<td style="width: 10%;font-size: 10px !important;">{{$taxe->ciu->code}}</td>
+				<td style="font-size: 10px !important;">INTERES</td>
+				<td></td>
+				<td style="width: 10%;font-size: 10px; !important;">{{$taxe->taxes->fiscal_period}}</td>
+				<td style="width: 15%;font-size: 10px;!important">{{substr($taxe->taxes->code,3,13)}}</td>
+				<td style="font-size: 10px !important;"></td>
+				<td style="font-size: 10px !important;">{{number_format($taxe->interest,2)}}</td>
+			</tr>
+			@endif
+
+
+			<tr>
+				<td style="width: 10%;font-size: 10px !important;" colspan="7">_________________________________________________________________________________________________________________________________</td>
+
+			</tr>
+
 		@endforeach
 
-
-		@if($recargo!=0)
 		<tr>
-			<td></td>
-			<td style="font-size: 10px !important;">RECARGO</td>
-			<td></td>
-			<td></td>
-			<td style="font-size: 10px !important;"></td>
-			<td style="font-size: 10px !important;"></td>
-			<td style="font-size: 10px !important;">{{number_format($recargo,2)}}</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td style="font-size: 10px !important;">INTERES</td>
-			<td></td>
-			<td></td>
-			<td style="font-size: 10px !important;"></td>
-			<td style="font-size: 10px !important;"></td>
-			<td style="font-size: 10px !important;">{{number_format($interest,2)}}</td>
-		</tr>
-		@endif
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>TOTAL</td>
-			<td style="font-size: 14px !important; text-align: left">{{number_format($amount_total,2)}}</td>
+			<td  style="font-size: 14px !important; text-align: right;" width="100" colspan="7">TOTAL:{{number_format($amount_total+$recargo+$interest,2)}}</td>
 		</tr>
 		</tbody>
-
-
 		<hr>
 		<tr>
-			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($amount_total))."."}}</td>
+			<td colspan="7" style="font-size: 13px;!important;">{{strtoupper(NumerosEnLetras::convertir($amount_total+$recargo+$interest))."."}}</td>
 		</tr>
 	</table>
 	<table>
 
 
 
-		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)!=='PPV')
+		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)!='PPV')
 		<tr>
 			<td style="font-size: 12px !important; text-align: center;">Planilla</td>
 			<td style="font-size: 12px !important; text-align: center;">Dígito</td>
@@ -237,26 +238,26 @@
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->taxes->payments[0]->digit}}</td>
 			<td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->taxes->payments[0]->code,3,13)}}<</td>
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->taxes->companies[0]->license}}</td>
-			<td style="font-size: 12px !important;text-align: center;">{{number_format($taxes[0]->taxes->payments[0]->amount,2)}}</td>
+			<td style="font-size: 12px !important;text-align: center;">{{number_format($amount_total+$recargo+$interest,2)}}</td>
 		</tr>
 		@else
 			<tr>
-				<td style="font-size: 12px !important; text-align: center;"></td>
-				<td style="font-size: 12px !important; text-align: center;"></td>
-				<td style="font-size: 12px !important; text-align: center;"></td>
-				<td style="font-size: 12px !important; text-align: center;"></td>
-				<td style="font-size: 12px !important; text-align: center;"></td>
+				<td style="font-size: 12px !important; text-align: center;">Planilla</td>
+				<td style="font-size: 12px !important; text-align: center;">Dígito</td>
+				<td style="font-size: 12px !important; text-align: center;">Correlat</td>
+				<td style="font-size: 12px !important; text-align: center;">Contrib</td>
+				<td style="font-size: 12px !important; text-align: center;">Monto</td>
 				<td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI ENMENDADURA NO VALIDO COMO SOLVENCIA</td>
 			</tr>
 
-			<tr>
-				<td style="font-size: 12px !important;text-align: center;"></td>
-				<td style="font-size: 12px !important;text-align: center;"></td>
-				<td style="font-size: 12px !important;text-align: center;"></td>
-				<td style="font-size: 12px !important;text-align: center;"></td>
-				<td style="font-size: 12px !important;text-align: center;"></td>
-			</tr>
 
+			<tr>
+				<td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->code}}</td>
+				<td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->digit}}</td>
+				<td style="font-size: 12px !important; text-align: center;">{{substr($taxes[0]->taxes->code,3,13)}}</td>
+				<td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->companies[0]->license}}</td>
+				<td style="font-size: 12px !important; text-align: center;">{{number_format($amount_total+$recargo+$interest,2)}}</td>
+			</tr>
 
 		@endif
 
@@ -273,16 +274,56 @@
 			<tr>
 				<td></td>
 			</tr>
+
+
+
+			@if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
 			<tr>
 				<td style="width: 100%;text-align: center; font-size: 14px;">
-
+					@if($taxes[0]->taxes->payments[0]->bank==44)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
+					@elseif($taxes[0]->taxes->payments[0]->bank==77)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BICENTENARIO*****
+					@elseif($taxes[0]->taxes->payments[0]->bank==99)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
+					@elseif($taxes[0]->taxes->payments[0]->bank==33)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
+					@elseif($taxes[0]->taxes->payments[0]->bank==55)
+						***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
+					@else
+						***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
+					@endif
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 100%;text-align: center; font-size: 14px;">
-
+					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes[0]->taxes->created_at))}}**
 				</td>
 			</tr>
+
+			@else
+				<tr>
+					<td style="width: 100%;text-align: center; font-size: 14px;">
+						@if($taxes[0]->bank==44)
+							***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BOD*****
+						@elseif($taxes[0]->bank==77)
+							***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BICENTENARIO*****
+						@elseif($taxes[0]->bank==99)
+							***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BNC*****
+						@elseif($taxes[0]->bank==33)
+							***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA 100%BANCO*****
+						@elseif($taxes[0]->bank==55)
+							***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BANESCO *****
+						@endif
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 100%;text-align: center; font-size: 14px;">
+
+					</td>
+				</tr>
+			@endif
+
 		</table>
 
 
@@ -293,67 +334,97 @@
 ?>
 
 
-    <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
-        <table style="width: 100%">
-        	<tr>
-        		<td style="width: 100%;"></td>
-        		<td style="width: 100%"></td>
-        		<td style="width: 100%;">
+<div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
+	<table style="width: 100%">
+		<tr>
+			<td style="width: 100%;"></td>
+			<td style="width: 100%"></td>
+			<td style="width: 100%;">
 
 
 
-        		</td>
+			</td>
 
-        	</tr>
+		</tr>
 
-        </table>
-        <b></b>  <b></b><br>
-         <b></b><br>
-         <b></b><br>
+	</table>
+	<b></b>  <b></b><br>
+	<b></b><br>
+	<b></b><br>
 
 
-		<table style="width: 100%;margin-bottom:-30px;">
+	<table style="width: 100%;margin-bottom:-30px;">
+		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
+
+
 			<tr>
 
 
-
 					<td style="width: 40%;text-align: center;">
-						<img src="" style="width:180px; height:80px;">
-
+						__________________________________________
 					</td>
-
-
-					<td style="width: 40%;text-align: center;">
-
-					</td>
-
 
 
 			</tr>
 			<tr>
-
-
 					<td style="width:40%;text-align: center; font-size: 10px;">
-
-					</td>
+						FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
+						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.<
+						</td>
 
 
 			</tr>
-		</table>
-		<table style="width: 100%;margin-bottom:-30px;">
+
+
+		@else
+			<tr>
+				<td style="width: 40%;text-align: center;position: relative;">
+					<img src="http://sysprim.com.devel/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="">
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center;font-size: 13px;position: relative;top: -5cm;" ><b>
+						__________________________________________<br>
+						ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
+						Directora (E) de la Dirección de Hacienda y<br>
+						Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
+					</b>
+				</td>
+			</tr>
+		@endif
+	</table>
+
+
+
+
+
+
+	<table style="width: 100%;">
+
+		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
+		<tr>
+			<td style="width: 80%;">
+				<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->taxes->id))) !!} " style="float: left;top: -1cm;right: 800px !important;left: 900px; position: absolute">
+			</td>
+		</tr>
+
+		@else
 			<tr>
 				<td style="width: 80%;">
-				<!--<img src="data:image/png;base64, !} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">-->
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period)) !!} " >
 				</td>
 			</tr>
-			<tr>
-				<td style="width: 20%;">
+		@endif
 
-						<!--<img src="https://sysprim.com/images/pdf/{{}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">-->
 
-				</td>
-			</tr>
-		</table>
-    </div>
+
+		<tr>
+			<td style="width: 20%;">
+
+			</td>
+		</tr>
+	</table>
+</div>
 </body>
 </html>

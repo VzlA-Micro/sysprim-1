@@ -8,11 +8,13 @@
     @php setlocale(LC_MONETARY, 'en_US');@endphp
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="#!" class="breadcrumb">Pagar Planilla</a>
-
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Generar Planilla</a></li>
+                </ul>
             </div>
             <div class="col s12 card">
                     <ul class="tabs">
@@ -39,25 +41,35 @@
                                 </thead>
 
                                 <tbody id="receipt-body">
-                                @foreach($taxes as $taxe)
+
+
+                                @if($taxes!==null)
+                                    @foreach($taxes as $taxe)
+                                        <tr>
+                                            <td>{{$taxe->companies[0]->name}}</td>
+                                            <td>{{$taxe->companies[0]->license}}</td>
+                                            <td>{{$taxe->code}}</td>
+                                            <td>{{$taxe->fiscal_period}}</td>
+                                            <td><p>
+                                                    <label>
+                                                        <input type="checkbox" name="payroll" class="payroll"
+                                                               value="{{$taxe->id}}"/>
+                                                        <span></span>
+                                                    </label>
+                                                </p></td>
+                                            <td>{{number_format($taxe->amount,2)}}</td>
+                                            <td> <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                    class="btn indigo waves-effect waves-light"><i
+                                                            class="icon-pageview left"></i>Detalles</a></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+
                                     <tr>
-                                        <td>{{$taxe->companies[0]->name}}</td>
-                                        <td>{{$taxe->companies[0]->license}}</td>
-                                        <td>{{$taxe->code}}</td>
-                                        <td>{{$taxe->fiscal_period}}</td>
-                                        <td><p>
-                                                <label>
-                                                    <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"/>
-                                                    <span></span>
-                                                </label>
-                                            </p></td>
-                                        <td>{{number_format($taxe->amount,2)}}</td>
-                                        <td> <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                class="btn indigo waves-effect waves-light"><i
-                                                        class="icon-pageview left"></i>Detalles</a></td>
+                                        <td colspan="7">Todavia no se genera una planilla</td>
                                     </tr>
-                                @endforeach
+
+                                @endif
                                 </tbody>
                             </table>
                             <div class="col s12 right-align">
@@ -132,7 +144,7 @@
                                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
                                                          alt="">
                                                 </i>
-                                                <input type="text" name="amount" id="amount" value=""
+                                                <input type="text" name="amount_total" id="amount" value=""
                                                        class="validate money_keyup"
                                                        required>
                                                 <label for="amount">Monto de punto de Venta</label>
@@ -144,7 +156,7 @@
                                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem"
                                                          alt="">
                                                 </i>
-                                                <input type="text" name="amount_total" id="amount_total" value=""
+                                                <input type="text" name="amount" id="amount_total" value=""
                                                        class="validate money amount"
                                                        required readonly>
                                                 <label for="amount_total">Total a Pagar</label>
@@ -160,8 +172,6 @@
                                     </form>
                                 </div>
                             </li>
-
-
                             @if(\Auth::user()->role_id===1)
                 <li>
                     <div class="collapsible-header"><i class="icon-payment"></i>TRANSFERENCIA</div>
@@ -209,8 +219,7 @@
                                 <div class="input-field col s12 m6 ">
                                     <i class="icon-person  prefix "></i>
                                     <input type="text" name="person" id="person" value=""
-                                           class="validate"
-                                           required>
+                                           class="validate" required>
                                     <label for="ref">Nombre</label>
                                 </div>
 
@@ -316,7 +325,18 @@
                                             </div>
 
 
-                                            <input type="hidden" name="amount" id="amount" value=""   class="validate amount money_keyup" required>
+                                            <div class="input-field col s12 m6">
+                                                <i class="prefix">
+                                                    <img src="{{ asset('images/isologo-BsS.png') }}"
+                                                         style="width: 2rem"
+                                                         alt="">
+                                                </i>
+                                                <input type="text" name="amount_total" id="amount_total_depo"  value="" class="validate money amount"
+                                                       required>
+                                                <label for="amount_total_depo">Total a Pagar</label>
+                                            </div>
+
+
                                             <div class="row col s12 m6 padding-2">
                                                 <button type="submit"
                                                         class="btn btn-large btn-rounded peach waves-effect waves-light">
@@ -339,7 +359,7 @@
         </div>
         <div id="modal-tick" class="modal">
             <div class="modal-content">
-                <h4 class="center-align">Escanear QR</h4>
+                <h4 class="center-align">Escanear QR O Ingresar Código</h4>
                 <div class="col l12">
                     <div class="col s12 center-align">
                         <img src="{{asset('images/scan.gif')}}" class="img-responsive">
@@ -347,7 +367,7 @@
                     <div class="input-field col s10">
                         <i class="icon-search prefix"></i>
                         <input id="search" type="search" value="">
-                        <label for="search">CODIGO QR</label>
+                        <label for="search">CÓDIGO</label>
                     </div>
                 </div>
 

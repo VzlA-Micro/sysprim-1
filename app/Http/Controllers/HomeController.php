@@ -22,6 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('auth');
     }
 
@@ -38,8 +39,10 @@ class HomeController extends Controller
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
                 foreach ($user->companies as $company){
-                         $taxes=TaxesMonth::verify($company->id,false);
+                         $taxes=TaxesMonth::verify($company->id,true);
                 }
+
+
                 $notifications= DB::table('notification')->where('user_id','=',\Auth::user()->id)->get();
                 session(['notifications' => $notifications]);
             }

@@ -4,7 +4,7 @@ $('document').ready(function () {
     $('#verification').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: url + "inmueble/verification",
+            url: url + "properties/verification",
             cache: false,
             contentType: false,
             processData: false,
@@ -49,7 +49,7 @@ $('document').ready(function () {
     $('#property').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: url + "inmueble/save",
+            url: url + "properties/save",
             cache: false,
             contentType: false,
             processData: false,
@@ -68,7 +68,7 @@ $('document').ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url + "inmueble/my-property";
+                    window.location.href = url + "properties/my-properties";
                 });
                 ;
 

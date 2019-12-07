@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');
@@ -12,9 +12,13 @@ $('document').ready(function () {
             message='cancelada';
         }
 
+
+
+
+
         swal({
             title: "Información",
-            text: '¿Estas seguro?, el estado de esta planilla cambiaria  a "'+ message+'".',
+            text: '¿Estas seguro?, el estado de esta planilla cambiaria  a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {
@@ -34,20 +38,17 @@ $('document').ready(function () {
         }).then(function (aceptar) {
             if (aceptar) {
 
-
-
-                console.log(taxes_id);
-                console.log(status);
                 $.ajax({
                     method: "GET",
                     url: url + "ticket-office/payments/change/"+ taxes_id +"/"+ status ,
-
 
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
+
+
 
 
                         if (response.status) {
@@ -65,7 +66,6 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeOut('fast');
 
                     }, error: function (err) {
-                        $('#license').val('');
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
                         swal({

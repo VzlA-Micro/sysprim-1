@@ -7,9 +7,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                </ul>
             </div>
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('tax-unit.manage') }}" class="btn-app white blue-text text-darken-2">

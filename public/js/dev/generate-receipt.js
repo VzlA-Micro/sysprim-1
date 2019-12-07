@@ -34,10 +34,13 @@ $('document').ready(function () {
                     });
 
 
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
+
+                    $('#amount_total_depo').val(function (index, value) {
+                        return number_format(value, 2);
+                    });
 
                     $('#amount_total').val(function (index, value) {
                         return number_format(value, 2);
@@ -298,7 +301,18 @@ $('document').ready(function () {
         var amount = $('#amount_total').val();
         var amount_pay = $('#amount').val();
 
-        if (amount_pay > amount) {
+            amount=amount.replace(/\./g,'');
+            amount_pay=amount_pay.replace(/\./g,'');
+
+
+            amount=amount.replace(/,/g, "");
+            amount_pay=amount_pay.replace(/,/g, "");
+
+
+
+
+
+           if (parseInt(amount_pay) > parseInt(amount)) {
             swal({
                 title: "Error",
                 text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
@@ -555,10 +569,40 @@ $('document').ready(function () {
                 }
             });
 
-
     });
 
 
+
+    function ConfirmtypePayment() {
+        swal({
+            title: "Información",
+            text: "Debe eliger la forma en que va hacer su deposito:",
+            icon: "warning",
+            buttons: {
+                CHEQUE: {
+                    text: "CHEQUE",
+                    value: 'PPC',
+                    visible: true,
+                    className: "green"
+
+                },
+                CANCEL: {
+                    text: "EFECTIVO",
+                    value: 'PPE',
+                    visible: true,
+                    className: "green"
+                },
+
+
+            }
+        }).then(function (value) {
+            if (value !== null) {
+                $('#type_payment').val(value);
+            } else {
+                ConfirmtypePayment();
+            }
+        });
+    }
 
 
     $('#register-payment-tr').submit(function (e) {
@@ -604,22 +648,16 @@ $('document').ready(function () {
                     } else {
                         swal({
                             title: "¡Bien hecho!",
-                            text: "Planilla ingresa y conciliada con éxito.",
+                            text: "Planilla ingresa, una vez se verifique el pago se enviara la planilla, al correo afiliado a esta empresa.",
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
-
-                            window.open(url + 'ticket-office/generate-receipt/' +taxes_id, "RECIBO DE PAGO", "width=500, height=600");
                             location.reload();
                         });
 
                     }
-
-
                     $('#ref_tr').val('');
                     $('#amount_tr').val('');
-
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 

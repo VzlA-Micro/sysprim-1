@@ -7,14 +7,16 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('companies.manage') }}" class="breadcrumb">Gestionar Usuarios</a>
-                <a href="{{ route('companies.read') }}" class="breadcrumb">Ver Usuarios</a>
-                <a href="#!" class="breadcrumb">Detalles</a>
-                <a href="#!" class="breadcrumb">Editar</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.read') }}">Ver Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="">Detalles</a></li>
+                    <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
+                </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
 
 
 
@@ -26,7 +28,7 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" value="1" name="confirmed">
-                        <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
+                        <input type="hidden" value="{{$user->id}}" name="id" id="id">
                         <div class="input-field col s6 m3">
 
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
@@ -53,7 +55,7 @@
                         </div>
                         <div class="input-field col s6 m3">
                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
-                            <select name="country_code" id="country_code_company" required disabled>
+                            <select name="country_code" id="country_code_company" required>
                                 <option value="null" selected disabled>...</option>
                                 <option value="+58412" @if ($user->operator=='+58412'){{"selected"}}@endif >(412)</option>
                                 <option value="+58414" @if ($user->operator=='+58414'){{"selected"}}@endif>(414)</option>
@@ -66,7 +68,7 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" readonly >
+                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
@@ -91,10 +93,20 @@
                     </div>
 
                     <div class="card-footer center">
-                        <button type="submit" id="actualizar" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
-                        <!--<button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
-                    </div>
-                        -->
+                        <div class="row">
+                            <div class="col s12 m6 center-align">
+                                <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves-light">
+                                    <i class="icon-update right"></i>
+                                    Actualizar
+                                </button>
+                            </div>
+                            <div class="col s12 m6">
+                                <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
+                                    <i class="icon-send right"></i>
+                                    Resetear Contraseña
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -153,10 +153,10 @@ class UserController extends Controller{
     }
 
     public function resetUserPassword(Request $request) {
-        $id = $request->input('id');
-        $password=Hash::make($request->input('password'));
+        $id= $request->input('id');
         $user=User::find($id);
-        $user->password=$password;
+        $password = Hash::make($user->ci);
+        $user->password = $password;
         $user->update();
     }
 

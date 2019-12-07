@@ -10,10 +10,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="{{ route('payments.manage') }}" class="breadcrumb">Gestionar Pagos</a>
-                <a href="#!" class="breadcrumb">Ver Pagos</a>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas</a></li>
+                </ul>
             </div>
 
             <div class="col s12">
@@ -27,12 +29,11 @@
                                         <th>Fecha</th>
                                         <th>Contribuyente</th>
                                         <th>Forma de Pago</th>
-                                        <th>Banco</th>
                                         <th>Ramo</th>
                                         <th>Periodo</th>
                                         <th>Status</th>
                                         <th>Monto</th>
-                                        <!--<th>Detalles</th>-->
+                                        <th>Detalles</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,12 +43,15 @@
                                             <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                             <td>{{$taxe->companies[0]->name}}</td>
                                             <td>{{$taxe->typePayment}}</td>
-                                            <td>{{$taxe->bankName}}</td>
                                             <td>{{$taxe->branch}}</td>
                                             <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                             <td>{{$taxe->statusName}}</td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
-                                            <!--<td></td>-->
+                                            <td>
+                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -71,7 +75,7 @@
 
         var name = $('.email').text();
         var amount_total = $('#amount_total').val();
-        console.log(name);
+
 
         $('#payments').DataTable({
             dom: 'Bfrtip',

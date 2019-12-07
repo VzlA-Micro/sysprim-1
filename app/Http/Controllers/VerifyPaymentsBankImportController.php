@@ -170,6 +170,6 @@ class VerifyPaymentsBankImportController extends Controller
 
         $taxes = Taxe::where('status','verified')
         ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-        return view('dev.verifyPaymentsBank.read',['taxes'=>$taxes]);
+        return view('modules.bank.read',['taxes'=>$taxes]);
     }
 }

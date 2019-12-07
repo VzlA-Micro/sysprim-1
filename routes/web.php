@@ -33,15 +33,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // User module routes
-Route::get('/user/register',array(
-    'uses'=>'UserController@create',
-    'as'=>'userRegister'
-));
-
-Route::post('/user/save',array(
-    'uses'=>'UserController@store',
-    'as'=>'userSave'
-));
+Route::get('/users/register','UserController@create')->name('users.register');
+Route::post('/users/save', 'UserController@store')->name('users.save');
 
 Route::get('/users/verify/{code}','UserController@verify');
 Route::get('/profile', function() {
@@ -50,36 +43,22 @@ Route::get('/profile', function() {
 Route::get('/users/manage', function() {
     return view('modules.users.menu');
 })->name('users.manage');
-Route::get('/users/register', function() {
+/*Route::get('/users/register', function() {
     return view('modules.users.register');
-})->name('users.register');
+})->name('users.register');*/
 
 
 Route::get('/users/account/{id}/{status}','UserController@enableDisableAccount');
-
-
-
-
-
-Route::get('/users/read',array(
-    'as'=>'userRead',
-    'uses'=>'UserController@show'
-));
-
-Route::get('/users/details/{id}',array(
-    'as'=>'detailsUser',
-    'uses'=>'UserController@edit'
-));
+Route::get('/users/read','UserController@show')->name('users.read');
+Route::get('/users/details/{id}','UserController@edit')->name('users.details');
+Route::post('/users/reset-password/', 'UserController@resetUserPassword')->name('users.reset-password');
+Route::post('/users/update/','UserController@update')->name('users.update');
 
 Route::get('/users/editar/{id}',array(
     'as'=>'editarUser',
     'uses'=>'UserController@editar'
 ));
 
-Route::post('/users/update/',array(
-    'as'=>'updateUser',
-    'uses'=>'UserController@update'
-));
 
 Route::get('/avatar/{filename}', 'UserController@getImage')->name('users.getImage');
 Route::post('/users/setImage', 'UserController@changeImage')->name('users.setImage');
@@ -369,29 +348,17 @@ Route::get('/payments/verify/manage', function() {
 })->name('payments.verify.manage');
 
 //Inmuebles
-Route::get('/inmueble/my-property','PropertyController@index')->name('inmueble.my-property');
-
-Route::get('/inmueble-register',array(
-    'as'=>'registerInmueble',
-    'uses'=>'PropertyController@create'
-));
-
-Route::post('/inmueble/save',array(
-    'as'=>'saveInmueble',
-    'uses'=>'PropertyController@store'
-));
-
-Route::post('/inmueble/verification',array(
-    'as'=>'verificationCode',
-    'uses'=>'PropertyController@verification'
-));
+Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
+Route::get('/properties/register','PropertyController@create')->name('properties.register');
+Route::post('/properties/save','PropertyController@store')->name('properties.save');
+Route::post('/properties/verification','PropertyController@verification')->name('properties.verification');
 
 Route::get('/inmueble/show/{id}',array(
     'as'=>'show.inmueble',
     'uses'=>'PropertyController@show'
 ));
-
 Route::get('/inmueble/mi-inmueble','PropertyController@myProperty')->name('inmueble.my-propertys');
+
 
 Route::get('/inmueble/my-inmueble/{id}',array(
     'uses'=>'PropertyTaxesController@create',
@@ -422,21 +389,18 @@ Route::post('/paymentProperty', array(
     'uses'=>'PropertyTaxesController@paymentsHelp',
     'as'=>'paymentsProperty.help'));
 
+
+Route::get('estates/my-prperties', 'PropertyController@myProperty');
+
 //verifyPaymentsBanks
 
 Route::get('/fileBank-register', function() {
     return view('dev.verifyPaymentsBank.upload');
 })->name('bank.upload');
 
-Route::post('/fileBank/save',array(
-    'as'=>'saveFileBank',
-    'uses'=>'VerifyPaymentsBankImportController@importFile'
-));
+Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
 
-Route::get('/verified/payments',array(
-    'as'=>'verifiedPayments',
-    'uses'=>'VerifyPaymentsBankImportController@verifyPayments'
-));
+Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
 
 //taquilla
 Route::get('/home/ticketOffice', function() {
@@ -469,7 +433,7 @@ Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode')
 Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
 Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
 Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
-Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
+Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
 Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
 Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
 Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
@@ -485,7 +449,7 @@ Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController
 
 
 
-Route::get('/carnet', 'CompanyTaxesController@getCarnet')->name('carnet');
+Route::get('/companies/carnet/{id}', 'CompaniesController@getCarnet')->name('companies.carnet');
 
 
 
@@ -586,10 +550,15 @@ Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword'
 Route::get('/help', function() {
     return view('modules.helps.manage');
 })->name('helps.manage');
+Route::get('/help/register-company', function() {
+    return view('modules.helps.register-company');
+})->name('help.register-company');
+
+
 
 Route::get('/taxes/payments', function() {
     return view('modules.taxes.payments');
 })->name('taxes.payments');
 
-
+Route::get('/pdfMultas','CompanyTaxesController@pdfMultas');
 

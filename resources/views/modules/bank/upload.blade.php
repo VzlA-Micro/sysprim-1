@@ -3,8 +3,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m6 offset-m3">
-                <form action="{{ route('saveReferenceBank') }}" method="post" class="card" enctype="multipart/form-data">
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Verificación de Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Cargar Pagos</a></li>
+                </ul>
+            </div>
+            <div class="col s12 m8 offset-m2">
+                <form action="{{ route('bank.verify') }}" id="verifyPaymentsBank" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>Cargar Archivo de Banco</h5>
                     </div>

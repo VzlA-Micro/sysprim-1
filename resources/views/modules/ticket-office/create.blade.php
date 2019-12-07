@@ -8,12 +8,15 @@
     @php setlocale(LC_MONETARY, 'en_US');@endphp
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('home.ticket-office') }}" class="breadcrumb">Taquilla</a>
-                <a href="#!" class="breadcrumb">Generar Planilla</a>
-
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Generar Planilla</a></li>
+                </ul>
             </div>
+
             <div class="col s12">
                 <form action="#" method="post" class="card" id="register-taxes" enctype="multipart/form-data">
                     <ul class="tabs">
@@ -36,8 +39,8 @@
 
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="search-code" id="search-code">
-                                <label for="license">Licencia o Código</label>
+                                <input type="text" name="search-code" id="search-code" >
+                                <label for="license">Licencia O RIF</label>
                             </div>
 
 
@@ -381,7 +384,7 @@
         </div>
         <div id="modal-tick" class="modal">
             <div class="modal-content">
-                <h4 class="center-align">Escanear QR</h4>
+                <h4 class="center-align">Escanear QR O Ingresar Código</h4>
                 <div class="col l12">
                     <div class="col s12 center-align">
                         <img src="{{asset('images/scan.gif')}}" class="img-responsive">
@@ -389,7 +392,7 @@
                     <div class="input-field col s10">
                         <i class="icon-search prefix"></i>
                         <input id="search" type="search" value="">
-                        <label for="search">CODIGO QR</label>
+                        <label for="search">CODIGO QR </label>
                     </div>
                 </div>
 

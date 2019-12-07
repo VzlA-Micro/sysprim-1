@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
@@ -119,8 +119,6 @@ $(document).ready(function () {
                             button: "Ok",
                         });
                     }
-
-                    $('#email').val('');
                 },
                 error: function (err) {
                     $("#preloader").fadeOut('fast');
@@ -131,6 +129,8 @@ $(document).ready(function () {
                         icon: "error",
                         button: "Ok",
                     });
+
+                    $('#email').val('');
                 }
             });
         }
@@ -147,11 +147,17 @@ $(document).ready(function () {
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
+                    $('#name').attr('readonly','readonly');
+
 
                     if($('#name_user').val()!==undefined){
                         $('#name_user').val(response.response.nombres);
+                        $('#name_user').attr('readonly','readonly')
                     }
                     $('#surname').val(response.response.apellidos);
+                    $('#surname').attr('readonly','readonly');
+
+
                     console.log(response);
                     M.updateTextFields();
 
@@ -175,7 +181,7 @@ $(document).ready(function () {
         e.preventDefault();
         var formData = new FormData(this); // Creating FormData object.
         $.ajax({
-            url: url + "user/save",
+            url: url + "users/save",
             cache: false,
             contentType: false,
             processData: false,
@@ -216,6 +222,88 @@ $(document).ready(function () {
         });
     });
 
+    $('#btn-reset-password').click(function() {
+        var id = $('#id').val();
+        var ci = $('#ci').val();
+        swal({
+            icon: "info",
+            title: "Resetear Contraseña",
+            text: "¿Está seguro que desea resetear la contraseña? Si lo hace, no podrá revertir los cambios.",
+            buttons: {
+                confirm: {
+                    text: "Resetear",
+                    value: true,
+                    visible: true,
+                    className: "red-gradient"
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true, 
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(confirm => {
+            if(confirm) {
+                $.ajax({
+                    method: 'POST',
+                    datType: 'json',
+                    data: {
+                        id: id,
+                        ci: ci
+                    },
+                    url: url + "users/reset-password",
+                    beforeSend: function() {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: "Reseteo Exitoso",
+                            text: "Se ha reseteado la contraseña éxitosamente.",
+                            icon: "success",
+                            timer: 3000,
+                            buttons: {
+                                confirm: {
+                                    text: "Aceptar",
+                                    className: "green-gradient"
+                                }
+                            }
+                        })
+                        .then(exit => {
+                            location.href = url + 'users/manage';
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            text: "No se ha reseteado la contraseña",
+                            icon: "info",
+                            buttons: {
+                                confirm: {
+                                    text: "Aceptar",
+                                    className: "blue-gradient"
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                swal({
+                    text: "No se ha reseteado la contraseña",
+                    icon: "info",
+                    buttons: {
+                        confirm: {
+                            text: "Aceptar",
+                            className: "blue-gradient"
+                        }
+                    }
+                });
+            }
+        }); 
+    });
 
     var statusBoton = false;
         $('#userUpdate').on('submit', function (e) {

@@ -7,10 +7,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('security.manage') }}" class="breadcrumb">Seguridad</a>
-                <a href="{{ route('bitacora') }}" class="breadcrumb">Bitácora</a>
+            <div class="col s12">
+            	<ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('security.manage') }}">Seguridad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('bitacora') }}">Bitácora</a></li>
+                </ul>
             </div>
             <div class="col s12">
             	<div class="card">

@@ -3,16 +3,18 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Pagar Impuestos</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company')]) }}">Pagar Impuestos</a></li>
+                </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1">
                 <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
-                    @if(is_null($date))
+                   {{-- @if(is_null($date))
                         <div class="alert alert-success center-align">
                             <strong>Todavia no hay pagos que realizar.</strong>
                         </div>
@@ -21,6 +23,9 @@
                             <strong>ACTIVIDAD ECONOMICA DECLARADA, POR FAVOR CONCILIE SUS PAGOS.</strong>
                         </div>
                     @else
+                    --}}
+
+
 
                         <div class="card-header center-align">
                             <h5>Declarar actividad Económica</h5>
@@ -28,19 +33,53 @@
 
                         <div class="card-content row">
                             @csrf
-                            <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
-                            <div class="input-field col s12">
-                                <input type="hidden" name="fiscal_period" id="fiscal_period"
-                                       value="{{$date['fiscal_period']}}">
-                            </div>
-
                             <div class="input-field col s12">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period_view" id="fiscal_period_view"
-                                       value="{{$date['mount_pay']}}" readonly>
-                                <label for="fiscal_period">Periodo Fiscal</label>
+                                <select name="fiscal_period">
+                                    <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
+                                    @foreach($mounths as $key=>$value)
+                                        @php
+                                            $band=false; $status; @endphp
+                                                @if($mount_pay!==null)
+                                                    @foreach($mount_pay as $key_mont=>$value_month)
+                                                            @if($key_mont==date('Y').'-'.$value.'-'.'01'&&!$band)
+                                                                    @php
+                                                                           $band=true;
+                                                                           $status=$value_month;
+                                                                    @endphp
+
+
+                                                            @endif
+                                                    @endforeach
+                                                @endif
+
+                                                @if(!$band)
+                                                    @if($value<$mountNow)
+                                                      <option value="{{date('Y').'-'.$value.'-'.'01'}}">{{$key." ".date('Y')}}</option>
+                                                    @endif
+                                                @else
+                                                     <option value="{{date('Y').'-'.$value.'-'.'01'}}" disabled>{{$key." ".date('Y')."|".$status}}</option>
+                                                @endif
+                                    @endforeach
+                                </select>
+                                <label>Perido Fiscal</label>
                             </div>
 
+                          <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
+
+                            {{--   <div class="input-field col s12">
+                                  <input type="hidden" name="fiscal_period" id="fiscal_period"
+                                         value="{{$date['fiscal_period']}}">
+                              </div>
+
+
+                          <!--   <div class="input-field col s12">
+                                  <i class="icon-date_range prefix"></i>
+                                  <input type="text" name="fiscal_period_view" id="fiscal_period_view"
+                                         value="{{$date['mount_pay']}}" readonly>
+                                  <label for="fiscal_period">Periodo Fiscal</label>
+                              </div>
+  -->--}}
                             <div class="divider"></div>
                             @foreach($company->ciu as $ciu)
                                 <div class="ciu-company">
@@ -114,7 +153,7 @@
                                 </div>
                               </div>
                         </div>
-                    @endif
+
                 </form>
             </div>
         </div>

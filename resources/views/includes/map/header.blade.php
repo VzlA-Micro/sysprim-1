@@ -15,8 +15,8 @@
                 </li>
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
-                    <li><a href=""><i class="icon-account_box"></i>Account</a></li>
-                    <li><a href=""><i class="icon-settings"></i>Settings</a></li>
+                    <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li>
+                    <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
                     <li class="divider"></li>
                     <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -34,13 +34,23 @@
             <li><a href="" class="subheader">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
             <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a></li>
             <li class="divider"></li>
-            <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Home</a></li>
+            <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a></li>
             <li class="divider hide-on-large-only"></li>
-            <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>     
-            <li><a href="#" class="waves-effect waves-blue" id="company-solvent">PAGOS VERIFICADOS</a></li>
-            <li><a href="#" id='company-process' class="waves-effect waves-blue">PAGOS EN PROCESO</a></li>
+            <li class="waves-efect waves-light hide-on-large-only">
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();document.getElementById('logout-sidenav-form').submit();">
+                    <i class="icon-exit_to_app"></i>
+                    {{ __('Desconectar') }}
+                </a>
+            </li>
+            <form id="logout-sidenav-form" action="{{ route('logout') }}" method="post" style="display: none;">
+                @csrf
+            </form>
+            <!-- <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>      -->
+            <li><a href="#" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only" id="company-solvent">PAGOS VERIFICADOS</a></li>
+            <li><a href="#" id='company-process' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">PAGOS EN PROCESO</a></li>
 
-            <li><a href="{{ route('home') }}" class="waves-effect waves-blue">Volver a SEMAT</a></li>
+            <li><a href="{{ route('home') }}" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">Volver a SEMAT</a></li>
         </ul>
     </nav>
 </header>
