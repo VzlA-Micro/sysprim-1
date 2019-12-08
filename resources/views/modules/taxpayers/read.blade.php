@@ -29,7 +29,9 @@
                                     <th>Teléfono</th>
                                     <th>E-mail</th>
                                     <th>Verificado</th>
+                                    @can('Detalles Contribuyentes')
                                     <th>Detalles</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,11 +48,13 @@
                                         Sin Verificar<i class="icon-close red-text" style="font-size: 20px"></i>
                                         @endif
                                     </td>
+                                    @can('Detalles Contribuyentes')
                                     <td>
                                         <a href="{{ route('taxpayers.details',['id' => $user->id]) }}" class="btn btn-floating orange waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
+                                    @endcan
                                 </tr>
                                 @endforeach                                
                             </tbody>

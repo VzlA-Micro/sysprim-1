@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                 </ul>
             </div>
+            @can('Registar Empresa')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('tickOffice.companies.register') }}" class="btn-app white teal-text text-darken-2">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Empresa</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Empresas')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('companies.read') }}" class="btn-app white indigo-text">
                     <i class="icon-playlist_add_check"></i>
                     <span class="truncate">Ver Empresas</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

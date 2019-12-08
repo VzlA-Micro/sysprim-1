@@ -9,10 +9,12 @@ use App\Notifications\MyResetPassword;
 use App\Notifications\VerifyEmailNotification;
 use App\Notifications\Payments;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable  implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     protected $auditEvents = [
         'created',

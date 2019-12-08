@@ -13,30 +13,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('security.manage') }}">Seguridad</a></li>
                 </ul>
             </div>
+            @can('Gestionar Roles y Permisos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('roles.manage') }}" class="btn-app white teal-text">
                     <i class="icon-contacts"></i>
                     <span class="truncate">Gestionar Roles</span>
                 </a>
             </div>
+            @endcan
+            @can('Bitacora')
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('permissions.manage') }}" class="btn-app white indigo-text">
-                    <i class="icon-star"></i>
-                    <span class="truncate">Gestionar Permisos</span>
-                </a>
-            </div>
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('modules.manage') }}" class="btn-app white amber-text">
-                    <i class="icon-widgets"></i>
-                    <span class="truncate">Gestionar Módulos</span>
-                </a>
-            </div>
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('bitacora') }}" class="btn-app white lime-text">
+                <a href="{{ route('audits') }}" class="btn-app white lime-text">
                     <i class="icon-web"></i>
                     <span class="truncate">Bitácora</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection
