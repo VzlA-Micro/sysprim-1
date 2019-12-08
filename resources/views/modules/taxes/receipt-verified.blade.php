@@ -307,7 +307,7 @@ $date = '31/12/'.date('Y');
 
             <tr>
                 <td style="width: 40%;text-align: center;position: relative;">
-                    <img src="http://sysprim.com.devel/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="">
+                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="">
                 </td>
             </tr>
             <tr>

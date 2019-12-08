@@ -18,11 +18,11 @@ class GeoSysprimController extends Controller{
     public function findCompanySolvent(){
         $date_now=Carbon::now();
 
+        $date_now->subMonth(1);
 
+        $mounth=$date_now->format('m');
 
-        $taxes=Taxe::where('status','verified')->whereDate('created','=',  $date_now)->get();
-
-
+        $taxes=Taxe::where('status','verified')->whereMonth('fiscal_period','=',$mounth)->get();
         if(!$taxes->isEmpty()){
             foreach ($taxes as $taxe){
                     $company_find[]=$taxe->companies[0];

@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');

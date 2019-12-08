@@ -12,7 +12,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('security.manage') }}">Seguridad</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('bitacora') }}">Bitácora</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('audits') }}">Bitácora</a></li>
                 </ul>
             </div>
             <div class="col s12">
