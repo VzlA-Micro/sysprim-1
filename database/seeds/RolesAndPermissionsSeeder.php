@@ -197,6 +197,14 @@ class RolesAndPermissionsSeeder extends Seeder
         // Taquillero
         $roleTicketOfficer = Role::create(['name' => 'Taquillero']);
         $roleTicketOfficer->givePermissionTo([
+            'Taquilla',
+            'Gestionar Contribuyentes',
+            'Registar Contribuyente',
+            'Consultar Contribuyentes',
+            'Detalles Contribuyentes',
+            'Actualizar Contribuyentes',
+            'Habilitar/Deshabilitar Contribuyentes',
+            'Resetar Contribuyentes',
             'Gestionar Pagos',
             'Registrar Pago',
             'Ver Pagos',
