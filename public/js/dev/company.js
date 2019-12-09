@@ -191,6 +191,7 @@ $(document).ready(function () {
                         icon: "info",
                         button: "Ok",
                     });
+                    $('#button-company').removeAttr('disabled','');
                 }
 
             } else {
@@ -210,7 +211,7 @@ $(document).ready(function () {
                         button: "Ok",
                     });
                 }
-
+                $('#button-company').removeAttr('disabled','');
             }
         } else {
             swal({
@@ -322,7 +323,6 @@ $(document).ready(function () {
                 url: url + "ciu/find/" + code,
                 beforeSend: function () {
                     $('#search-ciu').attr('disabled','disabled');
-
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
@@ -391,6 +391,8 @@ $(document).ready(function () {
                             icon: "info",
                             button: "Ok",
                         });
+
+
                     }
 
 

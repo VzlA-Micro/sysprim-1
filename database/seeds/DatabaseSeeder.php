@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CatastralTerrenoTableSeeder::class,
             CatastralConstruccionTableSeeder::class,
             AlicuotaTableSeeder::class,
+            FinesTableSeeder::class
         ]);
     }
 }
