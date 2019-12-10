@@ -1,24 +1,100 @@
 var url = "http://sysprim.com.devel/";
 var addCiiu = false;
+var disabledCiiu = false;
+var updateCompany = false;
 
 $('document').ready(function () {
 
     $('#update-company').on('click', function () {
-        $('#document_type').prop("disabled", false);
-        $('select').formSelect();
-        $('#RIF').removeAttr('readonly');
-        $('#name').removeAttr('readonly');
-        $('#license').removeAttr('readonly');
-        $('#opening_date').removeAttr('disabled');
-        $('#number_employees').removeAttr('disabled');
-        $('#sector').removeAttr('disabled');
-        $('#code_catastral').removeAttr('disabled');
-        $('#country_code_company').removeAttr('disabled');
-        $('select').formSelect();
-        $('#parish').removeAttr('disabled', '');
-        $('select').formSelect();
-        $('#address').removeAttr('disabled');
-        $('#phone').removeAttr('disabled');
+        if (updateCompany == false) {
+            $('#document_type').prop("disabled", false);
+            $('select').formSelect();
+            $('#RIF').removeAttr('readonly');
+            $('#name').removeAttr('readonly');
+            $('#license').removeAttr('readonly');
+            $('#opening_date').removeAttr('disabled');
+            $('#number_employees').removeAttr('disabled');
+            $('#sector').removeAttr('disabled');
+            $('#code_catastral').removeAttr('disabled');
+            $('#country_code_company').removeAttr('disabled');
+            $('select').formSelect();
+            $('#parish').removeAttr('disabled', '');
+            $('select').formSelect();
+            $('#address').removeAttr('disabled');
+            $('#phone').removeAttr('disabled');
+
+            updateCompany=true;
+        }
+        else {
+            console.log('estoy en el else');
+            var documentType = $('#document_type').val();
+            var rif = $('#RIF').val();
+            var name = $('#name').val();
+            var license = $('#license').val();
+            var openingDate = $('#opening_date').val();
+            var numberEmployees = $('#number_employees').val();
+            var sector = $('#sector').val();
+            var codeCadastral = $('#code_catastral').val();
+            var countryCodeCompany = $('#country_code_company').val();
+            var parish = $('#parish').val();
+            var address=$('#address').val();
+            var phone = $('#phone').val();
+            var id = $('#id').val();
+
+            $.ajax({
+                type: "POST",
+                url: url + "company/update",
+                data: {
+                    id: id,
+                    documentType:documentType,
+                    rif:rif,
+                    name:name,
+                    license:license,
+                    openingDate:openingDate,
+                    numberEmployees:numberEmployees,
+                    sector:sector,
+                    codeCadastral:codeCadastral,
+                    countryCodeCompany:countryCodeCompany,
+                    parish:parish,
+                    address:address,
+                    phone:phone
+                },
+                dataType: "JSON",
+
+                beforeSend: function () {
+                    $('#document_type').prop("disabled", true);
+                    $('select').formSelect();
+                    $('#RIF').attr('readonly','readonly');
+                    $('#name').attr('readonly','readonly');
+                    $('#license').attr('readonly','readonly');
+                    $('#opening_date').attr('disabled','disabled');
+                    $('#number_employees').attr('disabled','disabled');
+                    $('#sector').attr('disabled','disabled');
+                    $('#code_catastral').attr('disabled','disabled');
+                    $('#country_code_company').attr('disabled','disabled');
+                    $('select').formSelect();
+                    $('#parish').attr('disabled', 'disabled');
+                    $('select').formSelect();
+                    $('#address').attr('disabled','disabled');
+                    $('#phone').attr('disabled','disabled');
+                },
+                success: function (data) {
+                     if(data == true) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Has Actualizado Los datos de la compañia Con Exito",
+                            icon: "success",
+                            button: "Ok",
+                        });
+
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+
+            });
+        }
     });
 
     $('#add-ciiu').on('click', function () {
@@ -212,6 +288,49 @@ $('document').ready(function () {
         $('select').formSelect();
         $('#address').removeAttr('disabled');
         $('#phone').removeAttr('disabled');
+    });
+
+
+    $('#disabled-ciiu').on('click', function () {
+        if (disabledCiiu == false) {
+            var ciiu;
+            var selected = [];
+            var check;
+            var html =
+                `<div class="input-field col s12 m1" id="bDelete">
+                <button  class="btn waves-effect waves-light peach col s12 delete-ciu"><i class="icon-close"></i>
+                </button>
+            </div>`;
+
+            $('.Dciiu').each(function () {
+                $('.ciu').each(function () {
+                    ciiu = $(this).val();
+                });
+                var checkBox =
+                    `<label class="col m1">
+                <input type="checkbox" name="ciiuCheck[]" class=".ciiuCheck" value=${ciiu}>
+                <span></span>
+            </label>`;
+                $(this).append(checkBox);
+            });
+            disabledCiiu = true;
+        }
+        else {
+            console.log('else');
+            $('.Dciiu').each(function () {
+                console.log('dentro del check');
+                $('.ciiuCheck').each(function () {
+                    check = $(this).val();
+                });
+
+                console.log(check);
+                //if (check) {
+                //  selected.push($(this).val());
+                //}
+            });
+
+            console.log(selected);
+        }
     });
 });
 

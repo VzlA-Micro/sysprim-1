@@ -25,6 +25,18 @@
                     <span class="truncate">Gestionar CIIU</span>
                 </a>
             </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-assignment"></i>
+                    <span class="truncate">Gestionar Tipo De Vehiculos</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-assignment"></i>
+                    <span class="truncate">Gestionar Modelos De Vehiculos</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

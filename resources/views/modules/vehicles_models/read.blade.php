@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
+
 @endsection
 
 @section('content')
@@ -15,30 +15,27 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Mis Vehículos</h5>
+                        <h5>Tipos Vehículos</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped responsive-table" id="vehicle">
+                        <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Licencia</th>
-                                <th>Color</th>
-                                <th>Marca</th>
-                                <th>Módelo</th>
+                                <th>Modelo</th>
                                 <th>Año</th>
+                                <th>Marca</th>
                                 <th>Detalles</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($show as $vehicle)
+                            @foreach($showModels as $models)
                                 <tr>
-                                    <td>{{$vehicle->license_plate}}</td>
-                                    <td>{{$vehicle->color}}</td>
-                                    <td>{{$vehicle->model->brand->name}}</td>
-                                    <td>{{$vehicle->model->name}}</td>
-                                    <td>{{$vehicle->model->year}}</td>
+                                    <td>{{$models->name}}</td>
+                                    <td>{{$models->year}}</td>
+                                    <td>{{$models->brand->name}}</td>
+
                                     <td>
-                                        <a href="{{route('vehicles.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light"><i
+                                        <a href="{{route('vehicles.models.details',['id'=>$models->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
                                 </tr>
@@ -54,33 +51,37 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#vehicle').DataTable({
+        $('#typeVehicle').DataTable({
             responsive: true,
+            "scrollX": true,
             "pageLength": 10,
             language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst": "<i class='icon-first_page'>",
-                    "sLast": "<i class='icon-last_page'></i>",
-                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
                 }
-
             }
         });
     </script>

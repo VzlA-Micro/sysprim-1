@@ -17,9 +17,13 @@ class CreateVehiclesTable extends Migration
             $table->increments('id');
             $table->string('license_plate',10);
             $table->string('color',15);
+            $table->string('body_serial',30);
+            $table->string('serial_engine',15);
             $table->string('image')->nullable();
+            $table->integer('type_vehicle_id')->unsigned();
             $table->integer('model_id')->unsigned();
             $table->foreign('model_id')->references('id')->on('models');
+            $table->foreign('type_vehicle_id')->references('id')->on('vehicle_type');
             $table->timestamps();
         });
     }

@@ -1,13 +1,15 @@
 $('document').ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
     $('#ciiu').on('submit',function (e) {
         e.preventDefault();
         $.ajax({
-            url: url+"ciu-branch/save",
-            cache:false,
-            contentType:false,
-            processData:false,
+
+            url: url+"ciuBranch/save",
+            //cache:false,
+            //contentType:false,
+            //processData:false,
             data:new FormData(this),
+            dataType:json,
             method: "POST",
 
             beforeSend: function () {
@@ -15,7 +17,7 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-
+                cosole.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "Ciiu registrado con exito",

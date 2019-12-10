@@ -173,17 +173,20 @@
                             </a>
                         </div>
                         @foreach($company->ciu as $ciu)
-                            <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="{{$ciu->id}}">
-                            <div class="input-field col s12 m4">
-                                <i class="icon-assignment prefix"></i>
-                                <input type="text" name="search-ciu" id="ciu" disabled value="{{$ciu->code}}">
-                                <label>CIIU</label>
-                            </div>
-                            <div class="input-field col s10 m8">
-                                <i class="icon-text_fields prefix"></i>
-                                <label for="phone">Nombre</label>
-                                <textarea name="name-ciu" id="nombre" cols="30" rows="10" class="materialize-textarea"
-                                          disabled required>{{$ciu->name}}</textarea>
+                            <div class="Dciiu">
+                                <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="{{$ciu->id}}">
+                                <div class="input-field col s12 m4">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="search-ciu" id="ciu" disabled value="{{$ciu->code}}">
+                                    <label>CIIU</label>
+                                </div>
+                                <div class="input-field col s10 m7 nameCiiu">
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                    <textarea name="name-ciu" id="nombre" cols="30" rows="10"
+                                              class="materialize-textarea"
+                                              disabled required>{{$ciu->name}}</textarea>
+                                </div>
                             </div>
                         @endforeach
                         <div id="group-ciu">
@@ -311,7 +314,7 @@
                 </a>
             </div>
             <div class="col s12 m12">
-                <a href="#" class="btn btn-large waves-effect waves-light orange col s12 " id="delete-ciiu">
+                <a href="#" class="btn btn-large waves-effect waves-light orange col s12 " id="disabled-ciiu">
                     Deshabilitar CIIU
                     <i class="icon-delete right"></i>
                 </a>

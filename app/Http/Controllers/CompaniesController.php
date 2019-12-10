@@ -153,24 +153,16 @@ class CompaniesController extends Controller
         $ciu=$request->input('ciu');
         $parish=$request->input('parish');
         $address=$request->input('address');
-        $code_catastral=$request->input('code_catastral');
-        $numberEmployees=$request->input('number_employees');
+        $code_catastral=$request->input('codeCadastral');
+        $numberEmployees=$request->input('numberEmployees');
         $sector=$request->input('sector');
         $phone=$request->input('phone');
-        $country_code=$request->input('country_code');
+        $country_code=$request->input('countryCodeCompany');
         $id=$request->input('id');
-        $lat=$request->input('lat');
-        $lng=$request->input('lng');
+        //$lat=$request->input('lat');
+        //$lng=$request->input('lng');
         $image=$request->input('image');
 
-        $validate=$this->validate($request,[
-            'address'=>'required',
-            'parish'=>'required|integer',
-            'code_catastral'=>'required',
-            'sector' => 'required',
-            'number_employees' => 'required',
-            'phone'=>'required'
-        ]);
 
         $company=Company::find($id);
         if($image){
@@ -184,17 +176,18 @@ class CompaniesController extends Controller
 
 
         $company->address=strtoupper($address);
-        $company->lat=$lat;
-        $company->lng=$lng;
+        //$company->lat=$lat;
+        //$company->lng=$lng;
         $company->code_catastral=strtoupper($code_catastral);
         $company->parish_id=$parish;
         $company->sector = $sector;
         $company->phone=$country_code.$phone;
         $company->number_employees = $numberEmployees;
         $company->update();
-        $company->ciu()->sync($ciu);
+        //$company->ciu()->sync($ciu);
+        $response=true;
 
-        return redirect('companies/details/'.$id);
+        return response()->json($response);
 
     }
 

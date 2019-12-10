@@ -35,6 +35,7 @@ class CiuController extends Controller
         $ciu->min_tribu_men= $request->input('mTM');
         $ciu->group_ciu_id= $request->input('idGroupCiiu');
         $ciu->save();
+        return response()->json('true');
     }
 
     /**
