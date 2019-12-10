@@ -547,45 +547,40 @@ Route::middleware(['auth'])->group(function() {
     })->name('ticket-office.payments');
 
 
+
+Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
+Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
+Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
+Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
+Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
+Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
+Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
+Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
+Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
+Route::get('/ticket-office/taxes/','TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
+Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
+
+
     Route::get('/ticket-office/type-payment', function() {
         return view('modules.payments.type_payment');
     
     })->name('ticket-office.type.payments');
 
-    Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
-    Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
-    Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
-    Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
-    Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
-    Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
-    Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-    Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
-    Route::get('/ticket-office/payments', 'TicketOfficeController@taxesAll')->name('ticket-office.payment');
-    Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
-    Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
-    Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
-    Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
-    Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
 
 
 
-    // Permissions routes
-
-    Route::get('/permissions/manage', function() {
-        return view('modules.security.permissions.manage');
-    })->name('permissions.manage');
-    Route::get('/permissions/register', function() {
-        return view('modules.security.permissions.register');
-    })->name('permissions.register');
-    Route::get('/permissions/read', function() {
-        return view('modules.security.permissions.read');
-    })->name('permissions.read');
 
     Route::get('/ciu/find/{ciu} ','CiuController@findCiu');
 
 
-    // -------------- Colaborator routes
-    
+
+
 
 
     Route::get('/help', function() {
@@ -597,6 +592,23 @@ Route::middleware(['auth'])->group(function() {
 
 
 
+
+
+
+
+
+Route::get('/help', function() {
+    return view('modules.helps.manage');
+})->name('helps.manage');
+Route::get('/help/register-company', function() {
+    return view('modules.helps.register-company');
+})->name('help.register-company');
+
+Route::get('/taxes/payments', function() {
+    return view('modules.taxes.payments');
+})->name('taxes.payments');
+
+Route::get('/pdfMultas','CompanyTaxesController@pdfMultas');
     Route::get('/taxes/payments', function() {
         return view('modules.taxes.payments');
     })->name('taxes.payments');

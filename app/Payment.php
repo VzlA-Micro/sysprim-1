@@ -5,22 +5,26 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Payments extends Model implements Auditable{
+class Payment extends Model implements Auditable{
     use \OwenIt\Auditing\Auditable;
 
     protected $table='payments';
     protected $appends = ['bankName'];
 
 
+
     public function taxes(){
-       return  $this->belongsTo('App\Taxe','taxe_id');
+        return $this->belongsToMany('App\Taxe','payments_taxes')
+            ->withPivot('taxe_id');
     }
+
+
 
     public function getBankNameAttribute(){
         if($this->bank==44){
             return $this->bankName="BOD";
         }else if($this->bank==77){
-            return $this->bankName="BINCENTENARIO";
+            return $this->bankName="BICENTENARIO";
         }else if ($this->bank==99){
             return $this->bankName="BNC";
         }else if($this->bank==33){

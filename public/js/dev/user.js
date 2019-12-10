@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
@@ -147,11 +147,17 @@ $(document).ready(function () {
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
+                    $('#name').attr('readonly','readonly');
+
 
                     if($('#name_user').val()!==undefined){
                         $('#name_user').val(response.response.nombres);
+                        $('#name_user').attr('readonly','readonly')
                     }
                     $('#surname').val(response.response.apellidos);
+                    $('#surname').attr('readonly','readonly');
+
+
                     console.log(response);
                     M.updateTextFields();
 

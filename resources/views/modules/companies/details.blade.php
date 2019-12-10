@@ -57,12 +57,12 @@
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
-                    <!-- <div class="col s12">
+                   <div class="col s12">
                         <a href="" class="btn-app white orange-text">
                             <i class="icon-warning"></i>
                             <span class="truncate">Mis Multas</span>
                         </a>
-                    </div> -->
+                    </div>
                     
                 </div>
             </div>

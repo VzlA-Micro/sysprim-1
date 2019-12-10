@@ -9,73 +9,97 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
+            <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Pagos</a></li>
                 </ul>
             </div>
 
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-
+                        <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
                             <table class="centered highlight" id="payments" style="width: 100%">
                                 <thead>
-                                    <tr>
-                                        <th>PLANILLA</th>
-                                        <th>Fecha</th>
-                                        <th>Contribuyente</th>
-                                        <th>Forma de Pago</th>
-                                        <th>Ramo</th>
-                                        <th>Periodo</th>
-                                        <th>Status</th>
-                                        <th>Monto</th>
-                                        <th>Detalles</th>
-                                    </tr>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Contribuyente</th>
+                                    <th>Forma de Pago</th>
+                                    <th>Banco</th>
+                                    <th>Banco Destino</th>
+                                    <th>Status</th>
+                                    <th>Planilla</th>
+                                    <th>Monto</th>
+                                    <th>Detalles</th>
+                                </tr>
                                 </thead>
                                 <tbody>
+
+                                @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
-                                            <td>{{$taxe->code}}</td>
                                             <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                            <td>{{$taxe->companies[0]->name}}</td>
-                                            <td>{{$taxe->typePayment}}</td>
-                                            <td>{{$taxe->branch}}</td>
-                                            <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
-                                            <td>{{$taxe->statusName}}</td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
+                                            <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
+                                            <td>{{$taxe->type_payment}}</td>
+                                            <td>{{$taxe->bankName}}</td>
+                                            <td>{{$taxe->taxes[0]->bankName}}</td>
+                                            @if($taxe->lot)
+                                                <td>{{$taxe->lot}}</td>
+                                            @else
+                                                @if($taxe->taxes[0]->status=='verified')
+                                                    <td>Verificado <i class="icon-check green-text"
+                                                                      style="font-size: 20px"></i></td>
+                                                @elseif($taxe->taxes[0]->status=='process')
+                                                    <td>Sin Conciliar aún.<i class="icon-alarm blue-text"
+                                                                             style="font-size: 20px"></i></td>
+                                                @else
+                                                    <td>Cancelado.<i class="icon-close red-text"
+                                                                     style="font-size: 20px"></i></td>
+                                                @endif
+                                            @endif
+
+                                            <td>{{$taxe->taxes[0]->code}}</td>
+                                            <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                             <td>
-                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                <a href="{{route('ticket-office.payment.details',[$taxe->id])  }}"
                                                    class="btn btn-floating orange waves-effect waves-light"><i
                                                             class="icon-pageview"></i></a>
                                             </td>
+
+
                                         </tr>
                                     @endforeach
+                                @endif
                                 </tbody>
                             </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
     <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
     <script src="{{asset('js/jszip.min.js')}}"></script>
     <script src="{{asset('js/pdfmake.min.js')}}"></script>
     <script src="{{asset('js/vfs_fonts.js')}}"></script>
     <script src="{{asset('js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('js/buttons.print.min.js')}}"></script>
+
     <script>
 
         var name = $('.email').text();
         var amount_total = $('#amount_total').val();
-
+        console.log(name);
 
         $('#payments').DataTable({
             dom: 'Bfrtip',
@@ -96,9 +120,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {

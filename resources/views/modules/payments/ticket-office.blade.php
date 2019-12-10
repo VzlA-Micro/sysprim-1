@@ -9,73 +9,85 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
+            <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas</a></li>
+
+                    <li class="breadcrumb-item"><a href="#!">Pagos</a></li>
                 </ul>
             </div>
 
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
+                        <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
 
-                            <table class="centered highlight" id="payments" style="width: 100%">
-                                <thead>
+
+                        <table class="centered highlight" id="payments" style="width: 100%">
+                            <thead>
+
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Contribuyente</th>
+                                <th>Forma de Pago</th>
+                                <th>Banco</th>
+                                <th>Lote</th>
+                                <th>Terminal</th>
+                                <th>Planilla</th>
+                                <th>Monto</th>
+                                <th>Detalles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if($taxes!==null)
+                                @foreach($taxes as $taxe)
                                     <tr>
-                                        <th>PLANILLA</th>
-                                        <th>Fecha</th>
-                                        <th>Contribuyente</th>
-                                        <th>Forma de Pago</th>
-                                        <th>Ramo</th>
-                                        <th>Periodo</th>
-                                        <th>Status</th>
-                                        <th>Monto</th>
-                                        <th>Detalles</th>
+                                        <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                        <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
+                                        <td>{{$taxe->type_payment}}</td>
+                                        <td>{{$taxe->bankName}}</td>
+                                        <td>{{$taxe->lot}}</td>
+                                        <td>{{$taxe->ref}}</td>
+                                        <td>{{$taxe->taxes[0]->code}}</td>
+                                        <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                        <td>
+                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
+                                               class="btn btn-floating orange waves-effect waves-light"><i
+                                                        class="icon-pageview"></i></a>
+                                        </td>
+
+
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($taxes as $taxe)
-                                        <tr>
-                                            <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                            <td>{{$taxe->companies[0]->name}}</td>
-                                            <td>{{$taxe->typePayment}}</td>
-                                            <td>{{$taxe->branch}}</td>
-                                            <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
-                                            <td>{{$taxe->statusName}}</td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
-                                            <td>
-                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                   class="btn btn-floating orange waves-effect waves-light"><i
-                                                            class="icon-pageview"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
     <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
     <script src="{{asset('js/jszip.min.js')}}"></script>
     <script src="{{asset('js/pdfmake.min.js')}}"></script>
     <script src="{{asset('js/vfs_fonts.js')}}"></script>
     <script src="{{asset('js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('js/buttons.print.min.js')}}"></script>
+
     <script>
 
         var name = $('.email').text();
         var amount_total = $('#amount_total').val();
-
+        console.log(name);
 
         $('#payments').DataTable({
             dom: 'Bfrtip',
@@ -96,9 +108,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sFirst":    "<i class='icon-first_page'>",
+                    "sLast":     "<i class='icon-last_page'></i>",
+                    "sNext":     "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {

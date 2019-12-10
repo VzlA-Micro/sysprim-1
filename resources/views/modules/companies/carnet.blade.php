@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td colspan="3" style="text-align: center; border-bottom: 1px solid #000; padding: 15px; border-top: 1px solid #000">
-                    CARNET DE ???
+                    REGISTRO MUNICIPAL DE INFORMACIÓN FISCAL.
                 </td>
             </tr>
             <tr>
@@ -37,7 +37,7 @@
                     <span>{{ $company->name }}</span>
                 </td>
                 <td style="width:20%;" rowspan="5">
-                    <img src="{{ asset('images/qr.png') }}" style="width: 150px; height: 150px; margin: auto;" alt="">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->RIF)) !!} " style="width: 150px; height: 150px; margin: auto;" ><br>
                 </td>
             </tr>
             <tr>
@@ -66,15 +66,19 @@
             </tr>
             <tr>
                 <td style="width:15%;">
-                    <img src="{{ asset('images/logo.png') }}" style="width: 120px; height: 80px;" alt="">
+                    <img src="{{ asset('images/logo.png') }}" style="width: 120px; height: 120px;" alt="">
                 </td>
-                <td style="width:60%">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam omnis deleniti placeat aspernatur sit minima atque dolore in officiis esse.
+                <td style="width:60%;font-size: 10px;text-align: center;">
+                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 120px; height: 90px;bottom: -10px!important;" alt=""><br>
+                    __________________________________________<br>
+                    ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
+                    Directora (E) de la Dirección de Hacienda y<br>
+                    Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
                 </td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 3px; border-top: 1px solid #000">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, eaque?
+
                 </td>
             </tr>
         </tbody>

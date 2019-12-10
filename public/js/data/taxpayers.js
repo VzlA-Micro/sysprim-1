@@ -140,11 +140,12 @@ $(document).ready(function () {
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
-
+                    $('#name').attr('readonly','readonly');
                     if($('#name_user').val()!==undefined){
                         $('#name_user').val(response.response.nombres);
                     }
                     $('#surname').val(response.response.apellidos);
+                    $('#surname').attr('readonly','readonly');
                     console.log(response);
                     M.updateTextFields();
 

@@ -23,7 +23,8 @@ class Taxe extends Model implements Auditable {
 
 
     public function payments(){
-        return $this->hasMany('App\Payments');
+        return $this->belongsToMany('App\Payment','payments_taxes')
+            ->withPivot('payment_id');
     }
 
     public function getTotalAttribute(){
@@ -38,11 +39,11 @@ class Taxe extends Model implements Auditable {
             return $this->statusName="SIN CONCILIAR AÚN";
 
         }else if($this->status=='verified'){
-
             return $this->statusName="VERIFICADA";
-
         }else if ($this->status=='cancel'){
             return $this->statusName='CANCELADA';
+        }else if($this->status=='ticket-office'){
+            return $this->statusName='TAQUILLA/SIN PAGO ASOCIADO AÚN.';
         }
 
     }
@@ -60,6 +61,8 @@ class Taxe extends Model implements Auditable {
             return $this->typePayment = "DEPOSITO BANCARIO(EFECTIVO)";
         } else if ($type == 'PPT') {
             return $this->typePayment = "TRASNFERENCIA BANCARIA";
+        }else if($type=='PTS'){
+            return $this->typePayment = "TAQUILLA SEMAT";
         }
 
 
@@ -69,7 +72,7 @@ class Taxe extends Model implements Auditable {
         if($this->bank==44){
             return $this->bankName="BOD";
         }else if($this->bank==77){
-            return $this->bankName="BINCENTENARIO";
+            return $this->bankName="BICENTENARIO";
         }else if ($this->bank==99){
             return $this->bankName="BNC";
         }else if($this->bank==33){
