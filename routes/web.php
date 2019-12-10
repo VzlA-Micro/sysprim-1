@@ -175,10 +175,12 @@ Route::middleware(['auth'])->group(function() {
             });
         });
 
+        // Gestionar Pagos
         Route::group(['middleware' => ['permission:Gestionar Pagos']], function() {
 
         });
 
+        // Gestionar Empresas
         Route::group(['middleware' => ['permission:Gestionar Empresas']], function() {
             // Nivel 1: Gestionar Empresas
             Route::get('/companies/manage', function () {
@@ -199,7 +201,31 @@ Route::middleware(['auth'])->group(function() {
                 });
             });
         });
+
+        // Verificacion de Pagos
+        Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function() {
+            Route::get('/payments/verify/manage', function() {
+                return view('modules.bank.manage');
+            })->name('payments.verify.manage');
+            // Nivel 1: Cargar Archivo
+            Route::group(['middleware' => ['permission:Cargar Archivo Pagos']], function() {
+                Route::get('/fileBank-register', function() {
+                    return view('modules.bank.upload');
+                })->name('bank.upload');
+                Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
+            });
+            // Nivel 2: Ver Pagos Verificados
+            Route::group(['middleware' => ['permission:Ver Pagos verificados']], function() {
+                Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
+
+            });
+        });
     });
+
+
+
+
+
 
     // Seguridad
     Route::group(['middleware' => ['permission:Seguridad']], function() {
@@ -455,9 +481,7 @@ Route::middleware(['auth'])->group(function() {
 
 
 
-    Route::get('/payments/verify/manage', function() {
-        return view('modules.bank.manage');
-    })->name('payments.verify.manage');
+    
 
     //Inmuebles
     Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
@@ -505,14 +529,6 @@ Route::middleware(['auth'])->group(function() {
     Route::get('estates/my-prperties', 'PropertyController@myProperty');
 
     //verifyPaymentsBanks
-
-    Route::get('/fileBank-register', function() {
-        return view('dev.verifyPaymentsBank.upload');
-    })->name('bank.upload');
-
-    Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
-
-    Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
 
     //taquilla
     

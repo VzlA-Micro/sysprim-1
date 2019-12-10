@@ -99,13 +99,14 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Anular Pagos']);
         Permission::create(['name' => 'Verificar Pagos - Manual']);
         Permission::create(['name' => 'Verificar Pagos - Archivo']);
+        Permission::create(['name' => 'Cargar Archivo Pagos']);
+        Permission::create(['name' => 'Ver Pagos verificados']);
         Permission::create(['name' => 'Generar Planilla']);
         Permission::create(['name' => 'Pagar Planilla']);
         Permission::create(['name' => 'Ver Planillas']);
         Permission::create(['name' => 'Ver Planillas - Web']);
         Permission::create(['name' => 'Ver Planillas - Transferencia']);
         Permission::create(['name' => 'Ver Planillas - Taquilla']);
-        Permission::create(['name' => 'Ver Pagos verificados']);
 
 
         // -- Gestionar Empresas
