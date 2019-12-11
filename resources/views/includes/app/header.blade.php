@@ -115,9 +115,6 @@
                     @can('Estadisticas')
                     <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
                     @endcan
-                    @can('Verificar Pagos - Archivo')
-                    <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                    @endcan
                     @can('Configuración')
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordion">
@@ -144,16 +141,19 @@
                                 <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
                                 <div class="collapsible-body">
                                     <ul>
+                                        @can('Gestionar Contribuyentes')
+                                        <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-record_voice_over left"></i>Gestionar Contribuyente</a></li>
+                                        @endcan
                                         @can('Gestionar Empresas')
                                         <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                         @endcan
                                         @can('Gestionar Pagos')
                                         <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
                                         @endcan
-                                        @can('Gestionar Contribuyentes')
-                                        <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-payment left"></i>Gestionar Contribuyente</a></li>
-                                        @endcan
                                         <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
+                                        @can('Verificar Pagos - Archivo')
+                                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
+                                        @endcan
                                     </ul>
                                 </div>
                             </li>
