@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url="https://sysprim.com/";
+    var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -340,7 +340,7 @@ $(document).ready(function () {
                                 <div class="input-field col s10 m5"  >
                                     <i class="icon-text_fields prefix"></i>
                                     <label for="phone">Nombre</label>
-                                     <textarea name="name-ciu" id="${subr}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
+                                     <textarea name="name-ciu" id="${subr+response.ciu.code}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
                                 </div>
 
                                 <div class="input-field col s12 m2">
@@ -382,7 +382,7 @@ $(document).ready(function () {
                             $(this).parent().parent().text("");
                         });
 
-                        M.textareaAutoResize($('#' + subr));
+                        M.textareaAutoResize($('#' + subr+response.ciu.code));
                         M.updateTextFields();
                     } else {
                         swal({
@@ -502,6 +502,9 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+                console.log(response);
+
+
                 if (response.status === 'error') {
                     swal({
                         title: "Información",
@@ -514,7 +517,13 @@ $(document).ready(function () {
                     $('#RIF').val("");
                     $('#RIF').addClass('validate');
                 } else {
-                    findCompany(rif);
+                    if (response.status=== 'registered'){
+                        var company=response.company[0];
+
+                    }else{
+                        findCompany(rif);
+                    }
+
                 }
 
             },
