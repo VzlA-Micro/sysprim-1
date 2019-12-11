@@ -69,7 +69,7 @@
                     @can('Actualizar Contribuyentes')
             		<div class="card-footer">
             			<div class="row">
-                            @can('Resetar Contribuyentes')
+                            @can('Resetear Contribuyentes')
             				<div class="col s12 m6 center-align">
             					<a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
 		                            <i class="icon-send right"></i>
@@ -77,7 +77,6 @@
 		                        </a>
             				</div>
                             @endcan
-                            @can('Actualizar Contribuyentes')
             				<div class="col s12 m6 center-align">
 		                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light" id="btn-edit">
 		                            <i class="icon-send right"></i>
@@ -88,7 +87,6 @@
 		                            Actualizar
 		                        </button>
             				</div>
-                            @endcan
             			</div>
                     </div>
                     @endcan
