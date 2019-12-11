@@ -1126,7 +1126,6 @@ $(document).ready(function () {
     });
 
 
-    var url = "http://sysprim.com.devel/";
 
     function ConfirmtypePayment() {
         swal({
