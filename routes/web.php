@@ -159,6 +159,13 @@ Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->nam
 Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
 //_________________________________________________________________________________________________
 
+
+//_______________________________________Vehicles Taxes Routes_______________________________________________________________
+Route::get('/taxes/vehicles/{id}', 'VehiclesTaxesController@create')->name('taxes.vehicle');
+Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
+//___________________________________________________________________________________________________________________________
+
+
 // Payments module routes
 Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
 
