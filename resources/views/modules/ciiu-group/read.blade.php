@@ -48,6 +48,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

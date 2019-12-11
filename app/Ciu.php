@@ -3,8 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Ciu extends Model{
+
+class Ciu extends Model implements Auditable{
+    use \OwenIt\Auditing\Auditable;
+
+
     protected $table='ciu';
     protected $fillable = ['code', 'name','alicuota','min_tribu_men'];
 

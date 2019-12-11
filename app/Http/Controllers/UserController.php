@@ -166,7 +166,7 @@ class UserController extends Controller{
     }
 
     public function showTaxpayer() {
-        $users = User::all();
+        $users = User::where('role_id','=','3')->get();
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));

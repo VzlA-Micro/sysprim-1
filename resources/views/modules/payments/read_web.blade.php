@@ -82,6 +82,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -124,24 +125,25 @@
                     messageTop: 'Usuario:' + name,
 
 
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
 
                     customize: function (doc) {
-                        doc.styles.title = {
-                            fontSize: '25',
-                            alignment: 'center'
+                        doc.styles['td:nth-child(2)'] = {
+                            width: '100px',
+                            'max-width': '100px',
+                            alignment: 'center',
+                        }, doc.styles.tableHeader = {
+                            fillColor:'#247bff',
+                            color:'#FFF',
+                            fontSize: '7',
+                            alignment: 'center',
+                            bold: true
+
                         },
-                            doc.styles['td:nth-child(2)'] = {
-                                width: '100px',
-                                'max-width': '100px'
-                            },
-                            doc.styles.tableHeader.fontSize = 14,
-                            doc.defaultStyle.alignment = 'left'
+                            doc.defaultStyle.fontSize = 6;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7]
                     }
                 },
 

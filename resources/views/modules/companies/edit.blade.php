@@ -148,7 +148,7 @@
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button onclick="window.history.back();" class="btn btn-rounded btn-large waves-effect waves-light peach">
+                        <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light peach">
                             <i class="icon-navigate_before right"></i>
                             Atras
                         </button>

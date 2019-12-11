@@ -109,7 +109,7 @@ Route::middleware(['auth'])->group(function() {
                 // Nivel 5 (Detalles)
                 Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function() {
                     Route::get('/ciu-branch/details/{id}','CiuController@edit')->name('ciu-branch.details');
-                    Route::post('/ciu-branch/update/{id}','CiuController@update')->name('ciu-branch.update');
+                    Route::post('/ciu-branch/update','CiuController@update')->name('ciu-branch.update');
                     // Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
                 });
             });
@@ -122,6 +122,9 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/geosysprim/home','GeoSysprimController@home')->name('geosysprim');
         Route::get('/geosysprim/find-company/solvent','GeoSysprimController@findCompanySolvent');
         Route::get('/geosysprim/find-company/process','GeoSysprimController@findCompanyProcess');
+        Route::get('/geosysprim/find-company/process','GeoSysprimController@findCompanyProcess');
+        Route::get('/geosysprim/find-company/registered','GeoSysprimController@CompanyRegistered');
+        Route::get('/geosysprim/find-company/solvent-process','GeoSysprimController@CompanyProcessVerified');
     });
 
 
@@ -207,6 +210,7 @@ Route::middleware(['auth'])->group(function() {
         // Nivel 1: Gestionar Roles y Ver Bitacora
         Route::group(['middleware' => ['permission:Gestionar Roles y Permisos|Bitacora']], function() {
             Route::get('/roles/manage', 'Permissions\RoleController@index')->name('roles.manage');
+            Route::get('/audits', 'SecurityController@audits')->name('audits');
             Route::get('/audits', 'SecurityController@audits')->name('audits');
 
             // Nivel 2: Registrar y Consultar

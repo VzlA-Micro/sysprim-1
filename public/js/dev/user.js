@@ -118,6 +118,7 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
+                        $('#email').val('');
                     }
                 },
                 error: function (err) {
@@ -129,7 +130,6 @@ $(document).ready(function () {
                         icon: "error",
                         button: "Ok",
                     });
-
                     $('#email').val('');
                 }
             });
