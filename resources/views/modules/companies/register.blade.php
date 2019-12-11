@@ -156,10 +156,25 @@
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach" id="button-company">
-                            Registrar
-                            <i class="icon-send right"></i>
-                        </button>
+                        <!-- Modal Trigger -->
+                          <a class="waves-effect waves-light btn btn-large peach modal-trigger" href="#modal1">
+                              <i class="icon-send right"></i>
+                              Registrar
+                          </a>
+                    </div>
+                          <!-- Modal Structure -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                          <h4 class="center-align">Registro de Empresa</h4>
+                          <div class="divider"></div>
+                          <p>Yo declaro que estoy autorizado para registrar esta empresa.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn waves-effect waves-light peach modal-close" id="button-company">
+                                Yo Declaro
+                                <i class="icon-fingerprint right"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

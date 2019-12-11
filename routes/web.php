@@ -178,10 +178,43 @@ Route::middleware(['auth'])->group(function() {
             });
         });
 
+        // Gestionar Pagos
         Route::group(['middleware' => ['permission:Gestionar Pagos']], function() {
+            // Nivel 1: Generar planilla, pagar planilla, Ver pagos y ver planillas
+            Route::get('/ticket-office/payments', function() {
+                return view('modules.ticket-office.create');
+            })->name('ticket-office.payments');
+            Route::get('/ticket-office/taxes/','TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
+            Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
+            Route::get('/ticket-office/type-payment', function() {
+                return view('modules.payments.type_payment');
+            })->name('ticket-office.type.payments');
+            Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
+
+            // Nivel 2: 
+            // ---- Generar Planilla -> Registrar
+            Route::group(['middleware' => ['permission:Generar Planilla']], function() {
+                Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
+            });
+            // ---- Pagar Planilla -> Registrar
+            Route::group(['middleware' => ['permission:Pagar Planilla']], function() {
+                Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
+            });
+            // ---- Ver Pagos 
+            Route::group(['middleware' => ['permission:Ver Pagos']], function() {
+                Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+                // Nivel 3: Detalles de planilla
+                Route::group(['middleware' => ['permission:Detalles Pagos']], function() {
+                    Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
+                    Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+                });
+            });
 
         });
 
+
+
+        // Gestionar Empresas
         Route::group(['middleware' => ['permission:Gestionar Empresas']], function() {
             // Nivel 1: Gestionar Empresas
             Route::get('/companies/manage', function () {
@@ -202,7 +235,43 @@ Route::middleware(['auth'])->group(function() {
                 });
             });
         });
+
+        // Verificacion de Pagos
+        Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function() {
+            Route::get('/payments/verify/manage', function() {
+                return view('modules.bank.manage');
+            })->name('payments.verify.manage');
+            Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
+
+
+            // Nivel 1: Cargar Archivo
+            Route::group(['middleware' => ['permission:Cargar Archivo Pagos']], function() {
+                Route::get('/fileBank-register', function() {
+                    return view('modules.bank.upload');
+                })->name('bank.upload');
+                Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
+            });
+            // Nivel 2: Ver Pagos Verificados
+            Route::group(['middleware' => ['permission:Ver Pagos verificados']], function() {
+                Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
+
+            });
+        });
     });
+
+
+
+Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
+Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
+
+// Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
+
+Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
+
 
     // Seguridad
     Route::group(['middleware' => ['permission:Seguridad']], function() {
@@ -452,16 +521,7 @@ Route::middleware(['auth'])->group(function() {
         'uses'=>'EmployeesController@show'
     ));
 
-    
 
-    
-
-
-
-
-    Route::get('/payments/verify/manage', function() {
-        return view('modules.bank.manage');
-    })->name('payments.verify.manage');
 
     //Inmuebles
     Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
@@ -508,79 +568,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('estates/my-prperties', 'PropertyController@myProperty');
 
-    //verifyPaymentsBanks
-
-    Route::get('/fileBank-register', function() {
-        return view('dev.verifyPaymentsBank.upload');
-    })->name('bank.upload');
-
-    Route::post('/bank-veryfy/save','VerifyPaymentsBankImportController@importFile')->name('bank.verify');
-
-    Route::get('/bank/verified-payments','VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
-
-    //taquilla
-    
-
-
-    Route::get('/ticket-office/payments', function() {
-        return view('modules.ticket-office.create');
-    })->name('ticket-office.payments');
-
-    Route::get('/ticket-office/view', function() {
-        return view('modules.ticket-office.create');
-    })->name('ticket-office.payments');
-
-    Route::get('/ticket-office/view', function() {
-        return view('modules.ticket-office.create');
-    })->name('ticket-office.payments');
-
-
-
-Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
-Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
-Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
-Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
-Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
-Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
-Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
-Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
-Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
-Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
-Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
-Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
-Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
-Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
-Route::get('/ticket-office/taxes/','TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
-Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
-
-
-    Route::get('/ticket-office/type-payment', function() {
-        return view('modules.payments.type_payment');
-    
-    })->name('ticket-office.type.payments');
-
-
-
-
-
     Route::get('/ciu/find/{ciu} ','CiuController@findCiu');
-
-
-
-
-
-
-    Route::get('/help', function() {
-        return view('modules.helps.manage');
-    })->name('helps.manage');
-    Route::get('/help/register-company', function() {
-        return view('modules.helps.register-company');
-    })->name('help.register-company');
-
-
-
-
 
 
 

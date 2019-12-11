@@ -37,7 +37,9 @@
                                 <th>Terminal</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
+                                @can('Detalles Pagos')
                                 <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -52,11 +54,13 @@
                                         <td>{{$taxe->ref}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                        @can('Detalles Pagos')
                                         <td>
                                             <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
                                                class="btn btn-floating orange waves-effect waves-light"><i
                                                         class="icon-pageview"></i></a>
                                         </td>
+                                        @endcan
 
 
                                     </tr>

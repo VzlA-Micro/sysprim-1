@@ -69,36 +69,15 @@
                     @can('Actualizar Contribuyentes')
             		<div class="card-footer">
             			<div class="row">
-                            @can('Habilitar/Deshabilitar Contribuyentes')
-                            @if($user->confirmed==0||$user->status_account=='block')
-                            <div class="col s12 m4 center-align">
-                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
-                                    <i class="icon-check right"></i>
-                                    Habilitar Cuenta.
-                                </button>
-                            </div>
-
-                            @else
-                                <div class="col s12 m4 center-align">
-                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
-                                        <i class="icon-send right"></i>
-                                        Deshabilitar
-                                    </button>
-                                </div>
-
-                            @endif
-                            @endcan
-
-
-                            @can('Resetar Contribuyentes')
-            				<div class="col s12 m4 center-align">
+                            @can('Resetear Contribuyentes')
+            				<div class="col s12 m6 center-align">
             					<a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
 		                            <i class="icon-send right"></i>
 		                            Resetear Contraseña
 		                        </a>
             				</div>
                             @endcan
-            				<div class="col s12 m4 center-align">
+            				<div class="col s12 m6 center-align">
 		                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light" id="btn-edit">
 		                            <i class="icon-send right"></i>
 		                            Editar

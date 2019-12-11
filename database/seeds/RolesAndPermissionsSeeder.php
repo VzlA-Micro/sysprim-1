@@ -46,7 +46,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Actualizar Usuarios']);
         Permission::create(['name' => 'Habilitar/Deshabilitar Usuarios']);
         // Permission::create(['name' => 'Eliminar Usuarios']);
-        Permission::create(['name' => 'Resetar Usuarios']);
+        Permission::create(['name' => 'Resetear Usuarios']);
 
         // Configuración
         Permission::create(['name' => 'Configuración']);
@@ -86,9 +86,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Consultar Contribuyentes']);
         Permission::create(['name' => 'Detalles Contribuyentes']);
         Permission::create(['name' => 'Actualizar Contribuyentes']);
-        Permission::create(['name' => 'Habilitar/Deshabilitar Contribuyentes']);
         // Permission::create(['name' => 'Eliminar Contribuyentes']);
-        Permission::create(['name' => 'Resetar Contribuyentes']);
+        Permission::create(['name' => 'Resetear Contribuyentes']);
 
 
         // -- Gestionar Pagos (Taquillero)
@@ -99,13 +98,21 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Anular Pagos']);
         Permission::create(['name' => 'Verificar Pagos - Manual']);
         Permission::create(['name' => 'Verificar Pagos - Archivo']);
-        Permission::create(['name' => 'Generar Planilla']);
-        Permission::create(['name' => 'Pagar Planilla']);
-        Permission::create(['name' => 'Ver Planillas']);
-        Permission::create(['name' => 'Ver Planillas - Web']);
-        Permission::create(['name' => 'Ver Planillas - Transferencia']);
-        Permission::create(['name' => 'Ver Planillas - Taquilla']);
+        Permission::create(['name' => 'Cargar Archivo Pagos']);
         Permission::create(['name' => 'Ver Pagos verificados']);
+        Permission::create(['name' => 'Generar Planilla']);
+        Permission::create(['name' => 'Detalles Planilla']);
+        Permission::create(['name' => 'Pagar Planilla']);
+        Permission::create(['name' => 'Ver Pagos - Transferencias']);
+        Permission::create(['name' => 'Ver Pagos - Punto de Venta']);
+        Permission::create(['name' => 'Ver Pagos - Depositos']);
+        Permission::create(['name' => 'Mi Taquilla - Punto de Venta']);
+        Permission::create(['name' => 'Mi Taquilla - Deposito']);
+        Permission::create(['name' => 'Ver Planillas - Taquilla']);
+        Permission::create(['name' => 'Escanear QR']);
+        Permission::create(['name' => 'Taquilla - Caja']);
+        Permission::create(['name' => 'Abrir/Cerrar Caja']);
+        Permission::create(['name' => 'Ver Planillas']);
 
 
         // -- Gestionar Empresas
@@ -203,8 +210,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
-            'Habilitar/Deshabilitar Contribuyentes',
-            'Resetar Contribuyentes',
+            'Resetear Contribuyentes',
             'Gestionar Pagos',
             'Registrar Pago',
             'Ver Pagos',
@@ -212,13 +218,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'Anular Pagos',
             'Verificar Pagos - Manual',
             'Verificar Pagos - Archivo',
+            'Cargar Archivo Pagos',
+            'Ver Pagos verificados',
             'Generar Planilla',
             'Pagar Planilla',
-            'Ver Planillas',
-            'Ver Planillas - Web',
-            'Ver Planillas - Transferencia',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
             'Ver Planillas - Taquilla',
-            'Ver Pagos verificados',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
             'Gestionar Empresas',
             'Registar Empresa',
             'Consultar Empresas',
