@@ -64,6 +64,10 @@ class User extends Authenticatable  implements Auditable
             ->withPivot('property_id');
     }
 
+    public function role() {
+        return $this->belongsTo('App\Role', 'role_id');
+    }
+
 
     public function sendPasswordResetNotification($token)
     {
