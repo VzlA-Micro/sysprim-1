@@ -49,7 +49,8 @@
             <!-- <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>      -->
             <li><a href="#" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only" id="company-solvent">PAGOS VERIFICADOS</a></li>
             <li><a href="#" id='company-process' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">PAGOS EN PROCESO</a></li>
-
+            <li><a href="#" id='company-registered' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">EMPRESAS REGISTRADA</a></li>
+            <li><a href="#" id='company-process-verified' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">RELACIÓN ACTUAL</a></li>
             <li><a href="{{ route('home') }}" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">Volver a SEMAT</a></li>
         </ul>
     </nav>

@@ -35,7 +35,7 @@
                             @csrf
                             <div class="input-field col s12">
                                 <i class="icon-date_range prefix"></i>
-                                <select name="fiscal_period">
+                                <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
                                     @foreach($mounths as $key=>$value)
                                         @php
@@ -138,9 +138,16 @@
                             El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Económica Art. 112).
                         </div>
                         <div class="card-action center-align">
+                            <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light grey">
+                                <i class="icon-navigate_before right"></i>
+                                Atras
+                            </button>
+
+
                             <a href="#declaracion" class="btn btn-large btn-rounded waves-effect waves-light peach modal-trigger">Declarar
                                 <i class="icon-send right"></i>
                             </a>
+
                               <!-- Modal Structure -->
                                 <div id="declaracion" class="modal">
                                 <div class="modal-content left-align">

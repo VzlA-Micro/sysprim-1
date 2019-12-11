@@ -50,22 +50,8 @@
                                         <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
-                                        <td>{{$taxe->taxes[0]->bankName}}</td>
-                                        @if($taxe->lot)
-                                            <td>{{$taxe->lot}}</td>
-                                        @else
-                                            @if($taxe->taxes[0]->status=='verified')
-                                                <td>Verificado <i class="icon-check green-text"
-                                                                  style="font-size: 20px"></i></td>
-                                            @elseif($taxe->taxes[0]->status=='process')
-                                                <td>Sin Conciliar aún.<i class="icon-alarm blue-text"
-                                                                         style="font-size: 20px"></i></td>
-                                            @else
-                                                <td>Cancelado.<i class="icon-close red-text"
-                                                                 style="font-size: 20px"></i></td>
-                                            @endif
-                                        @endif
-
+                                        <td>{{$taxe->ref}}</td>
+                                        <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Detalles Pagos')
@@ -112,6 +98,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -126,9 +113,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "<i class='icon-first_page'>",
-                    "sLast":     "<i class='icon-last_page'></i>",
-                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sFirst": "<i class='icon-first_page'>",
+                    "sLast": "<i class='icon-last_page'></i>",
+                    "sNext": "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {
@@ -154,24 +141,29 @@
                     messageTop: 'Usuario:' + name,
 
 
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
+
 
 
                     customize: function (doc) {
                         doc.styles.title = {
                             fontSize: '25',
                             alignment: 'center'
-                        },
-                            doc.styles['td:nth-child(2)'] = {
-                                width: '100px',
-                                'max-width': '100px'
-                            },
-                            doc.styles.tableHeader.fontSize = 14,
-                            doc.defaultStyle.alignment = 'left'
+                        }, doc.styles['td:nth-child(2)'] = {
+                            width: '100px',
+                            'max-width': '100px'
+                        }, doc.styles.tableHeader = {
+                                fillColor:'#247bff',
+                                color:'#FFF',
+                                fontSize: '10',
+                                alignment: 'center',
+                                bold: true
+
+                        }, doc.defaultStyle.fontSize = 9;
+
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7]
                     }
                 },
 

@@ -40,7 +40,7 @@ class GroupCiiuController extends Controller
         $groupCiiu->name= $request->input('name');
         $groupCiiu->save();
 
-        return redirect()->route('ciu-group.read');
+        return response()->json(['status'=>'success']);
     }
 
     /**
@@ -51,7 +51,7 @@ class GroupCiiuController extends Controller
      */
     public function show()
     {     
-        $groupCiiu = GroupCiiu::get();
+        $groupCiiu = GroupCiiu::orderBy('id','desc')->get();
         return view('modules.ciiu-group.read',array(
             'showGroupCiiu'=>$groupCiiu
         ));

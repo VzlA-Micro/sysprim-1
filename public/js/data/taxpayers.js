@@ -68,7 +68,7 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
-
+                        $('#ci').val('');
                         $('#ci').addClass('invalid');
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
@@ -112,8 +112,8 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
+                        $('#email').val('');
                     }
-
                 },
                 error: function (err) {
                     $("#preloader").fadeOut('fast');

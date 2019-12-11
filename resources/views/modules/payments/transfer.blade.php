@@ -151,25 +151,25 @@
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
 
-
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
-
                     customize: function (doc) {
                         doc.styles.title = {
                             fontSize: '25',
                             alignment: 'center'
-                        },
-                            doc.styles['td:nth-child(2)'] = {
-                                width: '100px',
-                                'max-width': '100px'
-                            },
-                            doc.styles.tableHeader.fontSize = 14,
-                            doc.defaultStyle.alignment = 'left'
+                        },doc.styles['td:nth-child(2)'] = {
+                            width: '100px',
+                            'max-width': '100px'
+                        }, doc.styles.tableHeader = {
+                            fillColor:'#247bff',
+                            color:'#FFF',
+                            fontSize: '9',
+                            alignment: 'center',
+                            bold: true
+
+                        },doc.defaultStyle.fontSize = 8;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7]
                     }
                 },
 
