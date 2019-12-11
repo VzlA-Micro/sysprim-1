@@ -14,33 +14,33 @@
                 </ul>
             </div>
             <div class="col s12">
-                <ul class="collection with-header">
-                    <li class="collection-header center-align"><h4>Ayuda</h4></li>
-                    <li class="collection-item">
+                <div class="collection with-header">
+                    <div class="collection-header center-align"><h4>Ayuda</h4></div>
+                    <a href="{{ route('help.register-company') }}" class="collection-item red-text text-darken-2">
                         <div>
                             Registrar mi Empresa
-                            <a href="{{ route('help.register-company') }}" class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></a>
+                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
-                    </li>
-                    <li class="collection-item">
+                    </a>
+                    <!-- <a href="" class="collection-item red-text text-darken-2">
                         <div>
                             Conciliar Impuestos
-                            <a href="#!" class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></a>
+                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
-                    </li>
-                    <li class="collection-item">
+                    </a>
+                    <a href="" class="collection-item red-text text-darken-2">
                         <div>
                             Alvin
-                            <a href="#!" class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></a>
+                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
-                    </li>
-                    <li class="collection-item">
+                    </a>
+                    <a href="" class="collection-item red-text text-darken-2">
                         <div>
                             Alvin
-                            <a href="#!" class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></a>
+                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
-                    </li>
-                </ul>
+                    </a> -->
+                </div>
             </div>
         </div>
     </div>

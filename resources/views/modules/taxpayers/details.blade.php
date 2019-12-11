@@ -53,14 +53,14 @@
 
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
-                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
-                            <label for="status">Estado de Cuenta:</label>
+                            <input id="statusName" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
+                            <label for="statusName">Estado de Cuenta:</label>
                         </div>
 
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
-                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
-                            <label for="status">Estado de Email:</label>
+                            <input id="statusEmail" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
+                            <label for="statusEmail">Estado de Email:</label>
                         </div>
 
 
