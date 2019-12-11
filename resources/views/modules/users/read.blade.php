@@ -27,6 +27,7 @@
                                     <th>Doc. Identidad</th>
                                     <th>Teléfono</th>
                                     <th>E-mail</th>
+                                    <th>Rol</th>
                                     <th>Verificado</th>
                                     <th>Detalles</th>
                                 </tr>
@@ -38,6 +39,8 @@
                                     <td>{{$user->ci}}</td>
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>{{$user->role->name}}</td>
+
                                     <td>
                                     @if($user->confirmed == 1)
                                         <i class="icon-check green-text" style="font-size: 20px"></i> Verificado

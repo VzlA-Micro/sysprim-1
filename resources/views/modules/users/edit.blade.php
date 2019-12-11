@@ -75,6 +75,17 @@
                             <input id="email" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly0>
                             <label for="email">E-mail</label>
                         </div>
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix"></i>
+                            <input id="statusName" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
+                            <label for="statusName">Estado de Cuenta:</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix"></i>
+                            <input id="statusEmail" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
+                            <label for="statusEmail">Estado de Email:</label>
+                        </div>
 
                         <div class="input-field col s12">
                             <i class="icon-recent_actors prefix"></i>
