@@ -16,7 +16,7 @@
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1 l8 offset-l2">
+            <div class="col s12 m10 offset-m1">
 
 
 
@@ -94,18 +94,41 @@
 
                     <div class="card-footer center">
                         <div class="row">
-                            <div class="col s12 m6 center-align">
+                            @can('Habilitar/Deshabilitar Usuarios')
+                            @if($user->confirmed==0||$user->status_account=='block')
+                            <div class="col s12 m4 center-align">
+                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
+                                    <i class="icon-check right"></i>
+                                    Habilitar
+                                </button>
+                            </div>
+
+                            @else
+                                <div class="col s12 m4 center-align">
+                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
+                                        <i class="icon-send right"></i>
+                                        Deshabilitar
+                                    </button>
+                                </div>
+
+                            @endif
+                            @endcan
+                            @can('Actualizar Usuarios')
+                            <div class="col s12 m4 center-align">
                                 <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves-light">
                                     <i class="icon-update right"></i>
                                     Actualizar
                                 </button>
                             </div>
-                            <div class="col s12 m6">
+                            @endcan
+                            @can('Resetear Usuarios')
+                            <div class="col s12 m4">
                                 <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
                                     <i class="icon-send right"></i>
                                     Resetear Contraseña
                                 </a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </form>

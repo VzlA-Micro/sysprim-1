@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="#!"></a></li>
+                    <li class="breadcrumb-item"><a href="#!">Depositos</a></li>
                 </ul>
             </div>
 
@@ -36,7 +36,9 @@
                                 <th>Planilla</th>
                                 <th>Status</th>
                                 <th>Monto</th>
+                                @can('Detalles Pagos')
                                 <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -62,12 +64,13 @@
 
 
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                        @can('Detalles Pagos')
                                         <td>
                                             <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
                                                class="btn btn-floating orange waves-effect waves-light"><i
                                                         class="icon-pageview"></i></a>
                                         </td>
-
+                                        @endcan
 
                                     </tr>
                                 @endforeach

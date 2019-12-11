@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Lista de Planillas</a></li>
                 </ul>
             </div>
 
@@ -33,7 +33,9 @@
                                         <th>Periodo</th>
                                         <th>Status</th>
                                         <th>Monto</th>
+                                        @can('Detalles Planilla')
                                         <th>Detalles</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,11 +49,13 @@
                                             <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                             <td>{{$taxe->statusName}}</td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
+                                            @can('Detalles Planilla')
                                             <td>
                                                 <a href="{{url('payments/taxes/'.$taxe->id)  }}"
                                                    class="btn btn-floating orange waves-effect waves-light"><i
                                                             class="icon-pageview"></i></a>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 </tbody>

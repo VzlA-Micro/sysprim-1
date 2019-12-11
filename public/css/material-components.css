@@ -2191,3 +2191,7 @@ i.background-round{
 .bg-opacity-5 {
     background-color: rgba(255, 255, 255, .5);
 }
+
+.bg-info-opacity-7 {
+    background-color: rgba(210, 239, 249, .85);
+}

@@ -156,32 +156,27 @@
 
                                 <div class="input-field col s12">
                                     @if($payments->taxes[0]->status=='process')
+                                        @can('Anular Pagos')
                                         <a href="#"  class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile" data-status="cancel">
                                             ANULAR PAGO.
                                             <i class="icon-close right"></i></a>
-
+                                        @endcan
+                                        @can('Verificar Pagos - Manual')
                                         <a href="#"  class="btn btn-rounded col s4 blue waves-effect waves-light reconcile" data-status="verified">
                                             VERIFICAR PAGO.
                                             <i class="icon-verified_user right"></i></a>
-
+                                        @endcan
                                     @endif
-
+                                    @can('Detalles Planilla')
                                     <a href="{{url('payments/taxes/'.$payments->taxes[0]->id)}}"  class="btn btn-rounded col s4 blue waves-effect waves-light">
 
                                         Detalles de planilla.
                                         <i class="icon-details right"></i>
                                     </a>
+                                    @endcan
 
                                 </div>
-
-
-
-
                         </div>
-
-
-
-
                         <div class="card-footer center">
 
 
