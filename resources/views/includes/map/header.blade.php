@@ -47,11 +47,36 @@
                 @csrf
             </form>
             <!-- <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>      -->
-            <li><a href="#" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only" id="company-solvent">PAGOS VERIFICADOS</a></li>
-            <li><a href="#" id='company-process' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">PAGOS EN PROCESO</a></li>
-            <li><a href="#" id='company-registered' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">EMPRESAS REGISTRADA</a></li>
-            <li><a href="#" id='company-process-verified' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">RELACIÓN ACTUAL</a></li>
-            <li><a href="{{ route('home') }}" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">Volver a SEMAT</a></li>
+            <li>
+                <a href="#" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only" id="company-solvent">
+                    <i class="far fa-calendar-check left"></i>
+                    Pagos Verificados
+                </a>
+            </li>
+            <li>
+                <a href="#" id='company-process' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                    <i class="fa fa-money-check left"></i>
+                    Pagos en Proceso
+                </a>
+            </li>
+            <li>
+                <a href="#" id='company-registered' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                    <i class="fas fa-map-marked left"></i>
+                    Empresas Registradas
+                </a>
+            </li>
+            <li>
+                <a href="#" id='company-process-verified' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                    <i class="fas fa-map-marked-alt left"></i>
+                    Relación Actual
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('home') }}" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                <i class="icon-arrow_back left"></i>
+                    Volver a SEMAT
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
