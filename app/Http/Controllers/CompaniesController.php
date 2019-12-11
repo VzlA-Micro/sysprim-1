@@ -275,9 +275,14 @@ class CompaniesController extends Controller
     }
 
     public function verifyRif($rif){
-        $company = Company::where('RIF',$rif)->get();
+        $company = Company::where('RIF',$rif)->with('users')->get();
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
+            if($company[0]->users->isEmpty()){
+                $response=array('status'=>'registered','company'=>$company);
+            }else{
+                $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
+            }
+
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
