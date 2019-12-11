@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col s2 center-align hide-on-large-only">
             <a href="{{ route('home') }}" class="btn btn-floating blue tooltipped" data-position="top" data-tooltip="Atras">
-              <i class="icon-navigate_before"></i>
+              <i class="icon-arrow_back"></i>
             </a>
           </div>
           <div class="col s2 center-align hide-on-large-only">
@@ -22,7 +22,7 @@
           </div>
           <div class="col s2 center-align hide-on-large-only">
             <a href="#" id='company-registered' class="btn indigo btn-floating tooltipped" data-position="top" data-tooltip="Empresas Registradas">
-              <i class="fas fa-map-marked-alt"></i>
+              <i class="fas fa-map-marked"></i>
             </a>
           </div>
           <div class="col s2 center-align  hide-on-large-only">
@@ -36,12 +36,6 @@
             </a>
           </div>
         </div>
-        <!-- <div class="col m6">
-        <div class="fixed-action-btn left">
-                <a class="btn-floating btn-large red" id="refresh">
-                  <i class="icon-refresh"></i>
-                </a>
-              </div> -->
     </main>
 @endsection
 
