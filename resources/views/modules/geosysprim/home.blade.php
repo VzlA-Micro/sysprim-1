@@ -5,22 +5,32 @@
         <div id="map" style="width:100%; height: 600px; margin-top:2px"></div>
     
         <div class="row">
-          <div class="col s3 center-align hide-on-large-only">
+          <div class="col s2 center-align hide-on-large-only">
             <a href="{{ route('home') }}" class="btn btn-floating blue tooltipped" data-position="top" data-tooltip="Atras">
               <i class="icon-navigate_before"></i>
             </a>
           </div>
-          <div class="col s3 center-align hide-on-large-only">
-            <a href="" class="btn btn-floating pink tooltipped" data-position="top" data-tooltip="Pagos Verificados">
-              <i class="fa fa-clipboard-list"></i>
+          <div class="col s2 center-align hide-on-large-only">
+            <a href="#" id="company-solvent" class="btn btn-floating pink tooltipped" data-position="top" data-tooltip="Pagos Verificados">
+              <i class="fas fa-calendar-check"></i>
             </a>
           </div>
-          <div class="col s3 center-align hide-on-large-only">
-            <a href="" class="btn btn-floating green tooltipped" data-position="top" data-tooltip="Pagos en Proceso">
+          <div class="col s2 center-align hide-on-large-only">
+            <a href="#" id='company-process' class="btn btn-floating green tooltipped" data-position="top" data-tooltip="Pagos en Proceso">
               <i class="fa fa-money-check"></i>
             </a>
           </div>
-          <div class="col s3 center-align">
+          <div class="col s2 center-align hide-on-large-only">
+            <a href="#" id='company-registered' class="btn indigo btn-floating tooltipped" data-position="top" data-tooltip="Empresas Registradas">
+              <i class="fas fa-map-marked-alt"></i>
+            </a>
+          </div>
+          <div class="col s2 center-align  hide-on-large-only">
+            <a href="#" id='company-process-verified' class="btn orange btn-floating tooltipped" data-position="top" data-tooltip="Relación Actual">
+              <i class="fas fa-map-marked-alt"></i>
+            </a>
+          </div>
+          <div class="col s2 center-align">
             <a href="" id="refresh" class="btn red btn-floating tooltipped" data-position="top" data-tooltip="Refrescar">
               <i class="icon-refresh"></i>
             </a>
