@@ -106,7 +106,9 @@
                             <h5>Forma de pago:</h5>
                         </div>
                         <div class="col s12">
+                            @can('Registrar Pago')
                             <ul class="collapsible" style="box-shadow: none !important;">
+                                @can('Registrar Pago - Punto de Venta')
                                 <li>
                                     <div class="collapsible-header"><i class="icon-payment"></i>PUNTO DE VENTA</div>
                                     <div class="collapsible-body">
@@ -162,92 +164,89 @@
                                                            required readonly>
                                                     <label for="amount_total">Total a Pagar</label>
                                                 </div>
-                                                @can('Registrar Pago')
                                                 <div class="card-footer center-align">
                                                     <button type="submit"
                                                             class="btn btn-large btn-rounded peach waves-effect waves-light">
                                                         REGISTRAR PAGO<i class="icon-send right"></i></button>
                                                 </div>
-                                                @endcan
                                             </div>
                                         </form>
                                     </div>
                                 </li>
-                            @if(\Auth::user()->role_id===1)
+                                @endcan
+                                @can('Registrar Pago - Transferencias')
                                 <li>
                                     <div class="collapsible-header"><i class="icon-payment"></i>TRANSFERENCIA</div>
-
                                     <div class="collapsible-body">
+                                        <form id="register-payment-tr" method="POST" action="#">
+                                            <div class="row">
+                                                <input type="hidden" name="taxes_id" id="taxes_id_tr" class="taxes_id" value="">
+                                                <div class="input-field col m6 s12">
+                                                    <i class="icon-satellite prefix"></i>
+                                                    <select name="bank">
+                                                        <option value="44">BOD</option>
+                                                        <option value="77">Banco Bicentenario</option>
+                                                        <option value="55">Banesco</option>
+                                                        <option value="99">BNC</option>
+                                                        <option value="33">100% Banco</option>
+                                                    </select>
+                                                    <label>Banco</label>
+                                                </div>
 
-                            <form id="register-payment-tr" method="POST" action="#">
-                                <div class="row">
-                                    <input type="hidden" name="taxes_id" id="taxes_id_tr" class="taxes_id" value="">
-                                    <div class="input-field col m6 s12">
-                                        <i class="icon-satellite prefix"></i>
-                                        <select name="bank">
-                                            <option value="44">BOD</option>
-                                            <option value="77">Banco Bicentenario</option>
-                                            <option value="55">Banesco</option>
-                                            <option value="99">BNC</option>
-                                            <option value="33">100% Banco</option>
-                                        </select>
-                                        <label>Banco</label>
-                                    </div>
-
-                                    <div class="input-field col m6 s12">
-                                        <i class="icon-satellite prefix"></i>
-                                        <select name="bank_destinations">
-                                            <option value="44">BOD</option>
-                                            <option value="77">Banco Bicentenario</option>
-                                            <option value="55">Banesco</option>
-                                            <option value="99">BNC</option>
-                                            <option value="33">100% Banco</option>
-                                        </select>
-                                        <label>Destino</label>
-                                    </div>
-
-
-                                    <input type="text" name="payments_type" id="payments_type"
-                                           value="PPT" class="validate hide" required>
-
-                                    <div class="input-field col s12 m6 ">
-                                        <i class="icon-confirmation_number prefix "></i>
-                                        <input type="text" name="ref" id="ref_tr" value="" class="validate"
-                                               required minlength="10" maxlength="10">
-                                        <label for="ref">Referencia</label>
-                                    </div>
-
-                                    <div class="input-field col s12 m6 ">
-                                        <i class="icon-person  prefix "></i>
-                                        <input type="text" name="person" id="person" value=""
-                                               class="validate" required>
-                                        <label for="ref">Nombre</label>
-                                    </div>
+                                                <div class="input-field col m6 s12">
+                                                    <i class="icon-satellite prefix"></i>
+                                                    <select name="bank_destinations">
+                                                        <option value="44">BOD</option>
+                                                        <option value="77">Banco Bicentenario</option>
+                                                        <option value="55">Banesco</option>
+                                                        <option value="99">BNC</option>
+                                                        <option value="33">100% Banco</option>
+                                                    </select>
+                                                    <label>Destino</label>
+                                                </div>
 
 
-                                    <div class="input-field col s4 m2">
-                                        <i class="icon-phone prefix tooltipped" data-position="S"
-                                           data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
-                                        <select name="country_code" id="country_code_company" required>
-                                            <option value="null" selected disabled>...</option>
-                                            <option value="+58412">(412)</option>
-                                            <option value="+58414">(414)</option>
-                                            <option value="+58416">(416)</option>
-                                            <option value="+58424">(424)</option>
-                                            <option value="+58426">(426)</option>
-                                            <option value="+58426">(251)</option>
-                                        </select>
-                                        <label for="country_code">Operadora</label>
-                                    </div>
-                                    <div class="input-field col s8 m4 tooltipped" data-position="bottom"
-                                         data-tooltip="Solo puede escribir números">
-                                        <label for="phone">Teléfono</label>
-                                        <input id="phone" type="tel" name="phone"
-                                               class="validate number-only" pattern="[0-9]+"
-                                                               title="Solo puede escribir números."
-                                                               placeholder="Ej. 1234567" maxlength="7" minlength="7"
-                                                               required>
-                                        </div>
+                                                <input type="text" name="payments_type" id="payments_type"
+                                                       value="PPT" class="validate hide" required>
+
+                                                <div class="input-field col s12 m6 ">
+                                                    <i class="icon-confirmation_number prefix "></i>
+                                                    <input type="text" name="ref" id="ref_tr" value="" class="validate"
+                                                           required minlength="10" maxlength="10">
+                                                    <label for="ref">Referencia</label>
+                                                </div>
+
+                                                <div class="input-field col s12 m6 ">
+                                                    <i class="icon-person  prefix "></i>
+                                                    <input type="text" name="person" id="person" value=""
+                                                           class="validate" required>
+                                                    <label for="ref">Nombre</label>
+                                                </div>
+
+
+                                                <div class="input-field col s4 m2">
+                                                    <i class="icon-phone prefix tooltipped" data-position="S"
+                                                       data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
+                                                    <select name="country_code" id="country_code_company" required>
+                                                        <option value="null" selected disabled>...</option>
+                                                        <option value="+58412">(412)</option>
+                                                        <option value="+58414">(414)</option>
+                                                        <option value="+58416">(416)</option>
+                                                        <option value="+58424">(424)</option>
+                                                        <option value="+58426">(426)</option>
+                                                        <option value="+58426">(251)</option>
+                                                    </select>
+                                                    <label for="country_code">Operadora</label>
+                                                </div>
+                                                <div class="input-field col s8 m4 tooltipped" data-position="bottom"
+                                                     data-tooltip="Solo puede escribir números">
+                                                    <label for="phone">Teléfono</label>
+                                                    <input id="phone" type="tel" name="phone"
+                                                           class="validate number-only" pattern="[0-9]+"
+                                                                           title="Solo puede escribir números."
+                                                                           placeholder="Ej. 1234567" maxlength="7" minlength="7"
+                                                                           required>
+                                                    </div>
 
 
                                                     <div class="input-field col s12 m6">
@@ -263,7 +262,7 @@
                                                     </div>
 
 
-                                                    <div class="input-field col s12 m6">
+                                                    <div class="input-field col s12 m12">
                                                         <i class="prefix">
                                                             <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                  style="width: 2rem"
@@ -274,20 +273,18 @@
                                                                required>
                                                         <label for="amount_total_tr">Total a Pagar</label>
                                                     </div>
-                                                    @can('Registrar Pago')
                                                     <div class="card-footer center-align">
                                                         <button type="submit"
                                                                 class="btn btn-large btn-rounded peach waves-effect waves-light">
                                                             REGISTRAR PAGO<i class="icon-send right"></i></button>
                                                     </div>
-                                                    @endcan
                                                 </div>
                                             </form>
 
                                         </div>
                                     </li>
-                                @endif
-
+                                @endcan
+                                @can('Registrar Pago - Depositos')
                                 <li>
                                     <div class="collapsible-header"><i class="icon-payment"></i>DEPOSITO</div>
                                     <div class="collapsible-body">
@@ -336,22 +333,21 @@
                                                            required>
                                                     <label for="amount_total_depo">Total a Pagar</label>
                                                 </div>
-
-                                                @can('Registrar Pago')
                                                 <div class="col s12 center-align">
                                                     <button type="submit"
                                                             class="btn btn-large btn-rounded peach waves-effect waves-light">
                                                         REGISTRAR PAGO<i class="icon-send right"></i>
                                                     </button>
                                                 </div>
-                                                @endcan
                                             </div>
 
                                         </form>
 
                                     </div>
                                 </li>
-                        </ul>
+                                @endcan
+                            </ul>
+                            @endcan
                         </div>
                         
                 </div>

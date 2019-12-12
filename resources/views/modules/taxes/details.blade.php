@@ -190,15 +190,10 @@
 
 
                                 @endif
-                                @if(\Auth::user()->role_id===1)
-
-
-
                                     @if(!$taxes->payments->isEmpty())
                                     <div class="row">
-
+                                            
                                             @if($taxes->status==='process')
-
                                                 <button class="btn green col s12">
                                                     <i class="icon-more_horiz left "></i>
                                                     ESTADO:  SIN CONCILIAR AÚN
@@ -221,66 +216,22 @@
 
                                         <div class="input-field col s12">
                                             @if($taxes->status=='process')
+                                                @can('Anular Pagos')
                                                 <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-ligt reconcile" data-status="cancel">
                                                     ANULAR PLANILLA.
-                                                    <i class="icon-close right"></i></a>
-
+                                                    <i class="icon-close right"></i>
+                                                </a>
+                                                @endcan
+                                                @can('Verificar Pagos - Manual')
                                                 <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light reconcile" data-status="verified">
                                                     VERIFICAR PLANILLA.
-                                                    <i class="icon-verified_user right"></i></a>
+                                                    <i class="icon-verified_user right"></i>
+                                                </a>
+                                                @endcan
                                             @endif
                                         </div>
                                         @endif
                                     </div>
-
-                                @endif
-
-
-
-                                <div id="modal1" class="modal modal-fixed-footer">
-                                    <div class="modal-content">
-                                        <h4 class="center-align">Formas de pago</h4>
-                                        <div class="row">
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Taquilla SEMAT</h5>
-                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img">
-                                                <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
-                                                    Taquilla
-                                                    <i class="icon-payment right"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Transferencia Bancaria</h5>
-                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img">
-                                                <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
-                                                    Transferencia
-                                                    <i class="icon-compare_arrows right"></i>
-                                                </a>
-                                                <ul id='ptb' class='dropdown-content'>
-                                                    <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
-                                                    <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
-                                                    <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Deposito Bancario</h5>
-                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img">
-                                                <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
-                                                    Deposito
-                                                    <i class="icon-account_balance right"></i>
-                                                </a>
-                                                {{-- Dropdown trigger --}}
-                                                <ul id='ppb' class='dropdown-content'>
-                                                    <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a></li>
-                                                    <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
-                                                    <li><a href="#!" data-bank="44"  class="bank">BOD</a></li>
-                                                    <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
-                                                    <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </form>

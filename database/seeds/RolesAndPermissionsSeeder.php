@@ -93,7 +93,9 @@ class RolesAndPermissionsSeeder extends Seeder
         // -- Gestionar Pagos (Taquillero)
         Permission::create(['name' => 'Gestionar Pagos']);
         Permission::create(['name' => 'Registrar Pago']);
-        Permission::create(['name' => 'Ver Pagos']);
+        Permission::create(['name' => 'Registrar Pago - Transferencias']);
+        Permission::create(['name' => 'Registrar Pago - Punto de Venta']);
+        Permission::create(['name' => 'Registrar Pago - Depositos']);
         Permission::create(['name' => 'Detalles Pagos']);
         Permission::create(['name' => 'Anular Pagos']);
         Permission::create(['name' => 'Verificar Pagos - Manual']);
@@ -103,6 +105,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Generar Planilla']);
         Permission::create(['name' => 'Detalles Planilla']);
         Permission::create(['name' => 'Pagar Planilla']);
+        Permission::create(['name' => 'Ver Pagos']);
         Permission::create(['name' => 'Ver Pagos - Transferencias']);
         Permission::create(['name' => 'Ver Pagos - Punto de Venta']);
         Permission::create(['name' => 'Ver Pagos - Depositos']);
@@ -213,6 +216,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Resetear Contribuyentes',
             'Gestionar Pagos',
             'Registrar Pago',
+            'Registrar Pago - Transferencias',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
             'Ver Pagos',
             'Detalles Pagos',
             'Anular Pagos',

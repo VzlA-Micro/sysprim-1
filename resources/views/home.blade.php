@@ -16,8 +16,8 @@
                 </a>
             </div>
             @endcan
-           {{--    
-            @can('')
+            {{--
+            @can('Mis Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('properties.my-properties') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>

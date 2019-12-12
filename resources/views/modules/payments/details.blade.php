@@ -8,7 +8,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">
-
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Tranferiacias</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
+                </ul>
+            </div>
                 <div class="col s12 m10 offset-m1">
                     <form action="" method="post" class="card" id="register">
                         <div class="card-header center-align">
@@ -183,9 +191,6 @@
                         </div>
                     </form>
                 </div>
-
-
-            </div>
         </div>
     </div>
 @endsection
