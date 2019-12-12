@@ -15,7 +15,7 @@ class CreateCiuTable extends Migration
     {
         Schema::create('ciu', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',15);
+            $table->string('code',15)->unique();
             $table->text('name');
             $table->float('alicuota');
             $table->integer('min_tribu_men');
