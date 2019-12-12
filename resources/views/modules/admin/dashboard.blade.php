@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('includes.petro-data')
+    {{-- @include('includes.petro-data') --}}
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">

@@ -259,18 +259,17 @@ Route::middleware(['auth'])->group(function() {
         });
     });
 
+    Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
+    Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+    Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+    Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+    Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
+    Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
+    Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
 
 
-Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
-Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
-Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
-Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
 
 // Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
-Route::get('/ticket-office/generate-receipt/{taxes}','TicketOfficeController@generateReceipt');
-
-Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController@calculatePayments');
 
 
     // Seguridad
@@ -318,7 +317,7 @@ Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController
         return view('modules.notifications.details');
     })->name('notifications.details');
 
-
+    // Mis Empresas
     Route::group(['middleware' => ['permission:Mis Empresas|Consultar Mis Empresas']], function() {
         // Nivel 1: Mis Empresas
         Route::get('/companies/my-business','CompaniesController@index')->name('companies.my-business');
@@ -329,18 +328,86 @@ Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController
         Route::group(['middleware' => ['permission:Registar Mis Empresas']], function() {
             Route::get('/companies/register', 'CompaniesController@create')->name('companies.register');
             Route::post('/companies/save', 'CompaniesController@store')->name('companies.save');
-            // Nivel 3: Actualizar
-            Route::group(['middleware' => ['permission:Detalles Mis Empresas']], function() {
-                Route::get('/companies/edit/{id}','CompaniesController@edit')->name('companies.edit');
-            });
+        });
+        // Nivel 3: Actualizar
+        Route::group(['middleware' => ['permission:Detalles Mis Empresas']], function() {
+            Route::get('/companies/edit/{id}','CompaniesController@edit')->name('companies.edit');
         });
 
     });
 
+    // Mis Inmuebles
+    Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function() {
+        // Nivel 1: Mis Inmuebles
+        Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
+        // Nivel 2: Registrar y Ver Detalles
+        Route::group(['middleware' => ['permission:Registar Mis Inmuebles']], function() {
+            Route::get('/properties/register','PropertyController@create')->name('properties.register');
+            Route::post('/properties/save','PropertyController@store')->name('properties.save');
+        });
+        // Nivel 3: Detalles
+        Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function() {
+
+        });
+    });
+
+
+    //Inmuebles
+    Route::post('/properties/verification','PropertyController@verification')->name('properties.verification');
+
+    Route::get('/inmueble/show/{id}',array(
+        'as'=>'show.inmueble',
+        'uses'=>'PropertyController@show'
+    ));
+    Route::get('/inmueble/mi-inmueble','PropertyController@myProperty')->name('inmueble.my-propertys');
+
+
+    Route::get('/inmueble/my-inmueble/{id}',array(
+        'uses'=>'PropertyTaxesController@create',
+        'as'=>'propertyStatement'
+    ));
+
+    Route::get('/inmueble/delaracion/{id}',array(
+        'uses'=>'PropertyTaxesController@create',
+        'as'=>'propertyStatement'
+    ));
+
+    Route::get('/inmueble/statement/{id}',array(
+        'uses'=>'PropertyTaxesController@create',
+        'as'=>'propertyStatement'
+    ));
+
+    Route::post('/inmueble/calcu',array(
+        'uses'=>'PropertyTaxesController@calcu',
+        'as'=>'propertyCalcu'
+    ));
+
+    Route::post('/inmueble/calcuFraccionado',array(
+        'uses'=>'PropertyTaxesController@calcuFraccionado',
+        'as'=>'propertyCalcuFraccionado'
+    ));
+
+    Route::post('/paymentProperty', array(
+        'uses'=>'PropertyTaxesController@paymentsHelp',
+        'as'=>'paymentsProperty.help'));
+
+    // Mis Vehiculos
+    Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function() {
+        // Nivel 1: Mis Vehiculos
+
+        // Nivel 2: Registrar Vehiculos
+        Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function() {
+
+        });
+
+        // Nivel 3: Detalles de vehiculos
+        Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function() {
+
+        });
+    });
+
+
     // Companies module routes
-
-
-
     Route::post('/companies/update','CompaniesController@update')->name('companies.update');
 
     Route::get('/companies/verify/{id}','CompaniesController@verifyTaxes');
@@ -523,47 +590,7 @@ Route::get('/ticket-office/taxes/calculate/{taxes_data}','TicketOfficeController
 
 
 
-    //Inmuebles
-    Route::get('/properties/my-properties','PropertyController@index')->name('properties.my-properties');
-    Route::get('/properties/register','PropertyController@create')->name('properties.register');
-    Route::post('/properties/save','PropertyController@store')->name('properties.save');
-    Route::post('/properties/verification','PropertyController@verification')->name('properties.verification');
-
-    Route::get('/inmueble/show/{id}',array(
-        'as'=>'show.inmueble',
-        'uses'=>'PropertyController@show'
-    ));
-    Route::get('/inmueble/mi-inmueble','PropertyController@myProperty')->name('inmueble.my-propertys');
-
-
-    Route::get('/inmueble/my-inmueble/{id}',array(
-        'uses'=>'PropertyTaxesController@create',
-        'as'=>'propertyStatement'
-    ));
-
-    Route::get('/inmueble/delaracion/{id}',array(
-        'uses'=>'PropertyTaxesController@create',
-        'as'=>'propertyStatement'
-    ));
-
-    Route::get('/inmueble/statement/{id}',array(
-        'uses'=>'PropertyTaxesController@create',
-        'as'=>'propertyStatement'
-    ));
-
-    Route::post('/inmueble/calcu',array(
-        'uses'=>'PropertyTaxesController@calcu',
-        'as'=>'propertyCalcu'
-    ));
-
-    Route::post('/inmueble/calcuFraccionado',array(
-        'uses'=>'PropertyTaxesController@calcuFraccionado',
-        'as'=>'propertyCalcuFraccionado'
-    ));
-
-    Route::post('/paymentProperty', array(
-        'uses'=>'PropertyTaxesController@paymentsHelp',
-        'as'=>'paymentsProperty.help'));
+    
 
 
     Route::get('estates/my-prperties', 'PropertyController@myProperty');

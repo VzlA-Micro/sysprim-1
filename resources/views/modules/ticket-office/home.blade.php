@@ -34,7 +34,7 @@
             </div>
             @endcan
             @can('Verificar Pagos - Archivo')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
                     <i class="icon-file_upload"></i>
                     <span class="truncate">Verificación de Pagos</span>

@@ -9,7 +9,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                 </ul>
             </div>
-            @include('sweet::alert')
+            {{-- @include('sweet::alert') --}} 
             @can('Consultar Mis Empresas')
             @foreach($companies as $company)
             <div class="col s12 m4 animated bounceIn">
