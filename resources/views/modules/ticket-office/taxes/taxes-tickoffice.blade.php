@@ -20,7 +20,7 @@
                 <div class="card">
                     <ul class="tabs">
                         <li class="tab col s6 " id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir Planilla</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i> Pagar</a></li>
+                        <li class="tab col s6" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i> Pagar</a></li>
                     </ul>
                     <div id="select-tab" class="content">
                         <div class="card-content row">
@@ -179,12 +179,13 @@
 
                                     <div class="collapsible-body">
 
-                            <form id="register-payment-tr" method="POST" action="#">
+                            <form id="register-payment-tr" method="#" action="#">
                                 <div class="row">
                                     <input type="hidden" name="taxes_id" id="taxes_id_tr" class="taxes_id" value="">
                                     <div class="input-field col m6 s12">
                                         <i class="icon-satellite prefix"></i>
-                                        <select name="bank">
+                                        <select name="bank" id="bank_tr">
+                                            <option value="null" selected disabled>Seleciona una opción</option>
                                             <option value="44">BOD</option>
                                             <option value="77">Banco Bicentenario</option>
                                             <option value="55">Banesco</option>
@@ -196,7 +197,8 @@
 
                                     <div class="input-field col m6 s12">
                                         <i class="icon-satellite prefix"></i>
-                                        <select name="bank_destinations">
+                                        <select name="bank_destinations" id="bank_destinations_tr">
+                                            <option value="null" selected disabled>Seleciona una opción</option>
                                             <option value="44">BOD</option>
                                             <option value="77">Banco Bicentenario</option>
                                             <option value="55">Banesco</option>
@@ -228,7 +230,7 @@
                                     <div class="input-field col s4 m2">
                                         <i class="icon-phone prefix tooltipped" data-position="S"
                                            data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
-                                        <select name="country_code" id="country_code_company" required>
+                                        <select name="country_code" id="country_code_user" required>
                                             <option value="null" selected disabled>...</option>
                                             <option value="+58412">(412)</option>
                                             <option value="+58414">(414)</option>
@@ -241,8 +243,8 @@
                                     </div>
                                     <div class="input-field col s8 m4 tooltipped" data-position="bottom"
                                          data-tooltip="Solo puede escribir números">
-                                        <label for="phone">Teléfono</label>
-                                        <input id="phone" type="tel" name="phone"
+                                        <label for="phone_user">Teléfono</label>
+                                        <input id="phone_user" type="tel" name="phone"
                                                class="validate number-only" pattern="[0-9]+"
                                                                title="Solo puede escribir números."
                                                                placeholder="Ej. 1234567" maxlength="7" minlength="7"
@@ -256,7 +258,7 @@
                                                                  style="width: 2rem"
                                                                  alt="">
                                                         </i>
-                                                        <input type="text" name="amount" id="amount_tr" value=""
+                                                        <input type="text" name="amount_total" id="amount_tr" value=""
                                                                class="validate money_keyup"
                                                                required>
                                                         <label for="amount_tr">Monto</label>
@@ -269,7 +271,7 @@
                                                                  style="width: 2rem"
                                                                  alt="">
                                                         </i>
-                                                        <input type="text" name="amount_total" id="amount_total_tr"  value=""
+                                                        <input type="text" name="amount" id="amount_total_tr"  value=""
                                                                class="validate money amount"
                                                                required>
                                                         <label for="amount_total_tr">Total a Pagar</label>
@@ -293,8 +295,42 @@
                                     <div class="collapsible-body">
                                         <form id="register-payment-depo" class="payment-form" method="POST" action="#">
                                             <input type="hidden" name="taxes_id" id="taxes_id_tr" class="taxes_id" value="">
+
                                             <div class="row">
-                                                <input type="text" name="payments_type" id="payments_type" value="PPB" class="validate hide" required>
+                                                <input type="hidden" name="payments_type" id="payments_type_depo" value="" class="validate" required>
+                                                <div class="input-field col s4" style="padding-top: 1rem">
+                                                    <h5>Forma de pago:</h5>
+                                                    <p>
+                                                        <label>
+                                                            <input name="form-payment" type="radio" value="PPE" class="check-payment"/>
+                                                            <span>EFECTIVO</span>
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input name="form-payment" type="radio" value="PPC"  class="check-payment" />
+                                                            <span>CHEQUE</span>
+                                                        </label>
+                                                    </p>
+                                                </div>
+
+                                                <div class="input-field col s12" style="padding-top: 1rem">
+                                                    <i class="prefix">
+                                                        <img src="{{ asset('images/isologo-BsS.png') }}"
+                                                             style="width: 2rem"
+                                                             alt=""></i>
+                                                    <input type="text" name="amount_total" id="amount_total_depo"  value="" class="validate money amount" required>
+                                                    <label for="amount_total_depo">Total a Pagar</label>
+                                                </div>
+
+                                                <div class="input-field col s12 m12 ">
+                                                    <i class="icon-confirmation_number prefix "></i>
+                                                    <input type="text" name="ref" id="ref_depo" value="" class="validate"
+                                                           required minlength="10" maxlength="10" readonly>
+                                                    <label for="ref">N DE CHEQUE</label>
+                                                </div>
+
+
 
                                                 <div class="col s12 m6">
                                                     <input type="radio" id="banesco" name="bank" value="55" class="bank-div">
@@ -326,27 +362,18 @@
                                                 </div>
 
 
-                                                <div class="input-field col s12" style="padding-top: 1rem">
-                                                    <i class="prefix">
-                                                        <img src="{{ asset('images/isologo-BsS.png') }}"
-                                                             style="width: 2rem"
-                                                             alt="">
-                                                    </i>
-                                                    <input type="text" name="amount_total" id="amount_total_depo"  value="" class="validate money amount"
-                                                           required>
-                                                    <label for="amount_total_depo">Total a Pagar</label>
-                                                </div>
 
+                                            </div>
+                                            <div class="row">
                                                 @can('Registrar Pago')
-                                                <div class="col s12 center-align">
-                                                    <button type="submit"
-                                                            class="btn btn-large btn-rounded peach waves-effect waves-light">
-                                                        REGISTRAR PAGO<i class="icon-send right"></i>
-                                                    </button>
-                                                </div>
+                                                    <div class="col s12 center-align">
+                                                        <button type="submit"
+                                                                class="btn btn-large btn-rounded peach waves-effect waves-light">
+                                                            REGISTRAR PAGO<i class="icon-send right"></i>
+                                                        </button>
+                                                    </div>
                                                 @endcan
                                             </div>
-
                                         </form>
 
                                     </div>

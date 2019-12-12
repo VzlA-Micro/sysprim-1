@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -19,8 +19,6 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
-
-
                         $('#search').val('');
                     } else if (response.status === 'verified') {
                         swal({
@@ -65,8 +63,6 @@ $(document).ready(function () {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
-
-
                             }
                         });
 
@@ -346,6 +342,11 @@ $(document).ready(function () {
                     $('#amount_tr').val('');
 
 
+
+                    $('#bank_tr').material_select();
+                    $('#bank_destinations_tr').material_select();
+
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
@@ -376,6 +377,7 @@ $(document).ready(function () {
         $('#register-taxes')[0].reset();
 
     }
+
 
 
 
