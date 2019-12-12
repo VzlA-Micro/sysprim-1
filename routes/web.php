@@ -203,6 +203,9 @@ Route::middleware(['auth'])->group(function() {
             // ---- Ver Pagos 
             Route::group(['middleware' => ['permission:Ver Pagos']], function() {
                 Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+                Route::get('/ticket-office/payments/checks', function() {
+                    return view('modules.payments.checks');
+                })->name('ticket-office.payment.type.checks');
                 // Nivel 3: Detalles de planilla
                 Route::group(['middleware' => ['permission:Detalles Pagos']], function() {
                     Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');

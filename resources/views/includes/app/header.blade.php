@@ -45,8 +45,12 @@
                 {{-- User dropdown trigger --}}
                 <li>
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
-                        <i class="icon-more_vert"></i>
-                        {{-- <img src="" alt="" class="avatar"> --}}
+                        <i class="icon-more_vert right"></i>
+                        @if (Storage::disk('users')->has(Auth::user()->image))
+                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar">
+                        @else 
+                        <img src="{{ asset('images/user.png') }}" alt="" class="avatar">
+                        @endif
                     </a>
                 </li>
                 {{-- Dropdown menu structure --}}
@@ -89,6 +93,11 @@
                           <div class="background">
                             <img src="{{ asset('images/bg-user.jpg') }}" class="responsive-img">
                           </div>
+                          @if (Storage::disk('users')->has(Auth::user()->image))
+                          <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>
+                          @else 
+                          <a href="#user"><img class="circle hide-on-large-only" src="{{ asset('images/user.png') }}"></a>
+                          @endif
                           <a href="!#"><span class="white-text name">Bienvenido, </span></a>
                           <a href="#email"><span class="white-text email"style="font-weight: 800">
                             {{ ucwords($name) . " " . ucwords($surname) }}
