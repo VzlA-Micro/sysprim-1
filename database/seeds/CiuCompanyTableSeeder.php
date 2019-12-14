@@ -11,6 +11,9 @@ class CiuCompanyTableSeeder extends Seeder
      */
     public function run()
     {
+        $path = base_path().'/database/seeds/sql/data.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
 
         DB::table('company_ciu')->insert([
             'ciu_id'=>6,
@@ -21,7 +24,6 @@ class CiuCompanyTableSeeder extends Seeder
         DB::table('company_ciu')->insert([
             'ciu_id'=>4,
             'company_id'=>1,
-
         ]);
 
     }
