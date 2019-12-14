@@ -26,7 +26,6 @@ class VehiclesTaxesController extends Controller
     public function create($id)
     {
         $declaration = DeclarationVehicle::Declaration($id);
-
         $vehicle = Vehicle::where('id', $id)->get();
         $taxesVehicle = number_format($declaration['taxes'], 2, ',', '.');
         $taxesPayment = $declaration['taxes'];

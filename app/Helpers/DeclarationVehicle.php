@@ -116,7 +116,7 @@ class DeclarationVehicle
                     }
                     $recharge = (($fractionalPayments * $diffMonths) * 20) / 100;
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
-                    $total = ($fractionalPayments * $diffMonths) + $recharge;
+                    $total =$fractionalPayments  + $recharge;
 
                 } else {
                     $diffMonths = round(($monthCurrent - $vehicleTaxes->created_at->format('m') / 3));
