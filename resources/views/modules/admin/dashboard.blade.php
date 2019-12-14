@@ -26,28 +26,30 @@
                     </div>
                 </div>
             </div>
+            @can('Estadisticas - SuperUsuario')
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats grass-gradient">
+                <div class="widget bootstrap-widget stats blue-gradient white-text">
                     <div class="widget-stats-icon white-text">
-                        <i class="icon-star"></i>
+                        <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="widget-stats-content">
                         <span class="widget-stats-title">Contribuyentes Registrados</span>
-                        <span class="widget-stats-number"></span>
+                        <span class="widget-stats-number">{{ $taxpayers }}</span>
                     </div>
                 </div>
             </div>
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats peach-gradient">
+                <div class="widget bootstrap-widget stats red-gradient white-text">
                     <div class="widget-stats-icon white-text">
-                        <i class="icon-star"></i>
+                        <i class="fas fa-building"></i>
                     </div>
                     <div class="widget-stats-content">
                         <span class="widget-stats-title">Empresas Registradas</span>
-                        <span class="widget-stats-number"></span>
+                        <span class="widget-stats-number">{{ $companies }}</span>
                     </div>
                 </div>
             </div>
+            @endcan
            <!--  <div class="col s12 m6">
                <div class="widget bootstrap-widget stats">
                    <div class="widget-stats-icon red white-text">
@@ -260,6 +262,7 @@
         @endsection
         @section('scripts')
             <script src="{{ asset('js/jquery.countTo.js') }}"></script>
+            <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
             <script src="{{ asset('js/aos.js') }}"></script>
             <script src="{{ asset('js/Chart.min.js') }}"></script>
             <script src="{{ asset('js/dashboard.js') }}"></script>

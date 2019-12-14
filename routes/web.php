@@ -31,6 +31,7 @@ Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/download/{file}', 'HomeController@downloadPdf')->name('download');
     
     // Usuarios
     Route::group(['middleware' => ['permission:Gestionar Usuarios']], function() {

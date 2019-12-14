@@ -156,6 +156,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Estadisticas
         Permission::create(['name' => 'Estadisticas']);
+        Permission::create(['name' => 'Estadisticas - SuperUsuario']);
+
 
         // Notificaciones
         Permission::create(['name' => 'Notificaciones']);
@@ -286,6 +288,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Actualizar Vehiculos',
             'GeoSEMAT',
             'Estadisticas',
+            'Estadisticas - SuperUsuario',
             'Notificaciones',
             'Registrar Notificaciones',
             'Consultar Notificaciones',
@@ -394,7 +397,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Ver Planillas'
         ]);
 
-        $roleCoordinator = Role::create(['name' => 'Coordinador - Actividad Económica']);
+        $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
         $roleCoordinator ->givePermissionTo([
             'Taquilla',
             'Gestionar Contribuyentes',
@@ -435,7 +438,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'Actualizar Empresas',
             'Añadir CIIU Empresas',
             'Habilitar/Deshabilitar CIIU Empresas',
-            'Historial de Pago - Empresas'
+            'Historial de Pago - Empresas',
+            'Gestionar Usuarios',
+            'Registar Usuario',
+            'Consultar Usuarios',
+            'Detalles Usuarios',
+            'Actualizar Usuarios',
+            'Habilitar/Deshabilitar Usuarios',
+            'Resetear Usuarios'
         ]);
 
         $roleAdministrator = Role::create(['name' => 'Administrador']);

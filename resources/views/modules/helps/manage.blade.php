@@ -16,7 +16,7 @@
             <div class="col s12">
                 <div class="collection with-header">
                     <div class="collection-header center-align"><h4>Ayuda</h4></div>
-                    <a href="{{ route('help.register-company') }}" class="collection-item red-text text-darken-4">
+                    <a href="{{ route('download', ['file' => 'Manual_Registro_Empresa.pdf']) }}" class="collection-item red-text text-darken-4">
                         <div>
                             Registrar mi Empresa
                             <span class="secondary-content"><i class="icon-get_app red-text text-darken-2" style="font-size: 22px;"></i></span>

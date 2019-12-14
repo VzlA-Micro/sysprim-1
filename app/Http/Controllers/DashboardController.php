@@ -669,6 +669,8 @@ class DashboardController extends Controller
         $countPpc = count($ppc);
         $dear = $this->dearTaxes();
 
+        $taxpayers = User::get()->where('role_id',3)->count();
+        $companies = Company::get()->count(); 
         
 
         return view('modules.admin.dashboard', array(
@@ -678,6 +680,8 @@ class DashboardController extends Controller
                 'ppc' => $countPpc,
                 'ppe' => $countPpe,
                 'dear' => $dear,
+                'taxpayers' => $taxpayers,
+                'companies' => $companies
             )
         );
     }
