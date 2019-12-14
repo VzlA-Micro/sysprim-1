@@ -128,7 +128,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Añadir CIIU Empresas']);
         Permission::create(['name' => 'Eliminar CIIU Empresas']);
         Permission::create(['name' => 'Habilitar/Deshabilitar CIIU Empresas']);
-        Permission::create(['name' => 'Historial de Pago Empresas']);
+        Permission::create(['name' => 'Historial de Pago - Empresas']);
 
         // -- Gestionar Inmuebles
         Permission::create(['name' => 'Gestionar Inmuebles']);
@@ -137,6 +137,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Inmuebles']);
         Permission::create(['name' => 'Actualizar Inmuebles']);
         // Permission::create(['name' => 'Eliminar Inmuebles']);
+        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
+
 
         // -- Gestionar Vehiculos
         Permission::create(['name' => 'Gestionar Vehiculos']);
@@ -145,6 +147,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Vehiculos']);
         Permission::create(['name' => 'Actualizar Vehiculos']);
         // Permission::create(['name' => 'Eliminar Vehiculos']);
+        Permission::create(['name' => 'Historial de Pago - Vehiculos']);
+
 
         // GeoSEMAT
 
@@ -152,6 +156,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Estadisticas
         Permission::create(['name' => 'Estadisticas']);
+        Permission::create(['name' => 'Estadisticas - SuperUsuario']);
+
 
         // Notificaciones
         Permission::create(['name' => 'Notificaciones']);
@@ -159,7 +165,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Consultar Notificaciones']);
         Permission::create(['name' => 'Ver Notificaciones']);
 
-        // Mis Gestiones
+        // Mis Gestiones ------------------------------------------------------------------
         // Mis Empresas
         Permission::create(['name' => 'Mis Empresas']);
         Permission::create(['name' => 'Registar Mis Empresas']);
@@ -202,11 +208,33 @@ class RolesAndPermissionsSeeder extends Seeder
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
         //Asignamos todos los permisos
-        $roleSuperUser->givePermissionTo(Permission::all());
-
-        // Taquillero
-        $roleTicketOfficer = Role::create(['name' => 'Taquillero']);
-        $roleTicketOfficer->givePermissionTo([
+        $roleSuperUser->givePermissionTo([
+            'Seguridad',
+            'Bitacora',
+            'Gestionar Roles y Permisos',
+            'Crear Rol',
+            'Ver Roles',
+            'Actualizar Roles',
+            'Detalles Roles',
+            'Gestionar Usuarios',
+            'Registar Usuario',
+            'Consultar Usuarios',
+            'Detalles Usuarios',
+            'Actualizar Usuarios',
+            'Habilitar/Deshabilitar Usuarios',
+            'Resetear Usuarios',
+            'Configuración',
+            'Gestionar Unidad Tribuaria',
+            'Registar Unidad Tribuaria',
+            'Consultar Unidades Tribuarias',
+            'Gestionar CIIU',
+            'Registar Grupo CIIU',
+            'Consultar Grupos CIIU',
+            'Gestionar Ramos CIIU',
+            'Registar Ramo CIIU',
+            'Consultar Ramos CIIU',
+            'Detalles Ramo CIIU',
+            'Actualizar Ramos CIIU',
             'Taquilla',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
@@ -219,7 +247,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Pago - Transferencias',
             'Registrar Pago - Punto de Venta',
             'Registrar Pago - Depositos',
-            'Ver Pagos',
             'Detalles Pagos',
             'Anular Pagos',
             'Verificar Pagos - Manual',
@@ -227,7 +254,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Cargar Archivo Pagos',
             'Ver Pagos verificados',
             'Generar Planilla',
+            'Detalles Planilla',
             'Pagar Planilla',
+            'Ver Pagos',
             'Ver Pagos - Transferencias',
             'Ver Pagos - Punto de Venta',
             'Ver Pagos - Depositos',
@@ -237,6 +266,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Escanear QR',
             'Taquilla - Caja',
             'Abrir/Cerrar Caja',
+            'Ver Planillas',
             'Gestionar Empresas',
             'Registar Empresa',
             'Consultar Empresas',
@@ -245,7 +275,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Añadir CIIU Empresas',
             'Eliminar CIIU Empresas',
             'Habilitar/Deshabilitar CIIU Empresas',
-            'Historial de Pago Empresas',
+            'Historial de Pago - Empresas',
             'Gestionar Inmuebles',
             'Registar Inmueble',
             'Consultar Inmuebles',
@@ -255,34 +285,322 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
-            'Actualizar Vehiculos'
+            'Actualizar Vehiculos',
+            'GeoSEMAT',
+            'Estadisticas',
+            'Estadisticas - SuperUsuario',
+            'Notificaciones',
+            'Registrar Notificaciones',
+            'Consultar Notificaciones',
+            'Ver Notificaciones'
+        ]);
+
+        // Taquillero
+        $roleTicketOfficer = Role::create(['name' => 'Taquillero']);
+        $roleTicketOfficer->givePermissionTo([
+            'Taquilla',
+            'Gestionar Pagos',
+            'Generar Planilla',
+            'Pagar Planilla',
+            'Registrar Pago',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Ver Pagos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas',
+            'Ver Planillas - Taquilla'
         ]);
 
         // Contribuyente
         $roleTaxpayer = Role::create(['name' => 'Contribuyente']);
         $roleTaxpayer->givePermissionTo([
-            'Mis Empresas','Registar Mis Empresas','Consultar Mis Empresas','Detalles Mis Empresas',
-            'Actualizar Mis Empresas',
-            'Mis Inmuebles',
-            'Registar Mis Inmuebles',
-            'Consultar Mis Inmuebles',
-            'Detalles Mis Inmuebles',
-            'Actualizar Mis Inmuebles',
-            'Mis Vehiculos',
-            'Registar Mis Vehiculos',
-            'Consultar Mis Vehiculos',
-            'Detalles Mis Vehiculos',
-            'Actualizar Mis Vehiculos',
-            'Mis Pagos - Actividad Económica',
-            'Declarar Actividad Económica',
-            'Ver Declaraciones - Actividad Económica',
-            'Mis Pagos - Inmuebles',
-            'Declarar Inmuebles',
-            'Ver Declaraciones - Inmuebles',
-            'Mis Pagos - Vehiculos',
-            'Declarar Vehiculos',
-            'Ver Declaraciones - Vehiculos'
+            'Mis Empresas',
+            'Registar Mis Empresas',
+            'Consultar Mis Empresas',
+            'Detalles Mis Empresas',
+            // 'Actualizar Mis Empresas',
+            // 'Mis Inmuebles',
+            // 'Registar Mis Inmuebles',
+            // 'Consultar Mis Inmuebles',
+            // 'Detalles Mis Inmuebles',
+            // 'Actualizar Mis Inmuebles',
+            // 'Mis Vehiculos',
+            // 'Registar Mis Vehiculos',
+            // 'Consultar Mis Vehiculos',
+            // 'Detalles Mis Vehiculos',
+            // 'Actualizar Mis Vehiculos',
+            // 'Mis Pagos - Actividad Económica',
+            // 'Declarar Actividad Económica',
+            // 'Ver Declaraciones - Actividad Económica',
+            // 'Mis Pagos - Inmuebles',
+            // 'Declarar Inmuebles',
+            // 'Ver Declaraciones - Inmuebles',
+            // 'Mis Pagos - Vehiculos',
+            // 'Declarar Vehiculos',
+            // 'Ver Declaraciones - Vehiculos'
         ]);
+
+        $rolePublicAttention = Role::create(['name' => 'Atención al Público']);
+        $rolePublicAttention->givePermissionTo([
+            'Taquilla',
+            'Gestionar Contribuyentes',
+            'Registar Contribuyente',
+            'Consultar Contribuyentes',
+            'Detalles Contribuyentes',
+            'Actualizar Contribuyentes',
+            'Resetear Contribuyentes',
+            'Gestionar Empresas',
+            'Registar Empresa',
+            'Consultar Empresas',
+            'Detalles Empresas',
+            'Historial de Pago - Empresas',
+            'Gestionar Inmuebles',
+            'Registar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            'Actualizar Inmuebles',
+            'Historial de Pago - Inmuebles',
+            'Gestionar Vehiculos',
+            'Registar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            'Actualizar Vehiculos',
+            'Historial de Pago - Vehiculos'
+        ]);
+
+        $rolePaymentConciliator = Role::create(['name' => 'Conciliador de Pagos']);
+        $rolePaymentConciliator->givePermissionTo([
+            'Taquilla',
+            'Gestionar Pagos',
+            'Registrar Pago',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Detalles Pagos',
+            'Anular Pagos',
+            'Verificar Pagos - Manual',
+            'Verificar Pagos - Archivo',
+            'Cargar Archivo Pagos',
+            'Ver Pagos verificados',
+            'Generar Planilla',
+            'Detalles Planilla',
+            'Pagar Planilla',
+            'Ver Pagos',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
+            'Ver Planillas'
+        ]);
+
+        $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
+        $roleCoordinator ->givePermissionTo([
+            'Taquilla',
+            'Gestionar Contribuyentes',
+            'Registar Contribuyente',
+            'Consultar Contribuyentes',
+            'Detalles Contribuyentes',
+            'Actualizar Contribuyentes',
+            'Resetear Contribuyentes',
+            'Gestionar Pagos',
+            'Registrar Pago',
+            'Registrar Pago - Transferencias',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Detalles Pagos',
+            'Anular Pagos',
+            'Verificar Pagos - Manual',
+            'Verificar Pagos - Archivo',
+            'Cargar Archivo Pagos',
+            'Ver Pagos verificados',
+            'Generar Planilla',
+            'Detalles Planilla',
+            'Pagar Planilla',
+            'Ver Pagos',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
+            'Ver Planillas',
+            'Gestionar Empresas',
+            'Registar Empresa',
+            'Consultar Empresas',
+            'Detalles Empresas',
+            'Actualizar Empresas',
+            'Añadir CIIU Empresas',
+            'Habilitar/Deshabilitar CIIU Empresas',
+            'Historial de Pago - Empresas',
+            'Gestionar Usuarios',
+            'Registar Usuario',
+            'Consultar Usuarios',
+            'Detalles Usuarios',
+            'Actualizar Usuarios',
+            'Habilitar/Deshabilitar Usuarios',
+            'Resetear Usuarios'
+        ]);
+
+        $roleAdministrator = Role::create(['name' => 'Administrador']);
+        $roleAdministrator->givePermissionTo([
+            'Taquilla',
+            'Gestionar Contribuyentes',
+            'Registar Contribuyente',
+            'Consultar Contribuyentes',
+            'Detalles Contribuyentes',
+            'Actualizar Contribuyentes',
+            'Resetear Contribuyentes',
+            'Gestionar Pagos',
+            'Registrar Pago',
+            'Registrar Pago - Transferencias',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Detalles Pagos',
+            'Anular Pagos',
+            'Verificar Pagos - Manual',
+            'Verificar Pagos - Archivo',
+            'Cargar Archivo Pagos',
+            'Ver Pagos verificados',
+            'Generar Planilla',
+            'Detalles Planilla',
+            'Pagar Planilla',
+            'Ver Pagos',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
+            'Ver Planillas',
+            'Gestionar Empresas',
+            'Registar Empresa',
+            'Consultar Empresas',
+            'Detalles Empresas',
+            'Actualizar Empresas',
+            'Añadir CIIU Empresas',
+            'Eliminar CIIU Empresas',
+            'Habilitar/Deshabilitar CIIU Empresas',
+            'Historial de Pago - Empresas',
+            'Gestionar Inmuebles',
+            'Registar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            'Actualizar Inmuebles',
+            'Historial de Pago - Inmuebles',
+            'Gestionar Vehiculos',
+            'Registar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            'Actualizar Vehiculos',
+            'Historial de Pago - Vehiculos',
+            'Configuración',
+            'Gestionar Unidad Tribuaria',
+            'Registar Unidad Tribuaria',
+            'Consultar Unidades Tribuarias',
+            'Gestionar CIIU',
+            'Registar Grupo CIIU',
+            'Consultar Grupos CIIU',
+            'Gestionar Ramos CIIU',
+            'Registar Ramo CIIU',
+            'Consultar Ramos CIIU',
+            'Detalles Ramo CIIU',
+            'Actualizar Ramos CIIU',
+            'Notificaciones',
+            'Registrar Notificaciones',
+            'Consultar Notificaciones',
+            'Ver Notificaciones'
+        ]);
+
+        $roleCollectionManager = Role::create(['name' => 'Gerente de Recaudación']);
+        $roleCollectionManager->givePermissionTo([
+            'Taquilla',
+            'Gestionar Contribuyentes',
+            'Registar Contribuyente',
+            'Consultar Contribuyentes',
+            'Detalles Contribuyentes',
+            'Actualizar Contribuyentes',
+            'Resetear Contribuyentes',
+            'Gestionar Pagos',
+            'Registrar Pago',
+            'Registrar Pago - Transferencias',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Detalles Pagos',
+            'Anular Pagos',
+            'Verificar Pagos - Manual',
+            'Verificar Pagos - Archivo',
+            'Cargar Archivo Pagos',
+            'Ver Pagos verificados',
+            'Generar Planilla',
+            'Detalles Planilla',
+            'Pagar Planilla',
+            'Ver Pagos',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
+            'Ver Planillas',
+            'Gestionar Empresas',
+            'Registar Empresa',
+            'Consultar Empresas',
+            'Detalles Empresas',
+            'Actualizar Empresas',
+            'Añadir CIIU Empresas',
+            'Eliminar CIIU Empresas',
+            'Habilitar/Deshabilitar CIIU Empresas',
+            'Historial de Pago - Empresas',
+            'Gestionar Inmuebles',
+            'Registar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            'Actualizar Inmuebles',
+            'Historial de Pago - Inmuebles',
+            'Gestionar Vehiculos',
+            'Registar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            'Actualizar Vehiculos',
+            'Historial de Pago - Vehiculos',
+            'Configuración',
+            'Gestionar Unidad Tribuaria',
+            'Registar Unidad Tribuaria',
+            'Consultar Unidades Tribuarias',
+            'Gestionar CIIU',
+            'Registar Grupo CIIU',
+            'Consultar Grupos CIIU',
+            'Gestionar Ramos CIIU',
+            'Registar Ramo CIIU',
+            'Consultar Ramos CIIU',
+            'Detalles Ramo CIIU',
+            'Actualizar Ramos CIIU',
+            'GeoSEMAT',
+            'Estadisticas'
+        ]);
+
+        $roleMayor = Role::create(['name' => 'Alcalde']);
+        $roleMayor->givePermissionTo([
+            'GeoSEMAT',
+            'Estadisticas',
+            'Gestionar Empresas',
+            'Consultar Empresas',
+            'Detalles Empresas'
+        ]);
+
 
         DB::table('model_has_roles')->insert([
         	'role_id' => 1,

@@ -59,8 +59,13 @@ class UserController extends Controller{
     }
 
     public function create()
-    {
-        $role=Role::all();
+    {   
+        if(\Auth::User()->role_id == 6){
+            $role = Role::where('id',2)->orWhere('id',4)->get();
+        }
+        else {
+            $role = Role::all();
+        }
         return view('modules.users.register',['Role'=>$role]);
     }
 
@@ -91,8 +96,12 @@ class UserController extends Controller{
 
     public function show()
     {
-
-        $user= User::get();
+        if(\Auth::User()->role_id == 6) {
+            $user= User::where('role_id',2)->orWhere('role_id',3)->orWhere('role_id',4)->get();
+        }
+        else{
+            $user= User::get();
+        }
         return view('modules.users.read',array(
             'showUser' => $user
         ));

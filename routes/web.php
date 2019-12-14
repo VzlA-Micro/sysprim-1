@@ -31,6 +31,7 @@ Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/download/{file}', 'HomeController@downloadPdf')->name('download');
     
     // Usuarios
     Route::group(['middleware' => ['permission:Gestionar Usuarios']], function() {
@@ -131,11 +132,11 @@ Route::middleware(['auth'])->group(function() {
     // Estadisticas 
     Route::group(['middleware' => ['permission:Estadisticas']], function() {
         Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
-        Route::get('/collection/statistics','DashboardController@collection')->name('collection');
         Route::get('bs','DashboardController@bs')->name('bs');
         Route::get('amountApproximate','DashboardController@amountApproximate')->name('amountApproximate');
         Route::get('dearTaxes','DashboardController@dearTaxes')->name('dearTaxes');
     });
+        Route::get('/collection/statistics','DashboardController@collection')->name('collection');
 
 
     // Route::get('/dashboard',array(
@@ -203,6 +204,9 @@ Route::middleware(['auth'])->group(function() {
             // ---- Ver Pagos 
             Route::group(['middleware' => ['permission:Ver Pagos']], function() {
                 Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+                Route::get('/ticket-office/payments/checks', function() {
+                    return view('modules.payments.checks');
+                })->name('ticket-office.payment.type.checks');
                 // Nivel 3: Detalles de planilla
                 Route::group(['middleware' => ['permission:Detalles Pagos']], function() {
                     Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');

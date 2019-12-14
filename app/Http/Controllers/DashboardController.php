@@ -619,6 +619,11 @@ class DashboardController extends Controller
           'total'=>$dear['total']
         );
 
+        // Count Taxpayers
+
+        $taxpayers = User::get()->where('role_id',3)->count();
+        $companies = Company::get()->count(); 
+
         return response()->json([
             $collection,
             $collectionMonth,
@@ -632,7 +637,9 @@ class DashboardController extends Controller
             $vehicle,
             $event,
             $top,
-            $dear
+            $dear, 
+            $taxpayers,
+            $companies
         ]);
     }
 
@@ -662,13 +669,19 @@ class DashboardController extends Controller
         $countPpc = count($ppc);
         $dear = $this->dearTaxes();
 
+        $taxpayers = User::get()->where('role_id',3)->count();
+        $companies = Company::get()->count(); 
+        
+
         return view('modules.admin.dashboard', array(
                 'company' => $company,
                 'ptb' => $countPtb,
                 'ppv' => $countPpv,
                 'ppc' => $countPpc,
                 'ppe' => $countPpe,
-                'dear' => $dear
+                'dear' => $dear,
+                'taxpayers' => $taxpayers,
+                'companies' => $companies
             )
         );
     }

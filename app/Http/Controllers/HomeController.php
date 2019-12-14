@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TaxesNumber;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -58,4 +59,12 @@ class HomeController extends Controller
     public function online(){
         return $datos=['status'=>200,'online'];
     }
+
+    public function downloadPdf($pdf) {
+        $file = storage_path() . "/app/public/" . $pdf;
+        $headers = ['Content-Type' => 'application/pfd'];
+        // dd($file);
+        return Storage::download($file, $pdf, $headers);
+    }
+
 }

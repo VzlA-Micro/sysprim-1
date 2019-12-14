@@ -332,6 +332,15 @@ button.btn-app:hover {
   color: #444444 !important;
 }
 
+nav ul a.dropdown-trigger.avatar-trigger {
+  font-size: 4rem;
+}
+
+.dropdown-trigger img.avatar {
+  width: 45px;
+  margin-top: 0.5rem;
+}
+
 /* nav .breadcrumb-nav,
 nav.breadcrumb-nav,
 .breadcrumb-nav {
