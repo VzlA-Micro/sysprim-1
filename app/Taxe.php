@@ -22,7 +22,7 @@ class Taxe extends Model implements Auditable {
     }
 
     public function vehicles(){
-        return $this->belongsTo('App\VehiclesTaxe');
+        return $this->belongsToMany('App\VehiclesTaxe','taxe_id');
     }
 
 

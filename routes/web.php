@@ -163,6 +163,7 @@ Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('
 //_______________________________________Vehicles Taxes Routes_______________________________________________________________
 Route::get('/taxes/vehicles/{id}', 'VehiclesTaxesController@create')->name('taxes.vehicle');
 Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
+Route::post('/vehicle/payments/register', 'VehiclesTaxesController@payments')->name('vehicle.payments.store');
 //___________________________________________________________________________________________________________________________
 
 

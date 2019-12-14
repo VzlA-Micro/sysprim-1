@@ -36,7 +36,8 @@
                     <div class="card-header center-align">
                         <h5>Detalles de Impuesto</h5>
                     </div>
-                    <form method="post" action="{{route('vehicles.taxes.save')}}" id='register-taxes' class="card-content row">
+                    <form method="post" action="{{route('vehicles.taxes.save')}}" id='register-taxes'
+                          class="card-content row">
                         @csrf
 
                         <div class="input-field col s12 m6">
@@ -65,7 +66,8 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="tasa[]" id="tasa" class="validate recargo money"
-                                   pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="0" readonly>
+                                   pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
+                                   value="{{number_format($previousDebt,2,',','.')}}" readonly>
                             <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
                         </div>
                     <!--<div class="input-field col s12 m4">
@@ -94,19 +96,51 @@
                                         <td>{{$rateYear}}</td>
                                     </tr>
                                     </tbody>
+
+                                    <thead>
+                                    <tr>
+                                        <th>RECARGO</th>
+                                        <th>VALOR</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{'20%'}}</td>
+                                        <td>{{$recharge}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <thead>
+                                    <tr>
+                                        <th>PERIODOS FISCALES</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{'20%'}}</td>
+                                        <td>{{$recharge}}</td>
+                                    </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest" class="validate money" value="{{$taxesVehicle}}" readonly>
+                                    <input type="text" name="interest" class="validate money" value="{{$taxesVehicle}}"
+                                           readonly>
                                     <label for="interest">Impuesto Bruto:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="recargo" class="validate money" value="{{$valueDiscount}}" readonly>
+                                    @if(isset($valueDiscount))
+                                        <input type="text" name="recargo" class="validate money"
+                                               value="{{$valueDiscount}}" readonly>
+                                    @else
+                                        <input type="text" name="recargo" class="validate money" value="0" readonly>
+                                    @endif
                                     <label for="recargo">Descuento:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input type="text" name="total" class="validate total money" value="{{$discount}}" readonly>
+                                    <input type="text" name="total" class="validate total money"
+                                           value="{{number_format($total,2,',','.')}}"
+                                           readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
@@ -119,24 +153,22 @@
                             <div class="input-field col s12">
 
                                 {{-- Modal trigger --}}
+                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
+                                   class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                    Calcular de nuevo
+                                    <i class="icon-refresh right"></i></a>
 
-
-                                    <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
-                                        Calcular de nuevo
-                                        <i class="icon-refresh right"></i></a>
-
-                                    <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
-                                         Descargar Calculo.
-                                         <i class="icon-cloud_download right"></i>
-                                     </a>-->
-
-                                    <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
-                                        Continuar
-                                        <i class="icon-more_horiz right"></i>
-                                    </button>
-                                    {{-- Modal structure --}}
-
-
+                                <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
+                                     Descargar Calculo.
+                                     <i class="icon-cloud_download right"></i>
+                                 </a>-->
+                                <button type="submit"
+                                        class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger"
+                                        id="continue">
+                                    Continuar
+                                    <i class="icon-more_horiz right"></i>
+                                </button>
+                                {{-- Modal structure --}}
                                 <div id="modal1" class="modal modal-fixed-footer">
                                     <div class="modal-content">
                                         <h4 class="center-align">Formas de pago</h4>

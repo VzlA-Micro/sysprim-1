@@ -49,10 +49,25 @@
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">
-                        <a href="{{route('taxes.vehicle',['id'=>$vehicle->id])}}" class="btn-app white green-text">
+                        <a href="#mode" class="modal-trigger btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
+                    </div>
+
+                    <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
+
+
+                    <!-- Modal Structure -->
+                    <div id="mode" class="modal">
+                        <div class="modal-content">
+                            <h4>Opciones de pago</h4>
+
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."true"])}}" class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                            <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."false"])}}" class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
+                        </div>
                     </div>
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
