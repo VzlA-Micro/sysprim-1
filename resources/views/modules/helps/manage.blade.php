@@ -16,19 +16,19 @@
             <div class="col s12">
                 <div class="collection with-header">
                     <div class="collection-header center-align"><h4>Ayuda</h4></div>
-                    <a href="{{ route('help.register-company') }}" class="collection-item red-text text-darken-2">
+                    <a href="{{ route('help.register-company') }}" class="collection-item red-text text-darken-4">
                         <div>
                             Registrar mi Empresa
-                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
+                            <span class="secondary-content"><i class="icon-get_app red-text text-darken-2" style="font-size: 22px;"></i></span>
+                        </div>
+                    </a>
+                    <a href="" class="collection-item red-text text-darken-4">
+                        <div>
+                            Conciliar Pagos - Actividad Económica
+                            <span class="secondary-content"><i class="icon-get_app red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
                     </a>
                     <!-- <a href="" class="collection-item red-text text-darken-2">
-                        <div>
-                            Conciliar Impuestos
-                            <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>
-                        </div>
-                    </a>
-                    <a href="" class="collection-item red-text text-darken-2">
                         <div>
                             Alvin
                             <span class="secondary-content"><i class="icon-send red-text text-darken-2" style="font-size: 22px;"></i></span>

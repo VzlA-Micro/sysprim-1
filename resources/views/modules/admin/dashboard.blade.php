@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Estadísticas</a></li>
                 </ul>
             </div>
-            <div class="col s12 m6" data-aos="zoom-in">
+            <div class="col s12" data-aos="zoom-in">
                 <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon green white-text">
                         <i class="i-bss"></i>
@@ -27,18 +27,40 @@
                 </div>
             </div>
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon red white-text">
-                        <i class="i-petro-logo"></i>
+                <div class="widget bootstrap-widget stats grass-gradient">
+                    <div class="widget-stats-icon white-text">
+                        <i class="icon-star"></i>
                     </div>
                     <div class="widget-stats-content">
-                        <span class="widget-stats-title">Recaudación Total en Petros</span>
-                        <span class="widget-stats-number">
-                            <span class="timer" id="petro"></span>  </i>
-                        </span>
+                        <span class="widget-stats-title">Contribuyentes Registrados</span>
+                        <span class="widget-stats-number"></span>
                     </div>
                 </div>
             </div>
+            <div class="col s12 m6">
+                <div class="widget bootstrap-widget stats peach-gradient">
+                    <div class="widget-stats-icon white-text">
+                        <i class="icon-star"></i>
+                    </div>
+                    <div class="widget-stats-content">
+                        <span class="widget-stats-title">Empresas Registradas</span>
+                        <span class="widget-stats-number"></span>
+                    </div>
+                </div>
+            </div>
+           <!--  <div class="col s12 m6">
+               <div class="widget bootstrap-widget stats">
+                   <div class="widget-stats-icon red white-text">
+                       <i class="i-petro-logo"></i>
+                   </div>
+                   <div class="widget-stats-content">
+                       <span class="widget-stats-title">Recaudación Total en Petros</span>
+                       <span class="widget-stats-number">
+                           <span class="timer" id="petro"></span>  </i>
+                       </span>
+                   </div>
+               </div>
+           </div> -->
             <div class="col s12 m6 l4">
                 <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon white-text banesco-green">

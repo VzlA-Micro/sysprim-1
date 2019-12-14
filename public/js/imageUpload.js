@@ -1,5 +1,7 @@
 (function () {
     var url = "https://sysprim.com/";
+    // var url="http://sysprim.com.devel/";
+
 
   var uploader = document.createElement('input'),
     image = document.getElementById('img-result');

@@ -1,5 +1,7 @@
 $(document).ready(function () {
     var url="https://sysprim.com/";
+    // var url="http://sysprim.com.devel/";
+
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {

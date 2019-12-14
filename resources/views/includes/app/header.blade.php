@@ -47,7 +47,7 @@
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
                         <i class="icon-more_vert right"></i>
                         @if (Storage::disk('users')->has(Auth::user()->image))
-                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar">
+                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar circle">
                         @else 
                         <img src="{{ asset('images/user.png') }}" alt="" class="avatar">
                         @endif

@@ -66,10 +66,10 @@
             </tr>
             <tr>
                 <td style="width:15%;">
-                    <img src="{{ asset('images/logo.png') }}" style="width: 120px; height: 120px;" alt="">
+                    <img src="{{ asset('images/logo.png') }}" style="width: 160px; height: 120px;" alt="">
                 </td>
                 <td style="width:60%;font-size: 10px;text-align: center;">
-                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 120px; height: 90px;bottom: -10px!important;" alt=""><br>
+                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: absolute; left: 270px !important; top: 180px" alt=""><br>
                     __________________________________________<br>
                     ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
                     Directora (E) de la Dirección de Hacienda y<br>

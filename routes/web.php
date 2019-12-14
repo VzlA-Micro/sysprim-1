@@ -131,11 +131,11 @@ Route::middleware(['auth'])->group(function() {
     // Estadisticas 
     Route::group(['middleware' => ['permission:Estadisticas']], function() {
         Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
-        Route::get('/collection/statistics','DashboardController@collection')->name('collection');
         Route::get('bs','DashboardController@bs')->name('bs');
         Route::get('amountApproximate','DashboardController@amountApproximate')->name('amountApproximate');
         Route::get('dearTaxes','DashboardController@dearTaxes')->name('dearTaxes');
     });
+        Route::get('/collection/statistics','DashboardController@collection')->name('collection');
 
 
     // Route::get('/dashboard',array(
