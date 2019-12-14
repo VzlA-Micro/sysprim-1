@@ -68,5 +68,11 @@ class ParishTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
+
+        DB::table('parish')->insert([
+            'name'=>'EL CUJÍ',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);
     }
 }

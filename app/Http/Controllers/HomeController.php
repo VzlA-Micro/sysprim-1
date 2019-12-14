@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Helpers\TaxesMonth;
 use App\Helpers\CedulaVE;
 use Psy\Util\Json;
-
+use  App\Helpers\Rif;
 class HomeController extends Controller
 {
     /**
@@ -32,6 +32,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request){
+
+
         if(\Auth::user()->status_account==='block'){
             Auth::logout();
             return redirect('/')->with('notification','Su usuario ha sido bloqueado, para poder desbloquearlo debe  dirigirse a la oficinas del semat.');

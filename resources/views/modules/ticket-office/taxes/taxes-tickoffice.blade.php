@@ -200,17 +200,6 @@
                                                         <div class="row">
                                                             <input type="hidden" name="taxes_id" id="taxes_id_tr"
                                                                    class="taxes_id" value="">
-                                                            <div class="input-field col m6 s12">
-                                                                <i class="icon-satellite prefix"></i>
-                                                                <select name="bank">
-                                                                    <option value="44">BOD</option>
-                                                                    <option value="77">Banco Bicentenario</option>
-                                                                    <option value="55">Banesco</option>
-                                                                    <option value="99">BNC</option>
-                                                                    <option value="33">100% Banco</option>
-                                                                </select>
-                                                                <label>Banco</label>
-                                                            </div>
 
 
                                                             <form id="register-payment-tr" method="#" action="#">
@@ -220,8 +209,7 @@
                                                                     <div class="input-field col m6 s12">
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank" id="bank_tr">
-                                                                            <option value="null" selected disabled>
-                                                                                Seleciona una opción
+                                                                            <option value="null" selected disabled>Seleciona una opción
                                                                             </option>
                                                                             <option value="44">BOD</option>
                                                                             <option value="77">Banco Bicentenario
@@ -237,8 +225,7 @@
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank_destinations"
                                                                                 id="bank_destinations_tr">
-                                                                            <option value="null" selected disabled>
-                                                                                Seleciona una opción
+                                                                            <option value="null" selected disabled>Seleciona una opción
                                                                             </option>
                                                                             <option value="44">BOD</option>
                                                                             <option value="77">Banco Bicentenario

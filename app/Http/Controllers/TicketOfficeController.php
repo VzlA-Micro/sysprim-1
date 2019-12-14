@@ -291,10 +291,6 @@ class TicketOfficeController extends Controller{
 
 
 
-    //taxes
-
-
-
 
     public function getTaxes(){
         $taxes=Audit::where('user_id',\Auth::user()->id)
@@ -500,7 +496,6 @@ class TicketOfficeController extends Controller{
 
 
     public function payments($type){
-
         $payment=Payment::with('taxes')->where('type_payment','=',$type)->get();
         if($payment->isEmpty()){
            $payment=null;

@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Tranferiacias</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Transferencias</a></li>
                 </ul>
             </div>
 
@@ -27,10 +27,12 @@
                                 <thead>
                                 <tr>
                                     <th>Fecha</th>
-                                    <th>Contribuyente</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
                                     <th>Forma de Pago</th>
                                     <th>Banco</th>
                                     <th>Banco Destino</th>
+                                    <th>Ref</th>
                                     <th>Status</th>
                                     <th>Planilla</th>
                                     <th>Monto</th>
@@ -45,10 +47,12 @@
                                     @foreach($taxes as $taxe)
                                         <tr>
                                             <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                            <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
+                                            <td>{{$taxe->name}}</td>
+                                            <td>{{$taxe->phone}}</td>
                                             <td>{{$taxe->type_payment}}</td>
                                             <td>{{$taxe->bankName}}</td>
                                             <td>{{$taxe->taxes[0]->bankName}}</td>
+                                            <td>{{$taxe->ref}}</td>
                                             @if($taxe->lot)
                                                 <td>{{$taxe->lot}}</td>
                                             @else
@@ -68,7 +72,7 @@
                                             <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                             @can('Detalles Pagos')
                                             <td>
-                                                <a href="{{route('ticket-office.payment.details',[$taxe->id])  }}"
+                                                <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
                                                    class="btn btn-floating orange waves-effect waves-light"><i
                                                             class="icon-pageview"></i></a>
                                             </td>
@@ -146,14 +150,14 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/TRANSFERENCIA',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
 
                     customize: function (doc) {
                         doc.styles.title = {
-                            fontSize: '25',
+                            fontSize: '20',
                             alignment: 'center'
                         },doc.styles['td:nth-child(2)'] = {
                             width: '100px',
@@ -161,15 +165,15 @@
                         }, doc.styles.tableHeader = {
                             fillColor:'#247bff',
                             color:'#FFF',
-                            fontSize: '9',
+                            fontSize: '6',
                             alignment: 'center',
                             bold: true
 
-                        },doc.defaultStyle.fontSize = 8;
+                        },doc.defaultStyle.fontSize =6;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7,8,9]
                     }
                 },
 

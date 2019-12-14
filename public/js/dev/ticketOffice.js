@@ -343,8 +343,6 @@ $(document).ready(function () {
 
 
 
-                    $('#bank_tr').material_select();
-                    $('#bank_destinations_tr').material_select();
 
 
                     $("#preloader").fadeOut('fast');

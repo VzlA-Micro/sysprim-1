@@ -533,7 +533,7 @@ Route::middleware(['auth'])->group(function() {
     
 
     Route::get('/company/verify-rif/{rif}','CompaniesController@verifyRif');
-    Route::get('/company/verify-license/{license}','CompaniesController@verifyLicense');
+    Route::get('/company/verify-license/{license}/{rif}','CompaniesController@verifyLicense');
 
     Route::get('/company/find/{rif}','CompaniesController@findCompany');
 
