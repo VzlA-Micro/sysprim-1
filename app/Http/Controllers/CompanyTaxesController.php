@@ -439,7 +439,7 @@ class CompanyTaxesController extends Controller
 
 
             Mail::send('mails.fines-acteco', [], function ($msj) use ($subject, $for, $pdf) {
-                $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
                 $msj->subject($subject);
                 $msj->to($for);
                 $msj->attachData($pdf->output(), time() . "multa.pdf");
@@ -463,7 +463,7 @@ class CompanyTaxesController extends Controller
 
 
         Mail::send('mails.payment-payroll', [], function ($msj) use ($subject, $for, $pdf) {
-            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+            $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);
             $msj->attachData($pdf->output(), time() . "planilla.pdf");

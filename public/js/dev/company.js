@@ -1,7 +1,6 @@
 $(document).ready(function () {
-
     var url="https://sysprim.com/";
-    // var url="http://sysprim.com.devel/";
+     //var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -624,21 +623,16 @@ $(document).ready(function () {
                     $('#license').val(company.codigo_licencia);
                     $('#address').val(company.direccion);
                     $('#phone-company').val(company.telefono_principal);
-
                     if(company.direccion!==''){
-                        localizar("map", company.direccion+", Barquisimeto.");
+                        localizar("map", company.direccion+" barquisimeto.Estado Lara.");
                     }
                     if ($('#ci-license').val() !== undefined) {
-
                         $('#name_company').val(company.historico_nombre_empresa);
                         $('#ci-license').val(company.historico_cedula);
                         $('#phone-user').val(company.telefono_principal);
                         $('#name-license').val(company.historico_nombre_representante);
                         $('#email').val(company.email);
-
                     }
-
-
                     M.textareaAutoResize($('#address'));
                     M.updateTextFields();
 
@@ -646,7 +640,7 @@ $(document).ready(function () {
 
                     swal({
                         title: "Información",
-                        text: "Empresa encontrada con éxito, verifique que  los datos encontrados son los correctos, complete los ciiu, código catastral y número de empleados, y confirme su ubicación en el mapa.",
+                        text: "Empresa encontrada con éxito, verifique que  los datos encontrados son los correctos, complete los CIIU, código catastral y número de empleados, y confirme su ubicación en el mapa.",
                         icon: "success",
                         button: "Ok",
                     });
@@ -840,7 +834,7 @@ function localizar(elemento,direccion) {
 $('#address').change(function () {
     var direccion=$(this).val();
     if(direccion!==''){
-        localizar("map", direccion);
+        localizar("map", direccion+" baquisimeto, Estado Lara.");
     }
 });
 

@@ -22,6 +22,7 @@ use App\UserCompany;
 use App\Payments;
 use App\FindCompany;
 use Alert;
+use Illuminate\Support\Facades\Mail;
 class CompaniesController extends Controller
 {
     /**
@@ -131,6 +132,14 @@ class CompaniesController extends Controller
 
 
 
+        $subject = "REGISTRO ÉXITOSO-SEMAT";
+        $for = \Auth::user()->email;
+
+        Mail::send('mails.company', ['id'=>$id], function ($msj) use ($subject, $for) {
+            $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
 
         return response()->json(['status'=>'success','message'=>"Empresa registrada con éxito"]);
     }
@@ -305,11 +314,15 @@ class CompaniesController extends Controller
     }
 
     public function verifyLicense($license,$rif){
+        $company = Company::where('license',$license)->get();
 
-        $company = Company::where('license',$license)->where('rif',$rif)->get();
 
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            if($company[0]->RIF===$rif){
+                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            }else{
+                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            }
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }

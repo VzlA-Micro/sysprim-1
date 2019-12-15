@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
-    // var url = "https://sysprim.com/";
-    var url = "http://sysprim.com.devel/";
+     var url = "https://sysprim.com/";
+    
+     //var url = "http://sysprim.com.devel/";
 
 
     $('#ci').blur(function () {
