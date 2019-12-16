@@ -3,6 +3,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+
+            @hasrole('Contribuyente')
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
@@ -13,7 +15,17 @@
                     <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                 </ul>
             </div>
-
+            @else
+                <div class="col s12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
+                    </ul>
+                </div>
+            @endif
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">

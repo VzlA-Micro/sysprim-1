@@ -56,7 +56,7 @@
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Detalles Pagos')
                                         <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }} }}"
+                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
                                                class="btn btn-floating orange waves-effect waves-light"><i
                                                         class="icon-pageview"></i></a>
                                         </td>
@@ -135,7 +135,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/PUNTO DE VENTA',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
@@ -146,7 +146,7 @@
 
                     customize: function (doc) {
                         doc.styles.title = {
-                            fontSize: '25',
+                            fontSize: '20',
                             alignment: 'center'
                         }, doc.styles['td:nth-child(2)'] = {
                             width: '100px',
@@ -154,7 +154,7 @@
                         }, doc.styles.tableHeader = {
                                 fillColor:'#247bff',
                                 color:'#FFF',
-                                fontSize: '10',
+                                fontSize: '9',
                                 alignment: 'center',
                                 bold: true
 

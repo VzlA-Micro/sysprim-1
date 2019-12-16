@@ -49,13 +49,15 @@
                         @if (Storage::disk('users')->has(Auth::user()->image))
                         <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar circle">
                         @else 
-                        <img src="{{ asset('images/user.png') }}" alt="" class="avatar">
+                        <img src="{{ asset('images/user.png') }}" alt="" class="avatar circle">
                         @endif
                     </a>
                 </li>
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
-                    <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li>
+                    @can('Mi Perfil')
+                    <li><a href=""><i class="icon-account_box"></i>Mi Perfil</a></li>
+                    @endcan
                     <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
                     <li class="divider"></li>
                     <li>
@@ -105,9 +107,11 @@
                           </a>
                         </div>
                     </li>
+                    @can('Mi Perfil')
                     <li class="waves-efect waves-light">
                         <a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a>
                     </li>
+                    @endcan
                     <li class="divider"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('home') }}"class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a>

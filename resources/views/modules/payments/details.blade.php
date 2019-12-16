@@ -63,6 +63,8 @@
                                 <h5>Detalles de pago</h5>
                             </div>
 
+
+
                             <div class="input-field col s6">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="fiscal_period_view" id="fiscal_period_view"
@@ -80,6 +82,7 @@
 
 
 
+                            @foreach($payments as $payment)
                             <input type="hidden" name="taxes_id" id="taxes_id_tr" value="">
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
@@ -138,6 +141,9 @@
 
 
 
+                            @endforeach
+
+
                             @if($payments->taxes[0]->status==='process')
                                 <div class="input-field col s12 center-align">
                                     <button class="btn green col s12">
@@ -184,6 +190,8 @@
                                     @endcan
 
                                 </div>
+
+
                         </div>
                         <div class="card-footer center">
 

@@ -47,6 +47,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Habilitar/Deshabilitar Usuarios']);
         // Permission::create(['name' => 'Eliminar Usuarios']);
         Permission::create(['name' => 'Resetear Usuarios']);
+        Permission::create(['name' => 'Mi Perfil']);
 
         // Configuración
         Permission::create(['name' => 'Configuración']);
@@ -292,7 +293,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Notificaciones',
             'Registrar Notificaciones',
             'Consultar Notificaciones',
-            'Ver Notificaciones'
+            'Ver Notificaciones',
+            'Mi Perfil'
         ]);
 
         // Taquillero
@@ -309,7 +311,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Mi Taquilla - Punto de Venta',
             'Mi Taquilla - Deposito',
             'Ver Planillas',
-            'Ver Planillas - Taquilla'
+            'Ver Planillas - Taquilla',
+            'Mi Perfil'
         ]);
 
         // Contribuyente
@@ -318,7 +321,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Mis Empresas',
             'Registar Mis Empresas',
             'Consultar Mis Empresas',
-            'Detalles Mis Empresas'
+            'Detalles Mis Empresas',
             // 'Actualizar Mis Empresas',
             // 'Mis Inmuebles',
             // 'Registar Mis Inmuebles',
@@ -338,7 +341,8 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Ver Declaraciones - Inmuebles',
             // 'Mis Pagos - Vehiculos',
             // 'Declarar Vehiculos',
-            // 'Ver Declaraciones - Vehiculos'
+            // 'Ver Declaraciones - Vehiculos',
+            'Mi Perfil'
         ]);
 
         $rolePublicAttention = Role::create(['name' => 'Atención al Público']);
@@ -366,7 +370,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Vehiculos',
             'Detalles Vehiculos',
             'Actualizar Vehiculos',
-            'Historial de Pago - Vehiculos'
+            'Historial de Pago - Vehiculos',
+            'Mi Perfil'
         ]);
 
         $rolePaymentConciliator = Role::create(['name' => 'Conciliador de Pagos']);
@@ -394,7 +399,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Escanear QR',
             'Taquilla - Caja',
             'Abrir/Cerrar Caja',
-            'Ver Planillas'
+            'Ver Planillas',
+            'Mi Perfil'
         ]);
 
         $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
@@ -445,7 +451,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Usuarios',
             'Actualizar Usuarios',
             'Habilitar/Deshabilitar Usuarios',
-            'Resetear Usuarios'
+            'Resetear Usuarios',
+            'Mi Perfil'
         ]);
 
         $roleAdministrator = Role::create(['name' => 'Administrador']);
@@ -518,7 +525,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Notificaciones',
             'Registrar Notificaciones',
             'Consultar Notificaciones',
-            'Ver Notificaciones'
+            'Ver Notificaciones',
+            'Mi Perfil'
         ]);
 
         $roleCollectionManager = Role::create(['name' => 'Gerente de Recaudación']);
@@ -589,7 +597,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Ramo CIIU',
             'Actualizar Ramos CIIU',
             'GeoSEMAT',
-            'Estadisticas'
+            'Estadisticas',
+            'Mi Perfil'
         ]);
 
         $roleMayor = Role::create(['name' => 'Alcalde']);
@@ -598,7 +607,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Estadisticas',
             'Gestionar Empresas',
             'Consultar Empresas',
-            'Detalles Empresas'
+            'Detalles Empresas',
+            'Mi Perfil'
         ]);
 
 

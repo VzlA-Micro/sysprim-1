@@ -188,11 +188,24 @@ class TaxesMonth{
         $diffDayMora=0;
         $fiscal_period=Carbon::parse($fiscal_period);
         $now_pay = Carbon::now();//fecha de pago
+
+
         if($now_pay->diffInMonths($fiscal_period)<2){
             $now_pay->subMonth(1);
         }
+
         if($type_company==='R'){
-            $fiscal_period->setDay(5);
+            $day_payment=Carbon::now()->setDay(5);
+            $nombre_dia=date('w', strtotime($day_payment));
+            if($now_pay->diffInMonths($fiscal_period)<2) {
+                if ($nombre_dia == 06) {
+                    $dayMoraEspecial = $dayMoraEspecial + 2;
+                } else if ($nombre_dia == 0) {
+                    $dayMoraEspecial = $dayMoraEspecial + 1;
+                }
+            }
+            $fiscal_period->setDay($dayMoraEspecial);
+
             if($fiscal_period->diffInDays($now_pay)<=$dayMoraEspecial){
                 $mora=false;
             }else{
@@ -200,7 +213,18 @@ class TaxesMonth{
                 $diffDayMora=$fiscal_period->diffInDays($now_pay);
             }
         }else{
-            $fiscal_period->setDay(14);
+            $day_payment=Carbon::now()->setDay(14);
+            $nombre_dia=date('w', strtotime($day_payment));
+
+            if($now_pay->diffInMonths($fiscal_period)<2){
+                if($nombre_dia=="06"&&$now_pay->diffInMonths($fiscal_period)<2){
+                    $dayMoraNormal=$dayMoraNormal+2;
+                }else if($nombre_dia=="0"){
+                    $dayMoraNormal=$dayMoraNormal+1;
+                }
+            }
+
+            $fiscal_period->setDay($dayMoraNormal);
             if($fiscal_period<$now_pay){
                 $diffDayMora=$fiscal_period->diffInDays($now_pay);
                 $mora=true;
@@ -208,6 +232,9 @@ class TaxesMonth{
                 $diffDayMora=0;
                 $mora=false;
             }
+
+
+
         }
 
         return array('mora'=>$mora,'diffDayMora'=>$diffDayMora);

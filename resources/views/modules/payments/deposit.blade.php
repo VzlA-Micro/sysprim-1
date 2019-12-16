@@ -34,6 +34,7 @@
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Planilla</th>
+                                <th>N de Cheque</th>
                                 <th>Status</th>
                                 <th>Monto</th>
                                 @can('Detalles Pagos')
@@ -50,6 +51,7 @@
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
+                                        <td>{{$taxe->ref}}</td>
 
                                             @if($taxe->taxes[0]->status=='verified')
                                                 <td>Verificado <i class="icon-check green-text"
@@ -138,46 +140,37 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/DEPOSITO',
                     className: 'btn orange waves-effect waves-light',
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/DEPOSITO',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
 
-
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
-
                     customize: function (doc) {
-
-                        doc.styles['td:nth-child(2)'] = {
+                        doc.styles.title = {
+                            fontSize: '20',
+                            alignment: 'center'
+                        },doc.styles['td:nth-child(2)'] = {
                             width: '100px',
                             'max-width': '100px'
                         }, doc.styles.tableHeader = {
                             fillColor:'#247bff',
                             color:'#FFF',
-                            fontSize: '10',
+                            fontSize: '9',
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 11;
+                        },doc.defaultStyle.fontSize =9;
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7]
                     }
                 },
 
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
 
 
                 {

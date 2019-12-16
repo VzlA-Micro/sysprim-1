@@ -13,12 +13,9 @@ $('document').ready(function () {
         }
 
 
-
-
-
         swal({
             title: "Información",
-            text: '¿Estas seguro?, el estado de esta planilla cambiaria  a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro?, el estado de esta planilla cambiaria  el status a "'+ message+'", tanto está como lo pagos asociado a la misma.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {

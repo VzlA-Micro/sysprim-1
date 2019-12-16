@@ -523,6 +523,8 @@ $('document').ready(function () {
 
     $('#register-payment-depo').submit(function (e) {
         e.preventDefault();
+
+        if($('input:radio:checked.check-payment').val()!==undefined&&$('input:radio:checked.bank-div').val()!==undefined){
             $.ajax({
                 url: url + "ticket-office/payment/save",
                 contentType: false,
@@ -569,6 +571,26 @@ $('document').ready(function () {
                 }
             });
 
+        }else{
+            if($('input:radio:checked.check-payment').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debes de selecionar la forma de pago en que se va hacer el deposito.",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            }else if($('input:radio:checked.bank-div').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debes de selecionar el banco en el cual se va realizar el deposito.",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            }
+
+
+        }
+
     });
 
 
@@ -609,7 +631,18 @@ $('document').ready(function () {
         e.preventDefault();
         var amount = $('#amount_total_tr').val();
         var amount_pay = $('#amount_tr').val();
-        if (amount_pay > amount) {
+
+        amount=amount.replace(/\./g,'');
+        amount_pay=amount_pay.replace(/\./g,'');
+
+
+        amount=amount.replace(/,/g, "");
+        amount_pay=amount_pay.replace(/,/g, "");
+
+
+
+
+        if (parseInt(amount_pay) > parseInt(amount)) {
             swal({
                 title: "Error",
                 text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
@@ -618,65 +651,111 @@ $('document').ready(function () {
             });
 
         } else {
-            $.ajax({
-                url: url + "ticket-office/payment/save",
-                contentType: false,
-                processData: false,
-                data: new FormData(this),
-                method: "POST",
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
-                    var taxes_id=$('#taxes_id').val();
-                    if (response.status === 'process') {
-                        $('#amount_total_tr').val(response.payment);
+            if($('#bank_destinations_tr').val()!=null&&$('#bank_tr').val()!=null) {
+                $.ajax({
+                    url: url + "ticket-office/payment/save",
+                    contentType: false,
+                    processData: false,
+                    data: new FormData(this),
+                    method: "POST",
 
-                        $('#amount_total_tr').val(function (index, value) {
-                            return number_format(value, 2);
-                        });
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        var taxes_id = $('#taxes_id').val();
+
+                        console.log(response);
+                        if (response.status === 'process') {
+                            $('#amount_total_tr').val(response.payment);
+
+                            $('#amount_total_tr').val(function (index, value) {
+                                return number_format(value, 2);
+                            });
+                            swal({
+                                title: "Información",
+                                text: "Para conciliar esta planilla " +
+                                "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total_tr').val() + "Bs",
+                                icon: "info",
+                                button: "Ok",
+                            });
+
+                        } else {
+                            swal({
+                                title: "¡Bien hecho!",
+                                text: "Planilla ingresa, una vez se verifique el pago se enviara la planilla, al correo afiliado a esta empresa.",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function (accept) {
+                                location.reload();
+                            });
+
+                        }
+                        $('#ref_tr').val('');
+                        $('#amount_tr').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                         swal({
-                            title: "Información",
-                            text: "Para conciliar esta planilla " +
-                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total_tr').val() + "Bs",
-                            icon: "info",
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
                             button: "Ok",
                         });
-
-                    } else {
-                        swal({
-                            title: "¡Bien hecho!",
-                            text: "Planilla ingresa, una vez se verifique el pago se enviara la planilla, al correo afiliado a esta empresa.",
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function (accept) {
-                            location.reload();
-                        });
-
                     }
-                    $('#ref_tr').val('');
-                    $('#amount_tr').val('');
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+                });
 
-                },
-                error: function (err) {
-                    console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+            }else{
+                if($('#bank_destinations_tr').val()===null){
                     swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
+                        title: "Información",
+                        text: "Debe selecionar el banco donde el dinero va ingresar.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }else if($('#bank_tr').val()===null){
+                    swal({
+                        title: "Información",
+                        text: "Debe selecionar el banco de donde se realizara la transferencia.",
+                        icon: "info",
                         button: "Ok",
                     });
                 }
-            });
+            }
+
+
 
         }
 
+    });
+
+    $('.check-payment').click(function () {
+        if($(this).val()==='PPC'){
+            $('#ref_depo').removeAttr('readonly');
+        }else{
+            $('#ref_depo').attr('readonly','readonly');
+            $('#ref_depo').val('');
+        }
+        $('#payments_type_depo').val($(this).val());
+    });
+
+    $('#phone_user').keyup(function () {
+        if($('#country_code_user').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
+                icon: "info",
+                button: "Ok",
+            });
+            $('#phone_user').val('');
+        }
     });
 
 });

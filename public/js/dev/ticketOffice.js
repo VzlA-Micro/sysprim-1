@@ -22,8 +22,6 @@ $(document).ready(function () {
                                 className: "red-gradient"
                             },
                         });
-
-
                         $('#search').val('');
                     } else if (response.status === 'verified') {
                         swal({
@@ -80,8 +78,6 @@ $(document).ready(function () {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
-
-
                             }
                         });
 
@@ -385,6 +381,9 @@ $(document).ready(function () {
                     $('#amount_tr').val('');
 
 
+
+
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
@@ -418,6 +417,7 @@ $(document).ready(function () {
         $('#register-taxes')[0].reset();
 
     }
+
 
 
 
