@@ -15,7 +15,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
             $('#ci').val('')
         }
@@ -39,7 +42,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
 
             $('#phone_user').val('');
@@ -69,7 +75,10 @@ $(document).ready(function () {
                             title: "Información",
                             text: response.message,
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
                         $('#ci').addClass('invalid');
@@ -81,7 +90,10 @@ $(document).ready(function () {
                             title: "Información",
                             text: "Esta cedula ya existe en el sistema. Por favor, ingresa una cedula valida.",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                         $('#ci').addClass('invalid');
                         $("#preloader").fadeOut('fast');
@@ -107,7 +119,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -133,7 +148,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                     }
 
@@ -145,7 +163,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -180,7 +201,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -208,7 +232,10 @@ $(document).ready(function () {
                     title: "¡Bien Hecho!",
                     text: response.message,
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });
@@ -226,7 +253,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -256,7 +286,10 @@ $(document).ready(function () {
                         title: "¡Bien Hecho!",
                         text: response.message,
                         icon: "success",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        },
                     }).then(function (accept) {
                         window.location.href = url + "users/manage";
                     });
@@ -274,7 +307,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });

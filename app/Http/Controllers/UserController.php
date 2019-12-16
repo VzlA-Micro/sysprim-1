@@ -35,7 +35,7 @@ class UserController extends Controller{
     public function verifyCi($ci){
         $user=User::where('ci', $ci)->get();
         if(!$user->isEmpty()){
-            $response=array('status'=>'error','message'=>'Esta cedula ya existe en el sistema. Ingrese una cedula valida.');
+            $response=array('status'=>'error','message'=>'La cedula "'.$ci.'" se encuentra registrada en el sistema. Por favor, ingrese una cedula valida.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
@@ -46,7 +46,7 @@ class UserController extends Controller{
     public function verifyEmail($email){
         $user=User::where('email', $email)->get();
         if(!$user->isEmpty()){
-            $response=array('status'=>'error','message'=>'Esta correo ya existe en el sistema. Ingrese un correo valido.');
+            $response=array('status'=>'error','message'=>'El correo "'.$email.'" encuentra registrado en el sistema. Por favor, ingrese un correo valido.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }

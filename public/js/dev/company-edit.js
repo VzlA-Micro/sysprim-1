@@ -98,9 +98,12 @@ if (addCiiu==true){
                                 if ($(this).val() == response.ciu.id) {
                                     swal({
                                         title: "¡Oh no!",
-                                        text: "El ciiu " + response.ciu.code + " ya  esta ingresado en esta empresa.",
+                                        text: "El CIIU " + response.ciu.code + " ya esta ingresado en esta empresa.",
                                         icon: "warning",
-                                        button: "Ok",
+                                        button:{
+                                            text: "Esta bien",
+                                            className: "amber-gradient"
+                                        },
                                     });
                                     $('#code').val("");
                                     band = false;
@@ -129,7 +132,10 @@ if (addCiiu==true){
                             title: "Información",
                             text: "El campo del codigo CIIU no debe estar vacio para iniciar la busquedad.",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                     }
 
@@ -146,7 +152,10 @@ if (addCiiu==true){
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -155,7 +164,10 @@ if (addCiiu==true){
                 title: "Información",
                 text: "Debe ingresar un CIIU valido.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
         }
     });
@@ -164,14 +176,14 @@ if (addCiiu==true){
     function confirmCiu() {
         swal({
             title: "¡Bien Hecho!",
-            text: "CIIU  ingresado con éxito, ¿Desea añadir otro CIIU? ",
+            text: "CIIU ingresado con éxito, ¿Desea añadir otro CIIU? ",
             icon: "info",
             buttons: {
                 confirm: {
                     text: "Si",
                     value: true,
                     visible: true,
-                    className: "red"
+                    className: "amber-gradient"
 
                 },
                 cancel: {
@@ -276,7 +288,10 @@ window.onload = function () {
                 title: "¡Oh no!",
                 text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
                 icon: "error",
-                button: "Ok",
+                button:{
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
             });
         } else {
             $('#lng').val(marcadores[0].getPosition().lng());//coloca la marca

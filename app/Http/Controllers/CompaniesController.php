@@ -280,7 +280,7 @@ class CompaniesController extends Controller
             if($company[0]->users->isEmpty()){
                 $response=array('status'=>'registered','company'=>$company);
             }else{
-                $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
+                $response=array('status'=>'error','message'=>'El RIF '.$rif.' se encuentra registrado en el sistema. Por favor, ingrese un RIF valido.');
             }
 
         }else{
@@ -292,7 +292,7 @@ class CompaniesController extends Controller
     public function verifyLicense($license){
         $company = Company::where('license',$license)->get();
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta registrado en sysprim, Ingrese una Licencia valida.');
+            $response=array('status'=>'error','message'=>'La licencia '.$license.' se encuentra registrada en el sistema. Por favor, ingrese una licencia valida.');
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }

@@ -318,7 +318,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Mis Empresas',
             'Registar Mis Empresas',
             'Consultar Mis Empresas',
-            'Detalles Mis Empresas',
+            'Detalles Mis Empresas'
             // 'Actualizar Mis Empresas',
             // 'Mis Inmuebles',
             // 'Registar Mis Inmuebles',
