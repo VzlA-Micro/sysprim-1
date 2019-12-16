@@ -126,7 +126,7 @@ $('document').ready(function () {
                 chartsMonth(response);
                 topTaxes(response[11]);
                 dear(response[12]);
-                api();
+                // api();
             }
         },
         error: function (e) {
