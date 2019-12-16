@@ -558,7 +558,6 @@ Route::middleware(['auth'])->group(function () {
         'uses' => 'PaymentsImportController@pdfImport'
     ));
 
-
     Route::get('/company/verify-rif/{rif}', 'CompaniesController@verifyRif');
     Route::get('/company/verify-license/{license}', 'CompaniesController@verifyLicense');
 

@@ -1,6 +1,8 @@
 $(document).ready(function () {
-    // var url = "https://sysprim.com/";
-    var url = "http://sysprim.com.devel/";
+
+     var url = "https://sysprim.com/";
+    
+     //var url = "http://sysprim.com.devel/";
 
 
     $('#ci').blur(function () {
@@ -34,7 +36,6 @@ $(document).ready(function () {
 
 
     $('#phone_user').keyup(function () {
-        console.log('eje');
         console.log($('#country_code_user').val());
         if($('#country_code_user').val()===null){
             swal({
@@ -396,7 +397,6 @@ $(document).ready(function () {
  $('#button-enable').click(function () {
         var user_id=$('#id').val();
         var value=$(this).val();
-
 
         swal({
             icon: "info",

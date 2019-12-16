@@ -33,7 +33,7 @@
                </div>
 
             </div> 
-            @endcan
+
 
             {{-- 
             @can('')

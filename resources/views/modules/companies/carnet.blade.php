@@ -29,6 +29,15 @@
                     REGISTRO MUNICIPAL DE INFORMACIÓN FISCAL.
                 </td>
             </tr>
+
+            <tr>
+                <td style="width:25%; text-align: left;">
+                    <b>Fecha WEB: </b>
+                </td>
+                <td style="width:60%; text-align: left;">
+                    <span>{{ $company->created_at->format('d-m-Y') }}</span>
+                </td>
+            </tr>
             <tr>
                 <td style="width:15%; text-align: left;">
                     <b>Razón Social: </b>
@@ -37,7 +46,7 @@
                     <span>{{ $company->name }}</span>
                 </td>
                 <td style="width:20%;" rowspan="5">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->RIF)) !!} " style="width: 150px; height: 150px; margin: auto;" ><br>
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->license.'-'.$company->created_at)) !!} " style="width: 150px; height: 150px; margin: auto;" ><br>
                 </td>
             </tr>
             <tr>

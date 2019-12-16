@@ -1,7 +1,6 @@
 $(document).ready(function () {
     var url="https://sysprim.com/";
-    // var url="http://sysprim.com.devel/";
-
+     //var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -29,22 +28,20 @@ $(document).ready(function () {
         }
     });
 
-    $('#parish').change(function () {
-        $('#sector').text('');
 
-
+    function filterByParish(parish_id) {
         var sector = [{
-            id: [1,9,10,4],
+            id: [9,10,4,6,10],
             name: 'NORTE',
             prefix:'NORTE',
             status: false
         },{
-            id: [2],
+            id: [2,6],
             name: 'OESTE',
             prefix:'OESTE',
             status: false
         }, {
-            id: [3],
+            id: [1,3],
             name: 'CENTRO',
             prefix:'CENTRO',
             status: false
@@ -62,7 +59,7 @@ $(document).ready(function () {
             prefix:'INDUSII' ,
 
         },{
-            id: [6],
+            id: [2],
             name: 'ZONA INDUSTRIAL III',
             status: false,
             prefix:'INDUSIII',
@@ -72,14 +69,19 @@ $(document).ready(function () {
             name: 'ESTE',
             status: false,
             prefix:'ESTE',
-        }
+        },
+            {   id: [7,5],
+                name: 'SUR',
+                status: false,
+                prefix:'ESTE',
+            }
 
 
         ];
         for (var i = 0; i < sector.length; i++) {
             for(var j=0;j<sector[i].id.length; j++){
 
-                if(sector[i].id[j]==$(this).val()){
+                if(sector[i].id[j]==parish_id){
                     sector[i].status=true;
                 }
             }
@@ -93,25 +95,37 @@ $(document).ready(function () {
 
         }
 
-        console.log(html);
-
-
         $('#sector').append(html);
         $('select').formSelect();
+    }
+    $('#parish').change(function () {
+        $('#sector').text('');
+         filterByParish($(this).val());
     });
 
 
+
     $('#license').blur(function () {
-        if ($('#license').val() !== '') {
-            var license = $('#license').val();
+        var license=$('#license').val();
+        var rif=$('#document_type').val()+$('#RIF').val();
+        verifylicense(license,rif);
+    });
+
+
+
+    function verifylicense(license,rif) {
+
+
+        if (license !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "company/verify-license/" + license,
+                url: url + "company/verify-license/" + license+"/"+rif,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+                    console.log(response);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
@@ -122,13 +136,12 @@ $(document).ready(function () {
                             icon: "error",
                             button: "Ok",
                         });
-
                         $('#license').val('');
-
                     }
 
                 },
                 error: function (err) {
+                    console.log(err);
                     $('#license').val('');
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -141,7 +154,12 @@ $(document).ready(function () {
                 }
             });
         }
-    });
+    }
+
+
+
+
+
 
     $('#company-register').on('submit', function (e) {
         e.preventDefault();
@@ -187,13 +205,14 @@ $(document).ready(function () {
                         }
                     });
                 } else {
+                    $('#button-company').removeAttr('disabled','');
                     swal({
                         title: "Información",
                         text: "Debe tener al menos un ciiu para poder registrar una empresa..",
                         icon: "info",
                         button: "Ok",
                     });
-                    $('#button-company').removeAttr('disabled','');
+
                 }
 
             } else {
@@ -222,6 +241,7 @@ $(document).ready(function () {
                 icon: "info",
                 button: "Ok",
             });
+            $('#button-company').removeAttr('disabled','');
         }
 
     });
@@ -504,20 +524,15 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-                console.log(response);
+
 
 
                 if (response.status === 'error') {
-                    swal({
-                        title: "Información",
-                        text: response.message,
-                        icon: "info",
-                        button: "Ok",
-                    });
+                    var company=response.company[0];
+                    $('#name').val(company.name);
+
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    $('#RIF').val("");
-                    $('#RIF').addClass('validate');
                 } else {
                     if (response.status=== 'registered'){
                         var company=response.company[0];
@@ -527,6 +542,7 @@ $(document).ready(function () {
                     }
 
                 }
+                M.updateTextFields();
 
             },
             error: function (err) {
@@ -598,6 +614,7 @@ $(document).ready(function () {
                 $("#preloader-overlay").fadeOut('fast');
 
                 console.log(response);
+
                 if (response.status === 'success') {
                     var company = response.company;
 
@@ -606,18 +623,73 @@ $(document).ready(function () {
                     $('#license').val(company.codigo_licencia);
                     $('#address').val(company.direccion);
                     $('#phone-company').val(company.telefono_principal);
-
-
+                    if(company.direccion!==''){
+                        localizar("map", company.direccion+" barquisimeto.Estado Lara.");
+                    }
                     if ($('#ci-license').val() !== undefined) {
-
                         $('#name_company').val(company.historico_nombre_empresa);
                         $('#ci-license').val(company.historico_cedula);
                         $('#phone-user').val(company.telefono_principal);
                         $('#name-license').val(company.historico_nombre_representante);
                         $('#email').val(company.email);
-
-
                     }
+                    M.textareaAutoResize($('#address'));
+                    M.updateTextFields();
+
+                }if(response.status==='registered'){
+
+                    swal({
+                        title: "Información",
+                        text: "Empresa encontrada con éxito, verifique que  los datos encontrados son los correctos, complete los CIIU, código catastral y número de empleados, y confirme su ubicación en el mapa.",
+                        icon: "success",
+                        button: "Ok",
+                    });
+
+
+
+                    var company = response.company;
+                    $('#name').val(company.name);
+                    $('#license').val(company.license);
+                    $('#address').val(company.address);
+                    $('#phone').val(company.phone);
+                    $("#parish option").each(function(){
+                        if($(this).val()==company.parish_id){
+                            $(this).attr("selected",true);
+                        }
+                    });
+                    $('#parish').formSelect();
+                    filterByParish(company.parish_id);
+
+                    $("#country_code_company option").each(function(){
+                        if($(this).val()==company.operator){
+                            $(this).attr("selected",true);
+                        }
+                    });
+
+                    $("#sector option").each(function(){
+                        if($(this).val()==company.sector){
+                            $(this).attr("selected",true);
+                        }
+                    });
+                    $('#sector').formSelect();
+                    $('#country_code_company').formSelect();
+                    $('#phone').val(company.numberPhone);
+
+                    var lat=parseFloat(company.lat);
+                    var lng=parseFloat(company.lng);
+
+                    var marcadores = [];
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 15,
+                        center: {lat: lat, lng: lng}
+                    });
+
+                    addMark({lat:lat,lng:lng}, map,marcadores);
+                    map.addListener('click', function (e) {
+                        addMark(e.latLng, map,marcadores);
+                    });
+
                     M.textareaAutoResize($('#address'));
                     M.updateTextFields();
                 }
@@ -643,6 +715,8 @@ $(document).ready(function () {
             $(this).val(1);
         }
     });
+
+
 
 
     //tab ticktffice
@@ -710,7 +784,88 @@ $(document).ready(function () {
 });
 
 
+
+function localizar(elemento,direccion) {
+    var geocoder = new google.maps.Geocoder();
+    var marcadores = [];
+
+
+    var map = new google.maps.Map(document.getElementById(elemento), {
+        zoom: 15,
+        scrollwheel: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        restriction: {latLngBounds:{north: 83.8, south: -57, west: -180, east: 180}}
+    });
+
+    geocoder.geocode({'address': direccion}, function(results, status) {
+
+
+        if (status === 'OK') {
+            var resultados = results[0].geometry.location,
+                resultados_lat = resultados.lat(),
+                resultados_long = resultados.lng();
+
+            map.setCenter(results[0].geometry.location);
+
+
+            map.addListener('click', function (e) {
+                addMark(e.latLng, map,marcadores);
+            });
+
+
+
+        } else {
+            var mensajeError = "";
+            if (status === "ZERO_RESULTS") {
+                mensajeError = "No hubo resultados para la dirección ingresada.";
+                initMap();
+            } else if (status === "OVER_QUERY_LIMIT" || status === "REQUEST_DENIED" || status === "UNKNOWN_ERROR") {
+                mensajeError = "Error general del mapa.";
+            } else if (status === "INVALID_REQUEST") {
+                mensajeError = "Error de la web. Contacte con Name Agency.";
+            }
+            alert(mensajeError);
+        }
+    });
+}
+
+
+
+$('#address').change(function () {
+    var direccion=$(this).val();
+    if(direccion!==''){
+        localizar("map", direccion+" baquisimeto, Estado Lara.");
+    }
+});
+
+
+
+
+
+
+
 function initMap() {
+    var marcadores = [];
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: {lat: 10.0736954, lng: -69.3498597}
+    });
+
+    map.addListener('click', function (e) {
+        console.log(e.latLng);
+        addMark(e.latLng, map,marcadores);
+    });
+
+
+
+
+}
+
+
+function addMark(latLng, map,marcadores) {
+
+
+
     function removeItemFromArr(arr, item) {
         var i = arr.indexOf(item);
 
@@ -719,54 +874,42 @@ function initMap() {
         }
     }
 
-    var marcadores = [];
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: 10.0736954, lng: -69.3498597}
-    });
-
-    map.addListener('click', function (e) {
-        addMark(e.latLng, map);
-    });
 
     var image = 'https://sysprim.com/images/mark-map.png';
 
-    function addMark(latLng, map) {
-        var marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            icon: image,
-            title: "ESTOY AQUÍ",
-            animation: google.maps.Animation.BOUNCE
+
+    var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: image,
+        title: "ESTOY AQUÍ",
+        animation: google.maps.Animation.BOUNCE
+    });
+    map.panTo(latLng);
+
+    marcadores.push(marker);
+
+    if (marcadores.length > 1) {
+        removeItemFromArr(marcadores, marker);
+        marker.setMap(null);
+
+        swal({
+            title: "Información",
+            text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
+            icon: "info",
+            button: "Ok",
         });
-        map.panTo(latLng);
-
-        marcadores.push(marker);
-
-        if (marcadores.length > 1) {
-            removeItemFromArr(marcadores, marker);
-            marker.setMap(null);
-
-            swal({
-                title: "Información",
-                text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-                icon: "info",
-                button: "Ok",
-            });
-        } else {
-            $('#lng').val(marcadores[0].getPosition().lng());
-            $('#lat').val(marcadores[0].getPosition().lat());
-            M.updateTextFields();
-        }
-        google.maps.event.addListener(marker, 'click', function () {
-            removeItemFromArr(marcadores, marker);
-            marker.setMap(null); //borramos el marcador del mapa
-            $('#lng').val(" ");
-            $('#lat').val(" ")
-        });
-        console.log(marcadores[0].getPosition().lat() + '-' + marcadores[0].getPosition().lng());
+    } else {
+        $('#lng').val(marcadores[0].getPosition().lng());
+        $('#lat').val(marcadores[0].getPosition().lat());
+        M.updateTextFields();
     }
+    google.maps.event.addListener(marker, 'click', function () {
+        removeItemFromArr(marcadores, marker);
+        marker.setMap(null); //borramos el marcador del mapa
+        $('#lng').val(" ");
+        $('#lat').val(" ")
+    });
+    console.log(marcadores[0].getPosition().lat() + '-' + marcadores[0].getPosition().lng());
 }
-
-
 

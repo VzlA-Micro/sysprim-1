@@ -31,6 +31,7 @@
                             <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
+
                         <div class="input-field col s12 m6">
                             <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
                             <input type="text" name="name" id="name" class="validate"   required>
@@ -99,7 +100,7 @@
                                 <option value="+58416">(416)</option>
                                 <option value="+58424">(424)</option>
                                 <option value="+58426">(426)</option>
-                                <option value="+58426">(251)</option>
+                                <option value="+58251">(251)</option>
                             </select>
                             <label for="country_code">Operadora</label>
                         </div>

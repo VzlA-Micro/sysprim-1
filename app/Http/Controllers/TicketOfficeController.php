@@ -110,9 +110,6 @@ class TicketOfficeController extends Controller{
         (int)$acum=0;
 
         $amountPayment=0;
-
-
-
         $amount_depo=$amount;
 
         $amount_format=str_replace('.','',$amount);
@@ -122,13 +119,14 @@ class TicketOfficeController extends Controller{
 
         if($payments_type==='PPT'){
             $payments->type_payment='TRANSFERENCIA BANCARIA';
-        }else if($payments_type=='PPB'){
-            $payments->type_payment='DEPOSITO BANCARIO';
+        }else if($payments_type=='PPC'){
+            $payments->type_payment='DEPOSITO BANCARIO/CHEQUE';
             //$amount=round($amount_depo,0);
+        }else if($payments_type=='PPE'){
+            $payments->type_payment='DEPOSITO BANCARIO/EFECTIVO';
         }else{
             $payments->type_payment='PUNTO DE VENTA';
         }
-
 
         $payments->lot=$lot;
         $payments_number=TaxesNumber::generateNumberPayment($payments_type . "81");
@@ -138,7 +136,6 @@ class TicketOfficeController extends Controller{
             $code = substr($payments_number, 3, 12);
             $payments->digit=TaxesNumber::generateNumberSecret($amount,Carbon::now()->format('Y-m-d'),$bank,$code);
         }
-
 
         $payments->amount=$amount;
         $payments->ref=$ref;
@@ -165,8 +162,6 @@ class TicketOfficeController extends Controller{
         foreach ($paymentsTaxe as $payment){
                 $acum=$acum+$payment->amount;
         }
-
-
 
 
 
@@ -293,10 +288,6 @@ class TicketOfficeController extends Controller{
 
         return response()->json($response);
     }
-
-
-
-    //taxes
 
 
 
@@ -505,7 +496,6 @@ class TicketOfficeController extends Controller{
 
 
     public function payments($type){
-
         $payment=Payment::with('taxes')->where('type_payment','=',$type)->get();
         if($payment->isEmpty()){
            $payment=null;
@@ -534,11 +524,22 @@ class TicketOfficeController extends Controller{
     public function calculatePayments($taxes_data){
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode=explode('-',$taxes_data);
-        $taxes=Taxe::whereIn('id',$taxes_explode)->get();
+        $taxes=Taxe::whereIn('id',$taxes_explode)->with('payments')->get();
         $amount=0;
+        $amount_payment=0;
         foreach ($taxes as $tax){
+
+            if(!$tax->payments->isEmpty()){
+                foreach ($tax->payments as $payment){
+                    $amount_payment+=$payment->amount;
+                }
+            }
+
             $amount+=$tax->amount;
+
         }
+
+        $amount=$amount-$amount_payment;
         return response()->json(['status'=>'success','amount'=>$amount]);
     }
 

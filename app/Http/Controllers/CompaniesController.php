@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyBranch;
+use App\CompanyRespaldo;
 use App\GroupCiu;
 use App\Helpers\CedulaVE;
 use App\Notification;
@@ -21,6 +23,7 @@ use App\Payments;
 use App\FindCompany;
 use App\CiuCompany;
 use Alert;
+use Illuminate\Support\Facades\Mail;
 class CompaniesController extends Controller
 {
     /**
@@ -73,6 +76,8 @@ class CompaniesController extends Controller
 
 
 
+
+
         $validate = $this->validate($request, [
             'name' => 'required',
             'license' => 'required',
@@ -85,6 +90,7 @@ class CompaniesController extends Controller
             ]);
 
         $company = new Company();
+
         if ($image) {
             $image_path_name = time() . $image->getClientOriginalName();
             Storage::disk('companies')->put($image_path_name, File::get($image));
@@ -105,7 +111,6 @@ class CompaniesController extends Controller
         $company->number_employees = $numberEmployees;
         $company->phone = $country_code.$phone;
         $company->created_at='2019-09-14';
-
         $company->save();
 
         $id = $company->id;
@@ -114,6 +119,29 @@ class CompaniesController extends Controller
         foreach ($ciu as $ciu) {
             $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);
         }
+
+
+        $company_rif=Company::where('RIF','=',$rif)->orderBy('id','asc')->take(1)->get();
+
+        if(!$company_rif->isEmpty()){
+            $company_id=$company_rif[0]->id;
+            $companyBranch= new CompanyBranch();
+            $companyBranch->company_id=$company_id;
+            $companyBranch->branch_id=$id;
+            $companyBranch->save();
+        }
+
+
+
+        $subject = "REGISTRO ÉXITOSO-SEMAT";
+        $for = \Auth::user()->email;
+
+        Mail::send('mails.company', ['id'=>$id], function ($msj) use ($subject, $for) {
+            $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+
         return response()->json(['status'=>'success','message'=>"Empresa registrada con éxito"]);
     }
 
@@ -269,36 +297,43 @@ class CompaniesController extends Controller
     }
 
     public function verifyRif($rif){
-        $company = Company::where('RIF',$rif)->with('users')->get();
-        if(!$company->isEmpty()){
-            if($company[0]->users->isEmpty()){
-                $response=array('status'=>'registered','company'=>$company);
-            }else{
-                $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
-            }
+        $company =Company::where('RIF',$rif)->with('users')->get();
 
+        if(!$company->isEmpty()){
+            $response=array('status'=>'error','company'=>$company);
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
         return response()->json($response);
     }
 
-    public function verifyLicense($license){
+    public function verifyLicense($license,$rif){
         $company = Company::where('license',$license)->get();
+
+
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta registrado en sysprim, Ingrese una Licencia valida.');
+            if($company[0]->RIF===$rif){
+                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            }else{
+                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            }
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
+
         return response()->json($response);
     }
 
 
     public function findCompany($rif){
-        $company_find = FindCompany::where('rif',$rif)->get();
+        $company_find_semat = FindCompany::where('rif',$rif)->get();
+        $company_find_sysprim=CompanyRespaldo::where('rif',$rif)->get();
 
-        if(!$company_find->isEmpty()){
-            $response=array('status'=>'success','company'=>$company_find[0]);
+        if(!$company_find_sysprim->isEmpty()){
+            $response=array('status'=>'registered','company'=>$company_find_sysprim[0]);
+        }else if(!$company_find_semat->isEmpty()){
+
+            $response=array('status'=>'success','company'=>$company_find_semat[0]);
         }else{
             $response=array('status'=>'error','message'=>'No encontrado');
         }
