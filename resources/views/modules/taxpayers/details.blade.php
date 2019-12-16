@@ -53,51 +53,31 @@
 
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
-                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
-                            <label for="status">Estado de Cuenta:</label>
+                            <input id="statusName" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
+                            <label for="statusName">Estado de Cuenta:</label>
                         </div>
 
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix tooltipped" data-position="bottom" ></i>
-                            <input id="status" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
-                            <label for="status">Estado de Email:</label>
+                            <input id="statusEmail" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
+                            <label for="statusEmail">Estado de Email:</label>
                         </div>
 
 
                         <input type="hidden" name="role" id="role" value="3">
             		</div>
+                    @can('Actualizar Contribuyentes')
             		<div class="card-footer">
             			<div class="row">
-
-
-                            @if($user->confirmed==0||$user->status_account=='block')
-                            <div class="col s12 m4 center-align">
-                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
-                                    <i class="icon-check right"></i>
-                                    Habilitar Cuenta.
-                                </button>
-                            </div>
-
-                            @else
-                                <div class="col s12 m4 center-align">
-                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
-                                        <i class="icon-send right"></i>
-                                        Deshabilitar
-                                    </button>
-                                </div>
-
-                            @endif
-
-
-
-
-            				<div class="col s12 m4 center-align">
+                            @can('Resetear Contribuyentes')
+            				<div class="col s12 m6 center-align">
             					<a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
 		                            <i class="icon-send right"></i>
 		                            Resetear Contraseña
 		                        </a>
             				</div>
-            				<div class="col s12 m4 center-align">
+                            @endcan
+            				<div class="col s12 m6 center-align">
 		                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light" id="btn-edit">
 		                            <i class="icon-send right"></i>
 		                            Editar
@@ -109,6 +89,7 @@
             				</div>
             			</div>
                     </div>
+                    @endcan
             	</form>
             </div>
         </div>

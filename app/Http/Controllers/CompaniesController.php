@@ -269,9 +269,14 @@ class CompaniesController extends Controller
     }
 
     public function verifyRif($rif){
-        $company = Company::where('RIF',$rif)->get();
+        $company = Company::where('RIF',$rif)->with('users')->get();
         if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
+            if($company[0]->users->isEmpty()){
+                $response=array('status'=>'registered','company'=>$company);
+            }else{
+                $response=array('status'=>'error','message'=>'El RIF '.$rif.' ya esta registrado en sysprim, Ingrese un RIF valido.');
+            }
+
         }else{
             $response=array('status'=>'success','message'=>'No registrado.');
         }
@@ -305,7 +310,6 @@ class CompaniesController extends Controller
         $company= new CiuCompany();
         $ciu=$request->input('ciu');
         $id=$request->input('id');
-
         foreach ($ciu as $value){
             $company->ciu_id=$value;
             $company->company_id=$id;
@@ -316,6 +320,9 @@ class CompaniesController extends Controller
 
     }
 
-
-
+    public function getCarnet($id){
+        $company = Company::findOrFail($id);
+        $pdf = \PDF::loadView('modules.companies.carnet', ['company'=> $company]);
+        return $pdf->stream();
+    }
 }

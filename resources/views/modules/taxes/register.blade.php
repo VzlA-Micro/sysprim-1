@@ -14,7 +14,7 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
-                    @if(is_null($date))
+                   {{-- @if(is_null($date))
                         <div class="alert alert-success center-align">
                             <strong>Todavia no hay pagos que realizar.</strong>
                         </div>
@@ -23,6 +23,9 @@
                             <strong>ACTIVIDAD ECONOMICA DECLARADA, POR FAVOR CONCILIE SUS PAGOS.</strong>
                         </div>
                     @else
+                    --}}
+
+
 
                         <div class="card-header center-align">
                             <h5>Declarar actividad Económica</h5>
@@ -30,19 +33,53 @@
 
                         <div class="card-content row">
                             @csrf
-                            <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
-                            <div class="input-field col s12">
-                                <input type="hidden" name="fiscal_period" id="fiscal_period"
-                                       value="{{$date['fiscal_period']}}">
-                            </div>
-
                             <div class="input-field col s12">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period_view" id="fiscal_period_view"
-                                       value="{{$date['mount_pay']}}" readonly>
-                                <label for="fiscal_period">Periodo Fiscal</label>
+                                <select name="fiscal_period" id="fiscal_period">
+                                    <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
+                                    @foreach($mounths as $key=>$value)
+                                        @php
+                                            $band=false; $status; @endphp
+                                                @if($mount_pay!==null)
+                                                    @foreach($mount_pay as $key_mont=>$value_month)
+                                                            @if($key_mont==date('Y').'-'.$value.'-'.'01'&&!$band)
+                                                                    @php
+                                                                           $band=true;
+                                                                           $status=$value_month;
+                                                                    @endphp
+
+
+                                                            @endif
+                                                    @endforeach
+                                                @endif
+
+                                                @if(!$band)
+                                                    @if($value<$mountNow)
+                                                      <option value="{{date('Y').'-'.$value.'-'.'01'}}">{{$key." ".date('Y')}}</option>
+                                                    @endif
+                                                @else
+                                                     <option value="{{date('Y').'-'.$value.'-'.'01'}}" disabled>{{$key." ".date('Y')."|".$status}}</option>
+                                                @endif
+                                    @endforeach
+                                </select>
+                                <label>Perido Fiscal</label>
                             </div>
 
+                          <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
+
+                            {{--   <div class="input-field col s12">
+                                  <input type="hidden" name="fiscal_period" id="fiscal_period"
+                                         value="{{$date['fiscal_period']}}">
+                              </div>
+
+
+                          <!--   <div class="input-field col s12">
+                                  <i class="icon-date_range prefix"></i>
+                                  <input type="text" name="fiscal_period_view" id="fiscal_period_view"
+                                         value="{{$date['mount_pay']}}" readonly>
+                                  <label for="fiscal_period">Periodo Fiscal</label>
+                              </div>
+  -->--}}
                             <div class="divider"></div>
                             @foreach($company->ciu as $ciu)
                                 <div class="ciu-company">
@@ -101,9 +138,16 @@
                             El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord. Act. Económica Art. 112).
                         </div>
                         <div class="card-action center-align">
+                            <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light grey">
+                                <i class="icon-navigate_before right"></i>
+                                Atras
+                            </button>
+
+
                             <a href="#declaracion" class="btn btn-large btn-rounded waves-effect waves-light peach modal-trigger">Declarar
                                 <i class="icon-send right"></i>
                             </a>
+
                               <!-- Modal Structure -->
                                 <div id="declaracion" class="modal">
                                 <div class="modal-content left-align">
@@ -116,7 +160,7 @@
                                 </div>
                               </div>
                         </div>
-                    @endif
+
                 </form>
             </div>
         </div>

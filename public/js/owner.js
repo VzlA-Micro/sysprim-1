@@ -1,6 +1,5 @@
 $(window).on("load", function () {
 
-
     $("#preloader").fadeOut("fast");
     $("#preloader-overlay").fadeOut("fast");
 });
@@ -55,5 +54,8 @@ $(document).ready(function() {
         coverTrigger: false,
         constrainWidth: false,
     });
-
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        indicators: true
+    });
 });

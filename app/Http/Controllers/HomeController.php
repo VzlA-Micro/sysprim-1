@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TaxesNumber;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -22,6 +23,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('auth');
     }
 
@@ -38,8 +40,10 @@ class HomeController extends Controller
             if(!session()->has('notifications')){
                 $user=User::find(Auth::user()->id);
                 foreach ($user->companies as $company){
-                         $taxes=TaxesMonth::verify($company->id,false);
+                         $taxes=TaxesMonth::verify($company->id,true);
                 }
+
+
                 $notifications= DB::table('notification')->where('user_id','=',\Auth::user()->id)->get();
                 session(['notifications' => $notifications]);
             }
@@ -53,4 +57,12 @@ class HomeController extends Controller
     public function online(){
         return $datos=['status'=>200,'online'];
     }
+
+    public function downloadPdf($pdf) {
+        $file = storage_path() . "/app/public/" . $pdf;
+        $headers = ['Content-Type' => 'application/pfd'];
+        // dd($file);
+        return Storage::download($file, $pdf, $headers);
+    }
+
 }

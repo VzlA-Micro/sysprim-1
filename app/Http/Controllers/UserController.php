@@ -14,6 +14,10 @@ use App\Role;
 
 class UserController extends Controller{
 
+    public function index() {
+        return view('modules.users.menu');
+    }
+
     public function verify($code){
         $user = User::where('confirmed_code', $code)->first();
 
@@ -55,8 +59,13 @@ class UserController extends Controller{
     }
 
     public function create()
-    {
-        $role=Role::all();
+    {   
+        if(\Auth::User()->role_id == 6){
+            $role = Role::where('id',2)->orWhere('id',4)->get();
+        }
+        else {
+            $role = Role::all();
+        }
         return view('modules.users.register',['Role'=>$role]);
     }
 
@@ -79,16 +88,20 @@ class UserController extends Controller{
         $user->phone=$country_code.$phone;
         $user->confirmed=1;
         $user->role_id=$role;
+        $user->syncRoles($role);
         $user->email=$email;
         $user->password=$password;
         $user->save();
-
     }
 
     public function show()
     {
-
-        $user= User::get();
+        if(\Auth::User()->role_id == 6) {
+            $user= User::where('role_id',2)->orWhere('role_id',3)->orWhere('role_id',4)->get();
+        }
+        else{
+            $user= User::get();
+        }
         return view('modules.users.read',array(
             'showUser' => $user
         ));
@@ -125,21 +138,22 @@ class UserController extends Controller{
      */
     public function update(Request $request)
     {
-
         $id= $request->input('id');
         $phone= $request->input('phone');
         $role= $request->input('roles');
         $email= $request->input('emailEdit');
         $password=Hash::make($request->input('passwordEdit'));
         $user=User::find($id);
-
         $user->phone=$phone;
-
         $user->role_id=$role;
+        $user->syncRoles($role);
         $user->email=$email;
         $user->password=$password;
-
         $user->update();
+    }
+
+    public function profile() {
+        return view('modules.users.profile');
     }
 
     public function updateProfile(Request $request) {
@@ -153,15 +167,15 @@ class UserController extends Controller{
     }
 
     public function resetUserPassword(Request $request) {
-        $id = $request->input('id');
-        $password=Hash::make($request->input('password'));
+        $id= $request->input('id');
         $user=User::find($id);
-        $user->password=$password;
+        $password = Hash::make($user->ci);
+        $user->password = $password;
         $user->update();
     }
 
     public function showTaxpayer() {
-        $users = User::all();
+        $users = User::where('role_id','=','3')->get();
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));
@@ -194,6 +208,7 @@ class UserController extends Controller{
         $user->phone=$country_code.$phone;
         $user->confirmed=1;
         $user->role_id=$role;
+        $user->syncRoles($role);
         $user->email=$email;
         $user->password=$password;
         $user->save();

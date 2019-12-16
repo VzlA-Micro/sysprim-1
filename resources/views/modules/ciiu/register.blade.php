@@ -13,7 +13,8 @@
                 </ul>            
             </div>
             <div class="col s12 m8 offset-m2">
-                <form id="ciuu" class="card">
+
+                <form id="ciuu" method="#" class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Ramo CIIU</h5>
                     </div>
@@ -21,7 +22,7 @@
                         @csrf
                         <div class="input-field col s12">
                             <i class="icon-featured_play_list prefix"></i>
-                            <select name="groupCiiu" id="groupCiiu" required>
+                            <select name="idGroupCiiu" id="idGroupCiiu" required>
                                 <option value="" disabled selected>Elije una opción...</option>
                                 @foreach($groupCiiu as $group)
                                     <option value="{{ $group->id }}">{{ $group->name }}</option>

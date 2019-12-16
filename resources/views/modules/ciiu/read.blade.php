@@ -33,10 +33,12 @@
                                 <tr>
                                     <td>{{ $ciu->name }}</td>
                                     <td>{{ $ciu->code }}</td>
-                                    <td>{{ $ciu->value }}</td>
+                                    <td>{{ $ciu->alicuota }}</td>
+                                    @can('Detalles Ramo CIIU')
                                     <td>
-                                    <a href="{{ route('ciu-branch.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
+                                        <a href="{{ route('ciu-branch.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
                                     </td>
+                                    @endcan
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -55,6 +57,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

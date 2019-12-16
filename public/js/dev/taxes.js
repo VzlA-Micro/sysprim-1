@@ -164,6 +164,18 @@ $(document).ready(function () {
             }
         });
 
+        if($('#fiscal_period').val()===null){
+            band=true;
+            if($(this).val()===''){
+                swal({
+                    title: "Información",
+                    text: "Selecione un periodo fiscal valido.",
+                    icon: "info",
+                    button: "Ok",
+                });
+            }
+        }
+
         if (!band) {
             verify();
         }
@@ -199,7 +211,11 @@ $(document).ready(function () {
                     band = true;
                 }
             }
+
         });
+
+
+
 
 
         if (!band) {

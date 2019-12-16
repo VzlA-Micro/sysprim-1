@@ -12,20 +12,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        $this->call([ParishTableSeeder::class,
+        $this->call([
+            RolesAndPermissionsSeeder::class,
             UsersTableSeeder::class,
+            ParishTableSeeder::class,
             CompanyTableSeeder::class,
             UsersCompanyTableSeeder::class,
             CiuCompanyTableSeeder::class,
             UnidTribuTableSeeder::class,
             ExtrasTableSeeder::class,
             EmployeesTableSeeder::class,
-            RolesTableSeeder::class,
-            PermissionsTableSeeder::class,
-            RolPermissionTableSeeder::class,
             CatastralTerrenoTableSeeder::class,
             CatastralConstruccionTableSeeder::class,
             AlicuotaTableSeeder::class,
+            FinesTableSeeder::class
         ]);
     }
 }

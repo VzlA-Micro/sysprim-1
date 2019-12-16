@@ -20,7 +20,6 @@ class UsersTableSeeder extends Seeder
             'phone'=>'04141234567',
             'confirmed'=>1,
             'confirmed_code'=>null,
-            'role_id'=>1,
             'email'=>'sysprim@gmail.com',
             'email_verified_at'=>null,
             'password'=>Hash::make('Sysprim2000'),
@@ -28,7 +27,8 @@ class UsersTableSeeder extends Seeder
             'image'=>null,
             'remember_token'=>null,
             'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
+            'updated_at'=>Carbon::now(),
+            'role_id'=>1,
         ]);
 
         DB::table('users')->insert([
@@ -38,7 +38,6 @@ class UsersTableSeeder extends Seeder
             'phone'=>'04121234567',
             'confirmed'=>1,
             'confirmed_code'=>null,
-            'role_id'=>2,
             'email'=>'ticket.office@gmail.com',
             'email_verified_at'=>null,
             'password'=>Hash::make('Sysprim2000'),
@@ -46,7 +45,8 @@ class UsersTableSeeder extends Seeder
             'image'=>null,
             'remember_token'=>null,
             'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
+            'updated_at'=>Carbon::now(),
+            'role_id'=>2,
         ]);
 
         DB::table('users')->insert([
@@ -56,7 +56,6 @@ class UsersTableSeeder extends Seeder
             'phone'=>'04121234567',
             'confirmed'=>1,
             'confirmed_code'=>null,
-            'role_id'=>3,
             'email'=>'jhonbeiker.ma26@gmail.com',
             'email_verified_at'=>null,
             'password'=>Hash::make('Sysprim2000'),
@@ -64,7 +63,8 @@ class UsersTableSeeder extends Seeder
             'image'=>null,
             'remember_token'=>null,
             'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
+            'updated_at'=>Carbon::now(),
+            'role_id'=>3,
         ]);
 
         DB::table('users')->insert([
@@ -74,7 +74,6 @@ class UsersTableSeeder extends Seeder
             'phone'=>'04121234567',
             'confirmed'=>1,
             'confirmed_code'=>null,
-            'role_id'=>4,
             'email'=>'admin@gmail.com',
             'email_verified_at'=>null,
             'password'=>Hash::make('Sysprim2000'),
@@ -82,7 +81,8 @@ class UsersTableSeeder extends Seeder
             'image'=>null,
             'remember_token'=>null,
             'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
+            'updated_at'=>Carbon::now(),
+            'role_id'=>3,
         ]);
     }
 }

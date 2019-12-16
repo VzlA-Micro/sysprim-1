@@ -16,187 +16,30 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
-                <form action="" method="post" class="card">
+                <form action="" method="post" class="card" id="register">
                     <div class="card-header center-align">
                         <h5>Registrar Rol</h5>
                     </div>
                     <div class="card-content row">
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12">
                             <i class="icon-assignment prefix"></i>
-                            <input type="text" name="name" id="name" class="validate"   required>
+                            <input type="text" name="name" id="name" class="validate" value="{{ $role->name }}"  required>
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-directions prefix"></i>
-                            <textarea name="description" id="description" cols="30" rows="10" class="materialize-textarea" required></textarea>
-                            <label for="description">Descripción</label>
+                        <div class="input-field col s12 center-align">
+                            <h5>Listado de Permisos</h5>
                         </div>
-                        <table class="striped centered">
-                            <thead>
-                                <tr>
-                                    <th>Módulo</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Gestionar Usuario</span>
-                                            </label>
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12 m6 left-align">
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Registrar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Consultar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Modificar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Eliminar</span>
-                                              </label>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span>Gestionar Empresas</span>
-                                            </label>
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12 m6 left-align">
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Registrar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Consultar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Modificar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Eliminar</span>
-                                              </label>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span>Gestionar Pagos</span>
-                                            </label>
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12 m6 left-align">
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Registrar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Consultar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Modificar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Eliminar</span>
-                                              </label>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span>Gestionar Multas</span>
-                                            </label>
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="input-field col s12 m6 left-align">
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Registrar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Consultar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Modificar</span>
-                                              </label>
-                                            </p>
-                                            <p>
-                                              <label>
-                                                <input type="checkbox" id="" name=""/>
-                                                <span>Eliminar</span>
-                                              </label>
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @foreach ($permissions as $permission)
+                        <div class="input-field col s12 m4">
+                            <p>
+                                <label for="customCheck{{ $permission->id  }}">
+                                    {{ Form::checkbox('permissions[]', $permission->id, $role->hasPermissionTo($permission->id), ['id' => 'customCheck'.$permission->id]) }}
+                                    <!-- <input type="checkbox" id="" name=""/> -->
+                                    <span class="truncate">{{ $permission->name }}</span>
+                                </label>
+                            </p>
+                        </div>
+                        @endforeach
                     </div>
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
@@ -211,5 +54,6 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/data/roles_permissions.js') }}"></script>
     
 @endsection

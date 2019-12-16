@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <div id="slides">
           <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/jonas1.jpg') }})"></span>
+            <span class="animate down" style="background-image: url({{ asset('images/publicidad.png') }})"></span>
           </div>
           <div class="slide">
             <span class="animate in" style="background-image: url({{ asset('images/semat1.jpg') }})"></span>
@@ -53,6 +53,11 @@
                     <span>{{ session('notification') }}</span>
                 </div>
                 @endif
+                <div class="alert alert-info bg-info-opacity-7" style="margin-top: 1.5rem">
+                    <span><b>Bienvenido(a) Contribuyente</b> a la nueva plataforma de <b>Conciliación de Pagos del SEMAT</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
+                    <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted. 
+                    </span>
+                </div>
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>
@@ -108,7 +113,16 @@
                 </form>
             </div>
         </div>
-    </div>
+        <!-- <div class="row">
+            <div class="col s12 hide-on-med-and-down animated bounceInDown"  style="padding-top: 1.5rem">
+                <div class="alert alert-info bg-info-opacity-7">
+                    <span><b>Bienvenido(a) Contribuyente</b> a la nueva plataforma de <b>Conciliación de Pagos del SEMAT</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
+                    <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted. 
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> -->
 @endsection
 
 @section('scripts')

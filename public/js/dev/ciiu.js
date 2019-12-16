@@ -1,7 +1,11 @@
 $('document').ready(function () {
-    var url="http://sysprim.com.devel/";
-    $('#ciiu').on('submit',function (e) {
+
+    var url="https://sysprim.com/";
+    // var url="http://sysprim.com.devel/";
+
+    $('#ciuu').on('submit',function (e) {
         e.preventDefault();
+
         $.ajax({
 
             url: url+"ciuBranch/save",
@@ -48,7 +52,7 @@ $('document').ready(function () {
     $('#ciiu-details').on('submit',function (e) {
         e.preventDefault();
         $.ajax({
-            url: url+"ciu-branch/save",
+            url: url+"ciu-branch/update",
             cache:false,
             contentType:false,
             processData:false,
@@ -61,13 +65,15 @@ $('document').ready(function () {
             },
             success: function (response) {
 
+
+                console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "Ciiu registrado con exito",
+                    text: "Ciiu actualizaco con éxito.",
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href=url+"ciu-branch/read";
+                    location.reload();
                 });
 
                 $("#preloader").fadeOut('fast');

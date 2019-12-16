@@ -7,67 +7,78 @@
     <title>Carnet - Alguien</title>
 </head>
 <body>
-    <table style="width:100%; border: solid 1px black">
+    <table style="width:100%; border: solid 1px black; font-family: Helvetica;">
         <tbody>
             <tr>
-                <td style="width: 33%; text-align: left;">
-                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 110px; height: 50px;" alt="">
+                <td style="width: 25%; text-align: left;">
+                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 130px; height: 60px;" alt="">
                 </td>
-                <td style="width: 33%; text-align: center;">
+                <td style="width: 50%; text-align: center;">
                     <span style="font-size: 12px !important;">
                         República Bolivariana de Venezuela <br>
                         Alcaldía Bolivariana del Municipio Iribarren <br>
                         Barquisimeto - Edo. Lara
 					</span>
                 </td>
-                <td style="width: 33%; text-align: right;">
-                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 110px; height: 50px;" alt="">
+                <td style="width: 25%; text-align: right;">
+                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 130px; height: 60px;" alt="">
                 </td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
-                    <b>Nombre: </b>
-                </td>
-                <td style="20%; text-align: left;">
-                    <span>Nombre va aqui</span>
-                </td>
-                <td style="20%"></td>
-            </tr>
-            <tr>
-                <td style="20%; text-align: left;">
-                    <b>Derección: </b>
-                </td>
-                <td style="20%; text-align: left;">
-                    <span>Direccion va aqui</span>
-                </td>
-                <td style="20%"></td>
-            </tr>
-            <tr>
-                <td style="20%; text-align: left;">
-                    <b>Licencia: </b>
-                </td>
-                <td style="20%; text-align: left;">
-                    <span>12153123627</span>
+                <td colspan="3" style="text-align: center; border-bottom: 1px solid #000; padding: 15px; border-top: 1px solid #000">
+                    REGISTRO MUNICIPAL DE INFORMACIÓN FISCAL.
                 </td>
             </tr>
             <tr>
-                <td style="20%; text-align: left;">
+                <td style="width:15%; text-align: left;">
+                    <b>Razón Social: </b>
+                </td>
+                <td style="width:60%; text-align: left;" colspan="">
+                    <span>{{ $company->name }}</span>
+                </td>
+                <td style="width:20%;" rowspan="5">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->RIF)) !!} " style="width: 150px; height: 150px; margin: auto;" ><br>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:15%; text-align: left;">
                     <b>RIF: </b>
                 </td>
-                <td style="20%; text-align: left;">
-                    <span>J-131361361</span>
+                <td style="width:60%; text-align: left;">
+                    <span>{{ $company->RIF }}</span>
                 </td>
-                <td style="20%"></td>
             </tr>
             <tr>
-                <td style="20%">
-                    <img src="{{ asset('images/logo.png') }}" style="width: 220px; height: 100px;" alt="">
+                <td style="width:15%; text-align: left;">
+                    <b>Dirección: </b>
                 </td>
-                <td style="20%">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam omnis deleniti placeat aspernatur sit minima atque dolore in officiis esse.
+                <td style="width:60%; text-align: left;">
+                    <span>{{ $company->address }}</span>
                 </td>
-                <td style="40%">
-                    <img src="{{ asset('images/qr.png') }}" style="width: 200px; height: 200px;" alt="">
+            </tr>
+            <tr>
+                <td style="width:15%; text-align: left;">
+                    <b>Licencia: </b>
+                </td>
+                <td style="width:60%; text-align: left;">
+                    <span>{{ $company->license }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:15%;">
+                    <img src="{{ asset('images/logo.png') }}" style="width: 160px; height: 120px;" alt="">
+                </td>
+                <td style="width:60%;font-size: 10px;text-align: center;">
+                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: absolute; left: 270px !important; top: 180px" alt=""><br>
+                    __________________________________________<br>
+                    ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
+                    Directora (E) de la Dirección de Hacienda y<br>
+                    Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 3px; border-top: 1px solid #000">
+
                 </td>
             </tr>
         </tbody>

@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Contribuyentes</a></li>
                 </ul>
             </div>
+            @can('Registar Contribuyente')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('taxpayers.register') }}" class="btn-app white green-text text-darken-2">
                     <i class="icon-person_add"></i>
                     <span class="truncate">Registrar Contribuyente</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Contribuyentes')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('taxpayers.read') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver Contribuyentes</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

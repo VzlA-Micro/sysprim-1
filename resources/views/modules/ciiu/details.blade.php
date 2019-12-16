@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
-                <form id="ciiu-details"  method="post" class="card">
+                <form id="ciiu-details"  method="#" class="card">
                     <div class="card-header center-align">
                         <h5>Detalles Ramo CIIU</h5>
                     </div>
@@ -56,12 +56,14 @@
                             <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>
                     </div>
+                    @can('Actualizar Ramos CIIU')
                     <div class="card-action center">
                         <button type="submit" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
                     </div>
-                    <div class="card-action center">
-                        <a href="{{ route('ciu-branch.delete', ['id' => $ciu->id]) }}" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>
-                    </div>
+                    @endcan
+                    <!-- <div class="card-action center">
+                        <a href="{{--route('ciu-branch.delete', ['id' => $ciu->id]) --}}" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>
+                    </div> -->
                    
                 </form>
             </div>

@@ -21,49 +21,25 @@
                         <table class="centered striped" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Rol</th>
-                                    <th>Descripción</th>
-                                    <th>Módulos</th>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    @can('Detalles Roles')
                                     <th>Detalles</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($role as $rol)
                                 <tr>
-                                    <td>Superusuario</td>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, nam.</td>
+                                    <td>{{ $rol->id }}</td>
+                                    <td>{{ $rol->name }}</td>
+                                    @can('Detalles Roles')
                                     <td>
-                                        <div class="input-field left-align">
-                                            <p>
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span>Gestionar Usuario</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span>Gestionar Empresas</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span>Gestionar Pagos</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span>Gestionar Multas</span>
-                                                </label>
-                                            </p>
-                                            
-                                        </div>
+                                        <a href="{{ route('roles.details', ['id' => $rol->id]) }}" class="btn btn-floating amber waves-effect waves-light"><i class="icon-pageview"></i></a>
                                     </td>
-                                    <td>
-                                        <a href="" class="btn btn-floating amber waves-effect waves-light"><i class="icon-pageview"></i></a>
-                                    </td>
+                                    @endcan
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

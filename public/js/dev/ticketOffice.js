@@ -54,7 +54,6 @@ $(document).ready(function () {
                         var ciu = response.ciu;
                         var company = taxe.companies[0];
 
-                        console.log(company);
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
@@ -66,7 +65,6 @@ $(document).ready(function () {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
-
 
 
                             }
@@ -276,8 +274,6 @@ $(document).ready(function () {
             });
 
         }
-
-
     });
 
 
@@ -374,7 +370,6 @@ $(document).ready(function () {
 
     function reset() {
         $('#details').text('');
-
         $('ul.tabs').tabs("select", "general-tab");
         $('#three').addClass('disabled');
         $('#two').addClass('disabled');
@@ -445,18 +440,12 @@ $(document).ready(function () {
                 }
             }).then(function (aceptar) {
                 if (aceptar) {
-                    if ($('#company_id').val() !== '') {
-                        registerTaxes();
-                        $('#three').removeClass('disabled');
-                        $('ul.tabs').tabs("select", "payment-tab");
-
-                    } else {
-                        $('#three').removeClass('disabled');
-                        $('ul.tabs').tabs("select", "payment-tab");
-                    }
-
+                    registerTaxes();
 
                 }
+
+
+
             });
         }
     });
@@ -503,11 +492,33 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
 
-                var taxes = response.taxe;
-                $('#amount_total').val(taxes.amountTotal);
-                $('#amount_total_tr').val(taxes.amountTotal);
-                $('#taxes_id').val(taxes.id_taxes);
-                $('#taxes_id_tr').val(taxes.id_taxes);
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "La planilla ha sido generado con éxito,¿Desea seguir generando planilla?",
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: "Si",
+                            value: true,
+                            visible: true,
+                            className: "red"
+
+                        },
+                        cancel: {
+                            text: "No",
+                            value: false,
+                            visible: true,
+                            className: "grey lighten-2"
+                        }
+                    }
+                }).then(function (aceptar) {
+                    if (aceptar) {
+                        reset();
+                    }else{
+                        window.location.href=url+'ticket-office/taxes';
+                    }
+                });
+
 
 
                 $("#preloader").fadeOut('fast');
@@ -572,45 +583,59 @@ $(document).ready(function () {
     $('#fiscal_period').change(function () {
         var company = $('#company_id').val();
         var fiscal_period = $('#fiscal_period').val();
-        if (fiscal_period !== '') {
-            $.ajax({
-                method: "GET",
-                url: url + "ticket-office/find/fiscal-period/" + fiscal_period + "/" + company,
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
 
 
-                    if (response.status === 'error') {
+        console.log(company);
+        if(company!==''){
+            if (fiscal_period !== '') {
+                $.ajax({
+                    method: "GET",
+                    url: url + "ticket-office/find/fiscal-period/" + fiscal_period + "/" + company,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+
+
+                        if (response.status === 'error') {
+                            swal({
+                                title: "Información",
+                                text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
+                                icon: "info",
+                                button: "Ok",
+                            });
+                            $('#fiscal_period').val(' ')
+                        }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $('#license').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                         swal({
-                            title: "Información",
-                            text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
-                            icon: "info",
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
                             button: "Ok",
                         });
-                        $('#fiscal_period').val(' ')
                     }
+                });
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
 
-                }, error: function (err) {
-                    $('#license').val('');
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                }
+            }
+        }else{
+            $('#fiscal_period').val('');
+            swal({
+                title: "Información",
+                text: 'Debe ingresar una licencia valida de una empresa, para generar una planilla.',
+                icon: "info",
+                button: "Ok",
             });
-
-
         }
+
 
 
     });
@@ -704,7 +729,7 @@ $(document).ready(function () {
                  
                    
                        </div>
-           
+          
             
                       <div class="divider" style="height:3px !important;"></div>
                           
@@ -819,7 +844,7 @@ $(document).ready(function () {
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });
-                ;
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -958,10 +983,8 @@ $(document).ready(function () {
         }
     }
 
-
+/*
     console.log(localStorage.getItem('epale'));
-
-
     if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
         swal({
             title: "Información",
@@ -988,8 +1011,6 @@ $(document).ready(function () {
 
         $('#content').css('display', 'block');
     }
-
-
 
     $('#close-cashier').click(function () {
        if(localStorage.getItem('bank')!==null){
@@ -1096,11 +1117,47 @@ $(document).ready(function () {
         }
     });
 
+    */
+
 
 
     $('#previous-details').click(function () {
         $('ul.tabs').tabs("select", "general-tab");
     });
+
+
+
+    function ConfirmtypePayment() {
+        swal({
+            title: "Información",
+            text: "Debe eliger la forma en que va hacer su deposito:",
+            icon: "warning",
+            buttons: {
+                CHEQUE: {
+                    text: "CHEQUE",
+                    value: 'PPC',
+                    visible: true,
+                    className: "green"
+
+                },
+                CANCEL: {
+                    text: "EFECTIVO",
+                    value: 'PPE',
+                    visible: true,
+                    className: "green"
+                },
+
+
+            }
+        }).then(function (value) {
+            if (value !== null) {
+                $('#type_payment').val(value);
+            } else {
+                ConfirmtypePayment();
+            }
+        });
+    }
+
 
 
 });

@@ -4,14 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-class Company extends Model{
+use OwenIt\Auditing\Contracts\Auditable;
+
+
+class Company extends Model implements Auditable {
+    use \OwenIt\Auditing\Auditable;
     protected $table='company';
+
     protected $appends=['desc','typeCompany','typeDocument',
                         'document',
                         'operator',
-                        'numberPhone',
-
-                        ];
+                        'numberPhone',];
 
 
 
@@ -29,8 +32,10 @@ class Company extends Model{
             ->withPivot('taxe_id');
     }
 
+
     public function fineCompany(){
-        return $this->hasMany('App\FineCompany','company_id');
+        return $this->belongsToMany('App\Fine','fines_company')
+            ->withPivot('company_id','fine_id','unid_tribu_value','fiscal_period');
     }
 
 

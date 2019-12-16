@@ -57,7 +57,7 @@ class CiuController extends Controller
      */
     public function show()
     {     
-        $ciu= ciu::get();
+        $ciu= ciu::orderBy('id','desc')->get();
         return view('modules.ciiu.read',array(
             'showCiu'=>$ciu
         ));
@@ -90,14 +90,12 @@ class CiuController extends Controller
      */
     public function update(Request $request)
     {
-        //$id=$request->input('id');
-        var_dump($request->input('groupCiuId'));
+        $id=$request->input('id');
         $ciu=ciu::findOrFail($request->input('id'));
         $ciu->code= $request->input('code');
         $ciu->name= $request->input('name');
-        $ciu->alicuota= $request->input('alicuota');
+        $ciu->alicuota= $request->input('alicuota')/100;
         $ciu->min_tribu_men= $request->input('mTM');
-        $ciu->group_ciu_id= $request->input('idGroupCiiu');
         
         $ciu->update();
     }

@@ -16,7 +16,7 @@
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1 l8 offset-l2">
+            <div class="col s12 m10 offset-m1">
 
 
 
@@ -28,7 +28,7 @@
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" value="1" name="confirmed">
-                        <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
+                        <input type="hidden" value="{{$user->id}}" name="id" id="id">
                         <div class="input-field col s6 m3">
 
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="input-field col s6 m3">
                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
-                            <select name="country_code" id="country_code_company" required disabled>
+                            <select name="country_code" id="country_code_company" required>
                                 <option value="null" selected disabled>...</option>
                                 <option value="+58412" @if ($user->operator=='+58412'){{"selected"}}@endif >(412)</option>
                                 <option value="+58414" @if ($user->operator=='+58414'){{"selected"}}@endif>(414)</option>
@@ -68,12 +68,23 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" readonly >
+                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly0>
                             <label for="email">E-mail</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix"></i>
+                            <input id="statusName" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>
+                            <label for="statusName">Estado de Cuenta:</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            <i class="icon-verified_user prefix"></i>
+                            <input id="statusEmail" type="text" name="status" class="validate" value="{{ $user->statusEmail }}" required readonly>
+                            <label for="statusEmail">Estado de Email:</label>
                         </div>
 
                         <div class="input-field col s12">
@@ -93,10 +104,43 @@
                     </div>
 
                     <div class="card-footer center">
-                        <button type="submit" id="actualizar" class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
-                        <!--<button type="submit" class="btn btn-rounded green waves-effect waves-light">Registar</button>
-                    </div>
-                        -->
+                        <div class="row">
+                            @can('Habilitar/Deshabilitar Usuarios')
+                            @if($user->confirmed==0||$user->status_account=='block')
+                            <div class="col s12 m4 center-align">
+                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
+                                    <i class="icon-check right"></i>
+                                    Habilitar
+                                </button>
+                            </div>
+
+                            @else
+                                <div class="col s12 m4 center-align">
+                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
+                                        <i class="icon-send right"></i>
+                                        Deshabilitar
+                                    </button>
+                                </div>
+
+                            @endif
+                            @endcan
+                            @can('Actualizar Usuarios')
+                            <div class="col s12 m4 center-align">
+                                <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves-light">
+                                    <i class="icon-update right"></i>
+                                    Actualizar
+                                </button>
+                            </div>
+                            @endcan
+                            @can('Resetear Usuarios')
+                            <div class="col s12 m4">
+                                <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
+                                    <i class="icon-send right"></i>
+                                    Resetear Contraseña
+                                </a>
+                            </div>
+                            @endcan
+                        </div>
                     </div>
                 </form>
             </div>

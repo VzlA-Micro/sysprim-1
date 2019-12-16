@@ -19,7 +19,7 @@ class CiuCompanyTableSeeder extends Seeder
 
 
         DB::table('company_ciu')->insert([
-            'ciu_id'=>7,
+            'ciu_id'=>4,
             'company_id'=>1,
 
         ]);

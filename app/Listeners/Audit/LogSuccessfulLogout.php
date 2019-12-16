@@ -33,8 +33,8 @@ class LogSuccessfulLogout
 
         $data = [
             'auditable_id' => auth()->user()->id,
-            'auditable_type' => "Logout",
-            'event'      => "Logout",
+            'auditable_type' => "logout",
+            'event'      => "logout",
             'url'        => request()->fullUrl(),
             'ip_address' => request()->getClientIp(),
             'user_agent' => request()->userAgent(),

@@ -14,8 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.payment') }}">Ver Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Planillas Web</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Lista de Planillas</a></li>
                 </ul>
             </div>
 
@@ -30,12 +29,13 @@
                                         <th>Fecha</th>
                                         <th>Contribuyente</th>
                                         <th>Forma de Pago</th>
-                                        <th>Banco</th>
                                         <th>Ramo</th>
                                         <th>Periodo</th>
                                         <th>Status</th>
                                         <th>Monto</th>
-                                        <!--<th>Detalles</th>-->
+                                        @can('Detalles Planilla')
+                                        <th>Detalles</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,12 +45,17 @@
                                             <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                             <td>{{$taxe->companies[0]->name}}</td>
                                             <td>{{$taxe->typePayment}}</td>
-                                            <td>{{$taxe->bankName}}</td>
                                             <td>{{$taxe->branch}}</td>
                                             <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                             <td>{{$taxe->statusName}}</td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
-                                            <!--<td></td>-->
+                                            @can('Detalles Planilla')
+                                            <td>
+                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+                                            </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -74,13 +79,14 @@
 
         var name = $('.email').text();
         var amount_total = $('#amount_total').val();
-        console.log(name);
+
 
         $('#payments').DataTable({
             dom: 'Bfrtip',
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -123,24 +129,25 @@
                     messageTop: 'Usuario:' + name,
 
 
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
 
                     customize: function (doc) {
-                        doc.styles.title = {
-                            fontSize: '25',
-                            alignment: 'center'
+                        doc.styles['td:nth-child(2)'] = {
+                            width: '100px',
+                            'max-width': '100px',
+                            alignment: 'center',
+                        }, doc.styles.tableHeader = {
+                            fillColor:'#247bff',
+                            color:'#FFF',
+                            fontSize: '7',
+                            alignment: 'center',
+                            bold: true
+
                         },
-                            doc.styles['td:nth-child(2)'] = {
-                                width: '100px',
-                                'max-width': '100px'
-                            },
-                            doc.styles.tableHeader.fontSize = 14,
-                            doc.defaultStyle.alignment = 'left'
+                            doc.defaultStyle.fontSize = 6;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7]
                     }
                 },
 

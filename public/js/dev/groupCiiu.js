@@ -15,6 +15,7 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+                console.log(response);
 
                 swal({
                     title: "¡Bien Hecho!",

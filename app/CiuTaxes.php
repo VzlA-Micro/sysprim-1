@@ -30,6 +30,10 @@ class CiuTaxes extends Model
         return $this->belongsTo('App\Ciu','ciu_id');
     }
 
+    public function taxes(){
+        return $this->belongsTo('App\Taxe','taxe_id');
+    }
+
 
 
 }

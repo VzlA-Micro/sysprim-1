@@ -3,14 +3,17 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="" class="breadcrumb">Mi Empresa</a>
-                <a href="" class="breadcrumb">Nombre de la empresa</a>
-                <a href="" class="breadcrumb">Mis Pagos</a>
-                <a href="" class="breadcrumb">Pagar Impuestos</a>
-                <a href="" class="breadcrumb">Detalles de Pago</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company')]) }}">Pagar Impuestos</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
+                </ul>
             </div>
+
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
@@ -161,7 +164,7 @@
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
                                 <input type="hidden" id="payments" name="payments" value="1">
-                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" >
+                                <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" id="taxes_id">
                             </div>
                         </div>
                         <div class="row" style="padding: 1rem">
@@ -183,54 +186,52 @@
                                     <i class="icon-more_horiz right"></i>
                                 </button>
                                 {{-- Modal structure --}}
-                               @endif
 
 
 
-                                <div id="modal1" class="modal modal-fixed-footer">
-                                    <div class="modal-content">
-                                        <h4 class="center-align">Formas de pago</h4>
-                                        <div class="row">
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Taquilla SEMAT</h5>
-                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img">
-                                                <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
-                                                    Taquilla
-                                                    <i class="icon-payment right"></i>
+                                @endif
+                                    @if(!$taxes->payments->isEmpty())
+                                    <div class="row">
+                                            
+                                            @if($taxes->status==='process')
+                                                <button class="btn green col s12">
+                                                    <i class="icon-more_horiz left "></i>
+                                                    ESTADO:  SIN CONCILIAR AÚN
+                                                </button>
+                                            @elseif($taxes->status==='verified')
+
+                                                <button class="btn blue col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO:  VERIFICADA.
+                                                </button>
+
+
+                                            @elseif($taxes->status=='cancel')
+
+                                                <button class="btn red col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO: CANCELADA.
+                                                </button>
+                                            @endif
+
+                                        <div class="input-field col s12">
+                                            @if($taxes->status=='process')
+                                                @can('Anular Pagos')
+                                                <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-ligt reconcile" data-status="cancel">
+                                                    ANULAR PLANILLA.
+                                                    <i class="icon-close right"></i>
                                                 </a>
-                                            </div>
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Transferencia Bancaria</h5>
-                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img">
-                                                <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
-                                                    Transferencia
-                                                    <i class="icon-compare_arrows right"></i>
+                                                @endcan
+                                                @can('Verificar Pagos - Manual')
+                                                <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light reconcile" data-status="verified">
+                                                    VERIFICAR PLANILLA.
+                                                    <i class="icon-verified_user right"></i>
                                                 </a>
-                                                <ul id='ptb' class='dropdown-content'>
-                                                    <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
-                                                    <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
-                                                    <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col s12 m4 center-align">
-                                                <h5>Pago por Deposito Bancario</h5>
-                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img">
-                                                <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
-                                                    Deposito
-                                                    <i class="icon-account_balance right"></i>
-                                                </a>
-                                                {{-- Dropdown trigger --}}
-                                                <ul id='ppb' class='dropdown-content'>
-                                                    <li><a href="#!" data-bank="77" class="bank">Banco Bicentenario</a></li>
-                                                    <li><a href="#!" data-bank="55" class="bank">Banesco</a></li>
-                                                    <li><a href="#!" data-bank="44"  class="bank">BOD</a></li>
-                                                    <li><a href="#!" data-bank="33" class="bank">100% Banco</a></li>
-                                                    <li><a href="#!" data-bank="99" class="bank">BNC</a></li>
-                                                </ul>
-                                            </div>
+                                                @endcan
+                                            @endif
                                         </div>
+                                        @endif
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -242,5 +243,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
