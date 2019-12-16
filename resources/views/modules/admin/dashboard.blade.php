@@ -203,7 +203,7 @@
                     <div class="card">
                         <div class="card-content">
                             <h5 class="center">Formas de Pago</h5>
-                            <canvas id="donus" style="position: relative; height:120vh; width:160vw"></canvas>
+                            <canvas id="donus" style="/* position: relative; height:120vh; width:160vw */"></canvas>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="dear" style="position: relative; height:160vh; width:160vw"></canvas>
+                            <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
                         </div>
                     </div>
                 </div>
