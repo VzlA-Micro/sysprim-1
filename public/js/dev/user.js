@@ -6,6 +6,8 @@ $(document).ready(function () {
 
 
 
+
+
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
             CheckCedula();
