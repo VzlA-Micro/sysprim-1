@@ -25,8 +25,10 @@ Route::get('/online','HomeController@online');
 Auth::routes();
 
 Route::get('/users/verify/{code}','UserController@verify');
+
 Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
-Route::get('/users/verify-email/{email}','UserController@verifyEmail');
+
+Route::get('/users/verify-email/{email}/{id?}','UserController@verifyEmail');
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 Route::middleware(['auth'])->group(function() {

@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-     var url = "https://sysprim.com/";
+    // var url = "https://sysprim.com/";
     
-     //var url = "http://sysprim.com.devel/";
+     var url = "http://sysprim.com.devel/";
 
 
     $('#ci').blur(function () {
@@ -139,6 +139,47 @@ $(document).ready(function () {
         }
     });
 
+
+
+    $('#email_edit').change(function () {
+        if ($('#email_edit').val() !== '') {
+            var email = $('#email_edit').val();
+            var id = $('#id').val();
+            $.ajax({
+                method: "GET",
+                url: url+"users/verify-email/"+email+'/'+id,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button: "Ok",
+                        });
+                        $('#email_edit').val('');
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                    $('#email_edit').val('');
+                }
+            });
+        }
+    });
 
     function findUser(nationality, ci) {
         $.ajax({
@@ -310,9 +351,7 @@ $(document).ready(function () {
 
     var statusBoton = false;
         $('#userUpdate').on('submit', function (e) {
-
             e.preventDefault();
-            console.log("epa");
             if (statusBoton==true){
                 $.ajax({
                     url: url + "users/update",

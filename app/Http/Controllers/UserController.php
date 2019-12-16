@@ -32,8 +32,13 @@ class UserController extends Controller{
 
 
 
-    public function verifyCi($ci){
-        $user=User::where('ci', $ci)->get();
+    public function verifyCi($ci,$id){
+        if(is_null($id)){
+            $user=User::where('ci', $ci)->get();
+        }else{
+            $user=User::where('ci', $ci)->where('id','!=',$id)->get();
+        }
+
         if(!$user->isEmpty()){
             $response=array('status'=>'error','message'=>'Esta cedula ya existe en el sistema. Ingrese una cedula valida.');
         }else{
@@ -43,8 +48,14 @@ class UserController extends Controller{
     }
 
 
-    public function verifyEmail($email){
-        $user=User::where('email', $email)->get();
+
+
+    public function verifyEmail($email,$id){
+        if(is_null($id)) {
+            $user = User::where('email', $email)->get();
+        }else{
+            $user = User::where('email', $email)->where('id','!=',$id)->get();
+        }
         if(!$user->isEmpty()){
             $response=array('status'=>'error','message'=>'Esta correo ya existe en el sistema. Ingrese un correo valido.');
         }else{
@@ -140,15 +151,13 @@ class UserController extends Controller{
     {
         $id= $request->input('id');
         $phone= $request->input('phone');
-        $role= $request->input('roles');
-        $email= $request->input('emailEdit');
-        $password=Hash::make($request->input('passwordEdit'));
+        $role= $request->input('role');
+        $email= $request->input('email');
         $user=User::find($id);
         $user->phone=$phone;
         $user->role_id=$role;
         $user->syncRoles($role);
         $user->email=$email;
-        $user->password=$password;
         $user->update();
     }
 
