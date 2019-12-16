@@ -303,7 +303,15 @@ class CompaniesController extends Controller
     }
 
     public function verifyRif($rif){
-        $company =Company::where('RIF',$rif)->with('users')->get();
+        $company = Company::where('RIF',$rif)->with('users')->get();
+        if(!$company->isEmpty()){
+            if($company[0]->users->isEmpty()){
+                $response=array('status'=>'registered','company'=>$company);
+            }else{
+                $response=array('status'=>'error','message'=>'El RIF '.$rif.' se encuentra registrado en el sistema. Por favor, ingrese un RIF valido.');
+            }
+        }
+        // $company =Company::where('RIF',$rif)->with('users')->get();
 
         if(!$company->isEmpty()){
             $response=array('status'=>'error','company'=>$company);
@@ -313,11 +321,13 @@ class CompaniesController extends Controller
         return response()->json($response);
     }
 
+
     public function verifyLicense($license,$rif){
         $company = Company::where('license',$license)->get();
 
 
         if(!$company->isEmpty()){
+            $response=array('status'=>'error','message'=>'La licencia '.$license.' se encuentra registrada en el sistema. Por favor, ingrese una licencia valida.');
             if($company[0]->RIF===$rif){
                 $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
             }else{

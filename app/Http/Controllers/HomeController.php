@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TaxesNumber;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +65,8 @@ class HomeController extends Controller
         $file = storage_path() . "/app/public/" . $pdf;
         $headers = ['Content-Type' => 'application/pfd'];
         // dd($file);
-        return Storage::download($file, $pdf, $headers);
+        // return Storage::download($file, $pdf, $headers);
+        return response()->download($file, $pdf, $headers);
     }
 
 }

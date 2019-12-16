@@ -33,13 +33,13 @@ Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profile','UserController@profile')->name('profile');
     Route::get('/download/{file}', 'HomeController@downloadPdf')->name('download');
     
     // Usuarios
     Route::group(['middleware' => ['permission:Gestionar Usuarios']], function() {
         // Nivel 1: Gestionar Usuario
         Route::get('/users/manage', 'UserController@index')->name('users.manage');
-        Route::get('/profile','UserController@profile')->name('profile');
 
 
 

@@ -15,34 +15,46 @@ $(document).ready(function () {
                     if (response.status === 'error') {
                         swal({
                             title: "Error",
-                            text: "El código de planilla ingresado no es validado, por favor ingrese  una planilla valida.",
+                            text: "El código de la planilla ingresada no es válido, por favor ingrese una planilla válida.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                         $('#search').val('');
                     } else if (response.status === 'verified') {
                         swal({
                             title: "Información",
-                            text: "La planilla ingresada ya fue conciliada, por favor ingrese un código de  planilla valido.",
+                            text: "La planilla ingresada ya fue conciliada, por favor ingrese el código de una planilla válida.",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                         $('#search').val('');
 
                     }else if(response.status === 'cancel'){
                         swal({
                             title: "Información",
-                            text: "La planilla ingresada esta cancelada, por favor ingrese un código de  planilla valido.",
+                            text: "La planilla ingresada esta cancelada, por favor ingrese un código de planilla válido.",
                             icon: "warning",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "amber-gradient"
+                            },
                         });
                         $('#search').val('');
                     }else if(response.status === 'old'){
                         swal({
                             title: "Información",
-                            text: "La planilla ingresada ya expiró, por favor ingrese un código de  planilla valido.",
+                            text: "La planilla ingresada ya expiró, por favor ingrese un código de planilla válido.",
                             icon: "warning",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                         $('#search').val('');
 
@@ -56,7 +68,10 @@ $(document).ready(function () {
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Listo",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
 
                             if (accept) {
@@ -180,7 +195,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -199,7 +217,10 @@ $(document).ready(function () {
                 title: "Error",
                 text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
                 icon: "error",
-                button: "Ok",
+                button:{
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
             });
 
         } else {
@@ -229,16 +250,22 @@ $(document).ready(function () {
                             text: "Para conciliar esta planilla " +
                             "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total').val() + "Bs",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
 
                     } else {
                         swal({
                             title: "¡Bien hecho!",
-                            text: "Planilla ingresa y conciliada con éxito.",
+                            text: "Planilla registrada y conciliada con éxito.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Listo",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
                             $('#amount_total').val('');
                             if ($('#company_id').val() !== '') {
@@ -264,7 +291,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -285,7 +315,10 @@ $(document).ready(function () {
                 title: "Error",
                 text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
                 icon: "error",
-                button: "Ok",
+                button:{
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
             });
 
         } else {
@@ -314,16 +347,22 @@ $(document).ready(function () {
                             text: "Para conciliar esta planilla " +
                             "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total_tr').val() + "Bs",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
 
                     } else {
                         swal({
                             title: "¡Bien hecho!",
-                            text: "Planilla ingresa y conciliada con éxito.",
+                            text: "Planilla registrada y conciliada con éxito.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Listo",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
                             $('#amount_total_tr').val('');
                             if ($('#company_id').val() !== '') {
@@ -357,7 +396,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -390,7 +432,7 @@ $(document).ready(function () {
             if($(this).val()==="") {
                 swal({
                     title: "Información",
-                    text: "El campo base imponible no puede estar vacio, por favor ingrese un monto valido.",
+                    text: "El campo Base Imponible no puede estar vacio, por favor ingrese un monto válido.",
                     icon: "info",
                     button: "Ok",
                 });
@@ -421,14 +463,14 @@ $(document).ready(function () {
         if(!band){
             swal({
                 title: "Información",
-                text: "Recuerde verificar al monto antes de realizar el pago, una vez confirmado, no se podrá revertir los cambios.",
+                text: "Recuerde verificar al monto antes de realizar el pago, una vez confirmado, no podrá revertir los cambios.",
                 icon: "info",
                 buttons: {
                     confirm: {
                         text: "Confirmar.",
                         value: true,
                         visible: true,
-                        className: "red"
+                        className: "red-gradient"
 
                     },
                     cancel: {
@@ -494,14 +536,14 @@ $(document).ready(function () {
 
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "La planilla ha sido generado con éxito,¿Desea seguir generando planilla?",
+                    text: "La planilla ha sido generado con éxito, ¿Desea seguir generando planillas?",
                     icon: "success",
                     buttons: {
                         confirm: {
                             text: "Si",
                             value: true,
                             visible: true,
-                            className: "red"
+                            className: "green-gradient"
 
                         },
                         cancel: {
@@ -535,7 +577,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -601,9 +646,12 @@ $(document).ready(function () {
                         if (response.status === 'error') {
                             swal({
                                 title: "Información",
-                                text: 'La empresa ' + $('#name_company').val() + 'ya declaro el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
+                                text: 'La empresa ' + $('#name_company').val() + 'ya declaró el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
                                 icon: "info",
-                                button: "Ok",
+                                button:{
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
                             });
                             $('#fiscal_period').val(' ')
                         }
@@ -619,7 +667,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                     }
                 });
@@ -632,7 +683,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: 'Debe ingresar una licencia valida de una empresa, para generar una planilla.',
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
         }
 
@@ -657,7 +711,10 @@ $(document).ready(function () {
                             title: "Información",
                             text: response.message,
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
 
@@ -787,7 +844,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -802,14 +862,20 @@ $(document).ready(function () {
                 title: "Información",
                 text: 'Debe ingresar una empresa,  para con continuar con el registro.',
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
         } else if ($('#fiscal_period').val() === '') {
             swal({
                 title: "Información",
                 text: 'Debe seleccionar un periodo fiscal, para continuar con el registro.',
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
 
         } else {
@@ -840,7 +906,10 @@ $(document).ready(function () {
                     title: "¡Bien Hecho!",
                     text: response.message,
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });

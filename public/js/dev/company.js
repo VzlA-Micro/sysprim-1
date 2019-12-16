@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    var url="https://sysprim.com/";
-     //var url="http://sysprim.com.devel/";
+    // var url="https://sysprim.com/";
+     var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -15,7 +15,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar el tipo de documento, antes de ingresar el número de RIF.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
             $('#RIF').val('');
         }
@@ -134,7 +137,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                         $('#license').val('');
                     }
@@ -149,7 +155,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -182,9 +191,12 @@ $(document).ready(function () {
                         success: function (response) {
                             swal({
                                 title: "¡Bien Hecho!",
-                                text: "Empresa Registrada con Éxito.",
+                                text: "La empresa se ha registrado con éxito.",
                                 icon: "success",
-                                button: "Ok",
+                                button:{
+                                    text: "Esta bien",
+                                    className: "green-gradient"
+                                },
                             }).then(function (accept) {
                                 window.location.href = url + "companies/my-business";
                             });
@@ -200,7 +212,10 @@ $(document).ready(function () {
                                 title: "¡Oh no!",
                                 text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                                 icon: "error",
-                                button: "Ok",
+                                button:{
+                                    text: "Entendido",
+                                    className: "red-gradient"
+                                },
                             });
                         }
                     });
@@ -210,7 +225,10 @@ $(document).ready(function () {
                         title: "Información",
                         text: "Debe tener al menos un ciiu para poder registrar una empresa..",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
                     });
 
                 }
@@ -220,16 +238,22 @@ $(document).ready(function () {
                 if ($('#sector').val() === null) {
                     swal({
                         title: "Información",
-                        text: "Seleciona un sector para completar el registro.",
+                        text: "Selecione un sector para completar el registro.",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
                     });
                 } else {
                     swal({
                         title: "Información",
-                        text: "Seleciona la parroquia para completar el registro.",
+                        text: "Selecione la parroquia para completar el registro.",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
                     });
                 }
                 $('#button-company').removeAttr('disabled','');
@@ -239,7 +263,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
             $('#button-company').removeAttr('disabled','');
         }
@@ -253,7 +280,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
 
             $('#phone').val('');
@@ -267,7 +297,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
 
             $('#phone_company').val('');
@@ -320,7 +353,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -380,7 +416,10 @@ $(document).ready(function () {
                                         title: "¡Oh no!",
                                         text: "El ciiu " + response.ciu.code + " ya  esta ingresado en esta empresa.",
                                         icon: "warning",
-                                        button: "Ok",
+                                        button:{
+                                            text: "Entendido",
+                                            className: "red-gradient"
+                                        },
                                     });
                                     $('#code').val("");
                                     band = false;
@@ -409,9 +448,12 @@ $(document).ready(function () {
                     } else {
                         swal({
                             title: "Información",
-                            text: "El CIIU ingresado no se encuentra registrado.",
+                            text: "El CIIU que ingresó no se encuentra registrado en el sistema.",
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
 
@@ -431,7 +473,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -440,7 +485,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debe ingresar un CIIU valido.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
         }
 
@@ -466,9 +514,12 @@ $(document).ready(function () {
                     success: function (response) {
                         swal({
                             title: "¡Bien Hecho!",
-                            text: "Empresa Registrada con Éxito.",
+                            text: "La empresa ha sido registrada con éxito.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
                             window.location.href = url + "ticketOffice/companies/all";
                         });
@@ -485,7 +536,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
                         });
                     }
                 });
@@ -495,14 +549,20 @@ $(document).ready(function () {
                         title: "Información",
                         text: "Seleciona un sector para completar el registro.",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
                     });
                 } else {
                     swal({
                         title: "Información",
                         text: "Seleciona la parroquia para completar el registro.",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        }
                     });
                 }
 
@@ -528,9 +588,17 @@ $(document).ready(function () {
 
 
                 if (response.status === 'error') {
+                    swal({
+                        title: "Información",
+                        text: response.message,
+                        icon: "info",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
                     var company=response.company[0];
                     $('#name').val(company.name);
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                 } else {
@@ -552,7 +620,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
                 $('#RIF').val(' ');
             }
@@ -570,7 +641,7 @@ $(document).ready(function () {
                     text: "Si",
                     value: true,
                     visible: true,
-                    className: "red"
+                    className: "amber-gradient"
 
                 },
                 cancel: {
@@ -703,7 +774,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -727,7 +801,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
         }else{
 
@@ -750,7 +827,10 @@ $(document).ready(function () {
                     title: "Información",
                     text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
                     icon: "info",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
                 });
 
                 band = false;
@@ -759,7 +839,10 @@ $(document).ready(function () {
                     title: "Información",
                     text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
                     icon: "info",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
                 });
                 band=false;
             }
@@ -860,7 +943,19 @@ function initMap() {
 
 
 }
-
+         //    swal({
+         //        title: "Información",
+         //        text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
+         //        icon: "info",
+         //        button:{
+         //            text: "Esta bien",
+         //            className: "blue-gradient"
+         //        },
+         //    });
+         // else {
+         //    $('#lng').val(marcadores[0].getPosition().lng());
+         //    $('#lat').val(marcadores[0].getPosition().lat());
+         //    M.updateTextFields();
 
 function addMark(latLng, map,marcadores) {
 
