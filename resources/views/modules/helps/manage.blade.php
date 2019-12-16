@@ -22,7 +22,7 @@
                             <span class="secondary-content"><i class="icon-get_app red-text text-darken-2" style="font-size: 22px;"></i></span>
                         </div>
                     </a>
-                    <a href="" class="collection-item red-text text-darken-4">
+                    <a href="{{ route('download', ['file' => 'Manual_Conciliacion_Pago.pdf']) }}" class="collection-item red-text text-darken-4">
                         <div>
                             Conciliar Pagos - Actividad Económica
                             <span class="secondary-content"><i class="icon-get_app red-text text-darken-2" style="font-size: 22px;"></i></span>
