@@ -33,8 +33,8 @@
                         <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="widget-stats-content">
-                        <span class="widget-stats-title">Contribuyentes Registrados</span>
-                        <span class="widget-stats-number">{{ $taxpayers }}</span>
+                        <span class="widget-stats-title">Usuarios Registrados</span>
+                        <span class="widget-stats-number">{{ $users }}</span>
                     </div>
                 </div>
             </div>
