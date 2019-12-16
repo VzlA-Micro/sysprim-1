@@ -62,7 +62,7 @@
                     @can('Mi Perfil')
                     <li><a href=""><i class="icon-account_box"></i>Mi Perfil</a></li>
                     @endcan
-                    <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
+                    <!-- <li><a href=""><i class="icon-settings"></i>Configuración</a></li> -->
                     <li class="divider"></li>
                     <li>
                         <a href="{{ route('logout') }}"
