@@ -37,7 +37,7 @@
             <span class="animate down" style="background-image: url({{ asset('images/bqto-1.jpg') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate in" style="background-image: url({{ asset('images/jonas2.jpg') }})"></span>
+            <span class="animate in" style="background-image: url({{ asset('images/bqto-4.jpg') }})"></span>
           </div>
           <div class="slide">
             <span class="animate down" style="background-image: url({{ asset('images/bqto-2.jpg') }})"></span>
@@ -137,7 +137,7 @@
             slideDuration: 6000,  // Duration of each induvidual slide.
             fadeDuration: 1000,    // Duration of the fading transition. Should be shorter than slideDuration.
             animate: true,        // Turn css animations on or off.
-            pauseOnTabBlur: true, // Pause thet slideshow when the tab is out of focus. This prevents glitches with setTimeout().
+            pauseOnTabBlur: true, // Pause the slideshow when the tab is out of focus. This prevents glitches with setTimeout().
             enableLog: false      // Enable log messages to the console. Useful for debugging.
           });
 
