@@ -101,5 +101,4 @@
     <script src="{{ asset('js/imageUpload.js') }}"></script>
     <script src="{{ asset('js/dev/profile.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
-
 @endsection
