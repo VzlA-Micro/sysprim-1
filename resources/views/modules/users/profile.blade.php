@@ -72,8 +72,8 @@
                                         <input id="phone" type="tel" name="phone" value="{{ Auth::user()->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
                                     </div>
                                     <div class="input-field col s12">
-                                        <input type="text" name="email" id="email" value="{{ Auth::user()->email }}" class="validate">
-                                        <label for="email">E-mail</label> 
+                                        <input type="email" name="email" id="email_edit" value="{{ Auth::user()->email }}" class="validate">
+                                        <label for="email_edit">E-mail</label> 
                                     </div>
                                     <div class="input-field col s12 center-align">
                                         <button type="submit" class="btn green col s12 btn-rounded">Actualizar</button>
