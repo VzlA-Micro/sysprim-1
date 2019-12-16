@@ -8,7 +8,10 @@
             <ul id="nav-movile" class="right hide-on-med-and-down">
                 {{-- Boton de prueba --}}
                 <li><a href="{{ route('home') }}" class="tooltipped" data-position="bottom"
-                       data-tooltip="{{ __('Inicio') }}"><i class="icon-home"></i></a></li>
+                       data-tooltip="{{ __('Inicio') }}"><i class="icon-home"></i>
+                   </a>
+                </li>
+                @can('Ver Notificaciones')
                 <li>
                     <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones"
                        data-target="notification-dropdown">
@@ -39,6 +42,7 @@
                         </a>
                     @endif
                 </div>
+                @endcan
                 <li>
                     <a href="{{ route('helps.manage') }}" class="tooltipped" data-tooltip="Ayuda" data-position="bottom"><i class="icon-info"></i></a>
                 </li>
@@ -116,7 +120,9 @@
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('home') }}"class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a>
                     </li>
+                    @can('Ver Notificaciones')
                     <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>
+                    @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>
                     @can('Gestionar Usuarios')
