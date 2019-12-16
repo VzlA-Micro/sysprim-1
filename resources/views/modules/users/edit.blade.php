@@ -32,7 +32,7 @@
                         <div class="input-field col s6 m3">
 
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
-                            <select name="nationality" id="nationality" required>
+                            <select name="nationality" id="nationality" required disabled>
                                 <option value="null">...</option>
                                 <option value="V" @if ($user->TypeDocument=='V'){{"selected"}}@endif>V</option>
                                 <option value="E" @if ($user->TypeDocument=='E'){{"selected"}}@endif>E</option>
@@ -70,11 +70,14 @@
                             <label for="phone_user">Teléfono</label>
                             <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
                         </div>
+
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
-                            <input id="email" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly0>
-                            <label for="email">E-mail</label>
+                            <input id="email_edit" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly0>
+                            <label for="email_edit">E-mail</label>
                         </div>
+
+
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix"></i>
                             <input id="statusName" type="text" name="status" class="validate" value="{{ $user->statusName }}"  required readonly>

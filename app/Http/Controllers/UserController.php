@@ -43,8 +43,14 @@ class UserController extends Controller{
     }
 
 
-    public function verifyEmail($email){
-        $user=User::where('email', $email)->get();
+
+
+    public function verifyEmail($email,$id=null){
+        if(is_null($id)) {
+            $user = User::where('email', $email)->get();
+        }else{
+            $user = User::where('email', $email)->where('id','!=',$id)->get();
+        }
         if(!$user->isEmpty()){
             $response=array('status'=>'error','message'=>'El correo "'.$email.'" encuentra registrado en el sistema. Por favor, ingrese un correo valido.');
         }else{
@@ -139,16 +145,14 @@ class UserController extends Controller{
     public function update(Request $request)
     {
         $id= $request->input('id');
-        $phone= $request->input('phone');
-        $role= $request->input('roles');
-        $email= $request->input('emailEdit');
-        $password=Hash::make($request->input('passwordEdit'));
+        $phone= $request->input('country_code').$request->input('phone');
+        $role= $request->input('role');
+        $email= $request->input('email');
         $user=User::find($id);
         $user->phone=$phone;
         $user->role_id=$role;
         $user->syncRoles($role);
         $user->email=$email;
-        $user->password=$password;
         $user->update();
     }
 
