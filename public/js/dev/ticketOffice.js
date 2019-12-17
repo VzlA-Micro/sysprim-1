@@ -929,7 +929,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entiendo",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -975,7 +978,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },,
             });
             $('#ci').val('')
         }
@@ -1003,14 +1009,14 @@ $(document).ready(function () {
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
-                            text: "El Contribuyente no esta registrado, Debe registrar el contribuyente antes para poder incluir una empresa.",
+                            text: "El Contribuyente no esta registrado, debe registrar el contribuyente antes para poder registrar una empresa.",
                             icon: "info",
                             buttons: {
                                 confirm: {
                                     text: "Registrarlo",
                                     value: true,
                                     visible: true,
-                                    className: "green"
+                                    className: "green-gradient"
 
                                 },
                                 cancel: {
@@ -1047,7 +1053,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },,
                     });
                 }
             });
@@ -1208,14 +1217,14 @@ $(document).ready(function () {
                     text: "CHEQUE",
                     value: 'PPC',
                     visible: true,
-                    className: "green"
+                    className: "ambre-gradient"
 
                 },
                 CANCEL: {
                     text: "EFECTIVO",
                     value: 'PPE',
                     visible: true,
-                    className: "green"
+                    className: "green-gradient"
                 },
 
 
