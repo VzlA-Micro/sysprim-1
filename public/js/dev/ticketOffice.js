@@ -981,7 +981,7 @@ $(document).ready(function () {
                 button:{
                     text: "Esta bien",
                     className: "blue-gradient"
-                },,
+                },
             });
             $('#ci').val('')
         }
@@ -1056,7 +1056,7 @@ $(document).ready(function () {
                         button:{
                             text: "Entendido",
                             className: "red-gradient"
-                        },,
+                        },
                     });
                 }
             });
