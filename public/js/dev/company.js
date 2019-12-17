@@ -1,7 +1,8 @@
 $(document).ready(function () {
     var url="https://sysprim.com/";
     //var url="http://172.19.50.253/";
-     //var url="http://sysprim.com.devel/";
+
+    //var url="http://sysprim.com.devel/";
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -497,8 +498,11 @@ $(document).ready(function () {
 
         $('#company-register-ticket').submit(function (e) {
             e.preventDefault();
+
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
+
                 $('#button-company').attr('disabled','disabled');
+
                 $.ajax({
                     url: url + "ticketOffice/company/save",
                     cache: false,
@@ -522,8 +526,11 @@ $(document).ready(function () {
                                 className: "green-gradient"
                             },
                         }).then(function (accept) {
-                            window.location.href = url + "ticketOffice/companies/all";
+                            if(accept){
+                                window.location.href = url + "ticketOffice/companies/all";
+                            }
                         });
+
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
 
