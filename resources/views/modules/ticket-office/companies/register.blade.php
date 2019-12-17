@@ -87,7 +87,7 @@
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
                                 <i class="icon-work prefix"></i>
-                                <input type="text" name="name_company" id="name" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required data-validate="Razon social">
+                                <input type="text" name="name_company" id="name_company" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required data-validate="Razon social">
                                 <label for="name_company" >Razón Social</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
