@@ -696,7 +696,7 @@ $(document).ready(function () {
                     $('#address').val(company.direccion);
                     $('#phone-company').val(company.telefono_principal);
                     if(company.direccion!==''){
-                        localizar("map", company.direccion+" barquisimeto.Estado Lara.");
+                        localizar("map", "Venezuela, Baquisimeto Estado Lara "+company.direccion);
                     }
                     if ($('#ci-license').val() !== undefined) {
                         $('#name_company').val(company.historico_nombre_empresa);
@@ -918,7 +918,7 @@ function localizar(elemento,direccion) {
 $('#address').change(function () {
     var direccion=$(this).val();
     if(direccion!==''){
-        localizar("map", direccion+" baquisimeto, Estado Lara.");
+        localizar("map", "Venezuela, Baquisimeto Estado Lara. "+ direccion);
     }
 });
 

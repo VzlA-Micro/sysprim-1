@@ -15,13 +15,13 @@
                 </li>
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
-                    <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li>
-                    <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
+                    <!-- <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li> -->
+                    <!-- <li><a href=""><i class="icon-settings"></i>Configuración</a></li> -->
                     <li class="divider"></li>
                     <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             <i class="icon-exit_to_app"></i>
-                            {{ __('Logout') }}
+                            Cerrar Sesión
                         </a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

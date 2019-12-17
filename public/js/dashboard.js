@@ -33,7 +33,7 @@ $('document').ready(function () {
 
 /*
 
-    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
+/*    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
     $('#eur').html('Euros '+0+'<i class="fas fa-euro-sign left"></i>');
     $('#cny').html('Yuan '+0+'<i class="fas fa-yen-sign left"></i>');
     $('#rub').html('Ruplas '+0+'<i class="fas fa-ruble-sign left"></i>');
@@ -101,10 +101,10 @@ $('document').ready(function () {
 
             });
 
-    }
+    }*/
 
 
-*/
+
     $.ajax({
         method: "GET",
         url: url + controller,
@@ -127,8 +127,8 @@ $('document').ready(function () {
                 chartsMonth(response);
                 topTaxes(response[11]);
                 dear(response[12]);
-                //api();
 
+                //api();
             }
                $("#preloader").fadeOut('fast');
                $("#preloader-overlay").fadeOut('fast');   

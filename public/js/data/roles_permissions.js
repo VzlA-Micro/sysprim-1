@@ -2,6 +2,7 @@ var url = "https://sysprim.com/";
 //var url="http://172.19.50.253/";
 $(document).ready(function() {
 	$('#register').submit(function(e) {
+        var  name = $('#name').val();
 		e.preventDefault();
 		var formData = new FormData(this);
 		$.ajax({
@@ -18,9 +19,12 @@ $(document).ready(function() {
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha registrado el Rol con éxito.",
+                    text: "Se ha registrado el '" + name + "' con éxito.",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",        
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href = url + "roles/manage";
                 });
@@ -35,7 +39,10 @@ $(document).ready(function() {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",        
+                        className: "red-gradient"
+                    },
                 });
             }
 		});
@@ -43,6 +50,7 @@ $(document).ready(function() {
 
 	$('#update').submit(function(e) {
 		e.preventDefault();
+        var  name = $('#name').val();
 		var formData = new FormData(this);
 		$.ajax({
 			method: "POST",
@@ -58,9 +66,12 @@ $(document).ready(function() {
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha actualizado el Rol con éxito.",
+                    text: "Se ha actualizado el '" + name +"' con éxito.",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",        
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href = url + "roles/manage";
                 });
@@ -75,7 +86,10 @@ $(document).ready(function() {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",        
+                        className: "red-gradient"
+                    },
                 });
             }
 		});

@@ -141,7 +141,10 @@ $(document).ready(function () {
                     title: "Información",
                     text: "El campo base imponible no puede estar vacio, por favor ingrese un monto valido.",
                     icon: "info",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",        
+                        className: "blue-gradient"
+                    },
                 });
 
                 band = true;
@@ -172,7 +175,10 @@ $(document).ready(function () {
                     title: "Información",
                     text: "Selecione un periodo fiscal valido.",
                     icon: "info",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",        
+                        className: "blue-gradient"
+                    },
                 });
             }
         }
@@ -207,7 +213,10 @@ $(document).ready(function () {
                         title: "Información",
                         text: "Verifique los datos ingresados.",
                         icon: "info",
-                        button: "Ok",
+                        button:{
+                            text: "Esta bien",        
+                            className: "blue-gradient"
+                        },
                     });
                     band = true;
                 }
@@ -308,7 +317,10 @@ $(document).ready(function () {
             title: "Información",
             text: "Se le notifica que se generará una Multa por pago extemporaneo,para cada período declarado fuera del lapso establecido Debe cancelar previamente la declaración de impuesto de Act.Economica anticipada y seguidamente la Multa generada.Pasar por el SEMAT a pagar la multa.",
             icon: "info",
-            button: "Ok",
+            button:{
+                text: "Esta bien",        
+                className: "blue-gradient"
+            },
         });
     }
 
@@ -327,14 +339,14 @@ $(document).ready(function () {
                     text: "CHEQUE",
                     value: 'PPC',
                     visible: true,
-                    className: "green"
+                    className: "amber-gradient"
 
                 },
                 CANCEL: {
                     text: "EFECTIVO",
                     value: 'PPE',
                     visible: true,
-                    className: "green"
+                    className: "green-gradient"
                 },
 
 
