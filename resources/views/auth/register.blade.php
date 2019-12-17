@@ -59,12 +59,12 @@
                         </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234">
                             <i class="icon-lock prefix"></i>
-                            <input id="password" type="password" name="password" class="validate" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
+                            <input id="password" type="password" name="password" class="validate" pattern='[A-Za-z0-9]+{5,20}' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password">Contraseña</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-lock prefix"></i>
-                            <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
+                            <input id="password-confirm" type="password" class="validate" name="password_confirmation" pattern='[A-Za-z0-9]+{5,20}' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>
                             <label for="password-confirm">Confirmar contraseña</label>
                         </div>
                     </div>
