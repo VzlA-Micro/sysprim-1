@@ -1,6 +1,6 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
-    //var url="http://172.19.50.253/";
+    //var url = "https://sysprim.com/";
+    var url="http://172.19.50.253/";
     $('.reconcile').click(function () {
         var status=$(this).data('status');
         var taxes_id=$('#taxes_id').val();
