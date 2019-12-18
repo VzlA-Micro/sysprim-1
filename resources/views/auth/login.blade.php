@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('css/countdown-timer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/subtle-slideshow.css') }}">
     <style type="text/css">
         body {
@@ -108,6 +109,7 @@
                         @endif
                     </div>
                     <div class="card-footer center-align">
+                        {{-- <a href="{{ route('register') }}" class="btn iribarren-wine waves-effect waves-light white-text pulse">¿No estás registrado? Registrate aquí.</a> --}}
                         <a class="iribarren-wine-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
                     </div>
                 </form>
@@ -126,6 +128,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/countdown-timer.js') }}"></script>
     <script src="{{ asset('js/jquery.subtle-slideshow.js') }}"></script>
     <script>
         $('.sidenav#side-login').sidenav({

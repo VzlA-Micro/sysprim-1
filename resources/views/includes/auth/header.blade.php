@@ -64,9 +64,30 @@
                     </div>
                     <div class="card-footer center-align">
                         <a class="iribarren-wine-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
+                        {{-- <a href="{{ route('register') }}" class="btn iribarren-wine waves-effect waves-light white-text pulse">¿No estás registrado? Registrate aquí.</a> --}}
                     </div>
                 </form>
             </div>
+        </div>
+
+        <div class="row" id="timer">
+            <div class="col s12">
+                <h4>
+                    <a href="{{ route('register') }}" class="black-text text-darken-4"><marquee behavior="" direction="">Registrate en SYSPRIM antes de:</marquee></a>
+                </h4>
+            </div>
+            <div class="col s3" id="days"></div>
+            <div class="col s3" id="hours"></div>
+            <div class="col s3" id="minutes"></div>
+            <div class="col s3" id="seconds"></div>
+            {{-- <div class="col s12">
+                <div >
+                    <div id="days"></div>
+                    <div id="hours"></div>
+                    <div id="minutes"></div>
+                    <div id="seconds"></div>
+                </div>
+            </div> --}}
         </div>
     </ul>
     @endif
