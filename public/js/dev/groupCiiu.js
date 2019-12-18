@@ -1,5 +1,8 @@
 $('document').ready(function () {
-    var url="http://sysprim.com.devel/";
+
+    var url="https://sysprim.com/";
+    //var url="http://172.19.50.253/";
+
     $('#groupCiiu').on('submit',function (e) {
         e.preventDefault();
         $.ajax({
@@ -19,9 +22,12 @@ $('document').ready(function () {
 
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "Ciiu registrado con exito",
+                    text: "CIIU registrado con exito",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",        
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href=url+"ciu-branch/read";
                 });
@@ -38,7 +44,10 @@ $('document').ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",        
+                        className: "red-gradient"
+                    },
                 });
             }
         });

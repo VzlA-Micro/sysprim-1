@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var url = "https://sysprim.com/";
-
+    //var url="http://172.19.50.253/";
 
     $("#user_form").hide();
     $("#btn-edit").click(function(e) {
@@ -27,9 +27,12 @@ $(document).ready(function() {
             success: function (response) {
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha actualizado el perfil exitosamente.",
+                    text: "Se ha actualizado su perfil éxitosamente.",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href = url + "profile";
                 });
@@ -44,7 +47,10 @@ $(document).ready(function() {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
     	})
@@ -68,7 +74,7 @@ $(document).ready(function() {
     		    	text: "Aceptar",
     		    	value: true,
     		    	visible: true,
-    		    	className: "blue",
+    		    	className: "blue-gradient",
     		    },
     		}
 
@@ -90,7 +96,7 @@ $(document).ready(function() {
     						text: "Continuar",
     						value:true,
     						visible: true,
-    						className: "blue"
+    						className: "blue-gradient"
     					}
     				}
     			}).then(password => {
@@ -100,8 +106,8 @@ $(document).ready(function() {
     						icon: "warning",
     						text: "No se puede cambiar la contraseña",
     						button: {
-    							text: "Esta bien",
-    							className: "blue"
+    							text: "Entendido",
+    							className: "red-gradient"
     						}
     					});
     				}
@@ -126,7 +132,7 @@ $(document).ready(function() {
 			    				confirm: {
 		    						text: "Confirmar",
 		    						visible: true,
-		    						className: "blue"
+		    						className: "blue-gradient"
 		    					},
 			    			}
     					}).then(confirmPassword => {
@@ -153,7 +159,7 @@ $(document).ready(function() {
     											text: "Listo",
     											value: true,
     											visible: true,
-    											className: "green"
+    											className: "green-gradient"
     										}
     									});
     								},
@@ -165,9 +171,9 @@ $(document).ready(function() {
                                             icon: "error",
                                             buttons: {
                                                 confirm:{
-                                                    text: "¡Esta bien!",
+                                                    text: "Entendido",
                                                     value: true,
-                                                    className: "blue"
+                                                    className: "red-gradient"
                                                 }
                                             }
                                         });
@@ -181,9 +187,9 @@ $(document).ready(function() {
                                     icon: "error",
                                     buttons: {
                                         confirm:{
-                                            text: "¡Esta bien!",
+                                            text: "Entendido",
                                             value: true,
-                                            className: "blue-45deg-gradient-1"
+                                            className: "red-gradient"
                                         }
                                     }
                                 });

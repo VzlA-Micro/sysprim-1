@@ -1,6 +1,7 @@
 $('document').ready(function () {
 
     var url="https://sysprim.com/";
+    //var url="http://172.19.50.253/";
     // var url="http://sysprim.com.devel/";
 
     $('#ciuu').on('submit',function (e) {
@@ -24,9 +25,12 @@ $('document').ready(function () {
                 cosole.log(response);
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "Ciiu registrado con exito",
+                    text: "CIIU registrado con exito",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     window.location.href=url+"ciu-branch/read";
                 });
@@ -43,7 +47,10 @@ $('document').ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -69,9 +76,12 @@ $('document').ready(function () {
                 console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "Ciiu actualizaco con éxito.",
+                    text: "CIIU actualizaco con éxito.",
                     icon: "success",
-                    button: "Ok",
+                    button:{
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
                 }).then(function (accept) {
                     location.reload();
                 });
@@ -88,7 +98,10 @@ $('document').ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });

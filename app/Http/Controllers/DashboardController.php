@@ -621,7 +621,7 @@ class DashboardController extends Controller
 
         // Count Taxpayers
 
-        $taxpayers = User::get()->where('role_id',3)->count();
+        $taxpayers = User::get()->count();
         $companies = Company::get()->count(); 
 
         return response()->json([
@@ -669,7 +669,7 @@ class DashboardController extends Controller
         $countPpc = count($ppc);
         $dear = $this->dearTaxes();
 
-        $taxpayers = User::get()->where('role_id',3)->count();
+        $users = User::all()->count();
         $companies = Company::get()->count(); 
         
 
@@ -680,7 +680,7 @@ class DashboardController extends Controller
                 'ppc' => $countPpc,
                 'ppe' => $countPpe,
                 'dear' => $dear,
-                'taxpayers' => $taxpayers,
+                'users' => $users,
                 'companies' => $companies
             )
         );

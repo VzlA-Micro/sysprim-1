@@ -15,13 +15,13 @@
                 </li>
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
-                    <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li>
-                    <li><a href=""><i class="icon-settings"></i>Configuración</a></li>
+                    <!-- <li><a href=""><i class="icon-account_box"></i>Cuenta</a></li> -->
+                    <!-- <li><a href=""><i class="icon-settings"></i>Configuración</a></li> -->
                     <li class="divider"></li>
                     <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             <i class="icon-exit_to_app"></i>
-                            {{ __('Logout') }}
+                            Cerrar Sesión
                         </a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -31,7 +31,32 @@
             </ul>
         </div>
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
-            <li><a href="" class="subheader">Bienvenido, {{ Auth::user()->name . " " . Auth::user()->surname }}</a></li>
+            <li>
+                <a href="" class="logo-container font-audiowide center-align">
+                    <img src="{{ asset('images/semat.png') }}" alt="" srcset="">                    
+                </a>
+            </li>
+            @php 
+                $name = strtolower(Auth::user()->name);
+                $surname = strtolower(Auth::user()->surname);
+            @endphp 
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img src="{{ asset('images/bg-user.jpg') }}" class="responsive-img">
+                    </div>
+                    @if (Storage::disk('users')->has(Auth::user()->image))
+                    <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>
+                    @else 
+                    <a href="#user"><img class="circle hide-on-large-only" src="{{ asset('images/user.png') }}"></a>
+                    @endif
+                    <a href="!#"><span class="white-text name">Bienvenido, </span></a>
+                    <a href="#email"><span class="white-text email"style="font-weight: 800">
+                        {{ ucwords($name) . " " . ucwords($surname) }}
+                        </span>
+                    </a>
+                </div>
+            </li>
             <li class="waves-efect waves-light"><a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a></li>
             <li class="divider"></li>
             <li class="waves-efect waves-light hide-on-large-only"><a href="{{ route('home') }}" class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a></li>

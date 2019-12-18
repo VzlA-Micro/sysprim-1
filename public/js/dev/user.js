@@ -1,8 +1,13 @@
 $(document).ready(function () {
+    //var url="http://172.19.50.253/";
 
-     var url = "https://sysprim.com/";
-    
-     //var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
+    //var url = "http://sysprim.com.devel/";
+
+
+
+
+
 
 
     $('#ci').blur(function () {
@@ -19,7 +24,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
             $('#ci').val('')
         }
@@ -42,7 +50,10 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
                 icon: "info",
-                button: "Ok",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
             });
 
             $('#phone_user').val('');
@@ -71,7 +82,10 @@ $(document).ready(function () {
                             title: "Información",
                             text: response.message,
                             icon: "info",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
 
                         $('#ci').addClass('invalid');
@@ -93,7 +107,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
                 }
             });
@@ -119,7 +136,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                         $('#email').val('');
                     }
@@ -131,7 +151,10 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button: "Ok",
+                        button:{
+                            text: "Entendido",
+                            className: "blue-gradient"
+                        },
                     });
                     $('#email').val('');
                 }
@@ -139,6 +162,47 @@ $(document).ready(function () {
         }
     });
 
+
+
+    $('#email_edit').change(function () {
+        if ($('#email_edit').val() !== '') {
+            var email = $('#email_edit').val();
+            var id = $('#id').val();
+            $.ajax({
+                method: "GET",
+                url: url+"users/verify-email/"+email+'/'+id,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button: "Ok",
+                        });
+                        $('#email_edit').val('');
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                    $('#email_edit').val('');
+                }
+            });
+        }
+    });
 
     function findUser(nationality, ci) {
         $.ajax({
@@ -173,7 +237,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -199,9 +266,9 @@ $(document).ready(function () {
 
                 swal({
                     title: "¡Bien Hecho!",
-                    text: response.message,
+                    text: "El usuario se ha registrado con éxito.",
                     icon: "success",
-                    button: "Ok",
+                    button: { text: "Esta bien!", className: "green-gradient"},
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });
@@ -219,7 +286,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });
@@ -310,9 +380,7 @@ $(document).ready(function () {
 
     var statusBoton = false;
         $('#userUpdate').on('submit', function (e) {
-
             e.preventDefault();
-            console.log("epa");
             if (statusBoton==true){
                 $.ajax({
                     url: url + "users/update",
@@ -330,9 +398,12 @@ $(document).ready(function () {
 
                         swal({
                             title: "¡Bien Hecho!",
-                            text: response.message,
+                            text: "El usuario se ha modificado con éxito.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
                             window.location.href = url + "users/manage";
                         });
@@ -350,21 +421,21 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                     }
                 });
             }
 
             if (statusBoton == false) {
+
                 $('#phone_user').removeAttr('readonly');
                 $('#email').removeAttr('readonly');
-                $('#name').removeAttr('readonly');
-                $('#surname').removeAttr('readonly');
-                $('#ci').removeAttr('readonly');
-
-
                 $('#rol').attr('readonly','disabled');
+                $('#actualizar').text('Guardar');
                 statusBoton=true;
             }
 
@@ -407,7 +478,7 @@ $(document).ready(function () {
                     text: "Habilitar",
                     value: true,
                     visible: true,
-                    className: "red-gradient"
+                    className: "green-gradient"
                 },
                 cancel: {
                     text: "Cancelar",
@@ -428,7 +499,10 @@ $(document).ready(function () {
                             title: "¡Bien Hecho!",
                             text: "La cuenta fue habilitada con éxito.",
                             icon: "success",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            },
                         }).then(function (accept) {
                             location.reload();
                         });
@@ -445,7 +519,10 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
                         });
                     }
                 });

@@ -37,6 +37,7 @@ class VerifyPaymentsBankImportController extends Controller
         //$amountTotal=0;
 
 
+
         $file = $request->file;
 
         $Archivo = \File::get($file);
@@ -79,6 +80,7 @@ class VerifyPaymentsBankImportController extends Controller
                     $amountThere = str_replace(',', '.', $amount);
                     $viaPayments = substr($otra, 41, 3);
 
+
                     //echo $typeRegisterBank . '<br>';
                     //echo $codeBank . '<br>';
                     //echo $codeAccount . '<br>';
@@ -118,12 +120,14 @@ class VerifyPaymentsBankImportController extends Controller
                     //echo $viaPayments . '<br>';
 
                     $carbon = Carbon::now();
+
                     $taxes = Taxe::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
 
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
+
 
                             $pCode = substr($taxe->code, 0, 3);
                             if ($pCode == 'PPC') {
@@ -152,10 +156,11 @@ class VerifyPaymentsBankImportController extends Controller
                                                 'firm' => true
                                             ]);
 
+
                                             $userCompany = $company->users()->get();
                                             $taxe->status = 'verified';
                                             $taxe->update();
-
+                                            ;
 
                                             $subject = "Planilla Verificada";
                                             $for = $userCompany[0]->email;
@@ -170,7 +175,6 @@ class VerifyPaymentsBankImportController extends Controller
                                             });
                                         }
                                     }
-
                                 }
                             }
                         }

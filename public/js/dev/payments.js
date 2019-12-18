@@ -1,5 +1,6 @@
 $('document').ready(function () {
     var url = "https://sysprim.com/";
+    //var url="http://172.19.50.253/";
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');
@@ -15,14 +16,14 @@ $('document').ready(function () {
 
         swal({
             title: "Información",
-            text: '¿Estas seguro?, el estado de esta planilla cambiaria  el status a "'+ message+'", tanto está como lo pagos asociado a la misma.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla cambiaria  el status a "'+ message+'", tanto está como lo pagos asociado a la misma.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {
                     text: "Si",
                     value: true,
                     visible: true,
-                    className: "green"
+                    className: "green-gradient"
 
                 },
                 cancel: {
@@ -53,7 +54,10 @@ $('document').ready(function () {
                                 title: "¡Bien hecho!",
                                 text: "La planilla fue "+ response.status +" con exito.",
                                 icon: "success",
-                                button: "Ok",
+                                button:{
+                                    text: "Esta bien",        
+                                    className: "green-gradient"
+                                },
                             }).then(function (accept) {
                                 location.reload();
                             });
@@ -69,7 +73,10 @@ $('document').ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button: "Ok",
+                            button:{
+                                text: "Esta bien",        
+                                className: "blue-gradient"
+                            },
                         });
                     }
                 });

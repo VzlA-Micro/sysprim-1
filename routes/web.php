@@ -24,21 +24,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/online', 'HomeController@online');
 Auth::routes();
 
-Route::get('/users/verify/{code}', 'UserController@verify');
-Route::get('/users/verify-ci/{ci}', 'UserController@verifyCi');
-Route::get('/users/verify-email/{email}', 'UserController@verifyEmail');
-Route::get('/users/find/{nationality}/{ci}', 'UserController@findUser');
 
+Route::get('/users/verify/{code}','UserController@verify');
 
+Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
+
+Route::get('/users/verify-email/{email}/{id?}','UserController@verifyEmail');
+Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profile','UserController@profile')->name('profile');
     Route::get('/download/{file}', 'HomeController@downloadPdf')->name('download');
 
     // Usuarios
     Route::group(['middleware' => ['permission:Gestionar Usuarios']], function () {
         // Nivel 1: Gestionar Usuario
         Route::get('/users/manage', 'UserController@index')->name('users.manage');
-        Route::get('/profile', 'UserController@profile')->name('profile');
 
 
         // Nivel 2: Registro y Consulta

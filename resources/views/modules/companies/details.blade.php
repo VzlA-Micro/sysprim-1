@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ $company->name }}</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8">
+            <div class="col s12 m9">
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Mi Empresa: {{ $company->name}}</h5>
@@ -49,7 +49,8 @@
                 </div>
             </div>
             {{-- Mostrar seccion si es administrador o no --}}
-            <div class="col s12 m4" style="margin-top: -7px">
+            @can('Declarar Actividad Económica')
+            <div class="col s12 m3" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">
                         <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}" class="btn-app white green-text">
@@ -65,6 +66,7 @@
                     </div> -->
                     
                 </div>
+                @endcan
             </div>
         </div>
     </div>

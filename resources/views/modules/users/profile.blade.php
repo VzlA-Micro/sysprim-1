@@ -54,13 +54,26 @@
                                         <input type="text" name="surname" id="surname" value="{{ Auth::user()->surname }}" class="validate" readonly>
                                         <label for="surname number-and-capital-letter-only">Apellido</label>    
                                     </div>
-                                    <div class="input-field col s12">
-                                        <input type="text" name="phone" id="phone" value="{{ Auth::user()->phone }}" class="validate number-only">
-                                        <label for="phone">Teléfono</label> 
+                                    <div class="input-field col s6">
+                                        <!-- <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i> -->
+                                        <select name="country_code" id="country_code_company" required>
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="+58412" @if (Auth::user()->operator=='+58412'){{"selected"}}@endif >(412)</option>
+                                            <option value="+58414" @if (Auth::user()->operator=='+58414'){{"selected"}}@endif>(414)</option>
+                                            <option value="+58416" @if (Auth::user()->operator=='+58416'){{"selected"}}@endif>(416)</option>
+                                            <option value="+58424" @if (Auth::user()->operator=='+58424'){{"selected"}}@endif>(424)</option>
+                                            <option value="+58426" @if (Auth::user()->operator=='+58426'){{"selected"}}@endif>(426)</option>
+                                            <option value="+58251" @if (Auth::user()->operator=='+58251'){{"selected"}}@endif>(251)</option>
+                                        </select>
+                                        <label for="country_code">Operadora</label>
+                                    </div>
+                                    <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                                        <label for="phone">Teléfono</label>
+                                        <input id="phone" type="tel" name="phone" value="{{ Auth::user()->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
                                     </div>
                                     <div class="input-field col s12">
-                                        <input type="text" name="email" id="email" value="{{ Auth::user()->email }}" class="validate">
-                                        <label for="email">E-mail</label> 
+                                        <input type="email" name="email" id="email_edit" value="{{ Auth::user()->email }}" class="validate">
+                                        <label for="email_edit">E-mail</label> 
                                     </div>
                                     <div class="input-field col s12 center-align">
                                         <button type="submit" class="btn green col s12 btn-rounded">Actualizar</button>
@@ -84,8 +97,8 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('js/dev/user.js') }}"></script>
     <script src="{{ asset('js/imageUpload.js') }}"></script>
     <script src="{{ asset('js/dev/profile.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
-
 @endsection
