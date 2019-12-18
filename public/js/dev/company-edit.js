@@ -1,9 +1,93 @@
-var url = "https://sysprim.com/";
+//var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 //var url="http://172.19.50.253/";
 var addCiiu = false;
+
+
+
 $('document').ready(function () {
 
-    $('#update-company').on('click', function () {
+    $('#company-status').click(function () {
+        var status=$(this).val();
+        var message;
+
+        var company_id=$('#company_id').val();
+        if(status==='enabled'){
+            message='activar esta empresa? , recuerde que al activar esta empresa podra realizar pagos.';
+        }else{
+            message='deshabilitar esta empresa? ,recuerda que al deshabilitar esta empresa no podra realizar pagos.';
+        }
+        swal({
+            icon: "info",
+            title: "Empresa",
+            text: "¿Está seguro de "+ message,
+            buttons: {
+                confirm: {
+                    text: "Aceptar",
+                    value: true,
+                    visible: true,
+                    className: "green-gradient"
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (accept) {
+            if(accept){
+                $.ajax({
+                    method: "GET",
+                    url: url+"company/"+company_id+"/"+status,
+                    success: function (response) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "La Empresa fue "+ message  +" con éxito.",
+                            icon: "success",
+                            button:{
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            },
+                        }).then(function (accept) {
+                            location.reload();
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+
+                    },
+                    error: function (err) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    }
+                });
+            }
+
+        });
+
+
+
+
+
+    });
+
+
+
+
+
+    $('#update-company').click(function () {
+
 
         $('#document_type').prop("disabled", false);
         $('select').formSelect();
@@ -20,44 +104,51 @@ $('document').ready(function () {
         $('select').formSelect();
         $('#address').removeAttr('disabled');
         $('#phone').removeAttr('disabled');
-    });
-    if (addCiiu == false) {
-        $('#add-ciiu').on('click', function () {
 
-            $('#code').prop("disabled", false);
-            $('#search-ciu').removeAttr('disabled');
-            $('#code').focus();
-            addCiiu = true;
 
+
+
+
+
+        if (addCiiu == false) {
+            $('#add-ciiu').on('click', function () {
+
+                $('#code').prop("disabled", false);
+                $('#search-ciu').removeAttr('disabled');
+                $('#code').focus();
+                addCiiu = true;
+
+            });
+        }
+    if (addCiiu==true){
+            $('#add-ciiu').on('click', function () {
+            console.log('else')
+            var ciu = $('#ciu').val();
+            var id = $('#id');
+            $.ajax({
+                type: "POST",
+                url: url + "company/addCiiu",
+                data: {
+                    id: id,
+                    ciu: ciu
+                },
+                dataType:"JSON",
+
+                beforeSend:function () {
+                    console.log('hola');
+                },
+                success:function (data) {
+                    console.log(data);
+                },
+                error:function (e) {
+                    console.log(e);
+                }
+
+            });
         });
     }
-if (addCiiu==true){
-        $('#add-ciiu').on('click', function () {
-        console.log('else')
-        var ciu = $('#ciu').val();
-        var id = $('#id');
-        $.ajax({
-            type: "POST",
-            url: url + "company/addCiiu",
-            data: {
-                id: id,
-                ciu: ciu
-            },
-            dataType:"JSON",
 
-            beforeSend:function () {
-                console.log('hola');
-            },
-            success:function (data) {
-                console.log(data);
-            },
-            error:function (e) {
-                console.log(e);
-            }
-
-        });
     });
-}
 
     $('#search-ciu').click(function () {
         var code = $('#code').val();
@@ -214,6 +305,9 @@ if (addCiiu==true){
         });
 
     }
+
+
+
 
     $('#delete-ciiu').on('click', function () {
 

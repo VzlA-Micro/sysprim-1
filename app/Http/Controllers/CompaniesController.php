@@ -207,9 +207,6 @@ class CompaniesController extends Controller
         }else{
             $company->image=null;
         }
-
-
-
         $company->address=strtoupper($address);
         $company->lat=$lat;
         $company->lng=$lng;
@@ -300,6 +297,14 @@ class CompaniesController extends Controller
                 $notification->save();
             }
 
+    }
+
+
+    public function changeStatus($id,$status){
+        $company=Company::find($id);
+        $company->status=$status;
+        $company->update();
+        return response()->json(['status'=>$status]);
     }
 
     public function verifyRif($rif){

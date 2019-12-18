@@ -31,6 +31,7 @@ Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
 Route::get('/users/verify-email/{email}/{id?}','UserController@verifyEmail');
 Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
 
+
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile','UserController@profile')->name('profile');
@@ -425,6 +426,8 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/company/update','CompaniesController@update')->name('companies.update');
 
     Route::post('/company/addCiiu','Companiescontroller@addCiiu')->name('companies.addCiiu');
+    Route::get('/company/{id}/{status}','CompaniesController@changeStatus');
+
 
 
 
