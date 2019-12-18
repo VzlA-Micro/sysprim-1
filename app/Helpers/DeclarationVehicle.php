@@ -31,6 +31,8 @@ class DeclarationVehicle
         $monthJanuary = Carbon::create(2018, 1, 30, 12, 00, 00)->format('m');
         $january = 01;
         $april = 04;
+        $total=0;
+        $PaymentFractional=0;
         $july = 07;
         $october = 10;
         $mes = 12;
@@ -55,7 +57,7 @@ class DeclarationVehicle
         $vehicle = Vehicle::where('id', $id)->get();
         $yearVehicle = $vehicle[0]->model->year;
 
-        $diffYear = $yearCurrent - $yearVehicle;
+        $diffYear = $yearCurrent - intval($yearVehicle);
 
         if ($diffYear < 3) {
             $rateYear = $vehicle[0]->type->rate;
@@ -119,7 +121,7 @@ class DeclarationVehicle
                     $total =$fractionalPayments  + $recharge;
 
                 } else {
-                    $diffMonths = round(($monthCurrent - $vehicleTaxes->created_at->format('m') / 3));
+                    $diffMonths = round(($monthCurrent - $vehicleTaxes[0]->created_at->format('m') / 3));
                     if ($diffMonths > 1 and $diffMonths < 1.5) {
                         $diffMonths = 2;
                     }

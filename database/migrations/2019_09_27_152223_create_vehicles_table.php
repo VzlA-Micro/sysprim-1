@@ -16,9 +16,9 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('license_plate',10);
-            $table->string('color',15);
+            $table->string('color',20);
             $table->string('body_serial',30);
-            $table->string('serial_engine',15);
+            $table->string('serial_engine',25);
             $table->string('image')->nullable();
             $table->integer('type_vehicle_id')->unsigned();
             $table->integer('model_id')->unsigned();

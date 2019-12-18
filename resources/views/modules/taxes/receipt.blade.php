@@ -352,7 +352,7 @@
 				@if($firm)
 
 					<td style="width: 40%;text-align: center;">
-						<img src="{{asset('images/pdf/firma.png')}}" style="width:180px; height:80px;">
+						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:80px;">
 
 					</td>
 				@else
@@ -366,10 +366,12 @@
 			</tr>
 			<tr>
 				@if($firm)
-					<td style="width:40%;text-align: center; font-size: 10px;">
-						FIRMA DEL GERENTE DE RECAUDACIÓN DEL SEMAT.<br> JURO QUE LOS DATOS EN ESTA
-						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
-						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.
+					<td style="width:40%;text-align: center; font-size: 10px;" ><b>
+							__________________________________________<br>
+							ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
+							Directora (E) de la Dirección de Hacienda y<br>
+							Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
+						</b>
 					</td>
 				@else
 

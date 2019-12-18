@@ -1,4 +1,4 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 var addCiiu = false;
 var disabledCiiu = false;
 var updateCompany = false;
@@ -303,15 +303,26 @@ $('document').ready(function () {
             </div>`;
 
             $('.Dciiu').each(function () {
+
                 $('.ciu').each(function () {
                     ciiu = $(this).val();
                 });
-                var checkBox =
+                var button=`
+                            <div class="input-field col s12 m1" id="bDelete">
+                                <input type="button" class="btn waves-effect waves-light peach col s12 delete-ciu" id="disabledCiuu" value=${ciiu}>
+                                <label for="disabledCiuu" ><i class="icon-close"></i></label>
+                            </div>`;
+
+                $(this).append(button);
+
+                /*var checkBox =
                     `<label class="col m1">
-                <input type="checkbox" name="ciiuCheck[]" class=".ciiuCheck" value=${ciiu}>
-                <span></span>
-            </label>`;
-                $(this).append(checkBox);
+                        <input type="checkbox" name="ciiuCheck[]" class=".ciiuCheck" value=${ciiu}>
+                        <span></span>
+                    </label>`;
+            */
+
+
             });
             disabledCiiu = true;
         }
@@ -319,9 +330,10 @@ $('document').ready(function () {
             console.log('else');
             $('.Dciiu').each(function () {
                 console.log('dentro del check');
-                $('.ciiuCheck').each(function () {
-                    check = $(this).val();
-                });
+                check = $('.ciiuCheck').val();
+                //$('.ciiuCheck').each(function () {
+                  //  check = $(this).val();
+                //});
 
                 console.log(check);
                 //if (check) {
@@ -329,7 +341,7 @@ $('document').ready(function () {
                 //}
             });
 
-            console.log(selected);
+            //console.log(selected);
         }
     });
 });

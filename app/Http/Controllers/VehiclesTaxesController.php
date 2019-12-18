@@ -36,7 +36,12 @@ class VehiclesTaxesController extends Controller
             $rateYear = $declaration['rateYear'];
         } else {
             $discount = 0;
-            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            if(isset($declaration['fractionalPayments'])){
+                $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            }else{
+                $paymentFractional=0;
+            }
+
             $rateYear = $declaration['rateYear'];
             if (isset($declaration['recharge'])){
                 $recharge=number_format($declaration['recharge'],2,',','.');
@@ -47,8 +52,13 @@ class VehiclesTaxesController extends Controller
                 $PreviousDebt=0;
             }
         }
+        if (isset($declaration['total'])){
+            $tot=$declaration['total'];
+        }else{
+            $tot=0;
+        }
 
-        $total=$discount+$PreviousDebt+$declaration['total'];
+        $total=$discount+$PreviousDebt+$tot;
 
         $taxes = new Taxe();
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');

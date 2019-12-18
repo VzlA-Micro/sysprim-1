@@ -304,7 +304,6 @@ $date = '31/12/'.date('Y');
 
 
     <table style="width: 100%;margin-bottom:-30px;">
-
             <tr>
                 <td style="width: 40%;text-align: center;position: relative;">
                     <img src="https://sysprim.com/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="">
@@ -319,7 +318,6 @@ $date = '31/12/'.date('Y');
                     </b>
                 </td>
             </tr>
-
     </table>
 
 

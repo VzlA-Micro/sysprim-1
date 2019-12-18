@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: Carga">
-                            <input type="text" name="type_vehicle" id="type_vehicle" pattern="[a-zA-Z]+"
+                            <input type="text" name="type_vehicle" id="type_vehicle" pattern="[a-zA-Z ]+"
                                    title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
                             <label for="type_vehicle">Tipo de vehiculo</label>
                         </div>
