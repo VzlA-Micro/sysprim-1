@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
 @endsection
 
 @section('content')
@@ -210,7 +211,7 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <table class="responsive-table">
+                            <table class="centered highlight" id="dear-table" style="width: 100%;">
                                 <thead>
                                 <tr>
                                     <th>Impuesto</th>
@@ -230,10 +231,8 @@
                                     <td>{{$dear['Total']}} Bs</td>
                                     <td>
                                         <div>
-                                            {{$dear['Porcentaje']}}%
                                             <div class="progress">
-                                                <div class="determinate bg-danger"
-                                                     style="width:{{$dear['Porcentaje']}}%"></div>
+                                                <div class="determinate red" style="width:{{$dear['Porcentaje']}}%"><span>{{ $dear['Porcentaje']}}%</span></div>
                                             </div>
                                         </div>
                                     </td>
@@ -270,4 +269,40 @@
             <script async defer
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"
                     type="text/javascript"></script>
+            <script src="{{ asset('js/datatables.js') }}"></script>
+            <script>
+                $('#dear-table').DataTable({
+                    responsive: true,
+                    "scrollX": true,
+                    "pageLength": 10,
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "No hay registros que mostrar.",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "<i class='icon-first_page'>",
+                            "sLast":     "<i class='icon-last_page'></i>",
+                            "sNext":     "<i class='icon-navigate_next'></i>",
+                            "sPrevious": "<i class='icon-navigate_before'></i>"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad"
+                        }
+                    }
+                });
+            </script>
 @endsection
