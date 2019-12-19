@@ -64,13 +64,21 @@
                     </div>
                     <div class="card-footer center-align">
                         <a class="iribarren-wine-text" href="{{ route('register') }}">¿No estás registrado? Registrate aquí.</a>
-                        {{-- <a href="{{ route('register') }}" class="btn iribarren-wine waves-effect waves-light white-text pulse">¿No estás registrado? Registrate aquí.</a> --}}
                     </div>
                 </form>
             </div>
         </div>
-
-        <div class="row" id="timer">
+        <div class="row">
+            <div class="col s12">
+                <div class="alert alert-warning animated fadeIn">
+                    <span>Par una mejor experiencia de usuario, recomendamos usar la aplicación con los siguientes navegadores:</span><br>
+                    <span style="font-size: 22px"><i class="fab fa-firefox"></i> Mozilla Firefox 65.0+</span><br>
+                    <span style="font-size: 22px"><i class="fab fa-chrome"></i> Google Chrome 62.0+</span><br>
+                    <span><b>Nota:</b> Se recomienda <b>NO</b> usar <i class="fab fa-internet-explorer"></i> Internet Explorer para esta aplicación.</span>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="row" id="timer">
             <div class="col s12">
                 <h4>
                     <a href="{{ route('register') }}" class="black-text text-darken-4"><marquee behavior="" direction="">Registrate en SYSPRIM antes de:</marquee></a>
@@ -80,15 +88,15 @@
             <div class="col s3" id="hours"></div>
             <div class="col s3" id="minutes"></div>
             <div class="col s3" id="seconds"></div>
-            {{-- <div class="col s12">
+            <!-- <div class="col s12">
                 <div >
                     <div id="days"></div>
                     <div id="hours"></div>
                     <div id="minutes"></div>
                     <div id="seconds"></div>
                 </div>
-            </div> --}}
-        </div>
+            </div> -->
+        </div> --}}
     </ul>
     @endif
 </header>
