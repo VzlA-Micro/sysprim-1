@@ -26,39 +26,34 @@ class VehiclesTaxesController extends Controller
     public function create($id)
     {
         $declaration = DeclarationVehicle::Declaration($id);
+        //var_dump($declaration);
+        //die();
+        $grossTaxes = 0;
         $vehicle = Vehicle::where('id', $id)->get();
-        $taxesVehicle = number_format($declaration['taxes'], 2, ',', '.');
-        $taxesPayment = $declaration['taxes'];
-
-        if ($declaration['optionPayment'] === true) {
-            $discount = number_format($declaration['discount'], 2, ',', '.');
+        //$taxesVehicle = number_format($declaration['taxes'], 2, ',', '.');
+        //$taxesPayment = $declaration['taxes'];
+        $total = number_format($declaration['total'], 2, ',', '.');
+        $paymentFractional = 0;
+        $valueDiscount = 0;
+        if ($declaration['optionPayment'] == 'true') {
+            $total = number_format($declaration['total'], 2, ',', '.');
             $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
             $rateYear = $declaration['rateYear'];
+            $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+            $previousDebt = $declaration['previousDebt'];
+            $recharge=0;
         } else {
-            $discount = 0;
-            if(isset($declaration['fractionalPayments'])){
-                $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
-            }else{
-                $paymentFractional=0;
-            }
-
+            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            $grossTaxes = $paymentFractional;
             $rateYear = $declaration['rateYear'];
-            if (isset($declaration['recharge'])){
-                $recharge=number_format($declaration['recharge'],2,',','.');
-                //$previousDebt=number_format($declaration['previousDebt'],2,',','.');
-                $PreviousDebt=$declaration['previousDebt'];
-            }else{
-                $recharge=0;
-                $PreviousDebt=0;
+            if (isset($declaration['recharge'])) {
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+                if ($declaration['previousDebt'] !== 0) {
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                }
+                //$PreviousDebt = $declaration['previousDebt'];
             }
         }
-        if (isset($declaration['total'])){
-            $tot=$declaration['total'];
-        }else{
-            $tot=0;
-        }
-
-        $total=$discount+$PreviousDebt+$tot;
 
         $taxes = new Taxe();
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
@@ -70,40 +65,24 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxes = new VehiclesTaxe();
         $vehicleTaxes->vehicle_id = $vehicle[0]->id;
         $vehicleTaxes->taxe_id = $taxesId;
-        $vehicleTaxes->amount_accumulated = $taxesPayment;
         $vehicleTaxes->save();
 
         $period_fiscal = Carbon::now()->format('Y');
 
-
-        if ($declaration['optionPayment'] === true) {
-            return view('modules.taxes.detailsVehicle', array(
-                'vehicle' => $vehicle,
-                'taxes' => $taxes,
-                'taxesVehicle' => $taxesVehicle,
-                'discount' => $discount,
-                'period' => $period_fiscal,
-                'valueDiscount' => $valueDiscount,
-                'rateYear' => $rateYear,
-                'recharge'=>$recharge,
-                'previousDebt'=>$PreviousDebt,
-                'total'=>$total
-            ));
-        } else {
-            return view('modules.taxes.detailsVehicle', array(
-                'vehicle' => $vehicle,
-                'taxes' => $taxes,
-                'taxesVehicle' => $paymentFractional,
-                'period' => $period_fiscal,
-                'discount' => $discount,
-                'rateYear' => $rateYear,
-                'recharge'=>$recharge,
-                'previousDebt'=>$PreviousDebt,
-                'total'=>$total
-            ));
-        }
-
+        return view('modules.taxes.detailsVehicle', array(
+            'vehicle' => $vehicle,
+            'taxes' => $taxes,
+            'grossTaxes' => $grossTaxes,
+            'paymentFractional' => $paymentFractional,
+            'period' => $period_fiscal,
+            'valueDiscount' => $valueDiscount,
+            'rateYear' => $rateYear,
+            'recharge' => $recharge,
+            'previousDebt' => $previousDebt,
+            'total' => $total
+        ));
     }
+
 
     public function taxesSave(Request $request)
     {
@@ -236,7 +215,7 @@ class VehiclesTaxesController extends Controller
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
-        if ($declaration['optionPayment']===true){
+        if ($declaration['optionPayment'] === true) {
             $pdf = \PDF::loadView('modules.vehicles-payments.receipt',
                 [
                     'taxes' => $taxes,
@@ -249,7 +228,7 @@ class VehiclesTaxesController extends Controller
                     'vehicle' => $vehicle,
                     'moreThereYear' => $declaration['moreThereYear']
                 ]);
-        }else{
+        } else {
             $pdf = \PDF::loadView('modules.vehicles-payments.receipt',
                 [
                     'taxes' => $taxes,

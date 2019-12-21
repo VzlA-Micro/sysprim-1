@@ -40,7 +40,14 @@ class FinesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fine= new Fine();
+        $fine->name= $request->input('name');
+        $fine->cant_unid_tribu= $request->input('undTributo');
+        $fine->branch= $request->input('branch');
+        $fine->description= $request->input('description');
+        $fine->save();
+
+        response()->json(true);
     }
 
     /**
@@ -55,7 +62,6 @@ class FinesController extends Controller
         return view('modules.fines.read',array(
             'showFines' => $fines
         ));
-        //return $ciu;
     }
 
     /**

@@ -56,7 +56,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input type="text" name="base[]" id="base" class="validate money" value="{{$taxesVehicle}}"
+                            <input type="text" name="base[]" id="base" class="validate money" value="{{$grossTaxes}}"
                                    readonly>
                             <label for="base">Base Imponible<b> (Bs)</b></label>
                         </div>
@@ -67,7 +67,7 @@
                             </i>
                             <input type="text" name="tasa[]" id="tasa" class="validate recargo money"
                                    pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
-                                   value="{{number_format($previousDebt,2,',','.')}}" readonly>
+                                   value="{{$previousDebt}}" readonly>
                             <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
                         </div>
                     <!--<div class="input-field col s12 m4">
@@ -124,7 +124,7 @@
                             </div>
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest" class="validate money" value="{{$taxesVehicle}}"
+                                    <input type="text" name="interest" class="validate money" value="{{$grossTaxes}}"
                                            readonly>
                                     <label for="interest">Impuesto Bruto:(Bs)</label>
                                 </div>
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="col s12 m12">
                                     <input type="text" name="total" class="validate total money"
-                                           value="{{number_format($total,2,',','.')}}"
+                                           value="{{$total}}"
                                            readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>

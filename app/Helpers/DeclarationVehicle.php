@@ -31,14 +31,15 @@ class DeclarationVehicle
         $monthJanuary = Carbon::create(2018, 1, 30, 12, 00, 00)->format('m');
         $january = 01;
         $april = 04;
-        $total=0;
-        $PaymentFractional=0;
+        $total = 0;
+        $fractionalPayments = 0;
         $july = 07;
         $october = 10;
         $mes = 12;
         $taxes = 0;
         $rateYear = 0;
         $discount = 0;
+        $previousDebt = 0;
         $valueDiscount = 0;
         $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
         $moreThereYear = null;
@@ -46,6 +47,19 @@ class DeclarationVehicle
         //$day = Carbon::now()->format('d');
         $array = explode('-', $id);
         $idVehicle = $array[0];
+
+        if ($monthCurrent >= 1 and $monthCurrent <= 3) {
+            $trimesterCurrent = 1;
+        }
+        if ($monthCurrent >= 4 and $monthCurrent <= 6) {
+            $trimesterCurrent = 2;
+        }
+        if ($monthCurrent >= 7 and $monthCurrent <= 9) {
+            $trimesterCurrent = 3;
+        }
+        if ($monthCurrent >= 10 and $monthCurrent <= 12) {
+            $trimesterCurrent = 4;
+        }
         session_start();
         if (isset($array[1])) {
             $optionPayment = $array[1];
@@ -75,28 +89,33 @@ class DeclarationVehicle
 
         //--------------option of payments-------------------------
         if ($optionPayment == 'true') {
+            //indica que el pago es anual
 
             if (($monthCurrent == $mes)) {
                 $valueDiscount = ($taxes * 20) / 100;
-                $discount = $taxes - $valueDiscount;
+                $total = $taxes - $valueDiscount;
 
                 $amounts = array(
-                    'taxes' => $taxes,
+                    'grossTaxes' => $taxes,
+                    'fractionalPayments'=>$fractionalPayments,
                     'valueDiscount' => $valueDiscount,
-                    'discount' => $discount,
+                    'total' => $total,
                     'rateYear' => $rateYear,
                     'moreThereYear' => $moreThereYear,
-                    'optionPayment' => $optionPayment
+                    'optionPayment' => $optionPayment,
+                    'previousDebt'=>$previousDebt
                 );
                 return $amounts;
             }
 
         } else {
+            //indica que el pago es trimestral
             $fractionalPayments = $taxes / 4;
             if (($monthCurrent == $january) || ($monthCurrent == $april) || ($monthCurrent == $july) || ($monthCurrent == $october)) {
                 $amounts = array(
                     'taxes' => $taxes,
                     'fractionalPayments' => $fractionalPayments,
+                    'total' => $total,
                     'rateYear' => $rateYear,
                     'moreThereYear' => $moreThereYear,
                     'optionPayment' => $optionPayment
@@ -104,7 +123,7 @@ class DeclarationVehicle
 
                 return $amounts;
             } else {
-                $vehicleTaxes = VehiclesTaxe::where('id', $vehicle[0]->id)->orderBy('id', 'desc')->take(1)->get();
+                $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle[0]->id)->orderBy('id', 'desc')->take(1)->get();
                 if (!isset($vehicleTaxes[0])) {
                     $diffMonths = round($monthCurrent / 3);
                     if ($diffMonths > 1 and $diffMonths < 1.5) {
@@ -118,22 +137,32 @@ class DeclarationVehicle
                     }
                     $recharge = (($fractionalPayments * $diffMonths) * 20) / 100;
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
-                    $total =$fractionalPayments  + $recharge;
+
+                    $total = $fractionalPayments + $recharge + $previousDebt;
 
                 } else {
-                    $diffMonths = round(($monthCurrent - $vehicleTaxes[0]->created_at->format('m') / 3));
-                    if ($diffMonths > 1 and $diffMonths < 1.5) {
-                        $diffMonths = 2;
+                    $monthTaxes = intval($vehicleTaxes[0]->created_at->format('m'));
+                    //var_dump($vehicleTaxes[0]);
+
+                    if ($monthTaxes >= 1 and $monthTaxes <= 3) {
+                        $trimester = 1;
                     }
-                    if ($diffMonths > 2 and $diffMonths < 2.5) {
-                        $diffMonths = 3;
+                    if ($monthTaxes >= 4 and $monthTaxes <= 6) {
+                        $trimester = 2;
                     }
-                    if ($diffMonths > 3 and $diffMonths < 3.5) {
-                        $diffMonths = 4;
+                    if ($monthTaxes >= 7 and $monthTaxes <= 9) {
+                        $trimester = 3;
                     }
-                    $recharge = (($fractionalPayments * $diffMonths) * 20) / 100;
-                    $previousDebt = ($fractionalPayments * ($diffMonths - 1));
-                    $total = $fractionalPayments + $recharge;
+                    if ($monthTaxes >= 10 and $monthTaxes <= 12) {
+                        $trimester = 4;
+                    }
+
+                    $diffTrimester = $trimesterCurrent - $trimester;
+
+                    $recharge = (($fractionalPayments * $diffTrimester) * 20) / 100;
+                    $previousDebt = ($fractionalPayments * $diffTrimester);
+
+                    $total = $fractionalPayments + $recharge + $previousDebt;
                 }
                 $amounts = array(
                     'taxes' => $taxes,

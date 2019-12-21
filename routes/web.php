@@ -579,7 +579,7 @@ Route::middleware(['auth'])->group(function () {
         return view('modules.fines.register');
     })->name('fines.register');
 
-    Route::post('/fines/save', 'FinesController@create')->name('fines.save');
+    Route::post('/fines/save', 'FinesController@store')->name('fines.save');
     Route::get('/fines/read', 'FinesController@show')->name('fines.read');
     Route::get('/fines/details/{id}', 'FinesController@edit')->name('fines.details');
     Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update');

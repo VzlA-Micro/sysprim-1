@@ -17,7 +17,6 @@ class CreateVehiclesTaxesTable extends Migration
             $table->increments('id');
             $table->integer('vehicle_id')->unsigned();
             $table->integer('taxe_id')->unsigned();
-            $table->float('amount_accumulated');
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
             $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();
