@@ -20,6 +20,7 @@ use App\Payments;
 use Carbon\Carbon;
 use App\Employees;
 use App\CiuTaxes;
+use App\CompanyTaxe;
 
 
 class VerifyPaymentsBankImportController extends Controller
@@ -28,25 +29,34 @@ class VerifyPaymentsBankImportController extends Controller
     public function importFile(Request $request)
     {
 
-        $amountInterest = 0;//total de intereses
-        $amountRecargo = 0;//total de recargos
-        $amountCiiu = 0;//total de ciiu
-        $amountDesc = 0;//Descuento
-        $amountTaxes = 0;//total a de impuesto
-        $amountTotal = 0;
+        //$amountInterest=0;//total de intereses
+        //$amountRecargo=0;//total de recargos
+        //$amountCiiu=0;//total de ciiu
+        //$amountDesc=0;//Descuento
+        //$amountTaxes=0;//total a de impuesto
+        //$amountTotal=0;
+
 
 
         $file = $request->file;
+
         $Archivo = \File::get($file);
         $mime = $file->getMimeType();
 
-
         if ($mime == "text/plain") {
+            //Archivo);
+            //var_dump($file);
+
+
             $arch = fopen($file, 'r');
+
+            //$hola=stream_get_contents($arch);
+            //var_dump($arch);
 
             $band = true;
 
             while (!feof($arch)) {
+
                 $linea = fgets($arch);
                 $otra = nl2br($linea);
 
@@ -70,23 +80,24 @@ class VerifyPaymentsBankImportController extends Controller
                     $amountThere = str_replace(',', '.', $amount);
                     $viaPayments = substr($otra, 41, 3);
 
-                    echo $typeRegisterBank . '<br>';
-                    echo $codeBank . '<br>';
-                    echo $codeAccount . '<br>';
-                    echo $date . '<br>';
-                    echo $amountTotalTwo . '<br>';
-                    echo $amountTotalThere . '<br>';
 
-                    echo 'este es el que es' . ltrim($amountTotal, '0');
+                    //echo $typeRegisterBank . '<br>';
+                    //echo $codeBank . '<br>';
+                    //echo $codeAccount . '<br>';
+                    //echo $date . '<br>';
+                    //echo $amountTotalTwo . '<br>';
+                    //echo $amountTotalThere . '<br>';
 
-                    echo $typeRegisterBank . '<br>';
-                    echo $document . '<br>';
-                    echo $reference . '<br>';
-                    echo $amount . '<br>';
-                    echo 'este es el que es' . ltrim($amount, '0') . '<br>';
+                    //echo 'este es el que es' . ltrim($amountTotal, '0');
+
+                    //echo $typeRegisterBank . '<br>';
+                    //echo $document . '<br>';
+                    //echo $reference . '<br>';
+                    //echo $amount . '<br>';
+                    //echo 'este es el que es' . ltrim($amount, '0') . '<br>';
                     //echo $amountTwo.'<br>';
                     //echo $amountThere.'<br>';
-                    echo $viaPayments . '<br>';
+                    //echo $viaPayments . '<br>';
 
                 } else {
 
@@ -99,59 +110,71 @@ class VerifyPaymentsBankImportController extends Controller
                     $viaPayments = substr($otra, 41, 30);
                     $numberCashierInternet = substr($otra, 71, 10);
 
+                    //echo $typeRegisterBank . '<br>';
+                    //echo $document . '<br>';
+                    //echo $reference . '<br>';
+                    //echo $amount . '<br>';
+                    //echo 'este es el que es' . ltrim($amount, '0') . '<br>';
+                    //echo $amountTwo.'<br>';
+                    //echo $amountThere.'<br>';
+                    //echo $viaPayments . '<br>';
+
                     $carbon = Carbon::now();
 
                     $taxes = Taxe::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
+
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
-                            $pCode = substr($taxe->code, 0, 2);
-                            if ($pCode == 'ppc') {
 
+
+                            $pCode = substr($taxe->code, 0, 3);
+                            if ($pCode == 'PPC') {
                             } else {
 
-                                $company = Company::find($taxe->company_id);
-                                $taxes = Taxe::findOrFail($taxe->id);
 
-                                $taxes = Taxe::findOrFail($taxe->id);
+                                if ($pCode == 'PPT' || $pCode == 'PPE'){
+                                    echo  "soy jhon";
+                                    if ($taxe->branch=='Act.Eco'){
 
-                                $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
-                                $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-                                $mora = Extras::orderBy('id', 'desc')->take(1)->get();
-                                $extra = ['tasa' => $mora[0]->tax_rate];
+                                        $companyTaxes=CompanyTaxe::where('taxe_id',$taxe->id)->get();
 
+                                        $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
+                                        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
+                                        $company=Company::find($companyTaxes[0]->company_id);
+                                        $userCompany = $company->users()->get();
 
-                                foreach ($ciuTaxes as $ciu) {
-                                    $amountInterest += $ciu->interest;
-                                    $amountRecargo += $ciu->tax_rate;
+                                        foreach ($ciuTaxes as $ciu) {
 
-
-                                    $pdf = \PDF::loadView('modules.taxes.receipt', [
-                                        'taxes' => $taxes,
-                                        'fiscal_period' => $fiscal_period,
-                                        'extra' => $extra,
-                                        'ciuTaxes' => $ciuTaxes,
-                                        'amount' => $amount,
-                                        'firm' => true
-                                    ]);
-
-                                    $userCompany = $company->users()->get();
-                                    $taxe->status = 'verified';
-                                    $taxe->update();
+                                            $pdf = \PDF::loadView('modules.taxes.receipt', [
+                                                'taxes' => $taxe,
+                                                'fiscal_period' => $fiscal_period,
+                                                'ciuTaxes' => $ciuTaxes,
+                                                'amount' => $amount,
+                                                'companyTaxes'=>$companyTaxes,
+                                                'firm' => true
+                                            ]);
 
 
-                                    $subject = "Planilla Verificada";
-                                    $for = $userCompany[0]->email;
+                                            $userCompany = $company->users()->get();
+                                            $taxe->status = 'verified';
+                                            $taxe->update();
+                                            ;
+
+                                            $subject = "Planilla Verificada";
+                                            $for = $userCompany[0]->email;
 
 
-                                    Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
+                                            Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
 
-                                        $msj->from("grabieldiaz63@gmail.com", "SEMAT");
-                                        $msj->subject($subject);
-                                        $msj->to($for);
-                                        $msj->attachData($pdf->output(), time() . 'Planilla_Verificada.pdf');
-                                    });
+                                                $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                                                $msj->subject($subject);
+                                                $msj->to($for);
+                                                $msj->attachData($pdf->output(), time() . 'Planilla_Verificada.pdf');
+                                            });
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -160,14 +183,15 @@ class VerifyPaymentsBankImportController extends Controller
 
             }
             fclose($arch);
+
         }
     }
 
     public function verifyPayments()
     {
 
-        $taxes = Taxe::where('status','verified')
-        ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-        return view('modules.bank.read',['taxes'=>$taxes]);
+        $taxes = Taxe::where('status', 'verified')
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+        return view('modules.bank.read', ['taxes' => $taxes]);
     }
 }

@@ -1,9 +1,14 @@
+
 //var url = "https://sysprim.com/";
+
 var url = "http://sysprim.com.devel/";
+
 //var url="http://172.19.50.253/";
+
+
 var addCiiu = false;
-
-
+var disabledCiiu = false;
+var updateCompany = false;
 
 $('document').ready(function () {
 
@@ -11,7 +16,7 @@ $('document').ready(function () {
         var status=$(this).val();
         var message;
 
-        var company_id=$('#company_id').val();
+        var company_id=$('#id').val();
         if(status==='enabled'){
             message='activar esta empresa? , recuerde que al activar esta empresa podra realizar pagos.';
         }else{
@@ -39,7 +44,12 @@ $('document').ready(function () {
             if(accept){
                 $.ajax({
                     method: "GET",
-                    url: url+"company/"+company_id+"/"+status,
+                    url: url+"company/change-status/"+company_id+"/"+status,
+
+                    beforeSend:function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
                     success: function (response) {
                         swal({
                             title: "¡Bien Hecho!",
@@ -76,55 +86,155 @@ $('document').ready(function () {
 
         });
 
+    });
+
+
+    $('#update-company').on('click', function () {
+
+        if (!updateCompany) {
+            $('#document_type').prop("disabled", false);
+            $('select').formSelect();
+            $('#RIF').removeAttr('readonly');
+            $('#name').removeAttr('readonly');
+            $('#license').removeAttr('readonly');
+            $('#opening_date').removeAttr('disabled');
+            $('#number_employees').removeAttr('disabled');
+            $('#sector').removeAttr('disabled');
+            $('#code_catastral').removeAttr('disabled');
+            $('#country_code_company').removeAttr('disabled');
+            $('select').formSelect();
+            $('#parish').removeAttr('disabled', '');
+            $('select').formSelect();
+            $('#address').removeAttr('disabled');
+            $('#phone').removeAttr('disabled');
+            updateCompany=true;
+            $('#update-company').text('Guardar');
 
 
 
 
+            swal({
+                title: "Información",
+                text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
+                icon: "info",
+                button: "Ok",
+            });
+
+
+        }
+        else {
+            var documentType = $('#document_type').val();
+            var rif = documentType+$('#RIF').val();
+            var name = $('#name').val();
+            var license = $('#license').val();
+            var openingDate = $('#opening_date').val();
+            var numberEmployees = $('#number_employees').val();
+            var sector = $('#sector').val();
+            var codeCadastral = $('#code_catastral').val();
+            var countryCodeCompany = $('#country_code_company').val();
+            var parish = $('#parish').val();
+            var address=$('#address').val();
+            var phone = $('#phone').val();
+            var id = $('#id').val();
+            $.ajax({
+                type: "POST",
+                url: url + "company/update",
+                data: {
+                    id: id,
+                    rif:rif,
+                    name:name,
+                    license:license,
+                    opening_date:openingDate,
+                    numberEmployees:numberEmployees,
+                    sector:sector,
+                    codeCadastral:codeCadastral,
+                    countryCodeCompany:countryCodeCompany,
+                    parish:parish,
+                    address:address,
+                    phone:phone
+                },
+                dataType: "JSON",
+
+                beforeSend: function () {
+
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+
+
+                    $('#document_type').prop("disabled", true);
+                    $('select').formSelect();
+                    $('#RIF').attr('readonly','readonly');
+                    $('#name').attr('readonly','readonly');
+                    $('#license').attr('readonly','readonly');
+                    $('#opening_date').attr('disabled','disabled');
+                    $('#number_employees').attr('disabled','disabled');
+                    $('#sector').attr('disabled','disabled');
+                    $('#code_catastral').attr('disabled','disabled');
+                    $('#country_code_company').attr('disabled','disabled');
+                    $('select').formSelect();
+                    $('#parish').attr('disabled', 'disabled');
+                    $('select').formSelect();
+                    $('#address').attr('disabled','disabled');
+                    $('#phone').attr('disabled','disabled');
+                },
+                success: function (data) {
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                     if(data) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Has actualizado Los datos de la empresas con éxito",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+
+                },
+                error: function (e) {
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(e);
+                }
+
+            });
+        }
     });
 
 
 
 
-
-    $('#update-company').click(function () {
-
-
-        $('#document_type').prop("disabled", false);
-        $('select').formSelect();
-        $('#RIF').removeAttr('readonly');
-        $('#name').removeAttr('readonly');
-        $('#license').removeAttr('readonly');
-        $('#opening_date').removeAttr('disabled');
-        $('#number_employees').removeAttr('disabled');
-        $('#sector').removeAttr('disabled');
-        $('#code_catastral').removeAttr('disabled');
-        $('#country_code_company').removeAttr('disabled');
-        $('select').formSelect();
-        $('#parish').removeAttr('disabled', '');
-        $('select').formSelect();
-        $('#address').removeAttr('disabled');
-        $('#phone').removeAttr('disabled');
-
-
-
-
-
-
+    $('#add-ciiu').on('click', function () {
         if (addCiiu == false) {
-            $('#add-ciiu').on('click', function () {
-
-                $('#code').prop("disabled", false);
-                $('#search-ciu').removeAttr('disabled');
+            $('#code').prop("disabled", false);
+            $('#search-ciu').removeAttr('disabled');
+            addCiiu = true;
+            $('#add-ciiu').text('Guardar CIIU');
+            swal({
+                title: "Información",
+                text: "Ingresa los codigo CIIU en la casilla selecionada",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "amber-gradient"
+                },
+            }).then(function () {
                 $('#code').focus();
-                addCiiu = true;
-
             });
-        }
-    if (addCiiu==true){
-            $('#add-ciiu').on('click', function () {
-            console.log('else')
-            var ciu = $('#ciu').val();
-            var id = $('#id');
+
+
+        } else {
+            var ciu = [];
+            var id = $('#id').val();
+
+
+
+            $('.ciu').each(function () {
+                ciu.push($(this).val());
+            });
             $.ajax({
                 type: "POST",
                 url: url + "company/addCiiu",
@@ -132,29 +242,50 @@ $('document').ready(function () {
                     id: id,
                     ciu: ciu
                 },
-                dataType:"JSON",
+                dataType: "JSON",
 
-                beforeSend:function () {
-                    console.log('hola');
+                beforeSend: function () {
+
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+
                 },
-                success:function (data) {
+                success: function (data) {
                     console.log(data);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+
+                    $('#bDelete').remove();
+
+                    if (data == true) {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Has Añadido Los nuevos CIIU Con éxito",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            location.reload();
+                        });
+
+                    }
                 },
-                error:function (e) {
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     console.log(e);
                 }
 
             });
-        });
-    }
-
+        }
     });
+
 
     $('#search-ciu').click(function () {
         var code = $('#code').val();
 
         var band = true;
-        if (code !== "") {
+        if (code != "") {
             $.ajax({
                 type: "GET",
                 url: url + "ciu/find/" + code,
@@ -166,8 +297,8 @@ $('document').ready(function () {
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
-                                <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="${response.ciu.id}">
-                                <div class="input-field col s12 m5">
+                                <input type="hidden" name="ciuAdd[]" id="ciuAdd" class="ciu" value="${response.ciu.id}">
+                                <div class="input-field col s12 m4">
                                     <i class="icon-assignment prefix"></i>
                                     <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >
                                     <label>CIIU</label>
@@ -178,7 +309,7 @@ $('document').ready(function () {
                                      <textarea name="name-ciu" id="${subr}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
                                 </div>
 
-                                <div class="input-field col s12 m1">
+                                <div class="input-field col s12 m1" id="bDelete">
                                     <button  class="btn waves-effect waves-light peach col s12 delete-ciu"><i class="icon-close"></i>
                                     </button>
                                 </div>
@@ -222,7 +353,7 @@ $('document').ready(function () {
                     } else {
                         swal({
                             title: "Información",
-                            text: "El campo del codigo CIIU no debe estar vacio para iniciar la busquedad.",
+                            text: "El CIIU que ingresó no se encuentra registrado en el sistema.",
                             icon: "info",
                             button:{
                                 text: "Esta bien",
@@ -231,10 +362,8 @@ $('document').ready(function () {
                         });
                     }
 
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-
                 },
                 error: function (err) {
                     console.log(err);
@@ -265,6 +394,80 @@ $('document').ready(function () {
     });
 
 
+
+    $('.disabled-ciu-selected').click(function () {
+        var ciu_id=$(this).val();
+        var company_id= $('#id').val();
+        var status=$(this).attr('data-ciiu');
+
+
+      console.log(ciu_id);
+      console.log(company_id);
+      console.log(status);
+        swal({
+            title: "Cambiar estado de CIIU",
+            text: "Esta seguro que desea cambiar el estado del CIIU?",
+            icon: "info",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "amber-gradient"
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (accept) {
+            if(accept){
+                $.ajax({
+                    type: "GET",
+                    url: url + "company/ciu/" +ciu_id+'/'+company_id+'/'+status,
+                    dataType: "JSON",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (data) {
+                        swal({
+                            title: "Bien hecho",
+                            text: "El estado del CIIU ha cambiando con éxito.",
+                            icon: "success",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        }).then(function () {
+                            location.reload();
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        console.log(data);
+                    },
+                    error: function (e) {
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        console.log(e);
+                    }
+
+                });
+            }
+        });
+
+
+
+    });
+
+
+
+
+
     function confirmCiu() {
         swal({
             title: "¡Bien Hecho!",
@@ -276,7 +479,6 @@ $('document').ready(function () {
                     value: true,
                     visible: true,
                     className: "amber-gradient"
-
                 },
                 cancel: {
                     text: "No",
@@ -285,119 +487,340 @@ $('document').ready(function () {
                     className: "grey lighten-2"
                 }
             }
-        }).then(function (aceptar) {
-            if (aceptar) {
-                $('#code').focus();
-                $('#code').val('');
-            } else {
-
-                if ($('#user-next').val() !== undefined) {
-                    $('ul.tabs').tabs();
-                    $('ul.tabs').tabs("select", "map-tab");
-
-                } else {
-                    var focalizar = $("div#div-map").position().top;
-                    $('html,body').animate({scrollTop: focalizar}, 1000);
-                }
-
-
-            }
-        });
-
+        }).then();
     }
 
 
 
 
-    $('#delete-ciiu').on('click', function () {
 
-        $('#document_type').prop("disabled", false);
-        $('select').formSelect();
-        $('#RIF').removeAttr('disabled');
-        $('#name').removeAttr('readonly');
-        $('#license').removeAttr('readonly');
-        $('#opening_date').removeAttr('disabled');
-        $('#number_employees').removeAttr('disabled');
-        $('#sector').removeAttr('disabled');
-        $('#code_catastral').removeAttr('disabled');
-        $('#country_code_company').removeAttr('disabled');
-        $('select').formSelect();
-        $('#parish').removeAttr('disabled', '');
-        $('select').formSelect();
-        $('#address').removeAttr('disabled');
-        $('#phone').removeAttr('disabled');
+
+
+    $('#disabled-ciiu').on('click', function () {
+        if (disabledCiiu == false) {
+            var ciiu;
+            var selected = [];
+
+
+
+
+                $('.ciu').each(function () {
+                    ciiu = $(this).val();
+
+                    var status=$(this).siblings('.ciu_status').val();
+
+                    if(status=='disabled'){
+                        button=`
+                            <div class="input-field col s12 m1" id="bDelete">
+                                <button type="button" class="btn waves-effect waves-light red col s12  disabled-ciu-selected" value="${ciiu}"  data-ciiu="enabled">
+                                  <i class="icon-do_not_disturb_alt "></i></button>
+                             
+                            </div>`;
+                        $(this).siblings('.nameCiiu').after(button);
+                    }else{
+                        button=`
+                            <div class="input-field col s12 m1" id="bDelete">
+                                <button type="button" class="btn waves-effect waves-light green col s12  disabled-ciu-selected" value="${ciiu}" data-ciiu="disabled">
+                                  <i class="icon-check"></i></button>
+                             
+                            </div>`;
+                        $(this).siblings('.nameCiiu').after(button);
+                    }
+                });
+
+
+                /*var checkBox =
+                    `<label class="col m1">
+                        <input type="checkbox" name="ciiuCheck[]" class=".ciiuCheck" value=${ciiu}>
+                        <span></span>
+                    </label>`;
+            */
+
+
+
+
+
+            disabledCiiu = true;
+        }
+        else {
+            console.log('else');
+            $('.Dciiu').each(function () {
+                console.log('dentro del check');
+                check = $('.ciiuCheck').val();
+                //$('.ciiuCheck').each(function () {
+                  //  check = $(this).val();
+                //});
+
+                console.log(check);
+                //if (check) {
+                //  selected.push($(this).val());
+                //}
+            });
+
+            //console.log(selected);
+        }
     });
+
+
+
+    $('#change-maps').click(function () {
+        swal({
+            title: "Información",
+            text: "Marca la nueva ubicación dentro del map",
+            icon: "info",
+            button:{
+                text: "Esta bien",
+                className: "blue-gradient"
+            },
+        }).then(function (accept) {
+
+
+            var focalizar = $("div#div-map").position().top;
+            $('html,body').animate({scrollTop: focalizar}, 1000);
+
+
+            var lat = parseFloat($('#lat').val());
+            var lng = parseFloat($('#lng').val());
+            var image = 'https://sysprim.com/images/mark-map.png';
+
+
+
+            var marcadores = [];
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: {lat: lat, lng:lng}
+            });
+            map.addListener('click', function (e) {
+                console.log(e.latLng);
+                addMark(e.latLng, map,image,marcadores,true);
+            });
+
+
+
+        });
+
+    });
+
+
+
+
+
+    $('#license').change(function () {
+        var license=$('#license').val();
+        var rif=$('#document_type').val()+$('#RIF').val();
+        verifylicense(license,rif);
+    });
+
+    function verifylicense(license,rif) {
+        if (license !== '') {
+            $.ajax({
+                method: "GET",
+                url: url + "company/verify-license/" + license+"/"+rif,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    console.log(response);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $('#license').val('');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button:{
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }
+    }
 });
 
 window.onload = function () {
     var image = 'https://sysprim.com/images/mark-map.png';
-
     var lat = parseFloat($('#lat').val());
     var lng = parseFloat($('#lng').val());
+
     var marcadores = [];
-    var myLatLng = {lat: lat, lng: lng};
+    var myLatLng = {lat: lat,
+                    lng: lng
+                    };
+
     //creando el mapa.
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: 10.0736954, lng: -69.3498597}
+    var map = new google.maps.Map(
+        document.getElementById('map'), {
+        zoom: 17,
+        center: {lat: lat, lng: lng}
     });
     /*map.addListener('click', function(e) {
         addMark(e.latLng, map);
     });*/
-    addMark(myLatLng, map);
 
-    // quita un valor de un array
-    function removeItemFromArr(arr, item) {
-        var i = arr.indexOf(item);
+    addMark(myLatLng, map,image,marcadores,false);
 
-        if (i !== -1) {
-            arr.splice(i, 1);
-        }
-    }
+
 
     //aniade una marca al mapa
-    function addMark(myLatLng, map) {
+}
 
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            icon: image,
-            animation: google.maps.Animation.BOUNCE,
-            title: "ESTOY AQUÍ",
-        });
+function addMark(myLatLng, map,image,marcadores,remove) {
 
-        /*google.maps.event.addListener(marker, 'click', function () {
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        icon: image,
+        animation: google.maps.Animation.BOUNCE,
+        title: "ESTOY AQUÍ",
+    });
+
+
+    if(remove){
+        google.maps.event.addListener(marker, 'click', function () {
             removeItemFromArr(marcadores, marker);
             marker.setMap(null); //borramos el marcador del mapa
-            $('#lgn').val(" ");
+            $('#lng').val(" ");
             $('#lat').val(" ");
-        });*/
+        });
 
-
-        marcadores.push(marker);
-        if (marcadores.length > 1) {
-            removeItemFromArr(marcadores, marker);
-            marker.setMap(null);
-
-            swal({
-                title: "¡Oh no!",
-                text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-                icon: "error",
-                button:{
-                    text: "Entendido",
-                    className: "red-gradient"
+        swal({
+            title: "Información",
+            text: "Desea guardar la ubicación del mapa seleccionada?",
+            icon: "info",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "amber-gradient"
                 },
-            });
-        } else {
-            $('#lng').val(marcadores[0].getPosition().lng());//coloca la marca
-            $('#lat').val(marcadores[0].getPosition().lat);//a quien le coloco la multa
-        }
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (accept) {
+            if(accept){
+                var id=$('#id').val();
+                var lat=$('#lat').val();
+                var lng=$('#lng').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: url + "company/update/map",
+                    data: {
+                        id: id,
+                        lat:lat,
+                        lng:lng
+                    },
+                    dataType: "JSON",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+
+                    },
+                    success: function (data) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Se actualizo la ubicación de la empresa con éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+
+                            location.reload();
+                        });
+
+
+
+
+                    },
+                    error: function (e) {
+
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button:{
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        console.log(e)
+                    }
+
+                });
+
+            }else{
+
+
+
+            }
+
+        });
 
     }
 
 
+
+    marcadores.push(marker);
+    if (marcadores.length > 1) {
+        removeItemFromArr(marcadores, marker);
+        marker.setMap(null);
+
+        swal({
+            title: "¡Oh no!",
+            text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
+            icon: "error",
+            button:{
+                text: "Entendido",
+                className: "red-gradient"
+            },
+        });
+    } else {
+        $('#lng').val(marcadores[0].getPosition().lng());//coloca la marca
+        $('#lat').val(marcadores[0].getPosition().lat);//a quien le coloco la multa
+    }
 }
 
 
+// quita un valor de un array
+function removeItemFromArr(arr, item) {
+    var i = arr.indexOf(item);
+
+    if (i !== -1) {
+        arr.splice(i, 1);
+    }
+}
 
 

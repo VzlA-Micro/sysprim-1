@@ -246,9 +246,20 @@ class PropertyTaxesController extends Controller
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
-        $pdf = \PDF::loadView('dev.paymentProperty.receipt', ['taxes' => $taxes, 'fiscal_period' => $taxes->created_at->format('Y'),
-            'amount' => $amount, 'firm' => false, 'nameUser' => $user->name . " " . $user->surname, 'ci' => $user->ci, 'tel' => $user->phone, 'cadastral' => $property->code_cadastral,
-            'property' => $property, 'build' => $catasBuild[0]->name, 'costBuild' =>$totalBuild,'ground'=>$catasGround->name,'costGround'=>$totalGround
+        $pdf = \PDF::loadView('dev.paymentProperty.receipt', [
+            'taxes' => $taxes,
+            'fiscal_period' => $taxes->created_at->format('Y'),
+            'amount' => $amount,
+            'firm' => false,
+            'nameUser' => $user->name . " " . $user->surname,
+            'ci' => $user->ci,
+            'tel' => $user->phone,
+            'cadastral' => $property->code_cadastral,
+            'property' => $property,
+            'build' => $catasBuild[0]->name,
+            'costBuild' =>$totalBuild,
+            'ground'=>$catasGround->name,
+            'costGround'=>$totalGround
         ]);
 
 

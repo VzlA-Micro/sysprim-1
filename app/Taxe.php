@@ -21,6 +21,10 @@ class Taxe extends Model implements Auditable {
             ->withPivot('company_id');
     }
 
+    public function vehicles(){
+        return $this->belongsToMany('App\VehiclesTaxe','taxe_id');
+    }
+
 
     public function payments(){
         return $this->belongsToMany('App\Payment','payments_taxes')

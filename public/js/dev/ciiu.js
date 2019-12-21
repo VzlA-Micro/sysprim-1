@@ -1,4 +1,5 @@
 $('document').ready(function () {
+
     var url="https://sysprim.com/";
     //var url="http://172.19.50.253/";
     // var url="http://sysprim.com.devel/";
@@ -7,11 +8,13 @@ $('document').ready(function () {
         e.preventDefault();
 
         $.ajax({
-            url: url+"ciu-branch/save",
-            cache:false,
-            contentType:false,
-            processData:false,
+
+            url: url+"ciuBranch/save",
+            //cache:false,
+            //contentType:false,
+            //processData:false,
             data:new FormData(this),
+            dataType:json,
             method: "POST",
 
             beforeSend: function () {
@@ -19,7 +22,7 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-
+                cosole.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "CIIU registrado con exito",

@@ -82,6 +82,8 @@
   -->--}}
                             <div class="divider"></div>
                             @foreach($company->ciu as $ciu)
+
+                                @if($ciu->pivot->status!=='disabled')
                                 <div class="ciu-company">
                                     <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                                     <input type="hidden" name="ciu_alicuota" class="ciu_alicuota"
@@ -126,8 +128,7 @@
                                     </div>
                                 </div>
 
-
-
+                                @endif
                             @endforeach
                         </div>
                         <!--<div class="card-footer">

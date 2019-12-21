@@ -540,7 +540,7 @@ $('document').ready(function () {
                 success: function (response) {
                         console.log(response);
 
-                       var taxes_id=$('#taxes_id').val();
+                        var taxes_id=$('#taxes_id').val();
                         swal({
                             title: "¡Bien hecho!",
                             text: "Planilla ingresa y registrada con éxito.",

@@ -14,7 +14,7 @@ class Company extends Model implements Auditable {
     protected $appends=['desc','typeCompany','typeDocument',
                         'document',
                         'operator',
-                        'numberPhone',];
+                        'numberPhone'];
 
 
 
@@ -23,9 +23,10 @@ class Company extends Model implements Auditable {
         ->withPivot('user_id');
     }
 
+
     public function ciu(){
         return $this->belongsToMany('App\Ciu','company_ciu')
-            ->withPivot('ciu_id');
+            ->withPivot('ciu_id','status');
     }
     public function taxesCompanies(){
         return $this->belongsToMany('App\Taxe','company_taxes')

@@ -130,7 +130,7 @@
                         <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">
 
                         @foreach($company->ciu as $ciu)
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom" data-tooltip="Se refiere al código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). "></i>
                             <input type="text" name="code" id="code" maxlength="6" class="validate number-only" pattern="[0-9]+" value="{{ $ciu->code }}" disabled="">
                             <label for="code">CIIU</label>
@@ -140,6 +140,27 @@
                             <textarea name="name" id="name" cols="30" rows="10" class="materialize-textarea" disabled>{{ $ciu->name }}</textarea>
                             <label for="name">Nombre</label>
                         </div>
+
+                            @if($ciu->pivot->status=='disabled')
+                                <div class="input-field col s12 m2" id="bDelete">
+                                    <span class="center-align">Estado:</span>
+                                    <button type="button"
+                                            class="btn waves-effect waves-light red col s12  disabled-ciu-selected"
+                                            value="{{$ciu->id}}" data-ciiu="enabled">
+
+                                        <i class="icon-do_not_disturb_alt "></i></button>
+
+                                </div>
+                            @else
+                                <div class="input-field col s12 m2" id="bDelete">
+                                    <span class="center-align">Estado:</span>
+                                    <button type="button"
+                                            class="btn waves-effect waves-light green col s12  disabled-ciu-selected"
+                                            value="{{$ciu->id}}" data-ciiu="disabled">
+                                        <i class="icon-check"></i></button>
+                                </div>
+                            @endif
+
                         @endforeach
 
                         <div class="input-field col s12 location-container tooltipped" data-position="bottom" data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">

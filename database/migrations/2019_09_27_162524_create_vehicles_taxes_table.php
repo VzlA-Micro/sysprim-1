@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersVehiclesTable extends Migration
+class CreateVehiclesTaxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateUsersVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_vehicles', function (Blueprint $table) {
+        Schema::create('vehicles_taxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
             $table->integer('vehicle_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('taxe_id')->unsigned();
+            $table->float('amount_accumulated');
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
+            $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateUsersVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_vehicles');
+        Schema::dropIfExists('vehicles_taxes');
     }
 }
