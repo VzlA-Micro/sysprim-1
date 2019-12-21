@@ -30,6 +30,7 @@ function isMobile(){
 
 $('document').ready(function () {
 
+    
 
 
 /*    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
