@@ -18,6 +18,7 @@ use App\VehicleType;
 use App\ModelsVehicle;
 use App\UserVehicle;
 use App\Tributo;
+use App\Taxe;
 
 class DeclarationVehicle
 {
@@ -124,7 +125,8 @@ class DeclarationVehicle
                 return $amounts;
             } else {
                 $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle[0]->id)->orderBy('id', 'desc')->take(1)->get();
-                if (!isset($vehicleTaxes[0])) {
+
+                if (!isset($vehicleTaxes[0]) || $vehicleTaxes[0]->status == 'Temporal') {
                     $diffMonths = round($monthCurrent / 3);
                     if ($diffMonths > 1 and $diffMonths < 1.5) {
                         $diffMonths = 2;
@@ -136,13 +138,17 @@ class DeclarationVehicle
                         $diffMonths = 4;
                     }
                     $recharge = (($fractionalPayments * $diffMonths) * 20) / 100;
+
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
 
                     $total = $fractionalPayments + $recharge + $previousDebt;
 
+
                 } else {
+                    //EL ERROR DE LA PLANILLA ESTA EN ESTA PARTE, VERIFICA LA DIFERENCIA DE LOS TRIMETRES YA QUE HAY UNA DEUDA ANTERIOR
+                    //Y NO LA MUESTRA, ES UN ERROR DE PROGRAMACION, MAYORMENTE DE LOGICA VERIFICA ESO Y LISTO
                     $monthTaxes = intval($vehicleTaxes[0]->created_at->format('m'));
-                    //var_dump($vehicleTaxes[0]);
+
 
                     if ($monthTaxes >= 1 and $monthTaxes <= 3) {
                         $trimester = 1;
@@ -159,10 +165,14 @@ class DeclarationVehicle
 
                     $diffTrimester = $trimesterCurrent - $trimester;
 
+
+
+
                     $recharge = (($fractionalPayments * $diffTrimester) * 20) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
                     $total = $fractionalPayments + $recharge + $previousDebt;
+
                 }
                 $amounts = array(
                     'taxes' => $taxes,

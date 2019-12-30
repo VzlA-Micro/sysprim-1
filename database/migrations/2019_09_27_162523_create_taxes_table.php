@@ -15,12 +15,14 @@ class CreateTaxesTable extends Migration
         Schema::create('taxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->string('type')->nullable();
             $table->string('digit',3)->nullable();
             $table->string('bank',3)->nullable();
             $table->string('branch',10)->nullable();
             $table->double('amount',11,2)->nullable();
             $table->string('status')->nullable();
             $table->date('fiscal_period');
+            $table->date('fiscal_period_end')->nullable();
             $table->timestamps();
         });
     }

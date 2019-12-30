@@ -7,10 +7,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis Vehículos</a>
-                <a href="{{ route('vehicles.register') }}" class="breadcrumb">Registrar Vehículo</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Registrar Vehículos</a></li>
+                </ul>
             </div>
             <form id="vehicle" action="#" method="post" class="col s12 m8 offset-m2" enctype="multipart/form-data">
                 <div class="card">
@@ -81,6 +83,11 @@
                                        placeholder="Elige una imagen del vehículo.">
                             </div>
                         </div>
+
+                        <div class="container">
+                            <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo, no se encuentre registrado en nuestro sistema. Por favor envíanos un correo a esta Dirección: correo, con los siguientes datos:<br> 1- Marca<br> 2- Modelo<br> 3- Año </p>
+                        </div>
+
                         <div class="input-field col s12 center-align">
                             <button id="button-vehicle" type="submit" class="btn btn-rounded green waves-effect">Registrar</button>
                         </div>

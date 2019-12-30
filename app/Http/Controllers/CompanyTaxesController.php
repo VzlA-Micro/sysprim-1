@@ -71,30 +71,37 @@ class CompanyTaxesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create($company)
+    public function create($company,$type)
     {
-
-
-
         $company = Company::where('name', $company)->get();
         $company_find = Company::find($company[0]->id);
-
-        $mounth_pay = TaxesMonth::verify($company[0]->id, false);
-
-        $users = $company_find->users()->get();
-
-        $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
+        $mounths = array("ENERO" => '01', "FEBRERO" => '02', "MARZO" => '03', "ABRIL" => '04', "MAYO" => '05', "JUNIO" => '06', "JULIO" => '07', "AGOSTO" => '08', "SEPTIEMBRE" => '09', "OCTUBRE" => '10', "NOVIEMBRE" => '11', "DICIEMBRE" => '12');
+        $mounthNow = Carbon::now()->format('m');
 
 
-        $mounths=array("ENERO"=>'01',"FEBRERO"=>'02',"MARZO"=>'03',"ABRIL"=>'04',"MAYO"=>'05',"JUNIO"=>'06',"JULIO"=>'07',"AGOSTO"=>'08',"SEPTIEMBRE"=>'09',"OCTUBRE"=>'10',"NOVIEMBRE"=>'11',"DICIEMBRE"=>'12');
-        $mounthNow=Carbon::now()->format('m');
+        if($company_find->status!=='disabled') {
+
+            if($type!=='definitive'){
+                $mounth_pay = TaxesMonth::verify($company[0]->id, false);
+                $users = $company_find->users()->get();
+                $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
 
+                if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
+                    return redirect('companies/my-business');
+                } else {
+                    return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow]);
+                }
+            }else{
+                $mounth_pay = TaxesMonth::verify($company[0]->id, false);
+                $users = $company_find->users()->get();
+                $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
 
-        if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
-            return redirect('companies/my-business');
-        } else {
-            return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay,'mounths'=>$mounths,'mountNow'=>$mounthNow]);
+                return view('modules.acteco-definitive.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow]);
+            }
+
+        } else{
+            return redirect('companies/details/'.$company_find->id);
         }
 
     }
@@ -602,7 +609,7 @@ class CompanyTaxesController extends Controller
     public function calculate($id){
         $taxes = Taxe::findOrFail($id);
         $taxes->delete();
-        return redirect('payments/create/' . session('company'));
+        return redirect('payments/create/' . session('company').'/'.'actuated');
     }
 
 
@@ -702,15 +709,89 @@ class CompanyTaxesController extends Controller
 
 
 
+    public function storeDefinitive(Request $request){
+
+        $fiscal_period = $request->input('fiscal_period');
+        $company = $request->input('company_id');
+        $company_find = Company::find($company);
+
+
+        $ciu_id = $request->input('ciu_id');
+        $min_tribu_men = $request->input('min_tribu_men');
+        $deductions = $request->input('deductions');
+        $withholding = $request->input('withholding');
+        $base = $request->input('base');
+        $fiscal_credits = $request->input('fiscal_credits');
+
+        $date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->fiscal_period = $fiscal_period;
+        $taxe->status='temporal';
+        $taxe->save();
+
+        $id = $taxe->id;
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
 
 
 
+        for ($i = 0; $i < count($base); $i++) {
+            //format a base
+            $base_format = str_replace('.', '', $base[$i]);
+            $base_format = str_replace(',', '.', $base_format);
 
 
 
 
+            $ciu = Ciu::find($ciu_id[$i]);
 
+            if ($base[$i] == 0) {
+                $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
+                $unid_total = $unid_tribu[0]->value;
+            } else {
+                $taxes = $ciu->alicuota * $base_format / 100;
+                $unid_total = 0;
+            }
+
+            /*if ($date['mora']) {//si tiene mora
+                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
+                if ($company_find->typeCompany === 'R') {
+                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
+                } else {
+                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
+                }
+
+                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
+                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
+                $mora = 0;
+            } else {
+                $mora = 0;
+                $tax_rate = 0;
+                $interest = 0;
+            }*/
+
+
+            $taxe->taxesCiu()->attach(['taxe_id'=>$id],
+                ['ciu_id'=>$ciu_id[$i],
+                    'base'=>$base_format,'deductions'=>0,'withholding'=>0,
+                    'fiscal_credits'=>0,'unid_tribu'=>$unid_total, 'mora'=>0,
+                    'tax_rate'=>0,
+                    'interest'=>0
+                ]);
+
+        }
+        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
+
+        $data = array([
+            'status' => 'success',
+            'message' => 'Impuesto registrada correctamente.'
+        ]);
+        return redirect('payments/taxes/' . $id);
+
+
+
+    }
 
 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\User;
 use Mail;
 use App\Company;
@@ -57,6 +59,16 @@ class VehicleController extends Controller
         $vehicle->serial_engine = $request->input('serialEngine');
         $vehicle->type_vehicle_id = $request->input('type');
         $vehicle->model_id = $request->input('model');
+        $image=$request->file('image');
+
+
+        if ($image) {
+            $image_path_name = time() . $image->getClientOriginalName();
+            Storage::disk('vehicles')->put($image_path_name, File::get($image));
+            $vehicle->image = $image_path_name;
+        } else {
+            $vehicle->image = null;
+        }
         $vehicle->save();
 
         $userVehicle = new UserVehicle();
@@ -162,6 +174,11 @@ class VehicleController extends Controller
     {
         $bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))->exists();
         return response()->json($bodySerial);
+    }
+
+    public function getImage($filename){
+        $file=Storage::disk('vehicles')->get($filename);
+        return new Response($file,200);
     }
 
 

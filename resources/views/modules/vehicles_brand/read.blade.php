@@ -8,39 +8,35 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" class="breadcrumb">Gestionar Tipos De Vehiculos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}" class="breadcrumb">Ver Tipos De Vehiculos</a></li>
-                    </ul>
-                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}" class="breadcrumb">Gestionar
+                            Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" class="breadcrumb">Ver
+                            Marcas De Vehiculos</a></li>
+                </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Tipos Vehículos</h5>
+                        <h5>Marcas De Vehículos</h5>
                     </div>
                     <div class="card-content">
                         <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Tipo</th>
-                                <th>Tarifa U.T menor a 3 años</th>
-                                <th>Tarifa U.T mayor a 3 años</th>
+                                <th>Marca</th>
                                 <th>Detalles</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($showType as $type)
+                            @foreach($showBrand as $brand)
                                 <tr>
-                                    <td>{{$type->name}}</td>
-                                    <td>{{$type->rate}}</td>
-                                    <td>{{$type->rate_UT}}</td>
-
+                                    <td>{{$brand->name}}</td>
                                     <td>
-                                        <a href="{{route('typeVehicle.details',['id'=>$type->id])}}" class="btn btn-floating orange waves-light"><i
+                                        <a href="{{route('vehicles.brand.details',['id'=>$brand->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
                                 </tr>

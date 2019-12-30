@@ -88,7 +88,7 @@
     </tr>
     <tr>
         <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
-        <td style="width:35%;font-size: 11px !important;"></td>
+        <td style="width:35%;font-size: 11px !important;">{{$user->email}}</td>
         <td style="width:20%;font-size: 12px !important;"><b></b></td>
         <td style="width:30%;font-size: 11px !important;"></td>
     </tr>
@@ -119,18 +119,42 @@
         <td style="width: 10%;font-size: 10px;!important">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('Y')}}</td>
         <td style="width: 15%;font-size: 10px; !important;">0</td>
         <td style="width: 15%;font-size: 10px;!important"></td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($taxes->amount,2)}}</td>
+        <td style="width: 10%;font-size: 10px;!important">{{number_format($grossTaxes, 2, ',', '.')}}</td>
+        {{$recharge}}
     </tr>
-    @if(isset($discount) and isset($valueDiscount))
+    @if($valueDiscount>0)
         <tr>
             <td style="width: 30%;font-size: 10px !important;">Descuento (20%)</td>
             <td style="width: 10%;font-size: 10px;!important;"></td>
             <td style="width: 10%;font-size: 10px;!important"></td>
-            <td style="width: 15%;font-size: 10px; !important;">{{$taxesVehicle}}</td>
-            <td style="width: 15%;font-size: 10px;!important">{{'-'.$valueDiscount}}</td>
+            <td style="width: 15%;font-size: 10px; !important;">{{number_format($valueDiscount, 2, ',', '.')}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($valueDiscount, 2, ',', '.')}}</td>
             <td style="width: 10%;font-size: 10px;!important">{{number_format($taxes->amount,2)}}</td>
         </tr>
     @endif
+    @if($previousDebt > 0)
+        <tr>
+            <td style="width: 30%;font-size: 10px !important;">Deuda Anterior</td>
+            <td style="width: 10%;font-size: 10px;!important;"></td>
+            <td style="width: 10%;font-size: 10px;!important"></td>
+            <td style="width: 15%;font-size: 10px; !important;">{{number_format($grossTaxes, 2, ',', '.')}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{number_format($previousDebt, 2, ',', '.')}}</td>
+            <td style="width: 10%;font-size: 10px;!important">{{number_format($grossTaxes+$previousDebt, 2, ',', '.')}}</td>
+        </tr>
+    @endif
+
+    @if($recharge > 0)
+        <tr>
+            <td style="width: 30%;font-size: 10px !important;">recargo (20%)</td>
+            <td style="width: 10%;font-size: 10px;!important;"></td>
+            <td style="width: 10%;font-size: 10px;!important"></td>
+            <td style="width: 15%;font-size: 10px; !important;">{{number_format($grossTaxes+$previousDebt, 2, ',', '.')}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{number_format($recharge, 2, ',', '.')}}</td>
+            <td style="width: 10%;font-size: 10px;!important">{{number_format($total, 2, ',', '.')}}</td>
+        </tr>
+    @endif
+
+
     <tr>
         <td></td>
         <td></td>

@@ -1,21 +1,24 @@
 @extends('layouts.app')
 
 @section('styles')
-
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis Vehículos</a>
-                <a href="{{ route('vehicles.register') }}" class="breadcrumb">Ver mis Vehículo</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" class="breadcrumb">Gestionar Modelos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.read') }}" class="breadcrumb">Ver Modelos De Vehículos</a></li>
+                </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Tipos Vehículos</h5>
+                        <h5>Modelos De Vehículos</h5>
                     </div>
                     <div class="card-content">
                         <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">

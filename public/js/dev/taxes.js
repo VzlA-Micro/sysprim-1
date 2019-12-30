@@ -193,7 +193,6 @@ $(document).ready(function () {
 
         $('.code').each(function () {
             var code = $(this).val();
-            console.log(code);
             var base = $('#base_' + code).val();
             var alicuota = $('#alicuota_' + code).val();
             var deductions = $('#deductions_' + code).val();
@@ -201,27 +200,54 @@ $(document).ready(function () {
             var fiscal_credits = $('#fiscal_credits_' + code).val();
 
             base = base.replace(/\./g, '');
-            deductions = deductions.replace(/\./g, '');
-            withholdings = withholdings.replace(/\./g, '');
-            fiscal_credits = fiscal_credits.replace(/\./g, '');
 
-            var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
-            var total = Math.floor(parseFloat(base) * alicuota);
-            if (total !== 0) {
-                if (total_deductions >= total) {
-                    swal({
-                        title: "Información",
-                        text: "Verifique los datos ingresados.",
-                        icon: "info",
-                        button:{
-                            text: "Esta bien",        
-                            className: "blue-gradient"
-                        },
-                    });
-                    band = true;
+
+            if(deductions!==undefined) {
+                deductions = deductions.replace(/\./g, '');
+                withholdings = withholdings.replace(/\./g, '');
+                fiscal_credits = fiscal_credits.replace(/\./g, '');
+                var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
+                var total = Math.floor(parseFloat(base) * alicuota);
+
+
+                if (total !== 0) {
+                    if (total_deductions >= total) {
+                        swal({
+                            title: "Información",
+                            text: "Verifique los datos ingresados.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        band = true;
+                    }
+
+                    if(base>=total){
+                        swal({
+                            title: "Información",
+                            text: "  ARTÍCULO 44.- Cuando el monto del\n" +
+                            "                        impuesto determinado, en el adelanto\n" +
+                            "                        mensual fuere inferior al señalado como\n" +
+                            "                        mínimo tributable en el Clasificador de\n" +
+                            "                        Actividades Económicas o en su defecto,\n" +
+                            "                            el sujeto pasivo no hubiere obtenido\n" +
+                            "                        ingresos brutos por el ejercicio de la\n" +
+                            "                        actividad económica, el monto del\n" +
+                            "                        impuesto anticipado será el establecido\n" +
+                            "                        como mínimo tributable en el\n" +
+                            "                        mencionado clasificador.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        band = true;
+                    }
                 }
             }
-
         });
 
 

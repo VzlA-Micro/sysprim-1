@@ -12,11 +12,20 @@
                 </ul>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('payments.create',['company'=>session('company')]) }}" class="btn-app white green-text">
+                <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
-                    <span class="truncate">Declarar mi Actividad Económica</span>
+                    <span class="truncate">Declaración  mi Actividad Económica</span>
                 </a>
             </div>
+
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}" class="btn-app white green-text">
+                    <i class="icon-account_balance"></i>
+                    <span class="truncate">Declaración  Definitiva Actividad Económica</span>
+                </a>
+            </div>
+
+
             {{-- <div class="col s12 m4 animated bounceIn">
                 <a href="" class="btn-app white amber-text">
                     <i class="icon-assistant"></i>
