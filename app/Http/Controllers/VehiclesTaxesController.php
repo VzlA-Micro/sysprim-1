@@ -94,13 +94,6 @@ class VehiclesTaxesController extends Controller
 
     public function taxesSave(Request $request)
     {
-        $amountInterest = 0;//total de intereses
-        $amountRecargo = 0;//total de recargos
-        $amountCiiu = 0;//total de ciiu
-        $amountDesc = 0;//Descuento
-        $amountTaxes = 0;//total a de impuesto
-        $amountTotal = 0;
-
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
 

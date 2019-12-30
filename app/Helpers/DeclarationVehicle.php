@@ -189,4 +189,29 @@ class DeclarationVehicle
             }
         }
     }
+    public static function verify($id,$temporal=true){
+    date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+    setlocale(LC_ALL, "es_ES");//establecer idioma local
+    $date = null;
+    $vehicle = Vehicle::find($id);
+    $now_pay = Carbon::now();//fecha de pago
+    $mount_pay=null;
+
+    if($temporal){
+        $vehicleTaxes = $vehicle->taxesVehicle()->where('status','=','temporal')->get();//busco el ultimo pago realizado por la empresa
+
+        if (!$vehicleTaxes->isEmpty()){
+            foreach ($vehicleTaxes as $tax){
+                if($tax->status!=='cancel'){
+                    $tax=Taxe::find($tax->id);
+                    $tax->delete();
+                }
+            }
+        }else{
+            $mount_pay=null;
+        }
+    }
+
+    return $mount_pay;
+    }
 }

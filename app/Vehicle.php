@@ -20,4 +20,9 @@ class Vehicle extends Model
     public function model(){
         return $this->belongsTo('App\ModelsVehicle');
     }
+
+    public function taxesVehicle(){
+        return $this->belongsToMany('App\Taxe','vehicle_taxes')
+            ->withPivot('taxe_id');
+    }
 }
