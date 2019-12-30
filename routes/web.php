@@ -119,6 +119,25 @@ Route::middleware(['auth'])->group(function () {
                 });
             });
         });
+
+        // Gestionar Accesorios
+        Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
+        Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
+        Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
+        Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
+        Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
+        Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
+
+
+        // GEstionar tipos de publicidad
+        Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
+        Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
+        Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
+        Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
+        Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
+        Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
+    
+
     });
 
     // GeoSysPRIM
@@ -141,6 +160,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dearTaxes', 'DashboardController@dearTaxes')->name('dearTaxes');
     });
     Route::get('/collection/statistics', 'DashboardController@collection')->name('collection');
+
+
 
 
     // Route::get('/dashboard',array(
@@ -329,6 +350,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/details', function () {
         return view('modules.notifications.details');
     })->name('notifications.details');
+
+    // Mi Publicidad
+    Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+    Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+
 
     // Mis Empresas
     Route::group(['middleware' => ['permission:Mis Empresas|Consultar Mis Empresas']], function () {
