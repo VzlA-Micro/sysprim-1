@@ -64,6 +64,12 @@ class User extends Authenticatable  implements Auditable
             ->withPivot('property_id');
     }
 
+    public function vehicles()
+    {
+        return $this->belongsToMany('App\Vehicle', 'user_vehicle')
+            ->withPivot('vehicle_id');
+    }
+
     public function role() {
         return $this->belongsTo('App\Role', 'role_id');
     }

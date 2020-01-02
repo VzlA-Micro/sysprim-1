@@ -89,10 +89,12 @@ class VehicleController extends Controller
      */
     public function show()
     {
-        $vehicle = Vehicle::all();
+
+        $vehicle=\Auth::user()->vehicles()->get();
+
 
         return view('modules.vehicles.menu', array(
-            'show' => $vehicle
+            'show' =>$vehicle
         ));
 
     }

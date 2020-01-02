@@ -545,6 +545,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/taxes/vehicles/{id}', 'VehiclesTaxesController@create')->name('taxes.vehicle');
     Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
     Route::post('/vehicle/payments/register', 'VehiclesTaxesController@payments')->name('vehicle.payments.store');
+    Route::get('/vehicle/payments/history/{$vehicleId}', 'VehiclesTaxesController@history')->name('vehicle.payments.history');
 //___________________________________________________________________________________________________________________________
 
 

@@ -36,7 +36,7 @@ class DeclarationVehicle
         $fractionalPayments = 0;
         $july = 07;
         $october = 10;
-        $mes = 12;
+        $mes = 1;
         $taxes = 0;
         $rateYear = 0;
         $discount = 0;
@@ -98,13 +98,13 @@ class DeclarationVehicle
 
                 $amounts = array(
                     'grossTaxes' => $taxes,
-                    'fractionalPayments'=>$fractionalPayments,
+                    'fractionalPayments' => $fractionalPayments,
                     'valueDiscount' => $valueDiscount,
                     'total' => $total,
                     'rateYear' => $rateYear,
                     'moreThereYear' => $moreThereYear,
                     'optionPayment' => $optionPayment,
-                    'previousDebt'=>$previousDebt
+                    'previousDebt' => $previousDebt
                 );
                 return $amounts;
             }
@@ -113,6 +113,7 @@ class DeclarationVehicle
             //indica que el pago es trimestral
             $fractionalPayments = $taxes / 4;
             if (($monthCurrent == $january) || ($monthCurrent == $april) || ($monthCurrent == $july) || ($monthCurrent == $october)) {
+                $total=$fractionalPayments;
                 $amounts = array(
                     'taxes' => $taxes,
                     'fractionalPayments' => $fractionalPayments,
@@ -166,8 +167,6 @@ class DeclarationVehicle
                     $diffTrimester = $trimesterCurrent - $trimester;
 
 
-
-
                     $recharge = (($fractionalPayments * $diffTrimester) * 20) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
@@ -189,29 +188,28 @@ class DeclarationVehicle
             }
         }
     }
-    public static function verify($id,$temporal=true){
-    date_default_timezone_set('America/Caracas');//Estableciendo hora local;
-    setlocale(LC_ALL, "es_ES");//establecer idioma local
-    $date = null;
-    $vehicle = Vehicle::find($id);
-    $now_pay = Carbon::now();//fecha de pago
-    $mount_pay=null;
 
-    if($temporal){
-        $vehicleTaxes = $vehicle->taxesVehicle()->where('status','=','temporal')->get();//busco el ultimo pago realizado por la empresa
 
-        if (!$vehicleTaxes->isEmpty()){
-            foreach ($vehicleTaxes as $tax){
-                if($tax->status!=='cancel'){
-                    $tax=Taxe::find($tax->id);
-                    $tax->delete();
+    public static function verify($id, $temporal = true)
+    {
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        $date = null;
+        $vehicle = Vehicle::find($id);
+        $now_pay = Carbon::now();//fecha de pago
+        $mount_pay = null;
+
+        if ($temporal) {
+            $vehicleTaxes = $vehicle->taxesVehicle()->where('status', '=', 'temporal')->get();//busco el ultimo pago realizado por la empresa
+
+            if (!$vehicleTaxes->isEmpty()) {
+                foreach ($vehicleTaxes as $tax) {
+                    if ($tax->status !== 'cancel') {
+                        $tax = Taxe::find($tax->id);
+                        $tax->delete();
+                    }
                 }
             }
-        }else{
-            $mount_pay=null;
         }
-    }
-
-    return $mount_pay;
     }
 }

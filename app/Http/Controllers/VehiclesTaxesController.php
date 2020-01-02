@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\DeclarationVehicle;
+use App\Helpers\Trimester;
 use App\VehiclesTaxe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,13 +26,22 @@ class VehiclesTaxesController extends Controller
 {
     public function create($id)
     {
-        $vehicleTaxe=VehiclesTaxe::where('vehicle_id',$id)
-            ->where('status','process')->get();
+        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
+            ->where('status', 'process')->get();
+
+        $vehicleTaxesTem = VehiclesTaxe::where('vehicle_id', $id)
+            ->where('status', 'process')->get();
 
 
         if (!Empty($vehicleTaxe[0])) {
-            return view('modules.taxes.detailsVehicle', array('vehicleTaxes'=>true));
+            return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
         } else {
+
+            if (!Empty($vehicleTaxesTem[0])) {
+                DeclarationVehicle::verify($id, $temporal = true);
+            }
+
+
             $declaration = DeclarationVehicle::Declaration($id);
 
             $vehicle = Vehicle::where('id', $id)->get();
@@ -53,10 +63,15 @@ class VehiclesTaxesController extends Controller
                 $rateYear = $declaration['rateYear'];
                 if (isset($declaration['recharge'])) {
                     $recharge = number_format($declaration['recharge'], 2, ',', '.');
+                } else {
+                    $recharge = 0;
+                }
+                if (isset($declaration['previousDebt'])) {
                     if ($declaration['previousDebt'] !== 0) {
                         $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
                     }
-
+                } else {
+                    $previousDebt = 0;
                 }
             }
 
@@ -73,7 +88,10 @@ class VehiclesTaxesController extends Controller
             $vehicleTaxes->status = 'Temporal';
             $vehicleTaxes->save();
 
-            $period_fiscal = Carbon::now()->format('Y');
+            $trimester=Trimester::verifyTrimester();
+            $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
+
+
 
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
@@ -86,7 +104,7 @@ class VehiclesTaxesController extends Controller
                 'recharge' => $recharge,
                 'previousDebt' => $previousDebt,
                 'total' => $total,
-                'vehicleTaxes'=>false
+                'vehicleTaxes' => false
             ));
         }
     }
@@ -127,7 +145,7 @@ class VehiclesTaxesController extends Controller
         $user = \Auth::user();
         $vehiclesTaxes = VehiclesTaxe::where('taxe_id', $id_taxes)->get();
         $vehicle = Vehicle::where('id', $vehiclesTaxes[0]->vehicle_id)->get();
-        $vehiclesTaxe=VehiclesTaxe::find($vehiclesTaxes[0]->id);
+        $vehiclesTaxe = VehiclesTaxe::find($vehiclesTaxes[0]->id);
 
         $declaration = DeclarationVehicle::Declaration($vehicle[0]->id);
 
@@ -148,11 +166,16 @@ class VehiclesTaxesController extends Controller
             $grossTaxes = $paymentFractional;
             $rateYear = $declaration['rateYear'];
             if (isset($declaration['recharge'])) {
-                $recharge = $declaration['recharge'];
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            } else {
+                $recharge = 0;
+            }
+            if (isset($declaration['previousDebt'])) {
                 if ($declaration['previousDebt'] !== 0) {
-                    $previousDebt = $declaration['previousDebt'];
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
                 }
-
+            } else {
+                $previousDebt = 0;
             }
         }
 
@@ -172,11 +195,11 @@ class VehiclesTaxesController extends Controller
         $taxes->status = "process";
         $taxes->update();
 
-        $vehiclesTaxe->status='process';
+        $vehiclesTaxe->status = 'process';
         $vehiclesTaxe->update();
 
-
-        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+        $trimester=Trimester::verifyTrimester();
+        $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
@@ -185,7 +208,7 @@ class VehiclesTaxesController extends Controller
             [
                 'taxes' => $taxes,
                 'user' => $user,
-                'fiscal_period' => $fiscal_period,
+                'fiscal_period' => $period_fiscal,
                 'firm' => false,
                 'grossTaxes' => $grossTaxes,
                 'recharge' => $recharge,
@@ -204,7 +227,14 @@ class VehiclesTaxesController extends Controller
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+        return redirect('vehicle/payments/history/' .$vehicle[0]->id);
+    }
+
+    public function history($vehicleId)
+    {
+        $vehicle=Vehicle::find($vehicleId);
+
+        return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
     }
 
 
