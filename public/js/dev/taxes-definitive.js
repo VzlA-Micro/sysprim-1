@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var url = "https://sysprim.com/";
+  
     $('input[type="text"].money_keyup').on('keyup', function (event) {
         var total = $(this).val();
         if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
