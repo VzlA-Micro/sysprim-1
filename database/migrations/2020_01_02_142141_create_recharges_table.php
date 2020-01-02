@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Recharge extends Migration
+class CreateRechargesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Recharge extends Migration
      */
     public function up()
     {
-        Schema::create('recharge', function (Blueprint $table) {
+        Schema::create('recharges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',20);
             $table->float('value');
@@ -29,6 +29,6 @@ class Recharge extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('recharges');
     }
 }

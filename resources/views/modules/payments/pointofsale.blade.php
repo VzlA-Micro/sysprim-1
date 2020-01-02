@@ -12,7 +12,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Punto de Venta</a></li>
@@ -37,7 +37,9 @@
                                 <th>Ref o Código</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
+                                @can('Anular Pagos')
                                 <th>Acción</th>
+                                @endcan
                                 @can('Detalles Pagos')
                                     <th>Detalles</th>
                                 @endcan
@@ -55,6 +57,7 @@
                                         <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                        @can('Anular Pagos')
                                         <td>
                                             @if($taxe->status==='cancel')
                                                 <div class="input-field col s12 m12">
@@ -72,8 +75,8 @@
                                             @endif
 
                                         </td>
+                                        @endcan
                                         @can('Detalles Pagos')
-
                                             @if($taxe->taxes[0]->type!='definitive')
                                                 <td>
                                                     <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"

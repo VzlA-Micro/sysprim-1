@@ -10,15 +10,15 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Contribuyentes</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Contribuyente</a></li>
+                    {{-- <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li> --}}
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Usuarios</a></li>
                 </ul>
             </div>
 			<div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Contribuyentes registrados</h5>
+                        <h5>Usuarios registrados</h5>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered" style="width: 100%" id="collaborators">

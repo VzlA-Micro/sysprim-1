@@ -35,7 +35,7 @@
                </div>
             </div>
             @endcan
-
+            @can('Mis Publicidades')
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
@@ -44,26 +44,23 @@
                    </a>
                </div>
             </div>
-
-
-            {{-- 
-            @can('')--}}
-            <div class="col s6 m3 animated bounceIn">
-               <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">
-                   <i class="icon-directions_car"></i>
-                   <span class="truncate">Mis Vehículos</span>
-               </a>
-            </div> 
-            {{--@endcan
-            --}}
-                @can('Gestionar Usuarios')
+            @endcan
+            @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
                         <i class="icon-people_outline"></i>
-                        <span class="truncate">Gestionar Usuarios</span>
+                        <span class="truncate">Gestionar Usuarios (Admin)</span>
                     </a>
                 </div>
-                @endcan
+            @endcan
+            @can('Gestionar Contribuyentes')
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
+                    <i class="icon-record_voice_over"></i>
+                    <span class="truncate">Gestionar Usuarios</span>
+                </a>
+            </div>
+            @endcan
             @can('Configuración')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('settings.manage') }}" class="btn-app white deep-orange-text">
@@ -92,7 +89,7 @@
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
                     <i class="icon-personal_video"></i>
-                    <span class="truncate">Taquilla</span>
+                    <span class="truncate">Taquilla - Actividad Económica</span>
                 </a>
             </div>
             @endcan
