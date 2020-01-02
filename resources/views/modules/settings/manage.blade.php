@@ -30,17 +30,31 @@
             </div>
             @endcan
             <div class="col s12 m3 animated bounceIn">
+
                 <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white purple-text">
+                    <i class="icon-local_shipping"></i>
+                    <span class="truncate">Gestionar Tipo De Vehiculos</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('vehicles.brand.manage') }}" class="btn-app white deep-purple-text">
                     <i class="icon-directions_car"></i>
-                    <span class="truncate">Gestionar Tipos de Vehiculos</span>
+                    <span class="truncate">Gestionar Marca De Vehiculos</span>
                 </a>
             </div>
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white brown-text">
-                    <i class="icon-directions_car"></i>
-                    <span class="truncate">Gestionar Modelos de Vehiculos</span>
+                    <i class="icon-airport_shuttle"></i>
+                    <span class="truncate">Gestionar Modelos De Vehiculos</span>
                 </a>
             </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('recharge.manage') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-trending_up"></i>
+                    <span class="truncate">Gestionar Recargos</span>
+                </a>
+            </div>
+
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('accessories.manage') }}" class="btn-app white green-text">
                     <i class="icon-filter_tilt_shift"></i>
@@ -53,6 +67,7 @@
                     <span class="truncate">Gestionar Tipos de Publicidad</span>
                 </a>
             </div>
+
         </div>
     </div>
 @endsection

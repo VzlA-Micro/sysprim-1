@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFinesTable extends Migration
+class Recharge extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines', function (Blueprint $table) {
+        Schema::create('recharge', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('name');
-            $table->integer('cant_unid_tribu');
+            $table->string('name',20);
+            $table->float('value');
             $table->string('branch',20);
-            $table->text('description');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        //
     }
 }

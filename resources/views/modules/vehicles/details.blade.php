@@ -7,8 +7,8 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                    <li class="breadcrumb-item"><a href=""></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12 m8">
@@ -16,6 +16,15 @@
                     <div class="card-header center-align">
                         <h5>Mi Vehiculo: {{ $vehicle->license_plate}}</h5>
                     </div>
+
+                    @if (Storage::disk('vehicles')->has($vehicle->image))
+                        <div class="card-image">
+                            <img src="{{ route('vehicles.image', ['filename' => $vehicle->image]) }}"
+                                 class="materialboxed" alt="" srcset=""
+                                 style="max-height:350px;">
+                            {{-- <span class="card-title grey-text"><b>Dirección:</b> {{ $company->address }}</span> --}}
+                        </div>
+                    @endif
 
                     <div class="card-content">
                         <ul>
@@ -27,7 +36,7 @@
                             <li><b></b></li>
                         </ul>
                     </div>
-                    <!--<div class="card-footer">
+                <!--<div class="card-footer">
                         <div class="row" style="margin-bottom:0">
                             <div class="col s12 center-align">
                                 <a href="" class="btn blue btn-rounded waves-light">
@@ -55,19 +64,24 @@
                         </a>
                     </div>
 
-                    <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
+                <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
 
 
                     <!-- Modal Structure -->
                     <div id="mode" class="modal">
-                        <div class="modal-content">
-                            <h4>Opciones de pago</h4>
+                        <div class="">
+                            <div class="modal-content">
+                                <h5 class="">Modos de pago</h5>
+                                <p>Elige la forma en la realizara su pago de Vehiculo</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."true"])}}"
+                                   class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                                <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."false"])}}"
+                                   class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="modal-footer">
-                            <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."true"])}}" class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
-                            <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-"."false"])}}" class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
-                        </div>
                     </div>
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
@@ -75,7 +89,7 @@
                             <span class="truncate">Mis Multas</span>
                         </a>
                     </div> -->
-                    
+
                 </div>
             </div>
         </div>

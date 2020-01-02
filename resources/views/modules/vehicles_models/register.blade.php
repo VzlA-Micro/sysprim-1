@@ -7,10 +7,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis Vehículos</a>
-                <a href="{{ route('vehicles.register') }}" class="breadcrumb">Registrar Vehículo</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" class="breadcrumb">Gestionar Modelos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.register') }}" class="breadcrumb">Registrar Modelos De Vehículos</a></li>
+                </ul>
             </div>
 
             <form method="post" action="{{url('/vehicles-models/save')}}" class="col s12 m8 offset-m2"

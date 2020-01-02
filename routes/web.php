@@ -25,21 +25,18 @@ Route::get('/online', 'HomeController@online');
 Auth::routes();
 
 
-Route::get('/users/verify/{code}','UserController@verify');
+Route::get('/users/verify/{code}', 'UserController@verify');
 
-Route::get('/users/verify-ci/{ci}','UserController@verifyCi');
+Route::get('/users/verify-ci/{ci}', 'UserController@verifyCi');
 
-Route::get('/users/verify-email/{email}/{id?}','UserController@verifyEmail');
-Route::get('/users/find/{nationality}/{ci}','UserController@findUser');
+Route::get('/users/verify-email/{email}/{id?}', 'UserController@verifyEmail');
+Route::get('/users/find/{nationality}/{ci}', 'UserController@findUser');
 
 Route::middleware(['auth'])->group(function () {
 
 
-
-
-
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/profile','UserController@profile')->name('profile');
+    Route::get('/profile', 'UserController@profile')->name('profile');
     Route::get('/download/{file}', 'HomeController@downloadPdf')->name('download');
 
     // Usuarios
@@ -263,12 +260,9 @@ Route::middleware(['auth'])->group(function () {
         });
 
 
-        Route::get('company/ciu/{id_ciu}/{company_id}/{status}','CompaniesController@changeStatusCiiu');
+        Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
 
-        Route::post('company/update/map','CompaniesController@updatedMap');
-
-
-
+        Route::post('company/update/map', 'CompaniesController@updatedMap');
 
 
         // Verificacion de Pagos
@@ -424,43 +418,39 @@ Route::middleware(['auth'])->group(function () {
 
     // Mis Vehiculos
     //Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
-        // Nivel 1: Mis Vehiculos
+    // Nivel 1: Mis Vehiculos
 
     //});
 //__________________________________Vehicles Type module routes_______________________________________________________
-        Route::get('/vehicles/type-vehicles', function () {
-            return view('modules.vehicle_type.manage');
-        })->name('vehicles.type.vehicles');
+    Route::get('/vehicles/type-vehicles', function () {
+        return view('modules.vehicle_type.manage');
+    })->name('vehicles.type.vehicles');
 
-        Route::get('/vehicles/register-type', function () {
-            return view('modules.vehicle_type.register');
-        })->name('vehicles.type-vehicles');
+    Route::get('/vehicles/register-type', function () {
+        return view('modules.vehicle_type.register');
+    })->name('vehicles.type.register');
 
-        Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
+    Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
 
-        Route::get('/type-vehicles/details/{id}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+    Route::get('/type-vehicles/details/{id}', 'VehicleTypeController@edit')->name('typeVehicle.details');
 
-        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+    Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
 
-        Route::get('/type-vehicles/read', array(
-            'as' => 'type-vehicles.read',
-            'uses' => 'VehicleTypeController@show'
-        ));
+    Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
 
 // ______________________________________________________________________________________________________
 
 
 //_________________________Vehicles module routes_______________________________________________________
-        // Nivel 2: Registrar Vehiculos
-        //Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function () {
+    // Nivel 2: Registrar Vehiculos
+    //Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function () {
 
-        //});
+    //});
 
-        // Nivel 3: Detalles de vehiculos
-        //Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
+    // Nivel 3: Detalles de vehiculos
+    //Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
 
-      //  });
-
+    //  });
 
 
     // Companies module routes
@@ -474,10 +464,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
 
-    Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
 
-    Route::post('/company/addCiiu','Companiescontroller@addCiiu')->name('companies.addCiiu');
-    Route::get('/company/change-status/{id}/{status}','CompaniesController@changeStatus');
+    Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
+    Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
 
 
 //________________________module Vehicle_____________________________
@@ -488,6 +477,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
+    Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
+    Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
 
     Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
     Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
@@ -520,6 +511,35 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
 //_________________________________________________________________________________________________
 
+
+//___________________________Brands Vehicles modules routes_______________________________________________________
+    Route::get('/vehicles/brands-vehicles', function () {
+        return view('modules.vehicles_brand.manage');
+    })->name('vehicles.brand.manage');
+
+    Route::get('/vehicles-brand/register', 'BrandVehicleController@create')->name('vehicles.brand.register');
+    Route::post('/vehicles-brand/save', 'BrandVehicleController@store')->name('vehicles.brand.save');
+
+    Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
+    Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
+    Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
+    Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');
+//___________________________________________________________________________________________________________________________
+
+
+//_____________________________________________Recharge modules routes_______________________________________________________
+
+    Route::get('/recharges', function () {
+        return view('modules.recharge.manage');
+    })->name('recharge.manage');
+    Route::get('/recharges/register', 'RechargeController@create')->name('recharge.register');
+    Route::post('/recharge/save', 'RechargeController@store')->name('recharge.save');
+    Route::get('/recharge/read', 'RechargeController@show')->name('recharge.read');
+    Route::get('/recharge/details/{id}', 'RechargeController@edit')->name('recharge.details');
+    Route::post('/recharge/update', 'RechargeController@update')->name('recharge.update');
+    Route::post('/recharge/verifyBrand', 'RechargeController@verifyBrand')->name('recharge.verifyBrand');
+
+//___________________________________________________________________________________________________________________________
 
 //_______________________________________Vehicles Taxes Routes_______________________________________________________________
     Route::get('/taxes/vehicles/{id}', 'VehiclesTaxesController@create')->name('taxes.vehicle');
@@ -625,7 +645,7 @@ Route::middleware(['auth'])->group(function () {
         return view('modules.fines.register');
     })->name('fines.register');
 
-    Route::post('/fines/save', 'FinesController@create')->name('fines.save');
+    Route::post('/fines/save', 'FinesController@store')->name('fines.save');
     Route::get('/fines/read', 'FinesController@show')->name('fines.read');
     Route::get('/fines/details/{id}', 'FinesController@edit')->name('fines.details');
     Route::post('/fines/update/{id}', 'FinesController@update')->name('fines.update');
@@ -643,9 +663,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fines-company/create/{id}', 'FinesCompanyController@create')->name('fines-company.create');
     Route::post('/fines-company/save', 'FinesCompanyController@store')->name('fines-company.save');
     Route::get('/fines-company/details/{id}', 'FinesCompanyController@edit')->name('fines-company.details');
-
-
-
 
 
     // Employees Modules
@@ -684,7 +701,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/taxes/payments', function () {
         return view('modules.taxes.payments');
     })->name('taxes.payments');
-
 
 
 });
