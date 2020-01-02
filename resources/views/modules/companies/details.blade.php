@@ -51,6 +51,7 @@
                                     <i class="icon-more_horiz right"></i>
                                 </a>
                             </div>
+
                             <div class="col s12 m6 center-align">
                                 <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
                                    class="btn green btn-rounded waves-light col s12">
@@ -63,31 +64,28 @@
                 </div>
             </div>
 
+            @can('Declarar Actividad Económica')
             @if($company->status!='disabled')
-
-                {{-- Mostrar seccion si es administrador o no --}}
-                @can('Declarar Actividad Económica')
-                    <div class="col s12 m3" style="margin-top: -7px">
-                        <div class="row">
-                            <div class="col s12">
-                                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
-                                   class="btn-app white green-text">
-                                    <i class="icon-payment"></i>
-                                    <span class="truncate">Mis Declaraciones</span>
-                                </a>
-                            </div>
-                            <!-- <div class="col s12">
-                                 <a href="" class="btn-app white orange-text">
-                                     <i class="icon-warning"></i>
-                                     <span class="truncate">Mis Multas</span>
-                                 </a>
-                             </div> -->
-
-                        </div>
-                        @endcan
+            {{-- Mostrar seccion si es administrador o no --}}
+            <div class="col s12 m3" style="margin-top: -7px">
+                <div class="row">
+                    <div class="col s12">
+                        <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
+                           class="btn-app white green-text">
+                            <i class="icon-payment"></i>
+                            <span class="truncate">Mis Declaraciones</span>
+                        </a>
                     </div>
-
-                    @endif
+                    <!-- <div class="col s12">
+                        <a href="" class="btn-app white orange-text">
+                            <i class="icon-warning"></i>
+                            <span class="truncate">Mis Multas</span>
+                        </a>
+                    </div> -->
+                </div>
+            </div>
+            @endif
+            @endcan
         </div>
     </div>
 @endsection

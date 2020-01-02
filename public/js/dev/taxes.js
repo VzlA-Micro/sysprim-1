@@ -39,7 +39,6 @@ $(document).ready(function () {
                     .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
             });
         }
-
     });
 
     function resetValue() {
@@ -135,6 +134,22 @@ $(document).ready(function () {
 
     $('#accept').click(function () {
         var band = false;
+
+        if($('#fiscal_period').val()===null){
+            band=true;
+            if($(this).val()===''){
+                swal({
+                    title: "Información",
+                    text: "Selecione un periodo fiscal valido.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+        }
+
         $('.base').each(function () {
             if ($(this).val() === "") {
                 swal({
@@ -168,20 +183,7 @@ $(document).ready(function () {
             }
         });
 
-        if($('#fiscal_period').val()===null){
-            band=true;
-            if($(this).val()===''){
-                swal({
-                    title: "Información",
-                    text: "Selecione un periodo fiscal valido.",
-                    icon: "info",
-                    button:{
-                        text: "Esta bien",        
-                        className: "blue-gradient"
-                    },
-                });
-            }
-        }
+
 
         if (!band) {
             verify();
@@ -190,7 +192,7 @@ $(document).ready(function () {
 
     function verify() {
         var band = false;
-
+        var tributo=$('#tributo').val();
         $('.code').each(function () {
             var code = $(this).val();
             var base = $('#base_' + code).val();
@@ -198,6 +200,9 @@ $(document).ready(function () {
             var deductions = $('#deductions_' + code).val();
             var withholdings = $('#withholdings_' + code).val();
             var fiscal_credits = $('#fiscal_credits_' + code).val();
+            var min_tribu = $('#min_tribu_'+code).val();
+
+
 
             base = base.replace(/\./g, '');
 
@@ -206,8 +211,13 @@ $(document).ready(function () {
                 deductions = deductions.replace(/\./g, '');
                 withholdings = withholdings.replace(/\./g, '');
                 fiscal_credits = fiscal_credits.replace(/\./g, '');
+
                 var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
                 var total = Math.floor(parseFloat(base) * alicuota);
+                var min_total=min_tribu*tributo;
+
+
+
 
 
                 if (total !== 0) {
@@ -223,26 +233,35 @@ $(document).ready(function () {
                         });
                         band = true;
                     }
-
-                    if(base>=total){
+                    if(min_total>total){
                         swal({
                             title: "Información",
-                            text: "  ARTÍCULO 44.- Cuando el monto del\n" +
-                            "                        impuesto determinado, en el adelanto\n" +
-                            "                        mensual fuere inferior al señalado como\n" +
-                            "                        mínimo tributable en el Clasificador de\n" +
-                            "                        Actividades Económicas o en su defecto,\n" +
-                            "                            el sujeto pasivo no hubiere obtenido\n" +
-                            "                        ingresos brutos por el ejercicio de la\n" +
-                            "                        actividad económica, el monto del\n" +
-                            "                        impuesto anticipado será el establecido\n" +
-                            "                        como mínimo tributable en el\n" +
-                            "                        mencionado clasificador.",
+                            text: "El monto de la base imponible no " +
+                            "puede ser menor que el minimo tributable " +
+                            "por este CIIU,en caso de ser menor debe declarar " +
+                            "como base imponible  0. Ord. Act. Económica Art.44",
                             icon: "info",
                             button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
+                        }).then(function () {
+                            $('.deductions').each(function () {
+
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
+                            $('.withholding').each(function () {
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
+                            $('.credits_fiscal').each(function () {
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
                         });
                         band = true;
                     }

@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Tributo;
-class CiuTaxes extends Model
-{
+class CiuTaxes extends Model{
+
+
     protected $table = 'ciu_taxes';
-    protected $appends = ['totalCiiu'];
+    protected $appends = ['totalCiiu','totalCiiuDefinitive'];
 
 
-
-    //
 
     public function getTotalCiiuAttribute(){
         $ciu=Ciu::find($this->ciu_id);
@@ -22,6 +21,17 @@ class CiuTaxes extends Model
             $this->totalCiiu=$ciu->min_tribu_men*$unid_tribu[0]->value;
         }
         return $this->attributes['totalCiiu'];
+    }
+
+    public function getTotalCiiuDefinitiveAttribute(){
+        $ciu=Ciu::find($this->ciu_id);
+        if($this->base!=0){
+            $this->totalCiiuDefinitive=($this->base*$ciu->alicuota)-$this->base_anticipated;
+        }else{
+            $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
+            $this->totalCiiuDefinitive=$ciu->min_tribu_men*12*$unid_tribu[0]->value;
+        }
+        return $this->attributes['totalCiiuDefinitive'];
     }
 
 

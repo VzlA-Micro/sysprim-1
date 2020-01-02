@@ -12,7 +12,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Punto de Venta</a></li>
@@ -34,11 +34,14 @@
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Lote</th>
-                                <th>Terminal</th>
+                                <th>Ref o Código</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
+                                @can('Anular Pagos')
+                                <th>Acción</th>
+                                @endcan
                                 @can('Detalles Pagos')
-                                <th>Detalles</th>
+                                    <th>Detalles</th>
                                 @endcan
                             </tr>
                             </thead>
@@ -54,15 +57,43 @@
                                         <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
-                                        @can('Detalles Pagos')
+                                        @can('Anular Pagos')
                                         <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
-                                               class="btn btn-floating orange waves-effect waves-light"><i
-                                                        class="icon-pageview"></i></a>
+                                            @if($taxe->status==='cancel')
+                                                <div class="input-field col s12 m12">
+                                                    <button type="button"
+                                                            class="btn waves-effect waves-light  col s12 red" value="">
+                                                        <i class="icon-do_not_disturb_alt"></i></button>
+                                                </div>
+                                            @else
+                                                <div class="input-field col s12 m12">
+                                                    <button type="button" id="change-status"
+                                                            class="btn waves-effect waves-light green col s12"
+                                                            value="{{$taxe->id}}" data-status="cancel">
+                                                        <i class="icon-assignment"></i></button>
+                                                </div>
+                                            @endif
+
                                         </td>
                                         @endcan
+                                        @can('Detalles Pagos')
+                                            @if($taxe->taxes[0]->type!='definitive')
+                                                <td>
+                                                    <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+                                                </td>
+                                            @else
 
 
+                                                <td>
+                                                    <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+                                            @endif
+                                        @endcan
                                     </tr>
                                 @endforeach
                             @endif
@@ -78,7 +109,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
-    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
     <script src="{{asset('js/jszip.min.js')}}"></script>
     <script src="{{asset('js/pdfmake.min.js')}}"></script>
@@ -141,9 +172,6 @@
                     messageTop: 'Usuario:' + name,
 
 
-
-
-
                     customize: function (doc) {
                         doc.styles.title = {
                             fontSize: '20',
@@ -152,18 +180,18 @@
                             width: '100px',
                             'max-width': '100px'
                         }, doc.styles.tableHeader = {
-                                fillColor:'#247bff',
-                                color:'#FFF',
-                                fontSize: '9',
-                                alignment: 'center',
-                                bold: true
+                            fillColor: '#247bff',
+                            color: '#FFF',
+                            fontSize: '9',
+                            alignment: 'center',
+                            bold: true
 
                         }, doc.defaultStyle.fontSize = 9;
 
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     }
                 },
 

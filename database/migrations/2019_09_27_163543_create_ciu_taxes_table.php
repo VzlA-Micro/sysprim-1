@@ -22,6 +22,7 @@ class CreateCiuTaxesTable extends Migration
             $table->decimal('tax_rate',12,2)->nullable();
             $table->decimal('mora',12,2)->nullable();
             $table->decimal('unid_tribu',12,2)->nullable();
+            $table->decimal('base_anticipated',12,2)->nullable()->default(0);
             $table->decimal('interest',12,2)->nullable();
             $table->integer('taxe_id')->unsigned();
             $table->integer('ciu_id')->unsigned();

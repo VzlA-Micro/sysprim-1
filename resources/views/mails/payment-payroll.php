@@ -139,8 +139,8 @@ a[x-apple-data-detectors] {
                         <img src="https://sysprim.com/images/semat_logo.png" style="width: 110px; height: 50px;" alt="">
                       </td> 
                      </tr> 
-                     <tr style="border-collapse:collapse;"> 
-                      <td align="center" colspan="3" style="Margin:0;padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:35px;"><h1 style="Margin:0;line-height:40px;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;font-size:32px;font-style:normal;font-weight:normal;color:#111111;">Declaración de Actividad Económica</h1></td> 
+                     <tr style="border-collapse:collapse;">
+                      <td align="center" colspan="3" style="Margin:0;padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:35px;"><h1 style="Margin:0;line-height:40px;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;font-size:32px;font-style:normal;font-weight:normal;color:#111111;"><?php  echo $type; ?></h1></td>
                      </tr> 
                      <tr style="border-collapse:collapse;"> 
                       <td bgcolor="#ffffff" align="center" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;"> 

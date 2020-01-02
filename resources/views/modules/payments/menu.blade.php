@@ -14,14 +14,14 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
-                    <span class="truncate">Declaración  mi Actividad Económica</span>
+                    <span class="truncate">Declaración  ANTICIPADA De Actividad Económica</span>
                 </a>
             </div>
 
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
-                    <span class="truncate">Declaración  Definitiva Actividad Económica</span>
+                    <span class="truncate">Declaración  DEFINITIVA De Actividad Económica</span>
                 </a>
             </div>
 

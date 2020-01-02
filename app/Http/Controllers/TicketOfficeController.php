@@ -106,8 +106,8 @@ class TicketOfficeController extends Controller{
         $taxes_data = substr($id_taxes, 0, -1);
         $taxes_explode=explode('-',$taxes_data);
 
-        (int)$amount_total=0;
-        (int)$acum=0;
+        $amount_total=0;
+        $acum=0;
 
         $amountPayment=0;
         $amount_depo=$amount;
@@ -126,6 +126,7 @@ class TicketOfficeController extends Controller{
             $payments->type_payment='DEPOSITO BANCARIO/EFECTIVO';
         }else{
             $payments->type_payment='PUNTO DE VENTA';
+            $payments->status='verified';
         }
 
         $payments->lot=$lot;
@@ -160,27 +161,32 @@ class TicketOfficeController extends Controller{
         $paymentsTaxe= $taxe->payments()->get();
 
         foreach ($paymentsTaxe as $payment){
-                $acum=$acum+$payment->amount;
+
+                if($payments->amount!=='cancel'){
+                    $acum=$acum+$payment->amount;
+                }
         }
 
 
+        $band= bccomp($acum, $amount_total, 2);
 
-        if($acum>=$amount_total){
+
+
+
+        if($band===0){
+
                 $data=['status'=>'success','payment'=>0];
-
                 for($i=0;$i<count($taxes_explode);$i++){
-
-
                     $taxes_find=Taxe::findOrFail($taxes_explode[$i]);
-
                     if($bank_destinations!==null){
                         $taxes_find->bank=$bank_destinations;
                         $taxes_find->status='process';
-                    }else if($payments_type=='PPB'){
+                    }else if($payments_type=='PPB'||$payments_type=='PPE'||$payments_type=='PPC'){
                         $code = substr($taxes_find->code, 3, 12);
                         $taxes_find->code="PPB".$code;
                         $taxes_find->status='process';
                         $taxes_find->bank=$bank;
+
                     }else{
                         $code = substr($taxes_find->code, 3, 12);
                         $taxes_find->digit=TaxesNumber::generateNumberSecret($taxes_find->amount,$taxes_find->created_at->format('Y-m-d'),$bank,$code);
@@ -280,11 +286,21 @@ class TicketOfficeController extends Controller{
     public function findCode($code){
         $company = Company::where('license',$code)->orWhere('RIF',$code)->with('ciu')->with('users')->get();
 
+
         if($company->isEmpty()){
             $response=array('status'=>'error','message'=>'La Licencia '.$code. 'no esta registrar, debe registrar una empresa.');
         }else{
-            $response=array('status'=>'success','company'=>$company);
+
+
+            if($company[0]->status!='disabled'){
+                $response=array('status'=>'success','company'=>$company);
+
+            }else{
+                $response=array('status'=>'error','message'=>'La empresa '.$company[0]->name. ' esta bloqueada temporalmente,para poder generar una planilla ,debes desbloquearla.');
+            }
+
         }
+
 
         return response()->json($response);
     }
@@ -304,8 +320,6 @@ class TicketOfficeController extends Controller{
             }
             if(count($id_taxes)!==0){
                 $taxes=Taxe::where('status','=','ticket-office')->whereIn('id',$id_taxes)->get();
-
-
             }else{
                 $amount_taxes=null;
                 $taxes=null;
@@ -335,11 +349,31 @@ class TicketOfficeController extends Controller{
         $base = $datos['base'];
         $fiscal_credits = $datos['fiscal_credits'];
 
+
+        if(isset($datos['anticipated'])){
+            $anticipated=$datos['anticipated'];
+        }
+
+
+
+        $type=$datos['typeTaxes'];
+
+
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('PTS81');
+
+        if($type==='definitive'){
+            $taxe->code = TaxesNumber::generateNumberTaxes('PTS89');
+            $taxe->fiscal_period_end='2019-12-01';
+        }
+
         $taxe->fiscal_period = $fiscal_period;
         $taxe->branch='Act.Eco';
         $taxe->bank='';
+        $taxe->type=$type;
+
+
+
         $taxe->status='ticket-office';
         $taxe->save();
         $id = $taxe->id;
@@ -347,71 +381,110 @@ class TicketOfficeController extends Controller{
 
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
         $date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
+        $taxes_amount=0;
+
+
 
         for ($i = 0; $i < count($base); $i++) {
 
             //format a base
             $base_format = str_replace('.', '', $base[$i]);
             $base_format = str_replace(',', '.', $base_format);
-
-            //format a deductions
-            $deductions_format = str_replace('.', '', $deductions[$i]);
-            $deductions_format = str_replace(',', '.', $deductions_format);
-
-
-            //format withdolding
-            $withholding_format = str_replace('.', '', $withholding[$i]);
-
-            $withholding_format = str_replace(',', '.', $withholding_format);
-            //format fiscal credits
-            $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
-            $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
             $ciu = Ciu::find($ciu_id[$i]);
 
-            if ($base[$i] == 0) {
-                $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
-                $unid_total = $unid_tribu[0]->value;
-            } else {
-                $taxes = $ciu->alicuota * $base_format / 100;
-                $unid_total = 0;
-            }
+            if($type!='definitive'){
+                $deductions_format = str_replace('.', '', $deductions[$i]);
+                $deductions_format = str_replace(',', '.', $deductions_format);
 
-            if ($date['mora']) {//si tiene mora
-                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                if ($company_find->typeCompany === 'R') {
-                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
+
+                //format withdolding
+                $withholding_format = str_replace('.', '', $withholding[$i]);
+
+                $withholding_format = str_replace(',', '.', $withholding_format);
+                //format fiscal credits
+                $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
+                $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+
+
+                if ($base[$i] == 0) {
+                    $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
+                    $unid_total = $unid_tribu[0]->value;
                 } else {
-                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
+                    $taxes = $ciu->alicuota * $base_format / 100;
+                    $unid_total = 0;
                 }
 
-                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                $mora = 0;
-            } else {
-                $mora = 0;
-                $tax_rate = 0;
-                $interest = 0;
+                if ($date['mora']) {//si tiene mora
+                    $extra = Extras::orderBy('id', 'desc')->take(1)->get();
+                    if ($company_find->typeCompany === 'R') {
+                        $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
+                    } else {
+                        $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
+                    }
+
+                    $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
+                    $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
+                    $mora = 0;
+                } else {
+                    $mora = 0;
+                    $tax_rate = 0;
+                    $interest = 0;
+                }
+
+
+                $taxe->taxesCiu()->attach(['taxe_id'=>$id],
+                    [   'ciu_id'=>$ciu_id[$i],
+                        'base'=>$base_format,
+                        'deductions'=>$deductions_format,
+                        'withholding'=>$withholding_format,
+                        'fiscal_credits'=>$fiscal_credits_format,
+                        'unid_tribu'=>$unid_total,
+                        'mora'=>$mora,
+                        'tax_rate'=>$tax_rate,
+                        'interest'=>$interest
+                    ]);
+
+
+            }else{
+
+                $anticipated_format = str_replace('.', '', $anticipated[$i]);
+                $anticipated_format = str_replace(',', '.', $anticipated_format);
+
+
+                if ($base[$i] == 0) {
+                    $taxes = $ciu->min_tribu_men* 12 * $unid_tribu[0]->value;
+                    $unid_total = $unid_tribu[0]->value;
+                } else {
+                    $taxes_amount+=($base_format*$ciu->alicuota)-$anticipated_format;
+                    $unid_total = 0;
+                }
+
+
+                $taxe->taxesCiu()->attach(['taxe_id' => $id], ['ciu_id' => $ciu_id[$i],
+                    'base' => $base_format, 'deductions' => 0, 'withholding' => 0,
+                    'fiscal_credits' => 0, 'unid_tribu' => $unid_total, 'mora' => 0,
+                    'tax_rate' => 0,
+                    'interest' => 0,
+                    'base_anticipated'=>$anticipated_format]);
+
             }
 
-            $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                [   'ciu_id'=>$ciu_id[$i],
-                    'base'=>$base_format,
-                    'deductions'=>$deductions_format,
-                    'withholding'=>$withholding_format,
-                    'fiscal_credits'=>$fiscal_credits_format,
-                    'unid_tribu'=>$unid_total,
-                    'mora'=>$mora,
-                    'tax_rate'=>$tax_rate,
-                    'interest'=>$interest
-                ]);
+            //format a deductions
+
+
         }
+
+
         $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
 
-       $taxesCalculate=Calculate::calculateTaxes($id);
-       $taxesCalculate['id_taxes']=$id;
-
-       $taxe_update=Taxe::find($id);
-       $taxe_update->amount=$taxesCalculate['amountTotal'];
+        $taxesCalculate=Calculate::calculateTaxes($id);
+        $taxesCalculate['id_taxes']=$id;
+        $taxe_update=Taxe::find($id);
+        if($taxe_update->type!='definitive'){
+            $taxe_update->amount=$taxesCalculate['amountTotal'];
+        }else{
+            $taxe_update->amount=$taxes_amount;
+        }
        $taxe_update->update();
         return response()->json(['taxe'=>'']);
     }
@@ -441,23 +514,41 @@ class TicketOfficeController extends Controller{
 
     public function pdfTaxes($id){
         $taxes = Taxe::findOrFail($id);
-        $companyTaxe=$taxes->companies()->get();
-        $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-        $company_find = Company::find($companyTaxe[0]->id);
-        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
-        $extra = ['tasa' => $mora[0]->tax_rate];
 
-        $amount=Calculate::calculateTaxes($id);
 
-        $pdf = \PDF::loadView('modules.taxes.receipt',[
-            'taxes'=>$taxes,
-            'fiscal_period'=>$fiscal_period,
-            'extra'=>$extra,
-            'ciuTaxes'=>$ciuTaxes,
-            'amount'=>$amount,
-            'firm'=>true
-        ]);
+        if($taxes->type!='definitive') {
+            $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+            $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+                'taxes' => $taxes,
+                'ciuTaxes' => $ciuTaxes,
+                'firm'=>true
+            ]);
+        }else{
+
+            $companyTaxe=$taxes->companies()->get();
+            $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
+            $company_find = Company::find($companyTaxe[0]->id);
+            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+            $mora = Extras::orderBy('id', 'desc')->take(1)->get();
+            $extra = ['tasa' => $mora[0]->tax_rate];
+            $amount=Calculate::calculateTaxes($id);
+
+
+            $pdf = \PDF::loadView('modules.taxes.receipt',[
+                'taxes'=>$taxes,
+                'fiscal_period'=>$fiscal_period,
+                'extra'=>$extra,
+                'ciuTaxes'=>$ciuTaxes,
+                'amount'=>$amount,
+                'firm'=>true
+            ]);
+        }
+
+
+
+
+
+
 
         return $pdf->stream();
     }
@@ -516,7 +607,18 @@ class TicketOfficeController extends Controller{
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode=explode('-',$taxes_data);
         $ciuTaxes=CiuTaxes::whereIn('taxe_id',$taxes_explode)->with('ciu')->with('taxes')->get();
-        $pdf = \PDF::loadView('modules.ticket-office.receipt-ticketoffice',['taxes'=>$ciuTaxes]);
+
+        if($ciuTaxes[0]->taxes->type!='definitive'){
+            $pdf = \PDF::loadView('modules.ticket-office.receipt-ticketoffice',['taxes'=>$ciuTaxes]);
+        }else{
+            $taxes=Taxe::find($ciuTaxes[0]->taxes->id);
+            $ciuTaxes=CiuTaxes::where('taxe_id',$ciuTaxes[0]->taxes->id)->get();
+            $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+                'taxes' => $taxes,
+                'ciuTaxes' => $ciuTaxes,
+                'firm'=>true
+            ]);
+        }
         return $pdf->stream();
     }
 
@@ -524,22 +626,35 @@ class TicketOfficeController extends Controller{
     public function calculatePayments($taxes_data){
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode=explode('-',$taxes_data);
+
         $taxes=Taxe::whereIn('id',$taxes_explode)->with('payments')->get();
         $amount=0;
         $amount_payment=0;
+        $id_payment='';
+
+
+
         foreach ($taxes as $tax){
 
             if(!$tax->payments->isEmpty()){
+
                 foreach ($tax->payments as $payment){
-                    $amount_payment+=$payment->amount;
+                    if($payment->id!==$id_payment){
+                       if($payment->status!=='cancel'){
+                           $amount_payment+=$payment->amount;
+                       }
+                   }
+                    $id_payment=$payment->id;
                 }
             }
 
+
             $amount+=$tax->amount;
-
         }
-
         $amount=$amount-$amount_payment;
+
+
+
         return response()->json(['status'=>'success','amount'=>$amount]);
     }
 
@@ -556,6 +671,8 @@ class TicketOfficeController extends Controller{
             $taxes_find=CiuTaxes::whereIn('taxe_id',[$id])->with('ciu')->with('taxes')->get();
             $companyTaxe=$taxes->companies()->get();
             $company_find = Company::find($companyTaxe[0]->id);
+
+
 
             $pdf = \PDF::loadView('modules.taxes.receipt-verified',['taxes'=>$taxes_find]);
             $user= $company_find->users()->get();
@@ -585,6 +702,41 @@ class TicketOfficeController extends Controller{
     public function paymentsWeb(){
         $taxes=Taxe::with('companies')->where('status','!=','cancel')->orderBy('id','desc')->get();
         return view('modules.payments.read_web',['taxes'=>$taxes]);
+    }
+
+
+    public function changeStatusPayment($id,$status){
+        $message='';
+
+        //Cambiando status del payment
+        $payments=Payment::find($id);
+        $payments->status=$status;
+        $payments->update();
+
+        //Cambiando el estado de la planilla a en procesos
+        $taxes=$payments->taxes()->first();
+
+
+        if($status=='cancel'){
+            $taxes->status='ticket-office';
+            $taxes->update();
+            $message='ANULADO';
+        }else{
+            $taxes->update();
+            $message='VERIFICADO';
+        }
+
+        return response()->json(['status'=>$message]);
+    }
+
+    //*________DEFINITIVE_________*
+
+
+
+
+    public function verifyDefinitive($company_id){
+        $status = TaxesMonth::verifyDefinitive($company_id);
+        return response()->json(['status'=>$status]);
     }
 
 

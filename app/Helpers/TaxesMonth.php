@@ -16,7 +16,7 @@ class TaxesMonth{
         $date = null;
         $company = Company::find($id);
         $now_pay = Carbon::now();//fecha de pago
-        $companyTaxes = $company->taxesCompanies()->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
+        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
         $mount_pay=null;
 
         if (!$companyTaxes->isEmpty()){
@@ -170,6 +170,44 @@ class TaxesMonth{
         */
 
     }
+
+
+    public static function verifyDefinitive($id){
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        $date = null;
+        $company = Company::find($id);
+        $now_pay = Carbon::now();//fecha de pago
+        $mount_pay=null;
+        $range_mount=null;
+        $status='';
+
+        $companyTaxes = $company->taxesCompanies()->where('type','definitive')->where('branch','Act.Eco')->first();
+
+        if(is_object($companyTaxes)){
+            if($companyTaxes->status==='verified'){
+                return $status='verified';
+            }else if($companyTaxes->status==='temporal'){
+                $companyTaxes->delete();
+                return $status='new';
+            }else if($companyTaxes->status==='ticket-office' && $companyTaxes->created_at->format('d-m-Y')===$now_pay->format('d-m-Y') ){
+                return $status='process';
+            } else if($companyTaxes->status==='process'&&$companyTaxes->created_at->format('d-m-Y')===$now_pay->format('d-m-Y')){
+                return $status='process';
+            }else{
+                return $status='new';
+            }
+        }else{
+            return $status='new';
+        }
+
+
+
+        return $status;
+    }
+
+
+
 
 
     public  static  function createNotification($name,$mes,$data){

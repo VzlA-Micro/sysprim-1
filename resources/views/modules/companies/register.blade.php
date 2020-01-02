@@ -168,7 +168,7 @@
                         <div class="modal-content">
                             <h5 class="center-align">Declaracción Jurada</h5>
                             <div class="divider"></div>
-                            <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y que estoy totalmente autorizado para el registro de esta empresa.</p>
+                            <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y  domiciliado en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y que estoy totalmente autorizado para el registro de esta empresa.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn waves-effect waves-light peach modal-close" id="button-company">
