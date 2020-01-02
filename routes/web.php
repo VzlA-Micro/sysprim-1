@@ -166,38 +166,38 @@ Route::middleware(['auth'])->group(function () {
     //     'uses'=>'DashboardController@dashboard'
     // ));
 
+    // Nivel 1: Gestionar Contrubuyente, Pagos y Empresas
+    Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
+        Route::get('/taxpayers/manage', function () {
+            return view('modules.taxpayers.manage');
+        })->name('taxpayers.manage');
+
+            // Nivel 2: Registrar Y Consultar
+            Route::group(['middleware' => ['permission:Registar Contribuyente|Consultar Contribuyentes']], function () {
+            Route::get('/taxpayers/register', function () {
+                return view('modules.taxpayers.register');
+            })->name('taxpayers.register');
+            Route::post('/taxpayers/save', 'UserController@storeTaxpayer')->name('taxpayers.save');
+            Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
+
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Contribuyentes']], function () {
+                Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
+                // Nivel 4: Actualizar, Resetear, Habilitar
+                Route::group(['middleware' => ['permission:Actualizar Contribuyentes|Habilitar/Deshabilitar Contribuyentes|Resetar Contribuyentes']], function () {
+                    Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
+                    Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
+                });
+            });
+        });
+    });
 
     // Taquilla
-    Route::group(['middleware' => ['permission:Taquilla']], function () {
+    Route::group(['middleware' => ['permission:Taquillas']], function () {
         Route::get('/home/ticketOffice', function () {
             return view('modules.ticket-office.home');
         })->name('home.ticket-office');
 
-        // Nivel 1: Gestionar Contrubuyente, Pagos y Empresas
-        Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
-            Route::get('/taxpayers/manage', function () {
-                return view('modules.taxpayers.manage');
-            })->name('taxpayers.manage');
-
-            // Nivel 2: Registrar Y Consultar
-            Route::group(['middleware' => ['permission:Registar Contribuyente|Consultar Contribuyentes']], function () {
-                Route::get('/taxpayers/register', function () {
-                    return view('modules.taxpayers.register');
-                })->name('taxpayers.register');
-                Route::post('/taxpayers/save', 'UserController@storeTaxpayer')->name('taxpayers.save');
-                Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
-
-                // Nivel 3: Detalles
-                Route::group(['middleware' => ['permission:Detalles Contribuyentes']], function () {
-                    Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
-                    // Nivel 4: Actualizar, Resetear, Habilitar
-                    Route::group(['middleware' => ['permission:Actualizar Contribuyentes|Habilitar/Deshabilitar Contribuyentes|Resetar Contribuyentes']], function () {
-                        Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
-                        Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
-                    });
-                });
-            });
-        });
 
         // Gestionar Pagos
         Route::group(['middleware' => ['permission:Gestionar Pagos']], function () {

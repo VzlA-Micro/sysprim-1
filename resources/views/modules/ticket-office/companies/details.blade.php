@@ -8,7 +8,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
                     <li class="breadcrumb-item"><a
@@ -273,6 +273,7 @@
                                         </a>
                                     </div>
                                 @endcan
+                                @can('Habilitar/Deshabilitar Empresas')
                                 @if($company->status===null||$company->status==='enabled')
                                     <div class="col s12 m3">
                                         <button type="button"
@@ -292,7 +293,9 @@
                                         </button>
                                     </div>
                                 @endif
-
+                                @endcan
+                                
+                                @can('Cambiar Ubicacion - Empresa')
                                     <div class="col s12 m3">
                                         <button type="button"
                                                 class="btn btn-large waves-effect waves-light green col s12 "
@@ -301,7 +304,7 @@
                                             <i class="icon-map right"></i>
                                         </button>
                                     </div>
-
+                                @endcan
 
 
                             </div>

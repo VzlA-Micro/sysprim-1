@@ -10,21 +10,21 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Contribuyentes</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.register') }}">Registrar Contribuyente</a></li>
+                    {{-- <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li> --}}
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.register') }}">Registrar Usuario</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
             	<form action="" method="post" class="card" id="register">
             		<div class="card-header center-align">
-                        <h5>Registrar Usuario Contribuyente</h5>
+                        <h5>Registrar Usuario</h5>
             		</div>
             		<div class="card-content row">
             			@csrf
                         <input type="hidden" value="1" name="confirmed">
                         <div class="input-field col s6 m3">
-                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
+                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V">V</option>
