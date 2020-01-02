@@ -71,10 +71,10 @@
         <div class="row">
             <div class="col s12">
                 <div class="alert alert-warning animated fadeIn">
-                    <span>Par una mejor experiencia de usuario, recomendamos usar la aplicación con los siguientes navegadores:</span><br>
+                    <span>Para una mejor experiencia de usuario, recomendamos utilizar los siguientes navegadores:</span><br><br>
                     <span style="font-size: 22px"><i class="fab fa-firefox"></i> Mozilla Firefox 65.0+</span><br>
-                    <span style="font-size: 22px"><i class="fab fa-chrome"></i> Google Chrome 62.0+</span><br>
-                    <span><b>Nota:</b> Se recomienda <b>NO</b> usar <i class="fab fa-internet-explorer"></i> Internet Explorer para esta aplicación.</span>
+                    <span style="font-size: 22px"><i class="fab fa-chrome"></i> Google Chrome 62.0+</span><br><br>
+                    <span><b>Nota:</b> <b>NO</b> se recomienda usar <i class="fab fa-internet-explorer"></i> <b>Internet Explorer</b> para esta aplicación.</span>
                 </div>
             </div>
         </div>

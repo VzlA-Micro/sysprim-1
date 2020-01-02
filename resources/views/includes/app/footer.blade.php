@@ -1,5 +1,5 @@
 <footer class="brand-footer iribarren-wine-gradient">
     <div class="container center-align">
-        Copyright - SEMAT - Alcaldía de Iribarren
+        © Copyright - SysPRIM 2019 - SEMAT
     </div>
 </footer>

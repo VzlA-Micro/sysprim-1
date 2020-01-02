@@ -7,13 +7,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis Vehículos</a>   
-                <a href="{{ route('vehicles.register') }}" class="breadcrumb">Registrar Tipo De Vehículo</a>
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" class="breadcrumb">Gestionar Tipos De Vehiculos</a></li>
+                </ul>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.type-vehicles') }}" class="btn-app white green-text">
+                <a href="{{ route('vehicles.type.register') }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Tipo De Vehículo</span>
                 </a>

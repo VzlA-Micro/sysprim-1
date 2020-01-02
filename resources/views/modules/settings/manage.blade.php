@@ -13,14 +13,6 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                 </ul>
             </div>
-            @can('Gestionar Unidad Tribuaria')
-            <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('tax-unit.manage') }}" class="btn-app white blue-text text-darken-2">
-                    <i class="icon-attach_money"></i>
-                    <span class="truncate">Gestionar Unidad Tributaria</span>
-                </a>
-            </div>
-            @endcan
             @can('Gestionar CIIU')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('ciu.manage') }}" class="btn-app white deep-purple-text">
@@ -29,16 +21,50 @@
                 </a>
             </div>
             @endcan
+            @can('Gestionar Unidad Tribuaria')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white deep-purple-text">
-                    <i class="icon-assignment"></i>
+                <a href="{{ route('tax-unit.manage') }}" class="btn-app white blue-text text-darken-2">
+                    <i class="icon-attach_money"></i>
+                    <span class="truncate">Gestionar Unidad Tributaria</span>
+                </a>
+            </div>
+            @endcan
+            <div class="col s12 m3 animated bounceIn">
+
+                <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white purple-text">
+                    <i class="icon-local_shipping"></i>
                     <span class="truncate">Gestionar Tipo De Vehiculos</span>
                 </a>
             </div>
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white deep-purple-text">
-                    <i class="icon-assignment"></i>
+                <a href="{{ route('vehicles.brand.manage') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-directions_car"></i>
+                    <span class="truncate">Gestionar Marca De Vehiculos</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white brown-text">
+                    <i class="icon-airport_shuttle"></i>
                     <span class="truncate">Gestionar Modelos De Vehiculos</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('recharge.manage') }}" class="btn-app white deep-purple-text">
+                    <i class="icon-trending_up"></i>
+                    <span class="truncate">Gestionar Recargos</span>
+                </a>
+            </div>
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('accessories.manage') }}" class="btn-app white green-text">
+                    <i class="icon-filter_tilt_shift"></i>
+                    <span class="truncate">Gestionar Accesorios</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('advertising-type.manage') }}" class="btn-app white amber-text text-darken-2">
+                    <i class="icon-folder_special"></i>
+                    <span class="truncate">Gestionar Tipos de Publicidad</span>
                 </a>
             </div>
 

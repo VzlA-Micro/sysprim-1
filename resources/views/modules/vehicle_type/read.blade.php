@@ -1,16 +1,21 @@
 @extends('layouts.app')
 
 @section('styles')
-
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis Vehículos</a>
-                <a href="{{ route('vehicles.register') }}" class="breadcrumb">Ver mis Vehículo</a>
+            <div class="col s12">
+                <div class="col s12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" class="breadcrumb">Gestionar Tipos De Vehiculos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}" class="breadcrumb">Ver Tipos De Vehiculos</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="col s12">
                 <div class="card">

@@ -1,7 +1,9 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}" class="brand-logo font-ubuntu">SEMAT</a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim/sysprim_logo.png') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            {{-- <a href="" class="brand-logo waves-efect waves-light"  margin: 0; padding: 0;"> --}}
+            {{-- </a> --}}
             {{-- Sidenav Trigger --}}
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}
@@ -145,8 +147,12 @@
                                         <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
                                         @endcan
                                         @can('Gestionar Unidad Tribuaria')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-assignment"></i>Gestionar Unidad Tributaria</a></li>    
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-attach_money"></i>Gestionar Unidad Tributaria</a></li>    
                                         @endcan
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.type.vehicles') }}"><i class="icon-directions_car"></i>Gestionar Tipos de Vehiculos</a></li>    
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.models.vehicles') }}"><i class="icon-directions_car"></i>Gestionar Modelos de Vehiculos</a></li>    
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('accessories.manage') }}"><i class="icon-filter_tilt_shift"></i>Gestionar Accesorios</a></li>    
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('advertising-type.manage') }}"><i class="icon-folder_special"></i>Gestionar Tipos de Publicidad</a></li>
                                     </ul>
                                 </div>
                             </li>

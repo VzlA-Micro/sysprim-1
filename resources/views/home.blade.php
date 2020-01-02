@@ -36,16 +36,25 @@
             </div>
             @endcan
 
+            <div>
+                <div class="col s6 m3 animated bounceIn">
+                   <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
+                       <i class="icon-folder_special"></i>
+                       <span class="truncate">Mis Publicidades</span>
+                   </a>
+               </div>
+            </div>
+
 
             {{-- 
-            @can('')
+            @can('')--}}
             <div class="col s6 m3 animated bounceIn">
                <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">
                    <i class="icon-directions_car"></i>
                    <span class="truncate">Mis Vehículos</span>
                </a>
             </div> 
-            @endcan
+            {{--@endcan
             --}}
                 @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
@@ -55,24 +64,6 @@
                     </a>
                 </div>
                 @endcan
-                <!-- <div class="col s6 m3">
-                    <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
-                        <i class="icon-work"></i>
-                        <span class="truncate">Gestionar Empresas</span>
-                    </a>
-                </div>
-            <!--  <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('payments.manage') }}" class="btn-app white orange-text text-darken-2">
-                        <i class="icon-payment"></i>
-                        <span class="truncate">Gestionar Pagos</span>
-                    </a>
-                </div>
-                <!-- <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('fines.manage') }}" class="btn-app white deep-orange-text">
-                        <i class="icon-warning"></i>
-                        <span class="truncate">Gestionar Multas</span>
-                    </a>
-                </div> -->
             @can('Configuración')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('settings.manage') }}" class="btn-app white deep-orange-text">
@@ -127,6 +118,7 @@
                     <span class="truncate">Gestionar Vehiculos</span>
                </a>
             </div> -->
+
         </div>
     </div>
 @endsection
