@@ -73,8 +73,9 @@ class TicketOfficeController extends Controller{
         }
     }
 
-    public function cashier(){;
-        return view('modules.ticket-office.create');
+    public function cashier(){
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+        return view('modules.ticket-office.create',['unid_tribu'=>$unid_tribu]);
     }
 
     public function findUser($ci){
@@ -452,7 +453,7 @@ class TicketOfficeController extends Controller{
 
 
                 if ($base[$i] == 0) {
-                    $taxes = $ciu->min_tribu_men* 12 * $unid_tribu[0]->value;
+                    $taxes_amount = ($ciu->min_tribu_men* 12 * $unid_tribu[0]->value)-$anticipated_format;
                     $unid_total = $unid_tribu[0]->value;
                 } else {
                     $taxes_amount+=($base_format*$ciu->alicuota)-$anticipated_format;

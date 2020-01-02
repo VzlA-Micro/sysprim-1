@@ -355,7 +355,6 @@ $(document).ready(function () {
 
 
     //si esta moroso
-
     if ($('#interest').val() !== "0.00"&&$('#interest').val()!==undefined&&$('#continue').val()!==undefined) {
         swal({
             title: "Información",

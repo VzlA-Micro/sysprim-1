@@ -202,9 +202,7 @@ Route::middleware(['auth'])->group(function () {
         // Gestionar Pagos
         Route::group(['middleware' => ['permission:Gestionar Pagos']], function () {
             // Nivel 1: Generar planilla, pagar planilla, Ver pagos y ver planillas
-            Route::get('/ticket-office/payments', function () {
-                return view('modules.ticket-office.create');
-            })->name('ticket-office.payments');
+            Route::get('/ticket-office/payments', 'TicketOfficeController@cashier')->name('ticket-office.payments');
             Route::get('/ticket-office/taxes/', 'TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
             Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
             Route::get('/ticket-office/type-payment', function () {

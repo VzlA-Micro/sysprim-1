@@ -100,11 +100,13 @@ class CompanyTaxesController extends Controller
                 $users = $company_find->users()->get();
 
                 $status = TaxesMonth::verifyDefinitive($company[0]->id);
-
+                $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
 
                 return view('modules.acteco-definitive.register', ['company' => $company_find,
-                                                                        "status" => $status]);
+                                                                        "status" => $status,
+                                                                        'unid_tribu'=>$unid_tribu[0]->value
+                    ]);
             }
 
         } else{
@@ -458,8 +460,6 @@ class CompanyTaxesController extends Controller
 
         }
 
-
-
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
         $pdf = \PDF::loadView('modules.taxes.receipt',
@@ -760,7 +760,7 @@ class CompanyTaxesController extends Controller
             $ciu = Ciu::find($ciu_id[$i]);
 
             if ($base[$i] == 0) {
-                $taxes = $ciu->min_tribu_men* 12 * $unid_tribu[0]->value;
+                $taxes_amount = ($ciu->min_tribu_men* 12 * $unid_tribu[0]->value)-$anticipated_format;
                 $unid_total = $unid_tribu[0]->value;
             } else {
                 $taxes_amount+=($base_format*$ciu->alicuota)-$anticipated_format;

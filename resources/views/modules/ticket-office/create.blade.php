@@ -33,6 +33,8 @@
                             <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
+
+                            <input type="hidden" id="tributo" value="{{$unid_tribu[0]->value}}">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="search-code" id="search-code" >

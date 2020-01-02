@@ -838,37 +838,33 @@ $(document).ready(function () {
                                     var base=$(this).val();
                                     var alicuota=$(this).parent().siblings('input.alicuota').val();
                                     var min_tribu=$(this).parent().siblings('input.min_tribu').val();
-                                    var min_total=min_tribu*300;
+                                    var min_total=min_tribu*$('#tributo').val()*12;
                                     base= base.replace(/\./g, '');
+                                    if (base !== '0') {
+                                        if (parseFloat(base) <= min_total) {
+                                            swal({
+                                                title: "Información",
+                                                text: "El monto de la base imponible no " +
+                                                "puede ser menor que el minimo tributable " +
+                                                "por este CIIU,en caso de ser menor debe declarar " +
+                                                "como base imponible  0. Ord. Act. Económica Art.44",
+                                                icon: "info",
+                                                button: {
+                                                    text: "Esta bien",
+                                                    className: "blue-gradient"
+                                                },
+                                            });
+                                        }
 
-
-                                    if(base<=min_total){
-                                        swal({
-                                            title: "Información",
-                                            text: "El monto de la base imponible no " +
-                                            "puede ser menor que el minimo tributable " +
-                                            "por este CIIU,en caso de ser menor debe declarar " +
-                                            "como base imponible  0. Ord. Act. Económica Art.44",
-                                            icon: "info",
-                                            button: {
-                                                text: "Esta bien",
-                                                className: "blue-gradient"
-                                            },
-                                        });
+                                        if ($(this).val() != 0) {
+                                            console.log($(this).val());
+                                            $('.min > input.money_keyup').prop('readonly', false);
+                                            $(this).parent().siblings().removeClass('min');
+                                        } else {
+                                            $(this).parent().siblings().addClass('min');
+                                            $('.min > input.money_keyup').prop('readonly', true);
+                                        }
                                     }
-
-
-
-
-                                    if($(this).val()!=0){
-                                        console.log($(this).val());
-                                        $('.min > input.money_keyup').prop('readonly',false);
-                                        $(this).parent().siblings().removeClass('min');
-                                    }else{
-                                        $(this).parent().siblings().addClass('min');
-                                        $('.min > input.money_keyup').prop('readonly',true);
-                                    }
-
                                 });
 
 
@@ -885,23 +881,47 @@ $(document).ready(function () {
                                     var anticipated=$(this).val().replace(/\./g, '');
 
                                     var total = Math.floor(parseFloat(base) * alicuota);
-                                    var min_total=min_tribu*300;
+                                    var min_total=min_tribu*$('#tributo').val();
 
-                                    if (total <= parseFloat(anticipated) ) {
-                                        swal({
-                                            title: "Información",
-                                            text: "Verifique los datos ingresados, " +
-                                            "el monto anticipado no puede ser mayor," +
-                                            " que el calculo total de la base.",
-                                            icon: "info",
-                                            button: {
-                                                text: "Esta bien",
-                                                className: "blue-gradient"
-                                            },
-                                        });
-                                        band = true;
-                                        $(this).val('');
+                                    if (base !== '0') {
+
+                                        if (total <= parseFloat(anticipated) ) {
+                                            swal({
+                                                title: "Información",
+                                                text: "Verifique los datos ingresados, " +
+                                                "el monto anticipado no puede ser mayor," +
+                                                " que el calculo total de la base.",
+                                                icon: "info",
+                                                button: {
+                                                    text: "Esta bien",
+                                                    className: "blue-gradient"
+                                                },
+                                            });
+                                            band = true;
+                                            $(this).val('');
+                                        }
+
+                                    }else{
+                                        total=min_tribu*12*$('#tributo').val();
+
+                                        if (parseFloat(anticipated)>total ) {
+                                            swal({
+                                                title: "Información",
+                                                text: "Verifique los datos ingresados, " +
+                                                "el monto anticipado no puede ser mayor," +
+                                                " que el calculo total de la base.",
+                                                icon: "info",
+                                                button: {
+                                                    text: "Esta bien",
+                                                    className: "blue-gradient"
+                                                },
+                                            });
+                                            $(this).val('');
+                                        }
+
+
                                     }
+
 
 
                                 });
@@ -1501,18 +1521,25 @@ $(document).ready(function () {
             $('#details').append(template);
             M.textareaAutoResize($('#' + subr));
             M.updateTextFields();
+        }
+
+
             $('.base').change(function () {
                 var total=$(this).val();
 
                 var base=$(this).val();
                 var alicuota=$(this).parent().siblings('input.alicuota').val();
                 var min_tribu=$(this).parent().siblings('input.min_tribu').val();
-                var min_total=min_tribu*300;
+                var min_total=min_tribu*$('#tributo').val();
                 base= base.replace(/\./g, '');
 
+                var total_base = Math.floor(parseFloat(base) * alicuota);
+
+
+                console.log(min_total);
 
                 if($(this).val()!=0){
-                    if(parseFloat(base)<=min_total){
+                    if(parseFloat(total_base)<=min_total){
                         swal({
                             title: "Información",
                             text: "El monto de la base imponible("+ total +")  no " +
@@ -1554,7 +1581,7 @@ $(document).ready(function () {
             });
 
             M.updateTextFields();
-        }
+
 
 
 
