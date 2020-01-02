@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use App\UserCompany;
 use App\Payments;
 use App\FindCompany;
+use App\CiuCompany;
 use Alert;
 use Illuminate\Support\Facades\Mail;
 class CompaniesController extends Controller
@@ -71,8 +72,6 @@ class CompaniesController extends Controller
         $phone=$request->input('phone');
         $lat=$request->input('lat');
         $lng=$request->input('lng');
-
-
 
 
 
@@ -179,26 +178,20 @@ class CompaniesController extends Controller
 
         $ciu=$request->input('ciu');
         $parish=$request->input('parish');
+        $rif=$request->input('rif');
+        $name=$request->input('name');
         $address=$request->input('address');
-        $code_catastral=$request->input('code_catastral');
-        $numberEmployees=$request->input('number_employees');
+        $code_catastral=$request->input('codeCadastral');
+        $numberEmployees=$request->input('numberEmployees');
         $sector=$request->input('sector');
+        $openig_date=$request->input('opening_date');
         $phone=$request->input('phone');
-        $country_code=$request->input('country_code');
+        $country_code=$request->input('countryCodeCompany');
+        $license=$request->input('license');
         $id=$request->input('id');
-        $lat=$request->input('lat');
-        $lng=$request->input('lng');
+        //$lat=$request->input('lat');
+        //$lng=$request->input('lng');
         $image=$request->input('image');
-
-        $validate=$this->validate($request,[
-            'address'=>'required',
-            'parish'=>'required|integer',
-            'code_catastral'=>'required',
-            'sector' => 'required',
-            'number_employees' => 'required',
-            'phone'=>'required'
-        ]);
-
         $company=Company::find($id);
         if($image){
             $image_path_name=time().$image->getClientOriginalName();
@@ -207,21 +200,23 @@ class CompaniesController extends Controller
         }else{
             $company->image=null;
         }
-
-
-
         $company->address=strtoupper($address);
-        $company->lat=$lat;
-        $company->lng=$lng;
+        //$company->lat=$lat;
+        //$company->lng=$lng;
         $company->code_catastral=strtoupper($code_catastral);
         $company->parish_id=$parish;
         $company->sector = $sector;
+        $company->RIF = $rif;
+        $company->name = $name;
         $company->phone=$country_code.$phone;
         $company->number_employees = $numberEmployees;
+        $company->license = $license;
+        $company->opening_date=$openig_date;
         $company->update();
-        $company->ciu()->sync($ciu);
+        //$company->ciu()->sync($ciu);
+        $response=true;
 
-        return redirect('companies/details/'.$id);
+        return response()->json($response);
 
     }
 
@@ -302,6 +297,15 @@ class CompaniesController extends Controller
 
     }
 
+
+    public function changeStatus($id,$status){
+
+        $company=Company::find($id);
+        $company->status=$status;
+        $company->update();
+        return response()->json(['status'=>$status]);
+    }
+
     public function verifyRif($rif){
         $company = Company::where('RIF',$rif)->with('users')->get();
         if(!$company->isEmpty()){
@@ -358,9 +362,47 @@ class CompaniesController extends Controller
 
     public function addCiiu(Request $request)
     {
+        $company= new CiuCompany();
         $ciu=$request->input('ciu');
         $id=$request->input('id');
-        var_dump($ciu);
+        foreach ($ciu as $value){
+            $company->ciu_id=$value;
+            $company->company_id=$id;
+            $company->save();
+        }
+
+        return response()->json(true);
+
+    }
+
+
+    public function changeStatusCiiu($id_ciu,$company_id,$status){
+        $company=Company::find($company_id);
+        $ciuCompany=CiuCompany::where('ciu_id',$id_ciu)->where('company_id',$company_id)->get();
+
+        if(!$ciuCompany->isEmpty()){
+            $company=CiuCompany::find($ciuCompany[0]->id);
+            $company->status=$status;
+            $company->update();
+        }
+        return response()->json(['status'=>$status]);
+    }
+
+
+    public function updatedMap(Request $request){
+        $id=$request->input('id');
+        $lat=$request->input('lat');
+        $lng=$request->input('lng');
+
+
+        //update
+        $company=Company::find($id);
+        $company->lat=$lat;
+        $company->lng=$lng;
+        $company->update();
+
+
+        return response()->json(['status'=>'success']);
     }
 
 

@@ -3,6 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
@@ -24,7 +25,6 @@
                         </div>
                     @else
                     --}}
-
 
 
                         <div class="card-header center-align">
@@ -66,6 +66,7 @@
                             </div>
 
                           <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
+                          <input type="hidden" id="tributo" name="tributo" value="{{ $unid_tribu }}">
 
                             {{--   <div class="input-field col s12">
                                   <input type="hidden" name="fiscal_period" id="fiscal_period"
@@ -82,11 +83,13 @@
   -->--}}
                             <div class="divider"></div>
                             @foreach($company->ciu as $ciu)
+
+                                @if($ciu->pivot->status!=='disabled')
                                 <div class="ciu-company">
                                     <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                                     <input type="hidden" name="ciu_alicuota" class="ciu_alicuota"
                                            value="{{ $ciu->alicuota }}">
-                                    <input type="hidden" name="min_tribu_men[]" class="min_tribu_men" value="{{ $ciu->min_tribu_men}}">
+                                    <input type="hidden" name="min_tribu_men[]" class="min_tribu_men"  id="min_tribu_{{$ciu->code}}" value="{{ $ciu->min_tribu_men}}">
                                     <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). .">
                                         <i class="icon-confirmation_number prefix"></i>
                                         <input type="text" name="code" id="code" value="{{ $ciu->code }}" class="code" required readonly>
@@ -126,8 +129,7 @@
                                     </div>
                                 </div>
 
-
-
+                                @endif
                             @endforeach
                         </div>
                         <!--<div class="card-footer">
@@ -152,7 +154,22 @@
                                 <div id="declaracion" class="modal">
                                 <div class="modal-content left-align">
                                     <h5 class="center-align">Declaracción Jurada</h5>
-                                    <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y fehacientes, igualmente autorizo suficientemente al <b>Servicio Municipal de Administración Tributaria (SEMAT)</b> a efecto de verificar la veracidad de lo aquí declarado.<br>A los <b>{{\Carbon\Carbon::now()->format('d')}}</b> días del mes <b>{{\Carbon\Carbon::now()->format('m')}}</b> del año <b>{{\Carbon\Carbon::now()->format('Y')}}</b>.</p>
+                                    <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la
+                                        C.I.
+                                        N° <b>{{ Auth::user()->ci }}</b> y de domicilio en
+                                        <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los
+                                        datos
+                                        y cifras que aparecen en esta declaración son una copia fiel y exacta de los
+                                        datos
+                                        contenidos en los libros de contabilidad y que han sido llevados de acuerdos con
+                                        los
+                                        principios de contabilidad generalmente aceptados, igualmente autorizo
+                                        suficientemente al <b>Servicio Municipal de Administración Tributaria
+                                            (SEMAT)</b> a
+                                        efecto de verificar la veracidad de lo aquí declarado.<br>A los
+                                        <b>{{\Carbon\Carbon::now()->format('d')}}</b> días del mes
+                                        <b>{{\Carbon\Carbon::now()->format('m')}}</b> del año
+                                        <b>{{\Carbon\Carbon::now()->format('Y')}}</b>.</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="#!" class="modal-close btn btn-flat waves-effect waves-green">Cancelar</a>

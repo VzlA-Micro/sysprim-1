@@ -11,12 +11,24 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
                 </ul>
             </div>
+            @can('Declaración Anticipada - Actividad Económica')
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('payments.create',['company'=>session('company')]) }}" class="btn-app white green-text">
+                <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
-                    <span class="truncate">Declarar mi Actividad Económica</span>
+                    <span class="truncate">Declaración  ANTICIPADA - Actividad Económica</span>
                 </a>
             </div>
+            @endcan
+            @can('Declaración Definitiva - Actividad Económica')
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}" class="btn-app white green-text">
+                    <i class="icon-account_balance"></i>
+                    <span class="truncate">Declaración  DEFINITIVA - Actividad Económica</span>
+                </a>
+            </div>
+            @endcan
+
+
             {{-- <div class="col s12 m4 animated bounceIn">
                 <a href="" class="btn-app white amber-text">
                     <i class="icon-assistant"></i>
@@ -47,12 +59,14 @@
                     <span class="truncate">Declarar mis Multas</span>
                 </a>
             </div> --}}
+            @can('Historial de Pagos - Actividad Económica')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('payments.history',['company'=>session('company')]) }}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

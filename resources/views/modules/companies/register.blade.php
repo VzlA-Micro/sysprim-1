@@ -17,13 +17,13 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s6 m3">
-                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero"></i>
                             <select name="document_type" id="document_type">
                                 <option value="null" selected disabled>...</option>
                                 <option value="J">J</option>
                                 <option value="V">V</option>
                                 <option value="G">G</option>
-                                <option value="G">E</option>
+                                <option value="E">E</option>
                             </select>
                             <label for="document_type">Documento</label>
                         </div>
@@ -168,7 +168,7 @@
                         <div class="modal-content">
                             <h5 class="center-align">Declaracción Jurada</h5>
                             <div class="divider"></div>
-                            <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y de domicilio en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y que estoy totalmente autorizado para el registro de esta empresa.</p>
+                            <p>Yo, <b>{{ Auth::user()->name . " " . Auth::user()->surname }}</b> titular de la C.I. N° <b>{{ Auth::user()->ci }}</b> y  domiciliado en <b>{{ Auth::user()->address }}</b>, declaro bajo Fé de Juramento que todos los datos suministrados son  correctos y que estoy totalmente autorizado para el registro de esta empresa.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn waves-effect waves-light peach modal-close" id="button-company">

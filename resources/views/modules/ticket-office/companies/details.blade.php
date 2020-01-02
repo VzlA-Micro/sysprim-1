@@ -8,15 +8,17 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('tickOffice.companies.details',['id'=>$company->id]) }}">Detalles</a></li>
+                    <li class="breadcrumb-item"><a
+                                href="{{ route('tickOffice.companies.details',['id'=>$company->id]) }}">Detalles</a>
+                    </li>
                     <li class="breadcrumb-item"><a href="#!">{{ $company->name }}</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8">
-                <form action="#" method="post" class="card" enctype="multipart/form-data">
+                <form action="#" method="POST" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>{{$company->name}}</h5>
                     </div>
@@ -25,7 +27,9 @@
                     @endforeach
                     <div class="card-content row">
                         @csrf
-                        <input type="hidden" name="id" name="id" value="{{ $company->id }}">
+
+                        <input type="hidden" name="id" id="id" value="{{ $company->id }}">
+
                         <div class="input-field col s6 m3">
                             <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom"
                                data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
@@ -134,7 +138,7 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" value="{{ $company->numberPhone }}"
                                    class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números."
-                                   placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
+                                   placeholder="Ej. 1234567" maxlength="7" minlength="7" required disabled>
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-satellite prefix"></i>
@@ -153,13 +157,9 @@
                         <div class="input-field col s12 m6">
                             <i class="icon-directions prefix"></i>
                             <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea"
-                                      required readonly>{{ $company->address }}</textarea>
+                                      required disabled>{{ $company->address }}</textarea>
                             <label for="address">Dirección</label>
                         </div>
-
-                        <input id="lat" type="hidden" name="lat" value="{{ $company->lat }}">
-                        <input id="lng" type="hidden" name="lng" value="{{ $company->lng }}">
-
 
                         <div class="input-field col s12 m6">
                             <i class="icon-cloud_done prefix tooltipped" data-position="bottom"
@@ -176,28 +176,144 @@
                             </a>
                         </div>
                         @foreach($company->ciu as $ciu)
-                            <input type="hidden" name="ciu[]" id="ciu" class="ciu" value="{{$ciu->id}}">
-                            <div class="input-field col s12 m4">
-                                <i class="icon-assignment prefix"></i>
-                                <input type="text" name="search-ciu" id="ciu" disabled value="{{$ciu->code}}">
-                                <label>CIIU</label>
-                            </div>
-                            <div class="input-field col s10 m8">
-                                <i class="icon-text_fields prefix"></i>
-                                <label for="phone">Nombre</label>
-                                <textarea name="name-ciu" id="nombre" cols="30" rows="10" class="materialize-textarea"
-                                          disabled required>{{$ciu->name}}</textarea>
+                            <div class="Dciiu">
+                                <input type="hidden" name="ciu[]" id="id_{{$ciu->code}}" class="ciu"
+                                       value="{{$ciu->id}}">
+                                <input type="hidden" name="ciu[]" class="ciu_status" value="{{$ciu->pivot->status}}">
+
+                                <div class="input-field col s12 m4">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="name_ciu" id="ciu_{{$ciu->code}}" disabled
+                                           value="{{$ciu->code}}">
+                                    <label>CIIU</label>
+                                </div>
+
+                                <div class="input-field col s10 m6 nameCiiu">
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                    <textarea name="name-ciu" id="nombre_{{$ciu->code}}" cols="30" rows="10"
+                                              class="materialize-textarea" disabled required>{{$ciu->name}}</textarea>
+                                </div>
+                                @can('Habilitar/Deshabilitar CIIU Empresas')
+                                    @if($ciu->pivot->status=='disabled')
+                                        <div class="input-field col s12 m1" id="bDelete">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light red col s12  disabled-ciu-selected"
+                                                    value="{{$ciu->id}}" data-ciiu="enabled">
+
+                                                <i class="icon-do_not_disturb_alt "></i></button>
+
+                                        </div>
+                                    @else
+                                        <div class="input-field col s12 m1" id="bDelete">
+                                            <button type="button"
+                                                    class="btn waves-effect waves-light green col s12  disabled-ciu-selected"
+                                                    value="{{$ciu->id}}" data-ciiu="disabled">
+                                                <i class="icon-check"></i></button>
+                                        </div>
+                                    @endif
+                                @endcan
                             </div>
                         @endforeach
                         <div id="group-ciu">
 
                         </div>
-                    </div>
+                        <div class="input-field col s12 m6">
+                            <i class="icon-my_location prefix"></i>
+                            <input id="lat" type="text" name="lat" value="{{$company->lat}}" readonly>
+                            <label for="lat">Latitud</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <i class="icon-my_location prefix"></i>
+                            <input id="lng" type="text" name="lng" value="{{$company->lng}}" readonly>
+                            <label for="lng">Logintud</label>
+                        </div>
 
+                        <div class="input-field col s10 m4">
+                            <h5 class="right">Estado:</h5>
+
+                        </div>
+                        @if($company->status===null||$company->status==='enabled')
+                            <div class="input-field col s10 m6">
+                                <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
+                                >Habilitada
+                                    <i class="icon-check right"></i>
+                                </a>
+                            </div>
+
+
+                        @else
+                            <div class="input-field col s10 m6">
+                                <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
+                                >Deshabilitada
+                                    <i class="icon-refresh right"></i>
+                                </a>
+                            </div>
+
+                        @endif
+
+
+                        <div class="col l12">
+                            <div class="row">
+                                @can('Actualizar Empresas')
+                                    <div class="col s12 m3">
+                                        <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
+                                           id="update-company">
+                                            Actualizar
+                                            <i class="icon-refresh right"></i>
+                                        </a>
+                                    </div>
+                                @endcan
+                                @can('Añadir CIIU Empresas')
+                                    <div class="col s12 m3">
+                                        <a href="#" class="btn btn-large waves-effect waves-light blue col s12 "
+                                           id="add-ciiu">
+                                            Añadir CIIU
+                                            <i class="icon-add right"></i>
+                                        </a>
+                                    </div>
+                                @endcan
+                                @can('Habilitar/Deshabilitar Empresas')
+                                @if($company->status===null||$company->status==='enabled')
+                                    <div class="col s12 m3">
+                                        <button type="button"
+                                                class="btn btn-large waves-effect waves-light red col s12 "
+                                                id="company-status" value="disabled">
+                                            Deshabilitar Empresa
+                                            <i class="icon-sync_disabled right"></i>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="col s12 m3">
+                                        <button type="button"
+                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                id="company-status" value="enabled">
+                                            Activar Empresa
+                                            <i class="icon-check right"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                                @endcan
+                                
+                                @can('Cambiar Ubicacion - Empresa')
+                                    <div class="col s12 m3">
+                                        <button type="button"
+                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                id="change-maps">
+                                            Cambiar Ubicación
+                                            <i class="icon-map right"></i>
+                                        </button>
+                                    </div>
+                                @endcan
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
                 </form>
             </div>
-
-
             <div class="col m4">
                 <form action="#" id="form-user" method="post" class="card testimonial-card">
                     <div class="card-header center-align">
@@ -236,7 +352,7 @@
                         <div class="input-field col s12 m12 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
                             <i class="icon-person prefix"></i>
-                            <input id="name" type="text" name="name" class="validate"
+                            <input id="name_user" type="text" name="name" class="validate"
                                    pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
                                    title="Solo puede agregar letras (con acentos)."
                                    value="{{$company->users[0]->name }}" required readonly>
@@ -251,144 +367,114 @@
                                    value="{{$company->users[0]->surname}}" required readonly>
                             <label for="surname">Apellido</label>
                         </div>
-                        <div class="input-field col s6 >
-                            <i class=" icon-phone prefix tooltipped
-                        " data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251:
+                        <div class="input-field col s6 ">
+                            <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251:
                         Local"></i>
-                        <select name="country_code" id="country_code_company" required disabled>
-                            <option value="null" selected disabled>...</option>
-                            <option value="+58412" @if ($company->users[0]->operator=='+58412'){{"selected"}}@endif >
-                                (412)
-                            </option>
-                            <option value="+58414" @if ($company->users[0]->operator=='+58414'){{"selected"}}@endif>
-                                (414)
-                            </option>
-                            <option value="+58416" @if ($company->users[0]->operator=='+58416'){{"selected"}}@endif>
-                                (416)
-                            </option>
-                            <option value="+58424" @if ($company->users[0]->operator=='+58424'){{"selected"}}@endif>
-                                (424)
-                            </option>
-                            <option value="+58426" @if ($company->users[0]->operator=='+58426'){{"selected"}}@endif>
-                                (426)
-                            </option>
-                            <option value="+58251" @if ($company->users[0]->operator=='+58251'){{"selected"}}@endif>
-                                (251)
-                            </option>
-                        </select>
-                        <label for="country_code">Operadora</label>
-                    </div>
-                    <div class="input-field col s6 tooltipped" data-position="bottom"
-                         data-tooltip="Solo puede escribir números">
-                        <label for="phone">Teléfono</label>
-                        <input id="phone" type="tel" name="phone" value="{{ $company->users[0]->numberPhone }}"
-                               class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números."
-                               placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
-                    </div>
+                            <select name="country_code" id="country_code_user" required disabled>
+                                <option value="null" selected disabled>...</option>
+                                <option value="+58412" @if ($company->users[0]->operator=='+58412'){{"selected"}}@endif >
+                                    (412)
+                                </option>
+                                <option value="+58414" @if ($company->users[0]->operator=='+58414'){{"selected"}}@endif>
+                                    (414)
+                                </option>
+                                <option value="+58416" @if ($company->users[0]->operator=='+58416'){{"selected"}}@endif>
+                                    (416)
+                                </option>
+                                <option value="+58424" @if ($company->users[0]->operator=='+58424'){{"selected"}}@endif>
+                                    (424)
+                                </option>
+                                <option value="+58426" @if ($company->users[0]->operator=='+58426'){{"selected"}}@endif>
+                                    (426)
+                                </option>
+                                <option value="+58251" @if ($company->users[0]->operator=='+58251'){{"selected"}}@endif>
+                                    (251)
+                                </option>
+                            </select>
+                            <label for="country_code">Operadora</label>
+                        </div>
+                        <div class="input-field col s6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números">
+                            <label for="phone">Teléfono</label>
+                            <input id="phone_user" type="tel" name="phone" value="{{ $company->users[0]->numberPhone }}"
+                                   class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números."
+                                   placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
+                        </div>
 
 
-                    <div class="input-field col s12 tooltipped" data-position="bottom"
-                         data-tooltip="Ej: correo@mail.com">
-                        <i class="icon-mail_outline prefix"></i>
-                        <input id="email" type="email" name="email" class="validate"
-                               value="{{ $company->users[0]->email }}" required readonly>
-                        <label for="email">E-mail</label>
+                        <div class="input-field col s12 tooltipped" data-position="bottom"
+                             data-tooltip="Ej: correo@mail.com">
+                            <i class="icon-mail_outline prefix"></i>
+                            <input id="email" type="email" name="email" class="validate"
+                                   value="{{ $company->users[0]->email }}" required readonly>
+                            <label for="email">E-mail</label>
+                        </div>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
-        <div class="col s12 m4">
-            @can('Actualizar Empresas')
-            <div class="col s12 m12">
-                <a href="#" class="btn btn-large waves-effect waves-light green col s12 " id="update-company">
-                    Actualizar
-                    <i class="icon-refresh right"></i>
-                </a>
-            </div>
-            @endcan
-            @can('Añadir CIIU Empresas')
-            <div class="col s12 m12">
-                <a href="#" class="btn btn-large waves-effect waves-light blue col s12 " id="add-ciiu">
-                    Añadir CIIU
-                    <i class="icon-add right"></i>
-                </a>
-            </div>
-            @endcan
-            @can('Eliminar CIIU Empresas')
-            <div class="col s12 m12">
-                <a href="#" class="btn btn-large waves-effect waves-light red col s12 " id="delete-ciiu">
-                    Eliminar CIIU
-                    <i class="icon-delete right"></i>
-                </a>
-            </div>
-            @endcan
-            @can('Habilitar/Deshabilitar CIIU Empresas')
-            <div class="col s12 m12">
-                <a href="#" class="btn btn-large waves-effect waves-light orange col s12 " id="delete-ciiu">
-                    Deshabilitar CIIU
-                    <i class="icon-delete right"></i>
-                </a>
-            </div>
-            @endcan
-        </div>
-        <div class="col s12 location-container tooltipped" data-position="left"
+
+
+        <div class="col s12 location-container tooltipped" id="div-map" data-position="left"
              data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
         </div>
-        @can('Historial de Pago Empresas')
-        <div class="col s12 m12">
-            <div class="card">
-                <div class="card-header center-align">
-                    <h5>Historial de Pagos</h5>
-                </div>
-                <div class="card-content">
-                    <table class="centered highlight" id="history" style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Periodo Fiscal</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($company->taxesCompanies as $taxe)
+
+
+        @can('Historial de Pago - Empresas')
+            <div class="col s12 m12">
+                <div class="card">
+                    <div class="card-header center-align">
+                        <h5>Historial de Pagos</h5>
+                    </div>
+                    <div class="card-content">
+                        <table class="centered highlight" id="history" style="width: 100%">
+                            <thead>
                             <tr>
-                                <td>{{ $taxe->code }}</td>
-                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
-                                @if($taxe->status==='process')
-                                    <td>SIN CONCILIAR AÚN</td>
-                                    <td><a href="{{url('pdf/'.$taxe->id)}}"
-                                           class="btn orange waves-effect waves-light"><i
-                                                    class="icon-description left"></i>Descargar planilla.</a></td>
-                                @else
-                                    <td>
-                                        <button class="btn disabled">
-                                            <i class="icon-more_horiz left"></i>
-                                            {{ $taxe->status }}
-                                        </button>
-                                    </td>
-                                    @if($taxe->status==='verified')
-                                        <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                               class="btn indigo waves-effect waves-light"><i
-                                                        class="icon-pageview left"></i>Detalles</a>
-                                        </td>
+                                <th>Código</th>
+                                <th>Periodo Fiscal</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($company->taxesCompanies as $taxe)
+                                <tr>
+                                    <td>{{ $taxe->code }}</td>
+                                    <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
+                                    @if($taxe->status==='process')
+                                        <td>SIN CONCILIAR AÚN</td>
+                                        <td><a href="{{url('pdf/'.$taxe->id)}}"
+                                               class="btn orange waves-effect waves-light"><i
+                                                        class="icon-description left"></i>Descargar planilla.</a></td>
                                     @else
                                         <td>
-                                            <a href="{{url('pdf/'.$taxe->id)}}"
-                                               class="btn orange waves-effect waves-light"><i
-                                                        class="icon-description left"></i>Descargar planilla.</a>
+                                            <button class="btn disabled">
+                                                <i class="icon-more_horiz left"></i>
+                                                {{ $taxe->status }}
+                                            </button>
                                         </td>
+                                        @if($taxe->status==='verified')
+                                            <td>
+                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                   class="btn indigo waves-effect waves-light"><i
+                                                            class="icon-pageview left"></i>Detalles</a>
+                                            </td>
+                                        @else
+                                            <td>
+                                                <a href="{{url('pdf/'.$taxe->id)}}"
+                                                   class="btn orange waves-effect waves-light"><i
+                                                            class="icon-description left"></i>Descargar planilla.</a>
+                                            </td>
+                                        @endif
                                     @endif
-                                @endif
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
         @endcan
 
 

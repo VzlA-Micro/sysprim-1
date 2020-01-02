@@ -1,9 +1,15 @@
 $(document).ready(function () {
+<<<<<<< HEAD
     //var url="https://sysprim.com/";
     var url="http://172.19.50.253/";
      //var url="http://sysprim.com.devel/";
 
 
+=======
+    var url="https://sysprim.com/";
+    // var url="http://sysprim.com.devel/";
+    //var url="http://172.19.50.253/";
+>>>>>>> 8f0d152d0932981cfb9c5aeb842378ea47cd9c84
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
             verifyRIF();
@@ -514,7 +520,6 @@ $(document).ready(function () {
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
-
                     },
                     success: function (response) {
                         swal({
@@ -593,8 +598,6 @@ $(document).ready(function () {
             },
             success: function (response) {
 
-
-
                 if (response.status === 'error') {
                     swal({
                         title: "Información",
@@ -612,7 +615,6 @@ $(document).ready(function () {
                 } else {
                     if (response.status=== 'registered'){
                         var company=response.company[0];
-
                     }else{
                         findCompany(rif);
                     }

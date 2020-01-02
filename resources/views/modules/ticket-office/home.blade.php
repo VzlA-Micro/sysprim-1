@@ -6,17 +6,9 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                 </ul>
             </div>
-            @can('Gestionar Contribuyentes')
-            <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
-                    <i class="icon-record_voice_over"></i>
-                    <span class="truncate">Gestionar Contribuyentes</span>
-                </a>
-            </div>
-            @endcan
             @can('Gestionar Empresas')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">

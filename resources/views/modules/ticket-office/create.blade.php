@@ -11,7 +11,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Generar Planilla</a></li>
                 </ul>
@@ -38,13 +38,13 @@
                                 <input type="text" name="search-code" id="search-code" >
                                 <label for="search-code">Licencia O RIF</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m3">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="name_company" id="name_company" value="" readonly>
                                 <label for="name_company">Razon Social</label>
                             </div>
                             <input type="text" id="company_id" value="" name="company_id" class="hide">
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+"
@@ -52,22 +52,38 @@
                                        readonly>
                                 <label for="RIF">RIF</label>
                             </div>
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s12 m3">
                                 <i class="icon-directions prefix"></i>
                                 <input type="text" name="address" id="address" value="" readonly>
                                 <label for="address">Direccion</label>
                             </div>
-                            <div class="input-field col s12 m4 ">
+                            <div class="input-field col s12 m3 ">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="person" id="person" value="" readonly>
                                 <label for="person">Pers. Responsable</label>
                             </div>
-                            <div class="input-field col s12 m4">
+                            <div class="input-field col s6">
+                                <i class="icon-picture_as_pdf prefix"></i>
+                                <select name="type" id="type">
+                                    <option value="null" disabled selected>Seleciona una Opción</option>
+                                    <option value="definitive">Definitiva</option>
+                                    <option value="actuated">Anticipada</option>
+                                </select>
+                                <label for="type">Tipo de Planilla</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"
                                        value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
+
+
+
+
+
+
                         </div>
                         <div class="card-footer" style="padding-bottom: .2rem">
                             <div class="row">
@@ -93,7 +109,7 @@
                         </div>
                         <div class="card-content" id="details">
                             @csrf
-                            <input type="hidden" name="fiscal_period" id="fiscal_period" value="">
+
 
 
                             <div id="ciu">

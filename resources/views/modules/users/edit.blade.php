@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('users.read') }}">Ver Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="">Detalles</a></li>
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
@@ -31,7 +31,7 @@
                         <input type="hidden" value="{{$user->id}}" name="id" id="id">
                         <div class="input-field col s6 m3">
 
-                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
+                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required disabled>
                                 <option value="null">...</option>
                                 <option value="V" @if ($user->TypeDocument=='V'){{"selected"}}@endif>V</option>

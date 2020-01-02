@@ -12,7 +12,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
 
                     <li class="breadcrumb-item"><a href="#!">Pagos</a></li>
@@ -34,7 +34,7 @@
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Lote</th>
-                                <th>Terminal</th>
+                                <th>Ref o Código</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
                                 @can('Detalles Pagos')

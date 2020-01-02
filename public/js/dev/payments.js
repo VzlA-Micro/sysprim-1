@@ -1,12 +1,8 @@
 $('document').ready(function () {
-<<<<<<< HEAD
-    //var url = "https://sysprim.com/";
+//var url="https://sysprim.com/";
     var url="http://172.19.50.253/";
-=======
-    var url = "https://sysprim.com/";
-    //var url="http://172.19.50.253/";
+// var url="http://sysprim.com.devel/";
 
->>>>>>> 7f1887910d268285de2e104566acb98923ea8992
     $('.reconcile').click(function () {
         var status=$(this).data('status');
         var taxes_id=$('#taxes_id').val();
@@ -94,6 +90,82 @@ $('document').ready(function () {
 
     });
 
+
+
+    $('#change-status').click(function () {
+        var status=$(this).attr('data-status');
+        var id=$(this).val();
+
+
+
+        if(status==='verified'){
+            message='verificada';
+        }else{
+            message='cancelada';
+        }
+
+        swal({
+            title: "Información",
+            text: '¿Estas seguro de realizar esta acción?, El estado de este pago cambiara  el status a "'+ message+'", asi como para la planilla no sera valido este pago.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            icon: "warning",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "green-gradient"
+
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (aceptar) {
+
+            if(aceptar){
+                $.ajax({
+                    method: "GET",
+                    url: url + '/payments/change-status/'+id +'/'+status,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        swal({
+                            title: "!Bien Hecho",
+                            text: 'El pago ha sido '+ response.status +' con éxito.',
+                            icon: "info",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            if(accept){
+                               location.reload();
+                            }
+                        });
+
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $('#license').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+            }
+        });
+
+
+    });
 
 /*
         $.ajax({

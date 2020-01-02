@@ -39,7 +39,6 @@ $(document).ready(function () {
                     .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
             });
         }
-
     });
 
     function resetValue() {
@@ -135,6 +134,22 @@ $(document).ready(function () {
 
     $('#accept').click(function () {
         var band = false;
+
+        if($('#fiscal_period').val()===null){
+            band=true;
+            if($(this).val()===''){
+                swal({
+                    title: "Información",
+                    text: "Selecione un periodo fiscal valido.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+        }
+
         $('.base').each(function () {
             if ($(this).val() === "") {
                 swal({
@@ -168,20 +183,7 @@ $(document).ready(function () {
             }
         });
 
-        if($('#fiscal_period').val()===null){
-            band=true;
-            if($(this).val()===''){
-                swal({
-                    title: "Información",
-                    text: "Selecione un periodo fiscal valido.",
-                    icon: "info",
-                    button:{
-                        text: "Esta bien",        
-                        className: "blue-gradient"
-                    },
-                });
-            }
-        }
+
 
         if (!band) {
             verify();
@@ -190,38 +192,81 @@ $(document).ready(function () {
 
     function verify() {
         var band = false;
-
+        var tributo=$('#tributo').val();
         $('.code').each(function () {
             var code = $(this).val();
-            console.log(code);
             var base = $('#base_' + code).val();
             var alicuota = $('#alicuota_' + code).val();
             var deductions = $('#deductions_' + code).val();
             var withholdings = $('#withholdings_' + code).val();
             var fiscal_credits = $('#fiscal_credits_' + code).val();
+            var min_tribu = $('#min_tribu_'+code).val();
+
+
 
             base = base.replace(/\./g, '');
-            deductions = deductions.replace(/\./g, '');
-            withholdings = withholdings.replace(/\./g, '');
-            fiscal_credits = fiscal_credits.replace(/\./g, '');
 
-            var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
-            var total = Math.floor(parseFloat(base) * alicuota);
-            if (total !== 0) {
-                if (total_deductions >= total) {
-                    swal({
-                        title: "Información",
-                        text: "Verifique los datos ingresados.",
-                        icon: "info",
-                        button:{
-                            text: "Esta bien",        
-                            className: "blue-gradient"
-                        },
-                    });
-                    band = true;
+
+            if(deductions!==undefined) {
+                deductions = deductions.replace(/\./g, '');
+                withholdings = withholdings.replace(/\./g, '');
+                fiscal_credits = fiscal_credits.replace(/\./g, '');
+
+                var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
+                var total = Math.floor(parseFloat(base) * alicuota);
+                var min_total=min_tribu*tributo;
+
+
+
+
+
+                if (total !== 0) {
+                    if (total_deductions >= total) {
+                        swal({
+                            title: "Información",
+                            text: "Verifique los datos ingresados.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        band = true;
+                    }
+                    if(min_total>total){
+                        swal({
+                            title: "Información",
+                            text: "El monto de la base imponible no " +
+                            "puede ser menor que el minimo tributable " +
+                            "por este CIIU,en caso de ser menor debe declarar " +
+                            "como base imponible  0. Ord. Act. Económica Art.44",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        }).then(function () {
+                            $('.deductions').each(function () {
+
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
+                            $('.withholding').each(function () {
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
+                            $('.credits_fiscal').each(function () {
+                                if ($(this).val() == '0') {
+                                    $(this).val('');
+                                }
+                            });
+                        });
+                        band = true;
+                    }
                 }
             }
-
         });
 
 
@@ -249,7 +294,6 @@ $(document).ready(function () {
         $('#payments').val($(this).attr('data-payments'));
         $('#register-taxes')[0].submit();
     });
-
 
     $('.type_payment_event').click(function () {
         $('#two-payments').addClass('disabled');

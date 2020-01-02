@@ -31,7 +31,12 @@ function isMobile(){
 
 $('document').ready(function () {
 
+<<<<<<< HEAD
 /*
+=======
+    
+
+>>>>>>> 8f0d152d0932981cfb9c5aeb842378ea47cd9c84
 
 /*    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
     $('#eur').html('Euros '+0+'<i class="fas fa-euro-sign left"></i>');

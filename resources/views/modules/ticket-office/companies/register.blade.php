@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('tickOffice.companies.register') }}">Registrar Empresa</a></li>
                 </ul>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="user_id" value="" id="user_id">
-                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extranjero">
                                 <i class="icon-public prefix"></i>
                                 <select name="nationality" id="nationality" required>
                                     <option value="null" selected disabled>...</option>

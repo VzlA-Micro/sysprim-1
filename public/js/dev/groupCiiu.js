@@ -1,13 +1,8 @@
 $('document').ready(function () {
-<<<<<<< HEAD
-    //var url="https://sysprim.com/";
+  //var url="https://sysprim.com/";
     var url="http://172.19.50.253/";
-=======
-    var url="https://sysprim.com/";
-    //var url="http://172.19.50.253/";
+   // var url="http://sysprim.com.devel/";
 
-
->>>>>>> 7f1887910d268285de2e104566acb98923ea8992
     $('#groupCiiu').on('submit',function (e) {
         e.preventDefault();
         $.ajax({

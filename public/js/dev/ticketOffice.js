@@ -1,7 +1,9 @@
 $(document).ready(function () {
-    //var url = "https://sysprim.com/";
-    var url="http://172.19.50.253/";
 
+
+    //var url="https://sysprim.com/";
+    var url="http://172.19.50.253/";
+   // var url="http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
@@ -74,13 +76,15 @@ $(document).ready(function () {
                                 text: "Listo",
                                 className: "green-gradient"
                             },
-                        }).then(function (accept) {
 
+                        }).then(function (accept) {
+                            $('#modal-tick').modal('close');
                             if (accept) {
                                 $('#two').removeClass('disabled');
                                 $('ul.tabs').tabs();
                                 $('ul.tabs').tabs("select", "details-tab");
                             }
+
                         });
 
                         $('#fiscal_period').val(taxe.fiscal_period);
@@ -427,8 +431,18 @@ $(document).ready(function () {
         var band=false;
 
 
-        console.log($('.base').val());
+        $('.anticipated').each(function () {
+            if($(this).val()==="") {
+                swal({
+                    title: "Información",
+                    text: "La base anticipada  no puede estar vacio, por favor ingrese un monto válido.",
+                    icon: "info",
+                    button: "Ok",
+                });
 
+                band=true;
+            }
+        });
 
         $('.base').each(function () {
             if($(this).val()==="") {
@@ -459,6 +473,9 @@ $(document).ready(function () {
                 M.updateTextFields();
             }
         });
+
+
+
 
 
 
@@ -630,9 +647,9 @@ $(document).ready(function () {
     $('#fiscal_period').change(function () {
         var company = $('#company_id').val();
         var fiscal_period = $('#fiscal_period').val();
+        var type=$('#type').val()
 
-
-        console.log(company);
+        if(type!=null){
         if(company!==''){
             if (fiscal_period !== '') {
                 $.ajax({
@@ -691,8 +708,270 @@ $(document).ready(function () {
                 },
             });
         }
+        }else{
+            $('#fiscal_period').val('');
+            swal({
+                title: "Información",
+                text: 'Debe Selecionar el tipo de planilla a generar',
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        }
+    });
 
 
+
+
+    $('#type').change(function () {
+        var type=$(this).val();
+        var company = $('#company_id').val();
+
+        if(company!=='') {
+            if (type == 'definitive') {
+                $.ajax({
+                    method: "GET",
+                    url: url + "tick-office/taxes/definitive/verify/"+company,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        if (response.status === 'verified') {
+                            swal({
+                                title: "Información",
+                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declración definitiva de este anio.',
+                                icon: "info",
+                                button: {
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
+                            });
+
+                        } else if (response.status === 'process') {
+                            swal({
+                                title: "Información",
+                                text: 'La empresa ' + $('#name_company').val() + ' tiene una declaracion definitiva en proceso.',
+                                icon: "info",
+                                button: {
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
+                            })
+                        }else if(response.status==='new'){
+                            $('#fiscal_period').val('2019-01-01');
+                            $('#fiscal_period').attr('readonly','readonly');
+
+                            $('#details').html('');
+
+
+                            for (var i = 0; i < ciu.length; i++) {
+                                var subr = ciu[i].name.substr(0, 3);
+                                $('ul.tabs').tabs();
+                                var template = `<div class="row pt-2">
+                      
+                    
+                               <input type="hidden" id="min_tribu_men_${ciu[i].code}" name="min_tribu_men[]" class="min_tribu" value="${ciu[i].min_tribu_men}">
+                               <input type="hidden" id="alicuota_${ciu[i].code}" name="alicuota[]" class="alicuota" value="${ciu[i].alicuota}">
+                 
+                                <input type="text"  name="ciu_id[]" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="search-ciu" id="ciu"  value="${ciu[i].code}">
+                                    <label>CIIU</label>
+                                </div>
+                                <div class="input-field col s10 m6"  >
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " >${ciu[i].name}</textarea>
+                                </div>
+                                
+                               <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                    </i>   
+                                    <input type="text" name="base[]" id="base_${subr}" class="validate money money_keyup base " value="">
+                                    <label for="base_${subr}">Base Imponible(Bs) ANUAL</label>
+                               </div>
+                              
+                              
+                              <div class="input-field col s12 m6">
+                     
+                                    <i class="prefix">
+                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                    </i>   
+                                    <input type="text" name="anticipated[]" id="anticipated_${subr}" class="validate money money_keyup anticipated " value="">
+                                    <label for="anticipated_${subr}">Base Anticipada(Bs) ANUAL</label>
+                              </div> 
+                                <input type="hidden" value="definitive" name="typeTaxes">
+                                
+                                <input type="hidden" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <input type="hidden" name="deductions[]" id="deductions_${subr}" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <input type="hidden" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                           
+                         
+                           
+       
+                   
+                       </div>
+          
+            
+                      <div class="divider" style="height:3px !important;">
+                      
+                      </div>
+                          
+                     `;
+
+
+
+                                $('#details').append(template);
+                                M.textareaAutoResize($('#' + subr));
+                                M.updateTextFields();
+
+
+
+                                $('.base').change(function () {
+                                    var total=$(this).val();
+
+                                    var base=$(this).val();
+                                    var alicuota=$(this).parent().siblings('input.alicuota').val();
+                                    var min_tribu=$(this).parent().siblings('input.min_tribu').val();
+                                    var min_total=min_tribu*300;
+                                    base= base.replace(/\./g, '');
+
+
+                                    if(base<=min_total){
+                                        swal({
+                                            title: "Información",
+                                            text: "El monto de la base imponible no " +
+                                            "puede ser menor que el minimo tributable " +
+                                            "por este CIIU,en caso de ser menor debe declarar " +
+                                            "como base imponible  0. Ord. Act. Económica Art.44",
+                                            icon: "info",
+                                            button: {
+                                                text: "Esta bien",
+                                                className: "blue-gradient"
+                                            },
+                                        });
+                                    }
+
+
+
+
+                                    if($(this).val()!=0){
+                                        console.log($(this).val());
+                                        $('.min > input.money_keyup').prop('readonly',false);
+                                        $(this).parent().siblings().removeClass('min');
+                                    }else{
+                                        $(this).parent().siblings().addClass('min');
+                                        $('.min > input.money_keyup').prop('readonly',true);
+                                    }
+
+                                });
+
+
+
+                                $('.anticipated').change(function () {
+                                    var  base=$(this).parent().siblings().find('input.base').val();
+
+                                    var alicuota=$(this).parent().siblings('input.alicuota').val();
+
+                                    var min_tribu=$(this).parent().siblings('input.min_tribu').val();
+
+                                    base= base.replace(/\./g, '');
+
+                                    var anticipated=$(this).val().replace(/\./g, '');
+
+                                    var total = Math.floor(parseFloat(base) * alicuota);
+                                    var min_total=min_tribu*300;
+
+                                    if (total <= parseFloat(anticipated) ) {
+                                        swal({
+                                            title: "Información",
+                                            text: "Verifique los datos ingresados, " +
+                                            "el monto anticipado no puede ser mayor," +
+                                            " que el calculo total de la base.",
+                                            icon: "info",
+                                            button: {
+                                                text: "Esta bien",
+                                                className: "blue-gradient"
+                                            },
+                                        });
+                                        band = true;
+                                        $(this).val('');
+                                    }
+
+
+                                });
+
+
+
+
+
+
+                                $('input[type="text"].money_keyup').on('keyup', function (event) {
+                                    var total=$(this).val();
+                                    if($(this).val()==0&&$(this).val().toString().length>=2){
+                                        $(this).val('');
+                                    }else if($(this).val().toString().length>=2&&total[0]==0){
+                                        $(this).val('');
+                                    }else{
+                                        $(event.target).val(function (index, value) {
+                                            return value.replace(/\D/g, "")
+                                                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                                                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                                        });
+                                    }
+                                });
+
+                                M.updateTextFields();
+
+
+                            }
+
+
+
+                            M.updateTextFields();
+
+                        }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $('#license').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                });
+
+
+            }else{
+                $('#fiscal_period').removeAttr('readonly','');
+                $('#fiscal_period').val('');
+                $('#details').html('');
+                generarCiiu();
+
+
+
+
+
+
+
+
+            }
+        }
 
     });
 
@@ -724,114 +1003,17 @@ $(document).ready(function () {
 
                         var company = response.company[0];
                         var user = response.company[0].users[0];
-                        var ciu = response.company[0].ciu;
+                        ciu = response.company[0].ciu;
+
                         $('#name_company').val(company.name);
                         $('#address').val(company.address);
                         $('#RIF').val(company.RIF);
                         $('#company_id').val(company.id);
                         $('#person').val(user.name + " " + user.surname);
                         M.updateTextFields();
-                        for (var i = 0; i < ciu.length; i++) {
-
-                            var subr = ciu[i].name.substr(0, 3);
-                            $('ul.tabs').tabs();
-
-                            var template = `<div class="row pt-2">
-                      
-                               <input type="text" id="min_tribu_men" name="min_tribu_men[]" class="hide" value="${ciu[i].min_tribu_men}">
-                                <input type="text"  name="ciu_id[]" id="ciu_id" class="ciu hide" value="${ciu[i].id}">
-                                <div class="input-field col s12 m6">
-                                    <i class="icon-assignment prefix"></i>
-                                    <input type="text" name="search-ciu" id="ciu"  value="${ciu[i].code}">
-                                    <label>CIIU</label>
-                                </div>
-                                <div class="input-field col s10 m6"  >
-                                    <i class="icon-text_fields prefix"></i>
-                                    <label for="phone">Nombre</label>
-                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " >${ciu[i].name}</textarea>
-                                </div>
-                                
-                               <div class="input-field col s12 m6">
-                                    <i class="prefix">
-                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
-                                    </i>   
-                                    <input type="text" name="base[]" id="base_${subr}" class="validate money money_keyup base " value="">
-                                    <label for="base_${subr}">Base Imponible</label>
-                                </div>
-                                
-                                                        
-                              <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
-                                </i>   
-                                <input type="text" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="withholdings_${subr}">Retenciones</label>
-                              </div>                               
-                             
-                     
-                             <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
-                                </i>   
-                                <input type="text" name="deductions[]" id="deductions_${subr}" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="deductions_${subr}">Deducciones</label>
-                            </div>
-                             
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
-                                </i>   
-                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                                <label for="fiscal_credits_${subr}">Creditos Fiscales</label>
-                            </div>
-                           
-                 
-                   
-                       </div>
-          
-            
-                      <div class="divider" style="height:3px !important;"></div>
-                          
-                       `;
 
 
-
-                            $('#details').append(template);
-                            M.textareaAutoResize($('#' + subr));
-                            M.updateTextFields();
-                            $('.base').change(function () {
-                                var total=$(this).val();
-                                if($(this).val()!=0){
-                                    console.log($(this).val());
-                                    $('.min > input.money_keyup').prop('readonly',false);
-                                    $(this).parent().siblings().removeClass('min');
-                                }else{
-                                    $(this).parent().siblings().addClass('min');
-                                    $('.min > input.money_keyup').prop('readonly',true);
-                                }
-
-                            });
-
-
-                            $('input[type="text"].money_keyup').on('keyup', function (event) {
-                                var total=$(this).val();
-                                if($(this).val()==0&&$(this).val().toString().length>=2){
-                                    $(this).val('');
-                                }else if($(this).val().toString().length>=2&&total[0]==0){
-                                    $(this).val('');
-                                }else{
-                                    $(event.target).val(function (index, value) {
-                                        return value.replace(/\D/g, "")
-                                            .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-                                    });
-                                }
-                            });
-
-                            M.updateTextFields();
-
-
-                        }
+                        generarCiiu();
                     }
 
 
@@ -855,6 +1037,11 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+
+
 
 
     $('#general-next').click(function () {
@@ -1207,6 +1394,12 @@ $(document).ready(function () {
 
 
 
+
+
+
+
+
+
     function ConfirmtypePayment() {
         swal({
             title: "Información",
@@ -1238,6 +1431,134 @@ $(document).ready(function () {
         });
     }
 
+
+
+    function  generarCiiu() {
+
+
+        for (var i = 0; i < ciu.length; i++) {
+            var subr = ciu[i].name.substr(0, 3);
+            $('ul.tabs').tabs();
+            var template = `<div class="row pt-2">
+                      
+                               <input type="text" id="min_tribu_men_${ciu[i].code}" name="min_tribu_men[]" class="hide min_tribu" value="${ciu[i].min_tribu_men}">
+                               <input type="text" id="alicuota_${ciu[i].code}" name="" class="hide alicuota" value="${ciu[i].alicuota}">
+                               
+                                <input type="text"  name="ciu_id[]" id="ciu_id_${ciu[i].code}" class="ciu hide" value="${ciu[i].id}">
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-assignment prefix"></i>
+                                    <input type="text" name="search-ciu" id="ciu_${ciu[i].code}"  value="${ciu[i].code}">
+                                    <label>CIIU</label>
+                                </div>
+                                <div class="input-field col s10 m6"  >
+                                    <i class="icon-text_fields prefix"></i>
+                                    <label for="phone">Nombre</label>
+                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " >${ciu[i].name}</textarea>
+                                </div>
+                                
+                               <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                    </i>   
+                                    <input type="text" name="base[]" id="base_${ciu[i].code}" class="validate money money_keyup base " value="">
+                                    <label for="base_${ciu[i].code}">Base Imponible</label>
+                                </div>
+                                
+                                                        
+                              <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="withholding[]" id="withholdings_${ciu[i].code}" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="withholdings_${subr}">Retenciones</label>
+                              </div>                               
+                             
+                     
+                             <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="deductions[]" id="deductions_${ciu[i].code}" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="deductions_${subr}">Deducciones</label>
+                            </div>
+                             
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                </i>   
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_${ciu[i].code}" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                <label for="fiscal_credits_${subr}">Creditos Fiscales</label>
+                            </div>
+                           
+                             <input type="hidden" value="actuated" name="typeTaxes">
+                   
+                       </div>
+          
+            
+                      <div class="divider" style="height:3px !important;"></div>`;
+
+
+            $('#details').append(template);
+            M.textareaAutoResize($('#' + subr));
+            M.updateTextFields();
+            $('.base').change(function () {
+                var total=$(this).val();
+
+                var base=$(this).val();
+                var alicuota=$(this).parent().siblings('input.alicuota').val();
+                var min_tribu=$(this).parent().siblings('input.min_tribu').val();
+                var min_total=min_tribu*300;
+                base= base.replace(/\./g, '');
+
+
+                if($(this).val()!=0){
+                    if(parseFloat(base)<=min_total){
+                        swal({
+                            title: "Información",
+                            text: "El monto de la base imponible("+ total +")  no " +
+                            "puede ser menor que el minimo tributable " +
+                            "por este CIIU,en caso de ser menor debe declarar " +
+                            "como base imponible  0. Ord. Act. Económica Art.44",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        $(this).val('');
+                    }
+
+                    $('.min > input.money_keyup').prop('readonly',false);
+                    $(this).parent().siblings().removeClass('min');
+                }else{
+                    $(this).parent().siblings().addClass('min');
+                    $('.min > input.money_keyup').prop('readonly',true);
+                }
+
+            });
+
+
+            $('input[type="text"].money_keyup').on('keyup', function (event) {
+                var total=$(this).val();
+                if($(this).val()==0&&$(this).val().toString().length>=2){
+                    $(this).val('');
+                }else if($(this).val().toString().length>=2&&total[0]==0){
+                    $(this).val('');
+                }else{
+                    $(event.target).val(function (index, value) {
+                        return value.replace(/\D/g, "")
+                            .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                    });
+                }
+            });
+
+            M.updateTextFields();
+        }
+
+
+
+    }
 
 
 });

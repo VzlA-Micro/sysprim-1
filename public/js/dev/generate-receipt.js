@@ -1,6 +1,58 @@
 $('document').ready(function () {
+
     //var url = "https://sysprim.com/";
      var url="http://172.19.50.253/";
+
+    //var url = "https://sysprim.com/";
+    // var url = "http://sysprim.com.devel/";
+
+    var companies_id='';
+    var type_taxes='';
+
+
+
+
+    $('.payroll').change(function () {
+        if(companies_id!==''){
+            if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
+                 companies_id=$(this).attr('data-company');
+            }else if ($(this).attr('data-company')!=companies_id){
+                swal({
+                    title: "Información",
+                    text: "Las planillas selecionadas no pertenecen a la misma empresa.",
+                    icon: "info",
+                    button: "Ok",
+                });
+                $(this).prop('checked', false);
+            }
+        }else{
+            companies_id=$(this).attr('data-company');
+        }
+
+
+        if(type_taxes!==''){
+
+            if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
+                type_taxes=$(this).attr('data-taxes');
+            }else if ($(this).attr('data-taxes')!=type_taxes){
+                swal({
+                    title: "Información",
+                    text: "Las planillas selecionadas deben ser del mismo tipo.",
+                    icon: "info",
+                    button: "Ok",
+                });
+
+                $(this).prop('checked', false);
+            }
+        }else{
+            type_taxes=$(this).attr('data-taxes');
+        }
+
+
+
+    });
+
+
 
 
     $('#select-next').click(function () {
@@ -24,7 +76,9 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    console.log(response);
+
+
+                    console.log(acum);
                     $('.taxes_id').each(function () {
                         $(this).val(acum);
                     });
@@ -73,11 +127,6 @@ $('document').ready(function () {
                 button: "Ok",
             });
         }
-
-
-
-
-
 
     });
 
@@ -407,7 +456,7 @@ $('document').ready(function () {
     });
 
     function generateReceipt() {
-        var taxes_id=$('#taxes_id').val();
+        var taxes_id=$('.taxes_id').val();
         window.open(url + 'ticket-office/generate-receipt/' +taxes_id, "RECIBO DE PAGO", "width=500, height=600");
     }
 
@@ -540,7 +589,8 @@ $('document').ready(function () {
                 success: function (response) {
                         console.log(response);
 
-                       var taxes_id=$('#taxes_id').val();
+
+                        var taxes_id=$('.taxes_id').val();
                         swal({
                             title: "¡Bien hecho!",
                             text: "Planilla ingresa y registrada con éxito.",
@@ -666,7 +716,7 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-                        var taxes_id = $('#taxes_id').val();
+                        var taxes_id = $('.taxes_id').val();
 
                         console.log(response);
                         if (response.status === 'process') {

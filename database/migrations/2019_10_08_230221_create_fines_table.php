@@ -17,6 +17,8 @@ class CreateFinesTable extends Migration
             $table->increments('id');
             $table->text('name');
             $table->integer('cant_unid_tribu');
+            $table->string('branch',20);
+            $table->text('description');
             $table->timestamps();
         });
     }

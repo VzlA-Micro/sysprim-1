@@ -16,11 +16,9 @@ class CreateModelsTable extends Migration
         Schema::create('models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',40);
-            $table->date('year');
-            $table->string('type_vehicle',40);
-            $table->float('value',40);
+            $table->string('year');
             $table->integer('brand_id')->unsigned();
-            $table->foreign('brand_id')->references('id')->on('models');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();
         });
 

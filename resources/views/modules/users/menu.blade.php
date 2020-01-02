@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
                 </ul>
             </div>
             @can('Registar Usuario')

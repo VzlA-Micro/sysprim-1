@@ -9,16 +9,22 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment', 'bankName','statusName'];
+    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
-            ->withPivot('ciu_id','fiscal_credits','withholding','deductions','base','unid_tribu','mora','tax_rate','interest');
+            ->withPivot('ciu_id','fiscal_credits','withholding',
+                'deductions','base','unid_tribu','mora','tax_rate',
+                'interest','base_anticipated');
     }
 
     public function companies(){
         return $this->belongsToMany('App\Company','company_taxes')
             ->withPivot('company_id');
+    }
+
+    public function vehicles(){
+        return $this->belongsToMany('App\VehiclesTaxe','taxe_id');
     }
 
 
@@ -32,6 +38,16 @@ class Taxe extends Model implements Auditable {
 
 
     }
+
+
+    public function getTypeTaxesAttribute(){
+        if($this->type=='definitive'){
+            return $this->typeTaxes='DEFINITIVA';
+        }else{
+            return $this->typeTaxes='ANTICIPADA';
+        }
+    }
+
 
     public function getStatusNameAttribute(){
         if($this->status=='process'){

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name') }} - Alcaldía de Iribarren</title>
-    <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/materialize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-components.css') }}">
     <link rel="stylesheet" href="{{ asset('css/material-gradient.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons/style.css') }}">
@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono_color.png') }}">
+
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">

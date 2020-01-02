@@ -63,6 +63,7 @@
     </div>
 
 
+
 		<h4 style="text-align:center">DEPOSITO TRIBUTARIA MUNICIPAL</h4>
 
     <table style="width: 100%; border-collapse: collapse;">
@@ -354,8 +355,7 @@
 
 
 	<table style="width: 100%;margin-bottom:-30px;">
-		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
-
+		@if($taxes[0]->taxes->status!=='verified')
 
 			<tr>
 
@@ -402,7 +402,7 @@
 
 	<table style="width: 100%;">
 
-		@if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
+		@if($taxes[0]->taxes->status!=='verified')
 		<tr>
 			<td style="width: 80%;">
 				<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->taxes->id))) !!} " style="float: left;top: -1cm;right: 800px !important;left: 900px; position: absolute">
@@ -412,7 +412,7 @@
 		@else
 			<tr>
 				<td style="width: 80%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period)) !!} " >
+					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->created_at)) !!} " >
 				</td>
 			</tr>
 		@endif

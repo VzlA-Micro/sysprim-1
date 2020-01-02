@@ -68,6 +68,35 @@
                 </form>
             </div>
         </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="alert alert-warning animated fadeIn">
+                    <span>Para una mejor experiencia de usuario, recomendamos utilizar los siguientes navegadores:</span><br><br>
+                    <span style="font-size: 22px"><i class="fab fa-firefox"></i> Mozilla Firefox 65.0+</span><br>
+                    <span style="font-size: 22px"><i class="fab fa-chrome"></i> Google Chrome 62.0+</span><br><br>
+                    <span><b>Nota:</b> <b>NO</b> se recomienda usar <i class="fab fa-internet-explorer"></i> <b>Internet Explorer</b> para esta aplicación.</span>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="row" id="timer">
+            <div class="col s12">
+                <h4>
+                    <a href="{{ route('register') }}" class="black-text text-darken-4"><marquee behavior="" direction="">Registrate en SYSPRIM antes de:</marquee></a>
+                </h4>
+            </div>
+            <div class="col s3" id="days"></div>
+            <div class="col s3" id="hours"></div>
+            <div class="col s3" id="minutes"></div>
+            <div class="col s3" id="seconds"></div>
+            <!-- <div class="col s12">
+                <div >
+                    <div id="days"></div>
+                    <div id="hours"></div>
+                    <div id="minutes"></div>
+                    <div id="seconds"></div>
+                </div>
+            </div> -->
+        </div> --}}
     </ul>
     @endif
 </header>
