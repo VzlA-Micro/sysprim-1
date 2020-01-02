@@ -114,7 +114,7 @@
               <!-- COPY -->
               <tr>
                 <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                  <p style="margin: 0;">Sr(a). <b>Nombre de Persona</b>, se le notifica que se le generó una multa por pago extemporaneo, para cada período declarado fuera del lapso establecido debe cancelar previamente la declaración de impuesto de Actividad Económica anticipada y seguidamente la multa generada. Acudir al SEMAT para pagar la multa.</p>
+                  <p style="margin: 0;">Sr(a). <b><?php echo $name; ?></b>, se le notifica que se le generó una multa por pago extemporaneo, para cada período declarado fuera del lapso establecido debe cancelar previamente la declaración de impuesto de Actividad Económica anticipada y seguidamente la multa generada. Acudir al SEMAT para pagar la multa.</p>
                   <p>Recuerda que: <b>¡No deber, es tu Deber!</b> </p>
                   <p style="text-align: center;">
                     <img src="https://sysprim.com/images/jonas_logo.jpg" style="width: 120px; height: 90px;" alt="">
@@ -130,7 +130,7 @@
                       <td bgcolor="" align="center" style="padding: 20px 30px 60px 30px;">
                         <table border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                              <td align="center" style="border-radius: 3px;" bgcolor="#a51d1d"><a href="https://sysprim.com/companies/carnet/<?php echo $id ?>" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #a51d1d; display: inline-block;">Descargar RIM  <i class="fas fa-download"></i></a></td>
+                              <td align="center" style="border-radius: 3px;" bgcolor="#a51d1d"><a href="https://sysprim.com/companies/carnet/" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #a51d1d; display: inline-block;">Descargar RIM  <i class="fas fa-download"></i></a></td>
                           </tr>
                         </table>
                       </td>

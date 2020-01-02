@@ -50,6 +50,7 @@ class TaxesMonth{
         return $mount_pay;
 
 
+
         /*if ($companyTaxes->isEmpty()) {//si no tiene pagos
 
             $fiscal_period = Carbon::parse('2019-12-01');//utilizo la fecha que se creo el registro como referencia si esta atrasado o no

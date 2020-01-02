@@ -447,14 +447,11 @@ class CompanyTaxesController extends Controller
 
             $subject = "MULTA-SEMAT";
             $for = \Auth::user()->email;
-            $pdf = \PDF::loadView('modules.fines.recepit-act-eco',['fines'=>$fines,'company'=>$company])->setPaper('a4');
 
-
-            Mail::send('mails.fines-acteco', [], function ($msj) use ($subject, $for, $pdf) {
+            Mail::send('mails.resolucion', ['name'=>$company->name], function ($msj) use ($subject, $for) {
                 $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
                 $msj->subject($subject);
                 $msj->to($for);
-                $msj->attachData($pdf->output(), time() . "multa.pdf");
             });
 
 
