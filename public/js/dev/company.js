@@ -1,9 +1,7 @@
 $(document).ready(function () {
-    var url="http://sysprim.com.devel/";
+    var url="https://sysprim.com/";
+    // var url="http://sysprim.com.devel/";
     //var url="http://172.19.50.253/";
-
-    //var url="http://sysprim.com.devel/";
-
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
             verifyRIF();

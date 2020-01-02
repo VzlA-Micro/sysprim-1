@@ -1,5 +1,7 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = "https://sysprim.com/";
+    // var url = "http://sysprim.com.devel/";
+
     var companies_id='';
     var type_taxes='';
 
