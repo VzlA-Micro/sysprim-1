@@ -1,11 +1,9 @@
 $(document).ready(function () {
-    // var url = "http://sysprim.com.devel/";
-    var url = "https://sysprim.com/";
-    
-    var ciu;
 
-    //var url="http://172.19.50.253/";
-    //var url="http://144.91.97.209//";
+
+    //var url="https://sysprim.com/";
+    var url="http://172.19.50.253/";
+   // var url="http://sysprim.com.devel/";
 
     $('#search').change(function () {
         if ($('#search').val() !== '') {
