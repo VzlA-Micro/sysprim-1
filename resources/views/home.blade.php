@@ -85,7 +85,7 @@
                 </a>
             </div>
             @endcan
-            @can('Taquilla')
+            @can('Taquilla - Actividad Económica')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
                     <i class="icon-personal_video"></i>
@@ -101,14 +101,14 @@
                 </a>    
             </div>
             @endcan
-            @can('Notificaciones')
+            {{-- @can('Notificaciones')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
                     <i class="icon-notifications"></i>
                     <span class="truncate">Gestionar Notificaciones</span>
                 </a>
             </div>
-            @endcan
+            @endcan --}}
             <!--<div class="col s12 m3 animated bounceIn">
                 <a href="" class="btn-app white orange-text deeptext-darken-2">
                     <i class="icon-local_shipping"></i>

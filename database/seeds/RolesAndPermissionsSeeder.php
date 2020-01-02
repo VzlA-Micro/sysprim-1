@@ -71,7 +71,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
 
         // Taquilla
-        Permission::create(['name' => 'Taquilla']);
+        Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
         // Permission::create(['name' => 'Taquilla - Vehículos']);
@@ -254,20 +254,22 @@ class RolesAndPermissionsSeeder extends Seeder
         // Mis Empresas
         Permission::create(['name' => 'Mis Pagos - Actividad Económica']);
         Permission::create(['name' => 'Declarar Actividad Económica']);
-        Permission::create(['name' => 'Ver Declaraciones - Actividad Económica']);
+        Permission::create(['name' => 'Declaración Anticipada - Actividad Económica']);
+        Permission::create(['name' => 'Declaración Definitiva - Actividad Económica']);
+        Permission::create(['name' => 'Historial de Pagos - Actividad Económica']);
 
         Permission::create(['name' => 'Mis Pagos - Inmuebles']);
         Permission::create(['name' => 'Declarar Inmuebles']);
-        Permission::create(['name' => 'Ver Declaraciones - Inmuebles']);
+        Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
 
 
         Permission::create(['name' => 'Mis Pagos - Vehiculos']);
         Permission::create(['name' => 'Declarar Vehiculos']);
-        Permission::create(['name' => 'Ver Declaraciones - Vehiculos']);
+        Permission::create(['name' => 'Historial de Pagos - Vehiculos']);
 
         Permission::create(['name' => 'Mis Pagos - Publicidad']);
         Permission::create(['name' => 'Declarar Publicidades']);
-        Permission::create(['name' => 'Ver Declaraciones - Publicidades']);
+        Permission::create(['name' => 'Historial de Pagos - Publicidades']);
 
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
@@ -329,7 +331,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Tipos de Publicidad',
             'Detalles Tipo de Publicidad',
             'Actualizar Tipos de Publicidad',
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',
@@ -393,7 +396,8 @@ class RolesAndPermissionsSeeder extends Seeder
         // Operador
         $roleTicketOfficer = Role::create(['name' => 'Operador']);
         $roleTicketOfficer->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',
@@ -440,7 +444,9 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Actualizar Mis Vehiculos',
             'Mis Pagos - Actividad Económica',
             'Declarar Actividad Económica',
-            'Ver Declaraciones - Actividad Económica',
+            'Declaración Anticipada - Actividad Económica',
+            'Declaración Definitiva - Actividad Económica',
+            'Historial de Pagos - Actividad Económica',
             // 'Mis Pagos - Inmuebles',
             // 'Declarar Inmuebles',
             // 'Ver Declaraciones - Inmuebles',
@@ -452,7 +458,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $rolePublicAttention = Role::create(['name' => 'Atención al Público']);
         $rolePublicAttention->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',
@@ -481,7 +488,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $rolePaymentConciliator = Role::create(['name' => 'Conciliador de Pagos']);
         $rolePaymentConciliator->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Punto de Venta',
@@ -510,7 +518,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
         $roleCoordinator ->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',
@@ -562,7 +571,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $roleAdministrator = Role::create(['name' => 'Administrador']);
         $roleAdministrator->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',
@@ -636,7 +646,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $roleCollectionManager = Role::create(['name' => 'Gerente de Recaudación']);
         $roleCollectionManager->givePermissionTo([
-            'Taquilla',
+            'Taquillas',
+            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registar Contribuyente',
             'Consultar Contribuyentes',

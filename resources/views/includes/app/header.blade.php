@@ -13,7 +13,7 @@
                        data-tooltip="{{ __('Inicio') }}"><i class="icon-home"></i>
                    </a>
                 </li>
-                @can('Ver Notificaciones')
+                {{-- @can('Ver Notificaciones')
                 <li>
                     <a href="" class="dropdown-trigger tooltipped" data-position="left" data-tooltip="Notificaciones"
                        data-target="notification-dropdown">
@@ -25,7 +25,6 @@
                         </i>
                     </a>
                 </li>
-                {{-- Notification dropdown content --}}
                 <div class="dropdown-content collection" id="notification-dropdown">
                     <a class="collection-header center-align">
                         <span class=" center-align grey-text">NOTIFICACIONES</span>
@@ -44,7 +43,7 @@
                         </a>
                     @endif
                 </div>
-                @endcan
+                @endcan --}}
                 <li>
                     <a href="{{ route('helps.manage') }}" class="tooltipped" data-tooltip="Ayuda" data-position="bottom"><i class="icon-info"></i></a>
                 </li>
@@ -62,7 +61,7 @@
                 {{-- Dropdown menu structure --}}
                 <ul class="dropdown-content" id="user-dropdown">
                     @can('Mi Perfil')
-                    <li><a href=""><i class="icon-account_box"></i>Mi Perfil</a></li>
+                    <li><a href="{{ route('profile') }}"><i class="icon-account_box"></i>Mi Perfil</a></li>
                     @endcan
                     <!-- <li><a href=""><i class="icon-settings"></i>Configuración</a></li> -->
                     <li class="divider"></li>
@@ -122,13 +121,13 @@
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('home') }}"class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a>
                     </li>
-                    @can('Ver Notificaciones')
+                    {{-- @can('Ver Notificaciones')
                     <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>
-                    @endcan
+                    @endcan --}}
                     <li class="divider hide-on-large-only"></li>
                     <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>
                     @can('Gestionar Usuarios')
-                    <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"><i class="icon-people_outline"></i>Gestionar Usuarios (Admin)</a></li>
+                    <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"class="truncate"><i class="icon-people_outline"></i>Gestionar Usuarios (Admin)</a></li>
                     @endcan
                     @can('Gestionar Contribuyentes')
                     <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-record_voice_over left"></i>Gestionar Usuarios</a></li>
@@ -176,14 +175,14 @@
                         </ul>
                     </li>
                     @endcan
-                    @can('Taquilla')
+                    @can('Taquillas')
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordion">
                             <li class="bold">
-                                <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquilla <i class="icon-arrow_drop_down right"></i></a>
+                                <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquillas<i class="icon-arrow_drop_down right"></i></a>
                                 <div class="collapsible-body">
                                     <ul>
-                                        @can('Gestionar Empresas')
+                                        {{-- @can('Gestionar Empresas')
                                         <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
                                         @endcan
                                         @can('Gestionar Pagos')
@@ -192,6 +191,9 @@
                                         <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
                                         @can('Verificar Pagos - Archivo')
                                         <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
+                                        @endcan --}}
+                                        @can('Taquilla - Actividad Económica')
+                                        <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li>
                                         @endcan
                                     </ul>
                                 </div>

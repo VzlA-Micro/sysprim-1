@@ -29,8 +29,8 @@
             </div>
             @can('Estadisticas - SuperUsuario')
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats blue-gradient white-text">
-                    <div class="widget-stats-icon white-text">
+                <div class="widget bootstrap-widget stats white-text">
+                    <div class="widget-stats-icon white-text blue-gradient">
                         <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="widget-stats-content">
@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats red-gradient white-text">
-                    <div class="widget-stats-icon white-text">
+                <div class="widget bootstrap-widget stats white-text">
+                    <div class="widget-stats-icon red-gradient white-text">
                         <i class="fas fa-building"></i>
                     </div>
                     <div class="widget-stats-content">

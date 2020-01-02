@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="user_id" value="" id="user_id">
-                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extrangero">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano; E: Extranjero">
                                 <i class="icon-public prefix"></i>
                                 <select name="nationality" id="nationality" required>
                                     <option value="null" selected disabled>...</option>
