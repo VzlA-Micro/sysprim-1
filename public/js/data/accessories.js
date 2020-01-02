@@ -1,8 +1,8 @@
 $(document).ready(function() {
     // var url = "http://sysprim.com.devel/";
-    //svar url = "https://sysprim.com/";
+    //svar url = "http://172.19.50.253/";
     
-    var url = "https://sysprim.com/";
+    var url = "http://172.19.50.253/";
 
 	// Registrar
 	$('#register').submit(function(e) {

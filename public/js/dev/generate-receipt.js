@@ -1,9 +1,9 @@
 $('document').ready(function () {
 
-    //var url = "https://sysprim.com/";
-     var url = "https://sysprim.com/";
+    //var url = "http://172.19.50.253/";
+     var url = "http://172.19.50.253/";
 
-    //var url = "https://sysprim.com/";
+    //var url = "http://172.19.50.253/";
     // var url = "http://sysprim.com.devel/";
 
     var companies_id='';
