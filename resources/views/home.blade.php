@@ -39,7 +39,7 @@
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
-                       <i class="icon-announcement"></i>
+                       <i class="icon-folder_special"></i>
                        <span class="truncate">Mis Publicidades</span>
                    </a>
                </div>

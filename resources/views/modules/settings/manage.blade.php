@@ -48,7 +48,7 @@
                 </a>
             </div>
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('advertising-type.manage') }}" class="btn-app white amber-text">
+                <a href="{{ route('advertising-type.manage') }}" class="btn-app white amber-text text-darken-2">
                     <i class="icon-folder_special"></i>
                     <span class="truncate">Gestionar Tipos de Publicidad</span>
                 </a>

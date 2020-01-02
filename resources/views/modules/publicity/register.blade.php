@@ -2,6 +2,8 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/imagePreview.css') }}">
+
 @endsection
 
 @section('content')
@@ -43,7 +45,14 @@
             				<label for="date_end">Fecha de Fin</label>
             			</div>
             			<div class="col s12">
-            				<img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt="">
+            				{{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
+                            <div class="preview img-wrapper center-align valing-wrapper">
+                                <i class="icon-add_a_photo medium"></i>
+                            </div>
+                            <div class="file-upload-wrapper">
+                                <input type="file" name="file" class="file-upload-native" accept="image/*" />
+                                <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
+                            </div>
            				</div>
             			<div class="col s12">
            					<label for="width">Ancho</label>
@@ -74,13 +83,32 @@
     	$(document).ready(function() {
     		$(".js-range-slider").ionRangeSlider({
     			skin: "modern",
-    			max: 25,
+    			max: 50,
     			min: 0,
     			grid: true,
     			step: 0.1,
     			postfix: ' m'
     		});
- 
+    
+            var date = new Date();
+            $('#date_end').datepicker({
+                maxDate:  null,
+                format: 'yyyy-mm-dd', // Configure the date format
+                // yearRange: [1900,date.getFullYear()],
+                showClearBtn: false,
+                i18n: {
+                    cancel: 'Cerrar',
+                    clear: 'Reiniciar',
+                    done: 'Hecho',
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+                }
+
+            }); 
     	})
     </script>
+    <script src="{{ asset('js/imagePreview.js') }}"></script>
 @endsection
