@@ -1,15 +1,10 @@
 $(document).ready(function () {
-<<<<<<< HEAD
+
     //var url="https://sysprim.com/";
-    var url="http://172.19.50.253/";
+    var url = "https://sysprim.com/";
      //var url="http://sysprim.com.devel/";
 
 
-=======
-    var url="https://sysprim.com/";
-    // var url="http://sysprim.com.devel/";
-    //var url="http://172.19.50.253/";
->>>>>>> 8f0d152d0932981cfb9c5aeb842378ea47cd9c84
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
             verifyRIF();
