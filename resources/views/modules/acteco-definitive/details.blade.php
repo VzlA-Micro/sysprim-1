@@ -3,7 +3,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-
             @hasrole('Contribuyente')
             <div class="col s12">
                 <ul class="breadcrumb">
@@ -11,7 +10,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                     <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}">Pagar Impuestos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}">Pagar Impuestos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                 </ul>
             </div>
@@ -29,8 +28,9 @@
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Resumen de Autoliquidación</h5>
-                        <h5> Periodo Fiscal:<span> {{ $fiscal_period }}</span></h5>
+                        <h5>Resumen de Autoliquidación(Definitiva)</h5>
+                        <h5> Periodo Fiscal de Inicio:<span> {{ $taxes->fiscal_period}}</span></h5>
+                        <h5> Periodo Fiscal de Fin:<span> {{ $taxes->fiscal_period_end }}</span></h5>
                     </div>
                     <div class="row padding-2 left-align">
                         <div class="col m6">
@@ -68,14 +68,25 @@
                             <label for="ciu">CIU</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
                             <input type="text" name="base[]" id="base" class="validate money" value="{{ $ciu->base }}" readonly>
                             <label for="base">Base Imponible</label>
                         </div>
-                        <div class="input-field col s12 m6">
+
+                            <div class="input-field col s12 m4">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="  base_anticipated[]" id="  base_anticipated" class="validate money" value="{{ $ciu->base_anticipated }}" readonly>
+                                <label for="base">Impuesto Anticipado</label>
+                            </div>
+
+
+                            {{--
+                             <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
@@ -98,6 +109,7 @@
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
 
+
                         @if($taxes->companies[0]->typeCompany=='R')
                         <div class="input-field col s12 m4">
                             <i class="prefix">
@@ -107,22 +119,25 @@
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
                         </div>
                         @else
+                        @endif
+                          --}}
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
-                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
+                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiuDefinitive}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
                         </div>
-                        @endif
-                        <div class="input-field col s12 m4">
+
+
+                        <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
                             <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->tax_rate}}" readonly>
                             <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
                         </div>
-                        <div class="input-field col s12 m4">
+                        <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
@@ -161,17 +176,19 @@
                                     
                                 </div>
                             </div>
+
+
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{$amount['amountInterest']}}"  readonly>
+                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{'0'}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="recargo" class="validate money" value="{{$amount['amountRecargo']}}"  readonly>
+                                    <input type="text" name="recargo" class="validate money" value="{{'0'}}"  readonly>
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
-                                    <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
+                                    <input type="text" name="total" class="validate total money"  value="{{$taxes->amount}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
@@ -184,7 +201,7 @@
                                 {{-- Modal trigger --}}
 
                                 @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
-                                <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                <a href="{{ route('taxes.again.definitive',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i></a>
 
@@ -193,10 +210,10 @@
                                         <i class="icon-cloud_download right"></i>
                                     </a>-->
 
-                                    <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
-                                    Continuar
+                                    <a href="{{ route('taxes.payment.definitive',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
+                                        Continuar
                                     <i class="icon-more_horiz right"></i>
-                                </button>
+                                </a>
                                 {{-- Modal structure --}}
 
 

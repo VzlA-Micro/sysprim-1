@@ -22,7 +22,8 @@
                     <ul class="tabs">
                         <li class="tab col s6 " id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
                                 Planilla</a></li>
-                        <li class="tab col s6" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i> Pagar</a>
+                        <li class="tab col s6 disabled" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i>
+                                Pagar</a>
                         </li>
                     </ul>
                     <div id="select-tab" class="content">
@@ -52,22 +53,41 @@
                                             <td>{{$taxe->companies[0]->license}}</td>
                                             <td>{{$taxe->code}}</td>
                                             <td>{{$taxe->fiscal_period}}</td>
+
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"/>
+                                                           value="{{$taxe->id}}"
+                                                           data-company="{{$taxe->companies[0]->id}}"
+                                                           data-taxes="{{$taxe->type}}"/>
                                                     <span></span>
                                                 </label>
                                             </td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
                                             @can('Detalles Planilla')
-                                                <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light">
-                                                        <i class="icon-pageview left"></i>
-                                                        Detalles
-                                                    </a>
-                                                </td>
+
+                                                @if($taxe->type!=='definitive')
+
+                                                    <td>
+                                                        <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                           class="btn indigo waves-effect waves-light">
+                                                            <i class="icon-pageview left"></i>
+                                                            Detalles
+                                                        </a>
+                                                    </td>
+                                                @else
+
+                                                    <td>
+                                                        <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
+                                                           class="btn indigo waves-effect waves-light"><i
+                                                                    class="icon-pageview left"></i>Detalles</a>
+                                                    <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                    </td>
+
+                                                @endif
+
+
+
                                             @endcan
                                         </tr>
                                     @endforeach
@@ -123,7 +143,7 @@
                                                         <div class="row">
                                                             <input type="text" name="payments_type" id="payments_type"
                                                                    value="PPV" class="validate hide" required>
-                                                            <input type="hidden" name="taxes_id" id="taxes_id" value=""
+                                                            <input type="hidden" name="taxes_id" value=""
                                                                    class="taxes_id">
 
                                                             <div class="input-field col s12 m6 ">
@@ -150,7 +170,7 @@
                                                                 <input type="text" name="ref" id="ref" value=""
                                                                        class="validate"
                                                                        required minlength="3" maxlength="10">
-                                                                <label for="ref">Terminal</label>
+                                                                <label for="ref">Ref o Código</label>
                                                             </div>
 
 
@@ -198,18 +218,17 @@
                                                 <div class="collapsible-body">
                                                     <form id="register-payment-tr" method="POST" action="#">
                                                         <div class="row">
-                                                            <input type="hidden" name="taxes_id" id="taxes_id_tr"
-                                                                   class="taxes_id" value="">
-
 
                                                             <form id="register-payment-tr" method="#" action="#">
                                                                 <div class="row">
+
                                                                     <input type="hidden" name="taxes_id"
                                                                            id="taxes_id_tr" class="taxes_id" value="">
                                                                     <div class="input-field col m6 s12">
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank" id="bank_tr">
-                                                                            <option value="null" selected disabled>Seleciona una opción
+                                                                            <option value="null" selected disabled>
+                                                                                Seleciona una opción
                                                                             </option>
                                                                             <option value="44">BOD</option>
                                                                             <option value="77">Banco Bicentenario
@@ -225,7 +244,8 @@
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank_destinations"
                                                                                 id="bank_destinations_tr">
-                                                                            <option value="null" selected disabled>Seleciona una opción
+                                                                            <option value="null" selected disabled>
+                                                                                Seleciona una opción
                                                                             </option>
                                                                             <option value="44">BOD</option>
                                                                             <option value="77">Banco Bicentenario
@@ -238,7 +258,6 @@
                                                                     </div>
 
                                                                     <input type="text" name="payments_type"
-                                                                           id="payments_type"
                                                                            value="PPT" class="validate hide" required>
 
                                                                     <div class="input-field col s12 m6 ">
@@ -337,12 +356,12 @@
                                                 <div class="collapsible-body">
                                                     <form id="register-payment-depo" class="payment-form" method="POST"
                                                           action="#">
-                                                        <input type="hidden" name="taxes_id" id="taxes_id_tr"
+                                                        <input type="hidden" name="taxes_id"
                                                                class="taxes_id" value="">
 
                                                         <div class="row">
                                                             <input type="hidden" name="payments_type"
-                                                                   id="payments_type_depo" value="" class="validate"
+                                                                   id="payments_type_depo" value="PPB" class="validate"
                                                                    required>
                                                             <div class="input-field col s4" style="padding-top: 1rem">
                                                                 <h5>Forma de pago:</h5>
@@ -362,16 +381,6 @@
                                                                 </p>
                                                             </div>
 
-                                                            <div class="input-field col s12" style="padding-top: 1rem">
-                                                                <i class="prefix">
-                                                                    <img src="{{ asset('images/isologo-BsS.png') }}"
-                                                                         style="width: 2rem"
-                                                                         alt=""></i>
-                                                                <input type="text" name="amount_total"
-                                                                       id="amount_total_depo" value=""
-                                                                       class="validate money amount" required>
-                                                                <label for="amount_total_depo">Total a Pagar</label>
-                                                            </div>
 
                                                             <div class="input-field col s12 m12 ">
                                                                 <i class="icon-confirmation_number prefix "></i>

@@ -15,6 +15,7 @@ class CreatePaymentsTable extends Migration
     /*esta relacion este en veremos*/
     public function up()
     {
+
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code',15)->unique()->nullable();
@@ -22,12 +23,15 @@ class CreatePaymentsTable extends Migration
             $table->string('ref',10)->nullable();
             $table->string('lot',10)->nullable();
             $table->string('bank',10)->nullable();
+            $table->string('status',20)->nullable();
             $table->string('amount',10);
             $table->string('type_payment',40)->nullable();
             $table->string('name',50)->nullable();
             $table->string('phone',15)->nullable();
             $table->timestamps();
         });
+
+
     }
 
     /**

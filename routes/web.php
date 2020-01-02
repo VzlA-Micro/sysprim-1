@@ -271,7 +271,18 @@ Route::middleware(['auth'])->group(function () {
 
             });
         });
+
+
+
+
+
     });
+
+    /*-----------Cambiar Status de pagos--------------*/
+
+    Route::get('/payments/change-status/{id}/{status}','TicketOfficeController@changeStatusPayment');
+
+
 
     Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
     Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
@@ -512,6 +523,32 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payments/register', 'CompanyTaxesController@payments')->name('payments.store');
     Route::post('/payments/taxes/save', 'CompanyTaxesController@taxesSave')->name('company.taxes.save');
     Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
+
+
+
+
+    //_______________________________________DEFINITIVE COMPANY TAXES _______________________________________________________________
+    Route::post('/taxes/definitive/store','CompanyTaxesController@storeDefinitive')->name('taxes.save.definitive');//registro
+
+    Route::get('/taxes/definitive/{id}','CompanyTaxesController@detailsDefinitive')->name('taxes.details.definitive');//detalles
+
+    Route::get('/taxes/definitive/again/{id}','CompanyTaxesController@againDefinitive')->name('taxes.again.definitive');//Calcular de nuevo
+
+    Route::get('/taxes/definitive/payment/{id}','CompanyTaxesController@typePaymentDefinitive')->name('taxes.payment.definitive');//forma de pago de taxes
+
+    Route::post('/taxes/definitive/payment/store','CompanyTaxesController@paymentDefinitiveStore')->name('taxes.payment.definitive.store');//forma de pago de taxes
+
+    Route::get('taxes/definitive/pdf/{id}','CompanyTaxesController@definitivePDF')->name('taxes.definitive.pdf');
+
+    //_______________________________________TICKOFFICE DEFINITIVE_____________________________________________________
+    Route::get('tick-office/taxes/definitive/verify/{id}','TicketOfficeController@verifyDefinitive');
+
+
+
+
+
+
+
 
     Route::get('/payments/reconcile', function () {
         return view('modules.payments.register');

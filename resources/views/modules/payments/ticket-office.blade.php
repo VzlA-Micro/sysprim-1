@@ -34,7 +34,7 @@
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Lote</th>
-                                <th>Terminal</th>
+                                <th>Ref o Código</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
                                 @can('Detalles Pagos')
