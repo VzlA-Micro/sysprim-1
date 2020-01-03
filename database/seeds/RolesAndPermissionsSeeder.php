@@ -372,6 +372,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Añadir CIIU Empresas',
             'Eliminar CIIU Empresas',
             'Habilitar/Deshabilitar CIIU Empresas',
+            'Habilitar/Deshabilitar Empresas',
+            'Cambiar Ubicacion - Empresa',
             'Historial de Pago - Empresas',
             'Gestionar Inmuebles',
             'Registar Inmueble',
