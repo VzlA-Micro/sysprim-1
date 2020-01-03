@@ -126,6 +126,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
 
 
+
+        //Gestionar Tasas del Banco
+
+
+
+        Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
+        Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
+        Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
+        Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
+        Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
+        Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');
+
+
+
+
         // GEstionar tipos de publicidad
         Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
         Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
@@ -473,9 +488,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
 
-
     Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
     Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
+    //Cambiar de usuario
+    Route::get('/company/change-users/{company_id}/{ci}','CompaniesController@changeUser');
+
+
+
+
 
 
 //________________________module Vehicle_____________________________

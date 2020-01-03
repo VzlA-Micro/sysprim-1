@@ -1,10 +1,10 @@
 $('document').ready(function () {
 
     //var url = "http://172.19.50.253/";
-     var url = "http://172.19.50.253/";
+    // var url = "http://172.19.50.253/";
 
     //var url = "http://172.19.50.253/";
-    // var url = "http://sysprim.com.devel/";
+    var url = "http://sysprim.com.devel/";
 
     var companies_id='';
     var type_taxes='';

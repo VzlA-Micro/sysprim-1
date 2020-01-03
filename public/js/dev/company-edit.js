@@ -1,6 +1,6 @@
 
 //var url = "http://172.19.50.253/";
-var url = "http://172.19.50.253/";
+var url = "http://sysprim.com.devel/";
 
 
 var addCiiu = false;
@@ -153,7 +153,6 @@ $('document').ready(function () {
                 dataType: "JSON",
 
                 beforeSend: function () {
-
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
 
@@ -242,18 +241,15 @@ $('document').ready(function () {
                 dataType: "JSON",
 
                 beforeSend: function () {
-
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
-
                 },
                 success: function (data) {
-                    console.log(data);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-
                     $('#bDelete').remove();
+
 
                     if (data == true) {
                         swal({
@@ -398,9 +394,6 @@ $('document').ready(function () {
         var status=$(this).attr('data-ciiu');
 
 
-      console.log(ciu_id);
-      console.log(company_id);
-      console.log(status);
         swal({
             title: "Cambiar estado de CIIU",
             text: "Esta seguro que desea cambiar el estado del CIIU?",
@@ -457,6 +450,126 @@ $('document').ready(function () {
             }
         });
 
+    });
+
+
+
+    $('#change-users').click(function () {
+        swal({
+            title: "Información",
+            text: "Desea cambiar el usuario que administra esta empresa?, recuerda que los cambios son  permanentes.",
+            icon: "info",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "amber-gradient"
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (accept) {
+            if(accept){
+                swal({
+                    text: 'Ingresa la cedula del usuario a cambiar Ej:V12345678.',
+                    content: "input",
+                    attributes: {
+                        placeholder: "Escribe la cedula Ej:V1234567",
+                        type: "text",
+                    },
+                    button: {
+                        text: "Buscar",
+                        className: "amber-gradient",
+                        closeModal: false,
+
+
+
+                    },
+                }).then(ci => {
+                    var company_id= $('#id').val();
+                    if(ci!==null){
+                    console.log(ci.toUpperCase());
+                        $.ajax({
+                            type: "GET",
+                            url: url + '/company/change-users/'+company_id+'/'+ci.toUpperCase(),
+                            dataType: "JSON",
+                            beforeSend: function () {
+                                $("#preloader").fadeIn('fast');
+                                $("#preloader-overlay").fadeIn('fast');
+                            },
+                            success: function (data) {
+
+                                if(data.status==='success'){
+                                    swal({
+                                        title: "Bien hecho",
+                                        text: data.message,
+                                        icon: "success",
+                                        button:{
+                                            text: "Aceptar",
+                                            className: "blue-gradient"
+                                        },
+                                    }).then(function (accept) {
+
+                                        location.reload();
+                                    });
+                                }else{
+                                    swal({
+                                        title: "Información",
+                                        text: data.message,
+                                        icon: "info",
+                                        button:{
+                                            text: "Aceptar",
+                                            className: "blue-gradient"
+                                        },
+                                    });
+                                }
+
+
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+                                console.log(data);
+                            },
+                            error: function (e) {
+
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+                                console.log(e);
+                            }
+
+                        });
+
+
+                    }else{
+                        swal({
+                            title: "Información",
+                            text: "Acción cancelada,Debes ingresar la cedula primero.",
+                            icon: "info",
+                            button:{
+                                text: "Aceptar",
+                                className: "blue-gradient"
+                            },
+                        });
+
+                    }
+
+
+                })
+
+
+
+
+
+            }else{
+
+            }
+
+        });
+
 
 
     });
@@ -503,7 +616,6 @@ $('document').ready(function () {
 
                 $('.ciu').each(function () {
                     ciiu = $(this).val();
-
                     var status=$(this).siblings('.ciu_status').val();
 
                     if(status=='disabled'){

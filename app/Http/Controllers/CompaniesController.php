@@ -8,6 +8,7 @@ use App\GroupCiu;
 use App\Helpers\CedulaVE;
 use App\Notification;
 use App\Parish;
+use App\User;
 use Carbon\Carbon;
 use function Complex\ln;
 use Illuminate\Http\Request;
@@ -410,5 +411,20 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
         $pdf = \PDF::loadView('modules.companies.carnet', ['company'=> $company]);
         return $pdf->stream();
+    }
+
+
+    //Cambia usuario
+
+    public function changeUser($company_id,$ci){
+        $user=User::where('ci',$ci)->first();
+        if(is_object($user)){
+            $company=Company::find($company_id);
+            $company->users()->sync($user->id);
+            $response=['status'=>'success','message'=>'Empresa actualizada con éxito'];
+        }else{
+            $response=['status'=>'error','message'=>'Usuario no encontrado'];
+        }
+        return $response;
     }
 }

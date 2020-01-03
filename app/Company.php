@@ -9,6 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Company extends Model implements Auditable {
     use \OwenIt\Auditing\Auditable;
+
     protected $table='company';
 
     protected $appends=['desc','typeCompany','typeDocument',

@@ -4,12 +4,6 @@ $(document).ready(function () {
     var url = "http://172.19.50.253/";
     //var url = "http://172.19.50.253/";
 
-   
-
-
-
-
-
 
 
     $('#ci').blur(function () {
