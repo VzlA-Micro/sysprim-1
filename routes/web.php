@@ -538,15 +538,13 @@ Route::middleware(['auth'])->group(function () {
 
 //_____________________________________________Recharge modules routes_______________________________________________________
 
-    Route::get('/recharges', function () {
-        return view('modules.recharge.manage');
-    })->name('recharge.manage');
-    Route::get('/recharges/register', 'RechargeController@create')->name('recharge.register');
-    Route::post('/recharge/save', 'RechargeController@store')->name('recharge.save');
-    Route::get('/recharge/read', 'RechargeController@show')->name('recharge.read');
-    Route::get('/recharge/details/{id}', 'RechargeController@edit')->name('recharge.details');
-    Route::post('/recharge/update', 'RechargeController@update')->name('recharge.update');
-    Route::post('/recharge/verifyBrand', 'RechargeController@verifyBrand')->name('recharge.verifyBrand');
+    Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
+    Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
+    Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
+    Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
+    Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
+    Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');
+    // Route::post('/recharge/verifyBrand', 'RechargeController@verifyBrand')->name('recharge.verifyBrand');
 
 //___________________________________________________________________________________________________________________________
 

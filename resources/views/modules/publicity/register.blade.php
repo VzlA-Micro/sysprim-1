@@ -24,7 +24,7 @@
             		<div class="card-content row">
             			@csrf
             			<div class="input-field col s12">
-            				<select multiple>
+            				<select name="advertising_type_id[]" id="advertising_type_id" multiple>
       							<option value="null" disabled selected>Elija un tipo</option>
       							@foreach($advertisingTypes as $type)
       							<option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -50,10 +50,22 @@
                                 <i class="icon-add_a_photo medium"></i>
                             </div>
                             <div class="file-upload-wrapper">
-                                <input type="file" name="file" class="file-upload-native" accept="image/*" />
+                                <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" />
                                 <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
                             </div>
            				</div>
+                        <div class="col s12 input-field">
+                            <select name="unit" id="unit">
+                                <option value="null" disabled selected>Elige la unidad</option>
+                                <option value="mts">Metro</option>
+                                <option value="cant">Cantidad</option>
+                            </select>
+                            <label>Unidad</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input type="text" name="quantity" id="quantity">
+                            <label for="quantity">Cantidad</label>
+                        </div>
             			<div class="col s12">
            					<label for="width">Ancho</label>
         					<input type="text" class="js-range-slider" name="width" id="width" value="">
@@ -61,9 +73,9 @@
             			<div class="col s12">
            					<label for="height">Alto</label>
         					<input type="text" class="js-range-slider" name="height" id="height" value="">
-            			</div>
+            			</div>{{-- 
             			<div class="input-field col s12 m6"></div>
-            			<div class="input-field col s12 m6"></div>
+            			<div class="input-field col s12 m6"></div> --}}
             		</div>
             		<div class="card-footer center-align">
             			<button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
