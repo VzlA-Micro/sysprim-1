@@ -181,7 +181,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/company-edit.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU" type="text/javascript"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
