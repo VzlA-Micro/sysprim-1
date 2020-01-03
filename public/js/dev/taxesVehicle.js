@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://172.19.50.253/";
+    var url="https://sysprim.com/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
