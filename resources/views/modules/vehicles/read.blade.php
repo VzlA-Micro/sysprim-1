@@ -23,8 +23,8 @@
                             <tr>
                                 <th>Licencia</th>
                                 <th>Color</th>
-                                <th>Marca</th>
-                                <th>Módelo</th>
+                                {{--<th>Marca</th>
+                                <th>Módelo</th>--}}
                                 <th>Año</th>
                                 <th>Detalles</th>
                             </tr>
@@ -34,9 +34,9 @@
                                 <tr>
                                     <td>{{$vehicle->license_plate}}</td>
                                     <td>{{$vehicle->color}}</td>
-                                    <td>{{$vehicle->model->brand->name}}</td>
-                                    <td>{{$vehicle->model->name}}</td>
-                                    <td>{{$vehicle->model->year}}</td>
+                                    {{--<td>{{$vehicle->model->brand->name}}</td>
+                                    <td>{{$vehicle->model->name}}</td>--}}
+                                    <td>{{$vehicle->year}}</td>
                                     <td>
                                         <a href="{{route('vehicles.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>

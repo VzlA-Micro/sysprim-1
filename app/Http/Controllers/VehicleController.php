@@ -58,7 +58,8 @@ class VehicleController extends Controller
         $vehicle->body_serial = $request->input('bodySerial');
         $vehicle->serial_engine = $request->input('serialEngine');
         $vehicle->type_vehicle_id = $request->input('type');
-        $vehicle->model_id = $request->input('model');
+        //$vehicle->model_id = $request->input('model');
+        $vehicle->year = $request->input('year');
         $image=$request->file('image');
 
 
@@ -108,6 +109,7 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $vehicle = Vehicle::findOrFail($id);
+        session(['vehicle'=>$vehicle->id]);
 
         return view('modules.vehicles.details', array(
             'vehicle' => $vehicle

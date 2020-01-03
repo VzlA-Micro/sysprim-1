@@ -70,7 +70,7 @@ class DeclarationVehicle
         }
 
         $vehicle = Vehicle::where('id', $id)->get();
-        $yearVehicle = $vehicle[0]->model->year;
+        $yearVehicle = $vehicle[0]->year;
 
         $diffYear = $yearCurrent - intval($yearVehicle);
 

@@ -14,7 +14,8 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.details',['id'=>$vehicle->id])}}" class="btn-app white purple-text">
                     <i class="icon-directions_car"></i>
-                    <span class="truncate">{{ $vehicle->model->brand->name."-".$vehicle->model->name}}</span>
+                    {{--<span class="truncate">{{ $vehicle->model->brand->name."-".$vehicle->model->name}}</span>--}}
+                    <span class="truncate">{{ $vehicle->license_plate}}</span>
                 </a>
             </div>
             @endforeach

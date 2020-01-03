@@ -23,7 +23,8 @@
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
             </div> --}}
-            {{--@can('Mis Vehiculos')--}}
+            @endcan
+            @can('Mis Vehiculos')
 
             <div>
                 <div class="col s6 m3 animated bounceIn">
@@ -33,7 +34,7 @@
                    </a>
                </div>
             </div>
-            {{--@endcan--}}
+            @endcan
             @can('Mis Publicidades')
             <div>
                 <div class="col s6 m3 animated bounceIn">

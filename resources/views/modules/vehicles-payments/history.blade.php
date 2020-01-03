@@ -10,9 +10,8 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
                     de Pagos</a></li>
                 </ul>

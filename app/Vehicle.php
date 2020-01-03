@@ -22,7 +22,7 @@ class Vehicle extends Model
     }
 
     public function taxesVehicle(){
-        return $this->belongsToMany('App\Taxe','vehicle_taxes')
+        return $this->belongsToMany('App\Taxe','vehicles_taxes')
             ->withPivot('taxe_id');
     }
 }

@@ -220,14 +220,16 @@ class VehiclesTaxesController extends Controller
             ]);
 
 
-        Mail::send('mails.payment-payroll', [], function ($msj) use ($subject, $for, $pdf) {
+        Mail::send('mails.payment-payroll',['type'=>'Declaración de Patente De Vehículo (ANTICIPADA)'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("grabieldiaz63@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('/vehicle/payments/history/' .$vehicle[0]->id);
+        $vehicleID=$vehicle[0]->id;
+
+        return redirect()->route('vehicle.payments.history',['id'=>$vehicleID]);
     }
 
     public function history($vehicleId)

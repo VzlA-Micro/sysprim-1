@@ -37,8 +37,10 @@
                             <div class="col m6">
                                 <ul>
                                     <li><b>Placa: </b>{{ $vehicle[0]->license_plate}}</li>
+                                    {{--
                                     <li><b>Marca: </b>{{ $vehicle[0]->model->brand->name}}</li>
                                     <li><b>Modelo: </b>{{ $vehicle[0]->model->name}}</li>
+                                    --}}
                                 </ul>
                             </div>
                         </div>
