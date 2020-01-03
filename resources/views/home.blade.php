@@ -34,7 +34,7 @@
                </div>
             </div>
             @endcan
-            {{-- @can('Mis Publicidades') --}}
+            @can('Mis Publicidades')
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
@@ -43,12 +43,12 @@
                    </a>
                </div>
             </div>
-            {{-- @endcan --}}
+            @endcan
             @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
                         <i class="icon-people_outline"></i>
-                        <span class="truncate">Gestionar Usuarios (Admin)</span>
+                        <span class="truncate">Gestionar Usuarios</span>
                     </a>
                 </div>
             @endcan
@@ -56,7 +56,7 @@
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-record_voice_over"></i>
-                    <span class="truncate">Gestionar Usuarios</span>
+                    <span class="truncate">Gestionar Usuarios Web</span>
                 </a>
             </div>
             @endcan

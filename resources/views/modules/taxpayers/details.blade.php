@@ -11,15 +11,15 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     {{-- <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li> --}}
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Usuarios</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.manage') }}">Gestionar Usuarios Web</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('taxpayers.read') }}">Ver Usuarios Web</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
             	<form action="#" method="post" class="card" id="update">
             		<div class="card-header center-align">
-                        <h5>Detalles del Usuario</h5>
+                        <h5>Detalles del Usuario Web</h5>
             		</div>
             		<div class="card-content row">
             			@csrf
