@@ -22,7 +22,9 @@ class TaxesMonth{
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
                 if($tax->status!=='cancel'){
-                    $mount_pay[$tax->fiscal_period]=$tax->statusName;
+                    if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')){
+                        $mount_pay[$tax->fiscal_period]=$tax->statusName;
+                    }
                 }
             }
         }else{
@@ -46,7 +48,6 @@ class TaxesMonth{
         }
 
         return $mount_pay;
-
 
 
 

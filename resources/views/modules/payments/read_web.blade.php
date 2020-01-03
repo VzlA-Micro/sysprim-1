@@ -50,11 +50,22 @@
                                             <td>{{$taxe->statusName}}</td>
                                             <td>{{number_format($taxe->amount,2)}}</td>
                                             @can('Detalles Planilla')
-                                            <td>
-                                                <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                   class="btn btn-floating orange waves-effect waves-light"><i
-                                                            class="icon-pageview"></i></a>
-                                            </td>
+                                                @if($taxe->type!='definitive')
+                                                    <td>
+                                                        <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+                                                    </td>
+                                                @else
+
+                                                    <td>
+                                                        <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+
+                                                    </td>
+
+                                                @endif
                                             @endcan
                                         </tr>
                                     @endforeach

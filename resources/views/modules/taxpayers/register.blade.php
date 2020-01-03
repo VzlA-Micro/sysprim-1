@@ -24,7 +24,7 @@
             			@csrf
                         <input type="hidden" value="1" name="confirmed">
                         <div class="input-field col s6 m3">
-                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extrangero"></i>
+                            <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required>
                                 <option value="null">...</option>
                                 <option value="V">V</option>

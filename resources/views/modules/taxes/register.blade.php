@@ -37,6 +37,8 @@
                                 <i class="icon-date_range prefix"></i>
                                 <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
+
+
                                     @foreach($mounths as $key=>$value)
                                         @php
                                             $band=false; $status; @endphp
@@ -48,11 +50,9 @@
                                                                            $status=$value_month;
                                                                     @endphp
 
-
                                                             @endif
                                                     @endforeach
                                                 @endif
-
                                                 @if(!$band)
                                                     @if($value<$mountNow)
                                                       <option value="{{date('Y').'-'.$value.'-'.'01'}}">{{$key." ".date('Y')}}</option>
@@ -61,6 +61,13 @@
                                                      <option value="{{date('Y').'-'.$value.'-'.'01'}}" disabled>{{$key." ".date('Y')."|".$status}}</option>
                                                 @endif
                                     @endforeach
+
+                                    @if(!isset($mount_pay['2019-12-01']))
+                                        <option value="{{"2019-12-01"}}">{{"2019-DICIEMBRE"}}</option>
+                                    @else
+                                        <option value="{{"2019-12-01"}}" disabled >{{"2019-DICIEMBRE|".$mount_pay['2019-12-01']}}</option>
+                                    @endif
+
                                 </select>
                                 <label>Perido Fiscal</label>
                             </div>

@@ -1,4 +1,9 @@
 $(document).ready(function () {
+   //var url="https://sysprim.com/";
+    var url = "http://172.19.50.253/";
+
+    // var url="http://sysprim.com.devel/";
+  
     $('input[type="text"].money_keyup').on('keyup', function (event) {
         var total = $(this).val();
         if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
@@ -15,9 +20,8 @@ $(document).ready(function () {
     });
 
 
-
     $('.base').keyup(function () {
-        if($('#fiscal_period').val()==null) {
+        if ($('#fiscal_period').val() == null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar el periodo fiscal.",
@@ -32,125 +36,141 @@ $(document).ready(function () {
     });
 
 
+    $('#taxes-register-definitive').submit(function (e) {
+        e.preventDefault();
+        var band = false;
 
-   $('#taxes-register-definitive').submit(function (e) {
-       e.preventDefault();
-       var band=false;
+        var base_band = true;
 
-       var base_band=true;
-
-       var fiscal =$('#fiscal_period').val();
-       if(fiscal===null){
-           swal({
-               title: "Información",
-               text: "Debes selecionar el periodo fiscal.",
-               icon: "info",
-               button:{
-                   text: "Esta bien",
-                   className: "blue-gradient"
-               },
-           });
-           band=true;
-       }
-
-
-       $('.base').each(function () {
-           if ($(this).val() === '') {
-             band=true;
-            base_band=false;
-           }
-
-       });
+        var fiscal = $('#fiscal_period').val();
+        if (fiscal === null) {
+            swal({
+                title: "Información",
+                text: "Debes selecionar el periodo fiscal.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            band = true;
+        }
 
 
+        $('.base').each(function () {
+            if ($(this).val() === '') {
+                band = true;
+                base_band = false;
+            }
+
+        });
 
 
-
-       var tributo=$('#tributo').val();
-       $('.code').each(function () {
-           var code = $(this).val();
-           var base = $('#base_' + code).val();
-           var alicuota = $('#alicuota_' + code).val();
-           var anticipated = $('#anticipated_' + code).val();
-
+        var tributo = $('#tributo').val();
+        $('.code').each(function () {
+            var code = $(this).val();
+            var base = $('#base_' + code).val();
+            var alicuota = $('#alicuota_' + code).val();
+            var anticipated = $('#anticipated_' + code).val();
 
 
-           // var deductions = $('#deductions_' + code).val();
-          // var withholdings = $('#withholdings_' + code).val();
-           //var fiscal_credits = $('#fiscal_credits_' + code).val();
-           var min_tribu = $('#min_tribu_'+code).val();
+            // var deductions = $('#deductions_' + code).val();
+            // var withholdings = $('#withholdings_' + code).val();
+            //var fiscal_credits = $('#fiscal_credits_' + code).val();
+            var min_tribu = $('#min_tribu_' + code).val();
 
 
-           base = base.replace(/\./g, '');
-           anticipated=anticipated.replace(/\./g, '');
+            base = base.replace(/\./g, '');
+            anticipated = anticipated.replace(/\./g, '');
 
-          // if(deductions!==undefined) {
-              // deductions = deductions.replace(/\./g, '');
-              // withholdings = withholdings.replace(/\./g, '');
-              // fiscal_credits = fiscal_credits.replace(/\./g, '');
-
-
-
-               //var total_antipaci = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
-               var total = Math.floor(parseFloat(base) * alicuota);
-               var min_total=min_tribu*tributo;
+            // if(deductions!==undefined) {
+            // deductions = deductions.replace(/\./g, '');
+            // withholdings = withholdings.replace(/\./g, '');
+            // fiscal_credits = fiscal_credits.replace(/\./g, '');
 
 
-               if (total !== 0) {
-                   if (total <= parseFloat(anticipated) ) {
-                       swal({
-                           title: "Información",
-                           text: "Verifique los datos ingresados, el monto anticipado no puede ser mayor, que el calculo total de la base.",
-                           icon: "info",
-                           button: {
-                               text: "Esta bien",
-                               className: "blue-gradient"
-                           },
-                       });
-                       band = true;
-                   }
-                  /* if(min_total>total){
-                       swal({
-                           title: "Información",
-                           text: "El monto de la base imponible no " +
-                           "puede ser menor que el minimo tributable " +
-                           "por este CIIU,en caso de ser menor debe declarar " +
-                           "como base imponible  0. Ord. Act. Económica Art.44",
-                           icon: "info",
-                           button: {
-                               text: "Esta bien",
-                               className: "blue-gradient"
-                           },
-                       }).then(function () {
-                           $('.deductions').each(function () {
-
-                               if ($(this).val() == '0') {
-                                   $(this).val('');
-                               }
-                           });
-                           $('.withholding').each(function () {
-                               if ($(this).val() == '0') {
-                                   $(this).val('');
-                               }
-                           });
-                           $('.credits_fiscal').each(function () {
-                               if ($(this).val() == '0') {
-                                   $(this).val('');
-                               }
-                           });
-                       });
-                       band = true;
-                   }
-               }
-               */
-           }
-       });
-       if(!band){
-          $('#taxes-register-definitive')[0].submit();
-       }
+            //var total_antipaci = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
+            var total = Math.floor(parseFloat(base) * alicuota);
 
 
-   });
+            var min_total = min_tribu  * tributo*12;
+
+
+            if (total !== 0) {
+                if (total <= parseFloat(anticipated)) {
+                    swal({
+                        title: "Información",
+                        text: "Verifique los datos ingresados, el monto anticipado no puede ser mayor, que el calculo total de la base.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+
+
+                    band = true;
+                }
+                /* if(min_total>total){
+                     swal({
+                         title: "Información",
+                         text: "El monto de la base imponible no " +
+                         "puede ser menor que el minimo tributable " +
+                         "por este CIIU,en caso de ser menor debe declarar " +
+                         "como base imponible  0. Ord. Act. Económica Art.44",
+                         icon: "info",
+                         button: {
+                             text: "Esta bien",
+                             className: "blue-gradient"
+                         },
+                     }).then(function () {
+                         $('.deductions').each(function () {
+
+                             if ($(this).val() == '0') {
+                                 $(this).val('');
+                             }
+                         });
+                         $('.withholding').each(function () {
+                             if ($(this).val() == '0') {
+                                 $(this).val('');
+                             }
+                         });
+                         $('.credits_fiscal').each(function () {
+                             if ($(this).val() == '0') {
+                                 $(this).val('');
+                             }
+                         });
+                     });
+                     band = true;
+                 }
+             }
+             */
+            } else {
+
+                console.log(parseFloat(anticipated));
+                console.log(parseFloat(min_total));
+
+                if (parseFloat(anticipated)>min_total) {
+                    swal({
+                        title: "Información",
+                        text: "Verifique los datos ingresados, el monto anticipado no puede ser mayor, que el calculo total de la base imponible anual.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+                    band=true;
+                }
+
+            }
+        });
+        if (!band) {
+            $('#taxes-register-definitive')[0].submit();
+        }
+
+
+    });
 
 
     $('.bank').click(function () {
@@ -159,12 +179,9 @@ $(document).ready(function () {
     });
 
 
-
     $('.payments').click(function () {
         $('#payments').val($(this).attr('data-payments'));
     });
-
-
 
 
     $('.tick').click(function () {

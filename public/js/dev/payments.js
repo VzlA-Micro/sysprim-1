@@ -1,6 +1,7 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
-    //var url="http://172.19.50.253/";
+ var url="https://sysprim.com/";
+   // var url = "http://172.19.50.253/";
+// var url="http://sysprim.com.devel/";
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');

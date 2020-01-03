@@ -67,11 +67,23 @@
 
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Detalles Pagos')
-                                        <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
-                                               class="btn btn-floating orange waves-effect waves-light"><i
-                                                        class="icon-pageview"></i></a>
-                                        </td>
+
+                                            @if($taxe->taxes[0]->type!='definitive')
+                                                <td>
+                                                    <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+                                                </td>
+                                            @else
+
+                                                <td>
+                                                    <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+                                                @endif
+
                                         @endcan
 
                                     </tr>

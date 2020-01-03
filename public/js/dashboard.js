@@ -1,4 +1,5 @@
-var url = "https://sysprim.com/";
+//var url = "http://172.19.50.253/";
+var url = "http://172.19.50.253/";
 var controller = "collection/statistics";
 
 var width = $(window).width();
@@ -30,7 +31,7 @@ function isMobile(){
 
 $('document').ready(function () {
 
-    
+
 
 
 /*    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
@@ -127,8 +128,13 @@ $('document').ready(function () {
                 chartsMonth(response);
                 topTaxes(response[11]);
                 dear(response[12]);
-                // api();
+
+                //api();
             }
+               $("#preloader").fadeOut('fast');
+               $("#preloader-overlay").fadeOut('fast');   
+                        
+
         },
         error: function (e) {
             console.log('hola4');

@@ -23,7 +23,7 @@
                         @csrf
                         <input type="hidden" name="id" name="id" value="{{ $company->id }}">
                         <div class="input-field col s4 m3">
-                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero"></i>
                             <select name="document_type" id="document_type" disabled>
                                 <option value="null" selected disabled>...</option>
                                 <option value="J" @if ($company->typeDocument=='J'){{"selected"}}@endif>J</option>

@@ -16,16 +16,15 @@
                 </a>
             </div>
             @endcan
-            {{--
             @can('Mis Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('properties.my-properties') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
-
             </div> --}}
             {{--@can('Mis Vehiculos')--}}
+
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">
@@ -54,7 +53,7 @@
                 </div>
             @endcan
             @can('Gestionar Contribuyentes')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-record_voice_over"></i>
                     <span class="truncate">Gestionar Usuarios</span>
@@ -85,7 +84,7 @@
                 </a>
             </div>
             @endcan
-            @can('Taquilla')
+            @can('Taquilla - Actividad Económica')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
                     <i class="icon-personal_video"></i>
@@ -101,14 +100,14 @@
                 </a>    
             </div>
             @endcan
-            @can('Notificaciones')
+            {{-- @can('Notificaciones')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
                     <i class="icon-notifications"></i>
                     <span class="truncate">Gestionar Notificaciones</span>
                 </a>
             </div>
-            @endcan
+            @endcan --}}
             <!--<div class="col s12 m3 animated bounceIn">
                 <a href="" class="btn-app white orange-text deeptext-darken-2">
                     <i class="icon-local_shipping"></i>

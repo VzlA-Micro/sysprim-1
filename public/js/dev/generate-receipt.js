@@ -1,12 +1,14 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
+
+    //var url = "http://172.19.50.253/";
+     var url = "http://172.19.50.253/";
+
+    //var url = "http://172.19.50.253/";
+    // var url = "http://sysprim.com.devel/";
+
     var companies_id='';
     var type_taxes='';
 
-
-
-
-    //var url="http://172.19.50.253/";
 
 
 
@@ -29,7 +31,6 @@ $('document').ready(function () {
 
 
         if(type_taxes!==''){
-
             if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
                 type_taxes=$(this).attr('data-taxes');
             }else if ($(this).attr('data-taxes')!=type_taxes){
@@ -38,13 +39,18 @@ $('document').ready(function () {
                     text: "Las planillas selecionadas deben ser del mismo tipo.",
                     icon: "info",
                     button: "Ok",
-                });
+                }).then(function () {
+
+                    location.reload();
+                    });
+
 
                 $(this).prop('checked', false);
             }
         }else{
             type_taxes=$(this).attr('data-taxes');
         }
+
 
 
 
@@ -585,9 +591,6 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                        console.log(response);
-
-
                         var taxes_id=$('.taxes_id').val();
                         swal({
                             title: "¡Bien hecho!",
@@ -602,7 +605,6 @@ $('document').ready(function () {
                             }
 
                         });
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 

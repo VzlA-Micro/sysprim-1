@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    var url = "https://sysprim.com/";
-    //var url="http://172.19.50.253/";
+    //var url = "http://172.19.50.253/";
+    var url = "http://172.19.50.253/";
     /*var company_id = 1;
     var fiscal_period= "2019-10-01";
     var ciu = [];
@@ -355,7 +355,6 @@ $(document).ready(function () {
 
 
     //si esta moroso
-
     if ($('#interest').val() !== "0.00"&&$('#interest').val()!==undefined&&$('#continue').val()!==undefined) {
         swal({
             title: "Información",

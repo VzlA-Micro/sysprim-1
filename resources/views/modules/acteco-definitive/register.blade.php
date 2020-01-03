@@ -57,6 +57,7 @@
                                 </select>
                                 <label for="fiscal_period">Lapso</label>
                             </div>
+                            <input type="hidden" id="tributo" name="tributo" value="{{ $unid_tribu }}">
 
                             <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
 
@@ -83,8 +84,7 @@
                                         <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                                         <input type="hidden" name="ciu_alicuota" class="ciu_alicuota"
                                                value="{{ $ciu->alicuota }}">
-                                        <input type="hidden" name="min_tribu_men[]" class="min_tribu_men"
-                                               value="{{ $ciu->min_tribu_men}}">
+                                        <input type="hidden" name="min_tribu_men[]" class="min_tribu_men"  id="min_tribu_{{$ciu->code}}" value="{{ $ciu->min_tribu_men}}">
 
                                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                              data-tooltip="Código del Clasificador Industrial Internacional Uniforme, el mismo facilita a los contribuyentes la ubicación de las actividades por sectores y algunos subgrupos con referencias específicas de su actividad económica (Ord.  AE I Parte Normativa, 6. Régimen Tarifario). .">
