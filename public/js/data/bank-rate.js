@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var url = "http://sysprim.com.devel/";
+    var url="https://sysprim.com/";
 
 	// Registrar
 	$('#register').submit(function(e) {
