@@ -107,7 +107,7 @@
 
     <tbody>
     <tr>
-        <td style="width: 30%;font-size: 10px !important;">
+        <td style="width: 25%;font-size: 10px !important;">
             AutoMovil
             @if($moreThereYear)
                 {{' (Mayor de 3A)'}}
@@ -116,7 +116,7 @@
             @endif
         </td>
         <td style="width: 10%;font-size: 10px;!important;">{{$taxes->branch}}</td>
-        <td style="width: 10%;font-size: 10px;!important">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('Y')}}</td>
+        <td style="width: 15%;font-size: 10px;!important">{{$fiscal_period}}</td>
         <td style="width: 15%;font-size: 10px; !important;">0</td>
         <td style="width: 15%;font-size: 10px;!important"></td>
         <td style="width: 10%;font-size: 10px;!important">{{number_format($grossTaxes, 2, ',', '.')}}</td>
@@ -195,7 +195,7 @@
             @endif
         </td>
         <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-        <td style="font-size: 12px !important;text-align: center;"></td>
+        <td style="font-size: 12px !important;text-align: center;">{{$vehicle[0]->license_plate}}</td>
         <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
     </tr>
 </table>

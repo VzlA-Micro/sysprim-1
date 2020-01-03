@@ -22,9 +22,10 @@
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
-            </div> 
+            </div> --}}
             @endcan
             @can('Mis Vehiculos')
+
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">

@@ -29,10 +29,13 @@
                     <div class="card-content">
                         <ul>
                             <li><b>Licencia: </b>{{ $vehicle->license_plate }}</li>
+                            {{--
                             <li><b>Marca: </b>{{ $vehicle->model->brand->name }}</li>
                             <li><b>Modelo: </b>{{ $vehicle->model->name }}</li>
+                            --}}
                             <li><b>Serial del Motor: </b>{{ $vehicle->serial_engine }}</li>
                             <li><b>Serial De Carrocería: </b>{{ $vehicle->body_serial }}</li>
+                            <li><b>Año: </b>{{ $vehicle->year }}</li>
                             <li><b></b></li>
                         </ul>
                     </div>
@@ -57,12 +60,12 @@
             {{-- Mostrar seccion si es administrador o no --}}
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
-                    <div class="col s12">
+                    {{--<div class="col s12">
                         <a href="#mode" class="modal-trigger btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
-                    </div>
+                    </div>--}}
 
                 <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
 

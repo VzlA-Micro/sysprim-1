@@ -46,7 +46,6 @@ class CompanyTaxesController extends Controller
 
     public function history($company)
     {
-
         $company=Company::where('name',$company)->get();
 
         $company=Company::find($company[0]->id);
@@ -60,9 +59,7 @@ class CompanyTaxesController extends Controller
             $taxes=null;
         }
 
-
         return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
-
     }
 
     /**

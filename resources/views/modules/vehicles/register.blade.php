@@ -22,7 +22,7 @@
                     <div class="card-content row">
                         <div class="input-field col s6">
                             <select name="status" id="status" required>
-                                <option value="null" disabled selected>Selecciona Condicion</option>
+                                {{--<option value="null" disabled selected>Selecciona Condicion</option>--}}
                                 <option value="propietario">Propietario</option>
                                 <option value="responsable">Responsable</option>
                             </select>
@@ -33,7 +33,7 @@
                                    title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
                             <label for="license_plate">Placa</label>
                         </div>
-                        <div class="input-field col s6">
+                        {{--<div class="input-field col s6">
                             <select name="brand" id="brand" required>
                                 <option value="null" disabled selected>Selecciona la marca</option>
                                 @foreach($brand as $brands)
@@ -48,10 +48,10 @@
                                 <option value="null" disabled selected>Selecciona el módelo</option>
                             </select>
                             <label for="model">Módelo</label>
-                        </div>
+                        </div>--}}
                         <div class="input-field col s6">
                             <select name="type" id="type" required>
-                                <option value="null" disabled selected>Selecciona el tipo de vehiculo</option>
+                                {{--<option value="null" disabled selected>Selecciona el tipo de vehiculo</option>--}}
                                 @foreach($type as $types)
                                     <option value="{{$types->id}}">{{$types->name}}</option>
                                 @endforeach
@@ -73,7 +73,12 @@
                                    pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros." required>
                             <label for="serialEngine">Serial del motor</label>
                         </div>
-                        <div class="file-field input-field col s12">
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="year" id="year" class="validate" pattern="[0-9]+" minlength="4" maxlength="4"
+                                   title="Solo puede escribir numeros." required>
+                            <label for="year">Año</label>
+                        </div>
+                        <div class="file-field input-field col s12 m6 l6">
                             <div class="btn purple btn-rounded waves-light">
                                 <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
                                 <input type="file" name="image" id="image">
@@ -84,9 +89,9 @@
                             </div>
                         </div>
 
-                        <div class="container">
+                        {{--<div class="container">
                             <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo, no se encuentre registrado en nuestro sistema. Por favor envíanos un correo a esta Dirección: correo, con los siguientes datos:<br> 1- Marca<br> 2- Modelo<br> 3- Año </p>
-                        </div>
+                        </div>--}}
 
                         <div class="input-field col s12 center-align">
                             <button id="button-vehicle" type="submit" class="btn btn-rounded green waves-effect">Registrar</button>
