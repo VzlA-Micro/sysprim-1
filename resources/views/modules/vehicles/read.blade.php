@@ -26,7 +26,9 @@
                                 {{--<th>Marca</th>
                                 <th>Módelo</th>--}}
                                 <th>Año</th>
+                                @can('Detalles Mis Vehiculos')
                                 <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -37,10 +39,12 @@
                                     {{--<td>{{$vehicle->model->brand->name}}</td>
                                     <td>{{$vehicle->model->name}}</td>--}}
                                     <td>{{$vehicle->year}}</td>
+                                    @can('Detalles Mis Vehiculos')
                                     <td>
                                         <a href="{{route('vehicles.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

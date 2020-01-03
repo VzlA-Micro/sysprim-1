@@ -13,18 +13,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis Vehículos</a></li>
                 </ul>
             </div>
+            @can('Registar Mis Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.register') }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Vehículo</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Mis Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.read') }}" class="btn-app white amber-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Ver Mis Vehículos</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

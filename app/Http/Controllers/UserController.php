@@ -162,7 +162,7 @@ class UserController extends Controller{
 
     public function updateProfile(Request $request) {
         $id= $request->input('id');
-        $phone= $request->input('phone');
+        $phone= $request->input('country_code').$request->input('phone');
         $email= $request->input('email');
         $user=User::find($id);
         $user->phone='+'.$phone;
