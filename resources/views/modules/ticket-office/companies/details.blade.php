@@ -409,12 +409,13 @@
                                    value="{{ $company->users[0]->email }}" required readonly>
                             <label for="email">E-mail</label>
                         </div>
-
+                        @can('Cambiar Usuario - Empresa')
                         <div class="input-field col s12 m6">
                             <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">Cambiar Usuario
                                 <i class="icon-refresh right"></i>
                             </a>
                         </div>
+                        @endcan
                     </div>
 
 
