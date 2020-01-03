@@ -1,4 +1,5 @@
-var url = "https://sysprim.com/";
+var url="http://172.19.50.253/";
+
 var updateType = false;
 
 $('document').ready(function () {
