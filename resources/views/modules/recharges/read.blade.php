@@ -12,35 +12,42 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}" class="breadcrumb">Gestionar
-                            Marcas De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" class="breadcrumb">Ver
-                            Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" class="breadcrumb">Gestionar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}" class="breadcrumb">Consultar Recargos</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Marcas De Vehículos</h5>
+                        <h4>Consultar Recargos</h4>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">
+                        <table class="highlight centered" id="recharges-table" style="width: 100%">
                             <thead>
-                            <tr>
-                                <th>Marca</th>
-                                <th>Detalles</th>
-                            </tr>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Desde</th>
+                                    <th>Hasta</th>
+                                    <th>Valor</th>
+                                    <th>Ramo</th>
+                                    <th>Detalles</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($showBrand as $brand)
+                                @foreach($recharges as $recharge)
                                 <tr>
-                                    <td>{{$brand->name}}</td>
-                                    <td>
-                                        <a href="{{route('vehicles.brand.details',['id'=>$brand->id])}}" class="btn btn-floating orange waves-light"><i
-                                                    class="icon-pageview"></i></a>
+                                    <td>{{ $recharge->name }}</td>
+                                    <td>{{ $recharge->since }}</td>
+                                    <td>{{ $recharge->to }}</td>
+                                    <td>{{ $recharge->value }}%</td>
+                                    <td>{{ $recharge->branch }}</td> 
+                                    <td>                                   
+                                        <a href="{{ route('recharges.details', ['id' => $recharge->id]) }}" class="btn btn-floating blue waves-effect waves-light">
+                                            <i class="icon-pageview"></i>
+                                        </a>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -52,7 +59,7 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#typeVehicle').DataTable({
+        $('#recharges-table').DataTable({
             responsive: true,
             "scrollX": true,
             "pageLength": 10,

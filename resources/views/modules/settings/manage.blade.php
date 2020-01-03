@@ -55,7 +55,7 @@
             @endcan
             @can('Gestionar Recargos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('recharge.manage') }}" class="btn-app white deep-purple-text">
+                <a href="{{ route('recharges.manage') }}" class="btn-app white deep-purple-text">
                     <i class="icon-trending_up"></i>
                     <span class="truncate">Gestionar Recargos</span>
                 </a>
@@ -69,6 +69,13 @@
                 </a>
             </div>
             @endcan
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('bank.rate.manage') }}" class="btn-app white red-text">
+                    <i class="icon-business_center"></i>
+                    <span class="truncate">Gestionar Tasa del Banco</span>
+                </a>
+            </div>
             @can('Gestionar Tipos de Publicidad')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('advertising-type.manage') }}" class="btn-app white amber-text text-darken-2">

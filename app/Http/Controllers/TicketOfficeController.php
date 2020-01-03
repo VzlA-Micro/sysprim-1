@@ -23,6 +23,10 @@ use App\Extras;
 use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use App\FineCompany;
+
+
+
 class TicketOfficeController extends Controller{
 
 
@@ -160,6 +164,7 @@ class TicketOfficeController extends Controller{
 
 
         $paymentsTaxe= $taxe->payments()->get();
+        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
         foreach ($paymentsTaxe as $payment){
 
@@ -196,6 +201,8 @@ class TicketOfficeController extends Controller{
                     }
                     $taxes_find->update();
                 }
+
+
         }else{
                 $amountPayment=$amount_total-$acum;
                 $data=['status'=>'process','payment'=>number_format($amountPayment,2)];
@@ -416,6 +423,8 @@ class TicketOfficeController extends Controller{
                 }
 
                 if ($date['mora']) {//si tiene mora
+
+
                     $extra = Extras::orderBy('id', 'desc')->take(1)->get();
                     if ($company_find->typeCompany === 'R') {
                         $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
@@ -426,6 +435,8 @@ class TicketOfficeController extends Controller{
                     $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
                     $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
                     $mora = 0;
+
+
                 } else {
                     $mora = 0;
                     $tax_rate = 0;
@@ -480,8 +491,33 @@ class TicketOfficeController extends Controller{
 
         $taxesCalculate=Calculate::calculateTaxes($id);
         $taxesCalculate['id_taxes']=$id;
-        $taxe_update=Taxe::find($id);
+        $taxe_update=Taxe::find($id)
+        ;
         if($taxe_update->type!='definitive'){
+            //Si tiene  multa
+            $verify=TaxesMonth::calculateDayMora($taxe_update->fiscal_period,$taxe_update->companies[0]->typeCompany);
+            if($verify['mora']){
+
+                $company=Company::find($taxe_update->companies[0]->id);
+                $fineCompany=FineCompany::where('fiscal_period',$taxe_update->fiscal_period)->get();
+                if(!$fineCompany->isEmpty()){
+                    $fine=FineCompany::find($fineCompany[0]->id);
+                    $fine->delete();
+                }
+                $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$unid_tribu[0]->value, 'fiscal_period'=>$taxe_update->fiscal_period]);
+                $fines=$company->fineCompany()->orderBy('id','desc')->take(1)->get();
+
+                $subject = "MULTA-SEMAT";
+                $for = $company->users[0]->email;
+
+                Mail::send('mails.resolucion', ['name'=>$company->name], function ($msj) use ($subject, $for) {
+                    $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+                    $msj->subject($subject);
+                    $msj->to($for);
+                });
+
+
+            }
             $taxe_update->amount=$taxesCalculate['amountTotal'];
         }else{
             $taxe_update->amount=$taxes_amount;
@@ -731,9 +767,6 @@ class TicketOfficeController extends Controller{
     }
 
     //*________DEFINITIVE_________*
-
-
-
 
     public function verifyDefinitive($company_id){
         $status = TaxesMonth::verifyDefinitive($company_id);

@@ -125,6 +125,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Habilitar/Deshabilitar CIIU Empresas']);
         Permission::create(['name' => 'Habilitar/Deshabilitar Empresas']);
         Permission::create(['name' => 'Cambiar Ubicacion - Empresa']);
+        Permission::create(['name' => 'Cambiar Usuario - Empresa']);
+
 
         Permission::create(['name' => 'Historial de Pago - Empresas']);
 
@@ -374,6 +376,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Habilitar/Deshabilitar CIIU Empresas',
             'Habilitar/Deshabilitar Empresas',
             'Cambiar Ubicacion - Empresa',
+            'Cambiar Usuario - Empresa'
             'Historial de Pago - Empresas',
             'Gestionar Inmuebles',
             'Registar Inmueble',
@@ -406,24 +409,28 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
             'Resetear Contribuyentes',
-            'Gestionar Pagos',
-            'Generar Planilla',
-            'Pagar Planilla',
-            'Registrar Pago',
-            'Registrar Pago - Punto de Venta',
-            'Registrar Pago - Depositos',
-            'Ver Pagos',
-            'Mi Taquilla - Punto de Venta',
-            'Mi Taquilla - Deposito',
-            'Ver Planillas',
-            'Ver Planillas - Taquilla',
-            'Mi Perfil',
             'Gestionar Empresas',
             'Registar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
-            'Taquilla - Caja',
-            'Abrir/Cerrar Caja'
+            // 'Gestionar Pagos',
+            // 'Generar Planilla',
+            // 'Pagar Planilla',
+            // 'Registrar Pago',
+            // 'Registrar Pago - Punto de Venta',
+            // 'Registrar Pago - Depositos',
+            // 'Ver Pagos',
+            // 'Mi Taquilla - Punto de Venta',
+            // 'Mi Taquilla - Deposito',
+            // 'Ver Planillas',
+            // 'Ver Planillas - Taquilla',
+            // 'Mi Perfil',
+            // 'Gestionar Empresas',
+            // 'Registar Empresa',
+            // 'Consultar Empresas',
+            // 'Detalles Empresas',
+            // 'Taquilla - Caja',
+            // 'Abrir/Cerrar Caja'
         ]);
 
         // Contribuyente
@@ -444,11 +451,11 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Consultar Mis Vehiculos',
             // 'Detalles Mis Vehiculos',
             // 'Actualizar Mis Vehiculos',
-            'Mis Pagos - Actividad Económica',
-            'Declarar Actividad Económica',
-            'Declaración Anticipada - Actividad Económica',
-            'Declaración Definitiva - Actividad Económica',
-            'Historial de Pagos - Actividad Económica',
+            // 'Mis Pagos - Actividad Económica',
+            // 'Declarar Actividad Económica',
+            // 'Declaración Anticipada - Actividad Económica',
+            // 'Declaración Definitiva - Actividad Económica',
+            // 'Historial de Pagos - Actividad Económica',
             // 'Mis Pagos - Inmuebles',
             // 'Declarar Inmuebles',
             // 'Ver Declaraciones - Inmuebles',

@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Fine extends Model{
+
+class Fine extends Model  implements Auditable {
+    use \OwenIt\Auditing\Auditable;
     protected $table='fines';
-    //
+
 
     public function company(){
         return $this->belongsToMany('App\Company','fines_company')

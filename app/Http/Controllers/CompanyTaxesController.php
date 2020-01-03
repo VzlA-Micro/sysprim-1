@@ -85,7 +85,6 @@ class CompanyTaxesController extends Controller
                 $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
                 $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
-
                 if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
                     return redirect('companies/my-business');
                 } else {
@@ -423,8 +422,6 @@ class CompanyTaxesController extends Controller
 
         $amount=Calculate::calculateTaxes($id_taxes);
         $ciuTaxes = CiuTaxes::where('taxe_id', $id_taxes)->get();
-
-
 
 
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);

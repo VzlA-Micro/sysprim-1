@@ -1,16 +1,20 @@
-var url="https://sysprim.com/";
 $(document).ready(function() {
+
+    var url = "http://sysprim.com.devel/";
+
+	// Registrar
 	$('#register').submit(function(e) {
-        var  name = $('#name').val();
 		e.preventDefault();
 		var formData = new FormData(this);
+
+
 		$.ajax({
-			method: "POST",
-			data: formData,
-			cache: false,
+			url: url + "bank-rate/save",
+            cache: false,
             contentType: false,
             processData: false,
-            url: url + 'roles/save',
+            data: formData,
+            method: "POST",
             beforeSend: function() {
             	$("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
@@ -18,20 +22,18 @@ $(document).ready(function() {
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha registrado el '" + name + "' con éxito.",
+                    text: "Se ha registrado la tasa exitosamente, desde ahora la tasa para sera:",
                     icon: "success",
-                    button:{
-                        text: "Esta bien",        
-                        className: "green-gradient"
-                    },
+                    button: {
+                    	text: "Esta bien",
+                    	className: "green-gradient"
+                    }
                 }).then(function (accept) {
-                    window.location.href = url + "roles/manage";
+                    window.location.href = url + "bank-rate/manage";
                 });
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
             },
-            error: function (err) {
-                console.log(err);
+            error: function(err) {
+            	console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -47,17 +49,29 @@ $(document).ready(function() {
 		});
 	});
 
+
+
+
+
+
+
+	$('#modify-btn').click(function() {
+		$(this).hide();
+		$('#update-btn').removeClass('hide');
+        $('#name').removeAttr('readonly');
+        $('#value').removeAttr('readonly');
+	});
+
 	$('#update').submit(function(e) {
 		e.preventDefault();
-        var  name = $('#name').val();
 		var formData = new FormData(this);
 		$.ajax({
-			method: "POST",
-			data: formData,
-			cache: false,
+			url: url + "accessories/update",
+            cache: false,
             contentType: false,
             processData: false,
-            url: url + 'roles/update',
+            data: formData,
+            method: "POST",
             beforeSend: function() {
             	$("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
@@ -65,20 +79,18 @@ $(document).ready(function() {
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha actualizado el '" + name +"' con éxito.",
+                    text: "Se ha actualizado el accesorio exitosamente.",
                     icon: "success",
-                    button:{
-                        text: "Entendido",        
-                        className: "green-gradient"
-                    },
+                    button: {
+                    	text: "Esta bien",
+                    	className: "green-gradient"
+                    }
                 }).then(function (accept) {
-                    window.location.href = url + "roles/manage";
+                    window.location.href = url + "accessories/manage";
                 });
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
             },
-            error: function (err) {
-                console.log(err);
+            error: function(err) {
+            	console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -92,5 +104,5 @@ $(document).ready(function() {
                 });
             }
 		});
-	});
+	})
 });

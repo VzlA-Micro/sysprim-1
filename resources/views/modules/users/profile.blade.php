@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                                         <label for="phone">Teléfono</label>
-                                        <input id="phone" type="tel" name="phone" value="{{ Auth::user()->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required readonly>
+                                        <input id="phone" type="tel" name="phone" value="{{ Auth::user()->numberPhone }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                                     </div>
                                     <div class="input-field col s12">
                                         <input type="email" name="email" id="email_edit" value="{{ Auth::user()->email }}" class="validate">
