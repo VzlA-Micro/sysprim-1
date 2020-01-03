@@ -227,7 +227,7 @@ class VehiclesTaxesController extends Controller
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('vehicle/payments/history/' .$vehicle[0]->id);
+        return redirect('/vehicle/payments/history/' .$vehicle[0]->id);
     }
 
     public function history($vehicleId)

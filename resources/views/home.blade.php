@@ -25,7 +25,7 @@
                 </a>
 
             </div> --}}
-            @can('Mis Vehiculos')
+            {{--@can('Mis Vehiculos')--}}
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('vehicles.my-vehicles') }}" class="btn-app white red-text text-darken-2">
@@ -34,7 +34,7 @@
                    </a>
                </div>
             </div>
-            @endcan
+            {{--@endcan--}}
             @can('Mis Publicidades')
             <div>
                 <div class="col s6 m3 animated bounceIn">

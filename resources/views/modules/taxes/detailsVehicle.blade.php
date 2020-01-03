@@ -122,17 +122,6 @@
                                             <td>{{$recharge}}</td>
                                         </tr>
                                         </tbody>
-                                        <thead>
-                                        <tr>
-                                            <th>PERIODOS FISCALES</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{{'20%'}}</td>
-                                            <td>{{$recharge}}</td>
-                                        </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="col l6 s12">
