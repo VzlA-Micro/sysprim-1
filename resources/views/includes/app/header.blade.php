@@ -161,7 +161,7 @@
                                         <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.brand.manage') }}"><i class="icon-directions_car"></i>Gestionar Marcas de Vehiculos</a></li> 
                                         @endcan
                                         @can('Gestionar Recargos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('recharge.manage') }}"><i class="icon-trending_up"></i>Gestionar Recargos</a></li> 
+                                        <li class="waves-efect waves-light truncate"><a href="{{ route('recharges.manage') }}"><i class="icon-trending_up"></i>Gestionar Recargos</a></li> 
                                         @endcan
                                         @can('Gestionar Accesorios')
                                         <li class="waves-efect waves-light truncate"><a href="{{ route('accessories.manage') }}"><i class="icon-filter_tilt_shift"></i>Gestionar Accesorios</a></li>  

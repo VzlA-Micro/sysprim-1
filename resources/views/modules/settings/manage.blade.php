@@ -55,7 +55,7 @@
             @endcan
             @can('Gestionar Recargos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('recharge.manage') }}" class="btn-app white deep-purple-text">
+                <a href="{{ route('recharges.manage') }}" class="btn-app white deep-purple-text">
                     <i class="icon-trending_up"></i>
                     <span class="truncate">Gestionar Recargos</span>
                 </a>

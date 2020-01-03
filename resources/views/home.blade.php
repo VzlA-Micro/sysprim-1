@@ -16,15 +16,14 @@
                 </a>
             </div>
             @endcan
-            {{--
             @can('Mis Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('properties.my-properties') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Mis Inmuebles</span>
                 </a>
-
-            </div> --}}
+            </div> 
+            @endcan
             @can('Mis Vehiculos')
             <div>
                 <div class="col s6 m3 animated bounceIn">
@@ -35,7 +34,7 @@
                </div>
             </div>
             @endcan
-            @can('Mis Publicidades')
+            {{-- @can('Mis Publicidades') --}}
             <div>
                 <div class="col s6 m3 animated bounceIn">
                    <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
@@ -44,7 +43,7 @@
                    </a>
                </div>
             </div>
-            @endcan
+            {{-- @endcan --}}
             @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
@@ -54,7 +53,7 @@
                 </div>
             @endcan
             @can('Gestionar Contribuyentes')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-record_voice_over"></i>
                     <span class="truncate">Gestionar Usuarios</span>

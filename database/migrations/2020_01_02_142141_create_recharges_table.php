@@ -16,6 +16,8 @@ class CreateRechargesTable extends Migration
         Schema::create('recharges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',20);
+            $table->date('since');
+            $table->date('to');
             $table->float('value');
             $table->string('branch',20);
             $table->timestamps();
