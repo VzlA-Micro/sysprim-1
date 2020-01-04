@@ -24,7 +24,7 @@
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4>Representante Legal</h4>
+                            <h4>Usuario web</h4>
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="user_id" value="" id="user_id">

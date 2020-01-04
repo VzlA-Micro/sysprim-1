@@ -305,10 +305,7 @@
                                         </button>
                                     </div>
                                 @endcan
-
-
                             </div>
-
 
                         </div>
                     </div>
@@ -317,7 +314,7 @@
             <div class="col m4">
                 <form action="#" id="form-user" method="post" class="card testimonial-card">
                     <div class="card-header center-align">
-                        <h5>CONSTRIBUYENTE</h5>
+                        <h5>Usuario Web</h5>
                     </div>
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
