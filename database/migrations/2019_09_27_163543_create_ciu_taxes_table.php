@@ -15,15 +15,12 @@ class CreateCiuTaxesTable extends Migration
     {
         Schema::create('ciu_taxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('base',12,2);
-            $table->decimal('deductions',12,2)->nullable();
-            $table->decimal('withholding',12,2)->nullable();
-            $table->decimal('fiscal_credits',12,2)->nullable();
-            $table->decimal('tax_rate',12,2)->nullable();
-            $table->decimal('mora',12,2)->nullable();
-            $table->decimal('unid_tribu',12,2)->nullable();
-            $table->decimal('base_anticipated',12,2)->nullable()->default(0);
-            $table->decimal('interest',12,2)->nullable();
+            $table->decimal('base',12,2);//base imponible
+            $table->decimal('base_anticipated',12,2)->nullable()->default(0);//impuesto anticipado
+            $table->decimal('recharge',12,2)->nullable();//Recargo
+            $table->decimal('tax_unit',12,2)->nullable();//Valor de unidad tributaria
+            $table->decimal('interest',12,2)->nullable();//intereset por numeros de dias
+            $table->decimal('taxable_minimum',12,2)->nullable()->default(0);//Minimo tributable en caso de tener 0
             $table->integer('taxe_id')->unsigned();
             $table->integer('ciu_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')

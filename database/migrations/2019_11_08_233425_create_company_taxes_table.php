@@ -17,6 +17,10 @@ class CreateCompanyTaxesTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->integer('taxe_id')->unsigned();
+            $table->decimal('deductions',12,2)->nullable();//Deduciones sede industiria
+            $table->decimal('withholding',12,2)->nullable();//retenciones
+            $table->decimal('fiscal_credits',12,2)->nullable();//credito fiscal
+            $table->integer('day_mora')->default(0);//dia que lleva moroso
             $table->foreign('company_id')->references('id')->on('company');
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')->onUpdate('cascade');
         });
