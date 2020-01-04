@@ -456,7 +456,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
 
-    Route::get('/type-vehicles/details/{id}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+    Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
 
     Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
 
