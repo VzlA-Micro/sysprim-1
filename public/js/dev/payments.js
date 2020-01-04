@@ -1,5 +1,5 @@
 $('document').ready(function () {
- var url = "http://172.19.50.253/";
+ var url="https://sysprim.com/";
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');

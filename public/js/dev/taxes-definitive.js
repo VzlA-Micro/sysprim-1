@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    var url = "http://172.19.50.253/";
+    var url="https://sysprim.com/";
 
-    // var url = "http://172.19.50.253/";
+    // var url="https://sysprim.com/";
   
     $('input[type="text"].money_keyup').on('keyup', function (event) {
         var total = $(this).val();
