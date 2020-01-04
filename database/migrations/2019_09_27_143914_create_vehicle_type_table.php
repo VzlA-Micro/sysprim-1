@@ -15,7 +15,7 @@ class CreateVehicleTypeTable extends Migration
     {
         Schema::create('vehicle_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',30);
+            $table->string('name',50);
             $table->float('rate');
             $table->float('rate_UT');
             $table->timestamps();
