@@ -126,8 +126,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Habilitar/Deshabilitar Empresas']);
         Permission::create(['name' => 'Cambiar Ubicacion - Empresa']);
         Permission::create(['name' => 'Cambiar Usuario - Empresa']);
-
-
         Permission::create(['name' => 'Historial de Pago - Empresas']);
 
         // -- Gestionar Inmuebles
@@ -376,7 +374,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Habilitar/Deshabilitar CIIU Empresas',
             'Habilitar/Deshabilitar Empresas',
             'Cambiar Ubicacion - Empresa',
-            'Cambiar Usuario - Empresa'
+            'Cambiar Usuario - Empresa',
             'Historial de Pago - Empresas',
             'Gestionar Inmuebles',
             'Registar Inmueble',
@@ -446,10 +444,10 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Consultar Mis Inmuebles',
             // 'Detalles Mis Inmuebles',
             // 'Actualizar Mis Inmuebles',
-            // 'Mis Vehiculos',
-            // 'Registar Mis Vehiculos',
-            // 'Consultar Mis Vehiculos',
-            // 'Detalles Mis Vehiculos',
+            'Mis Vehiculos',
+            'Registar Mis Vehiculos',
+            'Consultar Mis Vehiculos',
+            'Detalles Mis Vehiculos',
             // 'Actualizar Mis Vehiculos',
             // 'Mis Pagos - Actividad Económica',
             // 'Declarar Actividad Económica',

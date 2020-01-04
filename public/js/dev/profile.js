@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    var url="https://sysprim.com/";
+
+    var url = "http://172.19.50.253/";
+
     $("#user_form").hide();
     $("#btn-edit").click(function(e) {
         e.preventDefault();
