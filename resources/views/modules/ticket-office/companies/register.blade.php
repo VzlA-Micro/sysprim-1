@@ -18,13 +18,13 @@
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post" class="card" id="company-register-ticket">
                     <ul class="tabs">
-                        <li class="tab col s4" id="user-tab-one"><a href="#user-tab"><i class="icon-filter_1"></i> Representante Legal</a></li>
+                        <li class="tab col s4" id="user-tab-one"><a href="#user-tab"><i class="icon-filter_1"></i>Usuario Web</a></li>
                         <li class="tab col s4 disabled" id="company-tab-two"><a href="#company-tab"><i class="icon-filter_2"></i> Datos de la Empresa</a></li>
                         <li class="tab col s4 disabled" id="map-tab-three"><a href="#map-tab"><i class="icon-filter_3"></i> Mapa</a></li>
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4>Representante Legal</h4>
+                            <h4>Usuario Web</h4>
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="user_id" value="" id="user_id">
