@@ -13,14 +13,19 @@ class Taxe extends Model implements Auditable {
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
-            ->withPivot('ciu_id','fiscal_credits','withholding',
-                'deductions','base','unid_tribu','mora','tax_rate',
-                'interest','base_anticipated');
+            ->withPivot('ciu_id',
+                'taxable_minimum',
+                'base',
+                'tax_unit',
+                'recharge',
+                'interest',
+                'base_anticipated'
+            );
     }
 
     public function companies(){
         return $this->belongsToMany('App\Company','company_taxes')
-            ->withPivot('company_id');
+            ->withPivot('company_id', 'fiscal_credits', 'withholding', 'deductions', 'day_mora');
     }
 
     public function vehicles(){

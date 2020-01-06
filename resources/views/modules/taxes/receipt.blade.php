@@ -60,6 +60,7 @@
 	    </table>
     </div>
 
+
 	@if($firm)
 		<h4 style="text-align:center">RECIBO DE PAGO</h4>
 	@else
@@ -151,8 +152,8 @@
 				<td></td>
 				<td></td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->tax_rate,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->recharge,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge,2)}}</td>
 			</tr>
 			<tr>
 				<td></td>
@@ -161,81 +162,57 @@
 				<td></td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->interest,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge+$ciu->recharge,2)}}</td>
 			</tr>
 
 		@endif
 
+		@endforeach
 
-		@if($ciu->withholding!=0)
+		@foreach($taxes->companies as $tax)
+
+		@if($tax->pivot->withholding!=0)
 			<tr>
 				<td></td>
 				<td style="font-size: 10px !important;">Retención al Impuesto del Período Fiscal</td>
 				<td></td>
 				<td></td>
-				<td style="font-size: 10px !important;"></td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->withholding,2)}}</td>
-				@if($taxes->companies[0]->typeCompany=='R')
-					<td style="font-size: 10px !important;">
-						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding,2)}}
-					</td>
-				@else
-					<td style="font-size: 10px !important;">
-						{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding,2)}}
-					</td>
-				@endif
+				<td></td>
+				<td style="font-size: 10px !important;">{{number_format($tax->pivot->withholding,2)}}</td>
+				<td style="font-size: 10px !important;">
+						{{number_format($amount['withholding_sub'],2)}}
+				</td>
+
 			</tr>
 		@endif
 
-			@if($ciu->deductions!=0)
+		@if($tax->pivot->fiscal_credits!=0)
+			<tr>
+				<td></td>
+				<td style="font-size: 10px !important;">Crédito Fiscal</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td style="font-size: 10px !important;">{{number_format($tax->pivot->fiscal_credits,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($amount['credits_sub'],2)}}</td>
+			</tr>
+		@endif
+			@if($tax->pivot->deductions!=0)
 				<tr>
 					<td></td>
 					<td style="font-size: 10px !important;">Deducciones</td>
 					<td></td>
 					<td></td>
-					<td style="font-size: 10px !important;"></td>
-					<td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
-					@if($taxes->companies->typeCompany=='R')
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions,2)}}
-						</td>
-					@else
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions,2)}}
-						</td>
-					@endif
+					<td></td>
+					<td style="font-size: 10px !important;">{{number_format($tax->pivot->deductions,2)}}</td>
+					<td style="font-size: 10px !important;">{{number_format($amount['deductions_sub'],2)}}</td>
 				</tr>
 			@endif
 
-			@if($ciu->fiscal_credits!=0)
-				<tr>
-					<td></td>
-					<td style="font-size: 10px !important;">Crédito Fiscal</td>
-					<td></td>
-					<td></td>
-					<td style="font-size: 10px !important;"></td>
-					<td style="font-size: 10px !important;">{{number_format($ciu->fiscal_credits,2)}}</td>
-					@if($taxes->companies[0]->typeCompany=='R')
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
-						</td>
-					@else
-						<td style="font-size: 10px !important;">
-							{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
-						</td>
-					@endif
-				</tr>
-			@endif
+
 
 
 		@endforeach
-
-
-
-
-
-
-
 
 		<tr>
 			<td></td>
@@ -268,9 +245,7 @@
 			<td style="font-size: 12px !important;text-align: center;">{{$taxes->code}}</td>
 			<td style="font-size: 12px !important;text-align: center;">
 				@if($taxes->digit)
-
 					{{$taxes->digit}}
-
 				@else
 					{{"000"}}
 				@endif

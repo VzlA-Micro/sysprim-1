@@ -75,64 +75,71 @@
                             <input type="text" name="base[]" id="base" class="validate money" value="{{ $ciu->base }}" readonly>
                             <label for="base">Base Imponible</label>
                         </div>
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
+                                <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
+                                <label for="interest">Interes por mora<b> (Bs)</b></label>
+                            </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
+                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu}}" readonly>
+                            <label for="fiscal_credits">Impuesto Causado por CIU<b> (Bs)</b></label>
+                        </div>
 
-                            <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->deductions }}" readonly>
+
+
+
+                        <div class="input-field col s12">
+                            <div class="divider"></div>
+                        </div>
+                        @endforeach
+
+
+                        @foreach($taxes->companies as $tax)
+
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-warning prefix"></i>
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->day_mora }}" readonly>
+                                <label for="fiscal_credits">Días de Atraso:</label>
+                            </div>
+                        <div class="input-field col s12 m6">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>
+
+                            <input type="text" name="deductions[]" id="deductions" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->deductions }}" readonly>
                             <label for="deductions">Deducciones</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->withholding }}" readonly>
+                            </i>
+                            <input type="text" name="withholding[]" id="withholdings" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->withholding }}" readonly>
                             <label for="withholdings">Retenciones</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->fiscal_credits }}" readonly>
+                            </i>
+                            <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->fiscal_credits }}" readonly>
                             <label for="fiscal_credits">Creditos Fiscales</label>
                         </div>
 
-                        @if($taxes->companies[0]->typeCompany=='R')
-                        <div class="input-field col s12 m4">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
-                            <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
-                        </div>
-                        @else
-                        <div class="input-field col s12 m4">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
-                            <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
-                        </div>
-                        @endif
-                        <div class="input-field col s12 m4">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->tax_rate}}" readonly>
-                            <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
-                        </div>
-                        <div class="input-field col s12 m4">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                            </i>   
-                            <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
-                            <label for="interest">Interes por mora<b> (Bs)</b></label>
-                        </div>
-                        <div class="input-field col s12">
-                            <div class="divider"></div>
-                        </div>
                         @endforeach
+
                         <div class="col l12 s12">
                             <div class="col l6 s12">
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
@@ -145,7 +152,6 @@
                                         </tr> 
                                     </thead>
                                     <tbody>
-                                        @php $unid=$ciu->unid_tribu;@endphp
                                         @foreach($taxes->taxesCiu as $ciu)
                                         <tr class="centered">
                                             <td>{{$ciu->code}}</td>
@@ -157,20 +163,25 @@
                                     </tbody>
                                 </table>
                                 <div class="col s12">
-                                <p><b>RECARGO: </b>{{$extra['tasa']."%"}}</p>
-                                    
-                                </div>
                             </div>
+
+                        </div>
+
                             <div class="col l6 s12">
-                                <div class="col s12 m12 ">
+                                <div class=" input-field col s12 m12 ">
+                                    <i class="icon-warning prefix"></i>
                                     <input type="text" name="interest"  class="validate money" id='interest' value="{{$amount['amountInterest']}}"  readonly>
-                                    <label for="interest">Interes por Mora:(Bs)</label>
+                                    <label for="interest">Total de Interes por Mora:(Bs)</label>
                                 </div>
-                                <div class="col s12 m12 ">
+                                <div class=" input-field col s12 m12 ">
+                                    <i class="icon-warning prefix"></i>
                                     <input type="text" name="recargo" class="validate money" value="{{$amount['amountRecargo']}}"  readonly>
-                                    <label for="recargo">Recargo  Interes:(Bs)</label>
+                                    <label for="recargo">Total de Recargo  Interes :(Bs)</label>
                                 </div>
-                                <div class="col s12 m12">
+                                <div class=" input-field col s12 m12 ">
+                                    <i class=" prefix">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    </i>
                                     <input type="text" name="total" class="validate total money"  value="{{$amount['amountTotal']}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
@@ -178,7 +189,7 @@
                                 <input type="hidden" id="payments" name="payments" value="1">
                                 <input type="hidden" name="taxes_id"  value="{{$taxes->id}}" id="taxes_id">
                             </div>
-                        </div>
+
                         <div class="row" style="padding: 1rem">
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
@@ -192,7 +203,6 @@
                                         Descargar Calculo.
                                         <i class="icon-cloud_download right"></i>
                                     </a>-->
-
                                     <button  type="submit" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger" id="continue">
                                     Continuar
                                     <i class="icon-more_horiz right"></i>

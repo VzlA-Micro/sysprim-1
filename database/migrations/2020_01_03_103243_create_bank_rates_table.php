@@ -15,7 +15,7 @@ class CreateBankRatesTable extends Migration
     {
         Schema::create('bank_rates', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('value_rate');
+            $table->decimal('value_rate',11,3);
             $table->timestamps();
         });
     }

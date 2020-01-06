@@ -14,12 +14,12 @@ class CiuTaxes extends Model{
 
     public function getTotalCiiuAttribute(){
         $ciu=Ciu::find($this->ciu_id);
-        if($this->base!=0){
-            $this->totalCiiu=$this->base*$ciu->alicuota;
-        }else{
-            $unid_tribu=Tributo::orderBy('id', 'desc')->take(1)->get();
-            $this->totalCiiu=$ciu->min_tribu_men*$unid_tribu[0]->value;
+        $this->totalCiiu=$this->base*$ciu->alicuota;
+
+        if($this->taxable_minimum!=0) {
+            $this->totalCiiu=$this->taxable_minimum;
         }
+
         return $this->attributes['totalCiiu'];
     }
 

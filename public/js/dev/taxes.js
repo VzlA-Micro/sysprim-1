@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://172.19.50.253/";
+    var url = "http://sysprim.com.devel/";
 
 
     /*var company_id = 1;
@@ -25,7 +25,9 @@ $(document).ready(function () {
         error: function (err) {
          console.log(err);
         }
-    });*/
+    });
+    */
+
     $('input[type="text"].money_keyup').on('keyup', function (event) {
         var total = $(this).val();
         if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
@@ -132,9 +134,14 @@ $(document).ready(function () {
         }
     }
 
+
+
+
+
+
+
     $('#accept').click(function () {
         var band = false;
-
         if($('#fiscal_period').val()===null){
             band=true;
             if($(this).val()===''){
@@ -193,88 +200,66 @@ $(document).ready(function () {
     function verify() {
         var band = false;
         var tributo=$('#tributo').val();
+        var total=0;
+        var deductions = $('#deductions').val();
+        var withholdings = $('#withholdings').val();
+        var fiscal_credits = $('#fiscal_credits').val();
+
+
+        deductions = deductions.replace(/\./g, '');
+        withholdings = withholdings.replace(/\./g, '');
+        fiscal_credits = fiscal_credits.replace(/\./g, '');
+
+
         $('.code').each(function () {
             var code = $(this).val();
             var base = $('#base_' + code).val();
             var alicuota = $('#alicuota_' + code).val();
-            var deductions = $('#deductions_' + code).val();
-            var withholdings = $('#withholdings_' + code).val();
-            var fiscal_credits = $('#fiscal_credits_' + code).val();
-            var min_tribu = $('#min_tribu_'+code).val();
-
-
-
             base = base.replace(/\./g, '');
-
-
-            if(deductions!==undefined) {
-                deductions = deductions.replace(/\./g, '');
-                withholdings = withholdings.replace(/\./g, '');
-                fiscal_credits = fiscal_credits.replace(/\./g, '');
-
-                var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
-                var total = Math.floor(parseFloat(base) * alicuota);
-                var min_total=min_tribu*tributo;
-
-
-
-
-
-                if (total !== 0) {
-                    if (total_deductions >= total) {
-                        swal({
-                            title: "Información",
-                            text: "Verifique los datos ingresados.",
-                            icon: "info",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
-                        band = true;
-                    }
-                    if(min_total>total){
-                        swal({
-                            title: "Información",
-                            text: "El monto de la base imponible no " +
-                            "puede ser menor que el minimo tributable " +
-                            "por este CIIU,en caso de ser menor debe declarar " +
-                            "como base imponible  0. Ord. Act. Económica Art.44",
-                            icon: "info",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        }).then(function () {
-                            $('.deductions').each(function () {
-
-                                if ($(this).val() == '0') {
-                                    $(this).val('');
-                                }
-                            });
-                            $('.withholding').each(function () {
-                                if ($(this).val() == '0') {
-                                    $(this).val('');
-                                }
-                            });
-                            $('.credits_fiscal').each(function () {
-                                if ($(this).val() == '0') {
-                                    $(this).val('');
-                                }
-                            });
-                        });
-                        band = true;
-                    }
-                }
-            }
+            total=total+Math.floor(parseFloat(base) * alicuota);
         });
 
+       /* var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
 
 
 
 
+
+            if (total_deductions > total) {
+                swal({
+                    title: "Información",
+                    text: "Verifique los datos ingresados.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                }).then(function () {
+                    $('.deductions').each(function () {
+
+                        if ($(this).val() == '0') {
+                            $(this).val('');
+                        }
+                    });
+                    $('.withholding').each(function () {
+                        if ($(this).val() == '0') {
+                            $(this).val('');
+                        }
+                    });
+                    $('.credits_fiscal').each(function () {
+                        if ($(this).val() == '0') {
+                            $(this).val('');
+                        }
+                    });
+                });
+                band = true;
+            }
+
+
+
+*/
         if (!band) {
-            $(('#taxes-register'))[0].submit();
+           $(('#taxes-register'))[0].submit();
         }
     }
 

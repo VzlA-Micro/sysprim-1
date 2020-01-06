@@ -27,7 +27,9 @@ class DatabaseSeeder extends Seeder
             FinesTableSeeder::class,
             CompanyRespaldoTableSeeder::class,
             AdvertisingTypeTableSeeder::class,
-            TypeVehicleTableSeeder::class
+            TypeVehicleTableSeeder::class,
+            RechargeTableSeeder::class,
+            BankRateTableSeeder::class
         ]);
     }
 }

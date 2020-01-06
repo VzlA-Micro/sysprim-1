@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BankRate;
 use App\Ciu;
 use App\Company;
 use App\Extras;
@@ -10,6 +11,7 @@ use App\Fine;
 use App\FineCompany;
 use App\Helpers\Calculate;
 use App\Notification;
+use App\Recharge;
 use App\Tributo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,6 +25,8 @@ use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
 use App\Employees;
 use Illuminate\Support\Facades\Mail;
+
+
 
 class CompanyTaxesController extends Controller
 {
@@ -68,17 +72,17 @@ class CompanyTaxesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create($company,$type){
+    public function create($company,$type)
+    {
         $company = Company::where('name', $company)->get();
         $company_find = Company::find($company[0]->id);
         $mounths = array("ENERO" => '01', "FEBRERO" => '02', "MARZO" => '03', "ABRIL" => '04', "MAYO" => '05', "JUNIO" => '06', "JULIO" => '07', "AGOSTO" => '08', "SEPTIEMBRE" => '09', "OCTUBRE" => '10', "NOVIEMBRE" => '11', "DICIEMBRE" => '12');
         $mounthNow = Carbon::now()->format('m');
 
 
+        if ($company_find->status !== 'disabled') {
 
-        if($company_find->status!=='disabled') {
-
-            if($type!=='definitive'){
+            if ($type !== 'definitive') {
                 $mounth_pay = TaxesMonth::verify($company[0]->id, false);
 
                 $users = $company_find->users()->get();
@@ -88,10 +92,10 @@ class CompanyTaxesController extends Controller
                 if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
                     return redirect('companies/my-business');
                 } else {
-                    return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow,'unid_tribu'=>$unid_tribu[0]->value]);
+                    return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow, 'unid_tribu' => $unid_tribu[0]->value]);
 
                 }
-            }else{
+            } else {
 
                 $users = $company_find->users()->get();
 
@@ -100,14 +104,15 @@ class CompanyTaxesController extends Controller
 
 
                 return view('modules.acteco-definitive.register', ['company' => $company_find,
-                                                                        "status" => $status,
-                                                                        'unid_tribu'=>$unid_tribu[0]->value
-                    ]);
+                    "status" => $status,
+                    'unid_tribu' => $unid_tribu[0]->value
+                ]);
             }
 
-        } else{
-            return redirect('companies/details/'.$company_find->id);
+        } else {
+            return redirect('companies/details/' . $company_find->id);
         }
+
 
     }
 
@@ -125,18 +130,23 @@ class CompanyTaxesController extends Controller
         $dedutions=$request->input('deductions');
         $withholding=$request->input('withholding');
         $fiscal_credits=$request->input('fiscal_credits');
+
        */
+
 
         $fiscal_period = $request->input('fiscal_period');
         $company = $request->input('company_id');
-
         $company_find = Company::find($company);
         $ciu_id = $request->input('ciu_id');
         $min_tribu_men = $request->input('min_tribu_men');
+
         $deductions = $request->input('deductions');
         $withholding = $request->input('withholding');
-        $base = $request->input('base');
         $fiscal_credits = $request->input('fiscal_credits');
+
+        $base = $request->input('base');
+
+
 
         $date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
         $taxe = new Taxe();
@@ -147,68 +157,103 @@ class CompanyTaxesController extends Controller
         $taxe->save();
 
         $id = $taxe->id;
-        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+
+
+        //Colocar siempre unidad tributarias vigentes.
+        $fiscal_period_format=Carbon::parse($fiscal_period);
+        $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+
+
+
+
+        //format a deductions
+        $deductions_format = str_replace('.', '', $deductions);
+        $deductions_format = str_replace(',', '.', $deductions_format);
+        //format withdolding
+        $withholding_format = str_replace('.', '', $withholding);
+        $withholding_format = str_replace(',', '.', $withholding_format);
+        //format fiscal credits
+        $fiscal_credits_format = str_replace('.', '', $fiscal_credits);
+        $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+
 
 
         for ($i = 0; $i < count($base); $i++) {
             //format a base
+
+
+
+            //damos formato a la base
             $base_format = str_replace('.', '', $base[$i]);
             $base_format = str_replace(',', '.', $base_format);
-            //format a deductions
-            $deductions_format = str_replace('.', '', $deductions[$i]);
-            $deductions_format = str_replace(',', '.', $deductions_format);
-            //format withdolding
-            $withholding_format = str_replace('.', '', $withholding[$i]);
-
-            $withholding_format = str_replace(',', '.', $withholding_format);
-            //format fiscal credits
-            $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
-            $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
-
             $ciu = Ciu::find($ciu_id[$i]);
 
-            if ($base[$i] == 0) {
-                $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
-                $unid_total = $unid_tribu[0]->value;
-            } else {
-                $taxes = $ciu->alicuota * $base_format / 100;
-                $unid_total = 0;
+
+            //Calculo de minimo  a tributar
+            $min_amount = $ciu->min_tribu_men * $tributo->value;
+
+            //Calculo de base imponible
+            $base_amount_sub = $ciu->alicuota * $base_format;
+
+            //si lo que va a pagar es mayor que el min a tributar
+            if($base_amount_sub>$min_amount){
+
+                $min_amount=0;
+            }else{//si no paga minimo
+
+                $base_amount_sub=$min_amount;
             }
 
             if ($date['mora']) {//si tiene mora
-                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                if ($company_find->typeCompany === 'R') {
-                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
-                } else {
-                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
-                }
+                //Obtengo recargo
 
-                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                $mora = 0;
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+
+                //Obtengo Intereset del banco
+                $interest_bank=BankRate::orderBy('id', 'desc')->take(1)->first();
+
+
+                $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                $interest=(($interest_bank->value_rate/100) / 360) * $date['diffDayMora'] *($amount_recharge+$base_amount_sub);
+
             } else {
-                $mora = 0;
-                $tax_rate = 0;
+                $amount_recharge= 0;
                 $interest = 0;
             }
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                ['ciu_id'=>$ciu_id[$i],
-                'base'=>$base_format,'deductions'=>$deductions_format,
-                    'withholding'=>$withholding_format,
-                'fiscal_credits'=>$fiscal_credits_format,
-                    'unid_tribu'=>$unid_total, 'mora'=>$mora,
-                'tax_rate'=>$tax_rate,
-                'interest'=>$interest
+                    ['ciu_id'=>$ciu_id[$i],
+                    'base'=>$base_format,
+                    'recharge'=>$amount_recharge,
+                    'tax_unit'=>$tributo->value,
+                    'interest'=>$interest,
+                    'taxable_minimum'=>$min_amount
             ]);
 
-        }
-        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
 
-        $data = array([
-            'status' => 'success',
-            'message' => 'Impuesto registrada correctamente.'
-        ]);
+        }
+
+
+        $day_mora=$date['diffDayMora'];
+        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id,
+                                                    'fiscal_credits'=>$fiscal_credits_format,
+                                                    'withholding'=>$withholding_format,
+                                                    'deductions'=>$deductions_format,
+                                                    'day_mora'=>$day_mora]);
+
+
+        $calculate=Calculate::calculateTaxes($id);
+
+
+
+
+
+        //Busco la impuesto y le coloco el total a pagar
+        $taxes_find=Taxe::find($id);
+        $taxes_find->amount=$calculate['amountTotal'];
+        $taxes_find->update();
+
+
         return redirect('payments/taxes/' . $id);
     }
 
@@ -220,56 +265,23 @@ class CompanyTaxesController extends Controller
      */
     public function show($id)
     {
-        $amountInterest = 0;//total de intereses
-        $amountRecargo = 0;//total de recargos
-        $amountCiiu = 0;//total de ciiu
-        $amountDesc = 0;//Descuento
-        $amountTaxes = 0;//total a de impuesto
-        $amountTotal = 0;
 
 
         $taxes = Taxe::findOrFail($id);
         $companyTaxe=$taxes->companies()->get();
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
         $company_find = Company::find($companyTaxe[0]->id);
-
-
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
-        $extra = ['tasa' => $mora[0]->tax_rate];
-
-        foreach ($ciuTaxes as $ciu) {
-            $amountInterest += $ciu->interest;
-            $amountRecargo += $ciu->tax_rate;
+        $amount=Calculate::calculateTaxes($id);
 
 
-            if ($company_find->TypeCompany === 'R') {
-                $amountCiiu += $ciu->totalCiiu + $ciu->withholding - $ciu->deductions - $ciu->fiscal_credits;
-            } else {
-
-                $amountCiiu += $ciu->totalCiiu - $ciu->withholding - $ciu->deductions - $ciu->fiscal_credits;
-
-            }
-        }
-
-        $amountTaxes = $amountInterest + $amountRecargo + $amountCiiu;//Total
 
 
-        $amount = ['amountInterest' => $amountInterest,
-            'amountRecargo' => $amountRecargo,
-            'amountCiiu' => $amountCiiu,
-            'amountTotal' => $amountTaxes,
-            'amountDesc' => $amountDesc
-        ];
-
-
-        return view('modules.taxes.details',
-            ['taxes' => $taxes,
+        return view('modules.taxes.details', [  'taxes' => $taxes,
                 'fiscal_period' => $fiscal_period,
-                'extra' => $extra,
                 'ciuTaxes' => $ciuTaxes,
-                'amount' => $amount
-            ]);
+                'amount'=>$amount
+        ]);
     }
 
     /**
@@ -357,8 +369,7 @@ class CompanyTaxesController extends Controller
         $amount = ['amountInterest' => $amountInterest,
             'amountRecargo' => $amountRecargo,
             'amountCiiu' => $amountCiiu,
-            'amountTotal' => $amountTaxes,
-        ];
+            'amountTotal' => $amountTaxes,];
 
         $pdf = \PDF::loadView('modules.taxes.receipt',[
             'taxes'=>$taxes,
@@ -392,8 +403,6 @@ class CompanyTaxesController extends Controller
 
 
         if($type_payment!='PPV'){
-
-
             if($type_payment=='PPE'){
                 $taxes->bank=$bank_payment;
                 $amount=round($taxes->amount,0);
@@ -408,22 +417,16 @@ class CompanyTaxesController extends Controller
         }
 
 
-
-
-
         $taxes->status="process";
         $taxes->update();
 
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $mora = Extras::orderBy('id', 'desc')->take(1)->get();
-        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
-        $extra = ['tasa' => $mora[0]->tax_rate];
+        $fiscal_period_format=Carbon::parse($taxes->fiscal_period);
+        $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
 
 
         $amount=Calculate::calculateTaxes($id_taxes);
-        $ciuTaxes = CiuTaxes::where('taxe_id', $id_taxes)->get();
-
-
+        $ciuTaxes =CiuTaxes::where('taxe_id', $id_taxes)->get();
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);
 
 
@@ -435,7 +438,7 @@ class CompanyTaxesController extends Controller
                 $fine=FineCompany::find($fineCompany[0]->id);
                 $fine->delete();
             }
-            $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$unid_tribu[0]->value, 'fiscal_period'=>$taxes->fiscal_period]);
+            $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$tributo->value, 'fiscal_period'=>$taxes->fiscal_period]);
 
             $fines=$company->fineCompany()->orderBy('id','desc')->take(1)->get();
 
@@ -456,13 +459,13 @@ class CompanyTaxesController extends Controller
         $pdf = \PDF::loadView('modules.taxes.receipt',
             ['taxes' => $taxes,
             'fiscal_period' => $fiscal_period,
-            'extra' => $extra,
             'ciuTaxes' => $ciuTaxes,
             'amount' => $amount,
             'firm' => false
         ]);
 
 
+        return $pdf->stream('recibo.pdf');
 
         Mail::send('mails.payment-payroll', ['type'=>'Declaración de Actividad Económica (ANTICIPADA)'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");

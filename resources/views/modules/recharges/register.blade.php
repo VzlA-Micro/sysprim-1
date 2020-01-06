@@ -47,7 +47,7 @@
                             <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="branch" id="branch">
                                 <option value="null" selected disabled>Elija un ramo</option>
-                                <option value="Act.Economica">Actividad Economica</option>
+                                <option value="Act.Eco">Actividad Economica</option>
                                 <option value="Pat.Vehiculo">Patente De Vehículo</option>
                                 <option value="Inmueble.Urb">Inmuebles Urbanos</option>
                                 <option value="Publicidad">Publicidad</option>

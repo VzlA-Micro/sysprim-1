@@ -13,8 +13,8 @@ class UnidTribuTableSeeder extends Seeder
     public function run()
     {
         DB::table('unidad_tribu')->insert([
-            'since'=>Carbon::now(),
-            'to'=>Carbon::now(),
+            'since'=>'2019-01-01',
+            'to'=>'2020-01-01',
             'value'=>300,
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),

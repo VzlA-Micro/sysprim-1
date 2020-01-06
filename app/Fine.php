@@ -16,6 +16,8 @@ class Fine extends Model  implements Auditable {
             ->withPivot('fine_id','unid_tribu_value');
     }
 
+
+
     public function fineCompany (){
         return $this->hasMany('App\FineCompany'); 
     }

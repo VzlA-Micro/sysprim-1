@@ -15,7 +15,7 @@ class CreateRechargesTable extends Migration
     {
         Schema::create('recharges', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',20);
+            $table->string('name',100);
             $table->date('since');
             $table->date('to');
             $table->float('value');
