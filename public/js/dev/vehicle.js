@@ -1,6 +1,9 @@
-var url = "http://172.19.50.253/";
+//var url = "http://172.19.50.253/";
+var url = "http://sysprim.com.devel/";
 
 var updateType = false;
+var buttonBrand = true;
+var controlButtonBrand = true;
 
 $('document').ready(function () {
 
@@ -164,7 +167,7 @@ $('document').ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url+"vehicles/read";
+                    window.location.href = url + "vehicles/read";
                 });
             },
             error: function (e) {
@@ -239,6 +242,43 @@ $('document').ready(function () {
                 }
             });
         }
+    });
+
+    $('#button-brand').on('click', function (e) {
+        e.preventDefault();
+        console.log('hola');
+        console.log(buttonBrand);
+        if (buttonBrand) {
+            if (controlButtonBrand) {
+                $('#group-MB').hide();
+                var html =
+                    `<div class="input-field col s6">
+                        <i class="icon-directions_car prefix"></i>
+                        <input type="text" name="brand-n" id="brand-n">
+                         <label for="brand-n">Marca</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="icon-local_shipping prefix"></i>
+                        <input type="text" name="model-n" id="model-n">
+                        <label for="model-n">Módelo</label>
+                    </div>`;
+                $('#group-new-MB').html(html);
+                console.log(buttonBrand);
+                buttonBrand = false;
+                controlButtonBrand=false;
+            }else{
+                $('#group-MB').hide();
+                $('#group-new-MB').show();
+            }
+
+        } else {
+            $('#group-new-MB').hide();
+            $('#group-MB').show();
+            console.log(buttonBrand);
+            buttonBrand = true;
+        }
+
+
     });
 
 });

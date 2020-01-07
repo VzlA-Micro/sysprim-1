@@ -573,6 +573,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
     Route::post('/vehicle/payments/register', 'VehiclesTaxesController@payments')->name('vehicle.payments.store');
     Route::get('/vehicle/payments/history/{id}', 'VehiclesTaxesController@history')->name('vehicle.payments.history');
+    Route::get('/vehicle/payments/taxes/download/{id}', 'VehiclesTaxesController@downloadPDF')->name('vehicle.taxes.download');
 //___________________________________________________________________________________________________________________________
 
 

@@ -89,7 +89,7 @@ class DeclarationVehicle
         }
 
         //--------------option of payments-------------------------
-        if ($optionPayment == 'true') {
+        if ($optionPayment) {
             //indica que el pago es anual
 
             if (($monthCurrent == $mes)) {
