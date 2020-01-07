@@ -13,7 +13,6 @@ use App\Company;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Encryption\DecryptException;
 use App\Helpers\TaxesNumber;
 use App\Tributo;
@@ -24,7 +23,8 @@ use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\FineCompany;
-
+use App\Recharge;
+use App\BankRate;
 
 
 class TicketOfficeController extends Controller{
@@ -341,189 +341,202 @@ class TicketOfficeController extends Controller{
         return view('modules.ticket-office.taxes.taxes-tickoffice',['taxes'=>$taxes]);
     }
 
-    public function registerTaxes(Request $request){
+    public function registerTaxes(Request $request)
+    {
 
-        $datos=$request->all();
+        $datos = $request->all();
 
         $fiscal_period = $datos['fiscal_period'];
         $company = $datos['company_id'];
         $company_find = Company::find($company);
 
         $ciu_id = $datos['ciu_id'];
-        $min_tribu_men = $datos['min_tribu_men'];
         $deductions = $datos['deductions'];
 
         $withholding = $datos['withholding'];
         $base = $datos['base'];
         $fiscal_credits = $datos['fiscal_credits'];
 
-
-        if(isset($datos['anticipated'])){
-            $anticipated=$datos['anticipated'];
-        }
-
-
-
-        $type=$datos['typeTaxes'];
-
-
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('PTS81');
 
-        if($type==='definitive'){
-            $taxe->code = TaxesNumber::generateNumberTaxes('PTS89');
-            $taxe->fiscal_period_end='2019-12-01';
-        }
 
         $taxe->fiscal_period = $fiscal_period;
-        $taxe->branch='Act.Eco';
-        $taxe->bank='';
-        $taxe->type=$type;
+        $taxe->branch = 'Act.Eco';
+        $taxe->bank = '';
+        $taxe->type = 'actuated';
 
-
-
-        $taxe->status='ticket-office';
+        $taxe->status = 'ticket-office';
         $taxe->save();
         $id = $taxe->id;
 
 
-        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
-        $date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
-        $taxes_amount=0;
+        $fiscal_period_format = Carbon::parse($fiscal_period);
+        $tributo = Tributo::whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+
+        if($tributo->isEmpty()){
+
+        }
+
+
+        $taxes_amount = 0;
+        $date = TaxesMonth::calculateDayMora($fiscal_period, $company_find->typeCompany);
+
+        //format a deductions
+        $deductions_format = str_replace('.', '', $deductions);
+        $deductions_format = str_replace(',', '.', $deductions_format);
+
+        //format withdolding
+        $withholding_format = str_replace('.', '', $withholding);
+        $withholding_format = str_replace(',', '.', $withholding_format);
+
+        //format fiscal credits
+        $fiscal_credits_format = str_replace('.', '', $fiscal_credits);
+        $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+
+
+        $base_format_verify = 0;
+        $total_base = 0;
+
+
+        for ($i = 0; $i < count($base); $i++) {
+
+            //damos formato a la base
+            $base_format_verify = str_replace('.', '', $base[$i]);
+            $base_format_verify = str_replace(',', '.', $base_format_verify);
+
+            $ciu = Ciu::find($ciu_id[$i]);
+
+            //Calculo de minimo  a tributar
+            $min_amount = $ciu->min_tribu_men * $tributo->value;
+
+            //Calculo de base imponible
+            $base_amount_sub = $ciu->alicuota * $base_format_verify;
+
+
+            if ($min_amount > $base_amount_sub) {
+                $total_base = $total_base + $min_amount;
+            } else {
+                $total_base = $total_base + $base_amount_sub;
+            }
+
+
+        }
+        if ($company_find->typeCompany == 'R') {
+            $total_base = $total_base + $withholding_format - $fiscal_credits_format - $deductions_format;
+        } else {
+            $total_base = $total_base - $withholding_format - $fiscal_credits_format - $deductions_format;
+        }
+
+
+        if ($total_base < 0) {
+            return response()->json(['status'=>'error','message' => 'La deducciones o creditos fiscal no pueder ser mayor que el impuesto causado.']);
+        }
+
+
+
+
 
 
 
         for ($i = 0; $i < count($base); $i++) {
 
-            //format a base
+            //damos formato a la base
             $base_format = str_replace('.', '', $base[$i]);
             $base_format = str_replace(',', '.', $base_format);
             $ciu = Ciu::find($ciu_id[$i]);
 
-            if($type!='definitive'){
-                $deductions_format = str_replace('.', '', $deductions[$i]);
-                $deductions_format = str_replace(',', '.', $deductions_format);
 
+            //Calculo de minimo  a tributar
+            $min_amount = $ciu->min_tribu_men * $tributo->value;
 
-                //format withdolding
-                $withholding_format = str_replace('.', '', $withholding[$i]);
+            //Calculo de base imponible
+            $base_amount_sub = $ciu->alicuota * $base_format;
 
-                $withholding_format = str_replace(',', '.', $withholding_format);
-                //format fiscal credits
-                $fiscal_credits_format = str_replace('.', '', $fiscal_credits[$i]);
-                $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
+            //si lo que va a pagar es mayor que el min a tributar
+            if ($base_amount_sub > $min_amount) {
 
+                $min_amount = 0;
+            } else {//si no paga minimo
 
-                if ($base[$i] == 0) {
-                    $taxes = $ciu->min_tribu_men * $unid_tribu[0]->value;
-                    $unid_total = $unid_tribu[0]->value;
-                } else {
-                    $taxes = $ciu->alicuota * $base_format / 100;
-                    $unid_total = 0;
-                }
-
-                if ($date['mora']) {//si tiene mora
-
-
-                    $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                    if ($company_find->typeCompany === 'R') {
-                        $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
-                    } else {
-                        $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
-                    }
-
-                    $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                    $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                    $mora = 0;
-
-
-                } else {
-                    $mora = 0;
-                    $tax_rate = 0;
-                    $interest = 0;
-                }
-
-
-                $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                    [   'ciu_id'=>$ciu_id[$i],
-                        'base'=>$base_format,
-                        'deductions'=>$deductions_format,
-                        'withholding'=>$withholding_format,
-                        'fiscal_credits'=>$fiscal_credits_format,
-                        'unid_tribu'=>$unid_total,
-                        'mora'=>$mora,
-                        'tax_rate'=>$tax_rate,
-                        'interest'=>$interest
-                    ]);
-
-
-            }else{
-
-                $anticipated_format = str_replace('.', '', $anticipated[$i]);
-                $anticipated_format = str_replace(',', '.', $anticipated_format);
-
-
-                if ($base[$i] == 0) {
-                    $taxes_amount = ($ciu->min_tribu_men* 12 * $unid_tribu[0]->value)-$anticipated_format;
-                    $unid_total = $unid_tribu[0]->value;
-                } else {
-                    $taxes_amount+=($base_format*$ciu->alicuota)-$anticipated_format;
-                    $unid_total = 0;
-                }
-
-
-                $taxe->taxesCiu()->attach(['taxe_id' => $id], ['ciu_id' => $ciu_id[$i],
-                    'base' => $base_format, 'deductions' => 0, 'withholding' => 0,
-                    'fiscal_credits' => 0, 'unid_tribu' => $unid_total, 'mora' => 0,
-                    'tax_rate' => 0,
-                    'interest' => 0,
-                    'base_anticipated'=>$anticipated_format]);
-
+                $base_amount_sub = $min_amount;
             }
 
-            //format a deductions
+            if ($date['mora']) {//si tiene mora
+                //Obtengo recargo
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+
+                //Obtengo Intereset del banco
+                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
 
+            } else {
+                $amount_recharge = 0;
+                $interest = 0;
+            }
+
+            $taxe->taxesCiu()->attach(['taxe_id' => $id],
+                ['ciu_id' => $ciu_id[$i],
+                    'base' => $base_format,
+                    'recharge' => $amount_recharge,
+                    'tax_unit' => $tributo->value,
+                    'interest' => $interest,
+                    'taxable_minimum' => $min_amount
+                ]);
         }
 
 
-        $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id]);
+            $day_mora=$date['diffDayMora'];
+            $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id,
+                'fiscal_credits'=>$fiscal_credits_format,
+                'withholding'=>$withholding_format,
+                'deductions'=>$deductions_format,
+                'day_mora'=>$day_mora]);
+
 
         $taxesCalculate=Calculate::calculateTaxes($id);
-        $taxesCalculate['id_taxes']=$id;
-        $taxe_update=Taxe::find($id)
-        ;
-        if($taxe_update->type!='definitive'){
+
+        $taxe_update=Taxe::find($id);
+
             //Si tiene  multa
             $verify=TaxesMonth::calculateDayMora($taxe_update->fiscal_period,$taxe_update->companies[0]->typeCompany);
             if($verify['mora']){
-
                 $company=Company::find($taxe_update->companies[0]->id);
                 $fineCompany=FineCompany::where('fiscal_period',$taxe_update->fiscal_period)->get();
                 if(!$fineCompany->isEmpty()){
                     $fine=FineCompany::find($fineCompany[0]->id);
                     $fine->delete();
                 }
-                $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$unid_tribu[0]->value, 'fiscal_period'=>$taxe_update->fiscal_period]);
+                $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$tributo->value, 'fiscal_period'=>$taxe_update->fiscal_period]);
                 $fines=$company->fineCompany()->orderBy('id','desc')->take(1)->get();
 
                 $subject = "MULTA-SEMAT";
                 $for = $company->users[0]->email;
 
-                Mail::send('mails.resolucion', ['name'=>$company->name], function ($msj) use ($subject, $for) {
-                    $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
-                    $msj->subject($subject);
-                    $msj->to($for);
-                });
 
-
-            }
-            $taxe_update->amount=$taxesCalculate['amountTotal'];
+                try{
+                    Mail::send('mails.resolucion', ['name'=>$company->name], function ($msj) use ($subject, $for) {
+                        $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+                        $msj->subject($subject);
+                        $msj->to($for);
+                    });
+                }catch (\Exception $e){
+                    return response()->json(['status'=>'error-email','message'=>'La planilla se registro con éxito, sin embargo no se pudo enviar el correo de la multa generada.(Fallo de internet.)']);
+                }
+                $response=['status'=>'success','message'=>'Registro de planilla con éxito,  se le genero una multa por pago fuera de lapso.'];
+                $taxe_update->amount=$taxesCalculate['amountTotal'];
         }else{
-            $taxe_update->amount=$taxes_amount;
+                $response=['status'=>'success','message'=>'Registro de planilla con éxito.'];
+            $taxe_update->amount=$taxesCalculate['amountTotal'];
         }
+
        $taxe_update->update();
-        return response()->json(['taxe'=>'']);
+
+
+        return response()->json($response);
     }
 
 

@@ -205,10 +205,13 @@ $(document).ready(function () {
         var withholdings = $('#withholdings').val();
         var fiscal_credits = $('#fiscal_credits').val();
 
+        var type_company=$('#type_company').val();
 
         deductions = deductions.replace(/\./g, '');
         withholdings = withholdings.replace(/\./g, '');
         fiscal_credits = fiscal_credits.replace(/\./g, '');
+
+
 
 
         $('.code').each(function () {
@@ -216,16 +219,18 @@ $(document).ready(function () {
             var base = $('#base_' + code).val();
             var alicuota = $('#alicuota_' + code).val();
             base = base.replace(/\./g, '');
-            total=total+Math.floor(parseFloat(base) * alicuota);
+           // total=total+Math.floor(parseFloat(base) * alicuota);
+            total=total+base;
         });
 
-       /* var total_deductions = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
+
+
+       /*
+        var total_deductions = parseFloat(deductions)  + parseFloat(fiscal_credits);
 
 
 
-
-
-            if (total_deductions > total) {
+         if (total_deductions >total) {
                 swal({
                     title: "Información",
                     text: "Verifique los datos ingresados.",
@@ -254,10 +259,8 @@ $(document).ready(function () {
                 });
                 band = true;
             }
+            */
 
-
-
-*/
         if (!band) {
            $(('#taxes-register'))[0].submit();
         }

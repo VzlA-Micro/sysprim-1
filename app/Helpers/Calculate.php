@@ -54,12 +54,12 @@ class Calculate{
                 $withholding_sub=$amountCiiu+$companyTax->pivot->withholding;
                 $credits_fiscal_sub= $withholding_sub-$companyTax->pivot->fiscal_credits;
                 $deductions_sub=$credits_fiscal_sub-$companyTax->pivot->deductions;
-                $amountTax+=$deductions_sub-$amountInterest+$amountRecargo;
+                $amountTax+=$deductions_sub;
             }else{
                 $withholding_sub=$amountCiiu-$companyTax->pivot->withholding;
                 $credits_fiscal_sub= $withholding_sub-$companyTax->pivot->fiscal_credits;
                 $deductions_sub=$credits_fiscal_sub-$companyTax->pivot->deductions;
-                $amountTax+=$deductions_sub+$amountInterest+$amountRecargo;
+                $amountTax+=$deductions_sub;
             }
 
 

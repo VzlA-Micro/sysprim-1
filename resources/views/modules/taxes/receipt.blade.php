@@ -162,7 +162,7 @@
 				<td></td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
 				<td style="font-size: 10px !important;">{{number_format($ciu->interest,2)}}</td>
-				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge+$ciu->recharge,2)}}</td>
+				<td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge+$ciu->interest,2)}}</td>
 			</tr>
 
 		@endif

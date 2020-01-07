@@ -15,10 +15,12 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
-                   {{-- @if(is_null($date))
-                        <div class="alert alert-success center-align">
-                            <strong>Todavia no hay pagos que realizar.</strong>
+                   @if(session("message") )
+                        <div class="alert alert-danger center-align">
+                            <strong>{{session("message")}}</strong>
                         </div>
+                    @endif
+                        {{--
                     @elseif($date['status']==='process')
                         <div class="alert alert-success center-align">
                             <strong>ACTIVIDAD ECONOMICA DECLARADA, POR FAVOR CONCILIE SUS PAGOS.</strong>
@@ -74,6 +76,7 @@
 
                           <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
                           <input type="hidden" id="tributo" name="tributo" value="{{ $unid_tribu }}">
+                          <input type="hidden" id="type_company" name="type_company" value="{{ $company->typeCompany }}">
 
                             {{--   <div class="input-field col s12">
                                   <input type="hidden" name="fiscal_period" id="fiscal_period"
