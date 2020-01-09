@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             UsersCompanyTableSeeder::class,
             CiuCompanyTableSeeder::class,
             UnidTribuTableSeeder::class,
-            ExtrasTableSeeder::class,
             EmployeesTableSeeder::class,
             CatastralTerrenoTableSeeder::class,
             CatastralConstruccionTableSeeder::class,
