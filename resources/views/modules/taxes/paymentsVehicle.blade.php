@@ -8,13 +8,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-                <a href="{{ route('home') }}" class="breadcrumb">Inicio</a>
-                <a href="#" class="breadcrumb">Mi Empresa</a>
-                <a href="#" class="breadcrumb">Nombre de la empresa</a>
-                <a href="#" class="breadcrumb">Mis Pagos</a>
-				<a href="#" class="breadcrumb">Detalles de Pago</a>
-                <a href="#" class="breadcrumb">Pagar Impuestos</a>
-            </div>
+				<ul class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+					<li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>session('vehicle')])}}">Detalles De Vehículos</a></li>
+					<li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+					<li class="breadcrumb-item"><a href="#">Pagar Impuestos</a></li>
+				</ul>
             <div class="col s12 m10 offset-m1">
             	<div class="card payment-form ">
 	            	<ul class="tabs">

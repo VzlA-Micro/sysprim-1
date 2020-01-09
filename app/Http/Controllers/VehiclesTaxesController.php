@@ -50,7 +50,7 @@ class VehiclesTaxesController extends Controller
             $total = number_format($declaration['total'], 2, ',', '.');
             $paymentFractional = 0;
             $valueDiscount = 0;
-            if ($declaration['optionPayment'] == 'true') {
+            if ($declaration['optionPayment']) {
                 $total = number_format($declaration['total'], 2, ',', '.');
                 $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
                 $rateYear = $declaration['rateYear'];
@@ -154,7 +154,7 @@ class VehiclesTaxesController extends Controller
         $paymentFractional = 0;
         $valueDiscount = 0;
 
-        if ($declaration['optionPayment'] == 'true') {
+        if ($declaration['optionPayment']) {
             $total = $declaration['total'];
             $valueDiscount = $declaration['valueDiscount'];
             $rateYear = $declaration['rateYear'];
@@ -237,6 +237,71 @@ class VehiclesTaxesController extends Controller
         $vehicle=Vehicle::find($vehicleId);
 
         return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
+    }
+
+    public function downloadPDF($id)
+    {
+        $declaration = DeclarationVehicle::Declaration($id);
+
+        $id_vehicle=explode('-',$id);
+
+
+        $taxes = Taxe::findOrFail($id_vehicle[1]);
+        $user = \Auth::user();
+        $vehicle = Vehicle::where('id',$id_vehicle[0])->get();
+
+        $grossTaxes = 0;
+        $total = $declaration['total'];
+        $paymentFractional = 0;
+        $valueDiscount = 0;
+
+
+
+        if ($declaration['optionPayment']) {
+            $total = $declaration['total'];
+            $valueDiscount = $declaration['valueDiscount'];
+            $rateYear = $declaration['rateYear'];
+            $grossTaxes = $declaration['grossTaxes'];
+            $previousDebt = $declaration['previousDebt'];
+            $recharge = 0;
+        } else {
+            $paymentFractional = $declaration['fractionalPayments'];
+            $grossTaxes = $paymentFractional;
+            $rateYear = $declaration['rateYear'];
+            if (isset($declaration['recharge'])) {
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            } else {
+                $recharge = 0;
+            }
+            if (isset($declaration['previousDebt'])) {
+                if ($declaration['previousDebt'] !== 0) {
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                }
+            } else {
+                $previousDebt = 0;
+            }
+        }
+
+        $trimester=Trimester::verifyTrimester();
+        $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
+
+        $pdf = \PDF::loadView('modules.vehicles-payments.receipt',
+            [
+                'taxes' => $taxes,
+                'user' => $user,
+                'fiscal_period' => $period_fiscal,
+                'firm' => false,
+                'grossTaxes' => $grossTaxes,
+                'recharge' => $recharge,
+                'previousDebt' => $previousDebt,
+                'valueDiscount' => $valueDiscount,
+                'vehicle' => $vehicle,
+                'total' => $total,
+                'moreThereYear' => $declaration['moreThereYear']
+            ]);
+
+
+        return $pdf->download('PLANILLA_SOLVENCIA.pdf');
     }
 
 
