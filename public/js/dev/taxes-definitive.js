@@ -88,15 +88,20 @@ $(document).ready(function () {
             // fiscal_credits = fiscal_credits.replace(/\./g, '');
 
 
-            //var total_antipaci = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
+            //var total_antipacit = parseFloat(deductions) + parseFloat(withholdings) + parseFloat(fiscal_credits);
             var total = Math.floor(parseFloat(base) * alicuota);
 
 
             var min_total = min_tribu  * tributo*12;
 
+            if(min_total>total){
+                total=min_total;
+            }
+;
+
 
             if (total !== 0) {
-                if (total <= parseFloat(anticipated)) {
+                if (parseFloat(anticipated)>total) {
                     swal({
                         title: "Información",
                         text: "Verifique los datos ingresados, el monto anticipado no puede ser mayor, que el calculo total de la base.",
@@ -165,9 +170,12 @@ $(document).ready(function () {
             }
         });
         if (!band) {
+            if($('#credits_fiscal').val()==''){
+                $('#credits_fiscal').val(0);
+            }
+
             $('#taxes-register-definitive')[0].submit();
         }
-
 
     });
 

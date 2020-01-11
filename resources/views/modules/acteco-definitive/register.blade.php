@@ -8,8 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                     <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                    <li class="breadcrumb-item"><a
-                                href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
                             Declaraciones</a></li>
                     <li class="breadcrumb-item"><a
                                 href="{{ route('payments.create',['company'=>session('company')]) }}">Pagar
@@ -32,7 +31,17 @@
 
                     <form action="{{ route('taxes.save.definitive')}}" method="post" class="card"
                           id="taxes-register-definitive">
-                        {{-- @if(is_null($date))
+                        @if(session("message") )
+                            <div class="alert alert-danger center-align">
+                                <strong>{{session("message")}}</strong>
+                            </div>
+                        @endif
+
+
+                        {{--
+
+
+                    @if(is_null($date))
                              <div class="alert alert-success center-align">
                                  <strong>Todavia no hay pagos que realizar.</strong>
                              </div>
@@ -41,6 +50,7 @@
                                  <strong>ACTIVIDAD ECONOMICA DECLARADA, POR FAVOR CONCILIE SUS PAGOS.</strong>
                              </div>
                          @else
+
                          --}}
 
                         <div class="card-header center-align">
@@ -53,7 +63,7 @@
                                 <i class="icon-date_range prefix"></i>
                                 <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona una Opción</option>
-                                    <option value="2019-01-01">2019</option>
+                                    <option value="2019-01-01">ENERO-2019 HASTA DICIEMBRE-2019</option>
                                 </select>
                                 <label for="fiscal_period">Lapso</label>
                             </div>
@@ -122,6 +132,8 @@
                                         </div>
 
 
+
+
                                         <input type="hidden" id="alicuota_{{$ciu->code}}" class="alicuota"
                                                value="{{ $ciu->alicuota }}">
 
@@ -132,6 +144,12 @@
 
                                 @endif
                             @endforeach
+                                <div class="input-field col s12 m12">
+                                    <i class="icon-info prefix amber-text tooltipped"
+                                       data-position="bottom" data-tooltip="En caso que en un período impositivo determinado, por la aplicación del mínimo tributable en algunos de los anticipos mensuales, surja una diferencia o crédito a favor del sujeto pasivo, la misma le será reconocida mediante acto administrativo como un crédito fiscal, el cual deberá ser descontado del monto del impuesto que le corresponda pagar en posteriores periodos impositivos o del impuesto determinado luego de un procedimiento de determinación tributaria, de ser el caso (Ord. AE Art 44, Parágrafo Único)."></i>
+                                    <input type="text" name="fiscal_credits"   id="credits_fiscal"  class="validate money_keyup anticipated" maxlength="18">
+                                    <label for="credits_fiscal">Credito Fiscal(Bs)</label>
+                                </div>
                         </div>
                         <!--<div class="card-footer">
                             <b>NOTA:</b> Si la Empresa tiene menos de 4 años utilizando el beneficio por trabajadores, te invitamos pases por nuestras oficina en las Torre David Planta Mezzanina Gerencia de Recaudación Dpto. Cuentas por Cobrar

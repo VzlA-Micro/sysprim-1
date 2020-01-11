@@ -3,34 +3,16 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @if($taxes->status!=='temporal'&&substr($taxes->code,0,1)=='P')
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
-                                de Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
-                    </ul>
-                </div>
-            @else
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                        <li class="breadcrumb-item"><a
-                                    href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
-                                Declaraciones</a></li>
-                        <li class="breadcrumb-item"><a
-                                    href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}">Pagar
-                                Impuestos</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
-                    </ul>
-                </div>
-            @endif
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
+                </ul>
+            </div>
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
@@ -46,8 +28,6 @@
                                 <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                             </ul>
                             <ul>
-
-
                             </ul>
                         </div>
                         <div class="col m6">
@@ -65,65 +45,66 @@
                         @foreach($ciuTaxes as $ciu)
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code" id="code_{{$ciu->ciu->code}}" class="code" value="{{ $ciu->ciu->code }}"
+                                <input type="text" name="code" id="code_{{ $ciu->ciu->code}}" class="code" value="{{ $ciu->ciu->code }}"
                                        required readonly>
-                                <label for="code_{{$ciu->ciu->code}}">Código</label>
+                                <label for="code_{{ $ciu->ciu->code}}">Código</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-assignment prefix"></i>
-                                <input type="text" name="ciu" id="ciu_{{$ciu->ciu->code}}" value="{{ $ciu->ciu->name }}" required readonly>
-                                <label for="ciu_{{$ciu->ciu->code}}">CIU</label>
+                                <input type="text" name="ciu" id="ciu_{{ $ciu->ciu->code}}" value="{{ $ciu->ciu->name }}" required readonly>
+                                <label for="ciu_{{ $ciu->ciu->code}}">CIU</label>
                             </div>
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="base[]" id="base_{{$ciu->ciu->code}}" class="validate money"
+                                <input type="text" name="base[]" id="base_{{ $ciu->ciu->code}}" class="validate money"
                                        value="{{ $ciu->base }}" readonly>
-                                <label for="base_{{$ciu->ciu->code}}">Base Imponible</label>
+                                <label for="base_{{ $ciu->ciu->code}}">Base Imponible</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}" class="validate recargo money"
+                                <input type="text" name="tasa[]" id="tasa_{{ $ciu->ciu->code}}" class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
-                                <label for="tasa_{{$ciu->ciu->code}}">Recargo (12%)<b> (Bs)</b></label>
+                                <label for="tasa_{{ $ciu->ciu->code}}">Recargo (12%)<b> (Bs)</b></label>
                             </div>
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="interest[]" id="interest_{{$ciu->ciu->code}}" class="validate money"
+                                <input type="text" name="interest[]" id="interest_{{ $ciu->ciu->code}}" class="validate money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
-                                <label for="interest_{{$ciu->ciu->code}}">Interes por mora<b> (Bs)</b></label>
+                                <label for="interest_{{ $ciu->ciu->code}}">Interes por mora<b> (Bs)</b></label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="total_ciu[]" id="total_ciu_{{$ciu->ciu->code}}" class="validate total_ciu money"
+                                <input type="text" name="total_ciu[]" id="fiscal_credits__{{ $ciu->ciu->code}}" class="validate total_ciu money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu}}" readonly>
-                                <label for="total_ciu_{{$ciu->ciu->code}}">Impuesto Causado por CIU<b> (Bs)</b></label>
+                                <label for="fiscal_credits_{{ $ciu->ciu->code}}">Impuesto Causado por CIU<b> (Bs)</b></label>
                             </div>
+
 
                             <div class="input-field col s12">
-                                    <div class="divider"></div>
+                                <div class="divider"></div>
                             </div>
-
                         @endforeach
 
 
                         @foreach($taxes->companies as $tax)
 
+
                             <div class="input-field col s12 m6">
                                 <i class="icon-warning prefix"></i>
-                                <input type="text" name="day_mora[]" id="day_mora" class="validate"
+                                <input type="text" name="fiscal_credits[]" id="fiscal_credits_{{ $ciu->ciu->code}}" class="validate"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->day_mora }}"
                                        readonly>
-                                <label for="day_mora">Días de Atraso:</label>
+                                <label for="fiscal_credits_{{ $ciu->ciu->code}}">Días de Atraso:</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
@@ -213,6 +194,7 @@
                             <div class="row" style="padding: 1rem">
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
+
                                     @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
                                         <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
                                            class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
@@ -230,10 +212,142 @@
                                             <i class="icon-more_horiz right"></i>
                                         </button>
                                         {{-- Modal structure --}}
+
                                     @endif
+                                    @if(!$taxes->payments->isEmpty())
+                                        <h4 class="center-align">Historial Pagos</h4>
+                                        <table class="centered highlight" id="payments" style="width: 100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Código</th>
+                                                <th>Forma de Pago</th>
+                                                <th>Status</th>
+                                                <th>Ref o Código</th>
+                                                <th>Monto</th>
+                                                <th>Acción</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($taxes->payments as $taxe)
+                                                <tr>
+                                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                                    <td>{{$taxe->code}}</td>
+                                                    <td>{{$taxe->type_payment}}</td>
+                                                    <td>{{$taxe->statusName}}</td>
+                                                    <td>{{$taxe->ref}}</td>
+                                                    <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                                    <td>
+                                                        @if($taxe->status==='cancel')
+                                                            <div class="input-field col s12 m12">
+                                                                <button type="button"
+                                                                        class="btn waves-effect waves-light  col s12 red"
+                                                                        value="">
+                                                                    <i class="icon-do_not_disturb_alt"></i></button>
+                                                            </div>
+                                                        @elseif($taxe->status=='verified')
+                                                            <div class="input-field col s12 m12">
+                                                                <button type="button"
+                                                                        class="btn waves-effect waves-light green col s12"
+                                                                        value="#" data-status="#">
+                                                                    <i class="icon-check"></i></button>
+                                                            </div>
+                                                        @else
+                                                            <div class="input-field col s12 m6">
+                                                                <button type="button"
+                                                                        class="change-status btn waves-effect waves-light green col s12"
+                                                                        value="{{$taxe->id}}" data-status="verified">
+                                                                    <i class="icon-check"></i></button>
+                                                            </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <button type="button"
+                                                                        class="change-status btn waves-effect waves-light red col s12"
+                                                                        value="{{$taxe->id}}" data-status="cancel">
+                                                                    <i class="icon-cancel"></i></button>
+                                                            </div>
+                                                        @endif
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
+
+                                        <div class="row ">
+                                            @if($taxes->status==='ticket-office')
+                                                <a class="btn green col s12 ">
+                                                    <i class="icon-more_horiz left "></i>
+                                                    ESTADO: SIN PROCESAR AÚN
+                                                </a>
+
+                                            @elseif($taxes->status==='process')
+                                                <a href="#" class="btn green col s12">
+                                                    <i class="icon-more_horiz left "></i>
+                                                    ESTADO: SIN CONCILIAR AÚN
+
+                                                </a>
+                                            @elseif($taxes->status==='verified')
+
+                                                <a href="#" class="btn blue col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO: VERIFICADA.
+                                                </a>
+
+
+                                            @elseif($taxes->status=='cancel')
+
+                                                <a href="#" class="btn red col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO: CANCELADA.
+                                                </a>
+                                            @endif
+
+                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+
+                                                <div class="col l12">
+                                                    <h4 class="center-align mt-2">Acciones</h4>
+                                                </div>
+
+
+                                                <div class="input-field col s12">
+
+                                                    @can('Anular Pagos')
+                                                        <a href="#"
+                                                           class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
+                                                           data-status="cancel">
+                                                            ANULAR PLANILLA.
+                                                            <i class="icon-close right"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('Verificar Pagos - Manual')
+                                                        @if($verified&&$taxes->status!=='verified')
+                                                            <a href="#"
+                                                               class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
+                                                               data-status="verified">
+                                                                VERIFICAR PLANILLA.
+                                                                <i class="icon-verified_user right"></i>
+                                                            </a>
+                                                        @endif
+                                                    @endcan
+                                                    @if($taxes->status=='verified')
+                                                        <button type="button" id="send-email-verified"
+
+
+                                                                class="btn btn-rounded col s4 green waves-effect waves-light"
+                                                                value="{{$taxes->id}}">Enviar Correo Verificado.
+                                                            <i class="icon-send right"></i>
+                                                        </button>
+                                                    @endif
+
+                                                </div>
+                                            @endif
+                                            @endif
+                                        </div>
                                 </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>

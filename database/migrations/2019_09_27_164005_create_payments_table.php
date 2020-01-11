@@ -24,7 +24,7 @@ class CreatePaymentsTable extends Migration
             $table->string('lot',10)->nullable();
             $table->string('bank',10)->nullable();
             $table->string('status',20)->nullable();
-            $table->string('amount',10);
+            $table->double('amount',11,2);
             $table->string('type_payment',40)->nullable();
             $table->string('name',50)->nullable();
             $table->string('phone',15)->nullable();

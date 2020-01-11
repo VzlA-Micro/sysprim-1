@@ -290,11 +290,7 @@ $date = '31/12/'.date('Y');
             <td style="width: 100%;"></td>
             <td style="width: 100%"></td>
             <td style="width: 100%;">
-
-
-
             </td>
-
         </tr>
 
     </table>
@@ -322,23 +318,18 @@ $date = '31/12/'.date('Y');
 
 
 
-
-
-
     <table style="width: 100%;">
-
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period)) !!} " >
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->code.'-'.$taxes[0]->taxes->created_at)) !!} " >
                 </td>
             </tr>
+            <tr>
+                <td style="width: 20%;">
 
+                </td>
 
-        <tr>
-            <td style="width: 20%;">
-
-            </td>
-        </tr>
+            </tr>
     </table>
 </div>
 </body>

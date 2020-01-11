@@ -62,7 +62,7 @@
 </div>
 
 @if($taxes->status==='verified')
-    <h4 style="text-align:center">RECIBO DE PAGO (DECLARACIÓN DEFINITIVA)</h4>
+    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (DECLARACIÓN DEFINITIVA)</h4>
 @else
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(DECLARACIÓN DEFINITIVA)</h4>
 @endif
@@ -125,12 +125,9 @@
             <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('Y')}}</td>
             <td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
             <td style="width: 15%;font-size: 10px;!important">{{($ciu->ciu->alicuota*100)."%"}}</td>
-            <td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
+            <td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiuDefinitive,2)}}</td>
         </tr>
 
-
-
-        @if($ciu->base_anticipated!=0)
             <tr>
                 <td></td>
                 <td style="font-size: 10px !important;">IMPUESTO ANTICIPADO</td>
@@ -143,8 +140,6 @@
                 </td>
 
             </tr>
-        @endif
-
 
         @if($ciu->interest!=0)
             <tr>
@@ -169,69 +164,26 @@
         @endif
 
 
-        @if($ciu->withholding!=0)
+    @endforeach
+
+    @foreach($taxes->companies as $tax)
+
+        @if($tax->pivot->fiscal_credits!=0)
             <tr>
                 <td></td>
-                <td style="font-size: 10px !important;">Retención al Impuesto del Período Fiscal</td>
+                <td style="font-size: 10px !important;">CRÉDITO FISCAL DETER.DEFINITIVA</td>
                 <td></td>
                 <td></td>
                 <td style="font-size: 10px !important;"></td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->withholding,2)}}</td>
-                @if($taxes->companies[0]->typeCompany=='R')
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding,2)}}
-                    </td>
-                @else
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding,2)}}
-                    </td>
-                @endif
+                <td style="font-size: 10px !important;">{{number_format($tax->pivot->fiscal_credits,2)}}</td>
+                <td style="font-size: 10px !important;"></td>
+
             </tr>
         @endif
 
-        @if($ciu->deductions!=0)
-            <tr>
-                <td></td>
-                <td style="font-size: 10px !important;">Deducciones</td>
-                <td></td>
-                <td></td>
-                <td style="font-size: 10px !important;"></td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->deductions,2)}}</td>
-                @if($taxes->companies->typeCompany=='R')
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions,2)}}
-                    </td>
-                @else
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions,2)}}
-                    </td>
-                @endif
-            </tr>
-        @endif
-
-        @if($ciu->fiscal_credits!=0)
-            <tr>
-                <td></td>
-                <td style="font-size: 10px !important;">Crédito Fiscal</td>
-                <td></td>
-                <td></td>
-                <td style="font-size: 10px !important;"></td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->fiscal_credits,2)}}</td>
-                @if($taxes->companies[0]->typeCompany=='R')
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
-                    </td>
-                @else
-                    <td style="font-size: 10px !important;">
-                        {{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits,2)}}
-                    </td>
-                @endif
-            </tr>
-        @endif
 
 
     @endforeach
-
 
     <tr>
         <td></td>
@@ -291,7 +243,11 @@
         <td></td>
     </tr>
 
-    @if(substr($taxes->payments[0]->code,0,3)=='PPB')
+
+
+
+
+    @if(!$taxes->payments->isEmpty()&&substr($taxes->payments[0]->code,0,3)=='PPB')
         <tr>
             <td style="width: 100%;text-align: center; font-size: 14px;">
                 @if($taxes->payments[0]->payments->bank==44)
@@ -370,17 +326,14 @@ $date = '31/12/' . date('Y');
         <tr>
 
             @if($taxes->status==='verified')
-
-                <td style="width: 40%;text-align: center;">
-                    <img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:80px;">
+                <td style="width: 80%;text-align: center;margin-bottom: -70px!important;">
+                    <img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
 
                 </td>
             @else
-
                 <td style="width: 40%;text-align: center;">
                     __________________________________________
                 </td>
-
             @endif
 
         </tr>
@@ -416,10 +369,7 @@ $date = '31/12/' . date('Y');
 
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;"
-
-                    >
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
                 </td>
             </tr>
 

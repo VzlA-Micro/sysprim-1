@@ -8,7 +8,7 @@ class Payment extends Model implements Auditable{
     use \OwenIt\Auditing\Auditable;
 
     protected $table='payments';
-    protected $appends = ['bankName'];
+    protected $appends = ['bankName','statusName'];
 
 
 
@@ -32,6 +32,19 @@ class Payment extends Model implements Auditable{
             return  $this->bankName="BANESCO";
         }
     }
+
+
+    public function getStatusNameAttribute(){
+        if($this->status=='process'){
+            return $this->statusName="EN PROCESO";
+        }else if($this->status=='verified'){
+            return $this->statusName="VERIFICADO";
+        }else if ($this->status=='cancel'){
+            return $this->statusName='CANCELADO';
+        }
+    }
+
+
 
 
     //

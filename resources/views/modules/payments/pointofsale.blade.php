@@ -29,6 +29,7 @@
                             <thead>
 
                             <tr>
+                                <th>Codigó</th>
                                 <th>Fecha</th>
                                 <th>Contribuyente</th>
                                 <th>Forma de Pago</th>
@@ -49,8 +50,9 @@
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
                                     <tr>
+                                        <td>{{$taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                        <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
+                                        <td>{{$taxe->taxes[0]->companies[0]->license}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->ref}}</td>
@@ -61,7 +63,7 @@
                                         <td>
                                             @if($taxe->status==='cancel')
                                                 <div class="input-field col s12 m12">
-                                                    <button type="button"
+                                                    <button type="button" disabled
                                                             class="btn waves-effect waves-light  col s12 red" value="">
                                                         <i class="icon-do_not_disturb_alt"></i></button>
                                                 </div>
@@ -70,7 +72,7 @@
                                                     <button type="button" id="change-status"
                                                             class="btn waves-effect waves-light green col s12"
                                                             value="{{$taxe->id}}" data-status="cancel">
-                                                        <i class="icon-assignment"></i></button>
+                                                        <i class="icon-cancel"></i></button>
                                                 </div>
                                             @endif
 
@@ -79,7 +81,7 @@
                                         @can('Detalles Pagos')
                                             @if($taxe->taxes[0]->type!='definitive')
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
+                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
                                                 </td>
@@ -186,12 +188,12 @@
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 9;
+                        }, doc.defaultStyle.fontSize = 7;
 
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
                     }
                 },
 

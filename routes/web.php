@@ -220,10 +220,21 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/ticket-office/payments', 'TicketOfficeController@cashier')->name('ticket-office.payments');
             Route::get('/ticket-office/taxes/', 'TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
             Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
+            Route::get('/ticket-office/taxes/ateco/details/{id}', 'TicketOfficeController@detailsTaxesAteco')->name('ticket-office.detailsTaxesAteco');
+            Route::get('/ticket-office/taxes/ateco/send-email/{id}','TicketOfficeController@sendEmailVerified');
+
+
+
+
             Route::get('/ticket-office/type-payment', function () {
                 return view('modules.payments.type_payment');
             })->name('ticket-office.type.payments');
+
             Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
+
+
+
+
 
             // Nivel 2: 
             // ---- Generar Planilla -> Registrar
@@ -321,7 +332,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ticket-office/taxes/calculate/{taxes_data}', 'TicketOfficeController@calculatePayments');
 
 
-// Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+    Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
 
 
     // Seguridad

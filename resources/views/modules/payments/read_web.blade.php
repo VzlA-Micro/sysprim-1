@@ -52,7 +52,7 @@
                                             @can('Detalles Planilla')
                                                 @if($taxe->type!='definitive')
                                                     <td>
-                                                        <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
                                                            class="btn btn-floating orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
                                                     </td>

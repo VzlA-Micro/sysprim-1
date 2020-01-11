@@ -40,7 +40,6 @@
                                 <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
 
-
                                     @foreach($mounths as $key=>$value)
                                         @php
                                             $band=false; $status; @endphp

@@ -54,7 +54,7 @@
                                             @if($taxe->type==='definitive')
                                                 <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period).'--'.\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
                                             @else
-                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
+                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
                                             @endif
 
                                             <td>{{$taxe->typeTaxes}}</td>
@@ -67,27 +67,26 @@
 
                                                 <td>
 
-                                                    <button class="btn green">
+                                                    <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{route('taxes.download',[$taxe->id])}}"
+                                                <td><a href="{{url('payments/taxes/download/'.$taxe->id)}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
 
                                                 @else
 
-
                                                     <td>
 
-                                                        <button class="btn green">
+                                                        <button class="btn blue">
                                                             <i class="icon-more_horiz left"></i>
                                                             SIN CONCILIAR AÚN
                                                         </button>
                                                     </td>
-                                                    <td><a href="{{route('taxes.definitive.pdf',[$taxe->id])}}"
+                                                    <td><a href="{{url('taxes.definitive.pdf',['id'=>$taxe->id])}}"
                                                            class="btn orange waves-effect waves-light"><i
                                                                     class="icon-description left"></i>Descargar
                                                             planilla.</a></td>
@@ -97,41 +96,40 @@
                                             @elseif($taxe->status==='verified')
                                                 <td>
                                                     <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
+                                                        <i class="icon-check left"></i>
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
 
-
-
-
-
                                                 @if($taxe->type!='definitive')
 
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
-                                                </td>
+
+                                               <a href="{{url('payments/taxes/download/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>
                                                 @else
                                                     <td>
-                                                        <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
-                                                           class="btn indigo waves-effect waves-light"><i
-                                                                    class="icon-pageview left"></i>Detalles</a>
-                                                    <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                        <a href="{{url('taxes/definitive/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
+                                                         </i>Descargar.</a>
                                                     </td>
-
 
                                                 @endif
 
                                             @elseif($taxe->status=='cancel')
                                                 <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
+                                                    <button class="btn" disabled>
+                                                        <i class="icon-block left"></i>
                                                         CANCELADA.
                                                     </button>
                                                 </td>
+
+                                                <td>
+                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                       class="btn indigo waves-effect waves-light" disabled><i
+                                                                class="icon-pageview left"></i>Detalles</a>
+                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                </td>
+
+
                                             @endif
                                         </tr>
                                     @endif

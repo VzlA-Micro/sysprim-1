@@ -44,7 +44,6 @@
 					<img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
 					<span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
 					<span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
-
 	             </td>
 	        </tr><!-- 
 	        <tr>
@@ -62,7 +61,7 @@
 
 
 	@if($firm)
-		<h4 style="text-align:center">RECIBO DE PAGO</h4>
+		<h4 style="text-align:center">RECIBO DE PAGO VERIFICADO.</h4>
 	@else
 		<h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
 	@endif
@@ -325,23 +324,20 @@
 			<tr>
 
 				@if($firm)
-
-					<td style="width: 40%;text-align: center;">
-						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:80px;">
+					<td style="width: 80%;text-align: center;margin-bottom: -70px!important;">
+						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
 
 					</td>
 				@else
-
 					<td style="width: 40%;text-align: center;">
 						__________________________________________
 					</td>
-
 				@endif
 
 			</tr>
 			<tr>
 				@if($firm)
-					<td style="width:40%;text-align: center; font-size: 10px;" ><b>
+					<td style="width:40%;text-align: center; font-size: 10px; margin-top: 0px !important;"><b>
 							__________________________________________<br>
 							ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
 							Directora (E) de la Dirección de Hacienda y<br>
@@ -353,23 +349,39 @@
 					<td style="width:40%;text-align: center; font-size: 10px;">
 						FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
 						DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
-						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.</td>
-
+						DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.
+					</td>
 				@endif
 			</tr>
 		</table>
 		<table style="width: 100%;margin-bottom:-30px;">
 			<tr>
-				<td style="width: 80%;">
-					<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
-				</td>
+
+				@if($firm)
+					<td style="width: 80%;">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+					</td>
+				@else
+					<td style="width: 80%;">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+					</td>
+				@endif
 			</tr>
 			<tr>
-				<td style="width: 20%;">
-					@if($taxes->bank!=null)
-						<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
-					@endif
-				</td>
+
+				@if($firm)
+					<td style="width: 20%;">
+
+					</td>
+				@else
+
+
+					<td style="width: 20%;">
+						@if($taxes->bank!=null)
+							<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+						@endif
+					</td>
+				@endif
 			</tr>
 		</table>
     </div>

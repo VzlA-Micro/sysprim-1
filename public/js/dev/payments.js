@@ -1,5 +1,93 @@
 $('document').ready(function () {
- var url = "http://172.19.50.253/";
+ var url = "http://sysprim.com.devel/";
+
+    $('.change-status').click(function () {
+        var status=$(this).data('status');
+        var taxes_id=$(this).val();
+
+        console.log(taxes_id);
+        if(status==='verified'){
+            message='verificada';
+        }else{
+            message='cancelada';
+        }
+        swal({
+            title: "Información",
+            text: '¿Estas seguro de realizar esta acción?,' +
+                   'El estado del pago cambiara a "'+ message+'".',
+            icon: "warning",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "green-gradient"
+
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+        }).then(function (aceptar) {
+            if (aceptar) {
+
+                $.ajax({
+                    method: "GET",
+                    url: url + "payments/change-status/"+ taxes_id +"/"+ status ,
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        if (response.status) {
+                            swal({
+                                title: "¡Bien hecho!",
+                                text: "La planilla fue "+ response.status +" con exito.",
+                                icon: "success",
+                                button:{
+                                    text: "Esta bien",
+                                    className: "green-gradient"
+                                },
+                            }).then(function (accept) {
+                                location.reload();
+                            });
+                        }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    }, error: function (err) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    }
+                });
+
+
+            }
+        });
+
+
+    });
+
+
+
+
+
+
+
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');
@@ -12,10 +100,9 @@ $('document').ready(function () {
             message='cancelada';
         }
 
-
         swal({
             title: "Información",
-            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla cambiaria  el status a "'+ message+'", tanto está como lo pagos asociado a la misma.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro de realizar esta acción?, El estado de este pago  cambiaria  el status a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {
@@ -45,20 +132,34 @@ $('document').ready(function () {
                     },
                     success: function (response) {
 
+                        if(response.status!='error') {
 
+                            if (response.status) {
+                                swal({
+                                    title: "¡Bien hecho!",
+                                    text: "La planilla fue " + response.status + " con exito.",
+                                    icon: "success",
+                                    button: {
+                                        text: "Esta bien",
+                                        className: "green-gradient"
+                                    },
+                                }).then(function (accept) {
+                                    location.reload();
+                                });
+                            }
+                        }else{
 
-
-                        if (response.status) {
                             swal({
-                                title: "¡Bien hecho!",
-                                text: "La planilla fue "+ response.status +" con exito.",
-                                icon: "success",
-                                button:{
-                                    text: "Esta bien",        
-                                    className: "green-gradient"
-                                },
+                                title: "Información",
+                                text:  'El estado de la planilla cambio  a verificado, ' +
+                                       'sin embargo no se pudo enviar el correo verificado,' +
+                                        'intente más tarde, dando el boton de Enviar Planilla vericada.',
+                                icon: "info",
+                                button: "Ok",
                             }).then(function (accept) {
-                                location.reload();
+                                if(accept){
+                                    location.reload();
+                                }
                             });
                         }
 
@@ -104,7 +205,7 @@ $('document').ready(function () {
 
         swal({
             title: "Información",
-            text: '¿Estas seguro de realizar esta acción?, El estado de este pago cambiara  el status a "'+ message+'", asi como para la planilla no sera valido este pago.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla cambiara   a "'+ message+'",.Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {
@@ -132,16 +233,19 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-                        swal({
-                            title: "!Bien Hecho",
-                            text: 'El pago ha sido '+ response.status +' con éxito.',
-                            icon: "info",
-                            button: "Ok",
-                        }).then(function (accept) {
-                            if(accept){
-                               location.reload();
-                            }
-                        });
+
+                            swal({
+                                title: "!Bien Hecho",
+                                text: 'El pago ha sido '+ response.status +' con éxito.',
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function (accept) {
+                                if(accept){
+                                    location.reload();
+                                }
+                            });
+
+
 
 
                         $("#preloader").fadeOut('fast');
@@ -162,6 +266,53 @@ $('document').ready(function () {
             }
         });
 
+
+    });
+
+
+
+    $('#send-email-verified').click(function () {
+        var id=$(this).val();
+        $.ajax({
+            method: "GET",
+            url: url + "ticket-office/taxes/ateco/send-email/" +id,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+
+                if (response.status === 'error') {
+                    swal({
+                        title: "Información",
+                        text: response.message,
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }else{
+                    swal({
+                        title: "Bien Hecho",
+                        text: response.message,
+                        icon: "success",
+                        button: "Ok",
+                    })
+                }
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            }, error: function (err) {
+                $('#license').val('');
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: "Ok",
+                });
+            }
+        });
 
     });
 
