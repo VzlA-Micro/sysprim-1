@@ -14,6 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('properties.register') }}">Registrar Inmueble</a></li>
                 </ul>
             </div>
+
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 @csrf
                 <form class="card" action="#" method="post" id="property" class="" enctype="multipart/form-data">
@@ -83,6 +84,7 @@
                             </div>
                         </div>
                         <div class="input-field col m6 s12">
+                            <i class="icon-map prefix"></i>
                             <select name="location_cadastral" id="location_cadastral" required>
                                 <option value="null" disabled selected>Seleccionar ubicacion Catastral</option>
                                 @foreach($catasTerreno as $cT):
@@ -92,6 +94,7 @@
                             <label>Ubicacion Catastral</label>
                         </div>
                         <div class="input-field col m6 s12">
+                            <i class="icon-domain prefix"></i>
                             <select name="type_const" id="type_const" required>
                                 <option value="null" disabled selected>Seleccionar tipo de Construccion</option>
                                 @foreach($catasConstruccion as $cC):
@@ -100,20 +103,24 @@
                             </select>
                             <label>Tipo De Construccion</label>
                         </div>
+
                         <div class="input-field col s12 m6">
-                            <input type="text" name="area_ground" id="area_ground" class="validate" pattern="[0-9.]+"
+                            <i class="icon-panorama_horizontal prefix"></i>
+                            <input type="text" name="area_ground" id="area_ground" class="validate number-only" pattern="[0-9.]+"
                                    data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                    required>
                             <label for="area_ground">Area De Terreno</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="text" name="area_build" id="area_build" class="validate" pattern="[0-9.]+"
+                            <i class="icon-location_city prefix"></i>
+                            <input type="text" name="area_build" id="area_build" class="validate number-only" pattern="[0-9.]+"
                                    data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                    required>
                             <label for="area_build">Area De Construcción</label>
                         </div>
 
                         <div class="input-field col m6 s12">
+                            <i class="icon-domain prefix"></i>
                             <select name="type" id="type" required>
                                 <option value="null" disabled selected>Seleccionar Tipo De Inmueble</option>
                                 @foreach($alicuota as $value):
@@ -124,6 +131,7 @@
                         </div>
 
                         <div class="input-field col m6 s12">
+                            <i class="icon-satellite prefix"></i>
                             <select name="parish" id="parish" required>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
                                 @foreach($parish as $parish):
@@ -133,6 +141,7 @@
                             <label>Parroquia</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-directions prefix"></i>
                         <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea"
                                   required></textarea>
                             <label for="address">Dirección</label>
@@ -143,11 +152,13 @@
                             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-location_searching prefix"></i>
                             <input id="lat" type="text" name="lat" value="" readonly>
                             <label for="lat">Latitud</label>
                         </div>
 
                         <div class="input-field col s12 m6">
+                            <i class="icon-location_searching prefix"></i>
                             <input id="lng" type="text" name="lng" value="" readonly>
                             <label for="lat">Logintud</label>
                         </div>
@@ -166,6 +177,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/property.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"
             type="text/javascript"></script>

@@ -59,39 +59,39 @@ class VehicleController extends Controller
         $vehicle->body_serial = $request->input('bodySerial');
         $vehicle->serial_engine = $request->input('serialEngine');
         $vehicle->type_vehicle_id = $request->input('type');
-        if (!empty($request->input('brand-n') && $request->input('model-n'))){
+        if (!empty($request->input('brand-n') && $request->input('model-n'))) {
 
             $brandVehicles = new Brand();
 
             $modelsVehicle = new ModelsVehicle();
 
-            $models=strtoupper($request->input('model-n'));
-            $brand=strtoupper($request->input('brand-n'));
-            $otherBrand=Brand::where('name',$brand)->exists();
+            $models = strtoupper($request->input('model-n'));
+            $brand = strtoupper($request->input('brand-n'));
+            $otherBrand = Brand::where('name', $brand)->exists();
 
-            if($otherBrand){
+            if ($otherBrand) {
 
-            }else{
-                $brandVehicles->name=$brand;
+            } else {
+                $brandVehicles->name = $brand;
                 $brandVehicles->save();
 
-                $modelsVehicle->name=$models;
-                $modelsVehicle->brand_id=$brandVehicles->id;
+                $modelsVehicle->name = $models;
+                $modelsVehicle->brand_id = $brandVehicles->id;
                 $modelsVehicle->save();
 
                 $vehicle->model_id = $modelsVehicle->id;
             }
 
-        }else{
-            $models=$request->input('models');
-            $brand=$request->input('brand');
+        } else {
+            $models = $request->input('models');
+            $brand = $request->input('brand');
             $vehicle->model_id = $request->input('model');
         }
 
 
         //$vehicle->model_id = $request->input('model');
         $vehicle->year = $request->input('year');
-        $image=$request->file('image');
+        $image = $request->file('image');
 
 
         if ($image) {
@@ -122,11 +122,11 @@ class VehicleController extends Controller
     public function show()
     {
 
-        $vehicle=\Auth::user()->vehicles()->get();
+        $vehicle = \Auth::user()->vehicles()->get();
 
 
         return view('modules.vehicles.menu', array(
-            'show' =>$vehicle
+            'show' => $vehicle
         ));
 
     }
@@ -140,11 +140,11 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $vehicle = Vehicle::findOrFail($id);
-        if (session()->has('vehicle')){
+        if (session()->has('vehicle')) {
             session()->forget(['vehicle']);
-            session()->put('vehicle',$vehicle->id);
-        }else{
-            session()->put('vehicle',$vehicle->id);
+            session()->put('vehicle', $vehicle->id);
+        } else {
+            session()->put('vehicle', $vehicle->id);
         }
 
 
@@ -217,9 +217,10 @@ class VehicleController extends Controller
         return response()->json($bodySerial);
     }
 
-    public function getImage($filename){
-        $file=Storage::disk('vehicles')->get($filename);
-        return new Response($file,200);
+    public function getImage($filename)
+    {
+        $file = Storage::disk('vehicles')->get($filename);
+        return new Response($file, 200);
     }
 
 

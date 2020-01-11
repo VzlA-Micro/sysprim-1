@@ -916,20 +916,12 @@ function localizar(elemento,direccion) {
     });
 }
 
-
-
 $('#address').change(function () {
     var direccion=$(this).val();
     if(direccion!==''){
         localizar("map", "Venezuela, Baquisimeto Estado Lara. "+ direccion);
     }
 });
-
-
-
-
-
-
 
 function initMap() {
     var marcadores = [];
@@ -942,9 +934,6 @@ function initMap() {
         console.log(e.latLng);
         addMark(e.latLng, map,marcadores);
     });
-
-
-
 
 }
          //    swal({

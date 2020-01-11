@@ -394,7 +394,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Mis Inmuebles
-    Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
+   /* Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
         // Nivel 1: Mis Inmuebles
         Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
         // Nivel 2: Registrar y Ver Detalles
@@ -406,7 +406,10 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
 
         });
-    });
+    });*/
+    Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+    Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+    Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
 
 
     //Inmuebles
