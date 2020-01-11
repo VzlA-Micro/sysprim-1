@@ -56,9 +56,7 @@ class Taxe extends Model implements Auditable {
 
     public function getStatusNameAttribute(){
         if($this->status=='process'){
-
             return $this->statusName="SIN CONCILIAR AÚN";
-
         }else if($this->status=='verified'){
             return $this->statusName="VERIFICADA";
         }else if ($this->status=='cancel'){

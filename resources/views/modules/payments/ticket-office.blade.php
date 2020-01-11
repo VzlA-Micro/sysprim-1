@@ -12,7 +12,8 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
+                            Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
 
                     <li class="breadcrumb-item"><a href="#!">Pagos</a></li>
@@ -24,21 +25,21 @@
                     <div class="card-content">
                         <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
 
-
                         <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
-
                             <tr>
+                                <th>Código</th>
                                 <th>Fecha</th>
                                 <th>Contribuyente</th>
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Lote</th>
                                 <th>Ref o Código</th>
+                                <th>status</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
                                 @can('Detalles Pagos')
-                                <th>Detalles</th>
+                                    <th>Detalles</th>
                                 @endcan
                             </tr>
                             </thead>
@@ -46,20 +47,34 @@
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
                                     <tr>
+                                        <td>{{$taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                        <td>{{$taxe->taxes[0]->companies[0]->name}}</td>
+                                        <td>{{$taxe->taxes[0]->companies[0]->license}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->ref}}</td>
+                                        <td>{{$taxe->statusName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
+
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Detalles Pagos')
-                                        <td>
-                                            <a href="{{url('payments/taxes/'.$taxe->taxes[0]->id)  }}"
-                                               class="btn btn-floating orange waves-effect waves-light"><i
-                                                        class="icon-pageview"></i></a>
-                                        </td>
+                                            @if($taxe->taxes[0]->type!='definitive')
+                                                <td>
+                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+                                                </td>
+                                            @else
+
+                                                <td>
+                                                    <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+                                            @endif
+
                                         @endcan
 
 
@@ -98,6 +113,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -112,9 +128,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "<i class='icon-first_page'>",
-                    "sLast":     "<i class='icon-last_page'></i>",
-                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sFirst": "<i class='icon-first_page'>",
+                    "sLast": "<i class='icon-last_page'></i>",
+                    "sNext": "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {
@@ -151,17 +167,17 @@
                             width: '100px',
                             'max-width': '100px'
                         }, doc.styles.tableHeader = {
-                            fillColor:'#247bff',
-                            color:'#FFF',
-                            fontSize: '10',
+                            fillColor: '#247bff',
+                            color: '#FFF',
+                            fontSize: '9',
                             alignment: 'center',
                             bold: true
 
                         }, doc.defaultStyle.fontSize = 8;
 
                     }, exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7]
-                    }
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
+                }
                 },
 
 

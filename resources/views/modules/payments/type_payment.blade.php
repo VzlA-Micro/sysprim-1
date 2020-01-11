@@ -39,14 +39,6 @@
                 </a>
             </div>
             @endcan
-            @can('Ver Pagos - Depositos')
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{-- route('ticket-office.payment.type',['type'=>'CHEQUES']) --}} {{ route('ticket-office.payment.type.checks') }}" class="btn-app white cyan-text">
-                    <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Cheques</span>
-                </a>
-            </div>
-            @endcan
             @can('Mi Taquilla - Punto de Venta')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment',['type'=>'PUNTO DE VENTA'])}}" class="btn-app white orange-text">

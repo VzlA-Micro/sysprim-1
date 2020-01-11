@@ -49,6 +49,7 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
+
                                             <td>{{$taxe->companies[0]->name}}</td>
                                             <td>{{$taxe->companies[0]->license}}</td>
                                             <td>{{$taxe->code}}</td>
@@ -69,7 +70,7 @@
                                                 @if($taxe->type!=='definitive')
 
                                                     <td>
-                                                        <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
                                                            class="btn indigo waves-effect waves-light">
                                                             <i class="icon-pageview left"></i>
                                                             Detalles
@@ -85,8 +86,6 @@
                                                     </td>
 
                                                 @endif
-
-
 
                                             @endcan
                                         </tr>
@@ -264,7 +263,7 @@
                                                                         <i class="icon-confirmation_number prefix "></i>
                                                                         <input type="text" name="ref" id="ref_tr"
                                                                                value="" class="validate"
-                                                                               required minlength="10" maxlength="10">
+                                                                               required minlength="3" maxlength="10">
                                                                         <label for="ref">Referencia</label>
                                                                     </div>
 
@@ -273,7 +272,7 @@
                                                                         <input type="text" name="person" id="person"
                                                                                value=""
                                                                                class="validate" required>
-                                                                        <label for="ref">Nombre</label>
+                                                                        <label for="person">Nombre</label>
                                                                     </div>
 
 
@@ -387,7 +386,7 @@
                                                                 <input type="text" name="ref" id="ref_depo" value=""
                                                                        class="validate"
                                                                        required minlength="10" maxlength="10" readonly>
-                                                                <label for="ref">N DE CHEQUE</label>
+                                                                <label for="ref_depo">N DE CHEQUE</label>
                                                             </div>
 
 

@@ -145,6 +145,8 @@ $(document).ready(function () {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
+                    }).then(function () {
+                        location.reload();
                     });
 
                 }else if(response.status==='error-email'){
@@ -916,13 +918,13 @@ $(document).ready(function () {
                                 <input type="text"  name="ciu_id[]" id="ciu_id_${ciu[i].code}" class="ciu hide" value="${ciu[i].id}">
                                 <div class="input-field col s12 m4">
                                     <i class="icon-assignment prefix"></i>
-                                    <input type="text" name="search-ciu" id="ciu_${ciu[i].code}"  value="${ciu[i].code}">
+                                    <input type="text" name="search-ciu" id="ciu_${ciu[i].code}"  value="${ciu[i].code}" readonly>
                                     <label>CIIU</label>
                                 </div>
                                 <div class="input-field col s10 m4"  >
                                     <i class="icon-text_fields prefix"></i>
                                     <label for="phone">Nombre</label>
-                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " >${ciu[i].name}</textarea>
+                                     <textarea name="${subr}" id="${subr}" cols="30" rows="10" class="materialize-textarea " readonly>${ciu[i].name}</textarea>
                                 </div>
                                 
                                <div class="input-field col s12 m4">

@@ -2,7 +2,7 @@ $('document').ready(function () {
 
 
 
-    var url = "http://172.19.50.253/";
+    var url = "http://sysprim.com.devel/";
 
     var companies_id='';
     var type_taxes='';
@@ -253,6 +253,9 @@ $('document').ready(function () {
                             });
                         } else {
                             localStorage.setItem('bank', bank);
+                            var hoy = new Date();
+                            var dd = hoy.getDate();
+                            localStorage.setItem('day',dd);
                             swal({
                                 title: "Bien hecho",
                                 text: "Ya puedes empezar a registrar pagos valido.",
@@ -260,7 +263,6 @@ $('document').ready(function () {
                             });
 
                             location.reload();
-
                         }
                     })
                 }
@@ -274,6 +276,17 @@ $('document').ready(function () {
             });
         }
     });
+    var hoy = new Date();
+    var dd = hoy.getDate();
+
+    if(localStorage.getItem('day')!=dd){
+        localStorage.removeItem('bank');
+        localStorage.removeItem('lot');
+        localStorage.removeItem('day');
+    }
+
+
+
 
 
     if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
