@@ -19,6 +19,8 @@ use App\ModelsVehicle;
 use App\UserVehicle;
 use App\Tributo;
 use App\Taxe;
+use App\Recharge;
+use App\Helpers\Trimester;
 
 class DeclarationVehicle
 {
@@ -26,7 +28,7 @@ class DeclarationVehicle
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
-        $dateCurrent = Carbon::now()->format('Y-m-d');
+        $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
         $monthJanuary = Carbon::create(2018, 1, 30, 12, 00, 00)->format('m');
@@ -44,7 +46,9 @@ class DeclarationVehicle
         $valueDiscount = 0;
         $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
         $moreThereYear = null;
-
+        $recharges=Recharge::where('branch','Pat.Vehiculo')->latest()->first();
+        $helperTrimester=Trimester::verifyTrimester();
+        $diffDayMora=$dateCurrent->diffInDays($helperTrimester['Daytrimester']);
         //$day = Carbon::now()->format('d');
         $array = explode('-', $id);
         $idVehicle = $array[0];
@@ -110,7 +114,8 @@ class DeclarationVehicle
             }
 
         } else {
-            //indica que el pago es trimestral
+            //INDICA QUE EL PAGO ES TRIMESTRAL, PERO SE DAN 2 CASOS
+            // 1- ES PAGO TRIMESTRAL PERO ESTA DENTRO DEL PRIMER MES DE CADA TRIMESTRE POR LO TANTO NO TENDRA, NI RECARGOS, NI MULTAS
             $fractionalPayments = $taxes / 4;
             if (($monthCurrent == $january) || ($monthCurrent == $april) || ($monthCurrent == $july) || ($monthCurrent == $october)) {
                 $total=$fractionalPayments;
@@ -124,9 +129,12 @@ class DeclarationVehicle
                 );
 
                 return $amounts;
+
+            // 2 - EN ESTE CASO ES SI, REALIZA EL PAGO DE FORMA TRIMESTRAL PERO,NO ESTA DENTRO DEL PRIMER MES DEL TRIMESTRE POR LO TANTO TENDRA UNA DEUDA Y UN RECARGO
             } else {
                 $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle[0]->id)->orderBy('id', 'desc')->take(1)->get();
-
+                //AQUI SE VUELVEN A DAR 2 CASOS
+                // 1 - ESTE CASO ES SI NO EXISTE NINGUN PAGO ANTERIOR DE ESTE VEHICULO
                 if (!isset($vehicleTaxes[0]) || $vehicleTaxes[0]->status == 'Temporal') {
                     $diffMonths = round($monthCurrent / 3);
                     if ($diffMonths > 1 and $diffMonths < 1.5) {
@@ -138,16 +146,15 @@ class DeclarationVehicle
                     if ($diffMonths > 3 and $diffMonths < 3.5) {
                         $diffMonths = 4;
                     }
-                    $recharge = (($fractionalPayments * $diffMonths) * 20) / 100;
+                    $recharge = (($fractionalPayments * $diffMonths) * $recharges) / 100;
 
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
 
                     $total = $fractionalPayments + $recharge + $previousDebt;
 
-
+                // 2 - ESTE CASO ES SI, HAY ALGUN REGISTRO CORESPONBDIENTE A ESTE VEHICULO
                 } else {
-                    //EL ERROR DE LA PLANILLA ESTA EN ESTA PARTE, VERIFICA LA DIFERENCIA DE LOS TRIMETRES YA QUE HAY UNA DEUDA ANTERIOR
-                    //Y NO LA MUESTRA, ES UN ERROR DE PROGRAMACION, MAYORMENTE DE LOGICA VERIFICA ESO Y LISTO
+                    //
                     $monthTaxes = intval($vehicleTaxes[0]->created_at->format('m'));
 
 
@@ -167,7 +174,7 @@ class DeclarationVehicle
                     $diffTrimester = $trimesterCurrent - $trimester;
 
 
-                    $recharge = (($fractionalPayments * $diffTrimester) * 20) / 100;
+                    $recharge = (($fractionalPayments * $diffTrimester) * $recharges) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
                     $total = $fractionalPayments + $recharge + $previousDebt;
