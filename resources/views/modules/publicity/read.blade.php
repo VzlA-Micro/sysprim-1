@@ -13,9 +13,16 @@
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                 </ul>
             </div>
-            {{-- <div class="col s12 m4"></div> --}}
+            @foreach($publicities as $publicity)
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('publicity.register') }}" class="btn-app white orange-text">
+                <a href="{{ route('publicity.details', ['id' => $publicity->id]) }}" class="btn-app white purple-text">
+                    <i class="icon-work"></i>
+                    <span class="truncate">{{ $publicity->name }}</span>
+                </a>
+            </div>
+            @endforeach
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('publicity.register.types') }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Agregar nueva publicidad...</span>
                 </a>

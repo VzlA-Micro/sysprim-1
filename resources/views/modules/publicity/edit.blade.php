@@ -13,7 +13,8 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register') }}">Registrar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Editar</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -24,16 +25,16 @@
             		<div class="card-content row">
             			@csrf
             			<div class="input-field col s12">
-            				<select name="advertising_type_id[]" id="advertising_type_id" multiple>
+            				<select name="advertising_type_id" id="advertising_type_id" multiple>
       							<option value="null" disabled selected>Elija un tipo</option>
       							@foreach($advertisingTypes as $type)
-      							<option value="{{ $type->id }}">{{ $type->name }}</option>
+      							<option value="{{ $type->id }}" @if($publicity->advertising_type_id == $type->id){{ "selected" }} @endif>{{ $type->name }}</option>
       							@endforeach
       						</select>
     						<label>Tipo de Publicidad</label>
             			</div>
             			<div class="input-field col s12">
-            				<input type="text" name="name" id="name">
+            				<input type="text" name="name" id="name" value="{{ $publicity->name }}">
             				<label for="name">Nombre</label>
             			</div>
             			{{-- <div class="input-field col s12 m6">

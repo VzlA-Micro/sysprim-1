@@ -383,6 +383,20 @@ Route::middleware(['auth'])->group(function () {
     // Mi Publicidad
     Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
     Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+    Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+    Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+
+
+    Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+    Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+    Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+    Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+    Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+
+
+
+
+
 
 
     // Mis Empresas
