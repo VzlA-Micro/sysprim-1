@@ -3,7 +3,6 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css') }}">
     <link rel="stylesheet" href="{{ asset('css/imagePreview.css') }}">
-
 @endsection
 
 @section('content')
@@ -14,6 +13,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.register') }}">Registrar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar por Tipo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Art. 61, 62, 63, 64, 65, 66, 72, 75</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -24,7 +25,7 @@
             		<div class="card-content row">
             			@csrf
             			<div class="input-field col s12">
-            				<select name="advertising_type_id[]" id="advertising_type_id" multiple>
+            				<select name="advertising_type_id" id="advertising_type_id">
       							<option value="null" disabled selected>Elija un tipo</option>
       							@foreach($advertisingTypes as $type)
       							<option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -36,14 +37,6 @@
             				<input type="text" name="name" id="name">
             				<label for="name">Nombre</label>
             			</div>
-            			{{-- <div class="input-field col s12 m6">
-            				<input type="text" name="date_start" id="date_start" class="datepicker">
-            				<label for="date_start">Fecha de Inicio</label>
-            			</div>
-            			<div class="input-field col s12 m6">
-            				<input type="text" name="date_end" id="date_end" class="datepicker">
-            				<label for="date_end">Fecha de Fin</label>
-            			</div> --}}
             			<div class="col s12">
             				{{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
                             <div class="preview img-wrapper center-align valing-wrapper">
@@ -54,15 +47,26 @@
                                 <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
                             </div>
            				</div>
-                        {{-- <div class="col s12 input-field">
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="date_start" id="date_start" class="datepicker date_start">
+                            <label for="date_start">Fecha de Inicio</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="date_end" id="date_end" class="datepicker">
+                            <label for="date_end">Fecha de Fin</label>
+                        </div>
+                        <div class="col s12 input-field">
                             <select name="unit" id="unit">
-                                <option value="null" disabled selected>Elige la unidad</option>
-                                <option value="mts">Metro</option>
-                                <option value="qnt">Cantidad</option>
+                                <option value="null" disabled>Elige la unidad</option>
+                                <option value="mts" disabled>Metro</option>
+                                <option value="qnt" selected>Cantidad</option>
                             </select>
                             <label>Unidad</label>
-                        </div> --}}
-                        <div id="content"></div>
+                        </div>
+                        <div class="input-field col s12">
+                            <input type="text" name="quantity" id="quantity">
+                            <label for="quantity">Ejemplares</label>
+                        </div>
             		</div>
             		<div class="card-footer center-align">
             			<button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">
@@ -78,18 +82,27 @@
 
 @section('scripts')
     <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
     <script>
-    	$(document).ready(function() {
-    		$(".js-range-slider").ionRangeSlider({
-    			skin: "modern",
-    			max: 50,
-    			min: 0,
-    			grid: true,
-    			step: 0.1,
-    			postfix: ' m'
-    		});
-    
+        $(document).ready(function() {
+            $('select').formSelect();
             var date = new Date();
+            $('#date_start').datepicker({
+                maxDate:  date,
+                format: 'yyyy-mm-dd', // Configure the date format
+                // yearRange: [1900,date.getFullYear()],
+                showClearBtn: false,
+                i18n: {
+                    cancel: 'Cerrar',
+                    clear: 'Reiniciar',
+                    done: 'Hecho',
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+                }
+            }); 
             $('#date_end').datepicker({
                 maxDate:  null,
                 format: 'yyyy-mm-dd', // Configure the date format
@@ -105,9 +118,16 @@
                     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
                 }
-
             }); 
-    	})
+            $(".js-range-slider").ionRangeSlider({
+                skin: "modern",
+                max: 50,
+                min: 0,
+                grid: true,
+                step: 0.1,
+                postfix: ' m'
+            });
+        })
     </script>
     <script src="{{ asset('js/imagePreview.js') }}"></script>
     <script src="{{ asset('js/data/publicity.js') }}"></script>

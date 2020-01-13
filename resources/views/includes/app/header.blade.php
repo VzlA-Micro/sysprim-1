@@ -127,10 +127,10 @@
                     <li class="divider hide-on-large-only"></li>
                     <li><a href="#!" class="subheader"><i class="icon-dashboard left"></i>Opciones:</a></li>
                     @can('Gestionar Usuarios')
-                    <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"class="truncate"><i class="icon-people_outline"></i>Gestionar Usuarios (Admin)</a></li>
+                    <li class="waves-efect waves-light"><a href="{{ route('users.manage') }}"class="truncate"><i class="icon-people_outline"></i>Gestionar Usuarios</a></li>
                     @endcan
                     @can('Gestionar Contribuyentes')
-                    <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-record_voice_over left"></i>Gestionar Usuarios</a></li>
+                    <li><a href="{{ route('taxpayers.manage') }}"><i class="icon-record_voice_over left"></i>Gestionar Usuarios Web</a></li>
                     @endcan
                     @can('GeoSEMAT')
                     <li class="waves-efect waves-light"><a href="{{ route('geosysprim') }}"><i class="icon-public"></i>GeoSEMAT</a></li>
