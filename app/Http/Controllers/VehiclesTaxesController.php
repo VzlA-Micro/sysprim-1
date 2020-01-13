@@ -86,11 +86,11 @@ class VehiclesTaxesController extends Controller
             $vehicleTaxes->vehicle_id = $vehicle[0]->id;
             $vehicleTaxes->taxe_id = $taxesId;
             $vehicleTaxes->status = 'Temporal';
+            $vehicleTaxes->fiscal_credits = 0;
             $vehicleTaxes->save();
 
-            $trimester=Trimester::verifyTrimester();
-            $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
-
+            $trimester = Trimester::verifyTrimester();
+            $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
 
 
             return view('modules.taxes.detailsVehicle', array(
@@ -198,8 +198,8 @@ class VehiclesTaxesController extends Controller
         $vehiclesTaxe->status = 'process';
         $vehiclesTaxe->update();
 
-        $trimester=Trimester::verifyTrimester();
-        $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
+        $trimester = Trimester::verifyTrimester();
+        $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
@@ -220,21 +220,21 @@ class VehiclesTaxesController extends Controller
             ]);
 
 
-        Mail::send('mails.payment-payroll',['type'=>'Declaración de Patente De Vehículo (ANTICIPADA)'], function ($msj) use ($subject, $for, $pdf) {
+        Mail::send('mails.payment-payroll', ['type' => 'Declaración de Patente De Vehículo (ANTICIPADA)'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("grabieldiaz63@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        $vehicleID=$vehicle[0]->id;
+        $vehicleID = $vehicle[0]->id;
 
-        return redirect()->route('vehicle.payments.history',['id'=>$vehicleID]);
+        return redirect()->route('vehicle.payments.history', ['id' => $vehicleID]);
     }
 
     public function history($vehicleId)
     {
-        $vehicle=Vehicle::find($vehicleId);
+        $vehicle = Vehicle::find($vehicleId);
 
         return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
     }
@@ -243,18 +243,17 @@ class VehiclesTaxesController extends Controller
     {
         $declaration = DeclarationVehicle::Declaration($id);
 
-        $id_vehicle=explode('-',$id);
+        $id_vehicle = explode('-', $id);
 
 
         $taxes = Taxe::findOrFail($id_vehicle[1]);
         $user = \Auth::user();
-        $vehicle = Vehicle::where('id',$id_vehicle[0])->get();
+        $vehicle = Vehicle::where('id', $id_vehicle[0])->get();
 
         $grossTaxes = 0;
         $total = $declaration['total'];
         $paymentFractional = 0;
         $valueDiscount = 0;
-
 
 
         if ($declaration['optionPayment']) {
@@ -282,8 +281,8 @@ class VehiclesTaxesController extends Controller
             }
         }
 
-        $trimester=Trimester::verifyTrimester();
-        $period_fiscal = Carbon::now()->format('m-Y').' / '.$trimester['trimesterEnd'];
+        $trimester = Trimester::verifyTrimester();
+        $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
 
         $pdf = \PDF::loadView('modules.vehicles-payments.receipt',
             [

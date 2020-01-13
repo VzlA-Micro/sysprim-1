@@ -148,7 +148,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
         Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
         Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
-    
+
 
     });
 
@@ -236,7 +236,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-            // Nivel 2: 
+            // Nivel 2:
             // ---- Generar Planilla -> Registrar
             Route::group(['middleware' => ['permission:Generar Planilla']], function () {
                 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
@@ -405,7 +405,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Mis Inmuebles
-   /* Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
+    Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
         // Nivel 1: Mis Inmuebles
         Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
         // Nivel 2: Registrar y Ver Detalles
@@ -417,12 +417,13 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
 
         });
-    });*/
+    });
+
+   /*
     Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
     Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
     Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-
-
+*/
     //Inmuebles
     Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
 
