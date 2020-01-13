@@ -25,7 +25,7 @@
             			@csrf
                         <input type="hidden" name="id" id="id" value="{{ $publicity->id }}">
             			<div class="input-field col s12">
-                            <select name="advertising_type_id" id="advertising_type_id">
+                            <select name="advertising_type_id" id="advertising_type_id" disabled>
                                 <option value="null" disabled selected>Elija un tipo</option>
                                 @foreach($advertisingTypes as $type)
                                 <option value="{{ $type->id }}" @if($publicity->advertising_type_id == $type->id){{ "selected" }} @endif>{{ $type->name }}</option>
