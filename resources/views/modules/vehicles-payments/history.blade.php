@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>session('vehicle')])}}">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
                     de Pagos</a></li>
                 </ul>
@@ -58,7 +58,7 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{route('taxes.download',[$taxe->id])}}"
+                                                <td><a href="{{route('vehicle.taxes.download',['id'=>session()->get('vehicle').'-'.$taxe->id])}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>

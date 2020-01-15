@@ -18,10 +18,9 @@ class CreateCatastralTerrenoTable extends Migration
             $table->integer('parish_id')->unsigned();
             $table->integer('sector_nueva_nomenclatura')->nullable();
             $table->integer('sector_catastral');
-            $table->string('name',50);
+            $table->text('name');
             $table->float('value_terreno_construccion',8,3);
             $table->float('value_terreno_vacio',8,3);
-            $table->foreign('parish_id')->references('id')->on('parish');
             $table->timestamps();
         });
     }

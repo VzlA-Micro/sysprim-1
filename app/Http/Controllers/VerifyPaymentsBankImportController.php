@@ -37,11 +37,14 @@ class VerifyPaymentsBankImportController extends Controller
         //$amountTotal=0;
 
 
-
         $file = $request->file;
 
         $Archivo = \File::get($file);
         $mime = $file->getMimeType();
+
+        if ($mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            Excel::import(new PaymentsImport, request()->file('file'));
+        }
 
         if ($mime == "text/plain") {
             //Archivo);
@@ -134,15 +137,15 @@ class VerifyPaymentsBankImportController extends Controller
                             } else {
 
 
-                                if ($pCode == 'PPT' || $pCode == 'PPE'){
-                                    echo  "soy jhon";
-                                    if ($taxe->branch=='Act.Eco'){
+                                if ($pCode == 'PPT' || $pCode == 'PPE') {
+                                    echo "soy jhon";
+                                    if ($taxe->branch == 'Act.Eco') {
 
-                                        $companyTaxes=CompanyTaxe::where('taxe_id',$taxe->id)->get();
+                                        $companyTaxes = CompanyTaxe::where('taxe_id', $taxe->id)->get();
 
                                         $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
                                         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
-                                        $company=Company::find($companyTaxes[0]->company_id);
+                                        $company = Company::find($companyTaxes[0]->company_id);
                                         $userCompany = $company->users()->get();
 
                                         foreach ($ciuTaxes as $ciu) {
@@ -152,15 +155,14 @@ class VerifyPaymentsBankImportController extends Controller
                                                 'fiscal_period' => $fiscal_period,
                                                 'ciuTaxes' => $ciuTaxes,
                                                 'amount' => $amount,
-                                                'companyTaxes'=>$companyTaxes,
+                                                'companyTaxes' => $companyTaxes,
                                                 'firm' => true
                                             ]);
 
 
                                             $userCompany = $company->users()->get();
                                             $taxe->status = 'verified';
-                                            $taxe->update();
-                                            ;
+                                            $taxe->update();;
 
                                             $subject = "Planilla Verificada";
                                             $for = $userCompany[0]->email;

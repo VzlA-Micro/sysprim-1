@@ -14,12 +14,6 @@ class CatastralConstruccionTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('value_catastral_construccion')->insert([
-            'name'=>'Vivienda Nivel Social',
-            'regimen_propiedad'=>'horizontal',
-            'value_edificacion'=>48.00,
-            'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
-        ]);
+
     }
 }

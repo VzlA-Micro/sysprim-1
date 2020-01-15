@@ -9,6 +9,8 @@ use App\Bank;
 use App\Ciu;
 use App\GroupCiiu;
 use App\PropertyTmp;
+use App\CatastralTerreno;
+use App\CatastralConstruccion;
 
 class PaymentsImport implements ToCollection
 {
@@ -21,6 +23,55 @@ class PaymentsImport implements ToCollection
     {
         $last_id = null;
         foreach ($rows as $row) {
+
+            $catastralConstruccion = new CatastralConstruccion();
+
+            $catastralConstruccion->name = (string)$row[0];
+            $catastralConstruccion->value_edificacion = (float)$row[1];
+            $catastralConstruccion->regimen_horizontal = (boolean)$row[2];
+
+            $catastralConstruccion->save();
+
+            // ESTO ES PARA IMPORTAR LOS ESTADOS DE CUENTAS
+            /*$catastralTerreno = new CatastralTerreno();
+
+
+            if (is_null($row[0]) && Empty($row[0])) {
+                $catastralTerreno->parish_id = (int)0;
+                echo "es null";
+                //die();
+            } else {
+                $catastralTerreno->parish_id = (int)$row[0];
+                echo "no es null.".$row[0];
+                //die();
+            }
+            if (is_null($row[1])) {
+                $catastralTerreno->sector_nueva_nomenclatura = (int)0;
+            } else {
+                $catastralTerreno->sector_nueva_nomenclatura = (int)$row[1];
+            }
+            if (is_null($row[2])) {
+                $catastralTerreno->sector_catastral = (int)0;
+            } else {
+                $catastralTerreno->sector_catastral = (int)$row[2];
+            }
+            if (is_null($row[3])) {
+                $catastralTerreno->name = (string)"";
+            } else {
+                $catastralTerreno->name = (string)$row[3];
+            }
+            if (is_null($row[4])) {
+                $catastralTerreno->value_terreno_construccion = (float)0;
+            } else {
+                $catastralTerreno->value_terreno_construccion = (float)$row[4];
+            }
+            if (is_null($row[5])) {
+                $catastralTerreno->value_terreno_vacio = (float)0;
+            } else {
+                $catastralTerreno->value_terreno_vacio = (float)$row[5];
+            }
+            $catastralTerreno->save();
+*/
             //ESTO ES PARA IMPORTAR LOS CODIGOS CATASTRALES
             /*
             if ($row[3] !== null && !empty($row[3])) {

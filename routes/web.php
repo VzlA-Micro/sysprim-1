@@ -148,7 +148,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
         Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
         Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
-    
+
 
     });
 
@@ -236,7 +236,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-            // Nivel 2: 
+            // Nivel 2:
             // ---- Generar Planilla -> Registrar
             Route::group(['middleware' => ['permission:Generar Planilla']], function () {
                 Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
@@ -383,6 +383,20 @@ Route::middleware(['auth'])->group(function () {
     // Mi Publicidad
     Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
     Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+    Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+    Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+
+
+    Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+    Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+    Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+    Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+    Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+
+
+
+
+
 
 
     // Mis Empresas
@@ -419,7 +433,11 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
+   /*
+    Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+    Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+    Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
+*/
     //Inmuebles
     Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
 
@@ -584,6 +602,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
     Route::post('/vehicle/payments/register', 'VehiclesTaxesController@payments')->name('vehicle.payments.store');
     Route::get('/vehicle/payments/history/{id}', 'VehiclesTaxesController@history')->name('vehicle.payments.history');
+    Route::get('/vehicle/payments/taxes/download/{id}', 'VehiclesTaxesController@downloadPDF')->name('vehicle.taxes.download');
 //___________________________________________________________________________________________________________________________
 
 

@@ -18,8 +18,8 @@ class Publicity extends Model
             ->withPivot('company_id');
     }
 
-    public function advertisingTypes() {
-    	return $this->belongsToMany('App\AdvertisingTypePublicity','advertising_type_publicity')
-            ->withPivot('advertising_type_id');
+    public function advertisingType() {
+    	return $this->belongsTo('App\AdvertisingType','advertising_type_id');
+            // ->withPivot('advertising_type_id');
     }
 }
