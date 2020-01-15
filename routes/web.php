@@ -616,8 +616,7 @@ Route::middleware(['auth'])->group(function () {
 
     //_______________________________________TICKOFFICE DEFINITIVE_____________________________________________________
     Route::get('tick-office/taxes/definitive/verify/{id}','TicketOfficeController@verifyDefinitive');
-
-
+    Route::post('ticket-office/taxes/definitive/save','TicketOfficeController@registerTaxeDefinitive');
 
 
 

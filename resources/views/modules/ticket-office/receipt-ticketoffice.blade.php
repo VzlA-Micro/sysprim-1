@@ -42,7 +42,8 @@
             </td>
             <td style="width: 25%;" rowspan="2">
                 <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
-                @if(substr($taxes[0]->taxes->payments[0]->code,0,3)!=='PPV')
+
+                @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)!=='PPV')
                     <span style="font-size: 10px !important;">{{$taxes[0]->taxes->payments[0]->code}}</span><br>
                 @else
                     <span style="font-size: 10px !important;">{{$taxes[0]->taxes->code}}</span><br>
@@ -117,7 +118,6 @@
     @php
         $recargo=0;
         $interest=0;
-        $amount_total=0;
         $taxe_id='';
         $withholding=0;
         $fiscal_credits=0;
@@ -130,10 +130,8 @@
         $deductions+=$tax->deductions;
        }
 
+
     @endphp
-
-
-
 
 
 
@@ -151,11 +149,8 @@
 
 
         @php
-            $recargo+=$taxe->tax_rate;
+            $recargo+=$taxe->recharge;
             $interest+=$taxe->interest;
-            $amount_total+=$taxe->totalCiiu;
-
-
         @endphp
 
 
@@ -165,7 +160,7 @@
 
 
 
-        @if($taxe->tax_rate!=0)
+        @if($taxe->recharge!=0)
 
             <tr>
                 <td style="width: 10%;font-size: 10px !important;">{{$taxe->ciu->code}}</td>
@@ -175,7 +170,7 @@
                 <td style="width: 10%;font-size: 10px; !important;">{{$taxe->taxes->fiscal_period}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{substr($taxe->taxes->code,3,13)}}</td>
                 <td style="font-size: 10px !important;"></td>
-                <td style="font-size: 10px !important;">{{number_format($taxe->tax_rate,2)}}</td>
+                <td style="font-size: 10px !important;">{{number_format($taxe->recharge,2)}}</td>
             </tr>
 
             <tr>
@@ -194,9 +189,10 @@
                 _________________________________________________________________________________________________________________________________
             </td>
         </tr>
+
+
     @endforeach
 
-    @if($withholding!=0)
         @if($withholding!=0)
             <tr>
                 <td></td>
@@ -226,7 +222,6 @@
         @endif
 
 
-
         @if($fiscal_credits!=0)
             <tr>
                 <td></td>
@@ -240,24 +235,30 @@
                 </td>
             </tr>
         @endif
-    @endif
+
+
+
 
 
     <tr>
         <td style="font-size: 14px !important; text-align: right; margin-right: 80px!important;margin-top: 10px !important;" width="100" colspan="7">
-            TOTAL:{{number_format($amount_total+$recargo+$interest,2)}}</td>
+
+
+                    TOTAL:{{number_format($amount_total,2)}}
+
+
+        </td>
     </tr>
     </tbody>
     <hr>
     <tr>
         <td colspan="7"
-            style="font-size: 13px;!important;">{{strtoupper(NumerosEnLetras::convertir($amount_total+$recargo+$interest))."."}}</td>
+            style="font-size: 13px;!important;">{{strtoupper(NumerosEnLetras::convertir($amount_total))."."}}</td>
     </tr>
 </table>
 <table>
 
-
-    @if(substr($taxes[0]->taxes->payments[0]->code,0,3)!='PPV')
+    @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)!='PPV')
         <tr>
             <td style="font-size: 12px !important; text-align: center;">Planilla</td>
             <td style="font-size: 12px !important; text-align: center;">Dígito</td>
@@ -276,7 +277,7 @@
                 <
             </td>
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->taxes->companies[0]->license}}</td>
-            <td style="font-size: 12px !important;text-align: center;">{{number_format($amount_total+$recargo+$interest,2)}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{number_format($amount_total,2)}}</td>
         </tr>
     @else
         <tr>
@@ -290,19 +291,23 @@
             </td>
         </tr>
 
-
         <tr>
             <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->code}}</td>
-            <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->digit}}</td>
+            <td style="font-size: 12px !important; text-align: center;">
+            @if($taxes[0]->taxes->digit)
+                    {{$taxes[0]->taxes->digit}}
+            @else
+                {{"000"}}
+            @endif
+           </td>
             <td style="font-size: 12px !important; text-align: center;">{{substr($taxes[0]->taxes->code,3,13)}}</td>
             <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->companies[0]->license}}</td>
-            <td style="font-size: 12px !important; text-align: center;">{{number_format($amount_total+$recargo+$interest,2)}}</td>
+            <td style="font-size: 12px !important; text-align: center;">{{number_format($amount_total,2)}}</td>
         </tr>
 
     @endif
 
 </table>
-
 <table>
     <tr>
         <td colspan="3" style="font-size: 12px;">Nota: Una vez que se publiquen
@@ -316,7 +321,7 @@
     </tr>
 
 
-    @if(substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
+    @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
         <tr>
             <td style="width: 100%;text-align: center; font-size: 14px;">
                 @if($taxes[0]->taxes->payments[0]->bank==44)

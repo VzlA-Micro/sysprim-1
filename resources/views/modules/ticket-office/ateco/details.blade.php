@@ -18,6 +18,7 @@
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
                         <h5> Periodo Fiscal:<span> {{ $fiscal_period }}</span></h5>
+                        <h5> Código:<b> {{$taxes->code}}</b></h5>
                     </div>
                     <div class="row padding-2 left-align">
                         <div class="col m6">
@@ -194,28 +195,8 @@
                             <div class="row" style="padding: 1rem">
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
-
-                                    @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
-                                        <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
-                                           class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
-                                            Calcular de nuevo
-                                            <i class="icon-refresh right"></i></a>
-
-                                        <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
-                                             Descargar Calculo.
-                                             <i class="icon-cloud_download right"></i>
-                                         </a>-->
-                                        <button type="submit"
-                                                class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger"
-                                                id="continue">
-                                            Continuar
-                                            <i class="icon-more_horiz right"></i>
-                                        </button>
-                                        {{-- Modal structure --}}
-
-                                    @endif
                                     @if(!$taxes->payments->isEmpty())
-                                        <h4 class="center-align">Historial Pagos</h4>
+                                        <h4 class="center-align">Registro de Pago:</h4>
                                         <table class="centered highlight" id="payments" style="width: 100%">
                                             <thead>
                                             <tr>
@@ -344,7 +325,15 @@
 
                                                 </div>
                                             @endif
-                                            @endif
+                                                @else
+
+                                                    <h4 class="center-align">Sin registro de pagos SEMAT(Generada Web).</h4>
+
+                                                @endif
+
+
+
+
                                         </div>
                                 </div>
                             </div>

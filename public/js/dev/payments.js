@@ -313,6 +313,26 @@ $('document').ready(function () {
                 });
             }
         });
+    });
+
+
+
+
+    $('.details-payment').click(function () {
+        var bank=   $(this).attr('data-bank');
+        var destino= $(this).attr('data-destino');
+        var phone=   $(this).attr('data-phone');
+        var name=   $(this).attr('data-name');
+
+        swal({
+            title: "Datos de Pago:",
+            text:   'Nombre: '+   name +'\n'+
+                    'Telefono:'+ phone+'\n'+
+                    'Banco:' + bank+'\n'+
+                    'Destino:'+  destino+'\n',
+            icon: "info",
+            button: "Ok",
+        });
 
     });
 

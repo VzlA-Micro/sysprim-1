@@ -8,8 +8,6 @@ $('document').ready(function () {
     var type_taxes='';
 
 
-
-
     $('.payroll').change(function () {
         if(companies_id!==''){
             if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
@@ -49,9 +47,6 @@ $('document').ready(function () {
             type_taxes=$(this).attr('data-taxes');
         }
 
-
-
-
     });
 
 
@@ -80,33 +75,44 @@ $('document').ready(function () {
                 success: function (response) {
 
 
-                    console.log(acum);
-                    $('.taxes_id').each(function () {
-                        $(this).val(acum);
-                    });
 
+                    if(response.status==='success'){
+                        $('.taxes_id').each(function () {
+                            $(this).val(acum);
+                        });
 
-                    $('.amount').each(function(){
-                        $(this).val(response.amount);
-                    });
+                        $('.amount').each(function(){
+                            $(this).val(response.amount);
+                        });
 
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+                        $('#amount_total_depo').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
 
+                        $('#amount_total').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+                        $('#amount_total_tr').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
 
-                    $('#amount_total_depo').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
+                        M.updateTextFields();
 
-                    $('#amount_total').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
-                    $('#amount_total_tr').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
+                    }else{
+                        swal({
+                            title: "!Bien Hecho",
+                            text: "La planilla ingresada se ha verificada con éxito, ya que el dinero a pagar es igual a 0.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.open(url + 'ticket-office/generate-receipt/' +acum, "RECIBO DE PAGO", "width=500, height=600");
 
-                    M.updateTextFields();
+                            location.reload();
+                        });
+                    }
                 },
 
                 error: function (err) {
