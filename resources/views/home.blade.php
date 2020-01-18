@@ -92,6 +92,13 @@
                     </a>
                 </div>
             @endcan
+
+           {{-- <div class="col s6 m3 animated bounceIn">
+                <a href="{{ route('ticketOffice.home') }}" class="btn-app white pink-text text-darken-4">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla</span>
+                </a>
+            </div>--}}
             @can('Seguridad')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('security.manage') }}" class="btn-app white green-text text-darken-4">

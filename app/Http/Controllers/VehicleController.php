@@ -33,16 +33,29 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($register=0)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
         $type = VehicleType::all();
-        return view('modules.vehicles.register', array(
-            'brand' => $brands,
-            'model' => $models,
-            'type' => $type
-        ));
+
+        if (!$register) {
+
+        } else {
+            return view('modules.ticket-office.vehicle.modules.vehicle.register', array(
+                'brand' => $brands,
+                'model' => $models,
+                'type' => $type
+            ));
+        }
+
+        if ($register==0){
+            return view('modules.vehicles.register', array(
+                'brand' => $brands,
+                'model' => $models,
+                'type' => $type
+            ));
+        }
     }
 
     /**
@@ -59,6 +72,7 @@ class VehicleController extends Controller
         $vehicle->body_serial = $request->input('bodySerial');
         $vehicle->serial_engine = $request->input('serialEngine');
         $vehicle->type_vehicle_id = $request->input('type');
+        $vehicle->status='enabled';
         if (!empty($request->input('brand-n') && $request->input('model-n'))) {
 
             $brandVehicles = new Brand();
@@ -221,6 +235,14 @@ class VehicleController extends Controller
     {
         $file = Storage::disk('vehicles')->get($filename);
         return new Response($file, 200);
+    }
+
+    public function showTicketOffice()
+    {
+        $vehicle = Vehicle::all();
+        return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
+            'show' => $vehicle
+        ));
     }
 
 

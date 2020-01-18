@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>session('vehicle')])}}">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.details',['id'=>session('vehicle')])}}">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
                     de Pagos</a></li>
                 </ul>

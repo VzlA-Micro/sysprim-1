@@ -40,16 +40,21 @@ class VehiclesTaxesController extends Controller
             if (!Empty($vehicleTaxesTem[0])) {
                 DeclarationVehicle::verify($id, $temporal = true);
             }
-
-
             $declaration = DeclarationVehicle::Declaration($id);
 
             $vehicle = Vehicle::where('id', $id)->get();
 
             $grossTaxes = 0;
             $total = number_format($declaration['total'], 2, ',', '.');
+            $totalAux = $declaration['total'];
             $paymentFractional = 0;
             $valueDiscount = 0;
+            if ($declaration['valueMora'] == 0) {
+                $valueMora = 0;
+            } else {
+                $valueMora = number_format($declaration['dayMora'], 2, ',', '.');
+            }
+
             if ($declaration['optionPayment']) {
                 $total = number_format($declaration['total'], 2, ',', '.');
                 $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
@@ -92,7 +97,6 @@ class VehiclesTaxesController extends Controller
             $trimester = Trimester::verifyTrimester();
             $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
 
-
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
                 'taxes' => $taxes,
@@ -104,25 +108,58 @@ class VehiclesTaxesController extends Controller
                 'recharge' => $recharge,
                 'previousDebt' => $previousDebt,
                 'total' => $total,
-                'vehicleTaxes' => false
+                'vehicleTaxes' => false,
+                'valueMora' => $valueMora,
+                'totalAux' => $totalAux
             ));
         }
+
     }
 
 
     public function taxesSave(Request $request)
     {
+
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
+        $fiscalCredits = $request->input('fiscal_credits');
+        $recharge = $request->input('recharge');
+        $recharge_mora = $request->input('rechargeMora');
 
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
+
+        if ($fiscalCredits !== 0) {
+            $fiscalCredits_format = str_replace('.', '', $fiscalCredits);
+            $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
+        } else {
+            $fiscalCredits_format = 0;
+        }
+
+        if ($recharge !== 0 && $recharge_mora !== 0) {
+            $recharge_format = str_replace('.', '', $recharge);
+            $recharge_format = str_replace(',', '.', $recharge_format);
+
+            $rechargeMora_format = str_replace('.', '', $recharge_mora);
+            $rechargeMora_format = str_replace(',', '.', $rechargeMora_format);
+        } else {
+            $recharge_format = 0;
+            $rechargeMora_format = 0;
+        }
+
+
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'temporal';
         $taxes->branch = 'Vehiculo';
-        //$code = substr($code, 3, 12);
 
+        $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+
+        $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
+        $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
+        $vehicleTaxes->recharge = $recharge_format;
+        $vehicleTaxes->recharge_mora = $rechargeMora_format;
+        $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
@@ -137,10 +174,11 @@ class VehiclesTaxesController extends Controller
 
     public function payments(Request $request)
     {
-
-        $id_taxes = $request->input('id_taxes');
         $type_payment = $request->input('type_payment');
         $bank_payment = $request->input('bank_payment');
+
+        $id_taxes = $request->input('id_taxes');
+
         $taxes = Taxe::findOrFail($id_taxes);
         $user = \Auth::user();
         $vehiclesTaxes = VehiclesTaxe::where('taxe_id', $id_taxes)->get();
@@ -153,6 +191,7 @@ class VehiclesTaxesController extends Controller
         $total = $declaration['total'];
         $paymentFractional = 0;
         $valueDiscount = 0;
+        $valueMora = $declaration['valueMora'];
 
         if ($declaration['optionPayment']) {
             $total = $declaration['total'];
@@ -216,7 +255,9 @@ class VehiclesTaxesController extends Controller
                 'valueDiscount' => $valueDiscount,
                 'vehicle' => $vehicle,
                 'total' => $total,
-                'moreThereYear' => $declaration['moreThereYear']
+                'moreThereYear' => $declaration['moreThereYear'],
+                'fiscalCredits' => $vehiclesTaxe->fiscal_credits,
+                'rechargeMora' => $vehiclesTaxe->recharge_mora
             ]);
 
 
@@ -245,16 +286,17 @@ class VehiclesTaxesController extends Controller
 
         $id_vehicle = explode('-', $id);
 
-
         $taxes = Taxe::findOrFail($id_vehicle[1]);
         $user = \Auth::user();
         $vehicle = Vehicle::where('id', $id_vehicle[0])->get();
+        $idTaxesVehicle=VehiclesTaxe::where('taxe_id',$id_vehicle[1])->get();
+        $vehiclesTaxe = VehiclesTaxe::find($idTaxesVehicle[0]->id);
+
 
         $grossTaxes = 0;
         $total = $declaration['total'];
         $paymentFractional = 0;
         $valueDiscount = 0;
-
 
         if ($declaration['optionPayment']) {
             $total = $declaration['total'];
@@ -296,11 +338,36 @@ class VehiclesTaxesController extends Controller
                 'valueDiscount' => $valueDiscount,
                 'vehicle' => $vehicle,
                 'total' => $total,
-                'moreThereYear' => $declaration['moreThereYear']
+                'moreThereYear' => $declaration['moreThereYear'],
+                'fiscalCredits' => $vehiclesTaxe->fiscal_credits,
+                'rechargeMora' => $vehiclesTaxe->recharge_mora
             ]);
 
 
         return $pdf->download('PLANILLA_SOLVENCIA.pdf');
+    }
+
+    public function creditsFiscal(Request $request)
+    {
+        $total = $request->input('total');
+        $fiscalCredits = $request->input('creditsFiscal');
+        $aux = 0;
+
+        if ($fiscalCredits >= 0) {
+            $aux = $total - $fiscalCredits;
+            if ($aux < 0) {
+                //DEVUELVO TRUE SI EL VALOR QUE INTRODUJO
+                // EN EL CREDITO FISCAL ES MAYOR AL QUE LE CORRESPONDE
+                //CANCELAR
+                return response()->json([true]);
+            } else {
+                //DEVUELVO FALSE SI EL CREDITO FISCAL ES IGUAL O MENOR AL MONTO A PAGAR
+                $totalAux = (string)number_format($aux, 2, ',', '.');
+                $fiscalCreditsAux = (string)number_format($fiscalCredits, 2, ',', '.');
+                return response()->json([false, $totalAux, $fiscalCreditsAux]);
+            }
+
+        }
     }
 
 
