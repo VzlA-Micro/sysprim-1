@@ -169,45 +169,76 @@ $('document').ready(function () {
             rate_id.push($(this).val());
         });
 
-        $.ajax({
-            method: "POST",
-            dataType: "json",
-            data: {
-                rate_id:rate_id,
-                type: type,
-                id: id,
-            },
-            url: url+'rate/taxpayers/save',
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
-                console.log(response);
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            },
-            error: function (err) {
-                console.log(err);
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Aceptar",
-                        visible: true,
-                        value: true,
-                        className: "green",
-                        closeModal: true
-                    }
-                });
+        if(rate_id.length>0) {
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                data: {
+                    rate_id: rate_id,
+                    type: type,
+                    id: id,
+                },
+                url: url + 'rate/taxpayers/save',
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            }
-        });
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    swal({
+                        title: "!Bien Hecho!",
+                        text: "Se ha generado la planilla de tasa con éxito,verifique los montos y continue. ",
+                        icon: "success",
+                        button:{
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    }).then(function () {
+                        location.href=url+'rate/taxpayers/details/'+response.taxe_id;
+                    });
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                },
+                error: function (err) {
+                    console.log(err);
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Aceptar",
+                            visible: true,
+                            value: true,
+                            className: "green",
+                            closeModal: true
+                        }
+                    });
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                }
+            });
+        }else{
+
+            swal({
+                title: "Información",
+                text: "Debes seleccionar al menos una  tasa a generar.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+
+
+
+
+        }
+
 
     });
 

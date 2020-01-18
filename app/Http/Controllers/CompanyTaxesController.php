@@ -827,7 +827,6 @@ class CompanyTaxesController extends Controller
             $for = \Auth::user()->email;
 
 
-
             $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
                 'taxes' => $taxes,
                 'ciuTaxes' => $ciuTaxes,
@@ -874,6 +873,7 @@ class CompanyTaxesController extends Controller
         $id_taxes=$request->input('id_taxes');
         $type_payment=$request->input('type_payment');
         $bank_payment=$request->input('bank_payment');
+
         $taxes = Taxe::findOrFail($id_taxes);
         $code = TaxesNumber::generateNumberTaxes($type_payment . "89");
         $taxes->code=$code;

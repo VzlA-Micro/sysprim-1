@@ -185,6 +185,9 @@ class RateController extends Controller{
         $taxe->save();
         $id = $taxe->id;
 
+
+        $amount=0;
+
         $tributo=Tributo::orderBy('id','desc')->first();
 
 
@@ -198,12 +201,136 @@ class RateController extends Controller{
                     'cant_tax_unit'=>$rate->cant_tax_unit,
                     'tax_unit'=>$tributo->value,
                 ]);
+
+
+            $amount+=$rate->cant_tax_unit*$tributo->value;
         }
 
 
-
-
+        $taxe_find=Taxe::find($id);
+        $taxe_find->amount=$amount;
+        $taxe_find->update();
         return response()->json(['status'=>'success','taxe_id'=>$id]);
+    }
+
+
+    public function detailsTaxPayers($id){
+        $taxe=Taxe::find($id);
+        $rate=$taxe->rateTaxes()->get();
+
+        $type='';
+
+        if(!is_null($rate[0]->pivot->company_id)){
+            $data=Company::find($rate[0]->pivot->company_id);
+            $type='company';
+        }else{
+            $data=User::find($rate[0]->pivot->person_id);
+            $type='user';
+        }
+
+        return view('modules.rates.taxpayers.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);
+    }
+
+
+    public function calculateTaxPayers($id){
+        $taxe=Taxe::find($id);
+        if($taxe->stauts==='temporal'){
+            $taxe->delete();
+        }
+        return redirect('rate/taxpayers/register');
+    }
+
+
+
+    public function typePaymentTaxPayers($id){
+        $taxe=Taxe::findOrFail($id);
+        return view('modules.rates.taxpayers.payments',['taxes_id'=>$id]);
+    }
+
+
+
+
+    public function downloadReciptTaxPayers($id){
+        $taxe=Taxe::find($id);
+        $rate=$taxe->rateTaxes()->get();
+        $type='';
+
+        if(!is_null($rate[0]->pivot->company_id)){
+            $data=Company::find($rate[0]->pivot->company_id);
+            $type='company';
+        }else{
+            $data=User::find($rate[0]->pivot->person_id);
+            $type='user';
+        }
+
+        $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+            'taxes' => $taxe,
+            'data' => $data,
+            'firm'=>false
+        ]);
+
+
+
+        return $pdf->download('PLANILLA_TASAS.pdf');
+
+    }
+
+
+    public function  paymentStoreTaxPayers(Request $request){
+        $id_taxes=$request->input('id_taxes');
+        $type_payment=$request->input('type_payment');
+        $bank_payment=$request->input('bank_payment');
+
+        $taxes = Taxe::findOrFail($id_taxes);
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "89");
+        $taxes->code=$code;
+        $code = substr($code, 3, 12);
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+
+
+
+
+        if($type_payment!='PPV'){
+
+            if($type_payment=='PPE'){
+                $taxes->bank=$bank_payment;
+                $amount=round($taxes->amount,0);
+                $taxes->amount=$amount;
+                $taxes->digit = TaxesNumber::generateNumberSecret($amount, $date_format, $bank_payment, $code);
+
+            }else{
+                $taxes->bank=$bank_payment;
+                $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
+            }
+        }
+
+        $taxes->status="process";
+        $taxes->update();
+
+
+        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+
+        $subject = "PLANILLA DE PAGO";
+        $for = \Auth::user()->email;
+
+        $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+            'taxes' => $taxes,
+            'ciuTaxes' => $ciuTaxes,
+            'firm'=>false
+        ]);
+
+
+        Mail::send('mails.payment-payroll', ['type'=>'Declaración de Actividad Económica (DEFINITIVA)'], function ($msj) use ($subject, $for, $pdf) {
+            $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+            $msj->subject($subject);
+            $msj->to($for);
+            $msj->attachData($pdf->output(), time() . "planilla.pdf");
+        });
+
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+
+
     }
 
 

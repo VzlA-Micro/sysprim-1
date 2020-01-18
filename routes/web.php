@@ -836,12 +836,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('rate/taxpayers/company-user/register','RateController@registerCompanyUsers');
 
-
-
     Route::post('rate/taxpayers/save','RateController@saveTaxPayers');
 
+    Route::get('rate/taxpayers/details/{id}','RateController@detailsTaxPayers')->name('rate.taxpayers.details');
 
+    Route::get('rate/taxpayers/calculate/{id}','RateController@calculateTaxPayers')->name('rate.taxpayers.calculate');
 
+    Route::get('rate/taxpayers/payments/{id}','RateController@typePaymentTaxPayers')->name('rate.taxpayers.typePayment');
 
 
 

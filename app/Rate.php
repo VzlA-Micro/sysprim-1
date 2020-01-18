@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Tributo;
 class Rate extends Model
 {
     protected $table="rates";
-
+    protected $appends = ['totalRate'];
 
     public function rateTaxes(){
         return $this->belongsToMany('App\Taxes','rate_taxes')
@@ -27,6 +27,16 @@ class Rate extends Model
     public function company(){
         return $this->belongsToMany('App\Company','rate_taxes')
             ->withPivot('company_id');
+    }
+
+
+
+    public function getTotalRateAttribute(){
+        $tributo=Tributo::orderBy('id','desc')->first();
+
+        $this->totalRate=$tributo->value*$this->cant_tax_unit;
+
+        return $this->attributes['totalRate'];
     }
 
 
