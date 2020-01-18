@@ -33,10 +33,10 @@
                     </div>
                     <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
-                            <div class="col s12 center-align">
+                        <!-- <div class="col s12 center-align">
                                 <a href="{{ route('companies.edit', ['id' => $property[0]->id]) }}" class="btn blue btn-rounded waves-light">Editar</a>
                             </div>
-                           <!-- <div class="col s12 m6 center-align">
+                           <div class="col s12 m6 center-align">
                                 <a href="" class="btn red btn-rounded waves-light col s12">Eliminar</a>
                             </div>-->
                         </div>
