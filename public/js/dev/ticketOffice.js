@@ -81,7 +81,6 @@ $(document).ready(function () {
             }).then(function (aceptar) {
                 if (aceptar) {
                     registerTaxes();
-
                 }
 
 
@@ -114,11 +113,29 @@ $(document).ready(function () {
 
     });
 
+
+
+
+
     function registerTaxes() {
         var form = new FormData(document.getElementById('register-taxes'));
         form.append('fiscal_period', $('#fiscal_period').val());
+
+        var type=$('#type').val();
+
+        url='http://sysprim.com.devel/';
+
+
+
+        if(type!=='definitive'){
+            url=url+'ticket-office/taxes/save';
+        }else{
+            url=url+'ticket-office/taxes/definitive/save';
+        }
+
+
         $.ajax({
-            url: url + "ticket-office/taxes/save",
+            url: url ,
             contentType: false,
             processData: false,
             data: form,
@@ -130,8 +147,9 @@ $(document).ready(function () {
             },
             success: function (response) {
 
-
+                console.log(response);
                 if(response.status==='error'){
+
                     swal({
                         title: "Información",
                         text: response.message,
@@ -150,7 +168,7 @@ $(document).ready(function () {
                         text: response.message,
                         icon: "info",
                         button: {
-                            text: "Esta bien",
+                            text: "Esta bien.",
                             className: "blue-gradient"
                         },
                     }).then(function () {
@@ -181,15 +199,12 @@ $(document).ready(function () {
                         if (aceptar) {
                             reset();
                         } else {
+                            url='http://sysprim.com.devel/';
+
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });
                 }
-
-
-
-
-
 
 
 
@@ -215,6 +230,9 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
 
 
     function formatMoney() {
@@ -419,20 +437,9 @@ $(document).ready(function () {
                                 <input type="hidden" name="withholding[]" id="withholdings_${subr}" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
                                 <input type="hidden" name="deductions[]" id="deductions_${subr}" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
                                 <input type="hidden" name="fiscal_credits[]" id="fiscal_credits_${subr}" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
-                           
-                         
-                           
-       
-                   
-                       </div>
-          
-            
+                         </div>
                       <div class="divider" style="height:3px !important;">
-                      
-                      </div>
-                          
-                     `;
-
+                      </div>`;
 
                                 $('#details').append(template);
                                 M.textareaAutoResize($('#' + subr));
@@ -447,7 +454,9 @@ $(document).ready(function () {
                                     var min_tribu = $(this).parent().siblings('input.min_tribu').val();
                                     var min_total = min_tribu * $('#tributo').val() * 12;
                                     base = base.replace(/\./g, '');
-                                    if (base !== '0') {
+
+
+                                   /* if (base !== '0') {
                                         if (parseFloat(base) <= min_total) {
                                             swal({
                                                 title: "Información",
@@ -472,7 +481,11 @@ $(document).ready(function () {
                                             $('.min > input.money_keyup').prop('readonly', true);
                                         }
                                     }
+
+
+                                    */
                                 });
+
 
 
                                 $('.anticipated').change(function () {
@@ -489,8 +502,12 @@ $(document).ready(function () {
                                     var total = Math.floor(parseFloat(base) * alicuota);
                                     var min_total = min_tribu * $('#tributo').val();
 
+
+
+
                                     if (base !== '0') {
 
+                                        /*
                                         if (total <= parseFloat(anticipated)) {
                                             swal({
                                                 title: "Información",
@@ -506,11 +523,11 @@ $(document).ready(function () {
                                             band = true;
                                             $(this).val('');
                                         }
+                                        */
 
                                     } else {
                                         total = min_tribu * 12 * $('#tributo').val();
-
-                                        if (parseFloat(anticipated) > total) {
+                                        /*if (parseFloat(anticipated) > total) {
                                             swal({
                                                 title: "Información",
                                                 text: "Verifique los datos ingresados, " +
@@ -524,27 +541,11 @@ $(document).ready(function () {
                                             });
                                             $(this).val('');
                                         }
-
+                                        */
 
                                     }
 
 
-                                });
-
-
-                                $('input[type="text"].money_keyup').on('keyup', function (event) {
-                                    var total = $(this).val();
-                                    if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
-                                        $(this).val('');
-                                    } else if ($(this).val().toString().length >= 2 && total[0] == 0) {
-                                        $(this).val('');
-                                    } else {
-                                        $(event.target).val(function (index, value) {
-                                            return value.replace(/\D/g, "")
-                                                .replace(/([0-9])([0-9]{2})$/, '$1,$2')
-                                                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-                                        });
-                                    }
                                 });
 
                                 M.updateTextFields();
@@ -553,8 +554,37 @@ $(document).ready(function () {
                             }
 
 
-                            M.updateTextFields();
+                            var deductions = `
+                               <div class="row pt-2">
+                                      <div class="input-field col s12 m4">
+                                        <i class="prefix">
+                                        <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
+                                        </i>   
+                                        <input type="text" name="fiscal_credits" id="fiscal_credits" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+                                        <label for="fiscal_credits">Creditos Fiscales</label>
+                                       </div>
+                                    </div>`;
 
+
+                            $('#details').append(deductions);
+
+
+
+                            $('input[type="text"].money_keyup').on('keyup', function (event) {
+                                var total = $(this).val();
+                                if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
+                                    $(this).val('');
+                                } else if ($(this).val().toString().length >= 2 && total[0] == 0) {
+                                    $(this).val('');
+                                } else {
+                                    $(event.target).val(function (index, value) {
+                                        return value.replace(/\D/g, "")
+                                            .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                                    });
+                                }
+                            });
+                            M.updateTextFields();
                         }
 
                         $("#preloader").fadeOut('fast');
@@ -588,6 +618,12 @@ $(document).ready(function () {
         }
 
     });
+
+
+
+
+
+
 
     $('#search-code').blur(function () {
         if ($('#search-code').val() !== '') {
@@ -625,8 +661,6 @@ $(document).ready(function () {
                         $('#company_id').val(company.id);
                         $('#person').val(user.name + " " + user.surname);
                         M.updateTextFields();
-
-
                         generarCiiu();
                     }
 
@@ -841,9 +875,6 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeOut('fast');
                 },
                 error: function (err) {
-                    console.log(err);
-
-
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     swal({
@@ -1034,8 +1065,6 @@ $(document).ready(function () {
         });
 
         M.updateTextFields();
-
-
     }
 
 

@@ -35,6 +35,7 @@
                                 <th>Status</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
+                                <th>Acción</th>
                                 @can('Detalles Pagos')
                                     <th>Detalles</th>
                                 @endcan
@@ -51,8 +52,6 @@
                                         {{--<td class="hide">{{$taxe->name}}</td>
                                         <td class="hide">{{$taxe->phone}}</td>--}}
                                         <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->bankName}}</td>
-                                        <td>{{$taxe->taxes[0]->bankName}}</td>
                                         <td>{{$taxe->ref}}</td>
                                         <td>{{$taxe->statusName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
@@ -68,7 +67,6 @@
                                                                 <i class="icon-do_not_disturb_alt"></i></button>
                                                         </div>
                                                     @elseif($taxe->status=='verified')
-
                                                         <div class="input-field col s12 m12">
                                                             <button type="button" id="change-status"
                                                                     class="btn waves-effect waves-light green col s12"
@@ -76,24 +74,19 @@
                                                                 <i class="icon-check"></i></button>
                                                         </div>
                                                     @else
+                                                        <div class="input-field col s12 m12 l12 xl6 ">
+                                                            <button type="button"
+                                                                    class="change-status btn waves-effect waves-light green col s12"
+                                                                    value="{{$taxe->id}}" data-status="verified">
+                                                                <i class="icon-check"></i></button>
+                                                        </div>
 
-
-
-
-                                                            <div class="input-field col s12 m12 l12 xl6 ">
-                                                                <button type="button"
-                                                                        class="change-status btn waves-effect waves-light green col s12"
-                                                                        value="{{$taxe->id}}" data-status="verified">
-                                                                    <i class="icon-check"></i></button>
-                                                            </div>
-
-                                                            <div class="input-field col s12 m12 l12 xl6 ">
-                                                                <button type="button"
-                                                                        class="change-status btn waves-effect waves-light red col s12"
-                                                                        value="{{$taxe->id}}" data-status="cancel">
-                                                                    <i class="icon-cancel"></i></button>
-                                                            </div>
-
+                                                        <div class="input-field col s12 m12 l12 xl6 ">
+                                                            <button type="button"
+                                                                    class="change-status btn waves-effect waves-light red col s12"
+                                                                    value="{{$taxe->id}}" data-status="cancel">
+                                                                <i class="icon-cancel"></i></button>
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </td>
@@ -106,29 +99,22 @@
                                                     <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
+
+                                                    <a href="#"
+                                                       class="btn btn-floating blue waves-effect waves-light details-payment"
+                                                       data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
+                                                       data-phone="{{$taxe->phone}}"
+                                                       data-name="{{$taxe->name}}"
+                                                    ><i class="icon-info"></i></a>
                                                 </td>
                                             @else
-
-
                                                 <td>
                                                     <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
                                                 </td>
                                             @endif
-
-                                                <td>
-                                                    <a href="#"
-                                                       class="btn btn-floating orange waves-effect waves-light details-payment"
-                                                       data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
-                                                       data-phone="{{$taxe->phone}}"
-                                                       data-name="{{$taxe->name}}"
-                                                    ><i
-                                                                class="icon-card"></i></a>
-                                                </td>
                                         @endcan
-
-
                                     </tr>
                                 @endforeach
                             @endif
@@ -215,15 +201,15 @@
                         }, doc.styles.tableHeader = {
                             fillColor: '#247bff',
                             color: '#FFF',
-                            fontSize: '6',
+                            fontSize: '10',
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 6;
+                        }, doc.defaultStyle.fontSize = 9;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
 

@@ -4,7 +4,9 @@
     <div class="container-fluid">
         <div class="row">
 
-            @if($taxes->status!=='temporal'&&substr($taxes->code,0,1)=='P')
+            @if(\Auth::user()->Hasrole('Contribuyente'))
+
+
                 <div class="col s12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
@@ -16,6 +18,7 @@
                         <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     </ul>
                 </div>
+
             @else
                 <div class="col s12">
                     <ul class="breadcrumb">
@@ -27,10 +30,13 @@
                     </ul>
                 </div>
             @endif
+
+
             <div class="col s12 m10 offset-m1">
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación(Definitiva)</h5>
+
                        <div class="row">
 
                            <div class="col l6">
@@ -40,6 +46,8 @@
                            <div class="col l6">
                                <h5> Periodo Fiscal de Fin:<span> {{ \Carbon\Carbon::parse($taxes->fiscal_period_end)->format('d-m-Y') }}</span></h5>
                            </div>
+
+
                        </div>
 
 
@@ -237,7 +245,7 @@
                                 @endif
                                     @if(!$taxes->payments->isEmpty())
                                     <div class="row">
-                                            
+
                                             @if($taxes->status==='process')
                                                 <button class="btn green col s12">
                                                     <i class="icon-more_horiz left "></i>

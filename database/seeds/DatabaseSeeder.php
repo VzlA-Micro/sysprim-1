@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
             CatastralConstruccionTableSeeder::class,
             AlicuotaTableSeeder::class,
             FinesTableSeeder::class,
-            CompanyRespaldoTableSeeder::class,
             AdvertisingTypeTableSeeder::class,
+            CompanyRespaldoTableSeeder::class,
             TypeVehicleTableSeeder::class,
             RechargeTableSeeder::class,
-            BankRateTableSeeder::class
+            BankRateTableSeeder::class,
         ]);
     }
 }
