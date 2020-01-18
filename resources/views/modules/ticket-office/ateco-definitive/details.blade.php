@@ -4,32 +4,15 @@
     <div class="container-fluid">
         <div class="row">
 
-            @if($taxes->status!=='temporal'&&substr($taxes->code,0,1)=='P')
-
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
-                                de Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
-                    </ul>
-                </div>
-
-            @else
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
-                    </ul>
-                </div>
-            @endif
-
+            <div class="col s12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="prev-view">Ver Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
+                </ul>
+            </div>
 
             <div class="col s12 m10 offset-m1">
                 <div class="card">
@@ -46,7 +29,7 @@
                                <h5> Periodo Fiscal de Fin:<span> {{ \Carbon\Carbon::parse($taxes->fiscal_period_end)->format('d-m-Y') }}</span></h5>
                            </div>
 
-
+                           <h5> Código:<b> {{$taxes->code}}</b></h5>
                        </div>
 
 
@@ -242,46 +225,137 @@
 
 
                                 @endif
-                                    @if(!$taxes->payments->isEmpty())
-                                    <div class="row">
+                                @if(!$taxes->payments->isEmpty())
+                                    <h4 class="center-align">Registro de Pago:</h4>
+                                    <table class="centered highlight" id="payments" style="width: 100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Código</th>
+                                            <th>Forma de Pago</th>
+                                            <th>Status</th>
+                                            <th>Ref o Código</th>
+                                            <th>Monto</th>
+                                            <th>Acción</th>
 
-                                            @if($taxes->status==='process')
-                                                <button class="btn green col s12">
-                                                    <i class="icon-more_horiz left "></i>
-                                                    ESTADO:  SIN CONCILIAR AÚN
-                                                </button>
-                                            @elseif($taxes->status==='verified')
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($taxes->payments as $taxe)
+                                            <tr>
+                                                <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                                <td>{{$taxe->code}}</td>
+                                                <td>{{$taxe->type_payment}}</td>
+                                                <td>{{$taxe->statusName}}</td>
+                                                <td>{{$taxe->ref}}</td>
+                                                <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                                <td>
+                                                    @if($taxe->status==='cancel')
+                                                        <div class="input-field col s12 m12">
+                                                            <button type="button"
+                                                                    class="btn waves-effect waves-light  col s12 red"
+                                                                    value="">
+                                                                <i class="icon-do_not_disturb_alt"></i></button>
+                                                        </div>
+                                                    @elseif($taxe->status=='verified')
+                                                        <div class="input-field col s12 m12">
+                                                            <button type="button"
+                                                                    class="btn waves-effect waves-light green col s12"
+                                                                    value="#" data-status="#">
+                                                                <i class="icon-check"></i></button>
+                                                        </div>
+                                                    @else
+                                                        <div class="input-field col s12 m6">
+                                                            <button type="button"
+                                                                    class="change-status btn waves-effect waves-light green col s12"
+                                                                    value="{{$taxe->id}}" data-status="verified">
+                                                                <i class="icon-check"></i></button>
+                                                        </div>
+                                                        <div class="input-field col s12 m6">
+                                                            <button type="button"
+                                                                    class="change-status btn waves-effect waves-light red col s12"
+                                                                    value="{{$taxe->id}}" data-status="cancel">
+                                                                <i class="icon-cancel"></i></button>
+                                                        </div>
+                                                    @endif
 
-                                                <button class="btn blue col s12">
-                                                    <i class="icon-more_horiz left"></i>
-                                                    ESTADO:  VERIFICADA.
-                                                </button>
+                                                </td>
+
+                                            </tr>
 
 
-                                            @elseif($taxes->status=='cancel')
+                                        @endforeach
+                                        </tbody>
+                                    </table>
 
-                                                <button class="btn red col s12">
-                                                    <i class="icon-more_horiz left"></i>
-                                                    ESTADO: CANCELADA.
-                                                </button>
-                                            @endif
+                                @endif
 
-                                        <div class="input-field col s12">
-                                            @if($taxes->status=='process')
+
+
+                                    <div class="row ">
+                                        @if($taxes->status==='ticket-office')
+                                            <a class="btn green col s12 ">
+                                                <i class="icon-more_horiz left "></i>
+                                                ESTADO: SIN PROCESAR AÚN
+                                            </a>
+
+                                        @elseif($taxes->status==='process')
+                                            <a href="#" class="btn green col s12">
+                                                <i class="icon-more_horiz left "></i>
+                                                ESTADO: SIN CONCILIAR AÚN
+
+                                            </a>
+                                        @elseif($taxes->status==='verified')
+
+                                            <a href="#" class="btn blue col s12">
+                                                <i class="icon-more_horiz left"></i>
+                                                ESTADO: VERIFICADA.
+                                            </a>
+
+
+                                        @elseif($taxes->status=='cancel')
+
+                                            <a href="#" class="btn red col s12">
+                                                <i class="icon-more_horiz left"></i>
+                                                ESTADO: CANCELADA.
+                                            </a>
+                                        @endif
+
+                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+
+                                            <div class="col l12">
+                                                <h4 class="center-align mt-2">Acciones</h4>
+                                            </div>
+
+
+                                            <div class="input-field col s12">
+
                                                 @can('Anular Pagos')
-                                                <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-ligt reconcile" data-status="cancel">
-                                                    ANULAR PLANILLA.
-                                                    <i class="icon-close right"></i>
-                                                </a>
+                                                    <a href="#"
+                                                       class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
+                                                       data-status="cancel">
+                                                        ANULAR PLANILLA.
+                                                        <i class="icon-close right"></i>
+                                                    </a>
                                                 @endcan
                                                 @can('Verificar Pagos - Manual')
-                                                <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light reconcile" data-status="verified">
-                                                    VERIFICAR PLANILLA.
-                                                    <i class="icon-verified_user right"></i>
-                                                </a>
+                                                    @if($verified&&$taxes->status!=='verified')
+                                                        <a href="#"
+                                                           class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
+                                                           data-status="verified">
+                                                            VERIFICAR PLANILLA.
+                                                            <i class="icon-verified_user right"></i>
+                                                        </a>
+                                                    @endif
                                                 @endcan
-                                            @endif
-                                        </div>
+                                                @if($taxes->status=='verified')
+                                                    <button type="button" id="send-email-verified"
+                                                            class="btn btn-rounded col s4 green waves-effect waves-light"
+                                                            value="{{$taxes->id}}">Enviar Correo Verificado.
+                                                        <i class="icon-send right"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         @endif
                                     </div>
                             </div>

@@ -57,9 +57,8 @@ class TicketOfficeController extends Controller
             }
 
         } catch (DecryptException $e) {
-            $taxe = Taxe::with('companies')->where('code', $id)->get();
-
-
+            $code=strtoupper($id);
+            $taxe = Taxe::with('companies')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
                 if ($taxe[0]->status === 'verified') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -297,7 +296,9 @@ class TicketOfficeController extends Controller
     {
         $company = Company::find($id);
         $parish = Parish::all();
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish]);
+
+        $companyTaxes=$company->taxesCompanies()->orderBy('id', 'desc')->get();
+        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'taxesCompanies'=>$companyTaxes]);
     }
 
     //find-license
@@ -308,7 +309,7 @@ class TicketOfficeController extends Controller
 
 
         if ($company->isEmpty()) {
-            $response = array('status' => 'error', 'message' => 'La Licencia ' . $code . 'no esta registrar, debe registrar una empresa.');
+            $response = array('status' => 'error', 'message' => 'La Licencia  o RIF "' . $code . '" no esta registrada, para generar una planilla debe ingresar un codigo valido.');
         } else {
 
 
@@ -734,7 +735,6 @@ class TicketOfficeController extends Controller
 
 
         } else {
-
             $taxes = Taxe::find($ciuTaxes[0]->taxes->id);
             $ciuTaxes = CiuTaxes::where('taxe_id', $ciuTaxes[0]->taxes->id)->get();
             $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
@@ -756,8 +756,6 @@ class TicketOfficeController extends Controller
         $amount = 0;
         $amount_payment = 0;
         $id_payment = '';
-
-
 
         foreach ($taxes as $tax) {
 
@@ -863,9 +861,13 @@ class TicketOfficeController extends Controller
 
 
 
-    public function sendEmailVerified($id){
-        $taxes = Taxe::findOrFail($id);;
-        if($taxes->type == 'actuated'&&$taxes->status=='verified') {
+    public function sendEmailVerified($id)
+    {
+        $taxes = Taxe::findOrFail($id);
+        $band=false;
+        $pdf='';
+
+        if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
             $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
             $companyTaxe = $taxes->companies()->get();
             $company_find = Company::find($companyTaxe[0]->id);
@@ -874,21 +876,45 @@ class TicketOfficeController extends Controller
 
             $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-            $amount=Calculate::calculateTaxes($id);
+            $amount = Calculate::calculateTaxes($id);
 
 
             $pdf = \PDF::loadView('modules.taxes.receipt',
-                [   'taxes' => $taxes,
+                ['taxes' => $taxes,
                     'fiscal_period' => $fiscal_period,
                     'ciuTaxes' => $ciuTaxes,
                     'amount' => $amount,
-                    'firm' =>true
+                    'firm' => true
                 ]);
 
+            $band=true;
 
+
+        } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified'){
+            $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
+            $companyTaxe = $taxes->companies()->get();
+            $company_find = Company::find($companyTaxe[0]->id);
+            $user = $company_find->users()->get();
+
+
+            $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+                'taxes' => $taxes,
+                'ciuTaxes' => $ciuTaxes,
+                'firm' => true
+            ]);
+
+            $band=true;
+        }else{
+            $band=false;
+            return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
+        }
+
+
+
+
+        if($band){
             $subject = "PLANILLA VERIFICADA";
             $for = $user[0]->email;
-
             try {
                 Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
                     $msj->from("grabieldiaz63@gmail.com", "SEMAT");
@@ -897,11 +923,10 @@ class TicketOfficeController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
             } catch (\Exception $e) {
-                return response()->json(['status' => 'error','message'=>'Ocurrio un error de conección durante el envio de correo,recargue el navegador e intentelo mas tarde.']);
+                return response()->json(['status' => 'error', 'message' => 'Ocurrio un error de conexión durante el envio de correo,recargue el navegador e intentelo mas tarde.']);
             }
-        }elseif($taxes->type!='verified'){
-            return response()->json(['status' => 'error','message'=>'El que correo no se envio, debido a que la planilla debe estar verificada.']);
         }
+
         return response()->json(['status'=>'success','message'=>'Correo enviado con éxito.']);
     }
 
@@ -967,7 +992,7 @@ class TicketOfficeController extends Controller
 
 
         $taxe = new Taxe();
-        $taxe->code = TaxesNumber::generateNumberTaxes('PTS81');
+        $taxe->code = TaxesNumber::generateNumberTaxes('PTS89');
         $taxe->fiscal_period = $fiscal_period;
         $taxe->fiscal_period_end = '2019-12-01';
         $taxe->status = 'ticket-office';
@@ -1136,6 +1161,43 @@ class TicketOfficeController extends Controller
 
 
     }
+
+
+    public function detailsTaxesDefinitive($id){
+        $taxes=Taxe::find($id);
+        $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
+        $companyTaxe = $taxes->companies()->get();
+        $verified = true;
+
+
+        if (!$taxes->payments->isEmpty()) {
+            foreach ($taxes->payments as $payment) {
+                if ($payment->status != 'verified') {
+                    $verified = false;
+                }
+            }
+        }else{
+            $verified = false;
+        }
+
+        return view('modules.ticket-office.ateco-definitive.details',[
+            'taxes'=>$taxes,
+            'ciuTaxes'=>$ciuTaxes,
+            'verified'=>$verified
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

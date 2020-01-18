@@ -793,14 +793,12 @@ class CompanyTaxesController extends Controller
 
 
 
-    //detalles
+    //detalles Taxes
     public function detailsDefinitive($id){
         $taxes=Taxe::find($id);
         $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
         return view('modules.acteco-definitive.details',['taxes'=>$taxes,'ciuTaxes'=>$ciuTaxes]);
     }
-
-
 
 
 

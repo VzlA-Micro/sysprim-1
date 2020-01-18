@@ -23,7 +23,7 @@
                     </div>
                 @elseif($status=='process')
                     <div class="alert alert-success center-align">
-                        <strong>PLANILLA DE ACTIVIDAD ECONOMICA DEFINITIVA DECLARADA, POR FAVOR CONCILIE SUS
+                        <strong>PLANILLA DE ACTIVIDAD ECONÓMICA DEFINITIVA DECLARADA, POR FAVOR CONCILIE SUS
                             PAGOS.</strong>
                     </div>
                 @elseif($status==='new')

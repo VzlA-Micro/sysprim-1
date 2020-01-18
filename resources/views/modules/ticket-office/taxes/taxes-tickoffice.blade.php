@@ -53,7 +53,7 @@
                                             <td>{{$taxe->companies[0]->name}}</td>
                                             <td>{{$taxe->companies[0]->license}}</td>
                                             <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->fiscal_period}}</td>
+                                            <td>{{$taxe->fiscalPeriodFormat}}</td>
 
                                             <td class="center-align">
                                                 <label>
@@ -79,7 +79,7 @@
                                                 @else
 
                                                     <td>
-                                                        <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
+                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
                                                            class="btn indigo waves-effect waves-light"><i
                                                                     class="icon-pageview left"></i>Detalles</a>
                                                     <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
@@ -385,7 +385,7 @@
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref_depo" value=""
                                                                        class="validate"
-                                                                       required minlength="10" maxlength="10" readonly>
+                                                                       required minlength="3"  readonly>
                                                                 <label for="ref_depo">N DE CHEQUE</label>
                                                             </div>
 
@@ -469,11 +469,17 @@
                     <div class="col s12 center-align">
                         <img src="{{asset('images/scan.gif')}}" class="img-responsive">
                     </div>
-                    <div class="input-field col s10">
+                    <div class="input-field col s8">
                         <i class="icon-search prefix"></i>
                         <input id="search" type="search" value="">
                         <label for="search">CÓDIGO</label>
                     </div>
+                    <div class="input-field col s12 center-align">
+                        <button type="button" class="modal-close btn btn-large btn-rounded peach waves-effect waves-light">BUSCAR<i class="icon-search right"></i>
+                        </button>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -493,9 +499,7 @@
                            data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
                     <li><a class="btn-floating light-blue darken-2 tooltipped" id="close-cashier" data-position="left"
                            data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
-                @endcan
-                @can('Ver Planillas')
-                    <li><a class="btn-floating light-blue darken-3 tooltipped" data-position="left"
+                    <li><a href="{{url('ticket-office/type-payment')}}" class="btn-floating light-blue darken-3 tooltipped" data-position="left"
                            data-tooltip="Ver pagos"><i class="fas fa-money-check"></i></a></li>
                 @endcan
             </ul>

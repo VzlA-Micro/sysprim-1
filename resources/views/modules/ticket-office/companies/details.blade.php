@@ -449,7 +449,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($company->taxesCompanies as $taxe)
+                            @foreach($taxesCompanies as $taxe)
 
 
 
@@ -470,7 +470,7 @@
                                             @if($taxe->status==='process')
                                                 <td>
 
-                                                    <button class="btn green">
+                                                    <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
                                                         SIN CONCILIAR AÚN
                                                     </button>
@@ -488,21 +488,30 @@
 
                                             @elseif($taxe->status=='cancel')
                                                 <td>
-                                                    <button class="btn green">
+                                                    <button class="btn" disabled>
                                                         <i class="icon-more_horiz left"></i>
                                                         CANCELADA.
+                                                    </button>
+                                                </td>
+                                            @elseif($taxe->status=='ticket-office')
+                                                <td>
+                                                    <button class="btn amber">
+                                                        <i class="icon-more_horiz left"></i>
+                                                        TAQUILLA.
                                                     </button>
                                                 </td>
                                             @endif
 
 
-                                            @if($taxe->type!='definitive')
+
+
+                                        @if($taxe->type!='definitive')
                                                 <td><a href="{{route('taxes.download',[$taxe->id])}}"
                                                        class="btn orange waves-effect waves-light col l6"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a>
 
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
                                                        class="btn indigo waves-effect waves-light col l6"><i
                                                                 class="icon-pageview left"></i>Detalles</a>
                                                 </td>
@@ -516,7 +525,7 @@
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a>
 
-                                                    <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
+                                                    <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
                                                        class="btn indigo waves-effect waves-light col l6"><i
                                                                 class="icon-pageview left"></i>Detalles</a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
@@ -546,6 +555,7 @@
             scroller: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

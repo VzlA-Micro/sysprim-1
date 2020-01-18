@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a>
+                    <li class="breadcrumb-item"><a href="#" class="prev-view" >Ver Pagos</a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
                 </ul>
@@ -255,8 +255,7 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-
-
+                                        @endif
                                         <div class="row ">
                                             @if($taxes->status==='ticket-office')
                                                 <a class="btn green col s12 ">
@@ -325,12 +324,6 @@
 
                                                 </div>
                                             @endif
-                                                @else
-
-                                                    <h4 class="center-align">Sin registro de pagos SEMAT(Generada Web).</h4>
-
-                                                @endif
-
 
 
 
