@@ -265,8 +265,8 @@ $('document').ready(function () {
                 $('#group-new-MB').html(html);
                 console.log(buttonBrand);
                 buttonBrand = false;
-                controlButtonBrand=false;
-            }else{
+                controlButtonBrand = false;
+            } else {
                 $('#group-MB').hide();
                 $('#group-new-MB').show();
             }
@@ -280,6 +280,137 @@ $('document').ready(function () {
 
 
     });
+
+
+    //tab ticktffice
+    $('#user-next').click(function () {
+
+        if ($('#ci').val() === '' || $('#name_user').val() === '') {
+            swal({
+                title: "Información",
+                text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        } else {
+
+
+            $('#vehicle-tab-two').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "company-tab");
+
+        }
+
+    });
+
+
+    $('#company-next').click(function () {
+        var band = true;
+
+        $('.company-validate').each(function () {
+            if ($(this).val() === '' || $(this).val() === null) {
+                swal({
+                    title: "Información",
+                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+                band = false;
+            } else if ($('#ciu').val() === undefined) {
+                swal({
+                    title: "Información",
+                    text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+                band = false;
+            }
+
+        });
+
+        if (band) {
+            $('#map-tab-three').removeClass('disabled');
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "map-tab");
+        }
+
+    });
+
+
+    $('#company-previous').click(function () {
+        $('ul.tabs').tabs();
+        $('ul.tabs').tabs("select", "user-tab");
+    });
+
+    $('#vehicle-register-ticket').submit(function (e) {
+        e.preventDefault();
+
+
+        $('#button-company').attr('disabled', 'disabled');
+
+        $.ajax({
+            url: url + "ticketOffice/vehicle/save",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: new FormData(this),
+            method: "POST",
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "El vehiculo ha sido registrado con éxito.",
+                    icon: "success",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    },
+                }).then(function (accept) {
+                    if (accept) {
+                        window.location.href = url + "ticketOffice/companies/all";
+                    }
+                });
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+            },
+            error: function (err) {
+                $('#button-company').removeAttr('disabled', '');
+                console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+
+    });
+
+
+
+
 
 });
 

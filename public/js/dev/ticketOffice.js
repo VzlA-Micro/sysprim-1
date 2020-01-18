@@ -1,17 +1,12 @@
 $(document).ready(function () {
     var url = "http://sysprim.com.devel/";
 
-
-
-
-
     function reset() {
         $('#details').text('');
         $('ul.tabs').tabs("select", "general-tab");
         $('#three').addClass('disabled');
         $('#two').addClass('disabled');
         $('#register-taxes')[0].reset();
-
     }
 
 

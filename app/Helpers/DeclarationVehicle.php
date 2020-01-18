@@ -177,7 +177,6 @@ class DeclarationVehicle
                     //
                     $monthTaxes = intval($vehicleTaxes[0]->created_at->format('m'));
 
-
                     if ($monthTaxes >= 1 and $monthTaxes <= 3) {
                         $trimester = 1;
                     }
@@ -192,7 +191,6 @@ class DeclarationVehicle
                     }
 
                     $diffTrimester = $trimesterCurrent - $trimester;
-
 
                     $recharge = (($fractionalPayments * $diffTrimester) * $recharges) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);

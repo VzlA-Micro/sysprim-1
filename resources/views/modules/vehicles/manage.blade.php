@@ -15,7 +15,7 @@
             </div>
             @can('Registar Mis Vehiculos')
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.register') }}" class="btn-app white green-text">
+                <a href="{{ route('vehicles.register',['register'=>false]) }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Vehículo</span>
                 </a>

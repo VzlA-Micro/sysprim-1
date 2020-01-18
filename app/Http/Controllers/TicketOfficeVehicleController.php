@@ -27,9 +27,13 @@ use Illuminate\Support\Facades\Mail;
 use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
+use App\Vehicle;
+use App\UserVehicle;
+use App\Brand;
+use App\ModelsVehicle;
 
 
-class TicketOfficeController extends Controller
+class TicketOfficeVehicleController extends Controller
 {
 
 
@@ -223,61 +227,61 @@ class TicketOfficeController extends Controller
     }
 
 
-    public function storeCompany(Request $request)
+    public function storeVehicle(Request $request)
     {
-        $ciu = $request->input('ciu');
-        $nameCompany = $request->input('name_company');
-        $license = $request->input('license');
-        $parish = $request->input('parish');
-        $openingDate = $request->input('opening_date');
-        $rif = $request->input('document_type') . $request->input('RIF');
-        $address = $request->input('address');
-        $code_catastral = $request->input('code_catastral');
-        $numberEmployees = $request->input('number_employees');
-        $sector = $request->input('sector');
-        $phone = $request->input('phone_company');
-        $country_code = $request->input('country_code_company');
-        $lat = $request->input('lat');
-        $lng = $request->input('lng');
+        $vehicle = new Vehicle();
 
+        $licensePlate = $request->input('license_plate');
+        $color = $request->input('color');
+        $body_serial = $request->input('bodySerial');
+        $serial_engine = $request->input('serialEngine');
+        $type_vehicle_id = $request->input('type');
+        $year = $request->input('year');
 
-        $validate = $this->validate($request, [
-            'name_company' => 'required',
-            'license' => 'required',
-            'RIF' => 'required|min:8',
-            'address' => 'required',
-            'opening_date' => 'required',
-            'parish' => 'required|integer',
-            'code_catastral' => 'required',
-            'sector' => 'required',
-            'number_employees' => 'required',
-        ]);
+        if (!empty($request->input('brand-n') && $request->input('model-n'))) {
+            $brandVehicles = new Brand();
+            $modelsVehicle = new ModelsVehicle();
 
-        $company = new Company();
-        $company->name = strtoupper($nameCompany);
-        $company->address = strtoupper($address);
-        $company->rif = $rif;
-        $company->license = strtoupper($license);
-        $company->lat = $lat;
-        $company->lng = $lng;
-        $company->code_catastral = strtoupper($code_catastral);
-        $company->parish_id = $parish;
-        $company->opening_date = $openingDate;
-        $company->sector = $sector;
-        $company->number_employees = $numberEmployees;
-        $company->phone = $country_code . $phone;
-        $company->created_at = '2019-09-14';
-        $company->save();
+            $models = strtoupper($request->input('model-n'));
+            $brand = strtoupper($request->input('brand-n'));
+            $otherBrand = Brand::where('name', $brand)->exists();
 
-        $id_company = $company->id;
+            if ($otherBrand) {
 
-        $id_user = $request->input('user_id');
+            } else {
+                $brandVehicles->name = $brand;
+                $brandVehicles->save();
 
-        $company->users()->attach(['company_id' => $id_company], ['user_id' => $id_user]);
-        foreach ($ciu as $ciu) {
-            $company->ciu()->attach(['company_id' => $id_company], ['ciu_id' => $ciu]);
+                $modelsVehicle->name = $models;
+                $modelsVehicle->brand_id = $brandVehicles->id;
+                $modelsVehicle->save();
+
+                $vehicle->model_id = $modelsVehicle->id;
+            }
+
+        } else {
+            $models = $request->input('models');
+            $brand = $request->input('brand');
+            $vehicle->model_id = $request->input('model');
         }
 
+        $vehicle->license_plate = $licensePlate;
+        $vehicle->color = $color;
+        $vehicle->body_serial = $body_serial;
+        $vehicle->serial_engine = $serial_engine;
+        $vehicle->type_vehicle_id = $type_vehicle_id;
+        $vehicle->year = $year;
+
+        $vehicle->save();
+        $id_user = $request->input('user_id');
+
+        var_dump($vehicle->id);
+
+        $userVehicle = new UserVehicle();
+        $userVehicle->user_id = $id_user;
+        $userVehicle->vehicle_id = $vehicle->id;
+        $userVehicle->status_user_vehicle = $request->input('status');
+        $userVehicle->save();
     }
 
 
@@ -288,11 +292,10 @@ class TicketOfficeController extends Controller
     }
 
 
-    public function detailsCompany($id)
+    public function detailsVehicle($id)
     {
-        $company = Company::find($id);
-        $parish = Parish::all();
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish]);
+        $vehicle = Vehicle::find($id);
+        return view('modules.ticket-office.vehicle.modules.vehicle.details', ['vehicle' => $vehicle]);
     }
 
     //find-license
@@ -362,8 +365,6 @@ class TicketOfficeController extends Controller
         $withholding = $datos['withholding'];
         $base = $datos['base'];
         $fiscal_credits = $datos['fiscal_credits'];
-
-
 
 
         $fiscal_period_format = Carbon::parse($fiscal_period);
@@ -645,15 +646,14 @@ class TicketOfficeController extends Controller
     public function payments($type)
     {
 
-        if($type=='DEPOSITO BANCARIO'){
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type.'/CHEQUE')->orWhere('type_payment', '=', $type.'/EFECTIVO')->get();
-        }else{
+        if ($type == 'DEPOSITO BANCARIO') {
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->get();
+        } else {
             $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
         }
         if ($payment->isEmpty()) {
             $payment = null;
         }
-
 
 
         if ($type == 'TRANSFERENCIA BANCARIA') {
@@ -662,7 +662,7 @@ class TicketOfficeController extends Controller
             return view('modules.payments.pointofsale', ['taxes' => $payment, 'amount_taxes' => 0]);
         } else if ($type === 'DEPOSITO BANCARIO') {
             return view('modules.payments.deposit', ['taxes' => $payment, 'amount_taxes' => 0]);
-        }else{
+        } else {
             return redirect('ticket-office/type-payment');
         }
 
@@ -686,7 +686,7 @@ class TicketOfficeController extends Controller
                     $verified = false;
                 }
             }
-        }else{
+        } else {
             $verified = false;
         }
 
@@ -768,8 +768,8 @@ class TicketOfficeController extends Controller
         $taxes->update();
 
 
-        if($status==='cancel'){
-            if(!$taxes->payments->isEmpty()){
+        if ($status === 'cancel') {
+            if (!$taxes->payments->isEmpty()) {
                 foreach ($taxes->payments as $payment) {
                     $payment = Payment::find($payment->id);
                     $payment->status = 'cancel';
@@ -777,7 +777,6 @@ class TicketOfficeController extends Controller
                 }
             }
         }
-
 
 
         if ($status === 'verified' && $taxes->type == 'actuated') {
@@ -790,15 +789,15 @@ class TicketOfficeController extends Controller
             $subject = "PLANILLA VERIFICADA";
             $for = $user[0]->email;
 
-            try{
+            try {
                 Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
                     $msj->from("grabieldiaz63@gmail.com", "SEMAT");
                     $msj->subject($subject);
                     $msj->to($for);
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
-            }catch (\Exception $e){
-                return response()->json(['status'=>'error']);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error']);
             }
 
         }
@@ -822,10 +821,10 @@ class TicketOfficeController extends Controller
     }
 
 
-
-    public function sendEmailVerified($id){
+    public function sendEmailVerified($id)
+    {
         $taxes = Taxe::findOrFail($id);;
-        if($taxes->type == 'actuated'&&$taxes->status=='verified') {
+        if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
             $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
             $companyTaxe = $taxes->companies()->get();
             $company_find = Company::find($companyTaxe[0]->id);
@@ -834,15 +833,15 @@ class TicketOfficeController extends Controller
 
             $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-            $amount=Calculate::calculateTaxes($id);
+            $amount = Calculate::calculateTaxes($id);
 
 
             $pdf = \PDF::loadView('modules.taxes.receipt',
-                [   'taxes' => $taxes,
+                ['taxes' => $taxes,
                     'fiscal_period' => $fiscal_period,
                     'ciuTaxes' => $ciuTaxes,
                     'amount' => $amount,
-                    'firm' =>true
+                    'firm' => true
                 ]);
 
 
@@ -857,20 +856,13 @@ class TicketOfficeController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
             } catch (\Exception $e) {
-                return response()->json(['status' => 'error','message'=>'Ocurrio un error de conección durante el envio de correo,recargue e intentelo mas tarde.']);
+                return response()->json(['status' => 'error', 'message' => 'Ocurrio un error de conección durante el envio de correo,recargue e intentelo mas tarde.']);
             }
-        }elseif($taxes->type!='verified'){
-            return response()->json(['status' => 'error','message'=>'El que correo no se envio, debido a que la planilla debe estar verificada.']);
+        } elseif ($taxes->type != 'verified') {
+            return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
         }
-        return response()->json(['status'=>'success','message'=>'Correo enviado con éxito.']);
+        return response()->json(['status' => 'success', 'message' => 'Correo enviado con éxito.']);
     }
-
-
-
-
-
-
-
 
 
     public function changeStatusPayment($id, $status)
@@ -908,7 +900,6 @@ class TicketOfficeController extends Controller
         $status = TaxesMonth::verifyDefinitive($company_id);
         return response()->json(['status' => $status]);
     }
-
 
 
 }
