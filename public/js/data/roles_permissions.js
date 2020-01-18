@@ -1,4 +1,4 @@
-var url = "http://sysprim.com.devel/";
+var url = "https://sysprim.com/";
 $(document).ready(function() {
 	$('#register').submit(function(e) {
         var  name = $('#name').val();

@@ -108,25 +108,24 @@
                 </div>
         @endcan
 
+        {{--
+
+                   <div class="col s6 m3 animated bounceIn">
+                       <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white green-text accent-3">
+                           <i class="icon-class"></i>
+                           <span class="truncate">Gestión de  Tasas</span>
+                       </a>
+                   </div>
 
 
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white green-text accent-3">
-                    <i class="icon-class"></i>
-                    <span class="truncate">Gestión de  Tasas</span>
-                </a>
-            </div>
-
-
-
-        {{-- @can('Notificaciones')
-        <div class="col s6 m3 animated bounceIn">
-            <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
-                <i class="icon-notifications"></i>
-                <span class="truncate">Gestionar Notificaciones</span>
-            </a>
-        </div>
-        @endcan --}}
+               {{-- @can('Notificaciones')
+               <div class="col s6 m3 animated bounceIn">
+                   <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
+                       <i class="icon-notifications"></i>
+                       <span class="truncate">Gestionar Notificaciones</span>
+                   </a>
+               </div>
+               @endcan --}}
         <!--<div class="col s12 m3 animated bounceIn">
                 <a href="" class="btn-app white orange-text deeptext-darken-2">
                     <i class="icon-local_shipping"></i>
