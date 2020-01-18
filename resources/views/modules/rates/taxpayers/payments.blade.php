@@ -139,7 +139,7 @@
 					</div>
             	</div>
 
-				<form id="form-payment" method="POST" action="{{route('taxes.payment.definitive.store')}}">
+				<form id="form-payment" method="POST" action="{{route('rate.taxpayers.paymentStore')}}">
 					<input type="hidden" class="#" name="type_payment" id="type_payment" >
 					<input type="hidden" class="#" name="bank_payment" id="bank_payment" >
 					<input type="hidden" class="#" name="id_taxes" id="id_taxes"  value="{{$taxes_id}}">

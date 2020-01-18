@@ -844,6 +844,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('rate/taxpayers/payments/{id}','RateController@typePaymentTaxPayers')->name('rate.taxpayers.typePayment');
 
+    Route::get('rate/taxpayers/pdf/{id}','RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
+
+    Route::post('rate/taxpayers/payments/storage','RateController@paymentStoreTaxPayers')->name('rate.taxpayers.paymentStore');
+
+    Route::get('rate/taxpayers/payments-history','RateController@paymentHistoryTaxPayers')->name('rate.taxpayers.payment.history');
+
 
 
 });

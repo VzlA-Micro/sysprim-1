@@ -10,6 +10,7 @@ use App\Helpers\CedulaVE;
 use App\Taxe;
 use App\Helpers\TaxesNumber;
 use App\Tributo;
+use Illuminate\Support\Facades\Mail;
 class RateController extends Controller{
 
 
@@ -250,7 +251,7 @@ class RateController extends Controller{
 
 
 
-    public function downloadReciptTaxPayers($id){
+    public function pdfTaxPayers($id){
         $taxe=Taxe::find($id);
         $rate=$taxe->rateTaxes()->get();
         $type='';
@@ -263,79 +264,87 @@ class RateController extends Controller{
             $type='user';
         }
 
-        $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+        $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
             'taxes' => $taxe,
             'data' => $data,
             'firm'=>false
         ]);
 
 
-
-        return $pdf->download('PLANILLA_TASAS.pdf');
+        return $pdf->stream('PLANILLA_TASAS.pdf');
 
     }
 
 
-    public function  paymentStoreTaxPayers(Request $request){
-        $id_taxes=$request->input('id_taxes');
-        $type_payment=$request->input('type_payment');
-        $bank_payment=$request->input('bank_payment');
+    public function  paymentStoreTaxPayers(Request $request)
+    {
+        $id_taxes = $request->input('id_taxes');
+        $type_payment = $request->input('type_payment');
+        $bank_payment = $request->input('bank_payment');
 
         $taxes = Taxe::findOrFail($id_taxes);
-        $code = TaxesNumber::generateNumberTaxes($type_payment . "89");
-        $taxes->code=$code;
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "88");
+        $taxes->code = $code;
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
 
 
+        $type = '';
+        $rate = $taxes->rateTaxes()->get();
 
 
-        if($type_payment!='PPV'){
+        if (!is_null($rate[0]->pivot->company_id)) {
+            $data = Company::find($rate[0]->pivot->company_id);
+            $type = 'company';
+        } else {
+            $data = User::find($rate[0]->pivot->person_id);
+            $type = 'user';
+        }
 
-            if($type_payment=='PPE'){
-                $taxes->bank=$bank_payment;
-                $amount=round($taxes->amount,0);
-                $taxes->amount=$amount;
+
+        if ($type_payment != 'PPV') {
+
+            if ($type_payment == 'PPE') {
+                $taxes->bank = $bank_payment;
+                $amount = round($taxes->amount, 0);
+                $taxes->amount = $amount;
                 $taxes->digit = TaxesNumber::generateNumberSecret($amount, $date_format, $bank_payment, $code);
-
-            }else{
-                $taxes->bank=$bank_payment;
+            } else {
+                $taxes->bank = $bank_payment;
                 $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
             }
         }
 
-        $taxes->status="process";
+        $taxes->status = "process";
         $taxes->update();
 
-
-        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
-        $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+
+        $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
             'taxes' => $taxes,
-            'ciuTaxes' => $ciuTaxes,
-            'firm'=>false
+            'data' => $data,
+            'firm' => false
         ]);
 
-
-        Mail::send('mails.payment-payroll', ['type'=>'Declaración de Actividad Económica (DEFINITIVA)'], function ($msj) use ($subject, $for, $pdf) {
+        Mail::send('mails.payment-payroll', ['type' => 'Declaración de Tasas Y Certificaciones'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
-
-
+        return redirect('')->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
     }
 
 
-
-
+    public function paymentHistoryTaxPayers(){
+        $taxes=Taxe::where('branch','TasasyCert')->get();
+        return view('modules.rates.taxpayers.history', ['taxes' =>$taxes]);
+    }
 
 
 
