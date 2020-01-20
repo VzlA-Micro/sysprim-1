@@ -18,14 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('ci',10)->unique();
             $table->string('name',50);
             $table->string('surname',50);
-            $table->string('phone',15);
+            $table->string('phone',15)->nullable();
             $table->boolean('confirmed')->default(0);
             $table->string('confirmed_code')->nullable();
             // $table->foreign('role_id')->references('id')->on('roles');
             // $table->integer('role_id')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('status_account',15)->default('authorized');
             $table->text('address')->nullable();
             $table->string('image')->nullable();

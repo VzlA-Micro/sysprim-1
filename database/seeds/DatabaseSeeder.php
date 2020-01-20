@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             TypeVehicleTableSeeder::class,
             RechargeTableSeeder::class,
             BankRateTableSeeder::class,
+            RatesTableSeeder::class
         ]);
     }
 }

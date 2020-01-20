@@ -84,6 +84,13 @@
                 </a>
             </div>
             @endcan
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('rate.manager')}}" class="btn-app white  green-text text-accent-3">
+                    <i class="icon-library_books"></i>
+                    <span class="truncate">Gestionar Tasas</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

@@ -317,9 +317,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
     Route::get('/ticket-office/generate-receipt/{taxes}', 'TicketOfficeController@generateReceipt');
     Route::get('/ticket-office/taxes/calculate/{taxes_data}', 'TicketOfficeController@calculatePayments');
-
-
     Route::get('/ticket-office/payments/change/{id}/{status}','TicketOfficeController@changeStatustaxes');
+
+
+
+
+
 
 
     // Seguridad
@@ -652,6 +655,11 @@ Route::middleware(['auth'])->group(function () {
     //_______________________________________TICKOFFICE DEFINITIVE_____________________________________________________
     Route::get('tick-office/taxes/definitive/verify/{id}','TicketOfficeController@verifyDefinitive');
     Route::post('ticket-office/taxes/definitive/save','TicketOfficeController@registerTaxeDefinitive');
+    Route::get('ticket-office/taxes/definitive/{id}','TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
+
+
+
+
 
 
 
@@ -800,6 +808,54 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/taxes/payments', function () {
         return view('modules.taxes.payments');
     })->name('taxes.payments');
+
+
+
+//___________________________RATE__________________________________________
+
+
+    /*  Module  */
+
+     Route::get('rate/manager','RateController@manager')->name('rate.manager');
+
+     Route::get('rate/register','RateController@create')->name('rate.register');
+
+     Route::get('rate','RateController@index')->name('rate.index');
+
+     Route::get('rate/details/{id}','RateController@details')->name('rate.details');
+
+
+     Route::post('rate/save','RateController@store')->name('rate.save');
+
+     Route::get('rate/verify-code/{code}/{id?}','RateController@verifyCode');
+
+     Route::post('rate/update','RateController@update');
+
+
+    /*  taxpayers */
+
+    Route::get('rate/taxpayers/menu','RateController@menuTaxPayers')->name('rate.taxpayers.menu');
+
+    Route::get('rate/taxpayers/register','RateController@registerTaxPayers')->name('rate.taxpayers.register');
+
+    Route::get('rate/taxpayers/find/{type_document}/{document}','RateController@findTaxPayers');
+
+    Route::post('rate/taxpayers/company-user/register','RateController@registerCompanyUsers');
+
+    Route::post('rate/taxpayers/save','RateController@saveTaxPayers');
+
+    Route::get('rate/taxpayers/details/{id}','RateController@detailsTaxPayers')->name('rate.taxpayers.details');
+
+    Route::get('rate/taxpayers/calculate/{id}','RateController@calculateTaxPayers')->name('rate.taxpayers.calculate');
+
+    Route::get('rate/taxpayers/payments/{id}','RateController@typePaymentTaxPayers')->name('rate.taxpayers.typePayment');
+
+    Route::get('rate/taxpayers/pdf/{id}','RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
+
+    Route::post('rate/taxpayers/payments/storage','RateController@paymentStoreTaxPayers')->name('rate.taxpayers.paymentStore');
+
+    Route::get('rate/taxpayers/payments-history','RateController@paymentHistoryTaxPayers')->name('rate.taxpayers.payment.history');
+
 
 
 });

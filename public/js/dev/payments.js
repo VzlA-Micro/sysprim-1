@@ -336,6 +336,10 @@ $('document').ready(function () {
 
     });
 
+    $('.prev-view').click(function () {
+        window.history.back();
+    });
+
 /*
         $.ajax({
             method: "GET",

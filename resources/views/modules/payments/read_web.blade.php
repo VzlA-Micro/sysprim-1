@@ -59,7 +59,7 @@
                                                 @else
 
                                                     <td>
-                                                        <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
+                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
                                                            class="btn btn-floating orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
 

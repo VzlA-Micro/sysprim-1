@@ -65,7 +65,17 @@
 </div>
 
 
-<h4 style="text-align:center">DEPOSITO TRIBUTARIA MUNICIPAL</h4>
+@if($taxes[0]->taxes->status==='verified')
+    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO(DECLARACIÓN ANTICIPADA)</h4>
+@else
+
+    <h4 style="text-align:center">DEPOSITO TRIBUTARIA MUNICIPAL</h4>
+@endif
+
+
+
+
+
 
 <table style="width: 100%; border-collapse: collapse;">
     <tr style="">
@@ -321,7 +331,7 @@
     </tr>
 
 
-    @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPB')
+    @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPC'||substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPE')
         <tr>
             <td style="width: 100%;text-align: center; font-size: 14px;">
                 @if($taxes[0]->taxes->payments[0]->bank==44)
@@ -342,7 +352,7 @@
         </tr>
         <tr>
             <td style="width: 100%;text-align: center; font-size: 14px;">
-                **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes[0]->taxes->created_at))}}**
+                **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes[0]->taxes->created_at))}}**
             </td>
         </tr>
 
@@ -461,10 +471,13 @@ $date = '31/12/' . date('Y');
 
 
         <tr>
-            <td style="width: 20%;">
-
-            </td>
+            @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPC' || substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPE')
+                <td style="width: 20%;">
+                    <img src="https://sysprim.com/images/pdf/{{$taxes[0]->taxes->payments[0]->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+                </td>
+            @endif
         </tr>
+
     </table>
 </div>
 </body>

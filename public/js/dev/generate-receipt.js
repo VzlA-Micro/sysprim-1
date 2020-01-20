@@ -1,7 +1,5 @@
 $('document').ready(function () {
 
-
-
     var url = "http://sysprim.com.devel/";
 
     var companies_id='';
@@ -542,13 +540,29 @@ $('document').ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
+                            var link;
+
+
+                            if(taxe.type!=='definitive'){
+                                link='<a href='+url+'payments/taxes/'+taxe.id+''+
+                                '\n class="btn indigo waves-effect waves-light"><i\n' +
+                                ' class="icon-pageview left"></i>Detalles</a>';
+
+                            }else{
+                                link='<a href='+url+'ticket-office/taxes/definitive/'+taxe.id+'"' +
+                                    '\nclass="btn indigo waves-effect waves-light"><i\n' +
+                                    'class="icon-pageview left"></i>Detalles</a>';
+                            }
+
+
+
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
                                     '<td><i class="icon-check text-green"></i>'+company.name+'</td>'+
                                     '<td>' +company.license+'</td>'+
                                     '<td>' +taxe.code+'</td>'+
-                                    '<td>' +taxe.fiscal_period+'</td>'+
+                                    '<td>' +taxe.fiscalPeriodFormat+'</td>'+
                                     '<td>' +'<p>' +
                                         '  <label>\n' +
                                         '           <input type="checkbox" name="payroll" class="payroll"\n' +
@@ -557,10 +571,8 @@ $('document').ready(function () {
                                         '                                  </label>\n' +
                                         '</p>'+
                                     '</td>'+
-                                     '<td>' +taxe.amount+'</td>'+
-                                     '<td><a href='+url+'payments/taxes/'+taxe.id+''+
-                                '                                        class="btn indigo waves-effect waves-light"><i\n' +
-                                '                           class="icon-pageview left"></i>Detalles</a></td>'+
+                                     '<td>' +taxe.amountFormat+'</td>'+
+                                     '<td>'+link+'</td>'+
                                 '</tr>');
 
                             $(this).val();
