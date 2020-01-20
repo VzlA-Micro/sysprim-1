@@ -612,6 +612,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
     Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
     Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
+    Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
+    Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
+
+    Route::get('/ticketOffice/vehicle/payments/', function () {
+        return view('modules.ticket-office.vehicle.modules.payment.home');
+    })->name('ticketOffice.vehicle.payments');
 
     //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
     //_______________________________________________________________________________________________________________________

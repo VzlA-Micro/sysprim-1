@@ -9,13 +9,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                 </ul>
             </div>
-
+            @can('Taquilla - Actividad Económica')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
+                <a href="{{route('home.ticket-office') }}" class="btn-app white light-green-text">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla Empresas</span>
                 </a>
             </div>
+            @endcan
 
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.vehicle.home') }}" class="btn-app white grey-text text-darken-2">
