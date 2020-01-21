@@ -207,6 +207,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+
+
     // Taquilla
     Route::group(['middleware' => ['permission:Taquillas']], function () {
         Route::get('/home/ticketOffice', function () {
@@ -380,24 +382,7 @@ Route::middleware(['auth'])->group(function () {
         return view('modules.notifications.details');
     })->name('notifications.details');
 
-    // Mi Publicidad
-    Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
-    Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
-    Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
-    Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
-
-
-    Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
-    Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
-    Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
-    Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
-    Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
-
-
-
-
-
-
+    
 
     // Mis Empresas
     Route::group(['middleware' => ['permission:Mis Empresas|Consultar Mis Empresas']], function () {
@@ -420,6 +405,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Mis Inmuebles
     Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
+        Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
+        Route::get('/inmueble/show/{id}','PropertyController@show')->name('show.inmueble');
+        Route::get('/inmueble/mi-inmueble', 'PropertyController@myProperty')->name('inmueble.my-propertys');
+        Route::get('/inmueble/my-inmueble/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+        Route::get('/inmueble/delaracion/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+        Route::get('/inmueble/statement/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+        Route::post('/inmueble/calcu', 'PropertyTaxesController@calcu')->name('propertyCalcu');
         // Nivel 1: Mis Inmuebles
         Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
         // Nivel 2: Registrar y Ver Detalles
@@ -433,40 +425,62 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function() {
+        // Nivel 1: Consultar y Registrar
+        Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
+        Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
+        Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
+        Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
+        Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
+        Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
+        Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
+        Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+        // Nivel 2: Registrar
+        Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function() {
+            Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
+            Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
+        });
+        // Nivel 3: Detalles
+        Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
+            Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
+        });
+    });
+
+    //________________________module Vehicle_____________________________
+
+
+    // Mi Publicidad
+    Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function() {
+        // Nivel 1: Consultar y Registrar
+        Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+        Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+        // Nivel 2: Registrar
+        Route::group(['middleware' => ['permission:Registar Mis Publicidades']], function() {
+            Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+            Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+            Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+            Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+        });
+        // Nivel 3: Detalles
+        Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function() {
+            Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+            Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+            Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+        });
+    }); 
+
+    // Declaraciones de Publicidad
+    Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
+    Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
+
+
    /*
     Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
     Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
     Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
 */
     //Inmuebles
-    Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
-
-    Route::get('/inmueble/show/{id}', array(
-        'as' => 'show.inmueble',
-        'uses' => 'PropertyController@show'
-    ));
-    Route::get('/inmueble/mi-inmueble', 'PropertyController@myProperty')->name('inmueble.my-propertys');
-
-
-    Route::get('/inmueble/my-inmueble/{id}', array(
-        'uses' => 'PropertyTaxesController@create',
-        'as' => 'propertyStatement'
-    ));
-
-    Route::get('/inmueble/delaracion/{id}', array(
-        'uses' => 'PropertyTaxesController@create',
-        'as' => 'propertyStatement'
-    ));
-
-    Route::get('/inmueble/statement/{id}', array(
-        'uses' => 'PropertyTaxesController@create',
-        'as' => 'propertyStatement'
-    ));
-
-    Route::post('/inmueble/calcu', array(
-        'uses' => 'PropertyTaxesController@calcu',
-        'as' => 'propertyCalcu'
-    ));
+// );
 
 
     // Mis Vehiculos
@@ -521,29 +535,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
     //Cambiar de usuario
     Route::get('/company/change-users/{company_id}/{ci}','CompaniesController@changeUser');
-
-
-
-
-
-
-//________________________module Vehicle_____________________________
-
-
-    Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
-    Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
-
-
-    Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
-    Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
-    Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
-
-    Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-    Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
-    Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
-    Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
-    Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
-    Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
 
     // ---------------------------------------------------
 

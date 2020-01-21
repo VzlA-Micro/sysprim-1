@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
                 </ul>
             </div>
-            {{--@can('Consultar Mis Inmuebles')--}}
+            @can('Consultar Mis Inmuebles')
             @foreach($inmuebles as $inmueble)
                 <div class="col s12 m4">
                     <a href="{{ route('show.inmueble', ['id' => $inmueble->id]) }}" class="btn-app white purple-text">
@@ -22,15 +22,15 @@
                     </a>
                 </div>
             @endforeach
-            {{--@endcan--}}
-            {{--@can('Registar Mis Inmuebles')--}}
+            @endcan
+            @can('Registar Mis Inmuebles')
             <div class="col s12 m4">
                 <a href="{{ route('properties.register') }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Agregar nuevo Inmueble...</span>
                 </a>
             </div>
-            {{--@endcan--}}
+            @endcan
         </div>
     </div>
 @endsection

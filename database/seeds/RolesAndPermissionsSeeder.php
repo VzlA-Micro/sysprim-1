@@ -239,8 +239,6 @@ class RolesAndPermissionsSeeder extends Seeder
         // Permission::create(['name' => 'Eliminar Mis Vehiculos']);
 
 
-
-
         // Mis Publicidades
         Permission::create(['name' => 'Mis Publicidades']);
         Permission::create(['name' => 'Registar Mis Publicidades']);
@@ -439,16 +437,21 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Mis Empresas',
             'Detalles Mis Empresas',
             // 'Actualizar Mis Empresas',
-            // 'Mis Inmuebles',
-            // 'Registar Mis Inmuebles',
-            // 'Consultar Mis Inmuebles',
-            // 'Detalles Mis Inmuebles',
+            'Mis Inmuebles',
+            'Registar Mis Inmuebles',
+            'Consultar Mis Inmuebles',
+            'Detalles Mis Inmuebles',
             // 'Actualizar Mis Inmuebles',
             'Mis Vehiculos',
             'Registar Mis Vehiculos',
             'Consultar Mis Vehiculos',
             'Detalles Mis Vehiculos',
             // 'Actualizar Mis Vehiculos',
+            'Mis Publicidades',
+            'Registar Mis Publicidades',
+            'Consultar Mis Publicidades',
+            'Detalles Mis Publicidades',
+            // 'Actualizar Mis Publicidades',
             // 'Mis Pagos - Actividad Económica',
             // 'Declarar Actividad Económica',
             // 'Declaración Anticipada - Actividad Económica',

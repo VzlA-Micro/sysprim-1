@@ -31,6 +31,7 @@
                             <li><b></b></li>
                         </ul>
                     </div>
+                    @can('Actualizar Mis Inmuebles')
                     <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
                             <div class="col s12 center-align">
@@ -41,6 +42,7 @@
                             </div>-->
                         </div>
                     </div>
+                    @endcan
                 </div>
             </div>
             {{-- Mostrar seccion si es administrador o no --}}

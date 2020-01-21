@@ -60,14 +60,14 @@
             {{-- Mostrar seccion si es administrador o no --}}
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
-                    {{--<div class="col s12">
+                    <div class="col s12">
                         <a href="#mode" class="modal-trigger btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
-                    </div>--}}
+                    </div>
 
-                <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
+                {{-- "{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger  --}}
 
 
                     <!-- Modal Structure -->
