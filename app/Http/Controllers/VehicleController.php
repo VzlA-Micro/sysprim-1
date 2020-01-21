@@ -33,7 +33,7 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($register=0)
+    public function create($register = 0)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
@@ -49,7 +49,7 @@ class VehicleController extends Controller
             ));
         }
 
-        if ($register==0){
+        if ($register == 0) {
             return view('modules.vehicles.register', array(
                 'brand' => $brands,
                 'model' => $models,
@@ -72,7 +72,7 @@ class VehicleController extends Controller
         $vehicle->body_serial = $request->input('bodySerial');
         $vehicle->serial_engine = $request->input('serialEngine');
         $vehicle->type_vehicle_id = $request->input('type');
-        $vehicle->status='enabled';
+        $vehicle->status = 'enabled';
         if (!empty($request->input('brand-n') && $request->input('model-n'))) {
 
             $brandVehicles = new Brand();
@@ -178,7 +178,7 @@ class VehicleController extends Controller
     public function update(Request $request)
     {
 
-        $id=$request->input('id');
+        $id = $request->input('id');
         $licensePlate = $request->input('license');
         $color = $request->input('color');
         $body_serial = $request->input('bodySerial');
@@ -187,14 +187,14 @@ class VehicleController extends Controller
         $year = $request->input('year');
         $models = $request->input('model');
         //$brand = $request->input('brand');
-        $vehicle=Vehicle::find($id);
-        $vehicle->license_plate=$licensePlate;
-        $vehicle->color=$color;
-        $vehicle->body_serial=$body_serial;
-        $vehicle->serial_engine=$serial_engine;
-        $vehicle->type_vehicle_id=$type_vehicle_id;
-        $vehicle->year=$year;
-        $vehicle->model_id=$models;
+        $vehicle = Vehicle::find($id);
+        $vehicle->license_plate = $licensePlate;
+        $vehicle->color = $color;
+        $vehicle->body_serial = $body_serial;
+        $vehicle->serial_engine = $serial_engine;
+        $vehicle->type_vehicle_id = $type_vehicle_id;
+        $vehicle->year = $year;
+        $vehicle->model_id = $models;
 
         $vehicle->update();
 
@@ -225,45 +225,45 @@ class VehicleController extends Controller
 
     public function licensePlate(Request $request)
     {
-        $id=null;
-        if ($request->input('id')!=null){
-            $id=$request->input('id');
+        $id = null;
+        if ($request->input('id') != null) {
+            $id = $request->input('id');
         }
         var_dump($request->input('id'));
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $license = Vehicle::where('license_plate', $request->input('license'))->get();
-        }else{
-            $license = Vehicle::where('license_plate', $request->input('license'))->where('id','!=',$id);
+        } else {
+            $license = Vehicle::where('license_plate', $request->input('license'))->where('id', '!=', $id);
         }
-        if(!$license->isEmpty()){
-            $response=array('status'=>'error','message'=>'La Placa "'.$request->input('license').'" se encuentra registrada en el sistema. Por favor, ingrese una placa valida.');
-        }else{
-            $response=array('status'=>'success','message'=>'No registrada.');
+        if (!$license->isEmpty()) {
+            $response = array('status' => 'error', 'message' => 'La Placa "' . $request->input('license') . '" se encuentra registrada en el sistema. Por favor, ingrese una placa valida.');
+        } else {
+            $response = array('status' => 'success', 'message' => 'No registrada.');
         }
 
         return response()->json($response);
-       // $license = Vehicle::where('license_plate', $request->input('license'))->exists();
+        // $license = Vehicle::where('license_plate', $request->input('license'))->exists();
         //return response()->json($license);
     }
 
 
     public function serialEngine(Request $request)
     {
-        $id=null;
-        if ($request->input('id')!=null){
-            $id=$request->input('id');
+        $id = null;
+        if ($request->input('id') != null) {
+            $id = $request->input('id');
         }
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->get();
-        }else{
-            $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->where('id','!=',$id);
+        } else {
+            $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->where('id', '!=', $id);
         }
-        if(!$serialEngine->isEmpty()){
-            $response=array('status'=>'error','message'=>'El serial del motor "'.$request->input('serialEngine').'" se encuentra registrado en el sistema. Por favor, ingrese un serial válido.');
-        }else{
-            $response=array('status'=>'success','message'=>'No registrado.');
+        if (!$serialEngine->isEmpty()) {
+            $response = array('status' => 'error', 'message' => 'El serial del motor "' . $request->input('serialEngine') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial válido.');
+        } else {
+            $response = array('status' => 'success', 'message' => 'No registrado.');
         }
 
         return response()->json($response);
@@ -274,20 +274,20 @@ class VehicleController extends Controller
 
     public function bodySerial(Request $request)
     {
-        $id=null;
-        if ($request->input('id')!=null){
-            $id=$request->input('id');
+        $id = null;
+        if ($request->input('id') != null) {
+            $id = $request->input('id');
         }
 
-        if(is_null($id)) {
+        if (is_null($id)) {
             $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->get();
-        }else{
-            $bodySerial= Vehicle::where('body_serial', $request->input('body_serial'))->where('id','!=',$id);
+        } else {
+            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->where('id', '!=', $id);
         }
-        if(!$bodySerial->isEmpty()){
-            $response=array('status'=>'error','message'=>'El serial de la carrocería "'.$request->input('body_serial').'" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
-        }else{
-            $response=array('status'=>'success','message'=>'No registrado.');
+        if (!$bodySerial->isEmpty()) {
+            $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('body_serial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
+        } else {
+            $response = array('status' => 'success', 'message' => 'No registrado.');
         }
 
         return response()->json($response);
@@ -309,5 +309,10 @@ class VehicleController extends Controller
         ));
     }
 
+    public function searchLicensePlate($license_plate)
+    {
+        $vehicle=Vehicle::where('license_plate',$license_plate)->get();
+
+    }
 
 }
