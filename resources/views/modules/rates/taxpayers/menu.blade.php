@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white orange-text">
+                <a href="{{route('rate.taxpayers.payment.history')}}" class="btn-app white orange-text">
                     <i class="icon-menu"></i>
                     <span class="truncate">Historial de Pagos.</span>
                 </a>

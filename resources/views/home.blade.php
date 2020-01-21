@@ -118,6 +118,15 @@
             </div>
 
 
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('rate.ticketoffice.menu')}}" class="btn-app white pink-text green-text accent-3">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla - Tasas y Certificaciones</span>
+                </a>
+            </div>
+
+
+
 
         {{-- @can('Notificaciones')
         <div class="col s6 m3 animated bounceIn">

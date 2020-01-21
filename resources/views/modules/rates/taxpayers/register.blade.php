@@ -17,13 +17,13 @@
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post" class="card" id="#">
                     <ul class="tabs">
-                        <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i>Datos de pago</a></li>
+                        <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i>Datos Generales</a></li>
                         <li class="tab col s6 disabled" id="two"><a href="#rate-tab"><i class="icon-filter_2"></i> Datos de la Tasa</a></li>
                     </ul>
 
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4>Ingresar Datos</h4>
+                            <h4>Datos Generales</h4>
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="id" value="" id="id">
@@ -42,13 +42,12 @@
                                 <label for="type_document"></label>
                             </div>
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="document" type="text" name="document" maxlength="8" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="document">Cedula o RIF</label>
                             </div>
-
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required >
+                                <input id="name" type="text" name="name" class="validate rate" data-validate="nombre" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required >
                                 <label for="name">Nombre</label>
                             </div>
 
@@ -58,10 +57,9 @@
 
 
 
-
                             <div class="input-field col s12 m12">
                                 <i class="icon-directions prefix"></i>
-                                <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required></textarea>
+                                <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                                 <label for="address">Dirección</label>
                             </div>
 

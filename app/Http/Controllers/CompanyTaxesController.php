@@ -52,6 +52,7 @@ class CompanyTaxesController extends Controller
     {
         $company=Company::where('name',$company)->get();
 
+
         $company=Company::find($company[0]->id);
 
         if(!$company->taxesCompanies->isEmpty()){
@@ -62,6 +63,9 @@ class CompanyTaxesController extends Controller
         }else{
             $taxes=null;
         }
+
+
+
 
         return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
     }

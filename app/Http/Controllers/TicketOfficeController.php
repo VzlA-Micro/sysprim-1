@@ -905,12 +905,10 @@ class TicketOfficeController extends Controller
 
             $band=true;
         }else{
+
             $band=false;
             return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
         }
-
-
-
 
         if($band){
             $subject = "PLANILLA VERIFICADA";

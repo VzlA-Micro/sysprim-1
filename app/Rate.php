@@ -10,8 +10,9 @@ class Rate extends Model
     protected $appends = ['totalRate'];
 
     public function rateTaxes(){
-        return $this->belongsToMany('App\Taxes','rate_taxes')
+        return $this->belongsToMany('App\Taxes','rates_taxes')
             ->withPivot(
+                'person_id',
                 'company_id',
                 'user_id',
                 'tax_unit',
