@@ -8,7 +8,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">
-
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Mis Tasas</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.payment.history')}}">Historial de Pagos</a></li>
+                </ul>
             </div>
             <div class="col s12 m10 offset-m1">
                 @if(Session::has('message'))
@@ -47,8 +51,6 @@
                                             <td>{{$taxe->branch}}</td>
                                             @if($taxe->status==='process')
 
-                                                @if($taxe->type!='definitive')
-
                                                 <td>
 
                                                     <button class="btn blue">
@@ -56,27 +58,12 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{url('payments/taxes/download/'.$taxe->id)}}"
+                                                <td><a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
 
-                                                @else
 
-                                                    <td>
-
-                                                        <button class="btn blue">
-                                                            <i class="icon-more_horiz left"></i>
-                                                            SIN CONCILIAR AÚN
-                                                        </button>
-                                                    </td>
-                                                    <td><a href="{{url('taxes.definitive.pdf',['id'=>$taxe->id])}}"
-                                                           class="btn orange waves-effect waves-light"><i
-                                                                    class="icon-description left"></i>Descargar
-                                                            planilla.</a></td>
-
-
-                                                @endif
                                             @elseif($taxe->status==='verified')
                                                 <td>
                                                     <button class="btn green">
@@ -85,18 +72,14 @@
                                                     </button>
                                                 </td>
 
-                                                @if($taxe->type!='definitive')
 
-                                                <td>
 
-                                               <a href="{{url('payments/taxes/download/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>
-                                                @else
                                                     <td>
-                                                        <a href="{{url('taxes/definitive/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
-                                                         </i>Descargar.</a>
+                                                        <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
+                                                         </i>Descargar Planilla.</a>
                                                     </td>
 
-                                                @endif
+
 
                                             @elseif($taxe->status=='cancel')
                                                 <td>
@@ -107,7 +90,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
+                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)  }}"
                                                        class="btn indigo waves-effect waves-light" disabled><i
                                                                 class="icon-pageview left"></i>Detalles</a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->

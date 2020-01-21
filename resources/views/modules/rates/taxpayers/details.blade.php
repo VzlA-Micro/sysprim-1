@@ -8,8 +8,8 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes->id])}}">Detalles de Autoliquidación</a></li>
+                        <li class="breadcrumb-item"><a href="#" class="prev-view" >Declarar Tasa</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes->id])}}" >Detalles de Autoliquidación</a></li>
                     </ul>
                 </div>
 
@@ -149,6 +149,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/data/rate.js') }}"></script>
     <script src="{{ asset('js/dev/taxes.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

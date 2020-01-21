@@ -7,13 +7,20 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+
             <div class="col s12">
                 <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Mis Tasas</a></li>
-                         <li class="breadcrumb-item"><a href="#">Declarar Tasa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('rate.ticketoffice.menu') }}">Taquilla - Tasas y Certificaciones</a></li>
+                    <li class="breadcrumb-item"><a href="#">Generar Planilla</a></li>
+
                 </ul>
             </div>
+
+
+
+
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post" class="card" id="#">
                     <ul class="tabs">
@@ -23,7 +30,7 @@
 
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4>Datos Generales</h4>
+                            <h5>Datos Generales-Taquilla</h5>
                         </div>
                         <div class="card-content row">
                             <input type="hidden" name="id" value="" id="id">
@@ -53,6 +60,9 @@
 
                             <input id="surname" type="hidden" name="surname" class="validate" value="" >
                             <input id="user_name" type="hidden" name="name_user" class="validate" value="" >
+
+
+                            <input id="user" type="hidden" name="user" class="validate" value="true">
 
 
 
@@ -100,13 +110,14 @@
                         <div class="card-content row">
                             <div class="input-field col s12 right-align">
                                 <a href="#" class="btn peach waves-effect waves light" id="register-rates">
-                                    Siguiente
+                                    Finalizar
                                     <i class="icon-navigate_next right"></i>
                                 </a>
                             </div>
                         </div>
 
                     </div>
+
                 </form>
             </div>
         </div>
@@ -114,7 +125,6 @@
 @endsection
 
 @section('scripts')
-
-    <script src="{{ asset('js/data/rate.js') }}"></script>
+    <script src="{{ asset('js/data/rate-tickoffice.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

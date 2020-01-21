@@ -10,17 +10,32 @@ use App\Helpers\CedulaVE;
 use App\Taxe;
 use App\Helpers\TaxesNumber;
 use App\Tributo;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Mail;
+use OwenIt\Auditing\Models\Audit;
+use Carbon\Carbon;
+
+
+
 class RateController extends Controller{
 
 
 
-    /*Module*/
+
+
 
     public function index() {
         $rate = Rate::all();
         return view('modules.rates.module.read', ['rate' => $rate]);
     }
+
+
+
+
+
+
+
 
     public function verifyCode($code,$id=null){
         $rate=Rate::where('code', $code)->get();
@@ -49,6 +64,17 @@ class RateController extends Controller{
     public function create() {
         return view('modules.rates.module.register');
     }
+
+
+
+    //register
+    public function createRegisterCompany($id){
+        $rate = Rate::all();
+        $company=Company::findOrFail($id);
+        return view('modules.rates.taxpayers.company',['rates' => $rate,'company'=>$company]);
+    }
+
+
 
 
     //save
@@ -106,19 +132,29 @@ class RateController extends Controller{
             $user=User::where('ci', $type_document.$document)->get();
             if($user->isEmpty()){
                 $user=CedulaVE::get($type_document,$document,false);
-
                 $data=['status'=>'success','type'=>'not-user','user'=>$user];
 
             }else{
+
                 $data=['status'=>'success','type'=>'user','user'=>$user[0]];
             }
         }else{
-            $company=Company::where('RIF', $type_document.$document)->get();
+            $company=Company::where('RIF', $type_document.$document)->orWhere('license',$type_document.$document)->get();
 
             if($company->isEmpty()){
-                $data=['status'=>'success','type'=>'not-company','company'=>null];
+                    $data=['status'=>'success','type'=>'not-company','company'=>null];
+
+
+
             }else{
-                $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+
+                if($company->count()>1){
+                    $data=['status'=>'error','message'=>'Este RIF, posse 2 licencia, por lo cual debe ingresar una licencia para indentificarla, selecione de tipo de documento la L e introduza el N de licencia..'];
+
+                }else{
+                    $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+                }
+
             }
 
         }
@@ -146,6 +182,7 @@ class RateController extends Controller{
             $user->role_id=3;
             $user->save();
             $id=$user->id;
+
         }else{
             $company=new Company();
             $company->name=$name;
@@ -156,8 +193,8 @@ class RateController extends Controller{
             $id=$company->id;
         }
 
-        return response(['status'=>'success','id'=>$id,'type'=>$type]);
 
+        return response(['status'=>'success','id'=>$id,'type'=>$type]);
     }
 
 
@@ -168,21 +205,22 @@ class RateController extends Controller{
 
         $person_id=null;
         $company_id=null;
-
         if($type=='user'){
             $person_id=$id;
+            $user_id=\Auth::user()->id;
+
         }else{
+
+            $user_id=\Auth::user()->id;
             $company_id=$id;
         }
-
-
 
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->status='temporal';
         $taxe->type='daily';
         $taxe->fiscal_period=date('Y-m-d');
-        $taxe->branch='TasasyCert';
+        $taxe->branch='Tasas y Cert';
         $taxe->save();
         $id = $taxe->id;
 
@@ -192,13 +230,15 @@ class RateController extends Controller{
         $tributo=Tributo::orderBy('id','desc')->first();
 
 
+
+
         for ($i=0;$i<count($rate_id);$i++){
             $rate=Rate::find($rate_id[$i]);
             $taxe->rateTaxes()->attach(['taxe_id'=>$id],
                 [    'rate_id'=>$rate_id[$i],
                     'company_id'=>$company_id,
                     'person_id'=>$person_id,
-                    'user_id'=>\Auth::user()->id,
+                    'user_id'=>$user_id,
                     'cant_tax_unit'=>$rate->cant_tax_unit,
                     'tax_unit'=>$tributo->value,
                 ]);
@@ -221,6 +261,8 @@ class RateController extends Controller{
 
         $type='';
 
+
+
         if(!is_null($rate[0]->pivot->company_id)){
             $data=Company::find($rate[0]->pivot->company_id);
             $type='company';
@@ -228,6 +270,7 @@ class RateController extends Controller{
             $data=User::find($rate[0]->pivot->person_id);
             $type='user';
         }
+
 
         return view('modules.rates.taxpayers.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);
     }
@@ -238,7 +281,7 @@ class RateController extends Controller{
         if($taxe->stauts==='temporal'){
             $taxe->delete();
         }
-        return redirect('rate/taxpayers/register');
+        return redirect('home');
     }
 
 
@@ -251,7 +294,7 @@ class RateController extends Controller{
 
 
 
-    public function pdfTaxPayers($id){
+    public function pdfTaxPayers($id,$download){
         $taxe=Taxe::find($id);
         $rate=$taxe->rateTaxes()->get();
         $type='';
@@ -267,13 +310,19 @@ class RateController extends Controller{
         $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
             'taxes' => $taxe,
             'data' => $data,
-            'firm'=>false
         ]);
 
 
-        return $pdf->stream('PLANILLA_TASAS.pdf');
+        if($download==='true'){
+            return $pdf->download('PLANILLA_TASAS.pdf');
+        }else{
+            return $pdf->stream('PLANILLA_TASAS.pdf');
+        }
 
     }
+
+
+
 
 
     public function  paymentStoreTaxPayers(Request $request)
@@ -342,10 +391,146 @@ class RateController extends Controller{
 
 
     public function paymentHistoryTaxPayers(){
-        $taxes=Taxe::where('branch','TasasyCert')->get();
+        $users=User::find(\Auth::user()->id);
+        $taxes=$users->taxesRate()->distinct()->orderBy('id','desc')->get();
         return view('modules.rates.taxpayers.history', ['taxes' =>$taxes]);
     }
 
+
+    public function menuTicketOffice(){
+        return view('modules.rates.ticket-office.menu');
+    }
+
+
+
+
+    public function generateRateTicketOffice(){
+        $rate = Rate::all();
+
+        return view('modules.rates.ticket-office.generate-rate',
+            ['rates'=>$rate]);
+    }
+
+
+
+    public function saveRateTicketOffice(Request $request){
+        $type=$request->input('type');
+        $id=$request->input('id');
+        $rate_id=$request->input('rate_id');
+
+        $person_id=null;
+        $company_id=null;
+        if($type=='user'){
+            $person_id=$id;
+            $user_id=$id;
+        }else{
+            $user_id=\Auth::user()->id;
+            $company_id=$id;
+        }
+
+
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->status='ticket-office';
+        $taxe->type='daily';
+        $taxe->fiscal_period=date('Y-m-d');
+        $taxe->branch='Tasas y Cert';
+        $taxe->save();
+        $id = $taxe->id;
+        $amount=0;
+
+
+        $tributo=Tributo::orderBy('id','desc')->first();
+
+
+
+        for ($i=0;$i<count($rate_id);$i++){
+            $rate=Rate::find($rate_id[$i]);
+            $taxe->rateTaxes()->attach(['taxe_id'=>$id],
+                [   'rate_id'=>$rate_id[$i],
+                    'company_id'=>$company_id,
+                    'person_id'=>$person_id,
+                    'user_id'=>$user_id,
+                    'cant_tax_unit'=>$rate->cant_tax_unit,
+                    'tax_unit'=>$tributo->value,
+                ]);
+
+
+            $amount+=$rate->cant_tax_unit*$tributo->value;
+        }
+
+
+        $taxe_find=Taxe::find($id);
+        $taxe_find->amount=$amount;
+        $taxe_find->update();
+
+
+
+        return response()->json(['status'=>'success','taxe_id'=>$id]);
+    }
+
+
+
+
+    public function getTaxesRateTicketOffice(){
+        $taxes = Audit::where('user_id', \Auth::user()->id)
+            ->where('event', 'created')
+            ->where('auditable_type', 'App\Taxe')
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+
+        if (!$taxes->isEmpty()) {
+            foreach ($taxes as $taxe) {
+                $id_taxes[] = $taxe->auditable_id;
+            }
+            if (count($id_taxes) !== 0) {
+
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch','=','Tasas y Cert')->whereIn('id', $id_taxes)->with('rateTaxes')->distinct()->get();
+
+            } else {
+
+                $amount_taxes = null;
+                $taxes = null;
+            }
+        } else {
+            $amount_taxes = null;
+            $taxes = null;
+        }
+
+
+        return view('modules.rates.ticket-office.payment', ['taxes' => $taxes]);
+    }
+
+    public function detailsTicketOffice($id){
+        $taxe=Taxe::find($id);
+        $rate=$taxe->rateTaxes()->get();
+        $type='';
+
+        if(!is_null($rate[0]->pivot->company_id)){
+            $data=Company::find($rate[0]->pivot->company_id);
+            $type='company';
+        }else{
+            $data=User::find($rate[0]->pivot->person_id);
+            $type='user';
+        }
+
+
+        $verified = true;
+
+        if (!$taxe->payments->isEmpty()) {
+            foreach ($taxe->payments as $payment) {
+                if ($payment->status != 'verified') {
+                    $verified = false;
+                }
+            }
+        } else {
+            $verified = false;
+        }
+
+
+
+
+        return view('modules.rates.ticket-office.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type,'verified'=>$verified]);
+    }
 
 
 

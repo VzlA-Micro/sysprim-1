@@ -85,10 +85,6 @@ $('document').ready(function () {
 
 
 
-
-
-
-
     $('.reconcile').click(function () {
         var status=$(this).data('status');
         var taxes_id=$('#taxes_id').val();

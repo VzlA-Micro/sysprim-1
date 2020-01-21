@@ -25,6 +25,43 @@
                 </a>
             </div>
 
+
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('rate.ticketoffice.menu')}}" class="btn-app white  blue-text accent-3">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla - Tasas y Certificaciones</span>
+                </a>
+            </div>
+
+
+            @can('Verificar Pagos - Archivo')
+                <div class="col s12 m3 animated bounceIn">
+                    <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
+                        <i class="icon-file_upload"></i>
+                        <span class="truncate">Verificación de Pagos</span>
+                    </a>
+                </div>
+            @endcan
+
+
+
+            @can('Ver Planillas')
+                <div class="col s12 m3 animated bounceIn">
+                    <a href="{{route('ticket-office.pay.web')}}" class="btn-app white indigo-text">
+                        <i class="icon-library_books"></i>
+                        <span class="truncate">Lista de Planillas</span>
+                    </a>
+                </div>
+            @endcan
+            @can('Ver Pagos')
+                <div class="col s12 m3 animated bounceIn">
+                    <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white indigo-text">
+                        <i class="icon-format_list_bulleted"></i>
+                        <span class="truncate">Ver Pagos</span>
+                    </a>
+                </div>
+            @endcan
+
         </div>
     </div>
 @endsection

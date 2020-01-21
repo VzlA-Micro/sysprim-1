@@ -35,16 +35,20 @@
                         <div class="card-content row">
 
                             <input type="hidden" id="tributo" value="{{$unid_tribu[0]->value}}">
+
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="search-code" id="search-code" >
                                 <label for="search-code">Licencia O RIF</label>
                             </div>
+
                             <div class="input-field col s12 m3">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="name_company" id="name_company" value="" readonly>
                                 <label for="name_company">Razon Social</label>
                             </div>
+
+
                             <input type="text" id="company_id" value="" name="company_id" class="hide">
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
@@ -54,6 +58,7 @@
                                        readonly>
                                 <label for="RIF">RIF</label>
                             </div>
+
                             <div class="input-field col s12 m3">
                                 <i class="icon-directions prefix"></i>
                                 <input type="text" name="address" id="address" value="" readonly>
@@ -62,8 +67,10 @@
                             <div class="input-field col s12 m3 ">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="person" id="person" value="" readonly>
-                                <label for="person">Pers. Responsable</label>
+                                <label for="person">Usuario Web</label>
                             </div>
+
+
                             <div class="input-field col s6">
                                 <i class="icon-picture_as_pdf prefix"></i>
                                 <select name="type" id="type">
@@ -74,18 +81,14 @@
                                 <label for="type">Tipo de Planilla</label>
                             </div>
 
+
+
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"
                                        value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
-
-
-
-
-
-
                         </div>
                         <div class="card-footer" style="padding-bottom: .2rem">
                             <div class="row">

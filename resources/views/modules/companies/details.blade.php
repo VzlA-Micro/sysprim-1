@@ -64,18 +64,31 @@
                 </div>
             </div>
 
-            @can('Declarar Actividad Económica')
+
             @if($company->status!='disabled')
             {{-- Mostrar seccion si es administrador o no --}}
             <div class="col s12 m3" style="margin-top: -7px">
                 <div class="row">
+                    @can('Declarar Actividad Económica')
                     <div class="col s12">
+
                         <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
                            class="btn-app white green-text">
                             <i class="icon-payment"></i>
-                            <span class="truncate">Mis Declaraciones</span>
+                            <span class="truncate">Declaración/Act-Ecónomica</span>
                         </a>
                     </div>
+                    @endcan
+                    <div class="col s12">
+                        <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
+                           class="btn-app white green-text">
+                            <i class="icon-picture_as_pdf"></i>
+                            <span class="truncate">Declaración/Tasas</span>
+                        </a>
+                    </div>
+
+
+
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
                             <i class="icon-warning"></i>
@@ -85,7 +98,7 @@
                 </div>
             </div>
             @endif
-            @endcan
+
         </div>
     </div>
 @endsection

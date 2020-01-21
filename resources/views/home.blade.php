@@ -119,6 +119,10 @@
 
 
 
+
+
+
+
         {{-- @can('Notificaciones')
         <div class="col s6 m3 animated bounceIn">
             <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">
