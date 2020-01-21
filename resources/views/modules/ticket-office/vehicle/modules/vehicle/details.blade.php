@@ -8,11 +8,11 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
-                            Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
-
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.read') }}">Ver Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detalles Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8">
@@ -48,12 +48,15 @@
                                    required>
                             <label for="license_plate">Placa</label>
                         </div>
+
                         <div class="input-field col s6">
                             <i class="icon-airport_shuttle prefix"></i>
-                            <input type="text" name="type" id="type" value="{{$vehicle->type->name}}"
-                                   disabled
-                                   title="Solo puede escribir números y letra en mayúsculas." class="validate"
-                                   required>
+                            <select name="type" id="type" disabled required>
+                                {{--<option value="null" disabled selected>Selecciona el tipo de vehiculo</option>--}}
+                                @foreach($type as $types)
+                                    <option value="{{$types->id}}"@if ($types->id==$vehicle->type_vehicle_id){{"selected"}}@endif>{{$types->name}}</option>
+                                @endforeach
+                            </select>
                             <label for="type">Tipo De Vehiculo</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -86,35 +89,47 @@
                         <div id="group-MB">
                             <div class="input-field col s6">
                                 <i class="icon-directions_car prefix"></i>
-                                <input type="text" name="brand" id="brand" class="validate"
-                                       pattern="[A-Za-z0-9]+" value="{{$vehicle->model->brand->name}}"
-                                       title="Solo puede escribir letras y numeros." disabled required>
+                                <select name="brand" id="brand" disabled required>
+                                    <option value="null" disabled selected>Selecciona la marca</option>
+                                    @foreach($brand as $brands)
+                                        <option value="{{$brands->id}}"@if ($brands->id==$vehicle->model->brand->id){{"selected"}}@endif>{{$brands->name}}</option>
+                                    @endforeach
 
+                                </select>
                                 <label for="brand">Marca</label>
                             </div>
+                            {{--<div class="input-field col s6">
+                                <i class="icon-local_shipping prefix"></i>
+                                <select name="model" id="model" disabled required>
+                                    <option value="null" disabled selected>Selecciona el módelo</option>
+                                    @foreach($model as $models)
+                                        <option value="{{$models->id}}"@if ($models->id==$vehicle->model->id){{"selected"}}@endif>{{$models->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label for="model">Módelo</label>
+                            </div>--}}
                             <div class="input-field col s6">
                                 <i class="icon-local_shipping prefix"></i>
-                                <input type="text" name="model" id="model" class="validate"
-                                       pattern="[A-Za-z0-9]+" value="{{$vehicle->model->name}}"
-                                       title="Solo puede escribir letras y numeros." disabled required>
-
+                                <select name="model" id="model" disabled required>
+                                        <option value="{{$vehicle->model->id}}")>{{$vehicle->model->name}}</option>
+                                </select>
                                 <label for="model">Módelo</label>
                             </div>
                         </div>
 
                         @if($vehicle->status===null||$vehicle->status==='enabled')
-                            <div class="input-field col s10 m6">
+                            <div class="input-field col s12 m6" id="estado">
                                 <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
-                                >Habilitada
+                                >Habilitado
                                     <i class="icon-check right"></i>
                                 </a>
                             </div>
 
 
                         @else
-                            <div class="input-field col s10 m6">
+                            <div class="input-field col s12 m6" id="estado">
                                 <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
-                                >Deshabilitada
+                                >Deshabilitado
                                     <i class="icon-refresh right"></i>
                                 </a>
                             </div>
@@ -136,7 +151,7 @@
 
                                 @can('Habilitar/Deshabilitar Empresas')
                                     @if($vehicle->status===null||$vehicle->status==='enabled')
-                                        <div class="col s12 m6">
+                                        <div class="col s12 m6" id="button-status">
                                             <button type="button"
                                                     class="btn btn-large waves-effect waves-light red col s12 "
                                                     id="vehicle-status" value="disabled">
@@ -145,7 +160,7 @@
                                             </button>
                                         </div>
                                     @else
-                                        <div class="col s12 m3">
+                                        <div class="col s12 m6" id="button-status">
                                             <button type="button"
                                                     class="btn btn-large waves-effect waves-light green col s12 "
                                                     id="vehicle-status" value="enabled">

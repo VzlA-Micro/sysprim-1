@@ -9,7 +9,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="#" class="prev-view">Ver Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="prev-view" >Ver Pagos</a>
+                    </li>
                     <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
                 </ul>
             </div>

@@ -76,7 +76,7 @@
 
                                                     <td>
                                                         <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
-                                                         </i>Descargar.</a>
+                                                         </i>Descargar Planilla.</a>
                                                     </td>
 
 

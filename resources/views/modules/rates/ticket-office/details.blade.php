@@ -7,8 +7,8 @@
                 <div class="col s12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>>
+                        <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}" class="prev-view">Lista de Planillas</a></li>
                         <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes->id])}}">Detalles de Autoliquidación</a></li>
                     </ul>
                 </div>
@@ -104,9 +104,7 @@
                                 </div>
 
                             </div>
-
                             <div class="col l6 s12">
-
                                 <div class=" input-field col s12 m12 ">
                                     <i class=" prefix">
                                         <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -123,6 +121,136 @@
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
 
+
+                                    @if(!$taxes->payments->isEmpty())
+                                        <h4 class="center-align">Registro de Pago:</h4>
+                                        <table class="centered highlight" id="payments" style="width: 100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Código</th>
+                                                <th>Forma de Pago</th>
+                                                <th>Status</th>
+                                                <th>Ref o Código</th>
+                                                <th>Monto</th>
+                                                <th>Acción</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($taxes->payments as $taxe)
+                                                <tr>
+                                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                                    <td>{{$taxe->code}}</td>
+                                                    <td>{{$taxe->type_payment}}</td>
+                                                    <td>{{$taxe->statusName}}</td>
+                                                    <td>{{$taxe->ref}}</td>
+                                                    <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                                    <td>
+                                                        @if($taxe->status==='cancel')
+                                                            <div class="input-field col s12 m12">
+                                                                <button type="button"
+                                                                        class="btn waves-effect waves-light  col s12 red"
+                                                                        value="">
+                                                                    <i class="icon-do_not_disturb_alt"></i></button>
+                                                            </div>
+                                                        @elseif($taxe->status=='verified')
+                                                            <div class="input-field col s12 m12">
+                                                                <button type="button"
+                                                                        class="btn waves-effect waves-light green col s12"
+                                                                        value="#" data-status="#">
+                                                                    <i class="icon-check"></i></button>
+                                                            </div>
+                                                        @else
+                                                            <div class="input-field col s12 m6">
+                                                                <button type="button"
+                                                                        class="change-status btn waves-effect waves-light green col s12"
+                                                                        value="{{$taxe->id}}" data-status="verified">
+                                                                    <i class="icon-check"></i></button>
+                                                            </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <button type="button"
+                                                                        class="change-status btn waves-effect waves-light red col s12"
+                                                                        value="{{$taxe->id}}" data-status="cancel">
+                                                                    <i class="icon-cancel"></i></button>
+                                                            </div>
+                                                        @endif
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                    <div class="row ">
+                                        @if($taxes->status==='ticket-office')
+                                            <a class="btn green col s12 ">
+                                                <i class="icon-more_horiz left "></i>
+                                                ESTADO: SIN PROCESAR AÚN
+                                            </a>
+
+                                        @elseif($taxes->status==='process')
+                                            <a href="#" class="btn green col s12">
+                                                <i class="icon-more_horiz left "></i>
+                                                ESTADO: SIN CONCILIAR AÚN
+
+                                            </a>
+                                        @elseif($taxes->status==='verified')
+
+                                            <a href="#" class="btn blue col s12">
+                                                <i class="icon-more_horiz left"></i>
+                                                ESTADO: VERIFICADA.
+                                            </a>
+
+
+                                        @elseif($taxes->status=='cancel')
+
+                                            <a href="#" class="btn red col s12">
+                                                <i class="icon-more_horiz left"></i>
+                                                ESTADO: CANCELADA.
+                                            </a>
+                                        @endif
+
+                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+
+                                            <div class="col l12">
+                                                <h4 class="center-align mt-2">Acciones</h4>
+                                            </div>
+
+                                            <div class="input-field col s12">
+
+                                                @can('Anular Pagos')
+                                                    <a href="#"
+                                                       class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
+                                                       data-status="cancel">
+                                                        ANULAR PLANILLA.
+                                                        <i class="icon-close right"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('Verificar Pagos - Manual')
+                                                    @if($verified&&$taxes->status!=='verified')
+                                                        <a href="#"
+                                                           class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
+                                                           data-status="verified">
+                                                            VERIFICAR PLANILLA.
+                                                            <i class="icon-verified_user right"></i>
+                                                        </a>
+                                                    @endif
+                                                @endcan
+                                                @if($taxes->status=='verified')
+                                                    <button type="button" id="send-email-verified"
+
+
+                                                            class="btn btn-rounded col s4 green waves-effect waves-light"
+                                                            value="{{$taxes->id}}">Enviar Correo Verificado.
+                                                        <i class="icon-send right"></i>
+                                                    </button>
+                                                @endif
+
+                                            </div>
+                                        @endif
+
                                 </div>
                             </div>
                         </div>
@@ -134,6 +262,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/taxes.js') }}"></script>
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

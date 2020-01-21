@@ -623,7 +623,6 @@ $('document').ready(function () {
 
 
 
-
         $('#close-cashier').click(function () {
             if (localStorage.getItem('bank') !== null) {
                 swal({
@@ -677,7 +676,6 @@ $('document').ready(function () {
 
             amount=amount.replace(/,/g, "");
             amount_pay=amount_pay.replace(/,/g, "");
-
 
 
 
@@ -781,8 +779,6 @@ $('document').ready(function () {
         }
 
 
-
-
         $('#search').change(function () {
             if ($('#search').val() !== '') {
                 var search = $('#search').val();
@@ -833,8 +829,6 @@ $('document').ready(function () {
                         } else {
 
                             var taxe = response.taxe[0];
-                            var ciu = response.ciu;
-                            var company = taxe.companies[0];
 
                             swal({
                                 title: "¡Bien hecho!",
@@ -844,27 +838,17 @@ $('document').ready(function () {
                             }).then(function (accept) {
                                 var link;
 
-
-                                if(taxe.type!=='definitive'){
-                                    link='<a href='+url+'payments/taxes/'+taxe.id+''+
-                                        '\n class="btn indigo waves-effect waves-light"><i\n' +
-                                        ' class="icon-pageview left"></i>Detalles</a>';
-
-                                }else{
-                                    link='<a href='+url+'ticket-office/taxes/definitive/'+taxe.id+'"' +
+                                link='<a href='+url+'rate/ticket-office/details/'+taxe.id+'"' +
                                         '\nclass="btn indigo waves-effect waves-light"><i\n' +
                                         'class="icon-pageview left"></i>Detalles</a>';
-                                }
-
-
 
 
                                 $('#receipt-body').append('' +
                                     '<tr>' +
-                                    '<td><i class="icon-check text-green"></i>'+company.name+'</td>'+
-                                    '<td>' +company.license+'</td>'+
+                                    '<td><i class="icon-check text-green"></i>'+taxe.created_at+'</td>'+
                                     '<td>' +taxe.code+'</td>'+
-                                    '<td>' +taxe.fiscalPeriodFormat+'</td>'+
+                                    '<td>' +taxe.branch+'</td>'+
+                                    '<td>' +taxe.amountFormat+'</td>'+
                                     '<td>' +'<p>' +
                                     '  <label>\n' +
                                     '           <input type="checkbox" name="payroll" class="payroll"\n' +
@@ -873,7 +857,6 @@ $('document').ready(function () {
                                     '                                  </label>\n' +
                                     '</p>'+
                                     '</td>'+
-                                    '<td>' +taxe.amountFormat+'</td>'+
                                     '<td>'+link+'</td>'+
                                     '</tr>');
 
@@ -974,39 +957,6 @@ $('document').ready(function () {
             }
 
         });
-
-
-
-        function ConfirmtypePayment() {
-            swal({
-                title: "Información",
-                text: "Debe eliger la forma en que va hacer su deposito:",
-                icon: "warning",
-                buttons: {
-                    CHEQUE: {
-                        text: "CHEQUE",
-                        value: 'PPC',
-                        visible: true,
-                        className: "green"
-
-                    },
-                    CANCEL: {
-                        text: "EFECTIVO",
-                        value: 'PPE',
-                        visible: true,
-                        className: "green"
-                    },
-
-
-                }
-            }).then(function (value) {
-                if (value !== null) {
-                    $('#type_payment').val(value);
-                } else {
-                    ConfirmtypePayment();
-                }
-            });
-        }
 
 
         $('#register-payment-tr').submit(function (e) {
@@ -1128,17 +1078,6 @@ $('document').ready(function () {
             $('#payments_type_depo').val($(this).val());
         });
 
-        $('#phone_user').keyup(function () {
-            if($('#country_code_user').val()===null){
-                swal({
-                    title: "Información",
-                    text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
-                    icon: "info",
-                    button: "Ok",
-                });
-                $('#phone_user').val('');
-            }
-        });
 
 
 });

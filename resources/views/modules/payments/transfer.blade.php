@@ -12,9 +12,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
-                            Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Transferencias</a></li>
                 </ul>
@@ -29,7 +27,6 @@
                             <tr>
                                 <th>Codigó</th>
                                 <th>Fecha</th>
-                                <th>Contribuyente</th>
                                 <th>Forma de Pago</th>
                                 <th>Ref</th>
                                 <th>Status</th>
@@ -94,26 +91,43 @@
 
 
                                         @can('Detalles Pagos')
-                                            @if($taxe->taxes[0]->type!='definitive')
+
+
+                                            @if($taxe->taxes[0]->branch==='Act.Eco')
+
+                                                @if($taxe->taxes[0]->type!='definitive')
+
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+                                                    </td>
+
+                                                @else
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->taxes[0]->id) }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+
+                                                    </td>
+                                                @endif
+
+                                            @elseif($taxe->taxes[0]->branch==='Tasas y Cert')
+
                                                 <td>
-                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
+                                                    <a href="{{url('rate/ticket-office/details/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
-                                                    <a href="#"
-                                                       class="btn btn-floating blue waves-effect waves-light details-payment"
-                                                       data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
-                                                       data-phone="{{$taxe->phone}}"
-                                                       data-name="{{$taxe->name}}"
-                                                    ><i class="icon-info"></i></a>
-                                                </td>
-                                            @else
-                                                <td>
-                                                    <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
-                                                                class="icon-pageview"></i></a>
                                                 </td>
                                             @endif
+                                                <a href="#"
+                                                   class="btn btn-floating blue waves-effect waves-light details-payment"
+                                                   data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
+                                                   data-phone="{{$taxe->phone}}"
+                                                   data-name="{{$taxe->name}}"
+                                                ><i class="icon-info"></i></a>
+
                                         @endcan
                                     </tr>
                                 @endforeach
@@ -209,7 +223,7 @@
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7]
+                        columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
 

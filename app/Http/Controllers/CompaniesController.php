@@ -327,21 +327,23 @@ class CompaniesController extends Controller
     }
 
 
-    public function verifyLicense($license,$rif){
-        $company = Company::where('license',$license)->get();
+    public function verifyLicense($license,$rif)
+    {
+        $company = Company::where('license', $license)->get();
 
+        if (!$company->isEmpty()) {
+            $response = array('status' => 'error', 'message' => 'La licencia ' . $license . ' se encuentra registrada en el sistema. Por favor, ingrese una licencia valida.');
 
-        if(!$company->isEmpty()){
-            $response=array('status'=>'error','message'=>'La licencia '.$license.' se encuentra registrada en el sistema. Por favor, ingrese una licencia valida.');
-            if($company[0]->RIF===$rif){
-                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
-            }else{
-                $response=array('status'=>'error','message'=>'La Licencia '.$license.' ya esta en uso por la empresa '. $company[0]->name  .' ,Ingrese una Licencia valida.');
+            if ($company[0]->RIF === $rif) {
+                $response = array('status' => 'error', 'message' => 'La Licencia ' . $license . ' ya esta en uso por la empresa ' . $company[0]->name . ' ,Ingrese una Licencia valida.');
+            } else {
+                $response = array('status' => 'error', 'message' => 'La Licencia ' . $license . ' ya esta en uso por la empresa ' . $company[0]->name . ' ,Ingrese una Licencia valida.');
             }
-        }else{
-            $response=array('status'=>'success','message'=>'No registrado.');
-        }
 
+
+        } else {
+            $response = array('status' => 'success', 'message' => 'No registrado.');
+        }
         return response()->json($response);
     }
 

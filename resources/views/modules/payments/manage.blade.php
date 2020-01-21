@@ -30,22 +30,6 @@
                 </a>
             </div>
             @endcan
-            @can('Ver Planillas')
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{route('ticket-office.pay.web')}}" class="btn-app white indigo-text">
-                    <i class="icon-library_books"></i>
-                    <span class="truncate">Lista de Planillas</span>
-                </a>
-            </div>
-            @endcan
-            @can('Ver Pagos')
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white indigo-text">
-                    <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Ver Pagos</span>
-                </a>
-            </div>
-            @endcan
         </div>
     </div>
 @endsection

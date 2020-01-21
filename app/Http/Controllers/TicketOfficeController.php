@@ -855,7 +855,7 @@ class TicketOfficeController extends Controller
 
     public function paymentsWeb()
     {
-        $taxes = Taxe::with('companies')->where('status', '!=', 'cancel')->orderBy('id', 'desc')->get();
+        $taxes = Taxe::with('companies')->where('status', '!=', 'temporal')->orderBy('id', 'desc')->get();
         return view('modules.payments.read_web', ['taxes' => $taxes]);
     }
 
@@ -866,53 +866,80 @@ class TicketOfficeController extends Controller
         $taxes = Taxe::findOrFail($id);
         $band=false;
         $pdf='';
+        $email='';
 
-        if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
-            $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
-            $companyTaxe = $taxes->companies()->get();
-            $company_find = Company::find($companyTaxe[0]->id);
-
-            $user = $company_find->users()->get();
-
-            $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-            $amount = Calculate::calculateTaxes($id);
+        if($taxes->branch==='Act.Eco') {
 
 
-            $pdf = \PDF::loadView('modules.taxes.receipt',
-                ['taxes' => $taxes,
-                    'fiscal_period' => $fiscal_period,
+            if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
+                $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
+                $companyTaxe = $taxes->companies()->get();
+                $company_find = Company::find($companyTaxe[0]->id);
+
+                $user = $company_find->users()->get();
+
+                $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
+                $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
+                $amount = Calculate::calculateTaxes($id);
+
+
+                $pdf = \PDF::loadView('modules.taxes.receipt',
+                    ['taxes' => $taxes,
+                        'fiscal_period' => $fiscal_period,
+                        'ciuTaxes' => $ciuTaxes,
+                        'amount' => $amount,
+                        'firm' => true
+                    ]);
+
+                $band = true;
+                $email=$user[0]->email;
+
+            } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified') {
+                $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
+                $companyTaxe = $taxes->companies()->get();
+                $company_find = Company::find($companyTaxe[0]->id);
+                $user = $company_find->users()->get();
+
+                $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+                    'taxes' => $taxes,
                     'ciuTaxes' => $ciuTaxes,
-                    'amount' => $amount,
                     'firm' => true
                 ]);
 
-            $band=true;
+
+                $band = true;
+            } else {
+
+                $band = false;
+                return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
+            }
 
 
-        } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified'){
-            $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
-            $companyTaxe = $taxes->companies()->get();
-            $company_find = Company::find($companyTaxe[0]->id);
-            $user = $company_find->users()->get();
+            $email=$user[0]->email;
+        }elseif($taxes->branch==='Tasas y Cert'&& $taxes->status == 'verified'){
+            $rate=$taxes->rateTaxes()->get();
+            $type='';
+            if(!is_null($rate[0]->pivot->company_id)){
+                $data=Company::find($rate[0]->pivot->company_id);
+                $type='company';
+            }else{
+                $data=User::find($rate[0]->pivot->person_id);
+                $type='user';
+            }
 
-
-            $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+            $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
                 'taxes' => $taxes,
-                'ciuTaxes' => $ciuTaxes,
-                'firm' => true
+                'data' => $data,
             ]);
 
+
+            $user=User::find($rate[0]->pivot->user_id);;
+            $email=$user->email;
             $band=true;
-        }else{
-
-            $band=false;
-            return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
         }
-
         if($band){
             $subject = "PLANILLA VERIFICADA";
-            $for = $user[0]->email;
+            $for = $email;
             try {
                 Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
                     $msj->from("grabieldiaz63@gmail.com", "SEMAT");
@@ -924,7 +951,6 @@ class TicketOfficeController extends Controller
                 return response()->json(['status' => 'error', 'message' => 'Ocurrio un error de conexión durante el envio de correo,recargue el navegador e intentelo mas tarde.']);
             }
         }
-
         return response()->json(['status'=>'success','message'=>'Correo enviado con éxito.']);
     }
 

@@ -255,45 +255,64 @@ $('document').ready(function () {
                 },
                 success: function (response) {
 
-                    if(response.type=='not-user') {
-
-                        var user = response.user.response;
-                        $('#name').val(user.nombres + ' ' + user.apellidos);
-                        $('#name').attr('readonly');
-                        $('#surname').val(user.apellidos);
-                        $('#user_name').val(user.nombres);
-                        $('#type').val('user');
-                        $('#id').val(user.id);
 
 
-                    }else if(response.type=='user'){
-
-                        var user = response.user;
-                        $('#name').val(user.name + ' ' + user.surname);
-                        $('#name').attr('readonly');
-                        $('#surname').val(user.surname);
-                        $('#id').val(user.id);
-
-                        $('#type').val('user');
-                        $('#address').val(user.address);
-                        $('#address').attr('readonly','');
+                    if(response.status!=='error') {
 
 
-                    }else if(response.type=='company'){
-                        var company = response.company;
-                        $('#name').val(company.name);
-                        $('#address').val(company.address);
-                        $('#name').attr('readonly');
-                        $('#address').attr('disabled');
-                        $('#id').val(company.id);
-                        $('#type').val('company');
-                        $('#address').attr('readonly','');
+                        if (response.type == 'not-user') {
+
+                            var user = response.user.response;
+                            $('#name').val(user.nombres + ' ' + user.apellidos);
+                            $('#name').attr('readonly');
+                            $('#surname').val(user.apellidos);
+                            $('#user_name').val(user.nombres);
+                            $('#type').val('user');
+                            $('#id').val(user.id);
 
 
+                        } else if (response.type == 'user') {
 
+                            var user = response.user;
+                            $('#name').val(user.name + ' ' + user.surname);
+                            $('#name').attr('readonly');
+                            $('#surname').val(user.surname);
+                            $('#id').val(user.id);
+
+                            $('#type').val('user');
+                            $('#address').val(user.address);
+                            $('#address').attr('readonly', '');
+
+
+                        } else if (response.type == 'company') {
+                            var company = response.company;
+                            $('#name').val(company.name);
+                            $('#address').val(company.address);
+                            $('#name').attr('readonly');
+                            $('#address').attr('disabled');
+                            $('#id').val(company.id);
+                            $('#type').val('company');
+                            $('#address').attr('readonly', '');
+
+                        } else {
+                            $('#type').val('company');
+                        }
                     }else{
-                        $('#type').val('company');
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+
+                        $('#document').val('');
                     }
+
+
+
 
                     M.updateTextFields();
                     $("#preloader").fadeOut('fast');
@@ -313,6 +332,13 @@ $('document').ready(function () {
             });
         }
     }
+
+
+    $('.prev-view').click(function () {
+        window.history.back();
+    });
+
+
 
 
 });

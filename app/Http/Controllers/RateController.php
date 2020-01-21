@@ -30,6 +30,13 @@ class RateController extends Controller{
         return view('modules.rates.module.read', ['rate' => $rate]);
     }
 
+
+
+
+
+
+
+
     public function verifyCode($code,$id=null){
         $rate=Rate::where('code', $code)->get();
 
@@ -57,6 +64,17 @@ class RateController extends Controller{
     public function create() {
         return view('modules.rates.module.register');
     }
+
+
+
+    //register
+    public function createRegisterCompany($id){
+        $rate = Rate::all();
+        $company=Company::findOrFail($id);
+        return view('modules.rates.taxpayers.company',['rates' => $rate,'company'=>$company]);
+    }
+
+
 
 
     //save
@@ -114,19 +132,29 @@ class RateController extends Controller{
             $user=User::where('ci', $type_document.$document)->get();
             if($user->isEmpty()){
                 $user=CedulaVE::get($type_document,$document,false);
-
                 $data=['status'=>'success','type'=>'not-user','user'=>$user];
 
             }else{
+
                 $data=['status'=>'success','type'=>'user','user'=>$user[0]];
             }
         }else{
-            $company=Company::where('RIF', $type_document.$document)->get();
+            $company=Company::where('RIF', $type_document.$document)->orWhere('license',$type_document.$document)->get();
 
             if($company->isEmpty()){
-                $data=['status'=>'success','type'=>'not-company','company'=>null];
+                    $data=['status'=>'success','type'=>'not-company','company'=>null];
+
+
+
             }else{
-                $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+
+                if($company->count()>1){
+                    $data=['status'=>'error','message'=>'Este RIF, posse 2 licencia, por lo cual debe ingresar una licencia para indentificarla, selecione de tipo de documento la L e introduza el N de licencia..'];
+
+                }else{
+                    $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+                }
+
             }
 
         }
@@ -174,19 +202,15 @@ class RateController extends Controller{
         $type=$request->input('type');
         $id=$request->input('id');
         $rate_id=$request->input('rate_id');
-        $band =$request->input('band');
 
         $person_id=null;
         $company_id=null;
         if($type=='user'){
             $person_id=$id;
-            if($band){
-                $user_id=$person_id;
-            }else{
-                $user_id=\Auth::user()->id;
-            }
+            $user_id=\Auth::user()->id;
 
         }else{
+
             $user_id=\Auth::user()->id;
             $company_id=$id;
         }
@@ -238,6 +262,7 @@ class RateController extends Controller{
         $type='';
 
 
+
         if(!is_null($rate[0]->pivot->company_id)){
             $data=Company::find($rate[0]->pivot->company_id);
             $type='company';
@@ -245,7 +270,6 @@ class RateController extends Controller{
             $data=User::find($rate[0]->pivot->person_id);
             $type='user';
         }
-
 
 
         return view('modules.rates.taxpayers.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);
@@ -257,7 +281,7 @@ class RateController extends Controller{
         if($taxe->stauts==='temporal'){
             $taxe->delete();
         }
-        return redirect('rate/taxpayers/register');
+        return redirect('home');
     }
 
 
@@ -288,7 +312,6 @@ class RateController extends Controller{
             'data' => $data,
         ]);
 
-        var_dump($download);
 
         if($download==='true'){
             return $pdf->download('PLANILLA_TASAS.pdf');
@@ -297,6 +320,9 @@ class RateController extends Controller{
         }
 
     }
+
+
+
 
 
     public function  paymentStoreTaxPayers(Request $request)
@@ -487,8 +513,26 @@ class RateController extends Controller{
             $type='user';
         }
 
-        return view('modules.rates.ticket-office.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);
+
+        $verified = true;
+
+        if (!$taxe->payments->isEmpty()) {
+            foreach ($taxe->payments as $payment) {
+                if ($payment->status != 'verified') {
+                    $verified = false;
+                }
+            }
+        } else {
+            $verified = false;
+        }
+
+
+
+
+        return view('modules.rates.ticket-office.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type,'verified'=>$verified]);
     }
+
+
 
 
 }

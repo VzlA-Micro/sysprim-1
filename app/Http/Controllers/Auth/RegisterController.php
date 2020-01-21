@@ -74,18 +74,34 @@ class RegisterController extends Controller
     {
         $data['confirmation_code'] = str_random(25);
 
+        $user=User::where('ci',$data['nationality'] . $data['ci'] )->where('status_account','=','waiting')->first();
 
 
-        $user=User::create([
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'ci' => $data['nationality'].$data['ci'],
-            'phone' => $data['country_code'].$data['phone'],
-            'confirmed_code'=> $data['confirmation_code'],
-            'role_id'=> 3,
-        ]);
+
+        if(!is_null($user)){
+            $user=User::find($user->id);
+            $user->phone = $data['country_code'] . $data['phone'];
+            $user->confirmed = 0;
+            $user->role_id = 3;
+            $user->email = $data['email'];
+            $user->password =Hash::make($data['password']);
+            $user->status_account='authorized';
+            $user->confirmed_code= $data['confirmation_code'];
+            $user->update();
+        }else {
+            $user = User::create([
+                'name' => $data['name'],
+                'surname' => $data['surname'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'ci' => $data['nationality'] . $data['ci'],
+                'phone' => $data['country_code'] . $data['phone'],
+                'confirmed_code' => $data['confirmation_code'],
+                'role_id' => 3,
+            ]);
+        }
+
+
         $id=$user->id;
         $user=User::find($id);
         $user->VerifyEmail($data['confirmation_code']);

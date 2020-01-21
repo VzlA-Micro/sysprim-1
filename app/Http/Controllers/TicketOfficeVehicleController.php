@@ -2,35 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\CompanyTaxe;
-use App\FindCompany;
 use App\Helpers\Calculate;
 use App\Payment;
 use App\Taxe;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
-use App\CiuTaxes;
-use App\Parish;
-use App\Company;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 use App\Helpers\TaxesNumber;
-use App\Tributo;
 use App\Helpers\TaxesMonth;
-use App\Ciu;
-use App\Extras;
 use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
 use App\Vehicle;
 use App\UserVehicle;
 use App\Brand;
 use App\ModelsVehicle;
+use App\VehicleType;
 
 
 class TicketOfficeVehicleController extends Controller
@@ -284,6 +276,24 @@ class TicketOfficeVehicleController extends Controller
         $userVehicle->save();
     }
 
+    public function statusVehicle(Request $request)
+    {
+
+        if ($request->input('status') == 'true') {
+            $vehicle = Vehicle::findOrFail($request->input('id'));
+            $vehicle->status = 'disabled';
+            $vehicle->update();
+            $response = array('status' => 'disabled', 'message' => 'Ha sido desactivado con exito.');
+
+        } else {
+            $vehicle = Vehicle::findOrFail($request->input('id'));
+            $vehicle->status = 'enabled';
+            $vehicle->update();
+            $response = array('status' => 'enabled', 'message' => 'Ha sido activado con exito.');
+        }
+
+        return response()->json($response);
+    }
 
     public function allCompanies()
     {
@@ -294,8 +304,16 @@ class TicketOfficeVehicleController extends Controller
 
     public function detailsVehicle($id)
     {
+        $models = ModelsVehicle::all();
+        $brands = Brand::all();
+        $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
-        return view('modules.ticket-office.vehicle.modules.vehicle.details', ['vehicle' => $vehicle]);
+        return view('modules.ticket-office.vehicle.modules.vehicle.details', [
+            'vehicle' => $vehicle,
+            'brand' => $brands,
+            'model' => $models,
+            'type' => $type
+        ]);
     }
 
     //find-license

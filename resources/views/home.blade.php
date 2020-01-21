@@ -85,20 +85,20 @@
                 </div>
             @endcan
             @can('Taquilla - Actividad Económica')
-                <div class="col s6 m3 animated bounceIn">
+                {{--<div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('home.ticket-office') }}" class="btn-app white pink-text text-darken-4">
                         <i class="icon-personal_video"></i>
                         <span class="truncate">Taquilla - Actividad Económica</span>
                     </a>
-                </div>
+                </div>--}}
             @endcan
 
-           {{-- <div class="col s6 m3 animated bounceIn">
+           <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.home') }}" class="btn-app white pink-text text-darken-4">
                     <i class="icon-personal_video"></i>
-                    <span class="truncate">Taquilla</span>
+                    <span class="truncate">Taquillas</span>
                 </a>
-            </div>--}}
+            </div>
             @can('Seguridad')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('security.manage') }}" class="btn-app white green-text text-darken-4">
@@ -118,12 +118,7 @@
             </div>
 
 
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.ticketoffice.menu')}}" class="btn-app white pink-text green-text accent-3">
-                    <i class="icon-personal_video"></i>
-                    <span class="truncate">Taquilla - Tasas y Certificaciones</span>
-                </a>
-            </div>
+
 
 
 

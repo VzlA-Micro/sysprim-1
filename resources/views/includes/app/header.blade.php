@@ -195,6 +195,8 @@
                                         @can('Taquilla - Actividad Económica')
                                         <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li>
                                         @endcan
+                                        <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li>
+
                                     </ul>
                                 </div>
                             </li>

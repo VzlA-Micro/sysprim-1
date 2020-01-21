@@ -11,9 +11,9 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Tasas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Pagar Planilla</a></li>
-                    <li class="breadcrumb-item"><a href="#"></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('rate.ticketoffice.menu') }}">Taquilla - Tasas y Certificaciones</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pagar Planilla</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -33,8 +33,8 @@
                                     <th>Fecha</th>
                                     <th>Código</th>
                                     <th>Ramo</th>
-                                    <th>Planilla</th>
                                     <th>Monto</th>
+                                    <th>Planilla</th>
                                     @can('Detalles Planilla')
                                         <th>Acción</th>
                                     @endcan
