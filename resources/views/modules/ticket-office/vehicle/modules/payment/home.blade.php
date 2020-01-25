@@ -17,7 +17,7 @@
             </div>
             @can('Generar Planilla')
                 <div class="col s12 m4 animated bounceIn">
-                    <a href="{{ route('ticket-office.payments') }}" class="btn-app white blue-text">
+                    <a href="{{ route('ticketOffice.vehicle.payments.create') }}" class="btn-app white blue-text">
                         <i class="icon-insert_drive_file"></i>
                         <span class="truncate">Generar Planilla</span>
                     </a>

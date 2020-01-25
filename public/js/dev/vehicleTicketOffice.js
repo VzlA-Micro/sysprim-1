@@ -396,5 +396,36 @@ $('document').ready(function () {
 
     });
 
+    $('#license_plate').blur(function () {
+        var license = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: url + "/ticketOffice/vehicle/search-license/",
+            data: {
+                status: status
+            },
+
+            beforeSend: function () {
+            },
+            success: function (data) {
+                console.log(data.status);
+                if (data['status'] == "enabled") {
+                    swal({
+                        title: "Vehículo",
+                        text: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    }).then((aceptar)=>{
+                        location.reload();
+                    });
+
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    });
+
 
 });
