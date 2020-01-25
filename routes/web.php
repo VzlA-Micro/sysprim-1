@@ -688,8 +688,6 @@ Route::middleware(['auth'])->group(/**
 
         Route::post('rate/update', 'RateController@update');*/
             });
-        });
-
         Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
         //Cambiar de usuario
@@ -711,7 +709,7 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
             });
-
+        });
 
         Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
             // Nivel 1: Consultar y Registrar
@@ -1059,5 +1057,6 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
 
         Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
+
     });
 
