@@ -523,18 +523,25 @@ Route::middleware(['auth'])->group(/**
             return view('modules.notifications.details');
         })->name('notifications.details');
 
-        // Mi Publicidad
-        Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
-        Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
-        Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
-        Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
-
-
-        Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
-        Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
-        Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
-        Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
-        Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+        //Mi Publicidad
+        Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
+            // Nivel 1: Consultar y Registrar
+            Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+            Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+            // Nivel 2: Registrar
+            Route::group(['middleware' => ['permission:Registrar Mis Publicidades']], function () {
+                Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+                Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+                Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+                Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+            });
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {
+                Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+                Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+                Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+            });
+        });
 
         // Declaraciones de Publicidad
         Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
@@ -682,6 +689,11 @@ Route::middleware(['auth'])->group(/**
         Route::post('rate/update', 'RateController@update');*/
             });
         });
+
+        Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
+        Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
+        //Cambiar de usuario
+        Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
 
         // Mis Inmuebles
         Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
