@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('advertising-type.manage') }}">Gestionar Tipos de Publicidad</a></li>
                 </ul>
             </div>
+            @can('Registrar Tipo de Publicidad')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('advertising-type.register') }}" class="btn-app white orange-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Tipo de Publicidad</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Tipos de Publicidad')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('advertising-type.read') }}" class="btn-app white teal-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Tipos de Publicidad</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

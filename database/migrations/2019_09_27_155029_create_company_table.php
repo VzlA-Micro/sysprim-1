@@ -17,8 +17,8 @@ class CreateCompanyTable extends Migration
             $table->increments('id');
             $table->string('name',100);
             $table->string('RIF',40);
-            $table->string('code_catastral',20);
-            $table->string('license',20)->unique();
+            $table->string('code_catastral',20)->nullable();
+            $table->string('license',20)->unique()->nullable();
             $table->date('opening_date')->nullable();
             $table->string('lat',20)->nullable();
             $table->string('lng',20)->nullable();
@@ -27,7 +27,7 @@ class CreateCompanyTable extends Migration
             $table->string('sector',100)->nullable();
             $table->string('phone',15)->nullable();
             $table->string('image',255)->nullable();
-            $table->integer('parish_id')->unsigned();
+            $table->integer('parish_id')->unsigned()->nullable();
             $table->string('status',10)->nullable();
             $table->foreign('parish_id')->references('id')->on('parish');
             $table->timestamps();

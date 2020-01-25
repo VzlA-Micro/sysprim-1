@@ -19,6 +19,8 @@ class CreateVehiclesTaxesTable extends Migration
             $table->integer('taxe_id')->unsigned();
             $table->string('status',15);
             $table->float('fiscal_credits',8,2);
+            $table->float('recharge',8,2);
+            $table->float('recharge_mora',8,2);
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
             $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();

@@ -46,8 +46,8 @@
                 </div>
             </div>
             {{-- Mostrar seccion si es administrador o no --}}
-            <div class="col s12 m4" style="margin-top: -7px">
-                {{--<div class="row">
+            {{--<div class="col s12 m4" style="margin-top: -7px">
+                <div class="row">
                     <div class="col s12">
                         <a href="{{route('inmueble.my-propertys')}}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
@@ -60,8 +60,8 @@
                             <span class="truncate">Mis Multas</span>
                         </a>
                     </div>
-                </div>--}}
-            </div>
+                </div>
+            </div>--}}
         </div>
     </div>
 @endsection

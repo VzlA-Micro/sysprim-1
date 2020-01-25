@@ -52,6 +52,7 @@ class CompanyTaxesController extends Controller
     {
         $company=Company::where('name',$company)->get();
 
+
         $company=Company::find($company[0]->id);
 
         if(!$company->taxesCompanies->isEmpty()){
@@ -62,6 +63,9 @@ class CompanyTaxesController extends Controller
         }else{
             $taxes=null;
         }
+
+
+
 
         return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
     }
@@ -793,14 +797,12 @@ class CompanyTaxesController extends Controller
 
 
 
-    //detalles
+    //detalles Taxes
     public function detailsDefinitive($id){
         $taxes=Taxe::find($id);
         $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
         return view('modules.acteco-definitive.details',['taxes'=>$taxes,'ciuTaxes'=>$ciuTaxes]);
     }
-
-
 
 
 
@@ -827,7 +829,6 @@ class CompanyTaxesController extends Controller
             $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
             $subject = "PLANILLA DE PAGO";
             $for = \Auth::user()->email;
-
 
 
             $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
@@ -876,6 +877,7 @@ class CompanyTaxesController extends Controller
         $id_taxes=$request->input('id_taxes');
         $type_payment=$request->input('type_payment');
         $bank_payment=$request->input('bank_payment');
+
         $taxes = Taxe::findOrFail($id_taxes);
         $code = TaxesNumber::generateNumberTaxes($type_payment . "89");
         $taxes->code=$code;

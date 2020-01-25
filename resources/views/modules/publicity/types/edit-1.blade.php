@@ -46,7 +46,7 @@
                             </div>
                             <div class="file-upload-wrapper">
                                 <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" value="{{ $publicity->image }}">
-                                <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" value="{{ $publicity->image }}">
+                                <input type="text" placeholder="Subir imagen" class="file-upload-text" value="{{ $publicity->image }}">
                             </div>
            				</div>
                         @else

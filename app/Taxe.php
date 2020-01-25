@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -9,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes'];
+    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes','amountFormat','fiscalPeriodFormat'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
@@ -23,10 +24,36 @@ class Taxe extends Model implements Auditable {
             );
     }
 
+
+
+
+    public function rateTaxes(){
+        return $this->belongsToMany('App\Rate','rates_taxes')
+            ->withPivot(
+                'company_id',
+                'user_id',
+                'tax_unit',
+                'cant_tax_unit',
+                'person_id'
+            );
+    }
+
+
+
     public function companies(){
         return $this->belongsToMany('App\Company','company_taxes')
             ->withPivot('company_id', 'fiscal_credits', 'withholding', 'deductions', 'day_mora');
     }
+
+
+
+    public function companiesRate(){
+
+    }
+
+
+
+
 
     public function vehicles(){
         return $this->belongsToMany('App\VehiclesTaxe','taxe_id');
@@ -106,6 +133,14 @@ class Taxe extends Model implements Auditable {
 
     public function ciuTaxes(){
         return $this->hasMany('App\CiuTaxes','ciu_id');
+    }
+
+    public function getAmountFormatAttribute(){
+        return  number_format($this->amount,2);
+    }
+
+    public function getFiscalPeriodFormatAttribute(){
+        return Carbon::parse($this->fiscal_period)->format('d-m-Y');
     }
 
 

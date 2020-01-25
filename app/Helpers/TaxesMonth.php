@@ -34,6 +34,7 @@ class TaxesMonth{
 
         if($temporal){
             $companyTaxes = $company->taxesCompanies()->where('status','=','temporal')->get();//busco el ultimo pago realizado por la empresa
+            $companyTaxes = $company->taxesCompanies()->where('status','=','temporal')->get();//busco el ultimo pago realizado por la empresa
             $mount_pay=null;
             if (!$companyTaxes->isEmpty()){
                 foreach ($companyTaxes as $tax){

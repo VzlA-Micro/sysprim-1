@@ -1,13 +1,9 @@
 $('document').ready(function () {
 
-
-
     var url = "http://sysprim.com.devel/";
 
     var companies_id='';
     var type_taxes='';
-
-
 
 
     $('.payroll').change(function () {
@@ -49,9 +45,6 @@ $('document').ready(function () {
             type_taxes=$(this).attr('data-taxes');
         }
 
-
-
-
     });
 
 
@@ -80,33 +73,44 @@ $('document').ready(function () {
                 success: function (response) {
 
 
-                    console.log(acum);
-                    $('.taxes_id').each(function () {
-                        $(this).val(acum);
-                    });
 
+                    if(response.status==='success'){
+                        $('.taxes_id').each(function () {
+                            $(this).val(acum);
+                        });
 
-                    $('.amount').each(function(){
-                        $(this).val(response.amount);
-                    });
+                        $('.amount').each(function(){
+                            $(this).val(response.amount);
+                        });
 
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+                        $('#amount_total_depo').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
 
+                        $('#amount_total').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+                        $('#amount_total_tr').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
 
-                    $('#amount_total_depo').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
+                        M.updateTextFields();
 
-                    $('#amount_total').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
-                    $('#amount_total_tr').val(function (index, value) {
-                        return number_format(value, 2);
-                    });
+                    }else{
+                        swal({
+                            title: "!Bien Hecho",
+                            text: "La planilla ingresada se ha verificada con éxito, ya que el dinero a pagar es igual a 0.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.open(url + 'ticket-office/generate-receipt/' +acum, "RECIBO DE PAGO", "width=500, height=600");
 
-                    M.updateTextFields();
+                            location.reload();
+                        });
+                    }
                 },
 
                 error: function (err) {
@@ -536,13 +540,29 @@ $('document').ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
+                            var link;
+
+
+                            if(taxe.type!=='definitive'){
+                                link='<a href='+url+'payments/taxes/'+taxe.id+''+
+                                '\n class="btn indigo waves-effect waves-light"><i\n' +
+                                ' class="icon-pageview left"></i>Detalles</a>';
+
+                            }else{
+                                link='<a href='+url+'ticket-office/taxes/definitive/'+taxe.id+'"' +
+                                    '\nclass="btn indigo waves-effect waves-light"><i\n' +
+                                    'class="icon-pageview left"></i>Detalles</a>';
+                            }
+
+
+
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
                                     '<td><i class="icon-check text-green"></i>'+company.name+'</td>'+
                                     '<td>' +company.license+'</td>'+
                                     '<td>' +taxe.code+'</td>'+
-                                    '<td>' +taxe.fiscal_period+'</td>'+
+                                    '<td>' +taxe.fiscalPeriodFormat+'</td>'+
                                     '<td>' +'<p>' +
                                         '  <label>\n' +
                                         '           <input type="checkbox" name="payroll" class="payroll"\n' +
@@ -551,10 +571,8 @@ $('document').ready(function () {
                                         '                                  </label>\n' +
                                         '</p>'+
                                     '</td>'+
-                                     '<td>' +taxe.amount+'</td>'+
-                                     '<td><a href='+url+'payments/taxes/'+taxe.id+''+
-                                '                                        class="btn indigo waves-effect waves-light"><i\n' +
-                                '                           class="icon-pageview left"></i>Detalles</a></td>'+
+                                     '<td>' +taxe.amountFormat+'</td>'+
+                                     '<td>'+link+'</td>'+
                                 '</tr>');
 
                             $(this).val();

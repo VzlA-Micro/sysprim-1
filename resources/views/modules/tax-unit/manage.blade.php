@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('tax-unit.manage') }}">Gestionar Unidad Tributaria</a></li>
                 </ul>
             </div>
-            @can('Registar Unidad Tribuaria')
+            @can('Registrar Unidad Tribuaria')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('tax-unit.register') }}" class="btn-app white red-text">
                     <i class="icon-add_circle"></i>

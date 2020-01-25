@@ -9,7 +9,6 @@
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="">Detalles De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pagar Impuestos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -85,6 +84,48 @@
                                        value="{{$previousDebt}}" readonly>
                                 <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
                             </div>
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="discount" id="discount" class="validate money"
+                                       value="{{$valueDiscount}}"
+                                       readonly>
+                                <label for="base">Descuento<b> (Bs)</b></label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="recharge" id="recharge" class="validate money"
+                                       pattern="[0-9.,]+"
+                                       value="{{$recharge}}"
+                                       readonly>
+                                <label for="recharge">Recargo<b> (Bs)</b></label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="rechargeMora" id="rechargeMora" class="validate money"
+                                       pattern="[0-9.,]+"
+                                       value="{{$valueMora}}"
+                                       readonly>
+                                <label for="rechargeMora">Interés por mora<b> (Bs)</b></label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input type="text" name="fiscal_credits" id="fiscal_credits"
+                                       class="validate number-only" pattern="[0-9.,]+"
+                                       value="0"
+                                >
+                                <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
+                            </div>
                         <!--<div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -143,12 +184,13 @@
                                         <label for="recargo">Descuento:(Bs)</label>
                                     </div>
                                     <div class="col s12 m12">
-                                        <input type="text" name="total" class="validate total money"
+                                        <input type="text" name="total" id="total" class="validate money"
                                                value="{{$total}}"
                                                readonly>
                                         <label for="total_pagar">Total a Pagar:(Bs)</label>
                                     </div>
                                     <input type="hidden" id="bank" name="bank" value="0">
+                                    <input type="hidden" id="totalAux" name="totalAux" value="{{$totalAux}}">
                                     <input type="hidden" id="payments" name="payments" value="1">
                                     <input type="hidden" name="taxes_id" value="{{$taxes->id}}">
                                 </div>
@@ -243,6 +285,6 @@
 @endsection
 
 @section('scripts')
-    <script src=""></script>
+    <script src="{{ asset('js/dev/vehicleTaxes.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

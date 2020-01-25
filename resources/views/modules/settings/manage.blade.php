@@ -69,13 +69,6 @@
                 </a>
             </div>
             @endcan
-
-            <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('bank.rate.manage') }}" class="btn-app white red-text">
-                    <i class="icon-business_center"></i>
-                    <span class="truncate">Gestionar Tasa del Banco</span>
-                </a>
-            </div>
             @can('Gestionar Tipos de Publicidad')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('advertising-type.manage') }}" class="btn-app white amber-text text-darken-2">
@@ -84,6 +77,18 @@
                 </a>
             </div>
             @endcan
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{ route('bank.rate.manage') }}" class="btn-app white red-text">
+                    <i class="icon-business_center"></i>
+                    <span class="truncate">Gestionar Tasa del Banco</span>
+                </a>
+            </div>
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('rate.manager')}}" class="btn-app white  green-text text-accent-3">
+                    <i class="icon-library_books"></i>
+                    <span class="truncate">Gestionar Tasas</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

@@ -33,7 +33,7 @@ class UserController extends Controller{
 
 
     public function verifyCi($ci){
-        $user=User::where('ci', $ci)->get();
+        $user=User::where('ci', $ci)->where('status_account','!=','waiting')->get();
         if(!$user->isEmpty()){
             $response=array('status'=>'error','message'=>'La cedula "'.$ci.'" se encuentra registrada en el sistema. Por favor, ingrese una cedula valida.');
         }else{
@@ -86,27 +86,42 @@ class UserController extends Controller{
         $role= $request->input('role');
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
+        $user=User::where('ci', $nacionality . $ci)->where('status_account','=','waiting')->first();
 
-        $user=new User();
-        $user->ci=$nacionality.$ci;
-        $user->name=$name;
-        $user->surname=$surname;
-        $user->phone=$country_code.$phone;
-        $user->confirmed=1;
-        $user->role_id=$role;
-        $user->syncRoles($role);
-        $user->email=$email;
-        $user->password=$password;
-        $user->save();
+
+
+        if(!is_null($user)){
+            $user=User::find($user->id);
+            $user->phone = $country_code . $phone;
+            $user->confirmed = 1;
+            $user->role_id = $role;
+            $user->syncRoles($role);
+            $user->email = $email;
+            $user->password = $password;
+            $user->status_account='authorized';
+            $user->update();
+        }else {
+            $user = new User();
+            $user->ci = $nacionality . $ci;
+            $user->name = $name;
+            $user->surname = $surname;
+            $user->phone = $country_code . $phone;
+            $user->confirmed = 1;
+            $user->role_id = $role;
+            $user->syncRoles($role);
+            $user->email = $email;
+            $user->password = $password;
+            $user->save();
+        }
     }
 
     public function show()
     {
         if(\Auth::User()->role_id == 6) {
-            $user= User::where('role_id',2)->orWhere('role_id',3)->orWhere('role_id',4)->get();
+            $user= User::where('role_id',2)->where('status_account','!=','waiting')->orWhere('role_id',3)->orWhere('role_id',4)->get();
         }
         else{
-            $user= User::get();
+            $user= User::where('status_account','!=','waiting')->get();
         }
         return view('modules.users.read',array(
             'showUser' => $user
@@ -179,7 +194,7 @@ class UserController extends Controller{
     }
 
     public function showTaxpayer() {
-        $users = User::where('role_id','=','3')->get();
+        $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->get();
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));

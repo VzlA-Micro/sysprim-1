@@ -61,7 +61,7 @@
 
 
 	@if($firm)
-		<h4 style="text-align:center">RECIBO DE PAGO VERIFICADO.</h4>
+		<h4 style="text-align:center">RECIBO DE PAGO VERIFICADO(DECLARACIÓN ANTICIPADA).</h4>
 	@else
 		<h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
 	@endif
@@ -363,7 +363,7 @@
 					</td>
 				@else
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -20px !important;right: 800px !important;left: 900px;">
 					</td>
 				@endif
 			</tr>

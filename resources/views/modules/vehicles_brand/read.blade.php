@@ -24,21 +24,25 @@
                         <h5>Marcas De Vehículos</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">
+                        <table class="centered striped" id="typeVehicle" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Marca</th>
+                                @can('Detalles Marca de Vehiculos')
                                 <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($showBrand as $brand)
                                 <tr>
                                     <td>{{$brand->name}}</td>
+                                    @can('Detalles Marca de Vehiculos')
                                     <td>
                                         <a href="{{route('vehicles.brand.details',['id'=>$brand->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
