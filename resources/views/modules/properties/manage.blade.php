@@ -23,7 +23,7 @@
                 </div>
             @endforeach
             {{--@endcan--}}
-            {{--@can('Registar Mis Inmuebles')--}}
+            {{--@can('Registrar Mis Inmuebles')--}}
             <div class="col s12 m4">
                 <a href="{{ route('properties.register') }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>

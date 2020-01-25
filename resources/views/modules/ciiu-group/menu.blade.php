@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ciu.manage') }}">Gestionar CIIU</a></li>
                 </ul>
             </div>
-            @can('Registar Grupo CIIU')
+            @can('Registrar Grupo CIIU')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('ciu-group.register') }}" class="btn-app white green-text">
                     <i class="icon-assignment_turned_in"></i>

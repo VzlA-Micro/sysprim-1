@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('bank.rate.manage') }}">Gestionar Tasa del Banco</a></li>
                 </ul>
             </div>
+            @can('Registrar Tasa de Banco')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('bank.rate.register') }}" class="btn-app white cyan-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Tasa</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Tasas del Banco')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('bank.rate.read') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Tasas</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

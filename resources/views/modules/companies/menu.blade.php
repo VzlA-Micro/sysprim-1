@@ -20,7 +20,7 @@
             </div>
             @endforeach
             @endcan
-            @can('Registar Mis Empresas')
+            @can('Registrar Mis Empresas')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('companies.register') }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
