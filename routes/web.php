@@ -844,12 +844,6 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/taxpayers/company/register/{id}', 'RateController@createRegisterCompany')->name('rate.taxpayers.company.create');
 
 
-
-
-
-
-
-
         /*Ticket-office*/
         Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
 
@@ -863,6 +857,12 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('rate/ticket-office/details/{id}','RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
+        Route::get('rate/ticket-office/verify-email/{mail}','RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
+
+
+
+
+        Route::get('test/company','CompaniesController@test');
 
 
 

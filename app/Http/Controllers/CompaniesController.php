@@ -6,6 +6,7 @@ use App\CompanyBranch;
 use App\CompanyRespaldo;
 use App\GroupCiu;
 use App\Helpers\CedulaVE;
+use App\Helpers\TaxesNumber;
 use App\Notification;
 use App\Parish;
 use App\User;
@@ -76,14 +77,11 @@ class CompaniesController extends Controller
 
 
 
-
         $validate = $this->validate($request, [
             'name' => 'required',
-            'license' => 'required',
             'RIF' => 'required|min:8',
             'address' => 'required',
             'parish' => 'required|integer',
-            'code_catastral' => 'required',
             'sector' => 'required',
             'number_employees' => 'required',
             ]);
@@ -96,6 +94,11 @@ class CompaniesController extends Controller
             $company->image = $image_path_name;
         } else {
             $company->image = null;
+        }
+
+
+        if(!$license){
+            $license=TaxesNumber::generateNumberLicense();
         }
 
         $company->name = strtoupper($name);
@@ -111,14 +114,15 @@ class CompaniesController extends Controller
         $company->phone = $country_code.$phone;
         $company->created_at='2019-09-14';
         $company->save();
-
         $id = $company->id;
 
         $company->users()->attach(['company_id' => $id], ['user_id' => \Auth::user()->id]);
-        foreach ($ciu as $ciu) {
-            $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);
-        }
 
+        if($ciu) {
+            foreach ($ciu as $ciu) {
+                $company->ciu()->attach(['company_id' => $id], ['ciu_id' => $ciu]);
+            }
+        }
 
         $company_rif=Company::where('RIF','=',$rif)->orderBy('id','asc')->take(1)->get();
 
@@ -159,6 +163,11 @@ class CompaniesController extends Controller
         $company=Company::findOrFail($id);
 
     }
+
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -428,5 +437,12 @@ class CompaniesController extends Controller
             $response=['status'=>'error','message'=>'Usuario no encontrado'];
         }
         return $response;
+    }
+
+
+    public function test(){
+        $license=TaxesNumber::generateNumberLicense();
+        dd($license);
+
     }
 }

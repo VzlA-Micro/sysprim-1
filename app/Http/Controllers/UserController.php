@@ -47,9 +47,9 @@ class UserController extends Controller{
 
     public function verifyEmail($email,$id=null){
         if(is_null($id)) {
-            $user = User::where('email', $email)->get();
+            $user = User::where('email', $email)->where('status_account','!=','waiting')->get();
         }else{
-            $user = User::where('email', $email)->where('id','!=',$id)->get();
+            $user = User::where('email', $email)->where('status_account','!=','waiting')->where('id','!=',$id)->get();
         }
         if(!$user->isEmpty()){
             $response=array('status'=>'error','message'=>'El correo "'.$email.'" encuentra registrado en el sistema. Por favor, ingrese un correo valido.');

@@ -247,15 +247,17 @@ class TicketOfficeController extends Controller
 
         $validate = $this->validate($request, [
             'name_company' => 'required',
-            'license' => 'required',
             'RIF' => 'required|min:8',
             'address' => 'required',
             'opening_date' => 'required',
             'parish' => 'required|integer',
-            'code_catastral' => 'required',
             'sector' => 'required',
             'number_employees' => 'required',
         ]);
+
+        if(!$license){
+            $license=TaxesNumber::generateNumberLicense();
+        }
 
         $company = new Company();
         $company->name = strtoupper($nameCompany);
@@ -272,16 +274,19 @@ class TicketOfficeController extends Controller
         $company->phone = $country_code . $phone;
         $company->created_at = '2019-09-14';
         $company->save();
-
         $id_company = $company->id;
 
         $id_user = $request->input('user_id');
 
         $company->users()->attach(['company_id' => $id_company], ['user_id' => $id_user]);
-        foreach ($ciu as $ciu) {
-            $company->ciu()->attach(['company_id' => $id_company], ['ciu_id' => $ciu]);
+
+        if($ciu) {
+            foreach ($ciu as $ciu) {
+                $company->ciu()->attach(['company_id' => $id_company], ['ciu_id' => $ciu]);
+            }
         }
 
+        return response()->json(['status'=>'success','Registro de Empresa realiazado con éxito']);
     }
 
 

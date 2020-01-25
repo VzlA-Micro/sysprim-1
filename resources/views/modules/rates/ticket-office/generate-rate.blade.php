@@ -2,11 +2,13 @@
 
 @section('styles')
 
+    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
+
 
             <div class="col s12">
                 <ul class="breadcrumb">
@@ -14,11 +16,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('rate.ticketoffice.menu') }}">Taquilla - Tasas y Certificaciones</a></li>
                     <li class="breadcrumb-item"><a href="#">Generar Planilla</a></li>
-
                 </ul>
             </div>
-
-
 
 
             <div class="col s12 m8 l8 offset-m2 offset-l2">
@@ -48,10 +47,13 @@
                                 </select>
                                 <label for="type_document"></label>
                             </div>
+
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="document">Cedula o RIF</label>
                             </div>
+
+
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
                                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required >
@@ -65,9 +67,15 @@
                             <input id="user" type="hidden" name="user" class="validate" value="true">
 
 
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                                <label for="email">Correo</label>
+                            </div>
 
 
-                            <div class="input-field col s12 m12">
+
+                            <div class="input-field col s6 m6">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                                 <label for="address">Dirección</label>
@@ -76,7 +84,7 @@
 
 
                             <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn peach waves-effect waves-light">
+                                <a href="#" id='data-next' class="btn green text  waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>
@@ -91,27 +99,44 @@
 
                         <div class="col l12">
 
+                                <table class="centered highlight" id="rates" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Codigó</th>
+                                        <th>Tasas</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                        @foreach($rates as $rate)
-                        <div class="input-field col s3 m3">
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="rate"  value="{{$rate->id}}"/>
-                                    <span>{{$rate->name}}</span>
-                                </label>
-                            </p>
-                        </div>
+                                    @foreach($rates as $rate)
+                                        <tr>
+                                            <td> {{$rate->code}}</td>
 
-                        @endforeach
+
+                                            <td>
+                                                <p style="text-align: justify">
+                                                    <label>
+                                                        <input type="checkbox" class="rate"  value="{{$rate->id}}"/>
+                                                        <span>{{$rate->name}}</span>
+                                                    </label>
+                                                </p>
+                                            </td>
+
+
+
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
 
                         </div>
 
 
                         <div class="card-content row">
                             <div class="input-field col s12 right-align">
-                                <a href="#" class="btn peach waves-effect waves light" id="register-rates">
+                                <a href="#" class="btn green text  waves-effect waves light" id="register-rates">
                                     Finalizar
-                                    <i class="icon-navigate_next right"></i>
+                                    <i class="icon-add_box right"></i>
                                 </a>
                             </div>
                         </div>
@@ -125,6 +150,46 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/data/rate-tickoffice.js') }}"></script>
+    <script src="{{ asset('js/datatables.js') }}"></script>
+
+    <script>
+        $('#rates').DataTable({
+            responsive: true,
+            scroller: true,
+            "scrollX": true,
+            "pageLength": 10,
+            "aaSorting": [],
+            language: {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Todavia este contribuyente ningun pago.",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "<i class='icon-navigate_next'></i>",
+                    "sPrevious": "<i class='icon-navigate_before'></i>"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+            }
+        });
+    </script>
+
     <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/data/rate-tickoffice.js') }}"></script>
 @endsection
