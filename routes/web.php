@@ -707,7 +707,7 @@ Route::middleware(['auth'])->group(/**
             // Nivel 1: Mis Inmuebles
             Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
             // Nivel 2: Registrar y Ver Detalles
-            Route::group(['middleware' => ['permission:Registar Mis Inmuebles']], function () {
+            Route::group(['middleware' => ['permission:Registrar Mis Inmuebles']], function () {
                 Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
             });
@@ -724,7 +724,7 @@ Route::middleware(['auth'])->group(/**
             Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
             Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
             // Nivel 2: Registrar
-            Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function () {
+            Route::group(['middleware' => ['permission:Registrar Mis Vehiculos']], function () {
                 Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
                 Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
             });
