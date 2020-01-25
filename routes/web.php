@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(/**
 
 
             // Nivel 2: Registro y Consulta
-            Route::group(['middleware' => ['permission:Registar Usuario|Consultar Usuarios']], function () {
+            Route::group(['middleware' => ['permission:Registrar Usuario|Consultar Usuarios']], function () {
                 Route::get('/users/register', 'UserController@create')->name('users.register');
                 Route::post('/users/save', 'UserController@store')->name('users.save');
                 Route::get('/users/read', 'UserController@show')->name('users.read');
@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(/**
             });
 
             // Nivel 3: Registro y Consulta
-            Route::group(['middleware' => ['permission:Registar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
+            Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
                 Route::get('/tax-unit/register', function () {
                     return view('modules.tax-unit.register');
                 })->name('tax-unit.register');
@@ -97,7 +97,7 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/tax-unit/read', 'TributoController@show')->name('tax-unit.read');
             });
 
-            Route::group(['middleware' => ['permission:Registar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
+            Route::group(['middleware' => ['permission:Registrar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
                 Route::get('/ciu-group/register', function () {
                     return view('modules.ciiu-group.register');
                 })->name('ciu-group.register');
@@ -107,7 +107,7 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
                 // Nivel 4 (Gestionar Ramo CIIU)
-                Route::group(['middleware' => ['permission:Registar Ramo CIIU|Consultar Ramos CIIU']], function () {
+                Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
                     Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
                     Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
                     Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
@@ -120,33 +120,196 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+            // Gestionar Tipos de Vehiculos
+            Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
+                Route::get('/vehicles/type-vehicles', function () {
+                    return view('modules.vehicle_type.manage');
+                })->name('vehicles.type.vehicles');
+                # Nivel 1: Registrar o Consultar
+                Route::group(['middleware' => ['permission:Registrar Tipo de Vehiculo|Consultar Tipos de Vehiculos']], function () {
+                    Route::get('/vehicles/register-type', function () {
+                        return view('modules.vehicle_type.register');
+                    })->name('vehicles.type.register');
+                    Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
+                    Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Tipo de Vehiculos']], function () {
+                        Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+                        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+                    });
+                });
+            });
+
+            // Gestionar Tipos de Vehiculos
+            Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
+                Route::get('/vehicles/type-vehicles', function () {
+                    return view('modules.vehicle_type.manage');
+                })->name('vehicles.type.vehicles');
+                # Nivel 1: Registrar o Consultar
+                Route::group(['middleware' => ['permission:Registrar Tipo de Vehiculo|Consultar Tipos de Vehiculos']], function () {
+                    Route::get('/vehicles/register-type', function () {
+                        return view('modules.vehicle_type.register');
+                    })->name('vehicles.type.register');
+                    Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
+                    Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Tipo de Vehiculos']], function () {
+                        Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+                        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+                    });
+                });
+            });
+
+            // Gestionar Marcas de vehiculos
+            Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
+                Route::get('/vehicles/brands-vehicles', function () {
+                    return view('modules.vehicles_brand.manage');
+                })->name('vehicles.brand.manage');
+                Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Marca de Vehiculo|Consultar Marcas de Vehiculos']], function () {
+                    Route::get('/vehicles-brand/register', 'BrandVehicleController@create')->name('vehicles.brand.register');
+                    Route::post('/vehicles-brand/save', 'BrandVehicleController@store')->name('vehicles.brand.save');
+                    Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Marca de Vehiculos']], function () {
+                        Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
+                        Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
+                    });
+                });
+            });
+
+            // Gestionar Modelos de Vehiculos
+            Route::group(['middleware' => ['permission:Gestionar Modelos de Vehiculos']], function () {
+                Route::get('/vehicles/models-vehicles', function () {
+                    return view('modules.vehicles_models.manage');
+                })->name('vehicles.models.vehicles');
+                # nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Modelo de Vehiculo|Consultar Modelos de Vehiculos']], function () {
+                    Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
+                    Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
+                    Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Modelo de Vehiculos']], function () {
+                        Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
+                        Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
+                    });
+                });
+            });
+
+            // Gestionar Recargos
+            Route::group(['middleware' => ['permission:Gestionar Recargos']], function () {
+                Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Recargo|Consultar Recargos']], function () {
+                    Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
+                    Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
+                    Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Recargo']], function () {
+                        Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
+                        Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');
+                    });
+                });
+            });
+
             // Gestionar Accesorios
+            Route::group(['middleware' => ['permission:Gestionar Accesorios']], function () {
+                Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Accesorio|Consultar Accesorios']], function () {
+                    Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
+                    Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
+                    Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Accesorio']], function () {
+                        Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
+                        Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
+                    });
+                });
+            });
+
+            // Gestionar tipos de publicidad
+            Route::group(['middleware' => ['permission:Gestionar Tipos de Publicidad']], function () {
+                Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Tipo de Publicidad|Consultar Tipos de Publicidad']], function () {
+                    Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
+                    Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
+                    Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Tipo de Publicidad']], function () {
+                        Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
+                        Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
+                    });
+                });
+            });
+
+            // Gestionar Tasas del Banco
+            Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
+                Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Tasa de Banco|Consultar Tasas del Banco']], function () {
+                    Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
+                    Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
+                    Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Tasa de Banco']], function () {
+                        Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
+                        Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');
+                    });
+                });
+            });
+
+            // Gestionar Tasas
+            Route::group(['middleware' => ['permission:Gestionar Tasas']], function () {
+                Route::get('rate/manager', 'RateController@manager')->name('rate.manager');
+                Route::get('rate/verify-code/{code}/{id?}', 'RateController@verifyCode');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Tasa|Consultar Tasas']], function () {
+                    Route::get('rate/register', 'RateController@create')->name('rate.register');
+                    Route::post('rate/save', 'RateController@store')->name('rate.save');
+                    Route::get('rate', 'RateController@index')->name('rate.index');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Registrar Tasa|Consultar Tasas']], function () {
+                        Route::get('rate/details/{id}', 'RateController@details')->name('rate.details');
+                        Route::post('rate/update', 'RateController@update');
+                    });
+                });
+            });
+
+
+
+
+
+
+            /*// Gestionar Accesorios
             Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
             Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
             Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
             Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
             Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
-            Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
+            Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');*/
 
 
-            //Gestionar Tasas del Banco
+            /*            //Gestionar Tasas del Banco
 
 
-            Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
-            Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
-            Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
-            Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
-            Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
-            Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');
+                        Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
+                        Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
+                        Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
+                        Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
+                        Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
+                        Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');*/
 
 
-            // GEstionar tipos de publicidad
+            /*// GEstionar tipos de publicidad
             Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
             Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
             Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
             Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
             Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
-            Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
+            Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');*/
 
 
         });
@@ -185,7 +348,7 @@ Route::middleware(['auth'])->group(/**
             })->name('taxpayers.manage');
 
             // Nivel 2: Registrar Y Consultar
-            Route::group(['middleware' => ['permission:Registar Contribuyente|Consultar Contribuyentes']], function () {
+            Route::group(['middleware' => ['permission:Registrar Contribuyente|Consultar Contribuyentes']], function () {
                 Route::get('/taxpayers/register', function () {
                     return view('modules.taxpayers.register');
                 })->name('taxpayers.register');
@@ -260,7 +423,7 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.companies.manage');
                 })->name('companies.manage');
                 // Nivel 2: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registar Empresa|Consultar Empresas']], function () {
+                Route::group(['middleware' => ['permission:Registrar Empresa|Consultar Empresas']], function () {
                     Route::get('ticketOffice/company/register', 'TicketOfficeController@registerCompany')->name('tickOffice.companies.register');
                     Route::post('ticketOffice/company/save', 'TicketOfficeController@storeCompany');
                     Route::get('ticketOffice/companies/all', 'TicketOfficeController@allCompanies')->name('companies.read');
@@ -364,18 +527,29 @@ Route::middleware(['auth'])->group(/**
             return view('modules.notifications.details');
         })->name('notifications.details');
 
-        // Mi Publicidad
-        Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
-        Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
-        Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
-        Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+        //Mi Publicidad
+        Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
+            // Nivel 1: Consultar y Registrar
+            Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+            Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+            // Nivel 2: Registrar
+            Route::group(['middleware' => ['permission:Registrar Mis Publicidades']], function () {
+                Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+                Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+                Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+                Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+            });
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {
+                Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+                Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+                Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+            });
+        });
 
-
-        Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
-        Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
-        Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
-        Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
-        Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+        // Declaraciones de Publicidad
+        Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
+        Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
 
 
         // Mis Empresas
@@ -386,7 +560,7 @@ Route::middleware(['auth'])->group(/**
             Route::get('/thumb/{filename}', 'CompaniesController@getImage')->name('companies.image');
             Route::get('/companies/carnet/{id}', 'CompaniesController@getCarnet')->name('companies.carnet');
             // Nivel 2: Registrar y Ver Detalles
-            Route::group(['middleware' => ['permission:Registar Mis Empresas']], function () {
+            Route::group(['middleware' => ['permission:Registrar Mis Empresas']], function () {
                 Route::get('/companies/register', 'CompaniesController@create')->name('companies.register');
                 Route::post('/companies/save', 'CompaniesController@store')->name('companies.save');
             });
@@ -402,7 +576,7 @@ Route::middleware(['auth'])->group(/**
             // Nivel 1: Mis Inmuebles
             Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
             // Nivel 2: Registrar y Ver Detalles
-            Route::group(['middleware' => ['permission:Registar Mis Inmuebles']], function () {
+            Route::group(['middleware' => ['permission:Registrar Mis Inmuebles']], function () {
                 Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
             });
@@ -454,73 +628,118 @@ Route::middleware(['auth'])->group(/**
 
         //});
 //__________________________________Vehicles Type module routes_______________________________________________________
-        Route::get('/vehicles/type-vehicles', function () {
-            return view('modules.vehicle_type.manage');
-        })->name('vehicles.type.vehicles');
+        /*   Route::get('/vehicles/type-vehicles', function () {
+               return view('modules.vehicle_type.manage');
+           })->name('vehicles.type.vehicles');
 
-        Route::get('/vehicles/register-type', function () {
-            return view('modules.vehicle_type.register');
-        })->name('vehicles.type.register');
+           Route::get('/vehicles/register-type', function () {
+               return view('modules.vehicle_type.register');
+           })->name('vehicles.type.register');
 
-        Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
+           Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
 
-        Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+           Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
 
-        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+           Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
 
-        Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
+           Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');*/
 
 // ______________________________________________________________________________________________________
 
-
-//_________________________Vehicles module routes_______________________________________________________
-        // Nivel 2: Registrar Vehiculos
-        //Route::group(['middleware' => ['permission:Registar Mis Vehiculos']], function () {
-
-        //});
-
-        // Nivel 3: Detalles de vehiculos
-        //Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
-
-        //  });
-
-
-        // Companies module routes
-        Route::post('/companies/update', 'CompaniesController@update')->name('companies.update');
-
-        Route::get('/companies/verify/{id}', 'CompaniesController@verifyTaxes');
-
-        Route::get('/company/edit/{id}', 'CompaniesController@edit');
 
         Route::get('/company/verify/{id}', 'CompaniesController@verifyTaxes');
 
         Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
 
+
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
+
+
+
+
+
+
+                /*
+                 Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+                 Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
+             */
+                //Inmuebles
+// );
+
+
+
+
+
+//___________________________RATE__________________________________________
+
+
+        /*  Module  */
+/*
+        Route::get('rate/manager', 'RateController@manager')->name('rate.manager');
+
+        Route::get('rate/register', 'RateController@create')->name('rate.register');
+
+        Route::get('rate', 'RateController@index')->name('rate.index');
+
+        Route::get('rate/details/{id}', 'RateController@details')->name('rate.details');
+
+
+        Route::post('rate/save', 'RateController@store')->name('rate.save');
+
+        Route::get('rate/verify-code/{code}/{id?}', 'RateController@verifyCode');
+
+        Route::post('rate/update', 'RateController@update');*/
+            });
         Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
         //Cambiar de usuario
         Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
 
+        // Mis Inmuebles
+        Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
+            Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
+            Route::get('/inmueble/show/{id}', 'PropertyController@show')->name('show.inmueble');
+            Route::get('/inmueble/mi-inmueble', 'PropertyController@myProperty')->name('inmueble.my-propertys');
+            Route::get('/inmueble/my-inmueble/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+            Route::get('/inmueble/delaracion/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+            Route::get('/inmueble/statement/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
+            Route::post('/inmueble/calcu', 'PropertyTaxesController@calcu')->name('propertyCalcu');
+            // Nivel 1: Mis Inmuebles
+            Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+            // Nivel 2: Registrar y Ver Detalles
+            Route::group(['middleware' => ['permission:Registrar Mis Inmuebles']], function () {
+                Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+                Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
+            });
+        });
 
-//________________________module Vehicle_____________________________
+        Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
+            // Nivel 1: Consultar y Registrar
+            Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
+            Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
+            Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
+            Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
+            Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
+            Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
+            Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
+            Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+            // Nivel 2: Registrar
+            Route::group(['middleware' => ['permission:Registrar Mis Vehiculos']], function () {
+                Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
+                Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
+            });
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
+                Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
+            });
+        });
 
+        //________________________module Vehicle_____________________________
 
         Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
         Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
-
-
-        Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
-        Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
-        Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
-
-        Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-        Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
-        Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
-        Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
-        Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
-        Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
-
-        // ---------------------------------------------------
 
 
         // Payments module routes
@@ -528,25 +747,28 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('/payments/my-payments', function () {
             return view('modules.payments.menu');
-        })->name('payments.my-payments'); // Ruta de adorno, no borrar
+        })->name('payments.my-payments');
+
+
+        // Ruta de adorno, no borrar
 
 
 //___________________________Models Vehicles modules routes_______________________________________________________
-        Route::get('/vehicles/models-vehicles', function () {
-            return view('modules.vehicles_models.manage');
-        })->name('vehicles.models.vehicles');
+        /* Route::get('/vehicles/models-vehicles', function () {
+             return view('modules.vehicles_models.manage');
+         })->name('vehicles.models.vehicles');
 
-        Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
-        Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
+         Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
+         Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
 
-        Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
-        Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
-        Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
+         Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
+         Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
+         Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');*/
 //_________________________________________________________________________________________________
 
 
 //___________________________Brands Vehicles modules routes_______________________________________________________
-        Route::get('/vehicles/brands-vehicles', function () {
+        /*Route::get('/vehicles/brands-vehicles', function () {
             return view('modules.vehicles_brand.manage');
         })->name('vehicles.brand.manage');
 
@@ -556,18 +778,18 @@ Route::middleware(['auth'])->group(/**
         Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
         Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
         Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
-        Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');
+        Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');*/
 //___________________________________________________________________________________________________________________________
 
 
 //_____________________________________________Recharge modules routes_______________________________________________________
 
-        Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
+        /*Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
         Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
         Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
         Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
         Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
-        Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');
+        Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');*/
         // Route::post('/recharge/verifyBrand', 'RechargeController@verifyBrand')->name('recharge.verifyBrand');
 
 //___________________________________________________________________________________________________________________________
@@ -593,15 +815,24 @@ Route::middleware(['auth'])->group(/**
             return view('modules.ticket-office.vehicle.modules.home');
         })->name('ticketOffice.vehicle.home');
 
-    Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-    Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
-    Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
-    Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
-    Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
+        Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
+        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
+        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
+        Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
+        Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
 
-    Route::get('/ticketOffice/vehicle/payments/', function () {
-        return view('modules.ticket-office.vehicle.modules.payment.home');
-    })->name('ticketOffice.vehicle.payments');
+        Route::get('/ticketOffice/vehicle/payments/', function () {
+            return view('modules.ticket-office.vehicle.modules.payment.home');
+        })->name('ticketOffice.vehicle.payments');
+
+
+        Route::get('/ticketOffice/vehicle/payments/create', function () {
+            return view('modules.ticket-office.vehicle.modules.payment.create');
+        })->name('ticketOffice.vehicle.payments.create');
+
+        Route::post('/ticketOffice/vehicle/search-license/', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
+        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
+        //_______________________________________________________________________________________________________________________
 
         Route::get('/ticketOffice/vehicle/manage', function () {
             return view('modules.ticket-office.vehicle.modules.vehicle.home');
@@ -612,7 +843,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
 
         //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
-        //_______________________________________________________________________________________________________________________
+
 
         Route::get('/payments/create/{company}/{type?}', 'CompanyTaxesController@create')->name('payments.create');
 
@@ -789,27 +1020,6 @@ Route::middleware(['auth'])->group(/**
         })->name('taxes.payments');
 
 
-//___________________________RATE__________________________________________
-
-
-        /*  Module  */
-
-        Route::get('rate/manager', 'RateController@manager')->name('rate.manager');
-
-        Route::get('rate/register', 'RateController@create')->name('rate.register');
-
-        Route::get('rate', 'RateController@index')->name('rate.index');
-
-        Route::get('rate/details/{id}', 'RateController@details')->name('rate.details');
-
-
-        Route::post('rate/save', 'RateController@store')->name('rate.save');
-
-        Route::get('rate/verify-code/{code}/{id?}', 'RateController@verifyCode');
-
-        Route::post('rate/update', 'RateController@update');
-
-
         /*  taxpayers */
 
         Route::get('rate/taxpayers/menu', 'RateController@menuTaxPayers')->name('rate.taxpayers.menu');
@@ -838,9 +1048,6 @@ Route::middleware(['auth'])->group(/**
 
         /*taxpayers company*/
 
-
-
-
         Route::get('rate/taxpayers/company/register/{id}', 'RateController@createRegisterCompany')->name('rate.taxpayers.company.create');
 
 
@@ -849,21 +1056,19 @@ Route::middleware(['auth'])->group(/**
 
         Route::post('rate/ticket-office/register', 'RateController@saveRateTicketOffice')->name('rate.ticketoffice.save');
 
-        Route::get('rate/ticket-office/generate-rate','RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+        Route::get('rate/ticket-office/generate-rate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
 
-        Route::get('rate/ticket-office/generate','RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+        Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
 
-        Route::get('rate/ticket-office/payments','RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
+        Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
 
-        Route::get('rate/ticket-office/details/{id}','RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
         Route::get('rate/ticket-office/verify-email/{mail}','RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
 
-
-
-
         Route::get('test/company','CompaniesController@test');
 
+        Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
 
-});
+    });
+

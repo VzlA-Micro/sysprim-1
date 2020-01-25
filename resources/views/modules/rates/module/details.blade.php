@@ -71,6 +71,7 @@
                         </div>
 
                     </div>
+                    @can('Actualizar Tasa')
             		<div class="card-footer center-align">
             			<a id="modify-btn" class="btn btn-large btn-rounded blue waves-effect waves-light">
                             <i class="icon-update right"></i>
@@ -81,7 +82,8 @@
                             Guardar
                         </button>
             		</div>
-            	</form>
+            	    @endcan
+                </form>
             </div>
         </div>
     </div>

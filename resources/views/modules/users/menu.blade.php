@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
                 </ul>
             </div>
-            @can('Registar Usuario')
+            @can('Registrar Usuario')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('users.register') }}" class="btn-app white amber-text">
                     <i class="icon-person_add"></i>

@@ -30,7 +30,9 @@
                                     <th>Hasta</th>
                                     <th>Valor</th>
                                     <th>Ramo</th>
+                                    @can('Detalles Recargo')
                                     <th>Detalles</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,12 +42,14 @@
                                     <td>{{ $recharge->since }}</td>
                                     <td>{{ $recharge->to }}</td>
                                     <td>{{ $recharge->value }}%</td>
-                                    <td>{{ $recharge->branch }}</td> 
-                                    <td>                                   
+                                    <td>{{ $recharge->branch }}</td>
+                                    @can('Detalles Recargo')
+                                    <td>
                                         <a href="{{ route('recharges.details', ['id' => $recharge->id]) }}" class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
+                                    @endcan
                                 </tr>
                                 @endforeach
                             </tbody>

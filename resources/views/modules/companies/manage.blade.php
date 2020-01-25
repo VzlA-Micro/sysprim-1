@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                 </ul>
             </div>
-            @can('Registar Empresa')
+            @can('Registrar Empresa')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('tickOffice.companies.register') }}" class="btn-app white teal-text text-darken-2">
                     <i class="icon-add_box"></i>

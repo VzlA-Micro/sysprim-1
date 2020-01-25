@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('rate.manager') }}">Gestionar Tasa</a></li>
                 </ul>
             </div>
+            @can('Registrar Tasa')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('rate.register') }}" class="btn-app white cyan-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Tasa</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Tasas')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('rate.index') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Tasas</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection
