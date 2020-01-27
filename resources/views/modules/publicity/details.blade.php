@@ -46,7 +46,7 @@
                             <li><b>Cantidad de Pisos: </b>{{ $publicity->floor }}</li>
                             @endif
                             @if($publicity->advertising_type_id == 1) 
-                            <li><b>Puntos de Publicidad: </b>{{ $publicity->side }}</li>
+                            <li><b>Puntos de Publicidad: </b>{{ $publicity->quantity }}</li>
                             @endif
                         </ul>
             		</div>
@@ -57,6 +57,14 @@
                         </a>      
                     </div>
             	</div>
+            </div>
+            <div class="col s12 m3" style="margin-top: -8px">
+                <div class="row">
+                    <a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
+                        <i class="icon-payment"></i>
+                        <span class="truncate">Mis Declaraciones</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

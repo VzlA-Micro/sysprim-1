@@ -187,7 +187,7 @@ class PublicityController extends Controller
         $old_image = $publicity->image;
         if($old_image == null){
             if($image) {
-                $image_name = time() . $image->clientExtension(); // Nombre de la imagen
+                $image_name = time() . $image->getClientOriginalName(); // Nombre de la imagen
                 Storage::disk('publicities')->put($image_name, File::get($image));
                 $publicity->image = $image_name;
             }
@@ -196,7 +196,7 @@ class PublicityController extends Controller
         else{
             Storage::disk('publicities')->delete($old_image);
             if($image) {
-                $image_name = time() . $image->clientExtension(); // Nombre de la imagen
+                $image_name = time() . $image->getClientOriginalName(); // Nombre de la imagen
                 Storage::disk('publicities')->put($image_name, File::get($image));
                 $publicity->image = $image_name;
             }

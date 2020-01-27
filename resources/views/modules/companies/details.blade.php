@@ -14,12 +14,21 @@
                 </ul>
             </div>
             @if($company->status=='disabled')
-                <div class="col s112 m10">
+                <div class="col s112 m12">
                     <div class="alert alert-danger" style="margin-top: 1.5rem">
                         <span>{{ "La empresa ".$company->name." ha sido  bloqueada  temporalmente, No puede realizar declaraciones, por favor dirigirse a la oficina de Atención al Contribuyente del SEMAT en la Torre David."}}</span>
                     </div>
                 </div>
             @endif
+            @if(session("message") )
+                <div class="col s112 m12">
+                    <div class="alert alert-danger center-align">
+                        <strong>{{session("message")}}</strong>
+                    </div>
+                </div>
+            @endif
+
+
             <div class="col s12 m9">
 
                 <div class="card">
@@ -66,37 +75,36 @@
 
 
             @if($company->status!='disabled')
-            {{-- Mostrar seccion si es administrador o no --}}
-            <div class="col s12 m3" style="margin-top: -7px">
-                <div class="row">
-                    @can('Declarar Actividad Económica')
-                    <div class="col s12">
+                {{-- Mostrar seccion si es administrador o no --}}
+                <div class="col s12 m3" style="margin-top: -7px">
+                    <div class="row">
+                        @can('Declarar Actividad Económica')
+                            <div class="col s12">
 
-                        <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
-                           class="btn-app white green-text">
-                            <i class="icon-payment"></i>
-                            <span class="truncate">Declaración/Act-Ecónomica</span>
-                        </a>
+                                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
+                                   class="btn-app white green-text">
+                                    <i class="icon-payment"></i>
+                                    <span class="truncate">Declaración/Act-Ecónomica</span>
+                                </a>
+                            </div>
+                        @endcan
+                        <div class="col s12">
+                            <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
+                               class="btn-app white green-text">
+                                <i class="icon-picture_as_pdf"></i>
+                                <span class="truncate">Declaración/Tasas</span>
+                            </a>
+                        </div>
+
+
+                        <!-- <div class="col s12">
+                            <a href="" class="btn-app white orange-text">
+                                <i class="icon-warning"></i>
+                                <span class="truncate">Mis Multas</span>
+                            </a>
+                        </div> -->
                     </div>
-                    @endcan
-                    <div class="col s12">
-                        <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
-                           class="btn-app white green-text">
-                            <i class="icon-picture_as_pdf"></i>
-                            <span class="truncate">Declaración/Tasas</span>
-                        </a>
-                    </div>
-
-
-
-                    <!-- <div class="col s12">
-                        <a href="" class="btn-app white orange-text">
-                            <i class="icon-warning"></i>
-                            <span class="truncate">Mis Multas</span>
-                        </a>
-                    </div> -->
                 </div>
-            </div>
             @endif
 
         </div>

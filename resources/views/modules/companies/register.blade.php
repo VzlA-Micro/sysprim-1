@@ -37,11 +37,32 @@
                             <input type="text" name="name" id="name" class="validate"   required>
                             <label for="name">Razón Social</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-chrome_reader_mode prefix tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3"></i>                                                        
+
+                        <div class="input-field col s6 m4">
+                            <i class="icon-question_answer prefix tooltipped" data-position="bottom" data-tooltip="LICENCIA DE FUNCIONAMIENTO PARA EL EJERCICIO DE ACTIVIDADES ECONÓMICAS"></i>
+                            <select name="question_license" id="question_license">
+                                <option value="null" selected disabled>...</option>
+                                <option value=true>Si</option>
+                                <option value=false>No</option>
+                            </select>
+                            <label for="question_license">Posee licencia de funcionamiento</label>
+                        </div>
+
+                        <div class="input-field col s12 m4">
+                            <i class="icon-chrome_reader_mode prefix tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3"></i>
                             <input type="text" name="license" id="license" class="validate number-and-capital-letter-only" minlength="6" maxlength="10" pattern="[0-9A-Z-]+" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="license">Licencia</label>
                         </div>
+
+                        <div class="input-field col s12 m4">
+                            <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
+                            <label for="code_catastral">Código Catastral</label>
+                        </div>
+
+
+
+
                         <!--<div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>                            
                             <input type="text" name="opening_date" id="opening_date" class="datepicker" required>
@@ -86,11 +107,6 @@
                             <label>Ubicación Geográfica </label>
                         </div>
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
-                            <label for="code_catastral">Código Catastral</label>
-                        </div>
                         <div class="input-field col s6 m3">
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
                             <select name="country_code" id="country_code_company" required>

@@ -9,7 +9,8 @@
                     <li class="breadcrumb-item"><a href="#">Mis Vehículos</a></li>
                 </ul>
             </div>
-            @include('sweet::alert')
+            {{-- @include('sweet::alert') --}}
+            @can('Consultar Mis Vehiculos')
             @foreach($show as $vehicle)
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.details',['id'=>$vehicle->id])}}" class="btn-app white purple-text">
@@ -19,12 +20,15 @@
                 </a>
             </div>
             @endforeach
+            @endcan
+            @can('Registrar Mis Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.register',['register'=>'']) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Agregar nuevo vehiculo...</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

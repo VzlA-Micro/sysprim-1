@@ -142,10 +142,7 @@ class RateController extends Controller{
             $company=Company::where('RIF', $type_document.$document)->orWhere('license',$type_document.$document)->get();
 
             if($company->isEmpty()){
-                    $data=['status'=>'success','type'=>'not-company','company'=>null];
-
-
-
+                    $data=['status'=>'error','type'=>'not-company','company'=>null];
             }else{
 
                 if($company->count()>1){
@@ -171,18 +168,20 @@ class RateController extends Controller{
         $type_document=$request->input('type_document');
         $document=$request->input('document');
         $address=$request->input('address');
+        $email=$request->input('email');
 
         if($type=='user'){
+
             $user=new User();
             $user->name=$name;
             $user->surname=$surname;
             $user->ci=$type_document.$document;
             $user->status_account='waiting';
             $user->address=$address;
+            $user->email=$email;
             $user->role_id=3;
             $user->save();
             $id=$user->id;
-
         }else{
             $company=new Company();
             $company->name=$name;
@@ -191,6 +190,7 @@ class RateController extends Controller{
             $company->address=$address;
             $company->save();
             $id=$company->id;
+
         }
 
 
@@ -261,8 +261,6 @@ class RateController extends Controller{
 
         $type='';
 
-
-
         if(!is_null($rate[0]->pivot->company_id)){
             $data=Company::find($rate[0]->pivot->company_id);
             $type='company';
@@ -311,7 +309,6 @@ class RateController extends Controller{
             'taxes' => $taxe,
             'data' => $data,
         ]);
-
 
         if($download==='true'){
             return $pdf->download('PLANILLA_TASAS.pdf');
@@ -534,5 +531,15 @@ class RateController extends Controller{
 
 
 
+    public function verifyEmail($email){
+        $user = User::where('email', $email)->get();
+
+        if(!$user->isEmpty()){
+            $response=array('status'=>'error','message'=>'El correo "'.$email.'" encuentra registrado en el sistema. Por favor, ingrese un correo valido.');
+        }else{
+            $response=array('status'=>'success','message'=>'No registrado.');
+        }
+        return response()->json($response);
+    }
 
 }

@@ -209,9 +209,15 @@
                     @can('Mis Empresas')
                     <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
                     @endcan
-                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
-                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
-                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
+                    @can('Mis Inmuebles')
+                    <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li>
+                    @endcan
+                    @can('Mis Vehiculos')
+                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-directions_car left"></i>Mis Vehiculos</a></li>
+                    @endcan
+                    @can('Mis Publicidades')
+                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
+                    @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('logout') }}"

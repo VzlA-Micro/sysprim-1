@@ -21,13 +21,15 @@
                         <h5>Modelos De Vehículos</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped responsive-table" id="typeVehicle" style="width: 100%">
+                        <table class="centered striped" id="typeVehicle" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Modelo</th>
                                 <th>Año</th>
                                 <th>Marca</th>
+                                @can('Detalles Modelo de Vehiculos')
                                 <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -36,11 +38,12 @@
                                     <td>{{$models->name}}</td>
                                     <td>{{$models->year}}</td>
                                     <td>{{$models->brand->name}}</td>
-
+                                    @can('Detalles Modelo de Vehiculos')
                                     <td>
                                         <a href="{{route('vehicles.models.details',['id'=>$models->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

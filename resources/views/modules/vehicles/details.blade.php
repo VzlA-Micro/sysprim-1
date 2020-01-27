@@ -61,6 +61,7 @@
             <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">
+
                         @if(\Carbon\Carbon::now()->format('m')=='01')
                             <a href="#mode" class="modal-trigger btn-app white green-text">
                                 <i class="icon-payment"></i>
@@ -75,8 +76,7 @@
                         @endif
                     </div>
 
-
-                <!--"{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger -->
+                {{-- "{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger  --}}
 
 
                     <!-- Modal Structure -->

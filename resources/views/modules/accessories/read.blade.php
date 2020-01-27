@@ -26,7 +26,9 @@
 		            			<tr>
 		            				<th>Nombre</th>
 		            				<th>Cantidad UT</th>
+                                    @can('Detalles Accesorio')
 		            				<th>Detalles</th>
+                                    @endcan
 		            			</tr>
 		            		</thead>
 		            		<tbody>
@@ -34,11 +36,13 @@
 		            			<tr>
 		            				<td>{{ $accessory->name }}</td>
 		            				<td>{{ $accessory->value }} UT</td>
+                                    @can('Detalles Accesorio')
 		            				<td>
 		            					<a href="{{ route('accessories.details', ['id' => $accessory->id]) }}" class="btn btn-floating blue waves-effect waves-light">
 		            						<i class="icon-pageview"></i>
 		            					</a>
 		            				</td>
+                                    @endcan
 		            			</tr>
 		            			@endforeach
 		            		</tbody>

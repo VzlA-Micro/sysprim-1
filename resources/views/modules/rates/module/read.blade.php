@@ -28,8 +28,10 @@
 		            				<th>Nombre</th>
 		            				<th>Cantidad UT</th>
 		            				<th>Status</th>
+                                    @can('Detalles Tasa')
 		            				<th>Detalles</th>
-		            			</tr>
+		            			    @endcan
+                                </tr>
 		            		</thead>
 		            		<tbody>
 		            			@foreach($rate as $rate)
@@ -45,12 +47,14 @@
                                         @endif
 
                                     </td>
+                                    @can('Detalles Tasa')
 		            				<td>
 		            					<a href="{{ route('rate.details', ['id' => $rate->id]) }}" class="btn btn-floating blue waves-effect waves-light">
 		            						<i class="icon-pageview"></i>
 		            					</a>
 		            				</td>
-		            			</tr>
+		            			    @endcan
+                                </tr>
 		            			@endforeach
 		            		</tbody>
 		            	</table>

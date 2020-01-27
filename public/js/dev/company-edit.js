@@ -1,5 +1,5 @@
 
-var url = "http://172.19.50.253/";
+var url = "http://sysprim.com.devel/";
 
 var addCiiu = false;
 var disabledCiiu = false;

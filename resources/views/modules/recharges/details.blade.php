@@ -54,6 +54,7 @@
                             <label for="branch">Ramo</label>
                         </div>
                     </div>
+                    @can('Actualizar Recargos')
                     <div class="card-footer center-align">
                         <a href="#!" class="btn btn-large blue btn-rounded waves-effect waves-light" id="btn-modify">
                             <i class="icon-update right"></i>
@@ -64,6 +65,7 @@
                             Actualizar
                         </button>
                     </div>
+                    @endcan
                 </form>
             </div>
         </div>
