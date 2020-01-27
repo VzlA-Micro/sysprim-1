@@ -296,36 +296,50 @@
 
                                                     @can('Anular Pagos')
                                                         <a href="#"
-                                                           class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
+                                                           class="btn btn-rounded col s3 red waves-effect waves-ligt reconcile"
                                                            data-status="cancel">
                                                             ANULAR PLANILLA.
                                                             <i class="icon-close right"></i>
                                                         </a>
                                                     @endcan
                                                     @can('Verificar Pagos - Manual')
-                                                        @if($verified&&$taxes->status!=='verified')
-                                                            <a href="#"
-                                                               class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
-                                                               data-status="verified">
-                                                                VERIFICAR PLANILLA.
+                                                        @if( $taxes->status!=='verified' || $verified )
+
+                                                                <a href="#" class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
+
+                                                                   data-status="verified">
+                                                                     VERIFICAR PLANILLA.
                                                                 <i class="icon-verified_user right"></i>
                                                             </a>
+
                                                         @endif
+
+
+
+
                                                     @endcan
                                                     @if($taxes->status=='verified')
                                                         <button type="button" id="send-email-verified"
 
 
-                                                                class="btn btn-rounded col s4 green waves-effect waves-light"
+                                                                class="btn btn-rounded col s3 green waves-effect waves-light"
                                                                 value="{{$taxes->id}}">Enviar Correo Verificado.
-                                                            <i class="icon-send right"></i>
+                                                            <i class="icon-mail_outline right"></i>
                                                         </button>
+
+                                                        @endif
+
+
+
+                                                    @if($taxes->status!='cancel')
+                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
+                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                                            <i class="icon-picture_as_pdf right"></i>
+                                                        </a>
                                                     @endif
+                                                @endif
 
                                                 </div>
-                                            @endif
-
-
 
                                         </div>
                                 </div>

@@ -28,7 +28,7 @@
                             <thead>
 
                             <tr>
-                                <th>Codigó</th>
+                                <th>Codigó de Pago</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
@@ -48,7 +48,7 @@
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
                                     <tr>
-                                        <td>{{$taxe->code}}</td>
+                                        <td>{{ $taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>

@@ -369,6 +369,10 @@ Route::middleware(['auth'])->group(/**
 
         // Taquilla
         Route::group(['middleware' => ['permission:Taquillas']], function () {
+            Route::get('ticket-office/taxes/download/{id}','TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
+
+
+
             Route::get('/home/ticketOffice', function () {
                 return view('modules.ticket-office.home');
             })->name('home.ticket-office');
@@ -808,6 +812,10 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ticketOffice/home', function () {
             return view('modules.ticket-office.homes');
         })->name('ticketOffice.home');
+
+
+
+
         //__________________________________________________________________________________________________________________________
         //___________________________________VEHICLE TICKET OFFICE ______________________________________________________________
 
@@ -874,6 +882,10 @@ Route::middleware(['auth'])->group(/**
         Route::get('tick-office/taxes/definitive/verify/{id}', 'TicketOfficeController@verifyDefinitive');
         Route::post('ticket-office/taxes/definitive/save', 'TicketOfficeController@registerTaxeDefinitive');
         Route::get('ticket-office/taxes/definitive/{id}', 'TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
+
+
+
+
 
 
         Route::get('/payments/reconcile', function () {
@@ -1061,7 +1073,6 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
 
         Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
-
 
         Route::get('rate/ticket-office/verify-email/{mail}','RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
 

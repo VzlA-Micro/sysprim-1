@@ -45,7 +45,6 @@
                                     <tr>
                                         <td>{{$taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                        <td>{{$taxe->taxes[0]->companies[0]->license}}</td>
                                         {{--<td class="hide">{{$taxe->name}}</td>
                                         <td class="hide">{{$taxe->phone}}</td>--}}
                                         <td>{{$taxe->type_payment}}</td>
@@ -101,7 +100,6 @@
                                                         <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
                                                            class="btn btn-floating orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
-                                                    </td>
 
                                                 @else
                                                     <td>
@@ -109,7 +107,6 @@
                                                            class="btn btn-floating orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
 
-                                                    </td>
                                                 @endif
 
                                             @elseif($taxe->taxes[0]->branch==='Tasas y Cert')
@@ -119,7 +116,7 @@
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
-                                                </td>
+
                                             @endif
                                                 <a href="#"
                                                    class="btn btn-floating blue waves-effect waves-light details-payment"
@@ -128,6 +125,7 @@
                                                    data-name="{{$taxe->name}}"
                                                 ><i class="icon-info"></i></a>
 
+                                                </td>
                                         @endcan
                                     </tr>
                                 @endforeach

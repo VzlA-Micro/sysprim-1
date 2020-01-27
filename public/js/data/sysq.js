@@ -97,6 +97,7 @@ $('document').ready(function () {
             },
             success: function (response) {
 
+                    console.log(response);
                    $('.content').html('');
 
 
@@ -104,19 +105,25 @@ $('document').ready(function () {
                     var html ='';
 
                     for(var i=0;i<response.length;i++){
-                        html='<a class="waves-effect waves-light green btn col l4 ticket href="#">'+ response[i].number_ticket +'</a>'
+                        if(response[i].status_ticket==='taken'){
+
+                            html='<a class="waves-effect waves-light red btn col l2 href="#">'+ response[i].number_ticket +'</a>';
+                        }else if(response[i].status_ticket==='Activa'){
+                            html='<a class="waves-effect waves-light green btn col l2 ticket href="#">'+ response[i].number_ticket +'</a>';
+                        }
+
+
                         $('.content').append(html);
+
+
                     }
 
 
 
-                $('.ticket').click(function () {
-
-                    
+                $('.ticket').click(function() {
+                    changeStatus($(this).text(),'taken');
 
                 });
-
-
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -426,12 +433,12 @@ $('document').ready(function () {
 
     });
     
-    function  changeStatus(id) {
+    function  changeStatus(id,status) {
         var url='http://sysq.com.devel/';
 
         $.ajax({
             method: "GET",
-            url: url +'/ticket/change-status/'+id+'/'+'',
+            url: url +'ticket/change-status/'+id+'/'+status,
 
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
@@ -440,7 +447,7 @@ $('document').ready(function () {
             },
             success: function (response) {
 
-
+                console.log(response);
 
 
                 $("#preloader").fadeOut('fast');

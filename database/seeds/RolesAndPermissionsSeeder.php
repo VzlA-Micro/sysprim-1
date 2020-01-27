@@ -469,26 +469,32 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Mis Vehiculos',
             'Consultar Mis Vehiculos',
             'Detalles Mis Vehiculos',
+
             // 'Actualizar Mis Vehiculos',
-            'Mis Publicidades',
-            'Registrar Mis Publicidades',
-            'Consultar Mis Publicidades',
-            'Detalles Mis Publicidades',
+            //'Mis Publicidades',
+            //'Registrar Mis Publicidades',
+            //'Consultar Mis Publicidades',
+            //'Detalles Mis Publicidades',
+
+
             'Generar Tasas',
             'Mis Pagos - Tasas',
             'Declarar Tasas',
             'Historial de Pagos - Tasas',
-            // 'Actualizar Mis Publicidades',
-            // 'Mis Pagos - Actividad Económica',
-            // 'Declarar Actividad Económica',
-            // 'Declaración Anticipada - Actividad Económica',
-            // 'Declaración Definitiva - Actividad Económica',
-            // 'Historial de Pagos - Actividad Económica',
-            // 'Mis Pagos - Inmuebles',
-            // 'Declarar Inmuebles',
-            // 'Ver Declaraciones - Inmuebles',
-            // 'Mis Pagos - Vehiculos',
-            // 'Declarar Vehiculos',
+            //'Actualizar Mis Publicidades',
+            'Mis Pagos - Actividad Económica',
+            'Declarar Actividad Económica',
+            'Declaración Anticipada - Actividad Económica',
+            //'Declaración Definitiva - Actividad Económica',
+             'Historial de Pagos - Actividad Económica',
+
+            //'Mis Pagos - Inmuebles',
+             //'Declarar Inmuebles',
+             ///'Ver Declaraciones - Inmuebles',
+
+
+             'Mis Pagos - Vehiculos',
+             'Declarar Vehiculos',
             // 'Ver Declaraciones - Vehiculos',
             'Mi Perfil'
         ]);
