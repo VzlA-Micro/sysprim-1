@@ -18,4 +18,12 @@ class Inmueble extends Model
             ->withPivot('value_catas_const_id');
     }
 
+    public function valueGround(){
+        return $this->belongsTo('App\CatastralTerreno','value_cadastral_ground_id');
+    }
+
+    public function type(){
+        return $this->belongsTo('App\Alicuota','type_inmueble_id');
+    }
+
 }

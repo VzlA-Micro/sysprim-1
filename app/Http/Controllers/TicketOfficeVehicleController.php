@@ -23,6 +23,9 @@ use App\UserVehicle;
 use App\Brand;
 use App\ModelsVehicle;
 use App\VehicleType;
+use App\VehiclesTaxe;
+use App\Helpers\DeclarationVehicle;
+use App\Helpers\Trimester;
 
 
 class TicketOfficeVehicleController extends Controller
@@ -918,6 +921,211 @@ class TicketOfficeVehicleController extends Controller
         $status = TaxesMonth::verifyDefinitive($company_id);
         return response()->json(['status' => $status]);
     }
+
+    //declarar y generar la planilla
+    public function create($value)
+    {
+        $array = explode('-', $value);
+        $id = $array[0];
+        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
+            ->where('status', 'process')->get();
+
+        $vehicleTaxesTem = VehiclesTaxe::where('vehicle_id', $id)
+            ->where('status', 'process')->get();
+
+
+        if (!Empty($vehicleTaxe[0])) {
+            //return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
+        } else {
+
+            if (!Empty($vehicleTaxesTem[0])) {
+                DeclarationVehicle::verify($id, $temporal = true);
+            }
+            $declaration = DeclarationVehicle::Declaration($value);
+
+            $vehicle = Vehicle::where('id', $id)->get();
+
+            $grossTaxes = 0;
+            $total = number_format($declaration['total'], 2, ',', '.');
+            $totalAux = $declaration['total'];
+            $paymentFractional = 0;
+            $valueDiscount = 0;
+            if ($declaration['valueMora'] == 0) {
+                $valueMora = 0;
+            } else {
+                $valueMora = number_format($declaration['dayMora'], 2, ',', '.');
+            }
+
+            if ($declaration['optionPayment']) {
+                $total = number_format($declaration['total'], 2, ',', '.');
+                $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
+                $rateYear = $declaration['rateYear'];
+                $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+                $previousDebt = $declaration['previousDebt'];
+                $recharge = 0;
+            } else {
+                $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+                $grossTaxes = $paymentFractional;
+                $rateYear = $declaration['rateYear'];
+                if (isset($declaration['recharge'])) {
+                    $recharge = number_format($declaration['recharge'], 2, ',', '.');
+                } else {
+                    $recharge = 0;
+                }
+                if (isset($declaration['previousDebt'])) {
+                    if ($declaration['previousDebt'] !== 0) {
+                        $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                    }
+                } else {
+                    $previousDebt = 0;
+                }
+            }
+
+            $taxes = new Taxe();
+            $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+            $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
+            $taxes->save();
+
+            $taxesId = $taxes->id;
+
+            $vehicleTaxes = new VehiclesTaxe();
+            $vehicleTaxes->vehicle_id = $vehicle[0]->id;
+            $vehicleTaxes->taxe_id = $taxesId;
+            $vehicleTaxes->status = 'Temporal';
+            $vehicleTaxes->fiscal_credits = 0;
+            $vehicleTaxes->save();
+
+            //$trimester = Trimester::verifyTrimester();
+            //$period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
+
+            return response()->json(array(
+                    'vehicle' => $vehicle,
+                    'taxes' => $taxes,
+                    'grossTaxes' => $grossTaxes,
+                    'paymentFractional' => $paymentFractional,
+                    'valueDiscount' => $valueDiscount,
+                    'rateYear' => $rateYear,
+                    'recharge' => $recharge,
+                    'previousDebt' => $previousDebt,
+                    'total' => $total,
+                    'vehicleTaxes' => false,
+                    'valueMora' => $valueMora,
+                    'totalAux' => $totalAux
+                )
+            );
+        }
+    }
+
+    //::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
+        public function saveRateTicketOffice(Request $request){
+        $type=$request->input('type');
+        $id=$request->input('id');
+        $rate_id=$request->input('rate_id');
+
+        $person_id=null;
+        $company_id=null;
+        if($type=='user'){
+            $person_id=$id;
+            $user_id=$id;
+        }else{
+            $user_id=\Auth::user()->id;
+            $company_id=$id;
+        }
+
+
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->status='ticket-office';
+        $taxe->type='daily';
+        $taxe->fiscal_period=date('Y-m-d');
+        $taxe->branch='Tasas y Cert';
+        $taxe->save();
+        $id = $taxe->id;
+        $amount=0;
+
+
+        $tributo=Tributo::orderBy('id','desc')->first();
+
+
+
+        for ($i=0;$i<count($rate_id);$i++){
+            $rate=Rate::find($rate_id[$i]);
+            $taxe->rateTaxes()->attach(['taxe_id'=>$id],
+                [   'rate_id'=>$rate_id[$i],
+                    'company_id'=>$company_id,
+                    'person_id'=>$person_id,
+                    'user_id'=>$user_id,
+                    'cant_tax_unit'=>$rate->cant_tax_unit,
+                    'tax_unit'=>$tributo->value,
+                ]);
+
+
+            $amount+=$rate->cant_tax_unit*$tributo->value;
+        }
+
+
+        $taxe_find=Taxe::find($id);
+        $taxe_find->amount=$amount;
+        $taxe_find->update();
+
+
+
+        return response()->json(['status'=>'success','taxe_id'=>$id]);
+    }
+
+    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    public function taxesSave(Request $request)
+    {
+        $id = $request->input('taxes_id');
+        $amount = $request->input('total');
+        $fiscalCredits = $request->input('fiscal_credits');
+        $recharge = $request->input('recharge');
+        $recharge_mora = $request->input('rechargeMora');
+
+        $amount_format = str_replace('.', '', $amount);
+        $amount_format = str_replace(',', '.', $amount_format);
+
+        if ($fiscalCredits !== 0) {
+            $fiscalCredits_format = str_replace('.', '', $fiscalCredits);
+            $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
+        } else {
+            $fiscalCredits_format = 0;
+        }
+
+        if ($recharge !== 0 && $recharge_mora !== 0) {
+            $recharge_format = str_replace('.', '', $recharge);
+            $recharge_format = str_replace(',', '.', $recharge_format);
+
+            $rechargeMora_format = str_replace('.', '', $recharge_mora);
+            $rechargeMora_format = str_replace(',', '.', $rechargeMora_format);
+        } else {
+            $recharge_format = 0;
+            $rechargeMora_format = 0;
+        }
+
+        $taxes = Taxe::findOrFail($id);
+        $taxes->amount = $amount_format;
+        $taxes->status = 'ticket-office';
+        $taxes->branch = 'Vehículo';
+
+        $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+
+        $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
+        $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
+        $vehicleTaxes->recharge = $recharge_format;
+        $vehicleTaxes->recharge_mora = $rechargeMora_format;
+        $vehicleTaxes->update();
+
+        $date_format = date("Y-m-d", strtotime($taxes->created_at));
+        $date = date("d-m-Y", strtotime($taxes->created_at));
+        // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
+
+        $taxes->update();
+
+        return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+    }
+
 
 
 }

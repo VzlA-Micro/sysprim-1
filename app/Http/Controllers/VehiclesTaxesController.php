@@ -119,7 +119,6 @@ class VehiclesTaxesController extends Controller
 
     public function taxesSave(Request $request)
     {
-
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
         $fiscalCredits = $request->input('fiscal_credits');
@@ -147,7 +146,6 @@ class VehiclesTaxesController extends Controller
             $rechargeMora_format = 0;
         }
 
-
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'temporal';
@@ -168,7 +166,6 @@ class VehiclesTaxesController extends Controller
         $taxes->update();
 
         return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
-
     }
 
 

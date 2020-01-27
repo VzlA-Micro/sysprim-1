@@ -13,12 +13,12 @@ class Trimester
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
 
-        $dateCurrent = Carbon::now()->format('Y-m-d');
+        $dateCurrent = Carbon::now();
         $monthCurrent = Carbon::now()->format('m');
-        $yearCurrent= Carbon::now()->format('Y');
-        $monthBegin=Carbon::now();
-        $monthIntermediate=Carbon::now();
-        $monthEnd=Carbon::now();
+        $yearCurrent = Carbon::now()->format('Y');
+        $monthBegin = Carbon::now();
+        $monthIntermediate = Carbon::now();
+        $monthEnd = Carbon::now();
 
         $trimesterCurrent = 0;
         $trimesterBegin = 0;
@@ -26,8 +26,8 @@ class Trimester
 
         if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
-            $trimesterBegin = '01'.'-'.$yearCurrent;
-            $trimesterEnd = '03'.'-'.$yearCurrent;
+            $trimesterBegin = '01' . '-' . $yearCurrent;
+            $trimesterEnd = '03' . '-' . $yearCurrent;
             $monthBegin->day(1);
             $monthBegin->month(1);
             $monthBegin->year($yearCurrent);
@@ -40,8 +40,8 @@ class Trimester
         }
         if ($monthCurrent >= 4 and $monthCurrent <= 6) {
             $trimesterCurrent = 2;
-            $trimesterBegin = '04'.'-'.$yearCurrent;
-            $trimesterEnd = '06'.'-'.$yearCurrent;
+            $trimesterBegin = '04' . '-' . $yearCurrent;
+            $trimesterEnd = '06' . '-' . $yearCurrent;
             $monthBegin->day(1);
             $monthBegin->month(4);
             $monthBegin->year($yearCurrent);
@@ -54,8 +54,8 @@ class Trimester
         }
         if ($monthCurrent >= 7 and $monthCurrent <= 9) {
             $trimesterCurrent = 3;
-            $trimesterBegin = '07'.'-'.$yearCurrent;
-            $trimesterEnd = '09'.'-'.$yearCurrent;
+            $trimesterBegin = '07' . '-' . $yearCurrent;
+            $trimesterEnd = '09' . '-' . $yearCurrent;
             $monthBegin->day(1);
             $monthBegin->month(7);
             $monthBegin->year($yearCurrent);
@@ -68,8 +68,8 @@ class Trimester
         }
         if ($monthCurrent >= 10 and $monthCurrent <= 12) {
             $trimesterCurrent = 4;
-            $trimesterBegin = '10'.'-'.$yearCurrent;
-            $trimesterEnd = '12'.'-'.$yearCurrent;
+            $trimesterBegin = '10' . '-' . $yearCurrent;
+            $trimesterEnd = '12' . '-' . $yearCurrent;
             $monthBegin->day(1);
             $monthBegin->month(10);
             $monthBegin->year($yearCurrent);
@@ -84,9 +84,10 @@ class Trimester
             'trimesterCurrent' => $trimesterCurrent,
             'trimesterBegin' => $trimesterBegin,
             'trimesterEnd' => $trimesterEnd,
-            'monthBegin' =>  $monthBegin,
-            'monthIntermediate' =>  $monthIntermediate,
-            'monthEnd' =>  $monthEnd
+            'monthBegin' => $monthBegin,
+            'monthIntermediate' => $monthIntermediate,
+            'monthEnd' => $monthEnd,
+            'current' => $dateCurrent
         );
     }
 }

@@ -598,6 +598,7 @@ Route::middleware(['auth'])->group(/**
     Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
     Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
     Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
+    Route::get('ticketOffice/vehicle/generatedPlanilla/{value}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
 
     Route::get('/ticketOffice/vehicle/payments/', function () {
         return view('modules.ticket-office.vehicle.modules.payment.home');
@@ -608,7 +609,8 @@ Route::middleware(['auth'])->group(/**
         return view('modules.ticket-office.vehicle.modules.payment.create');
     })->name('ticketOffice.vehicle.payments.create');
 
-    Route::post('/ticketOffice/vehicle/search-license/', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
+    Route::get('/ticketOffice/vehicle/search-license/{license}', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
+    Route::get('/ticketOffice/vehicle/period-fiscal/{period}','VehicleController@periodoFiscal')->name('ticketOffice.vehicle.periodFiscal');
     //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
     //_______________________________________________________________________________________________________________________
 
