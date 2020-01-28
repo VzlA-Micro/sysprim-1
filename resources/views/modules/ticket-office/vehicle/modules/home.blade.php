@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquilla Vehículos</a></li>
                 </ul>
             </div>
-            @can('Gestionar Empresas')
+            @can('Gestionar Vehiculos')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.vehicle.manage') }}" class="btn-app white light-green-text">
                     <i class="icon-directions_car"></i>

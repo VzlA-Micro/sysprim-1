@@ -116,7 +116,6 @@
                                 <label for="model">Módelo</label>
                             </div>
                         </div>
-
                         @if($vehicle->status===null||$vehicle->status==='enabled')
                             <div class="input-field col s12 m6" id="estado">
                                 <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
@@ -136,10 +135,9 @@
 
                         @endif
 
-
                         <div class="col l12">
                             <div class="row">
-                                @can('Actualizar Empresas')
+                                @can('Actualizar Vehiculos')
                                     <div class="col s12 m6">
                                         <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
                                            id="update-vehicle">
@@ -149,7 +147,7 @@
                                     </div>
                                 @endcan
 
-                                @can('Habilitar/Deshabilitar Empresas')
+                                @can('Habilitar/Deshabilitar Vehiculo')
                                     @if($vehicle->status===null||$vehicle->status==='enabled')
                                         <div class="col s12 m6" id="button-status">
                                             <button type="button"

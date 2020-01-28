@@ -10,23 +10,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('rate.ticketoffice.menu') }}">Taquilla - Tasas y Certificaciones</a></li>
                 </ul>
             </div>
-
-            <div class="col s12 m3 animated bounceIn">
+            @can('Generar Planilla')
+            <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.generate')}}" class="btn-app white blue-text">
                     <i class="icon-picture_as_pdf"></i>
                     <span class="truncate">Generar Planilla</span>
                 </a>
             </div>
-
-
+            @endcan
+            @can('Pagar Planilla')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.payments')}}" class="btn-app white amber-text">
                     <i class="icon-payment"></i>
                     <span class="truncate">Pagar Planilla</span>
                 </a>
             </div>
-
-
+            @endcan
         </div>
     </div>
 @endsection
