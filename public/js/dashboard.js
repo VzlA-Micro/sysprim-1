@@ -1,5 +1,3 @@
-var url = "http://sysprim.com.devel/";
-var controller = "collection/statistics";
 
 var width = $(window).width();
 var height = $(window).height();

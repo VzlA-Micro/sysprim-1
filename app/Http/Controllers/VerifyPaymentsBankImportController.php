@@ -36,7 +36,6 @@ class VerifyPaymentsBankImportController extends Controller
         //$amountTaxes=0;//total a de impuesto
         //$amountTotal=0;
 
-
         $file = $request->file;
 
         $Archivo = \File::get($file);
@@ -49,7 +48,6 @@ class VerifyPaymentsBankImportController extends Controller
         if ($mime == "text/plain") {
             //Archivo);
             //var_dump($file);
-
 
             $arch = fopen($file, 'r');
 
@@ -74,6 +72,7 @@ class VerifyPaymentsBankImportController extends Controller
 
                     $band = false;
                 }
+
                 if ($codeBank == '00116' && $band == false) {
                     $typeRegisterBank = substr($otra, 0, 1);
                     $document = substr($otra, 1, 10);
@@ -82,7 +81,6 @@ class VerifyPaymentsBankImportController extends Controller
                     $amountTwo = str_replace(',', '', $amount);
                     $amountThere = str_replace(',', '.', $amount);
                     $viaPayments = substr($otra, 41, 3);
-
 
                     //echo $typeRegisterBank . '<br>';
                     //echo $codeBank . '<br>';
@@ -130,12 +128,9 @@ class VerifyPaymentsBankImportController extends Controller
 
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
-
-
                             $pCode = substr($taxe->code, 0, 3);
                             if ($pCode == 'PPC') {
                             } else {
-
 
                                 if ($pCode == 'PPT' || $pCode == 'PPE') {
                                     echo "soy jhon";
@@ -159,14 +154,12 @@ class VerifyPaymentsBankImportController extends Controller
                                                 'firm' => true
                                             ]);
 
-
                                             $userCompany = $company->users()->get();
-                                            $taxe->status = 'verified';
+                                            $taxe->status = 'verified-sysprim';
                                             $taxe->update();;
 
                                             $subject = "Planilla Verificada";
                                             $for = $userCompany[0]->email;
-
 
                                             Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
 
@@ -182,16 +175,13 @@ class VerifyPaymentsBankImportController extends Controller
                         }
                     }
                 }
-
             }
             fclose($arch);
-
         }
     }
 
     public function verifyPayments()
     {
-
         $taxes = Taxe::where('status', 'verified')
             ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
         return view('modules.bank.read', ['taxes' => $taxes]);
