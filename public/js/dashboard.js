@@ -1,4 +1,4 @@
-var url = "http://172.19.50.253/";
+var url = "http://sysprim.com.devel/";
 var controller = "collection/statistics";
 
 var width = $(window).width();
@@ -30,7 +30,8 @@ function isMobile(){
 
 $('document').ready(function () {
 
-
+    var url = "http://sysprim.com.devel/";
+    var controller = "collection/statistics";
 
 
 /*    $('#bs').html('Bolivar '+0+'<i class="i-bss left"></i>');
