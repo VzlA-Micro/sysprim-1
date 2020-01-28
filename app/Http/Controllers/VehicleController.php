@@ -209,13 +209,6 @@ class VehicleController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $ciu = ciu::destroy($id);
-        return redirect()->route('ciu-branch.read');
-    }
-
-
     public function brand(Request $request)
     {
         $models = ModelsVehicle::where('brand_id', $request->input('brand'))->get();

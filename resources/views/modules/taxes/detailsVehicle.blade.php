@@ -69,7 +69,7 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="base[]" id="base" class="validate money"
+                                <input type="text" name="base" id="base" class="validate money"
                                        value="{{$grossTaxes}}"
                                        readonly>
                                 <label for="base">Base Imponible<b> (Bs)</b></label>
@@ -79,10 +79,10 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="tasa[]" id="tasa" class="validate recargo money"
+                                <input type="text" name="previous_debt" id="previous_debt" class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
                                        value="{{$previousDebt}}" readonly>
-                                <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
+                                <label for="previous_debt">Deuda Anterior<b> (Bs)</b></label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
@@ -91,7 +91,7 @@
                                 <input type="text" name="discount" id="discount" class="validate money"
                                        value="{{$valueDiscount}}"
                                        readonly>
-                                <label for="base">Descuento<b> (Bs)</b></label>
+                                <label for="discount">Descuento<b> (Bs)</b></label>
                             </div>
 
                             <div class="input-field col s12 m6">

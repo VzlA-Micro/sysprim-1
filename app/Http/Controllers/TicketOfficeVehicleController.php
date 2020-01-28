@@ -79,11 +79,6 @@ class TicketOfficeVehicleController extends Controller
         }
     }
 
-    public function cashier()
-    {
-        $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
-        return view('modules.ticket-office.create', ['unid_tribu' => $unid_tribu]);
-    }
 
     public function findUser($ci)
     {
@@ -213,15 +208,6 @@ class TicketOfficeVehicleController extends Controller
         return response()->json($data);
     }
 
-
-    //comapanies
-    public function registerCompany()
-    {
-        $parish = Parish::all();
-        return view('modules.ticket-office.companies.register', ['parish' => $parish]);
-    }
-
-
     public function storeVehicle(Request $request)
     {
         $vehicle = new Vehicle();
@@ -298,11 +284,6 @@ class TicketOfficeVehicleController extends Controller
         return response()->json($response);
     }
 
-    public function allCompanies()
-    {
-        $companies = Company::all();
-        return view('modules.ticket-office.companies.read', ['companies' => $companies]);
-    }
 
 
     public function detailsVehicle($id)
@@ -664,63 +645,32 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function payments($type)
-    {
+    /*public function payments($type)
+        {
 
-        if ($type == 'DEPOSITO BANCARIO') {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->get();
-        } else {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
-        }
-        if ($payment->isEmpty()) {
-            $payment = null;
-        }
-
-
-        if ($type == 'TRANSFERENCIA BANCARIA') {
-            return view('modules.payments.transfer', ['taxes' => $payment, 'amount_taxes' => 0]);
-        } else if ($type === 'PUNTO DE VENTA') {
-            return view('modules.payments.pointofsale', ['taxes' => $payment, 'amount_taxes' => 0]);
-        } else if ($type === 'DEPOSITO BANCARIO') {
-            return view('modules.payments.deposit', ['taxes' => $payment, 'amount_taxes' => 0]);
-        } else {
-            return redirect('ticket-office/type-payment');
-        }
-
-    }
-
-
-    public function detailsTaxesAteco($id)
-    {
-        $taxes = Taxe::findOrFail($id);
-        $companyTaxe = $taxes->companies()->get();
-        $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-        $company_find = Company::find($companyTaxe[0]->id);
-        $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-        $amount = Calculate::calculateTaxes($id);
-        $verified = true;
-
-
-        if (!$taxes->payments->isEmpty()) {
-            foreach ($taxes->payments as $payment) {
-                if ($payment->status != 'verified') {
-                    $verified = false;
-                }
+            if ($type == 'DEPOSITO BANCARIO') {
+                $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->get();
+            } else {
+                $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
             }
-        } else {
-            $verified = false;
+            if ($payment->isEmpty()) {
+                $payment = null;
+            }
+
+
+            if ($type == 'TRANSFERENCIA BANCARIA') {
+                return view('modules.payments.transfer', ['taxes' => $payment, 'amount_taxes' => 0]);
+            } else if ($type === 'PUNTO DE VENTA') {
+                return view('modules.payments.pointofsale', ['taxes' => $payment, 'amount_taxes' => 0]);
+            } else if ($type === 'DEPOSITO BANCARIO') {
+                return view('modules.payments.deposit', ['taxes' => $payment, 'amount_taxes' => 0]);
+            } else {
+                return redirect('ticket-office/type-payment');
+            }
+
         }
+    */
 
-
-        return view('modules.ticket-office.ateco.details', ['taxes' => $taxes,
-            'fiscal_period' => $fiscal_period,
-            'ciuTaxes' => $ciuTaxes,
-            'amount' => $amount,
-            'verified' => $verified
-        ]);
-
-
-    }
 
 
     public function generateReceipt($taxes_data)
@@ -1017,60 +967,59 @@ class TicketOfficeVehicleController extends Controller
     }
 
     //::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
-        public function saveRateTicketOffice(Request $request){
-        $type=$request->input('type');
-        $id=$request->input('id');
-        $rate_id=$request->input('rate_id');
+    public function saveRateTicketOffice(Request $request)
+    {
+        $type = $request->input('type');
+        $id = $request->input('id');
+        $rate_id = $request->input('rate_id');
 
-        $person_id=null;
-        $company_id=null;
-        if($type=='user'){
-            $person_id=$id;
-            $user_id=$id;
-        }else{
-            $user_id=\Auth::user()->id;
-            $company_id=$id;
+        $person_id = null;
+        $company_id = null;
+        if ($type == 'user') {
+            $person_id = $id;
+            $user_id = $id;
+        } else {
+            $user_id = \Auth::user()->id;
+            $company_id = $id;
         }
 
 
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
-        $taxe->status='ticket-office';
-        $taxe->type='daily';
-        $taxe->fiscal_period=date('Y-m-d');
-        $taxe->branch='Tasas y Cert';
+        $taxe->status = 'ticket-office';
+        $taxe->type = 'daily';
+        $taxe->fiscal_period = date('Y-m-d');
+        $taxe->branch = 'Tasas y Cert';
         $taxe->save();
         $id = $taxe->id;
-        $amount=0;
+        $amount = 0;
 
 
-        $tributo=Tributo::orderBy('id','desc')->first();
+        $tributo = Tributo::orderBy('id', 'desc')->first();
 
 
-
-        for ($i=0;$i<count($rate_id);$i++){
-            $rate=Rate::find($rate_id[$i]);
-            $taxe->rateTaxes()->attach(['taxe_id'=>$id],
-                [   'rate_id'=>$rate_id[$i],
-                    'company_id'=>$company_id,
-                    'person_id'=>$person_id,
-                    'user_id'=>$user_id,
-                    'cant_tax_unit'=>$rate->cant_tax_unit,
-                    'tax_unit'=>$tributo->value,
+        for ($i = 0; $i < count($rate_id); $i++) {
+            $rate = Rate::find($rate_id[$i]);
+            $taxe->rateTaxes()->attach(['taxe_id' => $id],
+                ['rate_id' => $rate_id[$i],
+                    'company_id' => $company_id,
+                    'person_id' => $person_id,
+                    'user_id' => $user_id,
+                    'cant_tax_unit' => $rate->cant_tax_unit,
+                    'tax_unit' => $tributo->value,
                 ]);
 
 
-            $amount+=$rate->cant_tax_unit*$tributo->value;
+            $amount += $rate->cant_tax_unit * $tributo->value;
         }
 
 
-        $taxe_find=Taxe::find($id);
-        $taxe_find->amount=$amount;
+        $taxe_find = Taxe::find($id);
+        $taxe_find->amount = $amount;
         $taxe_find->update();
 
 
-
-        return response()->json(['status'=>'success','taxe_id'=>$id]);
+        return response()->json(['status' => 'success', 'taxe_id' => $id]);
     }
 
     //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1126,7 +1075,63 @@ class TicketOfficeVehicleController extends Controller
         return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
     }
 
+    /* public function payments(Request $request)
+     {
+         $id_taxes = $request->input('id_taxes');
 
+         $taxes = Taxe::findOrFail($id_taxes);
+         $vehiclesTaxes = VehiclesTaxe::where('taxe_id', $id_taxes)->get();
+         $vehiclesTaxe = VehiclesTaxe::find($vehiclesTaxes[0]->id);
+
+
+         $code = TaxesNumber::generateNumberTaxes("TEM" . "85");
+         $taxes->code = $code;
+         $code = substr($code, 3, 12);
+
+         $date_format = date("Y-m-d", strtotime($taxes->created_at));
+         $date = date("d-m-Y", strtotime($taxes->created_at));
+
+         $taxes->status = "tickek-office";
+         $taxes->update();
+
+         $vehiclesTaxe->status = 'process';
+         $vehiclesTaxe->update();
+
+         $trimester = Trimester::verifyTrimester();
+         $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
+
+
+         return redirect()->route('vehicle.payments.history', ['id' => $vehicleID]);
+     }*/
+
+    public function viewDetails($id)
+    {
+        $taxes=Taxe::findOrFail('id',$id)->get();
+        $vehicleTaxes=VehiclesTaxe::where('taxe_id',$id)->get();
+        $vehicle=Vehicle::where('id',$vehicleTaxes[0]->vehicle_id)->get();
+
+        $verified = true;
+
+        if (!$taxes->payments->isEmpty()) {
+            foreach ($taxes->payments as $payment) {
+                if ($payment->status != 'verified') {
+                    $verified = false;
+                }
+            }
+        } else {
+            $verified = false;
+        }
+        $response= array(
+            'taxes'=>$taxes,
+            'vehicleTaxes'=>$vehicleTaxes,
+            'vehicle'=>$vehicle,
+            'model'=>$vehicle[0]->model,
+            'verified'=>$verified
+        );
+
+
+        return view('modules.ticket-office.vehicle.modules.payroll.details',array('response'=>$response));
+    }
 
 }
 

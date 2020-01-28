@@ -36,10 +36,10 @@
                     <div class="card-header center-align">
                         <h5>Detalles de pago de inmueble</h5>
                     </div>
-                    <form method="post" action="{{ route('paymentsProperty.help') }}" id='register-taxes'
+                    <form method="post" action="" id='register-taxes'
                           class="card-content row">
                         @csrf
-                        <input type="text" name="idProperty" value="">
+                        <input type="hidden" name="idProperty" value="{{$response['property'][0]->id}}">
                         <input type="hidden" name="totalGround" id="totalGround" class="validate money"
                                value="" readonly>
 

@@ -846,6 +846,7 @@ Route::middleware(['auth'])->group(/**
         Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
         Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
         Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
+        Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
 
         //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
 
