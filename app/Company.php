@@ -35,6 +35,11 @@ class Company extends Model implements Auditable {
     }
 
 
+    public function taxesCompaniesRate(){
+        return $this->belongsToMany('App\Taxe','rates_taxes')
+            ->withPivot('taxe_id');
+    }
+
     public function fineCompany(){
         return $this->belongsToMany('App\Fine','fines_company')
             ->withPivot('company_id','fine_id','unid_tribu_value','fiscal_period');

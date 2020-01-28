@@ -39,8 +39,8 @@
 
 
                         </div>
-                        <div class="col m6">
-
+                        <div class="col m12 center-align">
+                            <h5> Código:<b> {{$taxes->code}}</b></h5>
                         </div>
                     </div>
 
@@ -154,7 +154,7 @@
                                                                         value="">
                                                                     <i class="icon-do_not_disturb_alt"></i></button>
                                                             </div>
-                                                        @elseif($taxe->status=='verified')
+                                                        @elseif($taxe->status=='verified'||$taxe->status=='verified-sysprim')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light green col s12"
@@ -196,7 +196,7 @@
                                                 ESTADO: SIN CONCILIAR AÚN
 
                                             </a>
-                                        @elseif($taxes->status==='verified')
+                                        @elseif($taxes->status==='verified' ||$taxes->status==='verified-sysprim')
 
                                             <a href="#" class="btn blue col s12">
                                                 <i class="icon-more_horiz left"></i>
@@ -212,7 +212,7 @@
                                             </a>
                                         @endif
 
-                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
 
                                             <div class="col l12">
                                                 <h4 class="center-align mt-2">Acciones</h4>
@@ -229,7 +229,7 @@
                                                     </a>
                                                 @endcan
                                                 @can('Verificar Pagos - Manual')
-                                                    @if($verified&&$taxes->status!=='verified')
+                                                    @if($verified&&$taxes->status!=='verified'&&$taxes->status!='verified-sysprim')
                                                         <a href="#"
                                                            class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
                                                            data-status="verified">
@@ -238,7 +238,7 @@
                                                         </a>
                                                     @endif
                                                 @endcan
-                                                @if($taxes->status=='verified')
+                                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                     <button type="button" id="send-email-verified"
                                                             class="btn btn-rounded col s3 green waves-effect waves-light"
                                                             value="{{$taxes->id}}">Enviar Correo Verificado.
@@ -266,5 +266,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/payments.js') }}"></script>
+    <script src="{{ asset('js/dev/taxes.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

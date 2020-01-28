@@ -213,7 +213,7 @@
                             <div class="row" style="padding: 1rem">
                                 <div class="input-field col s12">
                                     {{-- Modal trigger --}}
-                                    @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
+                                    @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
                                         <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
                                            class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                             Calcular de nuevo

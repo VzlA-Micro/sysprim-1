@@ -372,7 +372,7 @@ class CompanyTaxesController extends Controller
         $amount=Calculate::calculateTaxes($id);
         $firm=false;
 
-        if($taxes->status==='verified'){
+        if($taxes->status==='verified'||$taxes->status==='verified-sysprim'){
             $firm=true;
         }
         $pdf = \PDF::loadView('modules.taxes.receipt',

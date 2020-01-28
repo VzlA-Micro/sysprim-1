@@ -426,6 +426,13 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/companies/manage', function () {
                     return view('modules.companies.manage');
                 })->name('companies.manage');
+
+
+
+
+
+
+
                 // Nivel 2: Registrar y Consultar
                 Route::group(['middleware' => ['permission:Registrar Empresa|Consultar Empresas']], function () {
                     Route::get('ticketOffice/company/register', 'TicketOfficeController@registerCompany')->name('tickOffice.companies.register');
@@ -434,6 +441,13 @@ Route::middleware(['auth'])->group(/**
                     // Nivel 3: Detalles
                     Route::group(['middleware' => ['permission:Detalles Empresas']], function () {
                         Route::get('ticketOffice/companies/details/{id}', 'TicketOfficeController@detailsCompany')->name('tickOffice.companies.details');
+
+                        Route::get('ticketOffice/companies/details-taxes/{id}/{type}', 'TicketOfficeController@detailsCompanyTaxes')->name('tickOffice.companies.details-taxes');
+
+
+
+
+
                         // Nivel 4: Actualizar
                         Route::group(['middleware' => ['permission:Actualizar Empresas']], function () {
                             // Poner rutas de edicion aqui

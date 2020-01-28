@@ -90,6 +90,8 @@ class Taxe extends Model implements Auditable {
             return $this->statusName='CANCELADA';
         }else if($this->status=='ticket-office'){
             return $this->statusName='TAQUILLA/SIN PAGO ASOCIADO AÚN.';
+        }else if($this->status=='verified-sysprim'){
+            return $this->statusName="VERIFICADA/SYSPRIM";
         }
 
     }

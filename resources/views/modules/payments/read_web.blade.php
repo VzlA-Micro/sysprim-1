@@ -57,6 +57,8 @@
                                                                 class="icon-pageview"></i></a>
                                                 </td>
 
+
+
                                             @else
                                                 <td>
                                                     <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"

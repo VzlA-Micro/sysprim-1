@@ -227,7 +227,7 @@
                                                                         value="">
                                                                     <i class="icon-do_not_disturb_alt"></i></button>
                                                             </div>
-                                                        @elseif($taxe->status=='verified')
+                                                        @elseif($taxe->status=='verified'||$taxes->status=='verified-sysprim')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light green col s12"
@@ -269,7 +269,7 @@
                                                     ESTADO: SIN CONCILIAR AÚN
 
                                                 </a>
-                                            @elseif($taxes->status==='verified')
+                                            @elseif($taxes->status==='verified'||$taxes->status=='verified-sysprim')
 
                                                 <a href="#" class="btn blue col s12">
                                                     <i class="icon-more_horiz left"></i>
@@ -285,7 +285,7 @@
                                                 </a>
                                             @endif
 
-                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>
@@ -303,7 +303,7 @@
                                                         </a>
                                                     @endcan
                                                     @can('Verificar Pagos - Manual')
-                                                        @if( $taxes->status!=='verified' || $verified )
+                                                        @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
 
                                                                 <a href="#" class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
 
@@ -318,7 +318,7 @@
 
 
                                                     @endcan
-                                                    @if($taxes->status=='verified')
+                                                    @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                         <button type="button" id="send-email-verified"
 
 
@@ -328,9 +328,6 @@
                                                         </button>
 
                                                         @endif
-
-
-
                                                     @if($taxes->status!='cancel')
                                                         <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
                                                            class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).

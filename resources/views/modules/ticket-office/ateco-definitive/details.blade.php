@@ -207,7 +207,7 @@
                             <div class="input-field col s12">
                                 {{-- Modal trigger --}}
 
-                                @if($taxes->status!='verified'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
+                                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim'&&\Auth::user()->id===$taxes->companies[0]->users[0]->id)
                                 <a href="{{ route('taxes.again.definitive',['id'=>$taxes->id]) }}"  class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                     Calcular de nuevo
                                     <i class="icon-refresh right"></i></a>
@@ -258,7 +258,7 @@
                                                                     value="">
                                                                 <i class="icon-do_not_disturb_alt"></i></button>
                                                         </div>
-                                                    @elseif($taxe->status=='verified')
+                                                    @elseif($taxe->status=='verified'&&$taxe->status=='verified-sysprim')
                                                         <div class="input-field col s12 m12">
                                                             <button type="button"
                                                                     class="btn waves-effect waves-light green col s12"
@@ -306,11 +306,11 @@
                                                 ESTADO: SIN CONCILIAR AÚN
 
                                             </a>
-                                        @elseif($taxes->status==='verified')
+                                        @elseif($taxes->status==='verified'||$taxe->status=='verified-sysprim')
 
                                             <a href="#" class="btn blue col s12">
                                                 <i class="icon-more_horiz left"></i>
-                                                ESTADO: VERIFICADA.
+                                                ESTADO: {{$taxes->statusName}}
                                             </a>
 
 
@@ -322,7 +322,7 @@
                                             </a>
                                         @endif
 
-                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified-sysprim'||$taxes->status=='verified')
 
                                             <div class="col l12">
                                                 <h4 class="center-align mt-2">Acciones</h4>
@@ -340,7 +340,7 @@
                                                     </a>
                                                 @endcan
                                                 @can('Verificar Pagos - Manual')
-                                                    @if($verified&&$taxes->status!=='verified')
+                                                    @if($verified&&$taxes->status!=='verified' && $taxes->status!=='verified-sysprim')
                                                         <a href="#"
                                                            class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
                                                            data-status="verified">
@@ -349,7 +349,7 @@
                                                         </a>
                                                     @endif
                                                 @endcan
-                                                @if($taxes->status=='verified')
+                                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                     <button type="button" id="send-email-verified"
                                                             class="btn btn-rounded col s4 green waves-effect waves-light"
                                                             value="{{$taxes->id}}">Enviar Correo Verificado.

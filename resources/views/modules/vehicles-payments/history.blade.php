@@ -44,7 +44,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($taxes as $taxe)
-                                    @if($taxe->status=='verified' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
+                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim'|| $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>
                                             <td>{{ $taxe->code }}</td>
@@ -62,7 +62,7 @@
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
-                                            @elseif($taxe->status==='verified')
+                                            @elseif($taxe->status==='verified' ||$taxe->status=='verified-sysprim')
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-more_horiz left"></i>

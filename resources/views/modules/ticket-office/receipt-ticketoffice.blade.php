@@ -65,15 +65,12 @@
 </div>
 
 
-@if($taxes[0]->taxes->status==='verified')
+@if($taxes[0]->taxes->status==='verified' ||$taxes[0]->taxes->status==='verified-sysprim')
     <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO(DECLARACIÓN ANTICIPADA)</h4>
 @else
 
     <h4 style="text-align:center">DEPOSITO TRIBUTARIA MUNICIPAL</h4>
 @endif
-
-
-
 
 
 
@@ -408,7 +405,7 @@ $date = '31/12/' . date('Y');
 
 
     <table style="width: 100%;margin-bottom:-30px;">
-        @if($taxes[0]->taxes->status!=='verified')
+        @if($taxes[0]->taxes->status!=='verified'&&$taxes[0]->taxes->status!=='verified-sysprim')
 
             <tr>
 
@@ -453,7 +450,7 @@ $date = '31/12/' . date('Y');
 
     <table style="width: 100%;">
 
-        @if($taxes[0]->taxes->status!=='verified')
+        @if($taxes[0]->taxes->status!=='verified'&&$taxes[0]->taxes->status!=='verified-sysprim')
             <tr>
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->taxes->id))) !!} "

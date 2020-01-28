@@ -174,10 +174,10 @@ $(document).ready(function () {
                     }).then(function () {
                         location.reload();
                     });
-                } else{
+                } else if(response.status==='success'){
                     swal({
                         title: "¡Bien Hecho!",
-                        text: "La planilla ha sido generado con éxito, ¿Desea seguir generando planillas?",
+                        text: response.message+"¿Desea seguir generando planillas?",
                         icon: "success",
                         buttons: {
                             confirm: {
@@ -197,10 +197,9 @@ $(document).ready(function () {
 
                     }).then(function (aceptar) {
                         if (aceptar) {
-                            reset();
+                           location.reload();
                         } else {
                             url='http://sysprim.com.devel/';
-
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });

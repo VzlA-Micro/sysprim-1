@@ -62,7 +62,7 @@
                                                                     value="">
                                                                 <i class="icon-do_not_disturb_alt"></i></button>
                                                         </div>
-                                                    @elseif($taxe->status=='verified')
+                                                    @elseif($taxe->status=='verified'||$taxe->status=='verified-sysprim')
                                                         <div class="input-field col s12 m12">
                                                             <button type="button" id="change-status"
                                                                     class="btn waves-effect waves-light green col s12"

@@ -61,7 +61,7 @@
     </table>
 </div>
 
-@if($taxes->status==='verified')
+@if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
     <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (DECLARACIÓN DEFINITIVA)</h4>
 @else
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(DECLARACIÓN DEFINITIVA)</h4>
@@ -325,7 +325,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status==='verified')
+            @if($taxes->status==='verified' ||$taxes->status=='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
                     <img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
 
@@ -338,7 +338,7 @@ $date = '31/12/' . date('Y');
 
         </tr>
         <tr>
-            @if($taxes->status==='verified')
+            @if($taxes->status==='verified' || $taxes->status=='verified-sysprim')
                 <td style="width:40%;text-align: center; font-size: 10px;"><b>
                         __________________________________________<br>
                         ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
@@ -360,7 +360,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status!='verified')
+            @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
             <td style="width: 80%;">
                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
                      style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
@@ -372,12 +372,11 @@ $date = '31/12/' . date('Y');
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
                 </td>
             </tr>
-
             @endif
 
         <tr>
             <td style="width: 20%;">
-                @if($taxes->status!='verified')
+                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
                         <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="">

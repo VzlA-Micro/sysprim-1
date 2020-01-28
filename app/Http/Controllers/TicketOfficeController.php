@@ -40,7 +40,7 @@ class TicketOfficeController extends Controller
 
             $taxe = Taxe::with('companies')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified') {
+            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -60,7 +60,7 @@ class TicketOfficeController extends Controller
             $code=strtoupper($id);
             $taxe = Taxe::with('companies')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified') {
+                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -298,12 +298,35 @@ class TicketOfficeController extends Controller
 
     public function detailsCompany($id)
     {
-        $company = Company::find($id);
+        $company = Company::findOrFail($id);
         $parish = Parish::all();
 
-        $companyTaxes=$company->taxesCompanies()->orderBy('id', 'desc')->get();
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'taxesCompanies'=>$companyTaxes]);
+        $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
+        $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
+
+
+
+
+        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco]);
     }
+
+
+    //Pago de empresas
+
+    public function detailsCompanyTaxes($id,$type){
+        $company = Company::findOrFail($id);
+        if($type=='Act.Eco'){
+            $companyTaxes=$company->taxesCompanies()->orderBy('id', 'desc')->get();
+        }elseif($type=='Tasas y Cert'){
+            $companyTaxes=$company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
+        }
+
+        return view('modules.ticket-office.companies.all-taxes',['taxesCompanies'=>$companyTaxes,'id'=>$id]);
+    }
+
+
+
+
 
     //find-license
 
@@ -331,6 +354,8 @@ class TicketOfficeController extends Controller
     }
 
 
+
+
     public function getTaxes(){
         $taxes = Audit::where('user_id', \Auth::user()->id)
             ->where('event', 'created')
@@ -342,7 +367,7 @@ class TicketOfficeController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Act.Eco')->whereIn('id', $id_taxes)->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -870,7 +895,7 @@ class TicketOfficeController extends Controller
         if($taxes->branch==='Act.Eco') {
 
 
-            if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
+            if ($taxes->type == 'actuated' && $taxes->status == 'verified'||$taxes->status == 'verified-sysprim') {
                 $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -893,7 +918,7 @@ class TicketOfficeController extends Controller
                 $band = true;
                 $email=$user[0]->email;
 
-            } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified') {
+            } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified'||$taxes->status == 'verified-sysprim') {
                 $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -915,7 +940,7 @@ class TicketOfficeController extends Controller
 
 
             $email=$user[0]->email;
-        }elseif($taxes->branch==='Tasas y Cert'&& $taxes->status == 'verified'){
+        }elseif($taxes->branch==='Tasas y Cert'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
             $rate=$taxes->rateTaxes()->get();
             $type='';
             if(!is_null($rate[0]->pivot->company_id)){
@@ -1215,11 +1240,13 @@ class TicketOfficeController extends Controller
 
     public function viewPDF($id){
         $taxes = Taxe::findOrFail($id);
+
         $firm=false;
+
         $pdf='';
 
 
-        if($taxes->status==='verified'){
+        if($taxes->status=='verified'||$taxes->status=='verified-sysprim'){
             $firm=true;
         }
 
