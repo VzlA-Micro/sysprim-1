@@ -90,4 +90,5 @@ class Trimester
             'current' => $dateCurrent
         );
     }
+
 }

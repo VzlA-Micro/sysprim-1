@@ -13,8 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="#">Ver
-                            Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Ver Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12">

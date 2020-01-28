@@ -31,7 +31,7 @@
                     </a>
                 </div>
             @endcan
-            @can('Ver Planillas')
+            {{--@can('Ver Planillas')
                 <div class="col s12 m4 animated bounceIn">
                     <a href="{{route('ticket-office.pay.web')}}" class="btn-app white indigo-text">
                         <i class="icon-library_books"></i>
@@ -46,7 +46,7 @@
                         <span class="truncate">Ver Pagos</span>
                     </a>
                 </div>
-            @endcan
+            @endcan--}}
         </div>
     </div>
 @endsection
