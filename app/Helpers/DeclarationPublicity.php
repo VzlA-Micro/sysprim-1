@@ -10,6 +10,9 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\DB;
 use App\Publicity;
 use App\AdvertisingType;
+use App\Tributo;
+use App\BankRate;
+use App\Taxe;
 
 class DeclarationPublicity
 {
@@ -19,6 +22,9 @@ class DeclarationPublicity
         $currentDate = Carbon::now();
         $currentMonth = Carbon::now()->format('m');
         $currentYear = Carbon::now()->format('Y');
+        $taxUnit = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $bankRate = BankRate::select('value_rate')->latest()->first();
+
 
     }
 }

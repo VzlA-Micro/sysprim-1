@@ -89,4 +89,5 @@ class Trimester
             'monthEnd' =>  $monthEnd
         );
     }
+
 }
