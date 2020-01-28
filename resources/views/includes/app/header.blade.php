@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim/sysprim_logo.png') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
             {{-- <a href="" class="brand-logo waves-efect waves-light"  margin: 0; padding: 0;"> --}}
             {{-- </a> --}}
             {{-- Sidenav Trigger --}}
@@ -81,7 +81,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/semat.png') }}" alt="" srcset="">                    
+                    <img src="{{ asset('images/semat.webp') }}" alt="" srcset="">
                 </a>
             </li>
             @guest
@@ -98,7 +98,7 @@
                     <li>
                         <div class="user-view">
                           <div class="background">
-                            <img src="{{ asset('images/bg-user.jpg') }}" class="responsive-img">
+                            <img src="{{ asset('images/bg-user.webp') }}" class="responsive-img">
                           </div>
                           @if (Storage::disk('users')->has(Auth::user()->image))
                           <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>
