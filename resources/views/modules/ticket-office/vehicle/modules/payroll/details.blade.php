@@ -6,7 +6,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#" class="prev-view" >Ver Pagos</a>
                     </li>
@@ -69,7 +69,7 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="discount" id="discount" class="validate money"
-                                   value="{{$response['vehicleTaxes'][0]->discoun}}"
+                                   value="{{$response['vehicleTaxes'][0]->discount}}"
                                    readonly>
                             <label for="discount">Descuento<b> (Bs)</b></label>
                         </div>
@@ -135,7 +135,7 @@
                                                     <td>{{$response['taxes'][0]->code}}</td>
                                                     <td>{{$response['taxes'][0]->type_payment}}</td>
                                                     <td>{{$response['taxes'][0]->statusName}}</td>
-                                                    <td>{{$$response['taxes'][0]->ref}}</td>
+                                                    <td>{{$response['taxes'][0]->ref}}</td>
                                                     <td>{{number_format($response['taxes'][0]->amount,2)." Bs"}}</td>
                                                     <td>
                                                         @if($response['taxes'][0]->status==='cancel')
@@ -174,7 +174,7 @@
                                             </tbody>
                                         </table>
                                         @endif
-                                       <div class="row ">
+                                       {{--<div class="row ">
                                             @if($response['taxes'][0]->status==='ticket-office')
                                                 <a class="btn green col s12 ">
                                                     <i class="icon-more_horiz left "></i>
@@ -245,7 +245,7 @@
 
 
 
-                                        </div>
+                                        </div>--}}
                                 </div>
                             </div>
                     </form>

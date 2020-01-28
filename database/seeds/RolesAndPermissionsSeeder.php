@@ -132,8 +132,10 @@ class RolesAndPermissionsSeeder extends Seeder
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
+        Permission::create(['name' => 'Taquilla - Vehiculos']);
+        Permission::create(['name' => 'Taquilla - Tasas']);
+
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
-        // Permission::create(['name' => 'Taquilla - Vehículos']);
         // Permission::create(['name' => 'Taquilla - Publicidad']);
 
         // -- Gestionar Contribuyente
@@ -159,6 +161,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Ver Pagos verificados']);
         Permission::create(['name' => 'Generar Planilla']);
         Permission::create(['name' => 'Detalles Planilla']);
+//        Permission::create(['name' => 'Verificar/Anular Planilla']);
         Permission::create(['name' => 'Pagar Planilla']);
         Permission::create(['name' => 'Ver Pagos']);
         Permission::create(['name' => 'Ver Pagos - Transferencias']);
@@ -171,6 +174,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Taquilla - Caja']);
         Permission::create(['name' => 'Abrir/Cerrar Caja']);
         Permission::create(['name' => 'Ver Planillas']);
+        Permission::create(['name' => 'Ver Planilla PDF']);
 
         // -- Gestionar Empresas
         Permission::create(['name' => 'Gestionar Empresas']);
@@ -204,6 +208,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Vehiculos']);
         Permission::create(['name' => 'Actualizar Vehiculos']);
         // Permission::create(['name' => 'Eliminar Vehiculos']);
+        Permission::create(['name' => 'Habilitar/Deshabilitar Vehiculo']);
         Permission::create(['name' => 'Historial de Pago - Vehiculos']);
 
         // GeoSEMAT
@@ -421,35 +426,50 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleTicketOfficer = Role::create(['name' => 'Operador']);
         $roleTicketOfficer->givePermissionTo([
             'Taquillas',
-            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
             'Resetear Contribuyentes',
+            'Taquilla - Actividad Económica',
             'Gestionar Empresas',
             'Registrar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
-            // 'Gestionar Pagos',
-            // 'Generar Planilla',
-            // 'Pagar Planilla',
-            // 'Registrar Pago',
-            // 'Registrar Pago - Punto de Venta',
-            // 'Registrar Pago - Depositos',
-            // 'Ver Pagos',
-            // 'Mi Taquilla - Punto de Venta',
-            // 'Mi Taquilla - Deposito',
-            // 'Ver Planillas',
-            // 'Ver Planillas - Taquilla',
-            // 'Mi Perfil',
-            // 'Gestionar Empresas',
-            // 'Registrar Empresa',
-            // 'Consultar Empresas',
-            // 'Detalles Empresas',
-            // 'Taquilla - Caja',
-            // 'Abrir/Cerrar Caja'
+            'Taquilla - Vehiculos',
+            'Gestionar Vehiculos',
+            'Registrar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            'Taquilla - Tasas',
+            'Gestionar Pagos',
+            'Registrar Pago',
+            'Registrar Pago - Transferencias',
+            'Registrar Pago - Punto de Venta',
+            'Registrar Pago - Depositos',
+            'Detalles Pagos',
+//            'Anular Pagos',
+//            'Verificar Pagos - Manual',
+//            'Verificar Pagos - Archivo',
+//            'Cargar Archivo Pagos',
+//            'Ver Pagos verificados',
+            'Generar Planilla',
+            'Detalles Planilla',
+            'Pagar Planilla',
+            'Ver Pagos',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Escanear QR',
+            'Taquilla - Caja',
+            'Abrir/Cerrar Caja',
+            'Ver Planillas',
+            'Ver Planilla PDF',
+            'Mi Perfil'
         ]);
 
         // Contribuyente
@@ -460,10 +480,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Mis Empresas',
             'Detalles Mis Empresas',
             // 'Actualizar Mis Empresas',
-            'Mis Inmuebles',
-            'Registrar Mis Inmuebles',
-            'Consultar Mis Inmuebles',
-            'Detalles Mis Inmuebles',
+            // 'Mis Inmuebles',
+            // 'Registrar Mis Inmuebles',
+            // 'Consultar Mis Inmuebles',
+            // 'Detalles Mis Inmuebles',
             // 'Actualizar Mis Inmuebles',
             'Mis Vehiculos',
             'Registrar Mis Vehiculos',
@@ -562,13 +582,14 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
         $roleCoordinator ->givePermissionTo([
             'Taquillas',
-            'Taquilla - Actividad Económica',
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
             'Resetear Contribuyentes',
+            'Taquilla - Tasas',
+            'Ver Planilla PDF',
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',
@@ -594,6 +615,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Taquilla - Caja',
             'Abrir/Cerrar Caja',
             'Ver Planillas',
+            'Ver Planilla PDF',
+            'Taquilla - Actividad Económica',
             'Gestionar Empresas',
             'Registrar Empresa',
             'Consultar Empresas',
@@ -602,6 +625,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'Añadir CIIU Empresas',
             'Habilitar/Deshabilitar CIIU Empresas',
             'Historial de Pago - Empresas',
+            'Taquilla - Vehiculos',
+            'Gestionar Vehiculos',
+            'Registrar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            'Actualizar Vehiculos',
+            'Habilitar/Deshabilitar Vehiculo',
+            'Historial de Pago - Vehiculos',
             'Gestionar Usuarios',
             'Registrar Usuario',
             'Consultar Usuarios',
@@ -787,5 +818,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'model_id' => 3
         ]);
 
+        DB::table('model_has_roles')->insert([
+            'role_id' => 6,
+            'model_type' => 'App\User',
+            'model_id' => 4
+        ]);
     }
 }

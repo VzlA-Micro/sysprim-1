@@ -245,12 +245,14 @@
                                                         <i class="icon-send right"></i>
                                                     </button>
                                                 @endif
+                                                    @can('Ver Planilla PDF')
                                                     @if($taxes->status!='cancel')
                                                         <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
-                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla (PDF).
                                                             <i class="icon-picture_as_pdf right"></i>
                                                         </a>
                                                     @endif
+                                                    @endcan
                                             </div>
                                         @endif
 

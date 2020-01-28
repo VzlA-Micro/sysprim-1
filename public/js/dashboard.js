@@ -14,16 +14,6 @@ if ((width>=300 && width <=1000) &&( height>=640 && height<= 1200) ){
     type= line;
 }
 
-function isMobile(){
-    return (
-        (navigator.userAgent.match(/Android/i)) ||
-        (navigator.userAgent.match(/webOS/i)) ||
-        (navigator.userAgent.match(/iPhone/i)) ||
-        (navigator.userAgent.match(/iPod/i)) ||
-        (navigator.userAgent.match(/iPad/i)) ||
-        (navigator.userAgent.match(/BlackBerry/i))
-    );
-}
 
 
 $('document').ready(function () {
@@ -102,8 +92,6 @@ $('document').ready(function () {
 
     }*/
 
-
-
     $.ajax({
         method: "GET",
         url: url + controller,
@@ -114,8 +102,7 @@ $('document').ready(function () {
             $("#preloader-overlay").fadeIn('fast');
         },
         success: function (response) {
-            console.log('hola3');
-            console.log(response);
+
             if (response !== 'error') {
                 $('#recaudacion').text(response[0]['total']);
                 $('#banesco').text(response[0]['banesco']);
@@ -125,6 +112,7 @@ $('document').ready(function () {
                 $('#banco100').text(response[0]['banco100']);
                 chartsMonth(response);
                 topTaxes(response[11]);
+                console.log(response[12]);
                 dear(response[12]);
 
                 //api();
@@ -135,7 +123,6 @@ $('document').ready(function () {
 
         },
         error: function (e) {
-            console.log('hola4');
             console.log(e);
             if (e !== 'error') {
                 $('#recaudacion').text(e['total']);
@@ -313,26 +300,26 @@ function chartsMonth(data) {
                 ,
                 {
                     "label":
-                        "Eventos",
+                        "Tasas y Certificados",
                     "data": [
-                        data[10]['enero'],
-                        data[10]['febrero'],
-                        data[10]['marzo'],
-                        data[10]['abril'],
-                        data[10]['mayo'],
-                        data[10]['junio'],
-                        data[10]['julio'],
-                        data[10]['agosto'],
-                        data[10]['septiembre'],
-                        data[10]['octubre'],
-                        data[10]['noviembre'],
-                        data[10]['diciembre']],
+                        data[15]['enero'],
+                        data[15]['febrero'],
+                        data[15]['marzo'],
+                        data[15]['abril'],
+                        data[15]['mayo'],
+                        data[15]['junio'],
+                        data[15]['julio'],
+                        data[15]['agosto'],
+                        data[15]['septiembre'],
+                        data[15]['octubre'],
+                        data[15]['noviembre'],
+                        data[15]['diciembre']],
                     "fill":
                         false,
                     "borderColor":
-                        "#9c27b0",
+                        "#5FB404",
                     "backgroundColor":
-                        "#9c27b0",
+                        "#5FB404",
                     "lineTension":
                         0.1
                 }

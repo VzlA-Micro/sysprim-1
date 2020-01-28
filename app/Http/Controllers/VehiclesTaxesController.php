@@ -25,7 +25,8 @@ use App\Taxe;
 class VehiclesTaxesController extends Controller
 {
     public function create($id)
-    {
+    { $trimester = Trimester::verifyTrimester();
+
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
             ->where('status', 'process')->get();
 
@@ -56,16 +57,22 @@ class VehiclesTaxesController extends Controller
             }
 
             if ($declaration['optionPayment']) {
+                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' .'12/'.$trimester['monthEnd']->format('Y');
                 $total = number_format($declaration['total'], 2, ',', '.');
                 $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
                 $rateYear = $declaration['rateYear'];
                 $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
                 $previousDebt = $declaration['previousDebt'];
                 $recharge = 0;
+                $period_fiscal_begin=$trimester['monthBegin']->format('m-Y');
+                $period_fiscal_end='12/'.$trimester['monthEnd']->format('Y');
             } else {
+                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
                 $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
                 $grossTaxes = $paymentFractional;
                 $rateYear = $declaration['rateYear'];
+                $period_fiscal_begin=$trimester['monthBegin']->format('m-Y');
+                $period_fiscal_end=$trimester['monthEnd']->format('m-Y');
                 if (isset($declaration['recharge'])) {
                     $recharge = number_format($declaration['recharge'], 2, ',', '.');
                 } else {
@@ -83,7 +90,8 @@ class VehiclesTaxesController extends Controller
 
             $taxes = new Taxe();
             $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
+            $taxes->fiscal_period =$period_fiscal_begin ;
+            $taxes->fiscal_period_end=$period_fiscal_end;
             $taxes->save();
 
             $taxesId = $taxes->id;
@@ -96,8 +104,8 @@ class VehiclesTaxesController extends Controller
             $vehicleTaxes->fiscal_credits = 0;
             $vehicleTaxes->save();
 
-            $trimester = Trimester::verifyTrimester();
-            $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
+
+            //$period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
 
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
