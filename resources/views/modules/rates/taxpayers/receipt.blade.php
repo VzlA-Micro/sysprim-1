@@ -73,10 +73,9 @@
         <td style="width:35%;font-size: 11px !important;">{{$data->name." ".$data->surname}}</td>
 
 
-
         @if($data->code_catastal)
-        <td style="width:20%;font-size: 12px !important;"><b>Codigo Catastral:</b></td>
-        <td style="width:30%;font-size: 11px !important;">{{$data->code_catastral}}</td>
+            <td style="width:20%;font-size: 12px !important;"><b>Codigo Catastral:</b></td>
+            <td style="width:30%;font-size: 11px !important;">{{$data->code_catastral}}</td>
 
         @else
             <td style="width:20%;font-size: 12px !important;"><b></b></td>
@@ -87,8 +86,8 @@
         <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
         <td style="width:35%;font-size: 11px !important;">{{$data->ci .''. $data->RIF}}</td>
         @if($data->license)
-        <td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
-        <td style="width:30%;font-size: 11px !important">{{$data->license}}</td>
+            <td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
+            <td style="width:30%;font-size: 11px !important">{{$data->license}}</td>
         @else
             <td style="width:20%;font-size: 12px !important;"><b></b></td>
             <td style="width:30%;font-size: 11px !important;"></td>
@@ -105,8 +104,8 @@
     </tr>
     <tr>
         @if($data->phone)
-        <td style="width:15%;font-size: 12px !important;"><b>Telf. Empresa:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{"0".substr($data->phone,3,10)}}</td>
+            <td style="width:15%;font-size: 12px !important;"><b>Telf. Empresa:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{"0".substr($data->phone,3,10)}}</td>
         @else
             <td style="width:15%;font-size: 12px !important;"><b></b></td>
             <td style="width:35%;font-size: 11px !important;"></td>
@@ -147,8 +146,7 @@
             <td style="width: 15%;font-size: 10px;!important"></td>
             <td style="width: 10%;font-size: 10px;!important">{{number_format($rate->totalRate ,2)}}</td>
         </tr>
-        @endforeach
-
+    @endforeach
 
 
     <tr>
@@ -209,58 +207,27 @@
         <td></td>
     </tr>
 
-
-
-
-
-    @if(!$taxes->payments->isEmpty()&&substr($taxes->payments[0]->code,0,3)=='PPC'||substr($taxes->payments[0]->code,0,3)=='PPE')
-        <tr>
+    <tr>
+    @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
             <td style="width: 100%;text-align: center; font-size: 14px;">
-
-
-                @if($taxes->payments[0]->bank==44)
+                @if($taxes->bank==44)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
-                @elseif($taxes->payments[0]->bank==77)
+                @elseif($taxes->bank==77)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BICENTENARIO*****
-                @elseif($taxes->payments[0]->bank==99)
+                @elseif($taxes->bank==99)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
-                @elseif($taxes->payments[0]->bank==33)
+                @elseif($taxes->bank==33)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
-                @elseif($taxes->payments[0]->bank==55)
+                @elseif($taxes->bank==55)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
                 @else
-                    ***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre
-                    David Planta Baja Calle 26 entre Carreras 15 y 16
-                @endif
-
-
+                    ***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
+            @endif
             </td>
         </tr>
         <tr>
             <td style="width: 100%;text-align: center; font-size: 14px;">
                 **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes->created_at))}}**
-            </td>
-        </tr>
-
-    @else
-        <tr>
-            <td style="width: 100%;text-align: center; font-size: 14px;">
-                @if($taxes->bank==44)
-                    ***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BOD*****
-                @elseif($taxes->bank==77)
-                    ***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BICENTENARIO*****
-                @elseif($taxes->bank==99)
-                    ***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BNC*****
-                @elseif($taxes->bank==33)
-                    ***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA 100%BANCO*****
-                @elseif($taxes->bank==55)
-                    ***** PAGO REALIZADO A TRAVÉS DE PUNTO DE VENTA BANESCO *****
-                @endif
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 100%;text-align: center; font-size: 14px;">
-
             </td>
         </tr>
     @endif
@@ -297,7 +264,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
+                    <img src="http://sysprim.com.devel/images/pdf/firma-director.png" style="width:180px; height:190px;">
                 </td>
             @else
                 <td style="width: 40%;text-align: center;">
@@ -330,19 +297,20 @@ $date = '31/12/' . date('Y');
         <tr>
 
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
-            <td style="width: 80%;">
-                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
-                     style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
-            </td>
-            @else
+                <td style="width: 80%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
+                </td>
+        @else
 
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
                 </td>
             </tr>
 
-            @endif
+        @endif
 
         <tr>
             <td style="width: 20%;">
@@ -351,7 +319,7 @@ $date = '31/12/' . date('Y');
                         <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="">
                     @endif
-				@endif
+                @endif
             </td>
         </tr>
     </table>

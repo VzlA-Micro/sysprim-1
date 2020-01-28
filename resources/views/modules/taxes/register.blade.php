@@ -47,8 +47,11 @@
                                                     @foreach($mount_pay as $key_mont=>$value_month)
                                                             @if($key_mont==date('Y').'-'.$value.'-'.'01'&&!$band)
                                                                     @php
+
                                                                            $band=true;
+
                                                                            $status=$value_month;
+
                                                                     @endphp
 
                                                             @endif

@@ -58,7 +58,7 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}"
+                                                <td><a href="{{url('rate/taxpayers/pdf/'.$taxe->id.'/true')}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
@@ -90,7 +90,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)  }}"
+                                                    <a href="#"
                                                        class="btn indigo waves-effect waves-light" disabled><i
                                                                 class="icon-pageview left"></i>Detalles</a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->

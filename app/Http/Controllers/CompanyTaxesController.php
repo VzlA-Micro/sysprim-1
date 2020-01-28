@@ -48,6 +48,11 @@ class CompanyTaxesController extends Controller
     }
 
 
+
+
+
+
+
     public function history($company)
     {
         $company=Company::where('name',$company)->get();
@@ -65,9 +70,7 @@ class CompanyTaxesController extends Controller
         }
 
 
-
-
-        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
+        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->orderBy('id','desc')->get()]);
     }
 
     /**
@@ -92,7 +95,7 @@ class CompanyTaxesController extends Controller
                     $mounth_pay = TaxesMonth::verify($company[0]->id, false);
 
                     $users = $company_find->users()->get();
-                    $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
+
                     $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
                     if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
@@ -101,13 +104,14 @@ class CompanyTaxesController extends Controller
                         return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow, 'unid_tribu' => $unid_tribu[0]->value]);
 
                     }
+
                 } else {
 
                     $users = $company_find->users()->get();
 
                     $status = TaxesMonth::verifyDefinitive($company[0]->id);
-                    $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
+                    $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
                     return view('modules.acteco-definitive.register', ['company' => $company_find,
                         "status" => $status,

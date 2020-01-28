@@ -311,7 +311,7 @@ class RateController extends Controller{
         ]);
 
         if($download==='true'){
-            return $pdf->download('PLANILLA_TASAS.pdf');
+            return $pdf->stream('PLANILLA_TASAS.pdf');
         }else{
             return $pdf->stream('PLANILLA_TASAS.pdf');
         }
@@ -329,7 +329,7 @@ class RateController extends Controller{
         $bank_payment = $request->input('bank_payment');
 
         $taxes = Taxe::findOrFail($id_taxes);
-        $code = TaxesNumber::generateNumberTaxes($type_payment . "88");
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "81");
         $taxes->code = $code;
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
@@ -355,7 +355,13 @@ class RateController extends Controller{
                 $taxes->bank = $bank_payment;
                 $amount = round($taxes->amount, 0);
                 $taxes->amount = $amount;
+                var_dump($amount);
+                var_dump($date_format);
+                var_dump($bank_payment);
+                var_dump($code);
+
                 $taxes->digit = TaxesNumber::generateNumberSecret($amount, $date_format, $bank_payment, $code);
+                dd($taxes->digit);
             } else {
                 $taxes->bank = $bank_payment;
                 $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
@@ -376,6 +382,7 @@ class RateController extends Controller{
             'firm' => false
         ]);
 
+
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Tasas Y Certificaciones'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
@@ -383,13 +390,17 @@ class RateController extends Controller{
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('')->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+        return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date);
     }
 
 
     public function paymentHistoryTaxPayers(){
         $users=User::find(\Auth::user()->id);
         $taxes=$users->taxesRate()->distinct()->orderBy('id','desc')->get();
+
+
+
+
         return view('modules.rates.taxpayers.history', ['taxes' =>$taxes]);
     }
 

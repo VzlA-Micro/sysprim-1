@@ -16,20 +16,28 @@ class TaxesMonth{
         $date = null;
         $company = Company::find($id);
         $now_pay = Carbon::now();//fecha de pago
-        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
+        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orWhereMonth('fiscal_period','=',12)->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
+
         $mount_pay=null;
+
 
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
                 if($tax->status!=='cancel'){
-                    if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')){
+                    if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')||$tax->status=='verified'||$tax->status=='verified-sysprim'){
+
+
+
                         $mount_pay[$tax->fiscal_period]=$tax->statusName;
                     }
                 }
             }
         }else{
            $mount_pay=null;
+
         }
+
+
 
 
         if($temporal){
@@ -187,7 +195,7 @@ class TaxesMonth{
         $companyTaxes = $company->taxesCompanies()->where('type','definitive')->where('branch','Act.Eco')->first();
 
         if(is_object($companyTaxes)){
-            if($companyTaxes->status==='verified'){
+            if($companyTaxes->status==='verified'||$companyTaxes->status==='verified-sysprim'){
                 return $status='verified';
             }else if($companyTaxes->status==='temporal'){
                 $companyTaxes->delete();
