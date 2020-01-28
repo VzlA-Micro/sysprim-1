@@ -81,8 +81,6 @@
                                 <label for="type">Tipo de Planilla</label>
                             </div>
 
-
-
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"

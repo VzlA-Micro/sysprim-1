@@ -18,9 +18,13 @@ class CreateVehiclesTaxesTable extends Migration
             $table->integer('vehicle_id')->unsigned();
             $table->integer('taxe_id')->unsigned();
             $table->string('status',15);
-            $table->float('fiscal_credits',8,2);
-            $table->float('recharge',8,2);
-            $table->float('recharge_mora',8,2);
+            $table->float('fiscal_credits',8,2)->nullable();;
+            $table->float('recharge',8,2)->nullable();;
+            $table->float('recharge_mora',8,2)->nullable();
+            $table->float('base_imponible',8,2)->nullable();
+            $table->float('discount',8,2)->nullable();
+            $table->float('previous_debt',8,2)->nullable();
+            $table->boolean('type_payments');
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
             $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();

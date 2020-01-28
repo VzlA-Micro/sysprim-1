@@ -2,8 +2,7 @@
 var url = "http://sysprim.com.devel/";
 
 var updateType = true;
-
-
+var period = null;
 $('document').ready(function () {
 
     $('#model').prop('disabled', true);
@@ -349,7 +348,7 @@ $('document').ready(function () {
             });
 
         } else {
-            var status ='false';
+            var status = 'false';
             $.ajax({
                 type: "POST",
                 url: url + "/ticketOffice/vehicle/status",
@@ -368,23 +367,24 @@ $('document').ready(function () {
                             text: data['message'],
                             icon: "success",
                             button: "Ok",
-                        }).then((aceptar)=>{
+                        }).then((aceptar) => {
                             location.reload();
-                        });
+                        })
+                        ;
 
-/*
-                        var templates = `<a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded ">Habilitado
-                            <i class="icon-check right"></i>
-                            </a>`;
+                        /*
+                                                var templates = `<a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded ">Habilitado
+                                                    <i class="icon-check right"></i>
+                                                    </a>`;
 
-                        $('#estado').html(templates);
-                        var template = `<button type="button"
-                                                    class="btn btn-large waves-effect waves-light red col s12 "
-                                                    id="vehicle-status" value="disabled">
-                                                Deshabilitar Vehículo
-                                                <i class="icon-sync_disabled right"></i>
-                                            </button>`;
-                        $('#button-status').html(template);*/
+                                                $('#estado').html(templates);
+                                                var template = `<button type="button"
+                                                                            class="btn btn-large waves-effect waves-light red col s12 "
+                                                                            id="vehicle-status" value="disabled">
+                                                                        Deshabilitar Vehículo
+                                                                        <i class="icon-sync_disabled right"></i>
+                                                                    </button>`;
+                                                $('#button-status').html(template);*/
 
                     }
                 },
@@ -396,29 +396,96 @@ $('document').ready(function () {
 
     });
 
-    $('#license_plate').blur(function () {
+    $('#licensePlate').blur(function () {
         var license = $(this).val();
         $.ajax({
-            type: "POST",
-            url: url + "/ticketOffice/vehicle/search-license/",
-            data: {
-                status: status
-            },
+            type: "get",
+            url: url + "/ticketOffice/vehicle/search-license/" + license,
 
             beforeSend: function () {
             },
             success: function (data) {
-                console.log(data.status);
-                if (data['status'] == "enabled") {
+                console.log(data);
+                if (data['status'] == "empty") {
                     swal({
-                        title: "Vehículo",
-                        text: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    }).then((aceptar)=>{
-                        location.reload();
+                        title: data['message'],
+                        icon: "info",
+                        button: "Ok"
                     });
+                    $('#brandTo').prop('disabled', true);
+                    $('#modelTo').prop('disabled', true);
+                    $('#colorTo').prop('disabled', true);
+                    $('#personTo').prop('disabled', true);
+                    $('#fiscal_periodTo').prop('disabled', true);
 
+                } else {
+
+                    $('#brandTo').prop('disabled', false);
+                    $('#modelTo').prop('disabled', false);
+                    $('#colorTo').prop('disabled', false);
+                    $('#personTo').prop('disabled', false);
+                    $('#fiscal_periodTo').prop('disabled', false);
+
+                    $('#vehicle_id').val(data['vehicle'][0].id);
+                    M.updateTextFields();
+                    $('#brandTo').val(data['modelVehicle']);
+                    M.updateTextFields();
+                    $('#modelTo').val(data['vehicle'][0]['model'].name);
+                    M.updateTextFields();
+                    $('#colorTo').val(data['vehicle'][0].color);
+                    M.updateTextFields();
+                    $('#personTo').val(data['userVehicle'][0].name);
+                    M.updateTextFields();
+
+                    swal({
+                        title: "Periodo Fiscal",
+                        text: "Elija entre los siguientes periodo",
+                        icon: "info",
+                        buttons: {
+                            cancel: {
+                                text: "Anual",
+                                value: false,
+                                visible: true,
+                                className: "green",
+                                closeModal: true
+                            },
+                            confirm: {
+                                text: "Trimestral",
+                                value: true,
+                                visible: true,
+                                className: "blue",
+                                closeModal: true
+                            }
+                        }
+                    }).then(function (options) {
+
+                        if (options) {
+                            period = 1;
+                        } else {
+                            period = 0;
+                        }
+
+                        $.ajax({
+                            type: "get",
+                            url: url + "/ticketOffice/vehicle/period-fiscal/" + period,
+                            beforeSend: function () {
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                if (data['status'] == "trimestre") {
+                                    $('#fiscal_periodTo').val(data['trimestre']);
+                                    M.updateTextFields();
+                                } else {
+                                    $('#fiscal_periodTo').val(data['year']);
+                                    M.updateTextFields();
+                                }
+
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    })
                 }
             },
             error: function (e) {
@@ -427,5 +494,51 @@ $('document').ready(function () {
         });
     });
 
+    $('#general-next').click(function () {
 
+        if ($('#vehicle_id').val() === '') {
+            swal({
+                title: "Información",
+                text: 'Debe ingresar una placa de vehículo,  para continuar con el registro.',
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        } else {
+            $('#two').removeClass('disabled');
+            $('ul.tabs').tabs("select", "details-tab");
+            var id = $('#vehicle_id').val();
+            console.log(period);
+            $.ajax({
+                type: "get",
+                url: url + "ticketOffice/vehicle/generatedPlanilla/" + id + "-" + period,
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    $('#base').val(data['grossTaxes']);
+                    M.updateTextFields();
+                    $('#tasa').val(data['previousDebt']);
+                    M.updateTextFields();
+                    $('#discount').val(' - ' + data['valueDiscount']);
+                    M.updateTextFields();
+                    $('#recharge').val(data['recharge']);
+                    M.updateTextFields();
+                    $('#rechargeMora').val(data['valueMora']);
+                    M.updateTextFields();
+                    $('#total').val(data['total']);
+                    M.updateTextFields();
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+
+    });
 });

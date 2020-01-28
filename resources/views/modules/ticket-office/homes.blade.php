@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('includes.lateral-bar')
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">
@@ -66,13 +65,10 @@
             
 
             <!-- Modal Structure -->
-
             <div id="modal1" class="modal modal-sm">
                 <div class="modal-content">
                     <h4 class="center-align">Taquillas</h4>
-
                     <div class="row content">
-
                     </div>
                 </div>
             </div>
@@ -85,6 +81,4 @@
 
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/data/sysq.js') }}"></script>
-    <script></script>
 @endsection

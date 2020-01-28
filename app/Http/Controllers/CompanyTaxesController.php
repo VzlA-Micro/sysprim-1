@@ -85,7 +85,7 @@ class CompanyTaxesController extends Controller
 
 
         if ($company_find->status !== 'disabled') {
-            if(substr($company_find->license,0,2)=='SL') {
+            if(substr($company_find->license,0,2)!='SL') {
 
 
                 if ($type !== 'definitive') {
@@ -117,7 +117,7 @@ class CompanyTaxesController extends Controller
 
 
             }else{
-                return redirect('companies/details/' . $company_find->id)->with(['message'=>'La mpresa deber poseer una licencia válida.']);
+                return redirect('companies/details/' . $company_find->id)->with(['message'=>'La empresa deber poseer una licencia válida.']);
             }
 
         } else {

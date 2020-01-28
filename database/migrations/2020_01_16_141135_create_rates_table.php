@@ -17,10 +17,12 @@ class CreateRatesTable extends Migration
             $table->increments('id');
             $table->string('code',10)->unique();
             $table->string('name',100);
-            $table->string('type',20);
+            $table->string('type',20)->nullable();
             $table->integer('cant_tax_unit');
-            $table->string('status',10);
+            $table->string('status',10)->default('active');
             $table->timestamps();
+
+
         });
     }
 

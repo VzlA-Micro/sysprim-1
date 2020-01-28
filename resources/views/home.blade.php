@@ -2,12 +2,17 @@
 
 @section('content')
     <div class="container-fluid">
+
+
         <div class="row">
+
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                 </ul>
             </div>
+
+
             @can('Mis Empresas')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('companies.my-business') }}" class="btn-app white blue-text">

@@ -427,7 +427,7 @@ class RateController extends Controller{
 
 
         $taxe = new Taxe();
-        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->code = TaxesNumber::generateNumberTaxes('PTS'."88");
         $taxe->status='ticket-office';
         $taxe->type='daily';
         $taxe->fiscal_period=date('Y-m-d');
@@ -522,8 +522,6 @@ class RateController extends Controller{
         } else {
             $verified = false;
         }
-
-
 
 
         return view('modules.rates.ticket-office.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type,'verified'=>$verified]);

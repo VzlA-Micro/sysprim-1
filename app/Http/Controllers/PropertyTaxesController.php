@@ -70,34 +70,38 @@ class PropertyTaxesController extends Controller
     {
         $declaration = Declaration::VerifyDeclaration($id);
 
-        $property = Inmueble::where('id', $id)->get();
+        $property = Inmueble::where('id', $id)->with('valueGround')->with('type')->get();
         $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
-        $catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
+        //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
         $catasBuild = CatastralConstruccion::where('id', $constProperty[0]->value_catas_const_id)->get();
-        $alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
+        //$alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
 
         $taxes = new Taxe();
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
         $taxes->save();
 
-        $taxesId = DB::getPdo()->lastInsertId();
+        $taxesId = $taxes->id;
 
-        $taxes = Taxe::where('id', $taxesId)->get();
+        //$taxes = Taxe::where('id', $taxesId)->get();
         $propertyTaxes = new PropertyTaxes();
         $propertyTaxes->property_id = $property[0]->id;
         $propertyTaxes->taxes_id = $taxesId;
+        $propertyTaxes->save();
+
         $period_fiscal = Carbon::now()->year;
 
 
-        return view('dev.paymentProperty.details', array(
+       $response= array(
             'property' => $property,
             'declaration' => $declaration,
-            'ground' => $catasGround,
             'build' => $catasBuild,
             'taxes' => $taxes,
-            'period' => $period_fiscal,
-            'alicuota' => $alicuota
+            'period' => $period_fiscal
+        );
+
+        return view('dev.paymentProperty.details',array(
+            'response'=>$response
         ));
     }
 

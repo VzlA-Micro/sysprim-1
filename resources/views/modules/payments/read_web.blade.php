@@ -75,7 +75,17 @@
 
                                             </td>
 
-                                        @endif
+                                            @elseif($taxe->branch==='Pat.Veh')
+
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+
+                                            @endif
+
 
 
                                     @endcan
@@ -162,16 +172,16 @@
                         }, doc.styles.tableHeader = {
                             fillColor: '#247bff',
                             color: '#FFF',
-                            fontSize: '7',
+                            fontSize: '11',
                             alignment: 'center',
                             bold: true
 
                         },
-                            doc.defaultStyle.fontSize = 6;
+                            doc.defaultStyle.fontSize = 9;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
 
