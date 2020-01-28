@@ -35,7 +35,7 @@ $('document').ready(function () {
 
 
         $('.rate').each(function () {
-            if($(this).val()===''||$(this).val()===null) {
+            if(($(this).val()===''||$(this).val()===null) && $('#type_company').val()!='company'&& $(this).attr('data-validate')!='email') {
                 swal({
                     title: "Información",
                     text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
@@ -93,7 +93,7 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-
+                        $('#id').val(response.id);
 
                         $('#two').removeClass('disabled');
                         $('#one').addClass('disabled');
@@ -184,7 +184,7 @@ $('document').ready(function () {
                                     location.reload();
 
                                 } else {
-                                    window.location.href = url + '';
+                                    window.location.href = url + 'rate/ticket-office/payments';
 
                                 }
                             });
@@ -309,7 +309,7 @@ $('document').ready(function () {
                             }
                         }).then(function (aceptar) {
                             if (aceptar) {
-                                window.location.href = url + "taxpayers/register";
+                                window.location.href = url + "ticketOffice/company/register";
                             }
                         });
 
@@ -346,44 +346,25 @@ $('document').ready(function () {
 
 
         $('.payroll').change(function () {
-            if(companies_id!==''){
-                if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
-                    companies_id=$(this).attr('data-company');
-                }else if ($(this).attr('data-company')!=companies_id){
-                    swal({
-                        title: "Información",
-                        text: "Las planillas selecionadas no pertenecen a la misma empresa.",
-                        icon: "info",
-                        button: "Ok",
-                    });
-                    $(this).prop('checked', false);
-                }
-            }else{
-                companies_id=$(this).attr('data-company');
+
+            var c=0;
+
+
+
+            $("input[type=checkbox]:checked").each(function(index, check ){
+                c++;
+            });
+
+            if(c>1) {
+                swal({
+                    title: "Información",
+                    text: "Solo se puede selecionar una planilla para realiazar el pago. ",
+                    icon: "info",
+                    button: "Ok",
+                });
+                $(this).prop('checked', false);
+
             }
-
-
-            if(type_taxes!==''){
-                if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
-                    type_taxes=$(this).attr('data-taxes');
-                }else if ($(this).attr('data-taxes')!=type_taxes){
-                    swal({
-                        title: "Información",
-                        text: "Las planillas selecionadas deben ser del mismo tipo.",
-                        icon: "info",
-                        button: "Ok",
-                    }).then(function () {
-
-                        location.reload();
-                    });
-
-
-                    $(this).prop('checked', false);
-                }
-            }else{
-                type_taxes=$(this).attr('data-taxes');
-            }
-
         });
 
 

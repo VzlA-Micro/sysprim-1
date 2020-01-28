@@ -67,7 +67,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-event_note prefix"></i>
-                            <input type="text" name="year" id="year" class="validate" pattern="[0-9]+" minlength="4"
+                            <input type="text" name="year" id="year" class="validate number-only" pattern="[0-9]+" minlength="4"
                                    maxlength="4"
                                    title="Solo puede escribir numeros." required>
                             <label for="year">Año</label>

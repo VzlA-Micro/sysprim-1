@@ -1133,5 +1133,6 @@ class TicketOfficeVehicleController extends Controller
         return view('modules.ticket-office.vehicle.modules.payroll.details',array('response'=>$response));
     }
 
+
 }
 

@@ -57,8 +57,9 @@
                     </div>-->
                 </div>
             </div>
-            {{-- Mostrar seccion si es administrador o no --}}
-            <div class="col s12 m4" style="margin-top: -7px">
+
+           <div class="col s12 m4" style="margin-top: -7px">
+
                 <div class="row">
                     <div class="col s12">
 
