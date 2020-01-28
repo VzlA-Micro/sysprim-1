@@ -45,31 +45,32 @@ class DeclarationVehicle
         $discount = 0;
         $previousDebt = 0;
         $valueDiscount = 0;
-        $valueDayMora=0;
+        $valueDayMora = 0;
         $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
         $moreThereYear = null;
-        $bank=BankRate::select('value_rate')->latest()->first();
-        $rateBank=$bank->value_rate*360;
+        $bank = BankRate::select('value_rate')->latest()->first();
+        $rateBank = $bank->value_rate * 360;
 
         $recharges = Recharge::where('branch', 'Pat.Vehiculo')->latest()->first();
         $helperTrimester = Trimester::verifyTrimester();
 
-        if ($dateCurrent->month==$helperTrimester['monthIntermediate']->month || $dateCurrent->month==$helperTrimester['monthEnd']->month){
+        if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
             if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
                 $diffDayMora = $dateCurrent->diffInDays($helperTrimester['monthIntermediate']);
-                $valueDayMora=$diffDayMora*$rateBank;
-            }else{
-                $diffDayMora=0;
-                $valueDayMora=$diffDayMora*$rateBank;
+                $valueDayMora = $diffDayMora * $rateBank;
+            } else {
+                $diffDayMora = 0;
+                $valueDayMora = $diffDayMora * $rateBank;
             }
-        }else{
-            $diffDayMora=0;
-            $valueDayMora=$diffDayMora*$rateBank;
+        } else {
+            $diffDayMora = 0;
+            $valueDayMora = $diffDayMora * $rateBank;
         }
 
         //$day = Carbon::now()->format('d');
         $array = explode('-', $id);
         $idVehicle = $array[0];
+
 
         if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
@@ -83,9 +84,18 @@ class DeclarationVehicle
         if ($monthCurrent >= 10 and $monthCurrent <= 12) {
             $trimesterCurrent = 4;
         }
+
         session_start();
         if (isset($array[1])) {
-            $optionPayment = $array[1];
+            $optionPayment = intval($array[1]);
+
+            if ($optionPayment === 1) {
+                $optionPayment = false;
+            }
+            if ($optionPayment === 0) {
+                $optionPayment = true;
+            }
+
             $_SESSION['optionPayment'] = $optionPayment;
         } else {
             $optionPayment = $_SESSION['optionPayment'];
@@ -127,7 +137,7 @@ class DeclarationVehicle
                     'moreThereYear' => $moreThereYear,
                     'optionPayment' => $optionPayment,
                     'previousDebt' => $previousDebt,
-                    'valueMora'=>$valueDayMora
+                    'valueMora' => $valueDayMora
                 );
                 return $amounts;
             }
@@ -145,7 +155,7 @@ class DeclarationVehicle
                     'rateYear' => $rateYear,
                     'moreThereYear' => $moreThereYear,
                     'optionPayment' => $optionPayment,
-                    'valueMora'=>$valueDayMora
+                    'valueMora' => $valueDayMora
                 );
 
                 return $amounts;
@@ -207,7 +217,7 @@ class DeclarationVehicle
                     'rateYear' => $rateYear,
                     'moreThereYear' => $moreThereYear,
                     'optionPayment' => $optionPayment,
-                    'valueMora'=>$valueDayMora
+                    'valueMora' => $valueDayMora
                 );
 
                 return $amounts;

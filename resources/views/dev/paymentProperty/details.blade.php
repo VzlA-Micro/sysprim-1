@@ -19,14 +19,14 @@
                     <div class="row padding-2 left-align">
                         <div class="col m6">
                             <ul>
-                                <li><b>Periodo Fiscal: {{$period}} </b></li>
-                                <li><b>Fecha: {{$taxes[0]->created_at}} </b></li>
+                                <li><b>Periodo Fiscal: {{$response['period']}} </b></li>
+                                <li><b>Fecha: {{$response['taxes']->created_at}} </b></li>
                             </ul>
                         </div>
                         <div class="col m6">
                             <ul>
-                                <li><b>Codigo Catastral: </b>{{ $property->code_cadastral }}</li>
-                                <li><b>Direccion: </b>{{ $property->address }}</li>
+                                <li><b>Codigo Catastral: </b></li>
+                                <li><b>Direccion: </b></li>
                                 <li><b></b></li>
                             </ul>
                         </div>
@@ -36,19 +36,19 @@
                     <div class="card-header center-align">
                         <h5>Detalles de pago de inmueble</h5>
                     </div>
-                    <form method="post" action="{{ route('paymentsProperty.help') }}" id='register-taxes'
+                    <form method="post" action="" id='register-taxes'
                           class="card-content row">
                         @csrf
-                        <input type="text" name="idProperty" value="{{$property->id}}">
+                        <input type="hidden" name="idProperty" value="{{$response['property'][0]->id}}">
                         <input type="hidden" name="totalGround" id="totalGround" class="validate money"
-                               value="{{$build[0]['name']}}" readonly>
+                               value="" readonly>
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="totalGround" id="totalGround" class="validate money"
-                                   value="{{$declaration['totalGround']}}" readonly>
+                                   value="" readonly>
                             <label for="totalGround">Total Terreno</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -56,7 +56,7 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="totalBuild" id="totalBuild" class="validate money"
-                                   value="{{$declaration['totalBuild']}}" readonly>
+                                   value="" readonly>
                             <label for="totalBuild">Total Construcción</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -88,8 +88,8 @@
                                         <th>ALICUOTA</th>
                                     </tr>
                                     <tr>
-                                        <th>{{$alicuota[0]->name}}</th>
-                                        <th>{{$alicuota[0]->value}} %</th>
+                                        <th></th>
+                                        <th>%</th>
                                     </tr>
 
                                 </table>
@@ -116,12 +116,12 @@
                                 </div>
                                 <div class="col s12 m12">
                                     <input id="total" type="text" name="total" class="validate"
-                                           value="{{$declaration ['declaration']}}" readonly>
+                                           value="" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>
                                 </div>
                                 <input type="hidden" id="bank" name="bank" value="0">
                                 <input type="hidden" id="payments" name="payments" value="1">
-                                <input type="hidden" name="taxes_id" value="{{$taxes[0]->id}}">
+                                <input type="hidden" name="taxes_id" value="">
                             </div>
                         </div>
                         <div class="row">

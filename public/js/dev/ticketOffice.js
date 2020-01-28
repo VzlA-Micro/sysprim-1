@@ -611,18 +611,10 @@ $(document).ready(function () {
                 $('#fiscal_period').val('');
                 $('#details').html('');
                 generarCiiu();
-
-
             }
         }
 
     });
-
-
-
-
-
-
 
     $('#search-code').blur(function () {
         if ($('#search-code').val() !== '') {

@@ -20,6 +20,8 @@ use App\UserVehicle;
 use App\Brand;
 use App\ModelsVehicle;
 use App\VehicleType;
+use App\Helpers\Trimester;
+
 
 class VehicleController extends Controller
 {
@@ -207,13 +209,6 @@ class VehicleController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $ciu = ciu::destroy($id);
-        return redirect()->route('ciu-branch.read');
-    }
-
-
     public function brand(Request $request)
     {
         $models = ModelsVehicle::where('brand_id', $request->input('brand'))->get();
@@ -309,10 +304,54 @@ class VehicleController extends Controller
         ));
     }
 
-    public function searchLicensePlate($license_plate)
+    public function searchLicensePlate($license)
     {
-        $vehicle=Vehicle::where('license_plate',$license_plate)->get();
+        //$license = $request->input('licensePlate');
 
+        $vehicle = Vehicle::where('license_plate', $license)->with('users')->with('model')->get();
+        $modelVehicle = Vehicle::where('license_plate', $license)->get();
+
+        if (!$vehicle->isEmpty()) {
+            $response = array(
+                "status" => "notEmpty",
+                "message" => "",
+                "vehicle" => $vehicle,
+                "modelVehicle" => $modelVehicle[0]->model->brand->name,
+                "userVehicle" => $modelVehicle[0]->users
+            );
+        } else {
+            $response = array(
+                "status" => "empty",
+                "message" => "Placa no encontrada"
+            );
+        }
+
+        return Response()->json($response);
+
+    }
+
+    public function periodoFiscal($period)
+    {
+
+        //var_dump($period);
+        $trimester = Trimester::verifyTrimester();
+        //si es TRUE es trimestral
+        if ($period==1) {
+            $trimestre = $trimester['trimesterBegin'] . " - " . $trimester['trimesterEnd'];
+            $response=array(
+                "trimestre"=>$trimestre,
+                "status"=>"trimestre"
+            );
+        } else {
+            //ES FALSE POR LO TANTO ES ANUAL
+            $year = $trimester['current']->format('m-Y'). " - " ."12-". $trimester['current']->format('Y');
+            $response=array(
+             "year"=>$year,
+             "status"=>"year"
+            );
+        }
+
+        return response()->json($response);
     }
 
 }

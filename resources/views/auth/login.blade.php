@@ -35,16 +35,16 @@
     <div class="container-fluid">
         <div id="slides">
           <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bqto-1.jpg') }})"></span>
+            <span class="animate down" style="background-image: url({{ asset('images/bqto-1.webp') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate in" style="background-image: url({{ asset('images/bqto-4.jpg') }})"></span>
+            <span class="animate in" style="background-image: url({{ asset('images/bqto-4.webp') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bqto-2.jpg') }})"></span>
+            <span class="animate down" style="background-image: url({{ asset('images/bqto-2.webp') }})"></span>
           </div>
           <div class="slide">
-            <span class="animate out" style="background-image: url({{ asset('images/bqto-3.jpg') }})"></span>
+            <span class="animate out" style="background-image: url({{ asset('images/bqto-3.webp') }})"></span>
           </div>
         </div>
         <div class="row show-on-medium-and-down hide-on-large-only">
@@ -62,7 +62,7 @@
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>
-                            <img src="{{ asset('images/semat.png') }}" class="responsive-img" alt="" srcset="">                    
+                            <img src="{{ asset('images/semat.webp') }}" class="responsive-img" alt="" srcset="">
                             
                         </h5>
                     </div>

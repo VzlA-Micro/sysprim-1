@@ -46,7 +46,7 @@
                 </div>
             </div>
             {{-- Mostrar seccion si es administrador o no --}}
-            {{--<div class="col s12 m4" style="margin-top: -7px">
+           <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
                     <div class="col s12">
                         <a href="{{route('inmueble.my-propertys')}}" class="btn-app white green-text">
@@ -54,14 +54,14 @@
                             <span class="truncate">Mis Pagos</span>
                         </a>
                     </div>
-                    <div class="col s12">
-                        <a href="" class="btn-app white orange-text">
-                            <i class="icon-warning"></i>
-                            <span class="truncate">Mis Multas</span>
-                        </a>
-                    </div>
-                </div>
-            </div>--}}
+                    {{--<div class="col s12">
+                       <a href="" class="btn-app white orange-text">
+                           <i class="icon-warning"></i>
+                           <span class="truncate">Mis Multas</span>
+                       </a>
+                   </div>--}}
+               </div>
+           </div>
         </div>
     </div>
 @endsection

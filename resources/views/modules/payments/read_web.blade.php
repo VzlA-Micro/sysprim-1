@@ -77,7 +77,17 @@
 
                                             </td>
 
-                                        @endif
+                                            @elseif($taxe->branch==='Pat.Veh')
+
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+
+                                            @endif
+
 
 
                                     @endcan
