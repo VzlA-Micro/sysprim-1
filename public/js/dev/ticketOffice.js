@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var url = "https://sysprim.com/";
+    var url = "http://172.19.50.253/";
 
 
     function reset() {
@@ -125,7 +125,7 @@ $(document).ready(function () {
 
         var type=$('#type').val();
 
-        url='https://sysprim.com/';
+        url='http://172.19.50.253/';
 
 
 
@@ -201,7 +201,7 @@ $(document).ready(function () {
                         if (aceptar) {
                            location.reload();
                         } else {
-                            url='https://sysprim.com/';
+                            url='http://172.19.50.253/';
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });
