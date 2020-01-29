@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/countdown-timer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/subtle-slideshow.css') }}">
+    {{--<link rel="stylesheet" href="{{ asset('css/countdown-timer.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('css/subtle-slideshow.css') }}">--}}
     <style type="text/css">
         body {
             
