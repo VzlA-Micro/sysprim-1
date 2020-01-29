@@ -15,6 +15,10 @@ class CompanyRespaldoTableSeeder extends Seeder
         $sql = file_get_contents($path);
         DB::unprepared($sql);
 
+        $path = base_path() . '/database/seeds/register/register_user.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
+
         $path = base_path() . '/database/seeds/register/sql_sysprim_inmueble/value_catastral_construccion.sql';
         $sql = file_get_contents($path);
         DB::unprepared($sql);
