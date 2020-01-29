@@ -1,5 +1,5 @@
 
-var url = "http://172.19.50.253/";
+var url = "https://sysprim.com/";
 var controller = "collection/statistics";
 
 
@@ -22,7 +22,7 @@ if ((width>=300 && width <=1000) &&( height>=640 && height<= 1200) ){
 
 $('document').ready(function () {
 
-    var url = "http://172.19.50.253/";
+    var url = "https://sysprim.com/";
     var controller = "collection/statistics";
 
 
