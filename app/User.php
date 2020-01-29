@@ -75,6 +75,13 @@ class User extends Authenticatable  implements Auditable
     }
 
 
+
+    public function taxesRate(){
+        return $this->belongsToMany('App\Taxe', 'rates_taxes')
+            ->withPivot('taxe_id');
+    }
+
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MyResetPassword($token));

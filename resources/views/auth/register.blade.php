@@ -70,7 +70,7 @@
                     </div>
                     <div class="card-footer center">
                         <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">
-                            Registarse
+                            Registrarse
                             <i class="icon-send right"></i>
                         </button>
                     </div>

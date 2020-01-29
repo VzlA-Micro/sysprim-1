@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($taxes as $taxe)
-                                    @if($taxe->status=='verified' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
+                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>
                                             <td>{{ $taxe->code }}</td>
@@ -93,7 +93,7 @@
 
 
                                                 @endif
-                                            @elseif($taxe->status==='verified')
+                                            @elseif($taxe->status==='verified'||$taxe->status==='verified-sysprim')
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-check left"></i>
@@ -150,6 +150,9 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
+
+
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

@@ -25,7 +25,8 @@ use App\Taxe;
 class VehiclesTaxesController extends Controller
 {
     public function create($id)
-    {
+    { $trimester = Trimester::verifyTrimester();
+
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
             ->where('status', 'process')->get();
 
@@ -56,16 +57,22 @@ class VehiclesTaxesController extends Controller
             }
 
             if ($declaration['optionPayment']) {
+                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' .'12/'.$trimester['monthEnd']->format('Y');
                 $total = number_format($declaration['total'], 2, ',', '.');
                 $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
                 $rateYear = $declaration['rateYear'];
                 $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
                 $previousDebt = $declaration['previousDebt'];
                 $recharge = 0;
+                $period_fiscal_begin=$trimester['monthBegin']->format('m-Y');
+                $period_fiscal_end='12/'.$trimester['monthEnd']->format('Y');
             } else {
+                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
                 $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
                 $grossTaxes = $paymentFractional;
                 $rateYear = $declaration['rateYear'];
+                $period_fiscal_begin=$trimester['monthBegin']->format('m-Y');
+                $period_fiscal_end=$trimester['monthEnd']->format('m-Y');
                 if (isset($declaration['recharge'])) {
                     $recharge = number_format($declaration['recharge'], 2, ',', '.');
                 } else {
@@ -73,6 +80,7 @@ class VehiclesTaxesController extends Controller
                 }
                 if (isset($declaration['previousDebt'])) {
                     if ($declaration['previousDebt'] !== 0) {
+
                         $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
                     }
                 } else {
@@ -82,7 +90,8 @@ class VehiclesTaxesController extends Controller
 
             $taxes = new Taxe();
             $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
+            $taxes->fiscal_period =$period_fiscal_begin ;
+            $taxes->fiscal_period_end=$period_fiscal_end;
             $taxes->save();
 
             $taxesId = $taxes->id;
@@ -91,11 +100,12 @@ class VehiclesTaxesController extends Controller
             $vehicleTaxes->vehicle_id = $vehicle[0]->id;
             $vehicleTaxes->taxe_id = $taxesId;
             $vehicleTaxes->status = 'Temporal';
+            $vehicleTaxes->type_payments = $declaration['optionPayment'];
             $vehicleTaxes->fiscal_credits = 0;
             $vehicleTaxes->save();
 
-            $trimester = Trimester::verifyTrimester();
-            $period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
+
+            //$period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
 
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
@@ -119,21 +129,40 @@ class VehiclesTaxesController extends Controller
 
     public function taxesSave(Request $request)
     {
-
         $id = $request->input('taxes_id');
         $amount = $request->input('total');
         $fiscalCredits = $request->input('fiscal_credits');
         $recharge = $request->input('recharge');
         $recharge_mora = $request->input('rechargeMora');
+        $previouDebt = $request->input('previou_debt');
+        $discount = $request->input('discount');
+        $base = $request->input('base');
 
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
+
+        $base_format = str_replace('.', '', $base);
+        $base_format = str_replace(',', '.', $base_format);
 
         if ($fiscalCredits !== 0) {
             $fiscalCredits_format = str_replace('.', '', $fiscalCredits);
             $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
         } else {
             $fiscalCredits_format = 0;
+        }
+
+        if ($previouDebt !== 0) {
+            $previouDebt_format = str_replace('.', '', $previouDebt);
+            $previouDebt_format = str_replace(',', '.', $previouDebt_format);
+        } else {
+            $previouDebt_format = 0;
+        }
+
+        if ($discount !== 0) {
+            $discount_format = str_replace('.', '', $discount);
+            $discount_format = str_replace(',', '.', $discount_format);
+        } else {
+            $discount_format = 0;
         }
 
         if ($recharge !== 0 && $recharge_mora !== 0) {
@@ -151,14 +180,19 @@ class VehiclesTaxesController extends Controller
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'temporal';
-        $taxes->branch = 'Vehiculo';
+        $taxes->branch = 'Pat.Veh';
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+
+
 
         $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
         $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
         $vehicleTaxes->recharge = $recharge_format;
         $vehicleTaxes->recharge_mora = $rechargeMora_format;
+        $vehicleTaxes->base_imponible = $base_format;
+        $vehicleTaxes->previous_debt = (float)$previouDebt_format;
+        $vehicleTaxes->discount=$discount_format;
         $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
@@ -168,7 +202,6 @@ class VehiclesTaxesController extends Controller
         $taxes->update();
 
         return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
-
     }
 
 
@@ -289,7 +322,7 @@ class VehiclesTaxesController extends Controller
         $taxes = Taxe::findOrFail($id_vehicle[1]);
         $user = \Auth::user();
         $vehicle = Vehicle::where('id', $id_vehicle[0])->get();
-        $idTaxesVehicle=VehiclesTaxe::where('taxe_id',$id_vehicle[1])->get();
+        $idTaxesVehicle = VehiclesTaxe::where('taxe_id', $id_vehicle[1])->get();
         $vehiclesTaxe = VehiclesTaxe::find($idTaxesVehicle[0]->id);
 
 

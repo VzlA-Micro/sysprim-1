@@ -38,8 +38,8 @@
 									</label>
 								</div>
 								<div class="col s12 m4">
-									<input type="radio" id="ptb" name="method" value="ptb" class="type_payment_event">
-									<label class="btn-radio grey" for="ptb">
+									<input type="radio" id="ppt" name="method" value="ppt" class="type_payment_event">
+									<label class="btn-radio grey" for="ppt">
 										<i class="">
 											<img src="{{ asset('images/png/009-smartphone-1.png') }}" style="height: 64px!important;width: 64px!important;" alt="">
 										</i>

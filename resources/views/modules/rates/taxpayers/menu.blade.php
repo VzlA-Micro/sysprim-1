@@ -12,13 +12,13 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('rate.taxpayers.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_box"></i>
-                    <span class="truncate">Declarar Tasa.</span>
+                    <span class="truncate">Declarar Tasa</span>
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white orange-text">
+                <a href="{{route('rate.taxpayers.payment.history')}}" class="btn-app white orange-text">
                     <i class="icon-menu"></i>
-                    <span class="truncate">Historial de Pagos.</span>
+                    <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
 

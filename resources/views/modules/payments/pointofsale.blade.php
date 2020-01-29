@@ -2,8 +2,6 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
-    <style>
-    </style>
 @endsection
 
 @section('content')
@@ -12,8 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Punto de Venta</a></li>
                 </ul>
@@ -29,9 +26,8 @@
                             <thead>
 
                             <tr>
-                                <th>Codigó</th>
+                                <th>Codigó de Pago</th>
                                 <th>Fecha</th>
-                                <th>Contribuyente</th>
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Lote</th>
@@ -50,9 +46,8 @@
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
                                     <tr>
-                                        <td>{{$taxe->code}}</td>
+                                        <td>{{ $taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                        <td>{{$taxe->taxes[0]->companies[0]->license}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->ref}}</td>
@@ -79,17 +74,29 @@
                                         </td>
                                         @endcan
                                         @can('Detalles Pagos')
-                                            @if($taxe->taxes[0]->type!='definitive')
-                                                <td>
-                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
-                                                                class="icon-pageview"></i></a>
-                                                </td>
-                                            @else
+                                            @if($taxe->taxes[0]->branch==='Act.Eco')
 
+                                                @if($taxe->taxes[0]->type!='definitive')
+
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+                                                    </td>
+
+                                                @else
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->taxes[0]->id) }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+
+                                                    </td>
+                                                @endif
+
+                                            @elseif($taxe->taxes[0]->branch==='Tasas y Cert')
 
                                                 <td>
-                                                    <a href="{{url('taxes/definitive/'.$taxe->taxes[0]->id)  }}"
+                                                    <a href="{{url('rate/ticket-office/details/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
@@ -184,16 +191,16 @@
                         }, doc.styles.tableHeader = {
                             fillColor: '#247bff',
                             color: '#FFF',
-                            fontSize: '9',
+                            fontSize: '10',
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 7;
+                        }, doc.defaultStyle.fontSize = 9;
 
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     }
                 },
 

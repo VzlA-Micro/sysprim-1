@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     var url = "https://sysprim.com/";
 
 
@@ -17,7 +16,7 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar el tipo de documento, antes de ingresar el número de RIF.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -36,58 +35,59 @@ $(document).ready(function () {
 
     function filterByParish(parish_id) {
         var sector = [{
-            id: [9,10,4,6,10],
+            id: [9, 10, 4, 6, 10],
             name: 'NORTE',
-            prefix:'NORTE',
-            status: false
-        },{
-            id: [2,6],
-            name: 'OESTE',
-            prefix:'OESTE',
+            prefix: 'NORTE',
             status: false
         }, {
-            id: [1,3],
+            id: [2, 6],
+            name: 'OESTE',
+            prefix: 'OESTE',
+            status: false
+        }, {
+            id: [1, 3],
             name: 'CENTRO',
-            prefix:'CENTRO',
+            prefix: 'CENTRO',
             status: false
         }, {
             id: [4],
             name: 'ZONA INDUSTRIAL I',
-            prefix:'INDUSI',
+            prefix: 'INDUSI',
 
             status: false
 
-        },{
+        }, {
             id: [4],
             name: 'ZONA INDUSTRIAL II',
             status: false,
-            prefix:'INDUSII' ,
+            prefix: 'INDUSII',
 
-        },{
+        }, {
             id: [2],
             name: 'ZONA INDUSTRIAL III',
             status: false,
-            prefix:'INDUSIII',
+            prefix: 'INDUSIII',
 
         }, {
             id: [8],
             name: 'ESTE',
             status: false,
-            prefix:'ESTE',
+            prefix: 'ESTE',
         },
-            {   id: [7,5],
+            {
+                id: [7, 5],
                 name: 'SUR',
                 status: false,
-                prefix:'ESTE',
+                prefix: 'ESTE',
             }
 
 
         ];
         for (var i = 0; i < sector.length; i++) {
-            for(var j=0;j<sector[i].id.length; j++){
+            for (var j = 0; j < sector[i].id.length; j++) {
 
-                if(sector[i].id[j]==parish_id){
-                    sector[i].status=true;
+                if (sector[i].id[j] == parish_id) {
+                    sector[i].status = true;
                 }
             }
         }
@@ -95,7 +95,7 @@ $(document).ready(function () {
         var html = '<option value="null" disabled selected>Seleccionar Ubicación</option>';
         for (var i = 0; i < sector.length; i++) {
             if (sector[i].status === true) {
-                html += '<option value='+sector[i].prefix+'>' + sector[i].name + '</option>'
+                html += '<option value=' + sector[i].prefix + '>' + sector[i].name + '</option>'
             }
 
         }
@@ -103,28 +103,27 @@ $(document).ready(function () {
         $('#sector').append(html);
         $('select').formSelect();
     }
+
     $('#parish').change(function () {
         $('#sector').text('');
-         filterByParish($(this).val());
+        filterByParish($(this).val());
     });
-
 
 
     $('#license').blur(function () {
-        var license=$('#license').val();
-        var rif=$('#document_type').val()+$('#RIF').val();
-        verifylicense(license,rif);
+        var license = $('#license').val();
+        var rif = $('#document_type').val() + $('#RIF').val();
+        verifylicense(license, rif);
     });
 
 
-
-    function verifylicense(license,rif) {
+    function verifylicense(license, rif) {
 
 
         if (license !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "company/verify-license/" + license+"/"+rif,
+                url: url + "company/verify-license/" + license + "/" + rif,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -139,7 +138,7 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button:{
+                            button: {
                                 text: "Entendido",
                                 className: "red-gradient"
                             },
@@ -157,7 +156,7 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "red-gradient"
                         },
@@ -168,16 +167,15 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
     $('#company-register').on('submit', function (e) {
         e.preventDefault();
-        $('#button-company').attr('disabled','disabled');
+
+        $('#button-company').attr('disabled', 'disabled');
+
+
         if ($('#lat').val() !== "") {
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
-                if ($('#ciu').val() !== undefined) {
+                if ($('#ciu').val() !== undefined || $('#question_license').val() == 'false') {
                     $.ajax({
                         url: url + "companies/save",
                         cache: false,
@@ -195,7 +193,7 @@ $(document).ready(function () {
                                 title: "¡Bien Hecho!",
                                 text: "La empresa se ha registrado con éxito.",
                                 icon: "success",
-                                button:{
+                                button: {
                                     text: "Esta bien",
                                     className: "green-gradient"
                                 },
@@ -206,7 +204,7 @@ $(document).ready(function () {
                             $("#preloader-overlay").fadeOut('fast');
                         },
                         error: function (err) {
-                            $('#button-company').removeAttr('disabled','');
+                            $('#button-company').removeAttr('disabled', '');
                             console.log(err);
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
@@ -214,7 +212,7 @@ $(document).ready(function () {
                                 title: "¡Oh no!",
                                 text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                                 icon: "error",
-                                button:{
+                                button: {
                                     text: "Entendido",
                                     className: "red-gradient"
                                 },
@@ -222,12 +220,12 @@ $(document).ready(function () {
                         }
                     });
                 } else {
-                    $('#button-company').removeAttr('disabled','');
+                    $('#button-company').removeAttr('disabled', '');
                     swal({
                         title: "Información",
                         text: "Debe tener al menos un ciiu para poder registrar una empresa..",
                         icon: "info",
-                        button:{
+                        button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
@@ -242,7 +240,7 @@ $(document).ready(function () {
                         title: "Información",
                         text: "Selecione un sector para completar el registro.",
                         icon: "info",
-                        button:{
+                        button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
@@ -252,25 +250,25 @@ $(document).ready(function () {
                         title: "Información",
                         text: "Selecione la parroquia para completar el registro.",
                         icon: "info",
-                        button:{
+                        button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
                     });
                 }
-                $('#button-company').removeAttr('disabled','');
+                $('#button-company').removeAttr('disabled', '');
             }
         } else {
             swal({
                 title: "Información",
                 text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
-            $('#button-company').removeAttr('disabled','');
+            $('#button-company').removeAttr('disabled', '');
         }
 
     });
@@ -282,7 +280,7 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -299,7 +297,7 @@ $(document).ready(function () {
                 title: "Información",
                 text: "Debes seleccionar una operadora valida, antes de ingresar el número telefónico.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -355,7 +353,7 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "red-gradient"
                         },
@@ -377,17 +375,17 @@ $(document).ready(function () {
 
 
         var band = true;
-        if(code!==""){
+        if (code !== "") {
             $.ajax({
                 type: "GET",
                 url: url + "ciu/find/" + code,
                 beforeSend: function () {
-                    $('#search-ciu').attr('disabled','disabled');
+                    $('#search-ciu').attr('disabled', 'disabled');
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    $('#search-ciu').removeAttr('disabled','');
+                    $('#search-ciu').removeAttr('disabled', '');
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
@@ -400,7 +398,7 @@ $(document).ready(function () {
                                 <div class="input-field col s10 m5"  >
                                     <i class="icon-text_fields prefix"></i>
                                     <label for="phone">Nombre</label>
-                                     <textarea name="name-ciu" id="${subr+response.ciu.code}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
+                                     <textarea name="name-ciu" id="${subr + response.ciu.code}" cols="30" rows="10" class="materialize-textarea" disabled required>${response.ciu.name}</textarea>
                                 </div>
 
                                 <div class="input-field col s12 m2">
@@ -418,7 +416,7 @@ $(document).ready(function () {
                                         title: "¡Oh no!",
                                         text: "El ciiu " + response.ciu.code + " ya  esta ingresado en esta empresa.",
                                         icon: "warning",
-                                        button:{
+                                        button: {
                                             text: "Entendido",
                                             className: "red-gradient"
                                         },
@@ -445,14 +443,14 @@ $(document).ready(function () {
                             $(this).parent().parent().text("");
                         });
 
-                        M.textareaAutoResize($('#' + subr+response.ciu.code));
+                        M.textareaAutoResize($('#' + subr + response.ciu.code));
                         M.updateTextFields();
                     } else {
                         swal({
                             title: "Información",
                             text: "El CIIU que ingresó no se encuentra registrado en el sistema.",
                             icon: "info",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
@@ -467,7 +465,7 @@ $(document).ready(function () {
 
                 },
                 error: function (err) {
-                    $('#search-ciu').removeAttr('disabled','');
+                    $('#search-ciu').removeAttr('disabled', '');
                     console.log(err);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -475,29 +473,32 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "red-gradient"
                         },
                     });
                 }
             });
-        }else{
+        } else {
             swal({
                 title: "Información",
                 text: "Debe ingresar un CIIU valido.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
         }
-
-
+        });
 
         $('#company-register-ticket').submit(function (e) {
             e.preventDefault();
+
+            console.log(e);
+
+
 
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
 
@@ -577,427 +578,456 @@ $(document).ready(function () {
         });
 
 
-    });
 
 
+        function verifyRIF() {
+            var rif = $('#document_type').val() + $('#RIF').val();
+            $.ajax({
+                method: "GET",
+                url: url + "company/verify-rif/" + rif,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
 
-    function verifyRIF() {
-        var rif = $('#document_type').val() + $('#RIF').val();
-        $.ajax({
-            method: "GET",
-            url: url + "company/verify-rif/" + rif,
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        var company = response.company[0];
+                        $('#name').val(company.name);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    } else {
+                        if (response.status === 'registered') {
+                            var company = response.company[0];
+                        } else {
+                            findCompany(rif);
+                        }
 
-                if (response.status === 'error') {
+                    }
+                    M.updateTextFields();
+
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                    $('#RIF').val(' ');
+                }
+            });
+        }
+
+
+        function confirmCiu() {
+            swal({
+                title: "¡Bien Hecho!",
+                text: "CIIU  ingresado con éxito, ¿Desea añadir otro CIIU? ",
+                icon: "info",
+                buttons: {
+                    confirm: {
+                        text: "Si",
+                        value: true,
+                        visible: true,
+                        className: "amber-gradient"
+
+                    },
+                    cancel: {
+                        text: "No",
+                        value: false,
+                        visible: true,
+                        className: "grey lighten-2"
+                    }
+                }
+            }).then(function (aceptar) {
+                if (aceptar) {
+                    $('#code').focus();
+                    $('#code').val('');
+                } else {
+
+                    if ($('#user-next').val() !== undefined) {
+                        $('ul.tabs').tabs();
+                        $('ul.tabs').tabs("select", "map-tab");
+
+                    } else {
+                        var focalizar = $("div#div-map").position().top;
+                        $('html,body').animate({scrollTop: focalizar}, 1000);
+                    }
+
+
+                }
+            });
+
+        }
+
+        function findCompany(rif) {
+
+            $.ajax({
+                method: "GET",
+                url: url + "company/find/" + rif.toUpperCase(),
+                beforeSend: function () {
+
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    console.log(response);
+
+                    if (response.status === 'success') {
+                        var company = response.company;
+
+                        $('#name').val(company.historico_nombre_empresa);
+                        $('#name_company').val(company.historico_nombre_empresa);
+                        $('#RIF').val(company.rif.substr(1));
+                        $('#license').val(company.codigo_licencia);
+                        $('#address').val(company.direccion);
+                        $('#phone-company').val(company.telefono_principal);
+                        if (company.direccion !== '') {
+                            localizar("map", "Venezuela, Baquisimeto Estado Lara " + company.direccion);
+                        }
+                        if ($('#ci-license').val() !== undefined) {
+                            $('#name_company').val(company.historico_nombre_empresa);
+                            $('#ci-license').val(company.historico_cedula);
+                            $('#phone-user').val(company.telefono_principal);
+                            $('#name-license').val(company.historico_nombre_representante);
+                            $('#email').val(company.email);
+                        }
+                        M.textareaAutoResize($('#address'));
+                        M.updateTextFields();
+
+                    }
+                    if (response.status === 'registered') {
+
+                        swal({
+                            title: "Información",
+                            text: "Empresa encontrada con éxito, verifique que  los datos encontrados son los correctos, complete los CIIU, código catastral y número de empleados, y confirme su ubicación en el mapa.",
+                            icon: "success",
+                            button: "Ok",
+                        });
+
+
+                        var company = response.company;
+                        $('#name').val(company.name);
+                        $('#license').val(company.license);
+                        $('#address').val(company.address);
+                        $('#phone').val(company.phone);
+                        $("#parish option").each(function () {
+                            if ($(this).val() == company.parish_id) {
+                                $(this).attr("selected", true);
+                            }
+                        });
+                        $('#parish').formSelect();
+                        filterByParish(company.parish_id);
+
+                        $("#country_code_company option").each(function () {
+                            if ($(this).val() == company.operator) {
+                                $(this).attr("selected", true);
+                            }
+                        });
+
+                        $("#sector option").each(function () {
+                            if ($(this).val() == company.sector) {
+                                $(this).attr("selected", true);
+                            }
+                        });
+                        $('#sector').formSelect();
+                        $('#country_code_company').formSelect();
+                        $('#phone').val(company.numberPhone);
+
+                        var lat = parseFloat(company.lat);
+                        var lng = parseFloat(company.lng);
+
+                        var marcadores = [];
+
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 15,
+                            center: {lat: lat, lng: lng}
+                        });
+
+                        addMark({lat: lat, lng: lng}, map, marcadores);
+                        map.addListener('click', function (e) {
+                            addMark(e.latLng, map, marcadores);
+                        });
+
+                        M.textareaAutoResize($('#address'));
+                        M.updateTextFields();
+                    }
+
+                },
+                error: function (err) {
+                    $('#license').val('');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }
+
+        $('#number_employees').change(function () {
+            var value = $(this).val();
+            if (value < 0) {
+                $(this).val(1);
+            }
+        });
+
+
+        $('#question_license').change(function () {
+            var questions_license = $('#question_license').val();
+
+            console.log(questions_license);
+
+
+            if (questions_license == 'true') {
+
+                swal({
+                    title: "Información",
+                    text: "Ingrese el numero de licencia otorgado y su código catastral.",
+                    icon: "info",
+                    button: "Ok",
+                });
+                $('#license').removeAttr('disabled', '');
+                $('#code_catastral').removeAttr('disabled', '');
+                $('#code').removeAttr('disabled', '');
+
+            } else {
+                $('#license').attr('disabled', '');
+                $('#code_catastral').attr('disabled', '');
+                $('#code').attr('disabled', '');
+            }
+        });
+
+
+        //tab ticktffice
+        $('#user-next').click(function () {
+
+            if ($('#ci').val() === '' || $('#name_user').val() === '') {
+                swal({
+                    title: "Información",
+                    text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            } else {
+
+
+                $('#company-tab-two').removeClass('disabled');
+                $('ul.tabs').tabs();
+                $('ul.tabs').tabs("select", "company-tab");
+
+            }
+
+        });
+
+
+        $('#company-next').click(function () {
+            var band = true;
+
+
+            console.log($('#question_license').val());
+
+
+            $('.company-validate').each(function () {
+                if (($(this).val() === '' || $(this).val() === null) && ($('#question_license').val() != 'false') && ($(this).attr('data-validate') == 'licencia'||$(this).attr('data-validate')=='Código Catastral')) {
+
                     swal({
                         title: "Información",
-                        text: response.message,
+                        text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
                         icon: "info",
-                        button:{
+                        button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
                     });
-                    var company=response.company[0];
-                    $('#name').val(company.name);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                } else {
-                    if (response.status=== 'registered'){
-                        var company=response.company[0];
-                    }else{
-                        findCompany(rif);
-                    }
-
-                }
-                M.updateTextFields();
-
-            },
-            error: function (err) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button:{
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-                $('#RIF').val(' ');
-            }
-        });
-    }
 
 
-    function confirmCiu() {
-        swal({
-            title: "¡Bien Hecho!",
-            text: "CIIU  ingresado con éxito, ¿Desea añadir otro CIIU? ",
-            icon: "info",
-            buttons: {
-                confirm: {
-                    text: "Si",
-                    value: true,
-                    visible: true,
-                    className: "amber-gradient"
-
-                },
-                cancel: {
-                    text: "No",
-                    value: false,
-                    visible: true,
-                    className: "grey lighten-2"
-                }
-            }
-        }).then(function (aceptar) {
-            if (aceptar) {
-                $('#code').focus();
-                $('#code').val('');
-            } else {
-
-                if ($('#user-next').val() !== undefined) {
-                    $('ul.tabs').tabs();
-                    $('ul.tabs').tabs("select", "map-tab");
-
-                } else {
-                    var focalizar = $("div#div-map").position().top;
-                    $('html,body').animate({scrollTop: focalizar}, 1000);
-                }
-
-
-            }
-        });
-
-    }
-
-    function findCompany(rif) {
-
-        $.ajax({
-            method: "GET",
-            url: url + "company/find/" + rif.toUpperCase(),
-            beforeSend: function () {
-
-            },
-            success: function (response) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-
-                console.log(response);
-
-                if (response.status === 'success') {
-                    var company = response.company;
-
-                    $('#name').val(company.historico_nombre_empresa);
-                    $('#RIF').val(company.rif.substr(1));
-                    $('#license').val(company.codigo_licencia);
-                    $('#address').val(company.direccion);
-                    $('#phone-company').val(company.telefono_principal);
-                    if(company.direccion!==''){
-                        localizar("map", "Venezuela, Baquisimeto Estado Lara "+company.direccion);
-                    }
-                    if ($('#ci-license').val() !== undefined) {
-                        $('#name_company').val(company.historico_nombre_empresa);
-                        $('#ci-license').val(company.historico_cedula);
-                        $('#phone-user').val(company.telefono_principal);
-                        $('#name-license').val(company.historico_nombre_representante);
-                        $('#email').val(company.email);
-                    }
-                    M.textareaAutoResize($('#address'));
-                    M.updateTextFields();
-
-                }if(response.status==='registered'){
-
+                    band = false;
+                } else if ($('#question_license').val() !== 'false' && $('#ciu').val() === undefined) {
                     swal({
                         title: "Información",
-                        text: "Empresa encontrada con éxito, verifique que  los datos encontrados son los correctos, complete los CIIU, código catastral y número de empleados, y confirme su ubicación en el mapa.",
-                        icon: "success",
-                        button: "Ok",
+                        text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
                     });
-
-
-
-                    var company = response.company;
-                    $('#name').val(company.name);
-                    $('#license').val(company.license);
-                    $('#address').val(company.address);
-                    $('#phone').val(company.phone);
-                    $("#parish option").each(function(){
-                        if($(this).val()==company.parish_id){
-                            $(this).attr("selected",true);
-                        }
-                    });
-                    $('#parish').formSelect();
-                    filterByParish(company.parish_id);
-
-                    $("#country_code_company option").each(function(){
-                        if($(this).val()==company.operator){
-                            $(this).attr("selected",true);
-                        }
-                    });
-
-                    $("#sector option").each(function(){
-                        if($(this).val()==company.sector){
-                            $(this).attr("selected",true);
-                        }
-                    });
-                    $('#sector').formSelect();
-                    $('#country_code_company').formSelect();
-                    $('#phone').val(company.numberPhone);
-
-                    var lat=parseFloat(company.lat);
-                    var lng=parseFloat(company.lng);
-
-                    var marcadores = [];
-
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 15,
-                        center: {lat: lat, lng: lng}
-                    });
-
-                    addMark({lat:lat,lng:lng}, map,marcadores);
-                    map.addListener('click', function (e) {
-                        addMark(e.latLng, map,marcadores);
-                    });
-
-                    M.textareaAutoResize($('#address'));
-                    M.updateTextFields();
+                    band = false;
                 }
 
-            },
-            error: function (err) {
-                $('#license').val('');
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button:{
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
+            });
+
+            if (band) {
+                $('#map-tab-three').removeClass('disabled');
+                $('ul.tabs').tabs();
+                $('ul.tabs').tabs("select", "map-tab");
+            }
+
+        });
+
+
+        $('#company-previous').click(function () {
+            $('ul.tabs').tabs();
+            $('ul.tabs').tabs("select", "user-tab");
+        });
+
+
+
+
+
+    function localizar(elemento, direccion) {
+        var geocoder = new google.maps.Geocoder();
+        var marcadores = [];
+
+
+        var map = new google.maps.Map(document.getElementById(elemento), {
+            zoom: 15,
+            scrollwheel: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            restriction: {latLngBounds: {north: 83.8, south: -57, west: -180, east: 180}}
+        });
+
+        geocoder.geocode({'address': direccion}, function (results, status) {
+
+
+            if (status === 'OK') {
+                var resultados = results[0].geometry.location,
+                    resultados_lat = resultados.lat(),
+                    resultados_long = resultados.lng();
+
+                map.setCenter(results[0].geometry.location);
+
+
+                map.addListener('click', function (e) {
+                    addMark(e.latLng, map, marcadores);
                 });
+
+
+            } else {
+                var mensajeError = "";
+                if (status === "ZERO_RESULTS") {
+                    mensajeError = "No hubo resultados para la dirección ingresada.";
+                    initMap();
+                } else if (status === "OVER_QUERY_LIMIT" || status === "REQUEST_DENIED" || status === "UNKNOWN_ERROR") {
+                    mensajeError = "Error general del mapa.";
+                } else if (status === "INVALID_REQUEST") {
+                    mensajeError = "Error de la web. Contacte con Name Agency.";
+                }
+                alert(mensajeError);
             }
         });
     }
 
-    $('#number_employees').change(function () {
-        var value=$(this).val();
-        if(value < 0){
-            $(this).val(1);
+
+    $('#address').change(function () {
+        var direccion = $(this).val();
+        if (direccion !== '') {
+            localizar("map", "Venezuela, Baquisimeto Estado Lara. " + direccion);
         }
     });
+});
+
+    function initMap() {
+        var marcadores = [];
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: {lat: 10.0736954, lng: -69.3498597}
+        });
+
+        map.addListener('click', function (e) {
+            console.log(e.latLng);
+            addMark(e.latLng, map, marcadores);
+        });
+
+    }
+
+    //    swal({
+    //        title: "Información",
+    //        text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
+    //        icon: "info",
+    //        button:{
+    //            text: "Esta bien",
+    //            className: "blue-gradient"
+    //        },
+    //    });
+    // else {
+    //    $('#lng').val(marcadores[0].getPosition().lng());
+    //    $('#lat').val(marcadores[0].getPosition().lat());
+    //    M.updateTextFields();
+
+    function addMark(latLng, map, marcadores) {
 
 
+        function removeItemFromArr(arr, item) {
+            var i = arr.indexOf(item);
+
+            if (i !== -1) {
+                arr.splice(i, 1);
+            }
+        }
 
 
-    //tab ticktffice
-    $('#user-next').click(function () {
+        var image = 'https://sysprim.com/images/mark-map.png';
 
-        if($('#ci').val()==='' || $('#name_user').val()===''){
+
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            icon: image,
+            title: "ESTOY AQUÍ",
+            animation: google.maps.Animation.BOUNCE
+        });
+        map.panTo(latLng);
+
+        marcadores.push(marker);
+
+        if (marcadores.length > 1) {
+            removeItemFromArr(marcadores, marker);
+            marker.setMap(null);
+
             swal({
                 title: "Información",
-                text: "Debes ingresar la cedula de un contribuyente, para continuar con el registros.",
+                text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
                 icon: "info",
-                button:{
-                    text: "Esta bien",
-                    className: "blue-gradient"
-                },
+                button: "Ok",
             });
-        }else{
-
-
-            $('#company-tab-two').removeClass('disabled');
-            $('ul.tabs').tabs();
-            $('ul.tabs').tabs("select", "company-tab");
-
-        }
-
-    });
-
-
-    $('#company-next').click(function (){
-        var band=true;
-
-        $('.company-validate').each(function () {
-            if($(this).val()===''||$(this).val()===null) {
-                swal({
-                    title: "Información",
-                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
-                    icon: "info",
-                    button:{
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                });
-
-                band = false;
-            }else if($('#ciu').val()===undefined){
-                swal({
-                    title: "Información",
-                    text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
-                    icon: "info",
-                    button:{
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                });
-                band=false;
-            }
-
-        });
-
-        if(band){
-            $('#map-tab-three').removeClass('disabled');
-            $('ul.tabs').tabs();
-            $('ul.tabs').tabs("select", "map-tab");
-        }
-
-    });
-
-
-    $('#company-previous').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "user-tab");
-    });
-
-
-});
-
-
-
-function localizar(elemento,direccion) {
-    var geocoder = new google.maps.Geocoder();
-    var marcadores = [];
-
-
-    var map = new google.maps.Map(document.getElementById(elemento), {
-        zoom: 15,
-        scrollwheel: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        restriction: {latLngBounds:{north: 83.8, south: -57, west: -180, east: 180}}
-    });
-
-    geocoder.geocode({'address': direccion}, function(results, status) {
-
-
-        if (status === 'OK') {
-            var resultados = results[0].geometry.location,
-                resultados_lat = resultados.lat(),
-                resultados_long = resultados.lng();
-
-            map.setCenter(results[0].geometry.location);
-
-
-            map.addListener('click', function (e) {
-                addMark(e.latLng, map,marcadores);
-            });
-
-
-
         } else {
-            var mensajeError = "";
-            if (status === "ZERO_RESULTS") {
-                mensajeError = "No hubo resultados para la dirección ingresada.";
-                initMap();
-            } else if (status === "OVER_QUERY_LIMIT" || status === "REQUEST_DENIED" || status === "UNKNOWN_ERROR") {
-                mensajeError = "Error general del mapa.";
-            } else if (status === "INVALID_REQUEST") {
-                mensajeError = "Error de la web. Contacte con Name Agency.";
-            }
-            alert(mensajeError);
+            $('#lng').val(marcadores[0].getPosition().lng());
+            $('#lat').val(marcadores[0].getPosition().lat());
+            M.updateTextFields();
         }
-    });
-}
-
-$('#address').change(function () {
-    var direccion=$(this).val();
-    if(direccion!==''){
-        localizar("map", "Venezuela, Baquisimeto Estado Lara. "+ direccion);
-    }
-});
-
-function initMap() {
-    var marcadores = [];
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: 10.0736954, lng: -69.3498597}
-    });
-
-    map.addListener('click', function (e) {
-        console.log(e.latLng);
-        addMark(e.latLng, map,marcadores);
-    });
-
-}
-         //    swal({
-         //        title: "Información",
-         //        text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-         //        icon: "info",
-         //        button:{
-         //            text: "Esta bien",
-         //            className: "blue-gradient"
-         //        },
-         //    });
-         // else {
-         //    $('#lng').val(marcadores[0].getPosition().lng());
-         //    $('#lat').val(marcadores[0].getPosition().lat());
-         //    M.updateTextFields();
-
-function addMark(latLng, map,marcadores) {
-
-
-
-    function removeItemFromArr(arr, item) {
-        var i = arr.indexOf(item);
-
-        if (i !== -1) {
-            arr.splice(i, 1);
-        }
-    }
-
-
-    var image = 'https://sysprim.com/images/mark-map.png';
-
-
-    var marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        icon: image,
-        title: "ESTOY AQUÍ",
-        animation: google.maps.Animation.BOUNCE
-    });
-    map.panTo(latLng);
-
-    marcadores.push(marker);
-
-    if (marcadores.length > 1) {
-        removeItemFromArr(marcadores, marker);
-        marker.setMap(null);
-
-        swal({
-            title: "Información",
-            text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-            icon: "info",
-            button: "Ok",
+        google.maps.event.addListener(marker, 'click', function () {
+            removeItemFromArr(marcadores, marker);
+            marker.setMap(null); //borramos el marcador del mapa
+            $('#lng').val(" ");
+            $('#lat').val(" ")
         });
-    } else {
-        $('#lng').val(marcadores[0].getPosition().lng());
-        $('#lat').val(marcadores[0].getPosition().lat());
-        M.updateTextFields();
+        console.log(marcadores[0].getPosition().lat() + '-' + marcadores[0].getPosition().lng());
     }
-    google.maps.event.addListener(marker, 'click', function () {
-        removeItemFromArr(marcadores, marker);
-        marker.setMap(null); //borramos el marcador del mapa
-        $('#lng').val(" ");
-        $('#lat').val(" ")
-    });
-    console.log(marcadores[0].getPosition().lat() + '-' + marcadores[0].getPosition().lng());
-}
 

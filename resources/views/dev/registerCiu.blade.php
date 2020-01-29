@@ -25,7 +25,7 @@
                         
                     </div>
                     <div class="card-action center">
-                        <button type="submit" class="btn green">Registarse</button>
+                        <button type="submit" class="btn green">Registrarse</button>
                     </div>
                     <div class="card-footer center-align">
                         <a href="{{ route('login') }}">¿Ya tienes una cuenta? Inicia sesión aquí.</a>

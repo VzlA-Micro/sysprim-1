@@ -187,6 +187,7 @@ return [
         App\Providers\declarationProviderService::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        App\Providers\DeclarationPublicityServiceProvider::class,
 
     ],
 
@@ -249,6 +250,8 @@ return [
         'Calculate'=>App\Helpers\Calculate::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'DeclarationPublicity'=>App\Helpers\DeclarationPublicity::class,
+
     ],
 
 ];

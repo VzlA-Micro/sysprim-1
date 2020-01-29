@@ -1,5 +1,7 @@
 $(document).ready(function () {
+
    var url = "https://sysprim.com/";
+
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){

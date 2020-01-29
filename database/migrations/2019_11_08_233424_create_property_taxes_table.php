@@ -19,6 +19,7 @@ class CreatePropertyTaxesTable extends Migration
             $table->integer('taxes_id')->unsigned();
             $table->foreign('property_id')->references('id')->on('property');
             $table->foreign('taxes_id')->references('id')->on('taxes');
+            $table->timestamps();
         });
     }
 

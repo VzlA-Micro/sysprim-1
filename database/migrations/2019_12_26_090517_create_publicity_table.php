@@ -20,8 +20,8 @@ class CreatePublicityTable extends Migration
             $table->date('date_end');
             $table->string('unit',3)->nullable();
             $table->integer('quantity')->unsigned()->nullable();
-            $table->float('width',2)->unsigned()->nullable();
-            $table->float('height',2)->unsigned()->nullable();
+            $table->float('width')->unsigned()->nullable();
+            $table->float('height')->unsigned()->nullable();
             $table->integer('side')->unsigned()->nullable();
             $table->integer('floor')->unsigned()->nullable();
             $table->string('image')->nullable();

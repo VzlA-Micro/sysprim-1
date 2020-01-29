@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim/sysprim_logo.png') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
             {{-- <a href="" class="brand-logo waves-efect waves-light"  margin: 0; padding: 0;"> --}}
             {{-- </a> --}}
             {{-- Sidenav Trigger --}}
@@ -81,7 +81,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/semat.png') }}" alt="" srcset="">                    
+                    <img src="{{ asset('images/semat.webp') }}" alt="" srcset="">
                 </a>
             </li>
             @guest
@@ -98,7 +98,7 @@
                     <li>
                         <div class="user-view">
                           <div class="background">
-                            <img src="{{ asset('images/bg-user.jpg') }}" class="responsive-img">
+                            <img src="{{ asset('images/bg-user.webp') }}" class="responsive-img">
                           </div>
                           @if (Storage::disk('users')->has(Auth::user()->image))
                           <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>
@@ -195,6 +195,8 @@
                                         @can('Taquilla - Actividad Económica')
                                         <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li>
                                         @endcan
+                                        <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li>
+
                                     </ul>
                                 </div>
                             </li>
@@ -207,9 +209,15 @@
                     @can('Mis Empresas')
                     <li class="waves-efect waves-light"><a href="{{ route('companies.my-business') }}"><i class="icon-work left"></i>Mis Empresas</a></li>
                     @endcan
-                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li> --}}
-                    {{-- <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-work left"></i>Mis Vehículos</a></li>
-                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-work left"></i>Mis Inmuebles</a></li> --}}
+                    @can('Mis Inmuebles')
+                    <li class="waves-efect waves-light"><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Mis Inmuebles</a></li>
+                    @endcan
+                    @can('Mis Vehiculos')
+                    <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-directions_car left"></i>Mis Vehiculos</a></li>
+                    @endcan
+                    @can('Mis Publicidades')
+                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
+                    @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('logout') }}"

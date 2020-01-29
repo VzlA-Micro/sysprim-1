@@ -14,18 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" class="breadcrumb">Gestionar Modelos De Vehículos</a></li>
                 </ul>
             </div>
+            @can('Registrar Modelo de Vehiculo')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.models.register') }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Modelos De Vehículo</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Modelos de Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.models.read') }}" class="btn-app white amber-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Ver Modelos De Vehículos</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

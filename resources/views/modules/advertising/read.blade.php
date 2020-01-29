@@ -11,7 +11,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('advertising-type.manage') }}">Gestionar Accesorios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('advertising-type.manage') }}">Gestionar Tipos de Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('advertising-type.read') }}">Consultar Tipos de Publicidad</a></li>
                 </ul>
             </div>
@@ -26,7 +26,9 @@
 		            			<tr>
 		            				<th>Nombre</th>
 		            				<th>Cantidad UT</th>
+                                    @can('Detalles Tipo de Publicidad')
 		            				<th>Detalles</th>
+                                    @endcan
 		            			</tr>
 		            		</thead>
 		            		<tbody>
@@ -34,11 +36,13 @@
 		            			<tr>
 		            				<td>{{ $type->name }}</td>
 		            				<td>{{ $type->value }} UT</td>
+                                    @can('Detalles Tipo de Publicidad')
 		            				<td>
 		            					<a href="{{ route('advertising-type.details', ['id' => $type->id]) }}" class="btn btn-floating blue waves-effect waves-light">
 		            						<i class="icon-pageview"></i>
 		            					</a>
 		            				</td>
+                                    @endcan
 		            			</tr>
 		            			@endforeach
 		            		</tbody>

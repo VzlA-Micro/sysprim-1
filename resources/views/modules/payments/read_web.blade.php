@@ -12,9 +12,9 @@
             <div class="col s12 breadcrumb-nav left-align">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Lista de Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.pay.web') }}">Lista de Planillas</a>
+                    </li>
                 </ul>
             </div>
 
@@ -22,55 +22,77 @@
                 <div class="card">
                     <div class="card-content">
 
-                            <table class="centered highlight" id="payments" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>PLANILLA</th>
-                                        <th>Fecha</th>
-                                        <th>Contribuyente</th>
-                                        <th>Forma de Pago</th>
-                                        <th>Ramo</th>
-                                        <th>Periodo</th>
-                                        <th>Status</th>
-                                        <th>Monto</th>
-                                        @can('Detalles Planilla')
-                                        <th>Detalles</th>
-                                        @endcan
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($taxes as $taxe)
-                                        <tr>
-                                            <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->created_at->format('d-m-Y')}}</td>
-                                            <td>{{$taxe->companies[0]->name}}</td>
-                                            <td>{{$taxe->typePayment}}</td>
-                                            <td>{{$taxe->branch}}</td>
-                                            <td>{{\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
-                                            <td>{{$taxe->statusName}}</td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
-                                            @can('Detalles Planilla')
-                                                @if($taxe->type!='definitive')
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
-                                                           class="btn btn-floating orange waves-effect waves-light"><i
-                                                                    class="icon-pageview"></i></a>
-                                                    </td>
-                                                @else
+                        <table class="centered highlight" id="payments" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>PLANILLA</th>
+                                <th>Fecha</th>
+                                <th>Forma de Pago</th>
+                                <th>Ramo</th>
+                                <th>Status</th>
+                                <th>Monto</th>
+                                @can('Detalles Planilla')
+                                    <th>Detalles</th>
+                                @endcan
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($taxes as $taxe)
+                                <tr>
+                                    <td>{{$taxe->code}}</td>
+                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                    <td>{{$taxe->typePayment}}</td>
+                                    <td>{{$taxe->branch}}</td>
+                                    <td>{{$taxe->statusName}}</td>
+                                    <td>{{number_format($taxe->amount,2)}}</td>
+                                    @can('Detalles Planilla')
 
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
-                                                           class="btn btn-floating orange waves-effect waves-light"><i
-                                                                    class="icon-pageview"></i></a>
+                                        @if($taxe->branch==='Act.Eco')
 
-                                                    </td>
+                                            @if($taxe->type!='definitive')
 
-                                                @endif
-                                            @endcan
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                <td>
+                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+                                                </td>
+
+
+
+                                            @else
+                                                <td>
+                                                    <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+                                            @endif
+
+                                        @elseif($taxe->branch==='Tasas y Cert')
+
+                                            <td>
+                                                <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+
+                                            </td>
+
+                                            @elseif($taxe->branch==='Pat.Veh')
+
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+
+                                            @endif
+
+                                    @endcan
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -86,6 +108,8 @@
     <script src="{{asset('js/vfs_fonts.js')}}"></script>
     <script src="{{asset('js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('js/buttons.print.min.js')}}"></script>
+
+
     <script>
 
         var name = $('.email').text();
@@ -140,25 +164,24 @@
                     messageTop: 'Usuario:' + name,
 
 
-
                     customize: function (doc) {
                         doc.styles['td:nth-child(2)'] = {
                             width: '100px',
                             'max-width': '100px',
                             alignment: 'center',
                         }, doc.styles.tableHeader = {
-                            fillColor:'#247bff',
-                            color:'#FFF',
-                            fontSize: '7',
+                            fillColor: '#247bff',
+                            color: '#FFF',
+                            fontSize: '11',
                             alignment: 'center',
                             bold: true
 
                         },
-                            doc.defaultStyle.fontSize = 6;
+                            doc.defaultStyle.fontSize = 9;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6,7]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
 

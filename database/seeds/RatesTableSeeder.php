@@ -33,5 +33,10 @@ class RatesTableSeeder extends Seeder
             'updated_at'=>Carbon::now()
         ]);
 
+
+        $path = base_path() . '/database/seeds/register/tasas.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
+
     }
 }

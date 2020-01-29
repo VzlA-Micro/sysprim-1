@@ -33,7 +33,8 @@ class Taxe extends Model implements Auditable {
                 'company_id',
                 'user_id',
                 'tax_unit',
-                'cant_tax_unit'
+                'cant_tax_unit',
+                'person_id'
             );
     }
 
@@ -43,6 +44,16 @@ class Taxe extends Model implements Auditable {
         return $this->belongsToMany('App\Company','company_taxes')
             ->withPivot('company_id', 'fiscal_credits', 'withholding', 'deductions', 'day_mora');
     }
+
+
+
+    public function companiesRate(){
+
+    }
+
+
+
+
 
     public function vehicles(){
         return $this->belongsToMany('App\VehiclesTaxe','taxe_id');
@@ -79,6 +90,8 @@ class Taxe extends Model implements Auditable {
             return $this->statusName='CANCELADA';
         }else if($this->status=='ticket-office'){
             return $this->statusName='TAQUILLA/SIN PAGO ASOCIADO AÚN.';
+        }else if($this->status=='verified-sysprim'){
+            return $this->statusName="VERIFICADA/SYSPRIM";
         }
 
     }

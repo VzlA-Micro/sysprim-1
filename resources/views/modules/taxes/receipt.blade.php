@@ -287,7 +287,7 @@
 			</tr>
 			<tr>
 				<td style="width: 100%;text-align: center; font-size: 14px;">
-					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes->created_at))}}**
+					**ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes->created_at))}}**
 				</td>
 			</tr>
 			@endif
@@ -324,7 +324,7 @@
 			<tr>
 
 				@if($firm)
-					<td style="width: 80%;text-align: center;margin-bottom: -70px!important;">
+					<td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
 						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
 
 					</td>

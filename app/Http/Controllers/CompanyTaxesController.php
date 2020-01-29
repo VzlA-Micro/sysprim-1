@@ -48,9 +48,15 @@ class CompanyTaxesController extends Controller
     }
 
 
+
+
+
+
+
     public function history($company)
     {
         $company=Company::where('name',$company)->get();
+
 
         $company=Company::find($company[0]->id);
 
@@ -63,7 +69,8 @@ class CompanyTaxesController extends Controller
             $taxes=null;
         }
 
-        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->get()]);
+
+        return view('modules.payments.history', ['taxes' => $company->taxesCompanies()->orderBy('id','desc')->get()]);
     }
 
     /**
@@ -81,32 +88,40 @@ class CompanyTaxesController extends Controller
 
 
         if ($company_find->status !== 'disabled') {
+            if(substr($company_find->license,0,2)!='SL') {
 
-            if ($type !== 'definitive') {
-                $mounth_pay = TaxesMonth::verify($company[0]->id, false);
 
-                $users = $company_find->users()->get();
-                $taxes = $company_find->taxesCompanies()->orderBy('id', 'desc')->take(1)->get();
-                $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+                if ($type !== 'definitive') {
+                    $mounth_pay = TaxesMonth::verify($company[0]->id, false);
 
-                if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
-                    return redirect('companies/my-business');
+                    $users = $company_find->users()->get();
+
+                    $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+
+                    if (isset($users[0]->id) && $users[0]->id != \Auth::user()->id) {//si la empresa le pertenece a quien coloco la ruta
+                        return redirect('companies/my-business');
+                    } else {
+                        return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow, 'unid_tribu' => $unid_tribu[0]->value]);
+
+                    }
+
                 } else {
-                    return view('modules.taxes.register', ['company' => $company_find, "mount_pay" => $mounth_pay, 'mounths' => $mounths, 'mountNow' => $mounthNow, 'unid_tribu' => $unid_tribu[0]->value]);
 
+                    $users = $company_find->users()->get();
+
+                    $status = TaxesMonth::verifyDefinitive($company[0]->id);
+
+                    $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
+
+                    return view('modules.acteco-definitive.register', ['company' => $company_find,
+                        "status" => $status,
+                        'unid_tribu' => $unid_tribu[0]->value
+                    ]);
                 }
-            } else {
-
-                $users = $company_find->users()->get();
-
-                $status = TaxesMonth::verifyDefinitive($company[0]->id);
-                $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
 
-                return view('modules.acteco-definitive.register', ['company' => $company_find,
-                    "status" => $status,
-                    'unid_tribu' => $unid_tribu[0]->value
-                ]);
+            }else{
+                return redirect('companies/details/' . $company_find->id)->with(['message'=>'La empresa deber poseer una licencia válida.']);
             }
 
         } else {
@@ -361,7 +376,7 @@ class CompanyTaxesController extends Controller
         $amount=Calculate::calculateTaxes($id);
         $firm=false;
 
-        if($taxes->status==='verified'){
+        if($taxes->status==='verified'||$taxes->status==='verified-sysprim'){
             $firm=true;
         }
         $pdf = \PDF::loadView('modules.taxes.receipt',
@@ -477,10 +492,11 @@ class CompanyTaxesController extends Controller
 
 
     //Guardar el taxes
-    public function taxesSave(Request $request){
+    public function taxesSave(Request $request)
+    {
         $id = $request->input('taxes_id');
-        $taxes=Taxe::find($id);
-        if($taxes->amount==0) {
+        $taxes = Taxe::find($id);
+        if ($taxes->amount == 0) {
             $code = TaxesNumber::generateNumberTaxes('PSP' . "81");
             $taxes->code = $code;
             $taxes->status = 'verified';
@@ -511,9 +527,11 @@ class CompanyTaxesController extends Controller
 
         }
 
-        return view('modules.taxes.payments',['taxes_id'=>$id]);
 
+        return view('modules.taxes.payments', ['taxes_id' => $id]);
     }
+
+
 
     public function calculate($id){
         $taxes = Taxe::findOrFail($id);
@@ -538,7 +556,6 @@ class CompanyTaxesController extends Controller
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
         $taxes = Taxe::find($id);
-
 
 
 
@@ -827,7 +844,6 @@ class CompanyTaxesController extends Controller
             $for = \Auth::user()->email;
 
 
-
             $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
                 'taxes' => $taxes,
                 'ciuTaxes' => $ciuTaxes,
@@ -870,53 +886,51 @@ class CompanyTaxesController extends Controller
 
 
     //Calcular
-    public function paymentDefinitiveStore(Request $request){
-        $id_taxes=$request->input('id_taxes');
-        $type_payment=$request->input('type_payment');
-        $bank_payment=$request->input('bank_payment');
+    public function paymentDefinitiveStore(Request $request)
+    {
+        $id_taxes = $request->input('id_taxes');
+        $type_payment = $request->input('type_payment');
+        $bank_payment = $request->input('bank_payment');
+
         $taxes = Taxe::findOrFail($id_taxes);
         $code = TaxesNumber::generateNumberTaxes($type_payment . "89");
-        $taxes->code=$code;
+        $taxes->code = $code;
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
 
 
+        if ($type_payment != 'PPV') {
 
-
-
-
-        if($type_payment!='PPV'){
-
-            if($type_payment=='PPE'){
-                $taxes->bank=$bank_payment;
-                $amount=round($taxes->amount,0);
-                $taxes->amount=$amount;
+            if ($type_payment == 'PPE') {
+                $taxes->bank = $bank_payment;
+                $amount = round($taxes->amount, 0);
+                $taxes->amount = $amount;
                 $taxes->digit = TaxesNumber::generateNumberSecret($amount, $date_format, $bank_payment, $code);
 
-            }else{
-                $taxes->bank=$bank_payment;
+            } else {
+                $taxes->bank = $bank_payment;
                 $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
             }
         }
 
-        $taxes->status="process";
+        $taxes->status = "process";
         $taxes->update();
 
 
-        $ciuTaxes=CiuTaxes::where('taxe_id',$taxes->id)->get();
+        $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
         $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
-                'taxes' => $taxes,
-                'ciuTaxes' => $ciuTaxes,
-                'firm'=>false
-            ]);
+            'taxes' => $taxes,
+            'ciuTaxes' => $ciuTaxes,
+            'firm' => false
+        ]);
 
 
-        Mail::send('mails.payment-payroll', ['type'=>'Declaración de Actividad Económica (DEFINITIVA)'], function ($msj) use ($subject, $for, $pdf) {
+        Mail::send('mails.payment-payroll', ['type' => 'Declaración de Actividad Económica (DEFINITIVA)'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
             $msj->to($for);
@@ -924,7 +938,11 @@ class CompanyTaxesController extends Controller
         });
 
         return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+
     }
+
+
+
 
 
 

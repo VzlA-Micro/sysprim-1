@@ -2,6 +2,7 @@ $('document').ready(function () {
     var url = "https://sysprim.com/";
 
 
+
     $('#groupCiiu').on('submit',function (e) {
         e.preventDefault();
         $.ajax({

@@ -224,4 +224,21 @@ class TaxesNumber{
 
 
 
+    public static function generateNumberLicense(){
+        $company=DB::table('company')->select('license')->where('license','LIKE',"%"."SL"."%")
+        ->orderByDesc('id')->take(1)->get();
+
+        if($company->isEmpty()){
+            $number_generated=strtoupper(str_pad(1, 8, '0', STR_PAD_LEFT));
+            return "SL".$number_generated;
+        }else{
+            $correlative=substr($company[0]->license,3,10);
+            $number_integer=(int)$correlative;//LOS COVIERTOS A UN ENTERO PARA PORDER SUMARLA 1 Y SEGUIR LA SECUENCIA
+            $number_generated=strtoupper(str_pad($number_integer+1, 8, '0', STR_PAD_LEFT));
+            return "SL".$number_generated;
+        }
+    }
+
+
+
 }

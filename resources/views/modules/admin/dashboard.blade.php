@@ -29,7 +29,7 @@
             </div>
             @can('Estadisticas - SuperUsuario')
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats white-text">
+                <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon white-text blue-gradient">
                         <i class="fas fa-user-tag"></i>
                     </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats white-text">
+                <div class="widget bootstrap-widget stats ">
                     <div class="widget-stats-icon red-gradient white-text">
                         <i class="fas fa-building"></i>
                     </div>
@@ -50,6 +50,28 @@
                     </div>
                 </div>
             </div>
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text orange-gradient">
+                            <i class="fas fa-car-alt"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title">Vehículos Registrados</span>
+                            <span class="widget-stats-number">{{ $vehicles }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text green-gradient">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title">Inmuebles Registrados</span>
+                            <span class="widget-stats-number">{{ $property }}</span>
+                        </div>
+                    </div>
+                </div>
             @endcan
            <!--  <div class="col s12 m6">
                <div class="widget bootstrap-widget stats">
@@ -155,15 +177,13 @@
                 </div>
                 <div class="col s12 m6">
                     <ul class="collection with-header">
-                        <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
+                       <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
                         @foreach ($company as $compa)
-
-
                             <li class="collection-item">
                                 <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
                                 <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
                                 <a href="">Detalles...</a>
-                                {{-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> --}}
+                                <!-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> -->
                             </li>
 
                         @endforeach
@@ -172,9 +192,9 @@
                 <div class="col s12 m6">
                     <ul class="collection with-header">
                         <li class="collection-header"><h5>Formas de Pago</h5></li>
-                        <li class="collection-item">
+                        {{----}}<li class="collection-item">
                             <div>
-                                {{-- <i class="icon-message circle"></i> --}}
+                                <!--<i class="icon-message circle"></i> -->
                                 <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
                                 <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
                             </div>
@@ -187,7 +207,7 @@
                         </li>
                         <li class="collection-item">
                             <div>
-                                {{-- <i class="icon-message circle"></i> --}}
+                                <!-- <i class="icon-message circle"></i> -->
                                 <span class="title"><b>Cheque: {{$ppc}} </b></span><br>
                                 <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
                             </div>
@@ -197,7 +217,7 @@
                                 <span class="title"><b>Efectivo: </b>{{$ppe}}</span><br>
                                 <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
                             </div>
-                        </li>
+                        </li>{{----}}
                     </ul>
                 </div>
                 <div class="col s12 m6">
@@ -224,21 +244,37 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{$dear['taxes']}}</td>
-                                    <td>{{$dear['Recaudado']}} Bs</td>
-                                    <td>{{$dear['Espera']}} Bs</td>
-                                    <td>{{$dear['Total']}} Bs</td>
+                                {{----}}<tr>
+                                    <td>{{$dear['company']['taxes']}}</td>
+                                    <td>{{$dear['company']['Recaudado']}} Bs</td>
+                                    <td>{{$dear['company']['Espera']}} Bs</td>
+                                    <td>{{$dear['company']['Total']}} Bs</td>
                                     <td>
                                         <div>
                                             <div class="progress">
-                                                <div class="determinate red" style="width:{{$dear['Porcentaje']}}%"><span>{{ $dear['Porcentaje']}}%</span></div>
+                                                <div class="determinate red" style="width:{{$dear['company']['Porcentaje']}}%"><span>{{$dear['company']['Porcentaje']}}%</span></div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{$dear['Estimado']}} Bs</td>
-                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['Incremento']}} Bs</td>
+                                    <td>{{$dear['company']['Estimado']}} Bs</td>
+                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['company']['Incremento']}} Bs</td>
                                 </tr>
+                                <tr>
+                                    <td>{{$dear['vehicle']['taxes']}}</td>
+                                    <td>{{$dear['vehicle']['Recaudado']}} Bs</td>
+                                    <td>{{$dear['vehicle']['Espera']}} Bs</td>
+                                    <td>{{$dear['vehicle']['Total']}} Bs</td>
+                                    <td>
+                                        <div>
+                                            <div class="progress">
+                                                <div class="determinate red" style="width:{{$dear['vehicle']['Porcentaje']}}%"><span>{{$dear['vehicle']['Porcentaje']}}%</span></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{$dear['vehicle']['Estimado']}} Bs</td>
+                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['vehicle']['Incremento']}} Bs</td>
+                                </tr>{{----}}
+
                                 </tbody>
                             </table>
                         </div>

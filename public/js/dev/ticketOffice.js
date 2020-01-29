@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/"
+
+    var url = "https://sysprim.com/";
+
 
     function reset() {
         $('#details').text('');
@@ -123,7 +125,7 @@ $(document).ready(function () {
 
         var type=$('#type').val();
 
-        url='http://sysprim.com.devel/';
+        url='https://sysprim.com/';
 
 
 
@@ -174,10 +176,10 @@ $(document).ready(function () {
                     }).then(function () {
                         location.reload();
                     });
-                } else{
+                } else if(response.status==='success'){
                     swal({
                         title: "¡Bien Hecho!",
-                        text: "La planilla ha sido generado con éxito, ¿Desea seguir generando planillas?",
+                        text: response.message+"¿Desea seguir generando planillas?",
                         icon: "success",
                         buttons: {
                             confirm: {
@@ -197,10 +199,9 @@ $(document).ready(function () {
 
                     }).then(function (aceptar) {
                         if (aceptar) {
-                            reset();
+                           location.reload();
                         } else {
-                            url='http://sysprim.com.devel/';
-
+                            url='https://sysprim.com/';
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });
@@ -612,18 +613,10 @@ $(document).ready(function () {
                 $('#fiscal_period').val('');
                 $('#details').html('');
                 generarCiiu();
-
-
             }
         }
 
     });
-
-
-
-
-
-
 
     $('#search-code').blur(function () {
         if ($('#search-code').val() !== '') {

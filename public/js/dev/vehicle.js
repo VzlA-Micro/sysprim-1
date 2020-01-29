@@ -1,5 +1,7 @@
-//var url = "https://sysprim.com/";
-var url = "https://sysprim.com/"
+var url = "https://sysprim.com/";
+// var url = "https://sysprim.com/";
+
+
 
 var updateType = false;
 var buttonBrand = true;
@@ -50,28 +52,35 @@ $('document').ready(function () {
 
     $('#license_plate').blur(function () {
         var license = $(this).val();
+        var id=$('#id').val();
         console.log(license);
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifyLicense",
             data: {
                 license: license,
+                id:id
             },
 
             beforeSend: function () {
             },
             success: function (data) {
                 console.log(data);
-                if (data) {
+                if (data['status']=="error") {
                     swal({
                         title: "¡Placa Registrada!",
-                        text: "No puedes registrar este vehiculo",
+                        text: data['message'],
                         icon: "info",
                         button: "Ok",
                     });
                     $(this).text('');
                     $('#button-vehicle').prop('disabled', true);
                 } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
                     $('#button-vehicle').prop('disabled', false);
                 }
             },
@@ -83,28 +92,35 @@ $('document').ready(function () {
 
     $('#bodySerial').blur(function () {
         var bodySerial = $(this).val();
+        var id=$('#id').val();
         console.log(bodySerial);
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifyBodySerial",
             data: {
                 bodySerial: bodySerial,
+                id:id
             },
 
             beforeSend: function () {
             },
             success: function (data) {
                 console.log(data);
-                if (data) {
+                if (data['status']=="error") {
                     swal({
                         title: "¡Serial de Carroceria Registrado!",
-                        text: "No puedes registrar este vehiculo",
+                        text: data['message'],
                         icon: "info",
                         button: "Ok",
                     });
                     $(this).text('');
                     $('#button-vehicle').prop('disabled', true);
                 } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
                     $('#button-vehicle').prop('disabled', false);
                 }
             },
@@ -116,27 +132,34 @@ $('document').ready(function () {
 
     $('#serialEngine').blur(function () {
         var serialEngine = $(this).val();
+        var id=$('#id').val();
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifySerialEngine",
             data: {
                 serialEngine: serialEngine,
+                id:id
             },
 
             beforeSend: function () {
             },
             success: function (data) {
                 console.log(data);
-                if (data) {
+                if (data['status']=="error") {
                     swal({
                         title: "¡Serial del Motor Registrado!",
-                        text: "No puedes registrar este vehiculo",
+                        text: data['message'],
                         icon: "info",
                         button: "Ok",
                     });
                     $(this).text('');
                     $('#button-vehicle').prop('disabled', true);
                 } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
                     $('#button-vehicle').prop('disabled', false);
                 }
             },

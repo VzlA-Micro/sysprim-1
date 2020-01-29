@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis Vehículos</a></li>
                 </ul>
             </div>
-            @can('Registar Mis Vehiculos')
+            @can('Registrar Mis Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('vehicles.register',['register'=>false]) }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>

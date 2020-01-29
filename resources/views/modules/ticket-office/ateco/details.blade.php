@@ -6,7 +6,8 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    {{--<li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>--}}
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
                     <li class="breadcrumb-item"><a href="#" class="prev-view" >Ver Pagos</a>
                     </li>
@@ -227,7 +228,7 @@
                                                                         value="">
                                                                     <i class="icon-do_not_disturb_alt"></i></button>
                                                             </div>
-                                                        @elseif($taxe->status=='verified')
+                                                        @elseif($taxe->status=='verified'||$taxes->status=='verified-sysprim')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light green col s12"
@@ -269,7 +270,7 @@
                                                     ESTADO: SIN CONCILIAR AÚN
 
                                                 </a>
-                                            @elseif($taxes->status==='verified')
+                                            @elseif($taxes->status==='verified'||$taxes->status=='verified-sysprim')
 
                                                 <a href="#" class="btn blue col s12">
                                                     <i class="icon-more_horiz left"></i>
@@ -285,7 +286,7 @@
                                                 </a>
                                             @endif
 
-                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified')
+                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>
@@ -296,36 +297,47 @@
 
                                                     @can('Anular Pagos')
                                                         <a href="#"
-                                                           class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
+                                                           class="btn btn-rounded col s3 red waves-effect waves-ligt reconcile"
                                                            data-status="cancel">
                                                             ANULAR PLANILLA.
                                                             <i class="icon-close right"></i>
                                                         </a>
                                                     @endcan
                                                     @can('Verificar Pagos - Manual')
-                                                        @if($verified&&$taxes->status!=='verified')
-                                                            <a href="#"
-                                                               class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
-                                                               data-status="verified">
-                                                                VERIFICAR PLANILLA.
+                                                        @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
+
+                                                                <a href="#" class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
+
+                                                                   data-status="verified">
+                                                                     VERIFICAR PLANILLA.
                                                                 <i class="icon-verified_user right"></i>
                                                             </a>
+
                                                         @endif
+
+
+
+
                                                     @endcan
-                                                    @if($taxes->status=='verified')
+                                                    @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                         <button type="button" id="send-email-verified"
 
 
-                                                                class="btn btn-rounded col s4 green waves-effect waves-light"
+                                                                class="btn btn-rounded col s3 green waves-effect waves-light"
                                                                 value="{{$taxes->id}}">Enviar Correo Verificado.
-                                                            <i class="icon-send right"></i>
+                                                            <i class="icon-mail_outline right"></i>
                                                         </button>
+
+                                                        @endif
+                                                    @if($taxes->status!='cancel')
+                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
+                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                                            <i class="icon-picture_as_pdf right"></i>
+                                                        </a>
                                                     @endif
+                                                @endif
 
                                                 </div>
-                                            @endif
-
-
 
                                         </div>
                                 </div>
