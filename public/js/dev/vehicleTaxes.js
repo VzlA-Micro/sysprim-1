@@ -1,5 +1,5 @@
 //var url = "https://sysprim.com/";
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 
 $('document').ready(function () {
     $('#fiscal_credits').blur(function () {

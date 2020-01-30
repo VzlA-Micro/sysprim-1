@@ -1,5 +1,5 @@
 //var url = "https://sysprim.com/";
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 
 var updateType = true;
 var period = null;
@@ -519,25 +519,94 @@ $('document').ready(function () {
                 },
                 success: function (data) {
                     console.log(data);
+                    if (data['process']) {
+                        swal({
+                            title: "Información",
+                            text: data['message'],
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient",
+                                value: true,
+                                visible: true,
+                                closeModal: true
+                            }
+                        }).then(function (option) {
+                            if (option) {
+                                location.reload();
+                            }
+                        });
 
-                    $('#base').val(data['grossTaxes']);
-                    M.updateTextFields();
-                    $('#tasa').val(data['previousDebt']);
-                    M.updateTextFields();
-                    $('#discount').val(' - ' + data['valueDiscount']);
-                    M.updateTextFields();
-                    $('#recharge').val(data['recharge']);
-                    M.updateTextFields();
-                    $('#rechargeMora').val(data['valueMora']);
-                    M.updateTextFields();
-                    $('#total').val(data['total']);
-                    M.updateTextFields();
+                        /*$('#base').prop('disabled', true);
+
+                        $('#tasa').prop('disabled', true);
+
+                        $('#discount').prop('disabled', true);
+
+                        $('#recharge').prop('disabled', true);
+
+                        $('#rechargeMora').prop('disabled', true);
+
+                        $('#fiscal_credits').prop('disabled', true);
+
+                        $('#total').prop('disabled', true);*/
+
+
+                    } else {
+                        $('#base').val(data['grossTaxes']);
+                        M.updateTextFields();
+                        $('#tasa').val(data['previousDebt']);
+                        M.updateTextFields();
+                        $('#discount').val(' - ' + data['valueDiscount']);
+                        M.updateTextFields();
+                        $('#recharge').val(data['recharge']);
+                        M.updateTextFields();
+                        $('#rechargeMora').val(data['valueMora']);
+                        M.updateTextFields();
+                        $('#total').val(data['total']);
+                        M.updateTextFields();
+                        $('#totalAux').val(data['totalAux']);
+                    }
                 },
                 error: function (e) {
                     console.log(e);
                 }
             });
         }
+
+
+    });
+    $('#details-next').on('click', function () {
+
+        var base = $('#base').val();
+        var previous = $('#tasa').val();
+        var discount = $('#discount').val();
+        var recharge = $('#recharge').val();
+        var rechargeMora = $('#rechargeMora').val();
+        var total = $('#total').val();
+        var fiscaCredits = $('#fiscal_credits').val();
+
+        $.ajax({
+            type: "get",
+            url: url + "/ticketOffice/vehicle/search-license/" + license,
+            data: {
+                base:base,
+                previous:previous,
+                discount:discount,
+                recharge:recharge,
+                rechargeMora:rechargeMora,
+                total:total,
+                fiscaCredits:fiscaCredits
+            },
+            beforeSend: function () {
+            },
+            success: function (data) {
+
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
 
 
     });

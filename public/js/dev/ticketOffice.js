@@ -1058,6 +1058,10 @@ $(document).ready(function () {
         M.updateTextFields();
     }
 
+    $('#details-next').on('click',function () {
+
+    });
+
 
 });
 

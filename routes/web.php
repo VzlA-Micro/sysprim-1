@@ -278,42 +278,6 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
-
-
-
-
-
-            /*// Gestionar Accesorios
-            Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
-            Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
-            Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
-            Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
-            Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
-            Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');*/
-
-
-            /*            //Gestionar Tasas del Banco
-
-
-                        Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
-                        Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
-                        Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
-                        Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
-                        Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
-                        Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');*/
-
-
-            /*// GEstionar tipos de publicidad
-            Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
-            Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
-            Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
-            Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
-            Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
-            Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');*/
-
-
-        });
-
         // GeoSysPRIM
 
         Route::group(['middleware' => ['permission:GeoSEMAT']], function () {
@@ -678,41 +642,6 @@ Route::middleware(['auth'])->group(/**
             Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
 
 
-
-
-
-
-                /*
-                 Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
-                 Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
-                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-             */
-                //Inmuebles
-// );
-
-
-
-
-
-//___________________________RATE__________________________________________
-
-
-        /*  Module  */
-/*
-        Route::get('rate/manager', 'RateController@manager')->name('rate.manager');
-
-        Route::get('rate/register', 'RateController@create')->name('rate.register');
-
-        Route::get('rate', 'RateController@index')->name('rate.index');
-
-        Route::get('rate/details/{id}', 'RateController@details')->name('rate.details');
-
-
-        Route::post('rate/save', 'RateController@store')->name('rate.save');
-
-        Route::get('rate/verify-code/{code}/{id?}', 'RateController@verifyCode');
-
-        Route::post('rate/update', 'RateController@update');*/
             });
         Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
@@ -771,50 +700,6 @@ Route::middleware(['auth'])->group(/**
             return view('modules.payments.menu');
         })->name('payments.my-payments');
 
-
-        // Ruta de adorno, no borrar
-
-
-//___________________________Models Vehicles modules routes_______________________________________________________
-        /* Route::get('/vehicles/models-vehicles', function () {
-             return view('modules.vehicles_models.manage');
-         })->name('vehicles.models.vehicles');
-
-         Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
-         Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
-
-         Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
-         Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
-         Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');*/
-//_________________________________________________________________________________________________
-
-
-//___________________________Brands Vehicles modules routes_______________________________________________________
-        /*Route::get('/vehicles/brands-vehicles', function () {
-            return view('modules.vehicles_brand.manage');
-        })->name('vehicles.brand.manage');
-
-        Route::get('/vehicles-brand/register', 'BrandVehicleController@create')->name('vehicles.brand.register');
-        Route::post('/vehicles-brand/save', 'BrandVehicleController@store')->name('vehicles.brand.save');
-
-        Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
-        Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
-        Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
-        Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');*/
-//___________________________________________________________________________________________________________________________
-
-
-//_____________________________________________Recharge modules routes_______________________________________________________
-
-        /*Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
-        Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
-        Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
-        Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
-        Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
-        Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');*/
-        // Route::post('/recharge/verifyBrand', 'RechargeController@verifyBrand')->name('recharge.verifyBrand');
-
-//___________________________________________________________________________________________________________________________
 
 //_______________________________________Vehicles Taxes Routes_______________________________________________________________
         Route::get('/taxes/vehicles/{id}', 'VehiclesTaxesController@create')->name('taxes.vehicle');
@@ -906,10 +791,6 @@ Route::middleware(['auth'])->group(/**
         Route::get('tick-office/taxes/definitive/verify/{id}', 'TicketOfficeController@verifyDefinitive');
         Route::post('ticket-office/taxes/definitive/save', 'TicketOfficeController@registerTaxeDefinitive');
         Route::get('ticket-office/taxes/definitive/{id}', 'TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
-
-
-
-
 
 
         Route::get('/payments/reconcile', function () {

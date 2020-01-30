@@ -38,6 +38,20 @@ class Taxe extends Model implements Auditable {
             );
     }
 
+    public function VehicleTaxes(){
+        return $this->belongsToMany('App\Vehicle','vehicles_taxes')
+            ->withPivot(
+                'vehicle_id',
+                'fiscal_credits',
+                'recharge',
+                'recharge_mora',
+                'base_imponible',
+                'discount',
+                'previous_debt',
+                'type_payments'
+            );
+    }
+
 
 
     public function companies(){

@@ -285,7 +285,6 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-
     public function detailsVehicle($id)
     {
         $models = ModelsVehicle::all();
@@ -672,7 +671,6 @@ class TicketOfficeVehicleController extends Controller
     */
 
 
-
     public function generateReceipt($taxes_data)
     {
         $taxes_data = substr($taxes_data, 0, -1);
@@ -877,6 +875,9 @@ class TicketOfficeVehicleController extends Controller
     {
         $array = explode('-', $value);
         $id = $array[0];
+        $trimester = Trimester::verifyTrimester();
+
+
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
             ->where('status', 'process')->get();
 
@@ -885,7 +886,10 @@ class TicketOfficeVehicleController extends Controller
 
 
         if (!Empty($vehicleTaxe[0])) {
-            //return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
+            return response()->json([
+                'process' => true,
+                'message' => 'Este vehículo, ya tiene un pago generado'
+            ]);
         } else {
 
             if (!Empty($vehicleTaxesTem[0])) {
@@ -896,6 +900,7 @@ class TicketOfficeVehicleController extends Controller
             $vehicle = Vehicle::where('id', $id)->get();
 
             $grossTaxes = 0;
+            $type=0;
             $total = number_format($declaration['total'], 2, ',', '.');
             $totalAux = $declaration['total'];
             $paymentFractional = 0;
@@ -912,11 +917,17 @@ class TicketOfficeVehicleController extends Controller
                 $rateYear = $declaration['rateYear'];
                 $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
                 $previousDebt = $declaration['previousDebt'];
+                $period_fiscal_begin=$trimester['monthBegin']->format('Y-m-d');
+                $period_fiscal_end=$trimester['monthEnd']->format('Y').'-12-01';
                 $recharge = 0;
+                $type="Anual";
             } else {
                 $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
                 $grossTaxes = $paymentFractional;
                 $rateYear = $declaration['rateYear'];
+                $type="Trimestral";
+                $period_fiscal_begin=$trimester['monthBegin']->format('Y-m-d');
+                $period_fiscal_end=$trimester['monthEnd']->format('Y-m-d');
                 if (isset($declaration['recharge'])) {
                     $recharge = number_format($declaration['recharge'], 2, ',', '.');
                 } else {
@@ -933,7 +944,9 @@ class TicketOfficeVehicleController extends Controller
 
             $taxes = new Taxe();
             $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
+            $taxes->fiscal_period =$period_fiscal_begin ;
+            $taxes->fiscal_period_end=$period_fiscal_end;
+            $taxes->type=$type;
             $taxes->save();
 
             $taxesId = $taxes->id;
@@ -942,6 +955,7 @@ class TicketOfficeVehicleController extends Controller
             $vehicleTaxes->vehicle_id = $vehicle[0]->id;
             $vehicleTaxes->taxe_id = $taxesId;
             $vehicleTaxes->status = 'Temporal';
+            $vehicleTaxes->type_payments = $declaration['optionPayment'];
             $vehicleTaxes->fiscal_credits = 0;
             $vehicleTaxes->save();
 
@@ -949,6 +963,7 @@ class TicketOfficeVehicleController extends Controller
             //$period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
 
             return response()->json(array(
+                    'process' => false,
                     'vehicle' => $vehicle,
                     'taxes' => $taxes,
                     'grossTaxes' => $grossTaxes,
@@ -958,6 +973,7 @@ class TicketOfficeVehicleController extends Controller
                     'recharge' => $recharge,
                     'previousDebt' => $previousDebt,
                     'total' => $total,
+                    'totalAux'=>$declaration['total'],
                     'vehicleTaxes' => false,
                     'valueMora' => $valueMora,
                     'totalAux' => $totalAux
@@ -1106,9 +1122,10 @@ class TicketOfficeVehicleController extends Controller
 
     public function viewDetails($id)
     {
-        $taxes=Taxe::findOrFail('id',$id)->get();
-        $vehicleTaxes=VehiclesTaxe::where('taxe_id',$id)->get();
-        $vehicle=Vehicle::where('id',$vehicleTaxes[0]->vehicle_id)->get();
+        $taxes = Taxe::findOrFail($id);
+
+        $vehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+        $vehicle = Vehicle::where('id', $vehicleTaxes[0]->vehicle_id)->get();
 
         $verified = true;
 
@@ -1121,18 +1138,14 @@ class TicketOfficeVehicleController extends Controller
         } else {
             $verified = false;
         }
-        $response= array(
-            'taxes'=>$taxes,
-            'vehicleTaxes'=>$vehicleTaxes,
-            'vehicle'=>$vehicle,
-            'model'=>$vehicle[0]->model,
-            'verified'=>$verified
+        $response = array(
+            'taxes' => $taxes,
+            'vehicleTaxes' => $vehicleTaxes,
+            'vehicle' => $vehicle,
+            'model' => $vehicle[0]->model,
+            'verified' => $verified
         );
-
-
-        return view('modules.ticket-office.vehicle.modules.payroll.details',array('response'=>$response));
+        return view('modules.ticket-office.vehicle.modules.payroll.details', array('response' => $response));
     }
-
-
 }
 
