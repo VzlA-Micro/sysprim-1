@@ -19,7 +19,7 @@
             @endcan
             {{--@can('')--}}
             <div class="col s12 m3 animated bounceIn">
-                <a href="#{{--route('ticketOffice.vehicle.home')--}}" class="btn-app white orange-text text-darken-3">
+                <a href="{{route('ticketOffice.vehicle.home')}}" class="btn-app white orange-text text-darken-3">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla Vehículos</span>
                 </a>
@@ -43,8 +43,6 @@
                 </div>
             @endcan
 
-
-
             @can('Ver Planillas')
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{route('ticket-office.pay.web')}}" class="btn-app white pink-text text-darken-2">
@@ -53,6 +51,8 @@
                     </a>
                 </div>
             @endcan
+
+
             @can('Ver Pagos')
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white teal-text">
