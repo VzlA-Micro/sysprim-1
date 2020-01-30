@@ -584,7 +584,7 @@ $('document').ready(function () {
         var recharge = $('#recharge').val();
         var rechargeMora = $('#rechargeMora').val();
         var total = $('#total').val();
-        var fiscaCredits = $('#fiscal_credits').val();
+        var fiscalCredits = $('#fiscal_credits').val();
 
         $.ajax({
             type: "get",
@@ -596,7 +596,7 @@ $('document').ready(function () {
                 recharge:recharge,
                 rechargeMora:rechargeMora,
                 total:total,
-                fiscaCredits:fiscaCredits
+                fiscalCredits:fiscalCredits
             },
             beforeSend: function () {
             },

@@ -742,6 +742,7 @@ Route::middleware(['auth'])->group(/**
 
     Route::get('/ticketOffice/vehicle/search-license/{license}', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
     Route::get('/ticketOffice/vehicle/period-fiscal/{period}','VehicleController@periodoFiscal')->name('ticketOffice.vehicle.periodFiscal');
+    Route::post('ticketOffice/vehicle/save-payroll','TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
     //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
     //_______________________________________________________________________________________________________________________
 
