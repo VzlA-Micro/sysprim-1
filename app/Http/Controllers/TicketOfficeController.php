@@ -305,6 +305,7 @@ class TicketOfficeController extends Controller
     public function allCompanies()
     {
         $companies = Company::all();
+
         return view('modules.ticket-office.companies.read', ['companies' => $companies]);
     }
 
@@ -316,7 +317,6 @@ class TicketOfficeController extends Controller
 
         $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
         $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
-
 
 
 
@@ -333,7 +333,6 @@ class TicketOfficeController extends Controller
         }elseif($type=='Tasas y Cert'){
             $companyTaxes=$company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
         }
-
         return view('modules.ticket-office.companies.all-taxes',['taxesCompanies'=>$companyTaxes,'id'=>$id]);
     }
 
@@ -444,7 +443,7 @@ class TicketOfficeController extends Controller
 
         for ($i = 0; $i < count($base); $i++) {
 
-            //damos formato a la base
+             //damos formato a la base
             $base_format_verify = str_replace('.', '', $base[$i]);
             $base_format_verify = str_replace(',', '.', $base_format_verify);
 

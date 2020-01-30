@@ -358,6 +358,10 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Contribuyentes']], function () {
                     Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
+                    Route::get('/taxpayers/details/company/{id}','UserController@detailsCompanyTaxPayers')->name('taxpayers.details.company');
+                    Route::get('/taxpayers/details/rates/{id}','UserController@detailsRatesTaxPayers')->name('taxpayers.details.rates');
+
+
                     // Nivel 4: Actualizar, Resetear, Habilitar
                     Route::group(['middleware' => ['permission:Actualizar Contribuyentes|Habilitar/Deshabilitar Contribuyentes|Resetar Contribuyentes']], function () {
                         Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');

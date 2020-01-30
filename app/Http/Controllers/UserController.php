@@ -123,6 +123,9 @@ class UserController extends Controller{
         else{
             $user= User::where('status_account','!=','waiting')->get();
         }
+
+
+
         return view('modules.users.read',array(
             'showUser' => $user
         ));
@@ -195,6 +198,12 @@ class UserController extends Controller{
 
     public function showTaxpayer() {
         $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->get();
+
+
+
+
+
+
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));
@@ -202,10 +211,18 @@ class UserController extends Controller{
 
     public function detailsTaxpayer($id) {
         $user = User::find($id);
+        $number_company=$user->companies()->count();
+        $number_rate=$user->taxesRate()->count();
+
+        $number_vehicle=$user->vehicles()->count();
 
         return view('modules.taxpayers.details', array(
-            'user' => $user
+            'user' => $user,
+            'number_company'=>$number_company,
+            'number_rate'=>$number_rate,
+            'number_vehicle'=>$number_vehicle
         ));
+
     }
 
     public function storeTaxpayer(Request $request) {
@@ -292,5 +309,20 @@ class UserController extends Controller{
 
         $user->update();
         return response()->json(['status',$status]);
+    }
+
+
+
+
+    public function detailsCompanyTaxPayers($id){
+        $user = User::find($id);
+        $companies=$user->companies()->get();
+        return view('modules.ticket-office.companies.read', ['companies' => $companies]);
+    }
+
+    public function detailsRatesTaxPayers($id){
+        $user = User::find($id);
+        $rates=$user->taxesRate()->get();
+        return view('modules.rates.ticket-office.all-taxes',['taxes'=>$rates,'id'=>$id]);
     }
 }
