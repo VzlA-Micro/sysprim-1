@@ -7,6 +7,7 @@ use App\FindCompany;
 use App\Helpers\Calculate;
 use App\Payment;
 use App\Taxe;
+use App\Vehicle;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\CiuTaxes;
@@ -937,12 +938,11 @@ class TicketOfficeController extends Controller
                 $company_find = Company::find($companyTaxe[0]->id);
                 $user = $company_find->users()->get();
 
-                $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
+                /*$pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
                     'taxes' => $taxes,
                     'ciuTaxes' => $ciuTaxes,
                     'firm' => true
-                ]);
-
+                ]);*/
 
                 $band = true;
             } else {
@@ -972,6 +972,27 @@ class TicketOfficeController extends Controller
 
             $user=User::find($rate[0]->pivot->user_id);;
             $email=$user->email;
+            $band=true;
+        } elseif ($taxes->branch=='Pat.Veh'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => true
+            ]);
+
+
+
+            $email=$user[0]->email;
             $band=true;
         }
         if($band){

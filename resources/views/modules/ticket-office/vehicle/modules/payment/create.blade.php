@@ -168,7 +168,7 @@
                                        value=""
                                        readonly>
                                 <label for="total">Total<b> (Bs)</b></label>
-
+                                <input type="hidden" id="totalAux" name="totalAux" value="">
                             </div>
 
                         </div>
@@ -221,8 +221,9 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>
+    <script src="{{asset('js/validations.js') }}"></script>
+    <script src="{{asset('js/dev/vehicleTaxes.js')}}"></script>
+    <script src="{{asset('js/dev/vehicleTicketOffice.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#bank-point').formSelect();

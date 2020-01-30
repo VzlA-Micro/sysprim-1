@@ -18,7 +18,7 @@
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
                         <h5> Periodo Fiscal:<span></span></h5>
-                        <h5> Código:<b> {{$response['taxes'][0]->code}}</b></h5>
+                        <h5> Código:<b> {{$response['taxes']->code}}</b></h5>
                     </div>
                     <div class="row padding-2 left-align">
                         <div class="col m6">
@@ -26,8 +26,8 @@
                                 <li><b>Placa: </b>{{ $response['vehicle'][0]->license_plate }}</li>
                                 <li><b>Color: </b>{{ $response['vehicle'][0]->color }}</li>
                                 <li><b>Marca: </b>{{ $response['model']->brand->name }}</li>
-                                <li><b>Modelo: </b>{{ $response['model']->name}} </li>
-                                <li><b>Fecha: </b>{{ $response['taxes'][0]->created_at->format('d-m-Y') }}</li>
+                                <li><b>Modelo:</b>{{ $response['model']->name}} </li>
+                                <li><b>Fecha: </b>{{ $response['taxes']->created_at->format('d-m-Y') }}</li>
                             </ul>
                             <ul>
                             </ul>
@@ -39,12 +39,12 @@
 
                     <div class="divider"></div>
                     <div class="card-header center-align">
-                        <h5>Detalles de Actividad Económica</h5>
+                        <h5>Detalles de Patente de Vehículo</h5>
                     </div>
                     <form method="post" action="{{ route('company.taxes.save')}}" id='register-taxes'
                           class="card-content row">
                         @csrf
-
+                        <input type="hidden" name="taxe_id" id="taxes_id" value="{{$response['taxes']->id}}">
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
@@ -101,19 +101,27 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="fiscal_credits" id="fiscal_credits"
-                                   class="validate number-only" pattern="[0-9.,]+"
+                                   class="validate number-only" readonly pattern="[0-9.,]+"
                                    value="{{$response['vehicleTaxes'][0]->fiscal_credits}}"
                             >
                             <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
                         </div>
 
-
-
+                        <div class="input-field col s12 m6">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>
+                            <input type="text" name="total" id="total"
+                                   class="validate number-only" pattern="[0-9.,]+"
+                                   value="{{number_format($response['taxes']->amount,2, ',', '.')}}"
+                            >
+                            <label for="fiscal_credits">Total<b> (Bs)</b></label>
+                        </div>
 
                             <div class="row" style="padding: 1rem">
                                 <div class="input-field col s12">
                                     <!-- Modal trigger -->
-                                    @if(!$response['taxes'][0]->payments->isEmpty())
+                                    @if(!$response['taxes']->payments->isEmpty())
                                         <h4 class="center-align">Registro de Pago:</h4>
                                         <table class="centered highlight" id="payments" style="width: 100%">
                                             <thead>
@@ -131,21 +139,21 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <td>{{$response['taxes'][0]->created_at->format('d-m-Y')}}</td>
-                                                    <td>{{$response['taxes'][0]->code}}</td>
-                                                    <td>{{$response['taxes'][0]->type_payment}}</td>
-                                                    <td>{{$response['taxes'][0]->statusName}}</td>
-                                                    <td>{{$response['taxes'][0]->ref}}</td>
-                                                    <td>{{number_format($response['taxes'][0]->amount,2)." Bs"}}</td>
+                                                    <td>{{$response['taxes']->created_at->format('d-m-Y')}}</td>
+                                                    <td>{{$response['taxes']->code}}</td>
+                                                    <td>{{$response['taxes']->type_payment}}</td>
+                                                    <td>{{$response['taxes']->statusName}}</td>
+                                                    <td>{{$response['taxes']->ref}}</td>
+                                                    <td>{{number_format($response['taxes']->amount,2)." Bs"}}</td>
                                                     <td>
-                                                        @if($response['taxes'][0]->status==='cancel')
+                                                        @if($response['taxes']->status==='cancel')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light  col s12 red"
                                                                         value="">
                                                                     <i class="icon-do_not_disturb_alt"></i></button>
                                                             </div>
-                                                        @elseif($response['taxes'][0]->status=='verified')
+                                                        @elseif($response['taxes']->status=='verified')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light green col s12"
@@ -156,13 +164,13 @@
                                                             <div class="input-field col s12 m6">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light green col s12"
-                                                                        value="{{$response['taxes'][0]->id}}" data-status="verified">
+                                                                        value="{{$response['taxes']->id}}" data-status="verified">
                                                                     <i class="icon-check"></i></button>
                                                             </div>
                                                             <div class="input-field col s12 m6">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light red col s12"
-                                                                        value="{{$response['taxes'][0]->id}}" data-status="cancel">
+                                                                        value="{{$response['taxes']->id}}" data-status="cancel">
                                                                     <i class="icon-cancel"></i></button>
                                                             </div>
                                                         @endif
@@ -174,20 +182,20 @@
                                             </tbody>
                                         </table>
                                         @endif
-                                       {{--<div class="row ">
-                                            @if($response['taxes'][0]->status==='ticket-office')
+                                       <div class="row ">
+                                            @if($response['taxes']->status==='ticket-office')
                                                 <a class="btn green col s12 ">
                                                     <i class="icon-more_horiz left "></i>
                                                     ESTADO: SIN PROCESAR AÚN
                                                 </a>
 
-                                            @elseif($response['taxes'][0]->status==='process')
+                                            @elseif($response['taxes']->status==='process')
                                                 <a href="#" class="btn green col s12">
                                                     <i class="icon-more_horiz left "></i>
                                                     ESTADO: SIN CONCILIAR AÚN
 
                                                 </a>
-                                            @elseif($response['taxes'][0]->status==='verified')
+                                            @elseif($response['taxes']->status==='verified')
 
                                                 <a href="#" class="btn blue col s12">
                                                     <i class="icon-more_horiz left"></i>
@@ -195,7 +203,7 @@
                                                 </a>
 
 
-                                            @elseif($response['taxes'][0]->status=='cancel')
+                                            @elseif($response['taxes']->status=='cancel')
 
                                                 <a href="#" class="btn red col s12">
                                                     <i class="icon-more_horiz left"></i>
@@ -203,7 +211,7 @@
                                                 </a>
                                             @endif
 
-                                            @if($response['taxes'][0]->status=='process'||$response['taxes'][0]->status=='ticket-office'||$response['taxes'][0]->status=='temporal'||$response['taxes'][0]->status=='verified')
+                                            @if($response['taxes']->status=='process'||$response['taxes']->status=='ticket-office'||$response['taxes']->status=='temporal'||$response['taxes']->status=='verified')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>
@@ -221,7 +229,7 @@
                                                         </a>
                                                     @endcan
                                                     @can('Verificar Pagos - Manual')
-                                                        @if($response['verified']&&$response['taxes'][0]->status!=='verified')
+                                                        @if($response['verified']&&$response['taxes']->status!=='verified')
                                                             <a href="#"
                                                                class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
                                                                data-status="verified">
@@ -230,12 +238,10 @@
                                                             </a>
                                                         @endif
                                                     @endcan
-                                                    @if($response['taxes'][0]->status=='verified')
+                                                    @if($response['taxes']->status=='verified')
                                                         <button type="button" id="send-email-verified"
-
-
                                                                 class="btn btn-rounded col s4 green waves-effect waves-light"
-                                                                value="{{$response['taxes'][0]->id}}">Enviar Correo Verificado.
+                                                                value="{{$response['taxes']->id}}">Enviar Correo Verificado.
                                                             <i class="icon-send right"></i>
                                                         </button>
                                                     @endif
@@ -243,9 +249,7 @@
                                                 </div>
                                             @endif
 
-
-
-                                        </div>--}}
+                                        </div>
                                 </div>
                             </div>
                     </form>

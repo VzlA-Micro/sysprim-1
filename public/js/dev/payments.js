@@ -1,5 +1,6 @@
 $('document').ready(function () {
- var url = "https://sysprim.com/";
+ //var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
     $('.change-status').click(function () {
         var status=$(this).data('status');
@@ -176,11 +177,8 @@ $('document').ready(function () {
                         });
                     }
                 });
-
-
             }
         });
-
     });
 
 
