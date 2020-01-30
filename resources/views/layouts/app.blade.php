@@ -9,6 +9,7 @@
 
         gtag('config', 'UA-157083345-1');
     </script>-->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="semat, semat en linea, alcaldia de iribarren semat, semat iribarren, semat barquisimeto, alcaldia de iribarren, pago de impuestos iribarren, recaudacion iribarren, impuestos iribarren">

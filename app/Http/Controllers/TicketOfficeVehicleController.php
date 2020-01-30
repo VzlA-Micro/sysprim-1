@@ -325,8 +325,7 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function getTaxes()
-    {
+    public function getTaxes(){
         $taxes = Audit::where('user_id', \Auth::user()->id)
             ->where('event', 'created')
             ->where('auditable_type', 'App\Taxe')
@@ -337,7 +336,7 @@ class TicketOfficeVehicleController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Pat.Veh')->whereIn('id', $id_taxes)->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -347,8 +346,7 @@ class TicketOfficeVehicleController extends Controller
             $taxes = null;
         }
 
-
-        return view('modules.ticket-office.taxes.taxes-tickoffice', ['taxes' => $taxes]);
+        return view('modules.ticket-office.vehicle.modules.taxes.taxes-tickoffice', ['taxes' => $taxes]);
     }
 
     public function registerTaxes(Request $request)
@@ -954,7 +952,7 @@ class TicketOfficeVehicleController extends Controller
             $vehicleTaxes = new VehiclesTaxe();
             $vehicleTaxes->vehicle_id = $vehicle[0]->id;
             $vehicleTaxes->taxe_id = $taxesId;
-            $vehicleTaxes->status = 'Temporal';
+            $vehicleTaxes->status = 'ticket-office';
             $vehicleTaxes->type_payments = $declaration['optionPayment'];
             $vehicleTaxes->fiscal_credits = 0;
             $vehicleTaxes->save();
@@ -976,7 +974,8 @@ class TicketOfficeVehicleController extends Controller
                     'totalAux'=>$declaration['total'],
                     'vehicleTaxes' => false,
                     'valueMora' => $valueMora,
-                    'totalAux' => $totalAux
+                    'totalAux' => $totalAux,
+                    'taxeId'=>$taxesId
                 )
             );
         }
@@ -1042,20 +1041,40 @@ class TicketOfficeVehicleController extends Controller
 
     public function taxesSave(Request $request)
     {
-        $id = $request->input('taxes_id');
+        $id = $request->input('taxeId');
         $amount = $request->input('total');
-        $fiscalCredits = $request->input('fiscal_credits');
+        $fiscalCredits = $request->input('fiscalCredits');
         $recharge = $request->input('recharge');
         $recharge_mora = $request->input('rechargeMora');
+        $previousDebt = $request->input('previous');
+        $discount = $request->input('discount');
+        $base = $request->input('base');
 
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
+
+        $base_format = str_replace('.', '', $base);
+        $base_format = str_replace(',', '.', $base_format);
 
         if ($fiscalCredits !== 0) {
             $fiscalCredits_format = str_replace('.', '', $fiscalCredits);
             $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
         } else {
             $fiscalCredits_format = 0;
+        }
+
+        if ($previousDebt !== 0) {
+            $previousDebt_format = str_replace('.', '', $previousDebt);
+            $previousDebt_format = str_replace(',', '.', $previousDebt_format);
+        } else {
+            $previousDebt_format = (float)0;
+        }
+
+        if ($discount !== 0) {
+            $discount_format = str_replace('.', '', $discount);
+            $discount_format = str_replace(',', '.', $discount_format);
+        } else {
+            $discount_format = 0;
         }
 
         if ($recharge !== 0 && $recharge_mora !== 0) {
@@ -1069,26 +1088,36 @@ class TicketOfficeVehicleController extends Controller
             $rechargeMora_format = 0;
         }
 
+
+
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'ticket-office';
-        $taxes->branch = 'Vehículo';
+        $taxes->branch = 'Pat.Veh';
+        $taxes->code=TaxesNumber::generateNumberTaxes('PTS');
+        $taxes->update();
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
 
-        $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
+        $vehicleTaxes = VehiclesTaxe::findOrFail($idVehicleTaxes[0]->id);
+
         $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
         $vehicleTaxes->recharge = $recharge_format;
         $vehicleTaxes->recharge_mora = $rechargeMora_format;
+        $vehicleTaxes->base_imponible = $base_format;
+
+        $vehicleTaxes->previous_debt = $previousDebt_format;
+
+        $vehicleTaxes->discount=$discount_format;
         $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
         // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
-        $taxes->update();
 
-        return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+
+        return response()->json(['status'=>'success']);
     }
 
     /* public function payments(Request $request)

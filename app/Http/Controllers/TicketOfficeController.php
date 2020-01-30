@@ -199,8 +199,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = $payments_type. $code;
                     $taxes_find->status = 'process';
-
-
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
@@ -208,9 +206,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
-
-
-
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
@@ -306,6 +301,7 @@ class TicketOfficeController extends Controller
     public function allCompanies()
     {
         $companies = Company::all();
+
         return view('modules.ticket-office.companies.read', ['companies' => $companies]);
     }
 
@@ -317,7 +313,6 @@ class TicketOfficeController extends Controller
 
         $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
         $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
-
 
 
 
@@ -334,7 +329,6 @@ class TicketOfficeController extends Controller
         }elseif($type=='Tasas y Cert'){
             $companyTaxes=$company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
         }
-
         return view('modules.ticket-office.companies.all-taxes',['taxesCompanies'=>$companyTaxes,'id'=>$id]);
     }
 
@@ -445,7 +439,7 @@ class TicketOfficeController extends Controller
 
         for ($i = 0; $i < count($base); $i++) {
 
-            //damos formato a la base
+             //damos formato a la base
             $base_format_verify = str_replace('.', '', $base[$i]);
             $base_format_verify = str_replace(',', '.', $base_format_verify);
 

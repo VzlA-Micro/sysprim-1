@@ -7,7 +7,8 @@ $('document').ready(function () {
         var type=$('#type').val();
         var status=$('#status').val();
 
-        console.log(type)
+
+
         if(type!=null&&status!=null) {
             var formData = new FormData(this);
             $.ajax({

@@ -16,7 +16,8 @@ $('document').ready(function () {
             },
 
             beforeSend: function () {
-
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
                 console.log(data[0]);
@@ -36,7 +37,15 @@ $('document').ready(function () {
                 }
             },
             error: function (e) {
-                console.log(e);
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
     });

@@ -1,5 +1,5 @@
 //var url = "https://sysprim.com/";
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 // var url = "https://sysprim.com/";
 
 
@@ -105,7 +105,6 @@ $('document').ready(function () {
             beforeSend: function () {
             },
             success: function (data) {
-                console.log(data);
                 if (data['status']=="error") {
                     swal({
                         title: "¡Serial de Carroceria Registrado!",
