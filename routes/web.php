@@ -664,11 +664,7 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
                 Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
                 Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
-                Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
-                Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
-                Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
-                Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
-                Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+
                 // Nivel 2: Registrar
                 Route::group(['middleware' => ['permission:Registrar Mis Vehiculos']], function () {
                     Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
@@ -679,6 +675,14 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
                 });
             });
+
+
+        Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
+        Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
+        Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
+        Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
+        Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+
 
             //________________________module Vehicle_____________________________
 
