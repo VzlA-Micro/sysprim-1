@@ -39,22 +39,6 @@
                             <li><b></b></li>
                         </ul>
                     </div>
-                <!--<div class="card-footer">
-                        <div class="row" style="margin-bottom:0">
-                            <div class="col s12 center-align">
-                                <a href="" class="btn blue btn-rounded waves-light">
-                                    Más Detalles
-                                    <i class="icon-more_horiz right"></i>
-                                </a>
-                            </div>
-                           {{-- <div class="col s12 m6 center-align">
-                                <a href="" class="btn green btn-rounded waves-light col s12">
-                                    Descargar Carnet
-                                    <i class="icon-perm_contact_calendar right"></i>
-                                </a>
-                            </div> --}}
-                        </div>
-                    </div>-->
                 </div>
             </div>
 
@@ -62,39 +46,10 @@
 
                 <div class="row">
                     <div class="col s12">
-
-                        @if(\Carbon\Carbon::now()->format('m')=='01')
-                            <a href="#mode" class="modal-trigger btn-app white green-text">
+                            <a href="{{url('vehicles/manage/'.$vehicle->id)}}" class="modal-trigger btn-app white green-text">
                                 <i class="icon-payment"></i>
                                 <span class="truncate">Mis Declaraciones</span>
                             </a>
-                        @else
-                            <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-".false])}}"
-                               class="btn-app white green-text">
-                                <i class="icon-payment"></i>
-                                <span class="truncate">Mis Declaraciones</span>
-                            </a>
-                        @endif
-                    </div>
-
-                {{-- "{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger  --}}
-
-
-                    <!-- Modal Structure -->
-                    <div id="mode" class="modal">
-                        <div class="">
-                            <div class="modal-content">
-                                <h5 class="">Modos de pago</h5>
-                                <p>Elige la forma en la realizara su pago de Vehiculo</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-".false])}}"
-                                   class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
-                                <a href="{{route('taxes.vehicle',['id'=>$vehicle->id."-".true])}}"
-                                   class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
-                            </div>
-                        </div>
-
                     </div>
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
@@ -102,7 +57,6 @@
                             <span class="truncate">Mis Multas</span>
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

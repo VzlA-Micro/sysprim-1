@@ -269,10 +269,9 @@ class VehiclesTaxesController extends Controller
         return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
     }
 
-    public function downloadPDF($id)
+    public function downloadPDF($id,$download)
     {
-        $id_vehicle = explode('-', $id);
-        $taxes=Taxe::find($id_vehicle[1]);
+        $taxes=Taxe::find($id);
 
         $vehicleTaxes=$taxes->vehicleTaxes()->get();
         $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
@@ -288,7 +287,11 @@ class VehiclesTaxesController extends Controller
                 'diffYear'=>$diffYear,
                 'firm' => true
             ]);
-        return $pdf->download('PLANILLA_SOLVENCIA.pdf');
+        if ($download==="true") {
+            return $pdf->download('PLANILLA_SOLVENCIA.pdf');
+        }else{
+            return $pdf->stream('PLANILLA_SOLVENCIA.pdf');
+        }
     }
 
     public function creditsFiscal(Request $request)

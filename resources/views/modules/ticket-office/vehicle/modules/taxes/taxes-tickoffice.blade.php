@@ -63,7 +63,7 @@
 
                                             @can('Detalles Planilla')
                                                 <td>
-                                                    <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
                                                        class="btn indigo waves-effect waves-light">
                                                         <i class="icon-pageview left"></i>
                                                         Detalles

@@ -861,7 +861,6 @@ $('document').ready(function () {
         var acum = '';
         var band=false;
 
-
         $('input.payroll:checked').each(function () {
             band=true;
             acum += $(this).val() + '-';
@@ -878,8 +877,6 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-
-
 
                     if(response.status==='success'){
                         $('.taxes_id').each(function () {
@@ -1276,7 +1273,7 @@ $('document').ready(function () {
 
     function generateReceipt() {
         var taxes_id=$('.taxes_id').val();
-        window.open(url + 'rate/taxpayers/pdf/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
+        window.open(url + 'vehicle/payments/taxes/download/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
     }
 
 
@@ -1415,7 +1412,7 @@ $('document').ready(function () {
                     }).then(function (accept) {
                         $('#amount_total_tr').val('');
                         if ($('#company_id').val() !== '') {
-                            window.open(url + 'rate/taxpayers/pdf/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
+                            window.open(url + 'vehicle/payments/taxes/download/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
                             location.reload();
                         }
 

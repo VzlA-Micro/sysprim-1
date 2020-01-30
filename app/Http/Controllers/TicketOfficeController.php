@@ -843,6 +843,10 @@ class TicketOfficeController extends Controller
                     $taxes_find->code = $code;
                 }
 
+                elseif($taxes_find->branch==='Pat.Veh'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
+                    $taxes_find->code = $code;
+                }
 
                 $taxes_find->update();
             }
@@ -1332,23 +1336,27 @@ class TicketOfficeController extends Controller
                 ]);
 
         }
+        elseif ($taxes->branch=='Pat.Veh'){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => $firm
+            ]);
+
+        }
 
 
         return $pdf->stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

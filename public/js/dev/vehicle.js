@@ -23,9 +23,13 @@ $('document').ready(function () {
             },
 
             beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
-                console.log(data);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
                 if (data) {
                     $('#model').prop('disabled', false);
                     $('select').formSelect();
@@ -45,55 +49,78 @@ $('document').ready(function () {
 
             },
             error: function (e) {
-                console.log(e);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
     });
 
-    $('#license_plate').blur(function () {
+    $('#license_plate').change(function () {
         var license = $(this).val();
         var id=$('#id').val();
-        console.log(license);
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifyLicense",
-            data: {
-                license: license,
-                id:id
-            },
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifyLicense",
+                data: {
+                    license: license,
+                    id: id
+                },
 
-            beforeSend: function () {
-            },
-            success: function (data) {
-                console.log(data);
-                if (data['status']=="error") {
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Placa Registrada!",
+                            text: data['message'],
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        swal({
+                            title: data['message'],
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Placa Registrada!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    $('#button-vehicle').prop('disabled', false);
                 }
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        });
+            });
+
     });
 
-    $('#bodySerial').blur(function () {
+    $('#bodySerial').change(function () {
         var bodySerial = $(this).val();
         var id=$('#id').val();
-        console.log(bodySerial);
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifyBodySerial",
@@ -103,8 +130,12 @@ $('document').ready(function () {
             },
 
             beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 if (data['status']=="error") {
                     swal({
                         title: "¡Serial de Carroceria Registrado!",
@@ -124,12 +155,22 @@ $('document').ready(function () {
                 }
             },
             error: function (e) {
-                console.log(e);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
     });
 
-    $('#serialEngine').blur(function () {
+    $('#serialEngine').change(function () {
         var serialEngine = $(this).val();
         var id=$('#id').val();
         $.ajax({
@@ -141,8 +182,12 @@ $('document').ready(function () {
             },
 
             beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 console.log(data);
                 if (data['status']=="error") {
                     swal({
@@ -163,7 +208,17 @@ $('document').ready(function () {
                 }
             },
             error: function (e) {
-                console.log(e);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
     });
@@ -181,8 +236,12 @@ $('document').ready(function () {
 
             beforeSend: function () {
                 $('#button-vehicle').prop('disabled', true);
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function () {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Bien Hecho!",
                     text: "Has Actualizado Los datos de tipo de vehiculos Con Exito",
@@ -193,7 +252,17 @@ $('document').ready(function () {
                 });
             },
             error: function (e) {
-                console.log(e);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
         updateType = false;
@@ -245,8 +314,12 @@ $('document').ready(function () {
                             $('#name').attr('readonly', 'readonly');
                             $('#rate').attr('readonly', 'readonly');
                             $('#rate_ut').attr('readonly', 'readonly');
+                            $("#preloader").fadeIn('fast');
+                            $("#preloader-overlay").fadeIn('fast');
                         },
                         success: function (data) {
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
                             if (data['update'] == true) {
                                 swal({
                                     title: "¡Bien Hecho!",
@@ -257,7 +330,17 @@ $('document').ready(function () {
                             }
                         },
                         error: function (e) {
-                            console.log(e);
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                            swal({
+                                title: "¡Oh no!",
+                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                icon: "error",
+                                button: {
+                                    text: "Entendido",
+                                    className: "red-gradient"
+                                },
+                            });
                         }
                     });
                     updateType = false;
@@ -268,8 +351,6 @@ $('document').ready(function () {
 
     $('#button-brand').on('click', function (e) {
         e.preventDefault();
-        console.log('hola');
-        console.log(buttonBrand);
         if (buttonBrand) {
             if (controlButtonBrand) {
                 $('#group-MB').hide();
@@ -296,8 +377,16 @@ $('document').ready(function () {
         } else {
             $('#group-new-MB').hide();
             $('#group-MB').show();
-            console.log(buttonBrand);
             buttonBrand = true;
+            swal({
+                title: "¡Oh no!",
+                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                icon: "error",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
         }
 
 
@@ -393,6 +482,8 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Bien Hecho!",
                     text: "El vehiculo ha sido registrado con éxito.",
@@ -412,8 +503,9 @@ $('document').ready(function () {
 
             },
             error: function (err) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 $('#button-company').removeAttr('disabled', '');
-                console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -429,11 +521,6 @@ $('document').ready(function () {
         });
 
     });
-
-
-
-
-
 });
 
 

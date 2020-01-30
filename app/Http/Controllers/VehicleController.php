@@ -224,7 +224,6 @@ class VehicleController extends Controller
         if ($request->input('id') != null) {
             $id = $request->input('id');
         }
-        var_dump($request->input('id'));
 
         if (is_null($id)) {
             $license = Vehicle::where('license_plate', $request->input('license'))->get();
@@ -352,6 +351,11 @@ class VehicleController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function manage($id)
+    {
+        return view('modules.vehicles.manage',['id'=>$id]);
     }
 
 }

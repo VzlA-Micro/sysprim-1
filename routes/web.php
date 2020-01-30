@@ -677,6 +677,7 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
                     Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
+                    Route::get('vehicles/manage/{id}','VehicleController@manage')->name('vehicles.manage');
                 });
             });
 
@@ -700,7 +701,7 @@ Route::middleware(['auth'])->group(/**
             Route::post('/vehicle/taxes/save', 'VehiclesTaxesController@taxesSave')->name('vehicles.taxes.save');
             Route::post('/vehicle/payments/register', 'VehiclesTaxesController@payments')->name('vehicle.payments.store');
             Route::get('/vehicle/payments/history/{id}', 'VehiclesTaxesController@history')->name('vehicle.payments.history');
-            Route::get('/vehicle/payments/taxes/download/{id}', 'VehiclesTaxesController@downloadPDF')->name('vehicle.taxes.download');
+            Route::get('/vehicle/payments/taxes/download/{id}/{download}', 'VehiclesTaxesController@downloadPDF')->name('vehicle.taxes.download');
 //___________________________________________________________________________________________________________________________
 
             //_______________________________________TICKET OFFICE______________________________________________________________________

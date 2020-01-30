@@ -35,7 +35,7 @@
                                 <th>Planilla</th>
                                 <th>Monto</th>
                                 @can('Anular Pagos')
-                                <th>Acción</th>
+                                    <th>Acción</th>
                                 @endcan
                                 @can('Detalles Pagos')
                                     <th>Detalles</th>
@@ -55,23 +55,24 @@
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Anular Pagos')
-                                        <td>
-                                            @if($taxe->status==='cancel')
-                                                <div class="input-field col s12 m12">
-                                                    <button type="button" disabled
-                                                            class="btn waves-effect waves-light  col s12 red" value="">
-                                                        <i class="icon-do_not_disturb_alt"></i></button>
-                                                </div>
-                                            @else
-                                                <div class="input-field col s12 m12">
-                                                    <button type="button" id="change-status"
-                                                            class="btn waves-effect waves-light green col s12"
-                                                            value="{{$taxe->id}}" data-status="cancel">
-                                                        <i class="icon-cancel"></i></button>
-                                                </div>
-                                            @endif
+                                            <td>
+                                                @if($taxe->status==='cancel')
+                                                    <div class="input-field col s12 m12">
+                                                        <button type="button" disabled
+                                                                class="btn waves-effect waves-light  col s12 red"
+                                                                value="">
+                                                            <i class="icon-do_not_disturb_alt"></i></button>
+                                                    </div>
+                                                @else
+                                                    <div class="input-field col s12 m12">
+                                                        <button type="button" id="change-status"
+                                                                class="btn waves-effect waves-light green col s12"
+                                                                value="{{$taxe->id}}" data-status="cancel">
+                                                            <i class="icon-cancel"></i></button>
+                                                    </div>
+                                                @endif
 
-                                        </td>
+                                            </td>
                                         @endcan
                                         @can('Detalles Pagos')
                                             @if($taxe->taxes[0]->branch==='Act.Eco')
@@ -100,6 +101,13 @@
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
+                                                </td>
+                                            @elseif($taxe->taxes[0]->branch==='Pat.Veh')
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light">
+                                                        <i class="icon-pageview left"></i>
+                                                    </a>
                                                 </td>
                                             @endif
                                         @endcan

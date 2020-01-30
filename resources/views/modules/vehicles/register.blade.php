@@ -108,9 +108,9 @@
                         </div>
 
 
-                    {{--<div class="container">
-                        <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo, no se encuentre registrado en nuestro sistema. Por favor envíanos un correo a esta Dirección: correo, con los siguientes datos:<br> 1- Marca<br> 2- Modelo<br> 3- Año </p>
-                    </div>--}}
+                    <div class="container">
+                        <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo no se encuentre registrado en nuestro sistema, presiona el botón de registrar marcas e introduce los siguientes datos:<br> 1- Marca<br> 2- Modelo<br></p>
+                    </div>
 
                     <div class="input-field col s12 center-align">
                         <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i

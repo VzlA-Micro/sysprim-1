@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -10,28 +10,66 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis
+                            Vehículos</a></li>
                 </ul>
             </div>
-            @can('Registrar Mis Vehiculos')
+
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.register',['register'=>false]) }}" class="btn-app white green-text">
-                    <i class="icon-add_circle"></i>
-                    <span class="truncate">Registrar Vehículo</span>
+                @if(\Carbon\Carbon::now()->format('m')=='01')
+                    <a href="#mode" class="modal-trigger btn-app white green-text">
+                        <i class="icon-payment"></i>
+                        <span class="truncate">Mis Declaraciones</span>
+                    </a>
+                @else
+                    <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
+                       class="btn-app white green-text">
+                        <i class="icon-payment"></i>
+                        <span class="truncate">Mis Declaraciones</span>
+                    </a>
+                @endif
+            </div>
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ url('/vehicle/payments/history/'.$id)}}" class="btn-app white orange-text">
+                    <i class="icon-format_list_bulleted"></i>
+                    <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
-            @endcan
-            @can('Consultar Mis Vehiculos')
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.read') }}" class="btn-app white amber-text">
-                    <i class="icon-directions_car"></i>
-                    <span class="truncate">Ver Mis Vehículos</span>
-                </a>
+
+
+        {{-- "{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger  --}}
+
+
+        <!-- Modal Structure -->
+            <div id="mode" class="modal">
+                <div class="">
+                    <div class="modal-content">
+                        <h5 class="">Modos de pago</h5>
+                        <p>Elige la forma en la realizara su pago de Vehiculo</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".true])}}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
+                    </div>
+                </div>
+
             </div>
-            @endcan
+            <!-- <div class="col s12">
+                <a href="" class="btn-app white orange-text">
+                    <i class="icon-warning"></i>
+                    <span class="truncate">Mis Multas</span>
+                </a>
+            </div> -->
+
         </div>
+    </div>
+
+
+    </div>
     </div>
 @endsection
 @section('scripts')
-    
+
 @endsection

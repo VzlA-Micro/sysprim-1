@@ -1094,7 +1094,7 @@ class TicketOfficeVehicleController extends Controller
         $taxes->amount = $amount_format;
         $taxes->status = 'ticket-office';
         $taxes->branch = 'Pat.Veh';
-        $taxes->code=TaxesNumber::generateNumberTaxes('PTS');
+        $taxes->code=TaxesNumber::generateNumberTaxes('PTS'.'85');
         $taxes->update();
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
