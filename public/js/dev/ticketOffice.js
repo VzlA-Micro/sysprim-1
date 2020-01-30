@@ -831,7 +831,7 @@ $(document).ready(function () {
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
-                            text: "El Contribuyente no esta registrado, debe registrar el contribuyente antes para poder registrar una empresa.",
+                            text: "El Contribuyente no esta registrado, debe registrar el contribuyente.",
                             icon: "info",
                             buttons: {
                                 confirm: {

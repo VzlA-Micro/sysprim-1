@@ -1,4 +1,4 @@
-var url = "https://sysprim.com/";
+var url = "http://sysprim.com.devel/";
 $(document).ready(function() {
 	$('#register').submit(function(e) {
         var  name = $('#name').val();
@@ -51,6 +51,7 @@ $(document).ready(function() {
 
 	$('#update').submit(function(e) {
 		e.preventDefault();
+        $('#rates').DataTable().destroy();
         var  name = $('#name').val();
 		var formData = new FormData(this);
 		$.ajax({
@@ -61,9 +62,12 @@ $(document).ready(function() {
             processData: false,
             url: url + 'roles/update',
             beforeSend: function() {
-            	$("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
+
+			    $("#preloader").fadeIn('fast');
+            	$("#preloader-overlay").fadeIn('fast');
+
             },
+
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",

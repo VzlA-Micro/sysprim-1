@@ -278,6 +278,7 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+        });
             // GeoSysPRIM
 
             Route::group(['middleware' => ['permission:GeoSEMAT']], function () {
@@ -299,6 +300,31 @@ Route::middleware(['auth'])->group(/**
             });
             Route::get('/collection/statistics', 'DashboardController@collection')->name('collection');
 
+            // Seguridad
+            Route::group(['middleware' => ['permission:Seguridad']], function () {
+                Route::get('/security', 'SecurityController@index')->name('security.manage');
+                // Nivel 1: Gestionar Roles y Ver Bitacora
+                Route::group(['middleware' => ['permission:Gestionar Roles y Permisos|Bitacora']], function () {
+                    Route::get('/roles/manage', 'Permissions\RoleController@index')->name('roles.manage');
+                    Route::get('/audits', 'SecurityController@audits')->name('audits');
+                    Route::get('/audits', 'SecurityController@audits')->name('audits');
+
+                    // Nivel 2: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Gestionar Roles y Permisos|Bitacora']], function () {
+                        Route::get('/roles/register', 'Permissions\RoleController@create')->name('roles.register');
+                        Route::post('/roles/save', 'Permissions\RoleController@store')->name('roles.save');
+                        Route::get('/roles/read', 'Permissions\RoleController@show')->name('roles.read');
+                        // Nivel 3: Detalles y Actualizacion
+                        Route::group(['middleware' => ['permission:Detalles Roles']], function () {
+                            Route::get('/roles/details/{id}', 'Permissions\RoleController@details')->name('roles.details');
+                            // Nivel 4: Actualizar
+                            Route::group(['middleware' => ['permission:Actualizar Roles']], function () {
+                                Route::post('/roles/update', 'Permissions\RoleController@update')->name('roles.update');
+                            });
+                        });
+                    });
+                });
+            });
 
             // Route::get('/dashboard',array(
             //     'as'=>'dashboard',
@@ -459,31 +485,7 @@ Route::middleware(['auth'])->group(/**
             Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
 
 
-            // Seguridad
-            Route::group(['middleware' => ['permission:Seguridad']], function () {
-                Route::get('/security', 'SecurityController@index')->name('security.manage');
-                // Nivel 1: Gestionar Roles y Ver Bitacora
-                Route::group(['middleware' => ['permission:Gestionar Roles y Permisos|Bitacora']], function () {
-                    Route::get('/roles/manage', 'Permissions\RoleController@index')->name('roles.manage');
-                    Route::get('/audits', 'SecurityController@audits')->name('audits');
-                    Route::get('/audits', 'SecurityController@audits')->name('audits');
 
-                    // Nivel 2: Registrar y Consultar
-                    Route::group(['middleware' => ['permission:Gestionar Roles y Permisos|Bitacora']], function () {
-                        Route::get('/roles/register', 'Permissions\RoleController@create')->name('roles.register');
-                        Route::post('/roles/save', 'Permissions\RoleController@store')->name('roles.save');
-                        Route::get('/roles/read', 'Permissions\RoleController@show')->name('roles.read');
-                        // Nivel 3: Detalles y Actualizacion
-                        Route::group(['middleware' => ['permission:Detalles Roles']], function () {
-                            Route::get('/roles/details/{id}', 'Permissions\RoleController@details')->name('roles.details');
-                            // Nivel 4: Actualizar
-                            Route::group(['middleware' => ['permission:Actualizar Roles']], function () {
-                                Route::post('/roles/update', 'Permissions\RoleController@update')->name('roles.update');
-                            });
-                        });
-                    });
-                });
-            });
 
             // Notificaciones
             Route::group(['middleware' => ['permission:Notificaciones']], function () {
@@ -973,6 +975,5 @@ Route::middleware(['auth'])->group(/**
 
             Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
-        });
 
     });

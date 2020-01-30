@@ -833,12 +833,12 @@ class TicketOfficeController extends Controller
                 if($taxes_find->type==='definitive'){
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "89");
                     $taxes_find->code=$code;
-
                 }elseif($taxes_find->type==='actuated') {
 
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "81");
                     $taxes_find->code = $code;
-                }elseif($taxes_find->type==='Tasas y Cert'){
+
+                }elseif($taxes_find->branch==='Tasas y Cert'){
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "88");
                     $taxes_find->code = $code;
                 }
