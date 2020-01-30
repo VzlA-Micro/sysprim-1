@@ -123,7 +123,7 @@ $(document).ready(function () {
 
         var type=$('#type').val();
 
-        url='http://sysprim.com.devel/';
+        url='https://sysprim.com/';
 
 
 
@@ -199,7 +199,7 @@ $(document).ready(function () {
                         if (aceptar) {
                            location.reload();
                         } else {
-                            url='http://sysprim.com.devel/';
+                            url='https://sysprim.com/';
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });
