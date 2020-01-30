@@ -278,6 +278,7 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+        });
             // GeoSysPRIM
 
             Route::group(['middleware' => ['permission:GeoSEMAT']], function () {
@@ -973,6 +974,5 @@ Route::middleware(['auth'])->group(/**
 
             Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
-        });
 
     });
