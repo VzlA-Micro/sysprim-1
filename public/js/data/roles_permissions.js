@@ -1,4 +1,4 @@
-var url = "http://172.19.50.253/";
+var url = "https://sysprim.com/";
 $(document).ready(function() {
 	$('#register').submit(function(e) {
         var  name = $('#name').val();
@@ -52,6 +52,7 @@ $(document).ready(function() {
 	$('#update').submit(function(e) {
 		e.preventDefault();
         var  name = $('#name').val();
+        $('#rates').DataTable().destroy();
 		var formData = new FormData(this);
 		$.ajax({
 			method: "POST",

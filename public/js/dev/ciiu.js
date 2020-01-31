@@ -1,6 +1,6 @@
 $('document').ready(function () {
 
-    var url = "http://172.19.50.253/";
+    var url = "https://sysprim.com/";
 
     $('#ciuu').on('submit',function (e) {
         e.preventDefault();
