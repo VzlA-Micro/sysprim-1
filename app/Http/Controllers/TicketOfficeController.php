@@ -397,6 +397,7 @@ class TicketOfficeController extends Controller
     public function registerTaxes(Request $request)
     {
 
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Anti');
         $datos = $request->all();
 
         $fiscal_period = $datos['fiscal_period'];
@@ -410,7 +411,8 @@ class TicketOfficeController extends Controller
         $base = $datos['base'];
         $fiscal_credits = $datos['fiscal_credits'];
 
-
+        $amount_recharge = 0;
+        $interest = 0;
 
 
         $fiscal_period_format = Carbon::parse($fiscal_period);
@@ -514,26 +516,24 @@ class TicketOfficeController extends Controller
                 $base_amount_sub = $min_amount;
             }
 
-            if ($date['mora']) {//si tiene mora
-                //Obtengo recargo
-                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
-                if (is_null($recharge)) {
-                    $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+
+            if ($verify_prologue['mora']) {
+
+                if ($date['mora']) {//si tiene mora
+                    //Obtengo recargo
+                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+                    if (is_null($recharge)) {
+                        $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+                    }
+
+                    //Obtengo Intereset del banco
+                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                    $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
+
                 }
-
-
-                //Obtengo Intereset del banco
-                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
-
-                $amount_recharge = $base_amount_sub * $recharge->value / 100;
-                $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
-
-
-            } else {
-                $amount_recharge = 0;
-                $interest = 0;
             }
-
             $taxe->taxesCiu()->attach(['taxe_id' => $id],
                 ['ciu_id' => $ciu_id[$i],
                     'base' => $base_format,
@@ -559,7 +559,7 @@ class TicketOfficeController extends Controller
 
         //Si tiene  multa
         $verify = TaxesMonth::calculateDayMora($taxe_update->fiscal_period, $taxe_update->companies[0]->typeCompany);
-        if ($verify['mora']) {
+        if ($verify['mora']&&$verify_prologue['mora']) {
             $company = Company::find($taxe_update->companies[0]->id);
             $fineCompany = FineCompany::where('fiscal_period', $taxe_update->fiscal_period)->get();
             if (!$fineCompany->isEmpty()) {
@@ -1058,6 +1058,8 @@ class TicketOfficeController extends Controller
 
 
     public function registerTaxeDefinitive(Request $request){
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Defi');
+
         $datos = $request->all();
 
         $fiscal_period = $datos['fiscal_period'];
@@ -1203,22 +1205,23 @@ class TicketOfficeController extends Controller
                 ]);
 
 
-            /*if ($date['mora']) {//si tiene mora
-                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                if ($company_find->typeCompany === 'R') {
-                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
-                } else {
-                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
-                }
+            if ($verify_prologue['mora']) {
 
-                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                $mora = 0;
-            } else {
-                $mora = 0;
-                $tax_rate = 0;
-                $interest = 0;
-            }*/
+                    //Obtengo recargo
+                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+                    if (is_null($recharge)) {
+                        $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+                    }
+
+                    //Obtengo Intereset del banco
+                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                    $amount_recharge = $taxes_amount * $recharge->value / 100;
+                    $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($taxes_amount+$amount_recharge);
+
+            }
+
+
         }
 
         $day_mora=0;

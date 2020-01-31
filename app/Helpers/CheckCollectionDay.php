@@ -22,31 +22,24 @@ class CheckCollectionDay{
         $verify=[];
 
 
-
-
         $prologue=Prologue::where('branch', $branch)->first();
         $date_limit=Carbon::parse($prologue->date_limit);
 
         if($prologue->branch==='Act.Eco.Anti'){
 
             if($now->format('d')>$date_limit->format('d')){
-
                 $verify['mora']=true;
-                $verify['diffDayMora']=$date_limit->diffInDays($now);
+                $verify['diffDayMora']=0;
 
             }else{
-
                 $verify['mora']=false;
                 $verify['diffDayMora']=0;
             }
 
        }else{
             if($now->format('d-m-Y')>$date_limit->format('d-m-Y')){
-
                 $verify['mora']=true;
                 $verify['diffDayMora']=$date_limit->diffInDays($now);
-
-
             }else{
                 $verify['mora']=false;
                 $verify['diffDayMora']=0;

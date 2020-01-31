@@ -149,6 +149,7 @@ class CompanyTaxesController extends Controller
        */
 
         $verify_prologue=CheckCollectionDay::verify('Act.Eco.Anti');
+
         $fiscal_period = $request->input('fiscal_period');
         $company = $request->input('company_id');
         $company_find = Company::find($company);
@@ -259,7 +260,7 @@ class CompanyTaxesController extends Controller
                 $base_amount_sub=$min_amount;
             }
 
-            if($verify_prologue) {
+            if($verify_prologue['mora']) {
                 if ($date['mora']) {//si tiene mora
                     //Obtengo recargo
 
@@ -290,7 +291,7 @@ class CompanyTaxesController extends Controller
         }
 
 
-        if($verify_prologue) {
+        if($verify_prologue['mora']) {
             $day_mora = $date['diffDayMora'];
         }else{
             $day_mora=0;
@@ -448,7 +449,7 @@ class CompanyTaxesController extends Controller
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);
 
 
-        if($verify_prologue) {
+        if($verify_prologue['mora']) {
             if ($verify['mora']) {
                 $company = Company::find($taxes->companies[0]->id);
                 $fineCompany = FineCompany::where('fiscal_period', $taxes->fiscal_period)->get();
@@ -656,6 +657,7 @@ class CompanyTaxesController extends Controller
 
         $ciu_id = $request->input('ciu_id');
 
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Defi');
 
         $min_tribu_men = $request->input('min_tribu_men');
         /* $deductions = $request->input('deductions');
@@ -669,13 +671,13 @@ class CompanyTaxesController extends Controller
         $anticipated = $request->input('anticipated');
         $fiscal_credits = $request->input('fiscal_credits');
 
-
+        $fiscal_period_end='2019-12-01';
 
         //$date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->fiscal_period = $fiscal_period;
-        $taxe->fiscal_period_end = '2019-12-01';
+        $taxe->fiscal_period_end = $fiscal_period_end;
         $taxe->status = 'temporal';
         $taxe->type = 'definitive';
         $taxe->branch = 'Act.Eco';
@@ -688,7 +690,7 @@ class CompanyTaxesController extends Controller
         $total_base=0;
         $fiscal_period_format=Carbon::parse($fiscal_period);
 
-        $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+        $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_end)->first();
 
         $fiscal_credits_format = str_replace('.', '', $fiscal_credits);
         $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
@@ -766,6 +768,19 @@ class CompanyTaxesController extends Controller
             $amount_total+=$base_amount_sub-$anticipated_format;
 
 
+            if ($verify_prologue['mora']) {//si tiene mora
+
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
+                //Obtengo Intereset del banco
+                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+                $amount_recharge = $amount_total * $recharge->value / 100;
+                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + $amount_total);
+
+
+            } else {
+                $amount_recharge = 0;
+                $interest = 0;
+            }
 
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
@@ -779,38 +794,19 @@ class CompanyTaxesController extends Controller
                 ]);
 
 
-
-
-            /*if ($date['mora']) {//si tiene mora
-                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                if ($company_find->typeCompany === 'R') {
-                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
-                } else {
-                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
-                }
-
-                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                $mora = 0;
-            } else {
-                $mora = 0;
-                $tax_rate = 0;
-                $interest = 0;
-            }*/
         }
 
-        $day_mora=0;
+
+        $day_mora=$verify_prologue['diffDayMora'];
         $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id,
             'fiscal_credits'=>$fiscal_credits_format,
             'withholding'=>0,
             'deductions'=>0,
             'day_mora'=>$day_mora
         ]);
-
         $taxe=Taxe::find($taxe->id);
         $taxe->amount=$amount_total-$fiscal_credits_format;
         $taxe->update();
-
 
         return redirect('taxes/definitive/' . $id);
     }
