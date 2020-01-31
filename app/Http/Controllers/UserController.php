@@ -199,14 +199,13 @@ class UserController extends Controller{
     public function showTaxpayer() {
         $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->get();
 
-
-
-
-
-
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));
+
+
+
+
     }
 
     public function detailsTaxpayer($id) {
@@ -313,16 +312,27 @@ class UserController extends Controller{
 
 
 
-
+    //Muestra lo vehiculos de este contribuyente
     public function detailsCompanyTaxPayers($id){
         $user = User::find($id);
         $companies=$user->companies()->get();
         return view('modules.ticket-office.companies.read', ['companies' => $companies]);
     }
 
+    //Muestra los detalles de tasas
+
     public function detailsRatesTaxPayers($id){
         $user = User::find($id);
         $rates=$user->taxesRate()->get();
         return view('modules.rates.ticket-office.all-taxes',['taxes'=>$rates,'id'=>$id]);
+    }
+
+    //Muestra los de vehiculos de este contribuyente
+    public function detailsVehicleTaxPayers($id){
+        $user = User::find($id);
+        $vehicle=$user->vehicles()->get();
+        return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
+            'show' => $vehicle
+        ));
     }
 }

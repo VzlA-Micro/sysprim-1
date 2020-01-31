@@ -26,8 +26,6 @@ class TaxesMonth{
                 if($tax->status!=='cancel'){
                     if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')||$tax->status=='verified'||$tax->status=='verified-sysprim'){
 
-
-
                         $mount_pay[$tax->fiscal_period]=$tax->statusName;
                     }
                 }

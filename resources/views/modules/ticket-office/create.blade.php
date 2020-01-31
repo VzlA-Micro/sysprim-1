@@ -6,6 +6,8 @@
 @section('content')
 
     @php setlocale(LC_MONETARY, 'en_US');@endphp
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col s12">

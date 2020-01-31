@@ -97,6 +97,20 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/tax-unit/read', 'TributoController@show')->name('tax-unit.read');
             });
 
+
+
+
+
+            //Gestionar dias de cobro
+            Route::get('/prologue/manage', 'PrologueController@manage')->name('prologue.manage');
+            Route::get('/prologue/index', 'PrologueController@index')->name('prologue.index');
+            Route::get('/prologue/details/{id}', 'PrologueController@details')->name('prologue.details');
+            Route::post('/prologue/update', 'PrologueController@update')->name('prologue.update');
+
+
+
+
+
             Route::group(['middleware' => ['permission:Registrar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
                 Route::get('/ciu-group/register', function () {
                     return view('modules.ciiu-group.register');
@@ -350,6 +364,7 @@ Route::middleware(['auth'])->group(/**
                         Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
                         Route::get('/taxpayers/details/company/{id}', 'UserController@detailsCompanyTaxPayers')->name('taxpayers.details.company');
                         Route::get('/taxpayers/details/rates/{id}', 'UserController@detailsRatesTaxPayers')->name('taxpayers.details.rates');
+                        Route::get('/taxpayers/details/vehicle/{id}', 'UserController@detailsVehicleTaxPayers')->name('taxpayers.details.vehicle');
 
 
                         // Nivel 4: Actualizar, Resetear, Habilitar
@@ -682,8 +697,6 @@ Route::middleware(['auth'])->group(/**
         Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
         Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
         Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-
-
             //________________________module Vehicle_____________________________
 
             Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
@@ -975,9 +988,14 @@ Route::middleware(['auth'])->group(/**
 
             Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
 
-            Route::get('test/company', 'CompaniesController@test');
+            Route::get('test/home', 'HomeController@test');
 
             Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
+
+
+
+
+
 
 
     });

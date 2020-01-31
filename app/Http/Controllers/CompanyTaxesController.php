@@ -21,10 +21,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Helpers\TaxesMonth;
-use Illuminate\Support\Facades\Session;
 use App\CiuTaxes;
-use App\Employees;
 use Illuminate\Support\Facades\Mail;
+use App\Helpers\CheckCollectionDay;
 
 
 
@@ -149,7 +148,7 @@ class CompanyTaxesController extends Controller
 
        */
 
-
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Anti');
         $fiscal_period = $request->input('fiscal_period');
         $company = $request->input('company_id');
         $company_find = Company::find($company);
@@ -260,21 +259,25 @@ class CompanyTaxesController extends Controller
                 $base_amount_sub=$min_amount;
             }
 
-            if ($date['mora']) {//si tiene mora
-                //Obtengo recargo
+            if($verify_prologue) {
+                if ($date['mora']) {//si tiene mora
+                    //Obtengo recargo
 
-                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
 
-                //Obtengo Intereset del banco
-                $interest_bank=BankRate::orderBy('id', 'desc')->take(1)->first();
+                    //Obtengo Intereset del banco
+                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                $amount_recharge = $base_amount_sub * $recharge->value / 100;
-                $interest=(($interest_bank->value_rate/100) / 360) * $date['diffDayMora'] *($amount_recharge+$base_amount_sub);
+                    $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
-            } else {
-                $amount_recharge= 0;
-                $interest = 0;
+                } else {
+                    $amount_recharge = 0;
+                    $interest = 0;
+                }
             }
+
+
 
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                     ['ciu_id'=>$ciu_id[$i],
@@ -287,7 +290,13 @@ class CompanyTaxesController extends Controller
         }
 
 
-        $day_mora=$date['diffDayMora'];
+        if($verify_prologue) {
+            $day_mora = $date['diffDayMora'];
+        }else{
+            $day_mora=0;
+        }
+
+
         $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id,
                                                     'fiscal_credits'=>$fiscal_credits_format,
                                                     'withholding'=>$withholding_format,
@@ -394,6 +403,8 @@ class CompanyTaxesController extends Controller
     //registrar el taxes con su forma de pago
     public function payments( Request $request){
 
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Anti');
+
 
         $id_taxes=$request->input('id_taxes');
         $type_payment=$request->input('type_payment');
@@ -437,31 +448,28 @@ class CompanyTaxesController extends Controller
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);
 
 
+        if($verify_prologue) {
+            if ($verify['mora']) {
+                $company = Company::find($taxes->companies[0]->id);
+                $fineCompany = FineCompany::where('fiscal_period', $taxes->fiscal_period)->get();
+                if (!$fineCompany->isEmpty()) {
+                    $fine = FineCompany::find($fineCompany[0]->id);
+                    $fine->delete();
+                }
+                $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id' => 1, 'unid_tribu_value' => $tributo->value, 'fiscal_period' => $taxes->fiscal_period]);
 
-        if($verify['mora']){
-            $company=Company::find($taxes->companies[0]->id);
-            $fineCompany=FineCompany::where('fiscal_period',$taxes->fiscal_period)->get();
-            if(!$fineCompany->isEmpty()){
-                $fine=FineCompany::find($fineCompany[0]->id);
-                $fine->delete();
+                $fines = $company->fineCompany()->orderBy('id', 'desc')->take(1)->get();
+
+                $subject = "MULTA-SEMAT";
+                $for = \Auth::user()->email;
+
+                Mail::send('mails.resolucion', ['name' => $company->name], function ($msj) use ($subject, $for) {
+                    $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
+                    $msj->subject($subject);
+                    $msj->to($for);
+                });
             }
-            $company->fineCompany()->attach(['company_id' => $company->id], ['fine_id'=>1, 'unid_tribu_value'=>$tributo->value, 'fiscal_period'=>$taxes->fiscal_period]);
-
-            $fines=$company->fineCompany()->orderBy('id','desc')->take(1)->get();
-
-            $subject = "MULTA-SEMAT";
-            $for = \Auth::user()->email;
-
-            Mail::send('mails.resolucion', ['name'=>$company->name], function ($msj) use ($subject, $for) {
-                $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
-                $msj->subject($subject);
-                $msj->to($for);
-            });
-
-
         }
-
-
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
@@ -647,7 +655,6 @@ class CompanyTaxesController extends Controller
         $amount_total=0;
 
         $ciu_id = $request->input('ciu_id');
-
 
 
         $min_tribu_men = $request->input('min_tribu_men');

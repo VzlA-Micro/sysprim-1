@@ -126,7 +126,7 @@
 
 
 
-                            <a href="#">
+                            <a href="{{route('taxpayers.details.vehicle',['id'=>$user->id])}}">
                                 <div class="col s12 m4">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon green-gradient white-text">

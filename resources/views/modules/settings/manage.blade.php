@@ -89,6 +89,14 @@
                     <span class="truncate">Gestionar Tasas</span>
                 </a>
             </div>
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('prologue.manage')}}" class="btn-app white  green-text text-accent-3">
+                    <i class="icon-date_range"></i>
+                    <span class="truncate">Días de Cobro</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection
