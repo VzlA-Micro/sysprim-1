@@ -86,7 +86,7 @@
                                                             SIN CONCILIAR AÚN
                                                         </button>
                                                     </td>
-                                                    <td><a href="{{url('taxes.definitive.pdf',['id'=>$taxe->id])}}"
+                                                    <td><a href="{{route('taxes.definitive.pdf',['id'=>$taxe->id])}}"
                                                            class="btn orange waves-effect waves-light"><i
                                                                     class="icon-description left"></i>Descargar
                                                             planilla.</a></td>

@@ -160,6 +160,9 @@ class CompanyTaxesController extends Controller
         $withholding = $request->input('withholding');
         $fiscal_credits = $request->input('fiscal_credits');
 
+        $amount_recharge=0;
+        $interest=0;
+
         $base = $request->input('base');
 
 
@@ -650,8 +653,7 @@ class CompanyTaxesController extends Controller
         $fiscal_period = $request->input('fiscal_period');
         $company = $request->input('company_id');
         $company_find = Company::find($company);
-        $amount_recharge=0;
-        $interest=0;
+
 
         $amount_total=0;
 
@@ -683,6 +685,13 @@ class CompanyTaxesController extends Controller
         $taxe->branch = 'Act.Eco';
         $taxe->save();
 
+        $amount_recharge=0;
+        $interest=0;
+
+
+
+        $recharge_total=0;
+        $interest_total=0;
 
         $id = $taxe->id;
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
@@ -697,6 +706,8 @@ class CompanyTaxesController extends Controller
 
 
         for ($i = 0; $i < count($base); $i++) {
+
+
 
             //damos formato a la base
             $base_format_verify = str_replace('.', '', $base[$i]);
@@ -773,8 +784,13 @@ class CompanyTaxesController extends Controller
                 $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
                 //Obtengo Intereset del banco
                 $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
-                $amount_recharge = $amount_total * $recharge->value / 100;
-                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + $amount_total);
+
+                $amount_recharge = ($base_amount_sub-$anticipated_format)* $recharge->value / 100;
+
+                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
+
+
+
 
 
             } else {
@@ -793,7 +809,8 @@ class CompanyTaxesController extends Controller
                     'taxable_minimum'=>$min_amount
                 ]);
 
-
+            $interest_total+=$interest;
+            $recharge_total+=$amount_recharge;
         }
 
 
@@ -804,9 +821,13 @@ class CompanyTaxesController extends Controller
             'deductions'=>0,
             'day_mora'=>$day_mora
         ]);
+
+
+
         $taxe=Taxe::find($taxe->id);
-        $taxe->amount=$amount_total-$fiscal_credits_format;
+        $taxe->amount=($amount_total-$fiscal_credits_format)+$recharge_total+$interest_total;
         $taxe->update();
+
 
         return redirect('taxes/definitive/' . $id);
     }
@@ -817,7 +838,19 @@ class CompanyTaxesController extends Controller
     public function detailsDefinitive($id){
         $taxes=Taxe::find($id);
         $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
-        return view('modules.acteco-definitive.details',['taxes'=>$taxes,'ciuTaxes'=>$ciuTaxes]);
+
+        $total_interest=0;
+        $total_recharge=0;
+
+
+        foreach ($ciuTaxes as $ciuTax) {
+            $total_interest+=$ciuTax->interest;
+            $total_recharge+=$ciuTax->recharge;
+        }
+
+
+
+        return view('modules.acteco-definitive.details',['taxes'=>$taxes,'ciuTaxes'=>$ciuTaxes,'total_interest'=>$total_interest,'total_recharge'=>$total_recharge]);
     }
 
 

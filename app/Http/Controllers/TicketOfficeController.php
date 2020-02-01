@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Mail;
 use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
+use App\Helpers\CheckCollectionDay;
+
+
 
 
 class TicketOfficeController extends Controller
