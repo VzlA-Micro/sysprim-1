@@ -263,7 +263,6 @@ class CompanyTaxesController extends Controller
                 $base_amount_sub=$min_amount;
             }
 
-            if($verify_prologue['mora']) {
                 if ($date['mora']) {//si tiene mora
                     //Obtengo recargo
 
@@ -279,7 +278,6 @@ class CompanyTaxesController extends Controller
                     $amount_recharge = 0;
                     $interest = 0;
                 }
-            }
 
 
 
@@ -294,11 +292,9 @@ class CompanyTaxesController extends Controller
         }
 
 
-        if($verify_prologue['mora']) {
-            $day_mora = $date['diffDayMora'];
-        }else{
-            $day_mora=0;
-        }
+
+        $day_mora = $date['diffDayMora'];
+
 
 
         $taxe->companies()->attach(['taxe_id'=>$id],['company_id'=>$company_find->id,
@@ -452,7 +448,7 @@ class CompanyTaxesController extends Controller
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);
 
 
-        if($verify_prologue['mora']) {
+
             if ($verify['mora']) {
                 $company = Company::find($taxes->companies[0]->id);
                 $fineCompany = FineCompany::where('fiscal_period', $taxes->fiscal_period)->get();
@@ -473,7 +469,6 @@ class CompanyTaxesController extends Controller
                     $msj->to($for);
                 });
             }
-        }
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 

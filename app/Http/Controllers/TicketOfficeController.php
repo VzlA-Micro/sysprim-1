@@ -519,24 +519,24 @@ class TicketOfficeController extends Controller
                 $base_amount_sub = $min_amount;
             }
 
-
-            if ($verify_prologue['mora']) {
-
-                if ($date['mora']) {//si tiene mora
+            if ($date['mora']) {//si tiene mora
                     //Obtengo recargo
                     $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+
+
                     if (is_null($recharge)) {
                         $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
                     }
 
                     //Obtengo Intereset del banco
                     $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
-
                     $amount_recharge = $base_amount_sub * $recharge->value / 100;
-                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
-                }
+
+                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
             }
+
+
             $taxe->taxesCiu()->attach(['taxe_id' => $id],
                 ['ciu_id' => $ciu_id[$i],
                     'base' => $base_format,
@@ -562,7 +562,7 @@ class TicketOfficeController extends Controller
 
         //Si tiene  multa
         $verify = TaxesMonth::calculateDayMora($taxe_update->fiscal_period, $taxe_update->companies[0]->typeCompany);
-        if ($verify['mora']&&$verify_prologue['mora']) {
+        if ($verify['mora']) {
             $company = Company::find($taxe_update->companies[0]->id);
             $fineCompany = FineCompany::where('fiscal_period', $taxe_update->fiscal_period)->get();
             if (!$fineCompany->isEmpty()) {
@@ -1076,11 +1076,12 @@ class TicketOfficeController extends Controller
         $fiscal_credits = $datos['fiscal_credits'];
         $base_anticipated = $datos['anticipated'];
 
+        $fiscal_period_end= '2019-12-01';
 
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('PTS89');
         $taxe->fiscal_period = $fiscal_period;
-        $taxe->fiscal_period_end = '2019-12-01';
+        $taxe->fiscal_period_end =$fiscal_period_end;
         $taxe->status = 'ticket-office';
         $taxe->type = 'definitive';
         $taxe->branch = 'Act.Eco';
@@ -1092,6 +1093,11 @@ class TicketOfficeController extends Controller
 
         $amount_recharge=0;
         $interest=0;
+
+
+        $interest_total=0;
+        $recharge_total=0;
+
 
 
 
@@ -1196,6 +1202,23 @@ class TicketOfficeController extends Controller
 
 
 
+
+            if ($verify_prologue['mora']) {
+
+                //Obtengo recargo
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
+                //Obtengo Intereset del banco
+                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                $amount_recharge = ($base_amount_sub-$anticipated_format)* $recharge->value / 100;
+
+                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
+
+            }
+
+
+
+
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
                 [
                     'ciu_id'=>$ciu_id[$i],
@@ -1208,22 +1231,8 @@ class TicketOfficeController extends Controller
                 ]);
 
 
-            if ($verify_prologue['mora']) {
-
-                    //Obtengo recargo
-                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
-                    if (is_null($recharge)) {
-                        $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
-                    }
-
-                    //Obtengo Intereset del banco
-                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
-
-                    $amount_recharge = $taxes_amount * $recharge->value / 100;
-                    $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($taxes_amount+$amount_recharge);
-
-            }
-
+            $interest_total+=$interest;
+            $recharge_total+=$amount_recharge;
 
         }
 
@@ -1239,15 +1248,11 @@ class TicketOfficeController extends Controller
         ]);
 
 
-
         $taxe=Taxe::find($taxe->id);
-        $taxe->amount=$taxes_amount-$fiscal_credits_format;
+        $taxe->amount=($taxes_amount-$fiscal_credits_format)+$recharge_total+$interest_total;
         $taxe->update();
 
-
         return response()->json(['status'=>'success','message'=>'']);
-
-
     }
 
 

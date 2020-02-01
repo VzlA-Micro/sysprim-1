@@ -16,7 +16,8 @@ class CheckCollectionDay{
         verify:Parametro que retorna la funcion si verify :
          * true:PAGO FUERA DE LAPSO.
          * false:Esta pagando en lapso correspondiente
-         **/
+         *
+         */
 
         $now=Carbon::now();
         $verify=[];
@@ -25,8 +26,7 @@ class CheckCollectionDay{
         $prologue=Prologue::where('branch', $branch)->first();
         $date_limit=Carbon::parse($prologue->date_limit);
 
-
-            if($now->format('d-m-Y')>$date_limit->format('d-m-Y')){
+            if($now->gt($date_limit)){
                 $verify['mora']=true;
                 $verify['diffDayMora']=$date_limit->diffInDays($now);
             }else{

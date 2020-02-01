@@ -307,7 +307,7 @@
                                                 ESTADO: SIN CONCILIAR AÚN
 
                                             </a>
-                                        @elseif($taxes->status==='verified'||$taxe->status=='verified-sysprim')
+                                        @elseif($taxes->status==='verified'||$taxes->status=='verified-sysprim')
 
                                             <a href="#" class="btn blue col s12">
                                                 <i class="icon-more_horiz left"></i>
@@ -328,7 +328,6 @@
                                             <div class="col l12">
                                                 <h4 class="center-align mt-2">Acciones</h4>
                                             </div>
-
 
                                             <div class="input-field col s12">
 
