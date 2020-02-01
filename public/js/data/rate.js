@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "http://172.19.50.253/";
+    var url = "http://sysprim.com.devel/";
     var user=$('#user').val();
 
 
@@ -88,7 +88,7 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-
+                        $('#id').val(response.id);
 
                         $('#two').removeClass('disabled');
                         $('#one').addClass('disabled');
@@ -263,6 +263,9 @@ $('document').ready(function () {
                         if (response.type == 'not-user') {
 
                             var user = response.user.response;
+
+
+                            console.log(user);
                             $('#name').val(user.nombres + ' ' + user.apellidos);
                             $('#name').attr('readonly');
                             $('#surname').val(user.apellidos);

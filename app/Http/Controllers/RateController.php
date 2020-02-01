@@ -270,6 +270,7 @@ class RateController extends Controller{
         }
 
 
+
         return view('modules.rates.taxpayers.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);
     }
 
