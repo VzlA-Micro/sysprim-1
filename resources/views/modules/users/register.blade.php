@@ -25,14 +25,14 @@
                         <div class="input-field col s6 m3">
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required>
-                                <option value="null">...</option>
+                                <option value="null" disabled selected>...</option>
                                 <option value="V">V</option>
                                 <option value="E">E</option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" maxlength="8" title="Solo puede escribir números." required>
+                                <input type="text"  id="ci" name="ci" class="validate number-only" pattern="[0-9]+" maxlength="8" minlength="7" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone_user" type="tel" name="phone" class="validate invalid" pattern="[0-9]+"   minlength="7"  title="Solo puede escribir números." placeholder="Ej. 1234567"  maxlength="7" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>

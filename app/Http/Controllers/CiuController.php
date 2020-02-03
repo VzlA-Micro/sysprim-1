@@ -73,7 +73,8 @@ class CiuController extends Controller
     public function edit($id)
     {
         $ciu= ciu::findOrFail($id);
-        $groupCiu=GroupCiiu::find($ciu->group_ciu_id);
+        $groupCiu=GroupCiiu::all();
+
         return view('modules.ciiu.details',array(
             'ciu'=>$ciu,
             'groupCiu'=>$groupCiu

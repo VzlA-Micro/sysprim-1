@@ -1,8 +1,8 @@
 $(document).ready(function () {
    // var url = "https://sysprim.com/";
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
-    $('#ci').blur(function () {
+    $('#ci').change(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){
             CheckCedula();
         }
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
 
     $('#phone_user').keyup(function () {
-        console.log('eje');
+
         console.log($('#country_code_user').val());
         if($('#country_code_user').val()===null){
             swal({
@@ -52,6 +52,8 @@ $(document).ready(function () {
 
     function CheckCedula() {
         if ($('#ci').val() !== '') {
+
+            if ($('#ci').val().length >= 7) {
             var ci = $('#ci').val();
             var nationality = $('#nationality').val();
             $.ajax({
@@ -89,10 +91,22 @@ $(document).ready(function () {
                     });
                 }
             });
+
+            }else{
+                swal({
+                    title: "Información",
+                    text: "La logintud minima de la cedula debe ser 7, ingrese una cedula valida.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
         }
     }
 
-    $('#email').blur(function () {
+    $('#email').change(function () {
         if ($('#email').val() !== '') {
             var email = $('#email').val();
             $.ajax({
@@ -129,6 +143,49 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+    $('#email_edit').change(function () {
+        if ($('#email_edit').val() !== '') {
+            var email = $('#email_edit').val();
+            var id = $('#id').val();
+            $.ajax({
+                method: "GET",
+                url: url + "users/verify-email/" + email + '/' + id,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button: "Ok",
+                        });
+                        $('#email_edit').val('');
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                    $('#email_edit').val('');
+                }
+            });
+        }
+    });
+
 
 
     function findUser(nationality, ci) {
@@ -213,7 +270,7 @@ $(document).ready(function () {
     $('#btn-edit').click(function () {
         $(this).hide();
         $('#phone').removeAttr('disabled');
-        $('#email').removeAttr('disabled');
+        $('#email_edit').removeAttr('disabled');
         $('#btn-update').show();
     });
 
@@ -222,11 +279,11 @@ $(document).ready(function () {
         var ci = $('#ci').val();
         swal({
             icon: "info",
-            title: "Resetear Contraseña",
-            text: "¿Está seguro que desea resetear la contraseña? <br> Si lo hace, no podrá revertir los cambios.",
+            title: "Restablecer Contraseña",
+            text: "¿Está seguro que desea restabler la contraseña? cambiara a :"+  $('#ci').val()  +" Si lo hace, no podrá revertir los cambios.",
             buttons: {
                 confirm: {
-                    text: "Resetear",
+                    text: "Restablecer",
                     value: true,
                     visible: true,
                     className: "red-gradient"
@@ -234,7 +291,7 @@ $(document).ready(function () {
                 cancel: {
                     text: "Cancelar",
                     value: false,
-                    visible: true, 
+                    visible: true,
                     className: "grey lighten-2"
                 }
             }
@@ -249,9 +306,8 @@ $(document).ready(function () {
                     },
                     url: url + "taxpayers/reset-password",
                     success: function (resp) {
-                        console.log(resp);
                         swal({
-                            title: "Reseteo Exitoso",
+                            title: "Bien hecho",
                             text: "Se ha reseteado la contraseña éxitosamente.",
                             icon: "success",
                             timer: 3000,
@@ -269,7 +325,7 @@ $(document).ready(function () {
                     error: function (err) {
                         console.log(err);
                         swal({
-                            text: "No se ha reseteado la contraseña",
+                            text: "Acción cancelada.",
                             icon: "info",
                             buttons: {
                                 confirm: {
@@ -293,7 +349,7 @@ $(document).ready(function () {
                     }
                 });
             }
-        }); 
+        });
     });
 
         $('#update').submit(function (e) {
@@ -344,6 +400,6 @@ $(document).ready(function () {
 
 
 
-   
+
 
 });

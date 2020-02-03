@@ -58,4 +58,9 @@ $(document).ready(function() {
         fullWidth: true,
         indicators: true
     });
+
+    $('.preview-view').click(function () {
+        window.history.back();
+    });
+
 });

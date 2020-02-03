@@ -40,8 +40,10 @@
                                 <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
 
+
+
                                     @if(!isset($mount_pay['2019-12-01']))
-                                        <option value="{{"2019-12-01"}}">{{"DICIEMBRE 2019"}}</option>
+                                        <option value="{{"2019-12-01"}}">{{"DICIEMBRE 2019 "}}</option>
                                     @else
                                         <option value="{{"2019-12-01"}}" disabled >{{"DICIEMBRE 2019|".$mount_pay['2019-12-01']}}</option>
                                     @endif
@@ -72,6 +74,7 @@
                                                      <option value="{{date('Y').'-'.$value.'-'.'01'}}" disabled>{{$key." ".date('Y')."|".$status}}</option>
                                                 @endif
                                     @endforeach
+
 
 
                                 </select>

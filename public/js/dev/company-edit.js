@@ -105,9 +105,6 @@ $('document').ready(function () {
             updateCompany=true;
             $('#update-company').text('Guardar');
 
-
-
-
             swal({
                 title: "Información",
                 text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
