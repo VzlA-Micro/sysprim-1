@@ -41,26 +41,26 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>
-                            <input id="name" type="text" name="name" required value="{{ $ciu->name }}" readonly>
+                            <input id="name" type="text" name="name" required  class="validate" value="{{ $ciu->name }}"  minlength="3" maxlength="100"  readonly>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code" required value="{{ $ciu->code }}" readonly>
+                            <input id="code" type="text" name="code" class="validate" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input id="alicuota" type="text" name="alicuota" required value="{{ $ciu->alicuota }}" readonly>
+                            <input id="alicuota" type="text" name="alicuota" class="validate number-only " required value="{{ $ciu->alicuota }}"  maxlength="5"  minlength="1" readonly>
                             <label for="code">Alicuota</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input id="mTM" type="text" name="mTM" required value="{{ $ciu->min_tribu_men }}" readonly>
+                            <input id="mTM" type="text" name="mTM" required value="{{ $ciu->min_tribu_men }}"  maxlength="3"  minlength="1" readonly>
                             <label for="mTM">Minimo de Tributo Mensual</label>
                         </div>
                     </div>

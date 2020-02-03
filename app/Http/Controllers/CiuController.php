@@ -58,10 +58,13 @@ class CiuController extends Controller
     public function show()
     {     
         $ciu= ciu::orderBy('id','desc')->get();
+
         return view('modules.ciiu.read',array(
             'showCiu'=>$ciu
         ));
-        //return $ciu;
+
+
+
     }
 
     /**
@@ -70,16 +73,14 @@ class CiuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $ciu= ciu::findOrFail($id);
         $groupCiu=GroupCiiu::all();
 
-        return view('modules.ciiu.details',array(
+        return view('modules.ciiu.details',[
             'ciu'=>$ciu,
             'groupCiu'=>$groupCiu
-        ));
-        
+            ]);
     }
 
     /**
@@ -97,7 +98,7 @@ class CiuController extends Controller
         $ciu->name= $request->input('name');
         $ciu->alicuota= $request->input('alicuota')/100;
         $ciu->min_tribu_men= $request->input('mTM');
-        
+        $ciu->group_ciu_id= $request->input('idGroupCiiu');
         $ciu->update();
     }
 

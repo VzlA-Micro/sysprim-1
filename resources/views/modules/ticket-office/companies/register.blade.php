@@ -85,7 +85,7 @@
                                 <label for="document_type">Documento</label>
                             </div>
                             <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
-                                <input type="text" name="RIF" id="RIF" class="validate company-validate" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
+                                <input type="text" name="RIF" id="RIF" class="validate company-validate number-only" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
                                 <label for="RIF">RIF</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
@@ -107,7 +107,7 @@
 
                             <div class="input-field col s12 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" name="license" id="license" class="validate company-validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required data-validate="licencia">
+                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="10" data-validate="licencia">
                                 <label for="license">Licencia</label>
                             </div>
 
@@ -159,7 +159,7 @@
 
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                                 <i class="icon-offline_pin prefix"></i>
-                                <input type="text" name="code_catastral" id="code_catastral" class="validate company-validate" data-validate="Código Catastral" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas."  required>
+                                <input type="text" name="code_catastral" id="code_catastral" class="validate question_license_validate" data-validate="Código Catastral" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas."  required>
                                 <label for="code_catastral">Código Catastral</label>
                             </div>
 

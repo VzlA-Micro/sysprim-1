@@ -2,6 +2,38 @@ $('document').ready(function () {
 
     var url = "http://sysprim.com.devel/";
 
+    $('#alicuota').change(function () {
+        if($(this).val()<1){
+            swal({
+                title: "Información",
+                text: "La alicuota tiene que se mayor o igual 1.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "amber-gradient"
+                },
+            });
+            $(this).val('');
+        }
+
+    });
+
+    $('#mTM').change(function () {
+        if($(this).val()<1){
+            swal({
+                title: "Información",
+                text: "El minimo tributable tiene que se mayor o igual 1.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "amber-gradient"
+                },
+            });
+            $(this).val('');
+        }
+    });
+
+
     $('#ciuu').on('submit',function (e) {
         e.preventDefault();
 
@@ -18,6 +50,9 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+
+
+                console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "CIIU registrado con exito",
@@ -81,8 +116,6 @@ $('document').ready(function () {
             },
             success: function (response) {
 
-
-                console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "CIIU actualizaco con éxito.",
@@ -100,7 +133,6 @@ $('document').ready(function () {
 
             },
             error: function (err) {
-                console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({

@@ -45,7 +45,7 @@
                             <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="branch" id="branch" disabled>
                                 <option value="null" selected disabled>Elija un ramo</option>
-                                <option value="Act.Eco" @if($recharge->branch =='Act.Economica'){{"selected"}}@endif>Actividad Economica</option>
+                                <option value="Act.Eco" @if($recharge->branch =='Act.Eco'){{"selected"}}@endif>Actividad Economica</option>
                                 <option value="Pat.Vehiculo" @if($recharge->branch =='Pat.Vehiculo'){{"selected"}}@endif>Patente De Vehículo</option>
                                 <option value="Inmueble.Urb" @if($recharge->branch =='Inmueble.Urb'){{"selected"}}@endif>Inmuebles Urbanos</option>
                                 <option value="Publicidad" @if($recharge->branch =='Publicidad'){{"selected"}}@endif>Publicidad</option>

@@ -647,7 +647,6 @@ $('document').ready(function () {
             disabledCiiu = true;
         }
         else {
-            console.log('else');
             $('.Dciiu').each(function () {
                 console.log('dentro del check');
                 check = $('.ciiuCheck').val();
