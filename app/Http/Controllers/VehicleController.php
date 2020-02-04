@@ -148,7 +148,7 @@ class VehicleController extends Controller
             if (isset($idCompany)) {
                 $userVehicle->user_id = \Auth::user()->id;
                 $userVehicle->vehicle_id = $vehicle->id;
-                $userVehicle->person_id = \Auth::user()->id;
+                $userVehicle->person_id = null;
                 $userVehicle->company_id = $idCompany;
                 $userVehicle->status_user_vehicle = $request->input('status');
             } else {

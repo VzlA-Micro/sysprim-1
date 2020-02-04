@@ -66,6 +66,7 @@ $('document').ready(function () {
         var interest = $('#interest').val();
         var alicuota = $('#alicuota').val();
         var amount = $('#amount').val();
+        var status = $('#status').val();
         console.log(amount, property_id);
         e.preventDefault();
         $.ajax({
@@ -78,7 +79,8 @@ $('document').ready(function () {
                 recharge: recharge,
                 interest: interest,
                 alicuota: alicuota,
-                amount: amount
+                amount: amount,
+                status: status
             },
             url: url + 'properties/taxes/store',
             beforeSend: function () {

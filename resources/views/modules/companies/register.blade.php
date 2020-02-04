@@ -136,7 +136,7 @@
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                            <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 " id="search-ciu">
                                Buscar
                                 <i class="icon-search right"></i>
                             </a>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="card-action center-align">
                         <!-- Modal Trigger -->
-                          <a class="waves-effect waves-light btn btn-large peach modal-trigger" href="#modal1">
+                          <a class="waves-effect btn-rounded waves-light btn btn-large peach modal-trigger" href="#modal1">
                               <i class="icon-send right"></i>
                               Registrar
                           </a>

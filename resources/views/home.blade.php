@@ -52,7 +52,7 @@
             @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
-                        <i class="icon-people_outline"></i>
+                        <i class="icon-account_box"></i>
                         <span class="truncate">Gestionar Usuarios</span>
                     </a>
                 </div>
@@ -67,7 +67,7 @@
             @endcan
             @can('Configuración')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('settings.manage') }}" class="btn-app white deep-orange-text">
+                    <a href="{{ route('settings.manage') }}" class="btn-app white grey-text">
                         <i class="icon-settings"></i>
                         <span class="truncate">Configuración</span>
                     </a>
@@ -99,7 +99,7 @@
             @endcan--}}
             @can('Taquillas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('ticketOffice.home') }}" class="btn-app white pink-text text-darken-4">
+                    <a href="{{ route('ticketOffice.home') }}" class="btn-app white amber-text text-darken-4">
                         <i class="icon-personal_video"></i>
                         <span class="truncate">Taquillas</span>
                     </a>

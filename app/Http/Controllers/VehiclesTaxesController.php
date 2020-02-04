@@ -29,9 +29,10 @@ class VehiclesTaxesController extends Controller
         $array = explode('-', $id);
         $idVehicle = $array[0];
         $optionPayment=null;
+        $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
         if (isset($array[1])) {
             if ($array[1]=='false'||$array[1]=='true'){
-                if ($array[1]=='false'){
+                if ($array[1]==='false'){
                     $optionPayment = false;
                 }else{
 
@@ -40,6 +41,7 @@ class VehiclesTaxesController extends Controller
             }
         }
 
+
         $trimester = Trimester::verifyTrimester();
 
         $date = Carbon::now();
@@ -47,7 +49,6 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $idVehicle)->get();
 
         if ($vehicleTaxe->isEmpty()) {
-
             $this->paymentsDeclaration($idVehicle,$optionPayment);
 
         } else {
@@ -61,8 +62,11 @@ class VehiclesTaxesController extends Controller
                 if ($taxes[0]->status !== 'cancel') {
 
                     if ($taxes[0]->status == 'process' && $taxes[0]->created_at->format('Y-d-m') == $date->format('Y-d-m') || $taxes[0]->status == 'verified' || $taxes[0]->status == 'verified-sysprim') {
-                        dd($taxes);
-                        return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
+
+                        return view('modules.taxes.detailsVehicle', array(
+                            'vehicleTaxes' => true,
+                            'vehicle'=>$vehicle
+                            ));
                     }else {
 
                         if (!$taxes->isEmpty()) {
@@ -73,7 +77,7 @@ class VehiclesTaxesController extends Controller
 
                         $type = null;
 
-                        $vehicle = Vehicle::where('id', $idVehicle)->get();
+                        //$vehicle = Vehicle::where('id', $idVehicle)->get();
 
                         $grossTaxes = 0;
                         $total = number_format($declaration['total'], 2, ',', '.');
@@ -93,12 +97,13 @@ class VehiclesTaxesController extends Controller
                             $rateYear = $declaration['rateYear'];
                             $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
                             $previousDebt = $declaration['previousDebt'];
-                            $recharge = 0;
+                            $recharge = number_format($declaration['recharge'], 2, ',', '.');
                             $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
                             $period_fiscal_end = $trimester['monthEnd']->format('Y') . '-12-01';
                             $type = "Anual";
 
-                        } else {
+                        }
+                        /*else {
                             $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . $trimester['monthEnd']->format('m-Y');
                             $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
                             $grossTaxes = $paymentFractional;
@@ -119,7 +124,7 @@ class VehiclesTaxesController extends Controller
                             } else {
                                 $previousDebt = 0;
                             }
-                        }
+                        }*/
 
                         $taxes = new Taxe();
                         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
@@ -171,7 +176,14 @@ class VehiclesTaxesController extends Controller
         $previouDebt = $request->input('previou_debt');
         $discount = $request->input('discount');
         $base = $request->input('base');
+        $companyId=$request->input('companyId');
+        $idVehicle=$request->input('vehicleId');
 
+
+        if (isset($companyId)){
+            $vehicle=Vehicle::where('id',$idVehicle)->with('company')->get();
+
+        }
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
 
@@ -231,8 +243,13 @@ class VehiclesTaxesController extends Controller
         // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
         $taxes->update();
+        if (isset($vehicle)){
+            return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id,'vehicle'=>$vehicle]);
+        }else{
+            return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+        }
 
-        return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+
     }
 
     public function payments(Request $request)
@@ -246,6 +263,8 @@ class VehiclesTaxesController extends Controller
 
         $vehiclesTaxes = VehiclesTaxe::where('taxe_id', $id_taxes)->get();
         $vehiclesTaxe = VehiclesTaxe::find($vehiclesTaxes[0]->id);
+
+        //$vehicle=Vehicle::where('id',$vehiclesTaxe->id)->with('company')->get();
 
         $code = TaxesNumber::generateNumberTaxes($type_payment . "85");
         $taxes->code = $code;
@@ -269,9 +288,20 @@ class VehiclesTaxesController extends Controller
         $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
 
+
+
         $subject = "PLANILLA DE PAGO";
         $for = $user[0]->email;
-
+        /*$var=[
+            'taxes' => $taxes,
+            'vehicleTaxes' => $vehicleTaxes,
+            'vehicle' => $vehicleFind,
+            'user' => $user,
+            'diffYear' => $diffYear,
+            'firm' => true
+        ];
+        dd($var);
+*/
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt',
             [
                 'taxes' => $taxes,
@@ -281,6 +311,8 @@ class VehiclesTaxesController extends Controller
                 'diffYear' => $diffYear,
                 'firm' => true
             ]);
+
+        //return $pdf->stream('PLANILLA_SOLVENCIA.pdf');
 
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Patente De Vehículo (ANTICIPADA)'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("grabieldiaz63@gmail.com", "SEMAT");
@@ -294,8 +326,14 @@ class VehiclesTaxesController extends Controller
 
     public function history($vehicleId)
     {
-        $vehicle = Vehicle::find($vehicleId);
-        return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
+        $vehicle = Vehicle::where('id',$vehicleId)->with('company')->get();
+        $vehicles=Vehicle::find($vehicleId);
+        if (isset($vehicle[0]->company[0])){
+            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(),'vehicle'=>$vehicle[0]]);
+        }else{
+            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get()]);
+
+        }
     }
 
     public function downloadPDF($id, $download)
@@ -347,13 +385,14 @@ class VehiclesTaxesController extends Controller
 
     public function paymentsDeclaration($id,$optionPayment)
     {
+
         $trimester = Trimester::verifyTrimester();
 
         $declaration = DeclarationVehicle::Declaration($id,$optionPayment);
 
         $type = null;
 
-        $vehicle = Vehicle::where('id', $id)->get();
+        $vehicle = Vehicle::where('id', $id)->with('company')->get();
 
         $grossTaxes = 0;
         $total = number_format($declaration['total'], 2, ',', '.');

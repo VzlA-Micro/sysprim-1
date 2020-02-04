@@ -100,7 +100,7 @@
                                        title="Solo puede escribir numeros." required>
                                 <label for="year">Año</label>
                             </div>
-                            <div class="file-field input-field col s12 m6 l6">
+                            <div class="file-field input-field col s12 m12 l12">
 
                                 <div class="btn purple btn-rounded waves-light">
                                     <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
@@ -140,14 +140,15 @@
                                 <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo no se encuentre registrado en nuestro sistema, presiona el botón de REGISTRAR MARCA e introduce los siguientes datos:<br> 1- Marca<br> 2- Modelo<br></p>
                             </div>
 
-                            <div class="input-field col s12 center-align">
-                                <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
-                                            class="icon-file_upload right"></i></a>
-                            </div>
+
                         </div>
 
                         <div class="card-content row">
-                            <div class="input-field col s12 right-align">
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
+                                            class="icon-file_upload right"></i></a>
+                            </div>
+                            <div class="input-field col s6 right-align">
                                 <button id="button-vehicle" type="submit" class="btn btn-rounded green waves-effect">
                                     Registrar<i class="icon-send right"></i></button>
                             </div>

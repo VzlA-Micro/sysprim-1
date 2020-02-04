@@ -25,10 +25,12 @@
             			@csrf
             			<input type="hidden" name="id" id="id" value="{{ $type->id }}">
                         <div class="input-field col s12">
+                            <i class="icon-local_library prefix"></i>
                             <input type="text" name="name" id="name" value="{{ $type->name }}" readonly>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-looks_one prefix"></i>
                             <input type="number" name="value" id="value" value="{{ $type->value }}" readonly>
                             <label for="value">Valor UTC</label>
                         </div>

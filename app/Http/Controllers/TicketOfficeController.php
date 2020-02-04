@@ -202,8 +202,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = $payments_type. $code;
                     $taxes_find->status = 'process';
-
-
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
@@ -211,9 +209,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
-
-
-
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
@@ -846,6 +841,10 @@ class TicketOfficeController extends Controller
                     $taxes_find->code = $code;
                 }
 
+                elseif($taxes_find->branch==='Pat.Veh'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
+                    $taxes_find->code = $code;
+                }
 
                 $taxes_find->update();
             }
@@ -1338,23 +1337,27 @@ class TicketOfficeController extends Controller
                 ]);
 
         }
+        elseif ($taxes->branch=='Pat.Veh'){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => $firm
+            ]);
+
+        }
 
 
         return $pdf->stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

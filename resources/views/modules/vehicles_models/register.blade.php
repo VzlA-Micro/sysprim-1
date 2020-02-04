@@ -41,7 +41,9 @@
                             <label for="brand">Marca</label>
                         </div>
                         <div class="input-field col s12 center-align">
-                            <button type="submit" class="btn btn-rounded green waves-effect">Registrar</button>
+                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect">Registrar
+                                    <i class="icon-send right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

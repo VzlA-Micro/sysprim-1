@@ -20,12 +20,20 @@
                 @csrf
                 <div class="card">
                     <div class="card-header center-align">
+<<<<<<< HEAD
+                        <h5>Registrar Tipo de Vehículo</h5>
+                    </div>
+                    <div class="card-content row">
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: Carga">
+                            <i class="icon-motorcycle prefix"></i>
+=======
                         <h5>Registrar  Tipo  de Vehículo</h5>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: Carga">
                             <i class="icon-merge_type prefix"></i>
 
+>>>>>>> 5dee84feb1ed1e3be3105366a08c3c4bc917256d
                             <input type="text" name="type_vehicle" id="type_vehicle" pattern="[a-zA-Z ]+"
                                    title="Solo puede escribir números y letra en mayúsculas." minlength="3" maxlength="100" class="validate" required>
                             <label for="type_vehicle">Tipo de vehiculo</label>
