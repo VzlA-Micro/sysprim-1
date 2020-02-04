@@ -28,7 +28,7 @@ class CheckCollectionDay{
         $date_limit=Carbon::parse($prologue->date_limit);
 
 
-            if($now->format('d-m-Y')>$date_limit->format('d-m-Y')){
+            if($now->gt($date_limit)){
                 $verify['mora']=true;
                 $verify['diffDayMora']=$date_limit->diffInDays($now);
             }else{
