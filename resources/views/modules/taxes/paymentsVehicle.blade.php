@@ -1,157 +1,188 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col s12 breadcrumb-nav left-align">
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-					<li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>session('vehicle')])}}">Detalles De Vehículos</a></li>
-					<li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
-					<li class="breadcrumb-item"><a href="#">Pagar Impuestos</a></li>
-				</ul>
-            <div class="col s12 m10 offset-m1">
-            	<div class="card payment-form ">
-	            	<ul class="tabs">
-				        <li class="tab col s4" id="one-payments"><a href="#payment-method"><i class="icon-filter_1"></i> Forma de Pago</a></li>
-				        <li class="tab col s4 disabled" id="two-payments"><a href="#payment-bank"><i class="icon-filter_2"></i> Seleccionar Banco</a></li>
-				        <li class="tab col s4 disabled" id="three-payments"><a href="#payment-receipt"><i class="icon-filter_3"></i> Obtener Planilla</a></li>
-				    </ul>
-					<div id="payment-method">
-						<div class="card-content">
-							<div class="row">
-								<div class="card-header">
-									<h4 class="center-align">Elige una forma de pago:</h4>
-								</div>
-								<div class="col s12 m4">
-									<input type="radio" id="ppv" name="method" value="ppv" class="type_payment_event">
-									<label class="btn-radio grey" for="ppv" >
-										<i class="">
-											<img src="{{ asset('images/png/001-point-of-service.png') }}"  style="height: 64px!important;width: 64px!important;" alt="">
-										</i>
-										<span class="truncate black-text">SEMAT(PUNTO DE VENTA)</span>
-									</label>
-								</div>
-								<div class="col s12 m4">
-									<input type="radio" id="ppt" name="method" value="ppt" class="type_payment_event">
-									<label class="btn-radio grey" for="ppt">
-										<i class="">
-											<img src="{{ asset('images/png/009-smartphone-1.png') }}" style="height: 64px!important;width: 64px!important;" alt="">
-										</i>
-										<span class="truncate black-text">Transferencia Bancaria</span>
-									</label>
-								</div>
-								<div class="col s12 m4">
-									<input type="radio" id="ppb" name="method" value="ppb" class="type_payment_event" >
-									<label class="btn-radio grey" for="ppb">
-										<i class="">
-											<img src="{{ asset('images/png/030-bank.png') }}" style="height: 64px!important;width: 64px!important;" alt="">
-										</i>
-										<span class="truncate black-text">Deposito Bancario</span>
-									</label>
-								</div>
-							</div>
+                <ul class="breadcrumb">
+                    @if(isset($vehicle[0]->company[0]->id))
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id.'-'.true)}}">Detalles
+                                De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/taxes/vehicles/'.$vehicle[0]->id."-false")}}">Detalles De Declaracion</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pagar Impuestos</a></li>
 
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>session('vehicle')])}}">Detalles
+                                De Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Detalles De Declaracion</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pagar Impuestos</a></li>
 
+                    @endif
 
-							<div class="row">
-
-							</div>
-
-
-						</div>
-					</div>
-					<div id="payment-bank">
-						<div class="card-content">
-							<div class="card-header">
-								<h4 class="center-align">Seleciona el banco:</h4>
-							</div>
-							<div class="row">
-								<div class="col s12 m6">
-									<input type="radio" id="banesco" name="method" value="55" class="bank-div">
-									<label class="btn-radio banesco-green" for="banesco">
-										<i class="i-banesco-logo"></i>
-									</label>
-								</div>
-								<div class="col s12 m6">
-									<input type="radio" id="bnc" name="method" value="99" class="bank-div">
-									<label class="btn-radio bnc-blue" for="bnc">
-										<i class="i-bnc"></i>
-									</label>
-								</div>
-								<div class="col s12 m6" id="bod-div">
-									<input type="radio" id="bod" name="method" value="44" class="bank-div">
-									<label class="btn-radio bod-green" for="bod">
-										<i class="i-bod"></i>
-									</label>
-								</div>
-
-								<div class="col s12 m6">
-									<input type="radio" id="percent-banco" name="method" value="33" class="bank-div">
-									<label class="btn-radio x100-banco-yellow" for="percent-banco">
-										<i class="i-percent-banco"></i>
-									</label>
-								</div>
-
-							</div>
-							<div class="row">
-                                <div class="col s6 left-align">
-                                    <a href="#" class="btn peach waves-effect waves-light" id="previous-bank">
-                                        <i class="icon-navigate_before left"></i>
-                                        Anterior
-                                    </a>
+                </ul>
+                <div class="col s12 m10 offset-m1">
+                    <div class="card payment-form ">
+                        <ul class="tabs">
+                            <li class="tab col s4" id="one-payments"><a href="#payment-method"><i
+                                            class="icon-filter_1"></i> Forma de Pago</a></li>
+                            <li class="tab col s4 disabled" id="two-payments"><a href="#payment-bank"><i
+                                            class="icon-filter_2"></i> Seleccionar Banco</a></li>
+                            <li class="tab col s4 disabled" id="three-payments"><a href="#payment-receipt"><i
+                                            class="icon-filter_3"></i> Obtener Planilla</a></li>
+                        </ul>
+                        <div id="payment-method">
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="card-header">
+                                        <h4 class="center-align">Elige una forma de pago:</h4>
+                                    </div>
+                                    <div class="col s12 m4">
+                                        <input type="radio" id="ppv" name="method" value="ppv"
+                                               class="type_payment_event">
+                                        <label class="btn-radio grey" for="ppv">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/001-point-of-service.png') }}"
+                                                     style="height: 64px!important;width: 64px!important;" alt="">
+                                            </i>
+                                            <span class="truncate black-text">SEMAT(PUNTO DE VENTA)</span>
+                                        </label>
+                                    </div>
+                                    <div class="col s12 m4">
+                                        <input type="radio" id="ppt" name="method" value="ppt"
+                                               class="type_payment_event">
+                                        <label class="btn-radio grey" for="ppt">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}"
+                                                     style="height: 64px!important;width: 64px!important;" alt="">
+                                            </i>
+                                            <span class="truncate black-text">Transferencia Bancaria</span>
+                                        </label>
+                                    </div>
+                                    <div class="col s12 m4">
+                                        <input type="radio" id="ppb" name="method" value="ppb"
+                                               class="type_payment_event">
+                                        <label class="btn-radio grey" for="ppb">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/030-bank.png') }}"
+                                                     style="height: 64px!important;width: 64px!important;" alt="">
+                                            </i>
+                                            <span class="truncate black-text">Deposito Bancario</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col s6 right-align">
 
+
+                                <div class="row">
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div id="payment-bank">
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <h4 class="center-align">Seleciona el banco:</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 m6">
+                                        <input type="radio" id="banesco" name="method" value="55" class="bank-div">
+                                        <label class="btn-radio banesco-green" for="banesco">
+                                            <i class="i-banesco-logo"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <input type="radio" id="bnc" name="method" value="99" class="bank-div">
+                                        <label class="btn-radio bnc-blue" for="bnc">
+                                            <i class="i-bnc"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col s12 m6" id="bod-div">
+                                        <input type="radio" id="bod" name="method" value="44" class="bank-div">
+                                        <label class="btn-radio bod-green" for="bod">
+                                            <i class="i-bod"></i>
+                                        </label>
+                                    </div>
+
+                                    <div class="col s12 m6">
+                                        <input type="radio" id="percent-banco" name="method" value="33"
+                                               class="bank-div">
+                                        <label class="btn-radio x100-banco-yellow" for="percent-banco">
+                                            <i class="i-percent-banco"></i>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col s6 left-align">
+                                        <a href="#" class="btn peach waves-effect waves-light" id="previous-bank">
+                                            <i class="icon-navigate_before left"></i>
+                                            Anterior
+                                        </a>
+                                    </div>
+                                    <div class="col s6 right-align">
+
+                                    </div>
                                 </div>
                             </div>
-						</div>
-					</div>
-					<div id="payment-receipt">
-						<div class="card-content">
-							<div class="card-header">
-								<h4 class="center-align">Obtener Planilla:</h4>
-							</div>
-							<div class="row">
-								<div class="col s12 m6 offset-m3 center-align" id="div-send"  >
-									<a href="#" class="btn-app green" >
-										<i class="far fa-file-pdf"></i>
-										<span class="truncate">Obtener Planilla</span>
-									</a>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col s6 left-align">
-									<a href="#" class="btn peach waves-effect waves-light" id="previous-receipt">
-										<i class="icon-navigate_before left"></i>
-										Anterior
-									</a>
-								</div>
-								<div class="col s6 right-align">
+                        </div>
+                        <div id="payment-receipt">
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <h4 class="center-align">Obtener Planilla:</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 m6 offset-m3 center-align" id="div-send">
+                                        <a href="#" class="btn-app green">
+                                            <i class="far fa-file-pdf"></i>
+                                            <span class="truncate">Obtener Planilla</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s6 left-align">
+                                        <a href="#" class="btn peach waves-effect waves-light" id="previous-receipt">
+                                            <i class="icon-navigate_before left"></i>
+                                            Anterior
+                                        </a>
+                                    </div>
+                                    <div class="col s6 right-align">
 
-								</div>
-							</div>
-						</div>
-					</div>
-            	</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-				<form id="form-payment" method="POST" action="{{route('vehicle.payments.store')}}">
-					<input type="hidden" class="#" name="type_payment" id="type_payment" >
-					<input type="hidden" class="#" name="bank_payment" id="bank_payment" >
-					<input type="hidden" class="#" name="id_taxes" id="id_taxes"  value="{{$taxes_id}}">
-				</form>
+                    <form id="form-payment" method="POST" action="{{route('vehicle.payments.store')}}">
+                        <input type="hidden" class="#" name="type_payment" id="type_payment">
+                        <input type="hidden" class="#" name="bank_payment" id="bank_payment">
+                        <input type="hidden" class="#" name="id_taxes" id="id_taxes" value="{{$taxes_id}}">
+                    </form>
 
 
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+        @endsection
 
-@section('scripts')
-	<script src="{{asset('js/dev/taxesVehicle.js')}}"></script>
+        @section('scripts')
+            <script src="{{asset('js/dev/taxesVehicle.js')}}"></script>
 @endsection

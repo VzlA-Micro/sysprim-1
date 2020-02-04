@@ -12,15 +12,19 @@
                     @if($status=="company")
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
                     @else
                         <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles') }}" class="breadcrumb">Mis
                                 Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>$vehicle[0]->id])}}">Detalles
+                                De Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="">Mis Declaraciones</a></li>
                     @endif
                 </ul>
             </div>

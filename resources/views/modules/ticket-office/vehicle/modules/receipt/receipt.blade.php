@@ -68,30 +68,58 @@
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
 @endif
 <table style="width: 100%; border-collapse: collapse;">
-    <tr style="">
-        <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{$user[0]->name." ".$user[0]->surname}}</td>
-        <td style="width:15%;font-size: 12px !important; "><b>Placa:</b></td>
-        <td style="width:15%;font-size: 11px !important;">{{$vehicleTaxes[0]->license_plate}}</td>
-    </tr>
-    <tr>
-        <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{$user[0]->ci}}</td>
-    </tr>
-    <tr>
-        <td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
-        <td style="width:35%;font-size: 11px !important">{{$user[0]->address}}</td>
-    </tr>
-    <tr>
-        <td style="width:15%;font-size: 12px !important;"><b>Telfono:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{$user[0]->phone}}</td>
-    </tr>
-    <tr>
-        <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{$user[0]->email}}</td>
-        <td style="width:20%;font-size: 12px !important;"><b></b></td>
-        <td style="width:30%;font-size: 11px !important;"></td>
-    </tr>
+    @if(isset($vehicle->company[0]))
+        <tr style="">
+            <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$vehicle->company[0]->name}}</td>
+            <td style="width:15%;font-size: 12px !important; "><b>Placa:</b></td>
+            <td style="width:15%;font-size: 11px !important;">{{$vehicleTaxes[0]->license_plate}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$vehicle->company[0]->RIF}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
+            <td style="width:35%;font-size: 11px !important">{{$vehicle->company[0]->address}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Telfono:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$vehicle->company[0]->phone}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->email}}</td>
+            <td style="width:20%;font-size: 12px !important;"><b></b></td>
+            <td style="width:30%;font-size: 11px !important;"></td>
+        </tr>
+    @else
+        <tr style="">
+            <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->name." ".$user[0]->surname}}</td>
+            <td style="width:15%;font-size: 12px !important; "><b>Placa:</b></td>
+            <td style="width:15%;font-size: 11px !important;">{{$vehicleTaxes[0]->license_plate}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->ci}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
+            <td style="width:35%;font-size: 11px !important">{{$user[0]->address}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Telfono:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->phone}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->email}}</td>
+            <td style="width:20%;font-size: 12px !important;"><b></b></td>
+            <td style="width:30%;font-size: 11px !important;"></td>
+        </tr>
+    @endif
+
 </table>
 
 <table style="width: 100%;">
@@ -108,13 +136,13 @@
     <tbody>
     <tr>
         <td style="width: 20%;font-size: 10px !important;">
-             AutoMovil
-             @if($diffYear>3)
-                 {{' (Mayor de 3A)'}}
-             @else
-                 {{' (Menor a 3A)'}}
-             @endif
-         </td>
+            AutoMovil
+            @if($diffYear>3)
+                {{' (Mayor de 3A)'}}
+            @else
+                {{' (Menor a 3A)'}}
+            @endif
+        </td>
         <td style="width: 10%;font-size: 10px;!important;"> {{$taxes->branch}}</td>
         <td style="width: 20%;font-size: 10px;!important">{{$taxes->fiscal_period." - ".$taxes->fiscal_period_end}}</td>
         <td style="width: 15%;font-size: 10px; !important;">0</td>

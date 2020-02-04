@@ -5,10 +5,30 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id)}}">Detalles De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+                    @if(isset($vehicle[0]->company[0]->id))
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id.'-'.true)}}">Detalles
+                                De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Detalles De Declaracion</a></li>
+
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id)}}">Detalles De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pagar Mis Impuesto</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -53,7 +73,11 @@
                         <form method="post" action="{{route('vehicles.taxes.save')}}" id='register-taxes'
                               class="card-content row">
                             @csrf
-
+                            @if(isset($vehicle[0]->company[0]->id))
+                                <input type="hidden" name="companyId" id="companyId"
+                                       value="{{$vehicle[0]->company[0]->id}}">
+                            @endif
+                            <input type="hidden" id="vehicleId" name="vehicleId" value="{{$vehicle[0]->id}}">
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="type" id="type" class="code"
@@ -195,7 +219,8 @@
                             <div class="row">
                                 <div class="input-field col s12">
 
-                                    <a href="" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                    <a href=""
+                                       class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                         Calcular de nuevo
                                         <i class="icon-refresh right"></i>
                                     </a>
