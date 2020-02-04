@@ -169,7 +169,27 @@
                 <td style="width: 20%;font-size: 10px;!important"></td>
                 <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($vehicleTaxes[0]->pivot->fiscal_credits, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($taxes->amount, 2, ',', '.')}}</td>
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+            </tr>
+        @endif
+        @if($vehicleTaxes[0]->pivot->recharge > 0)
+            <tr>
+                <td style="width: 20%;font-size: 10px !important;">recargo (20%)</td>
+                <td style="width: 10%;font-size: 10px;!important;"></td>
+                <td style="width: 20%;font-size: 10px;!important"></td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge, 2, ',', '.')}}</td>
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+            </tr>
+        @endif
+        @if($vehicleTaxes[0]->pivot->recharge_mora > 0)
+            <tr>
+                <td style="width: 20%;font-size: 10px !important;">interés por mora</td>
+                <td style="width: 10%;font-size: 10px;!important;"></td>
+                <td style="width: 20%;font-size: 10px;!important"></td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge_mora, 2, ',', '.')}}</td>
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge+$vehicleTaxes[0]->pivot->recharge_mora-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
             </tr>
         @endif
 
@@ -276,10 +296,10 @@
     <tr>
         <td></td>
     </tr>
-    @if(!$firm)
-        <tr>
-            <td style="width: 100%;text-align: center; font-size: 14px;">
 
+    <tr>
+        @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+            <td style="width: 100%;text-align: center; font-size: 14px;">
                 @if($taxes->bank==44)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
                 @elseif($taxes->bank==77)
@@ -291,16 +311,15 @@
                 @elseif($taxes->bank==55)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
                 @else
-                    ***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre
-                    David Planta Baja Calle 26 entre Carreras 15 y 16
+                    ***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
                 @endif
             </td>
-        </tr>
-        <tr>
-            <td style="width: 100%;text-align: center; font-size: 14px;">
-                **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("Y-m-d", strtotime($taxes->created_at))}}**
-            </td>
-        </tr>
+    </tr>
+    <tr>
+        <td style="width: 100%;text-align: center; font-size: 14px;">
+            **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes->created_at))}}**
+        </td>
+    </tr>
     @endif
 </table>
 
@@ -333,27 +352,25 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($firm)
-
-                <td style="width: 40%;text-align: center;">
-                    <img src="{{asset('images/pdf/firma.png')}}" style="width:180px; height:80px;">
-
+            @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+                <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
+                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;">
                 </td>
             @else
-
                 <td style="width: 40%;text-align: center;">
                     __________________________________________
                 </td>
-
             @endif
 
         </tr>
         <tr>
-            @if($firm)
-                <td style="width:40%;text-align: center; font-size: 10px;">
-                    FIRMA DEL GERENTE DE RECAUDACIÓN DEL SEMAT.<br> JURO QUE LOS DATOS EN ESTA
-                    DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
-                    DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.
+            @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+                <td style="width:40%;text-align: center; font-size: 10px;"><b>
+                        __________________________________________<br>
+                        ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
+                        Directora (E) de la Dirección de Hacienda y<br>
+                        Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
+                    </b>
                 </td>
             @else
 
@@ -368,16 +385,30 @@ $date = '31/12/' . date('Y');
     </table>
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
-            <td style="width: 80%;">
-                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
-                     style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
-            </td>
-        </tr>
+
+            @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+                <td style="width: 80%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
+                </td>
+        @else
+
+            <tr>
+                <td style="width: 80%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+                </td>
+            </tr>
+
+        @endif
+
         <tr>
             <td style="width: 20%;">
-                @if($taxes->bank!=66)
-                    <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
-                         style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="">
+                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+                    @if($taxes->bank!=null)
+                        <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
+                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="">
+                    @endif
                 @endif
             </td>
         </tr>

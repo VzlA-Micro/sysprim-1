@@ -32,7 +32,7 @@ class DeclarationVehicle
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
-        $monthJanuary = Carbon::create(2020, 1, 01, 12, 00, 00);
+        $monthJanuary = Carbon::create(2020, 01, 01, 12, 00, 00);
         $january = 01;
         $april = 04;
         $total = 0;
@@ -60,17 +60,17 @@ class DeclarationVehicle
             if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
                 $dayMora = 31;
 
-                $valueDayMora = ($dayMora + intval($day)) * $rateBank;
+                $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
             } else {
-                $diffDayMora = 0;
-                $valueDayMora = intval($day) * $rateBank;
+                $dayMora = 0;
+                $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
             }
         } else {
-            $diffDayMora = 0;
-            $valueDayMora = intval($day) * $rateBank;
+            $dayMora = 0;
+            $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
         }
 
-        if ($monthCurrent >= 1 and $monthCurrent <= 3) {
+        /*if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
         }
         if ($monthCurrent >= 4 and $monthCurrent <= 6) {
@@ -81,7 +81,7 @@ class DeclarationVehicle
         }
         if ($monthCurrent >= 10 and $monthCurrent <= 12) {
             $trimesterCurrent = 4;
-        }
+        }*/
 
         $vehicle = Vehicle::where('id', $id)->get();
 
@@ -105,28 +105,36 @@ class DeclarationVehicle
 
             if (($monthCurrent == $mes)) {
                 $valueDiscount = ($taxes * 20) / 100;
-                $total = $taxes - $valueDiscount;
+                $total = ($taxes - $valueDiscount) + $valueDayMora;
 
-                $amounts = array(
-                    'grossTaxes' => $taxes,
-                    'fractionalPayments' => $fractionalPayments,
-                    'valueDiscount' => $valueDiscount,
-                    'total' => $total,
-                    'rateYear' => $rateYear,
-                    'moreThereYear' => $moreThereYear,
-                    'optionPayment' => $optionPayment,
-                    'previousDebt' => $previousDebt,
-                    'valueMora' => $valueDayMora
-                );
-                return $amounts;
+            } else {
+                //$valueDiscount = ($taxes * 20) / 100;
+                $recharge = ($taxes * $recharges->value) / 100;
+                $total = ($taxes - $valueDiscount) + $valueDayMora+$recharge;
+
             }
+            $amounts = array(
+                'grossTaxes' => $taxes,
+                'fractionalPayments' => $fractionalPayments,
+                'valueDiscount' => $valueDiscount,
+                'total' => $total,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'moreThereYear' => $moreThereYear,
+                'optionPayment' => $optionPayment,
+                'previousDebt' => $previousDebt,
+                'valueMora' => $valueDayMora
+            );
+            return $amounts;
+        }
 
-        } else {
+
+        /*  }else {
             //INDICA QUE EL PAGO ES TRIMESTRAL, PERO SE DAN 2 CASOS
             // 1- ES PAGO TRIMESTRAL PERO ESTA DENTRO DEL PRIMER MES DE CADA TRIMESTRE POR LO TANTO NO TENDRA, NI RECARGOS, NI MULTAS
             $fractionalPayments = $taxes / 4;
             if (($monthCurrent == $january) || ($monthCurrent == $april) || ($monthCurrent == $july) || ($monthCurrent == $october)) {
-                $total = $fractionalPayments;
+                $total = $fractionalPayments*$valueDayMora;
                 $amounts = array(
                     'taxes' => $taxes,
                     'fractionalPayments' => $fractionalPayments,
@@ -185,7 +193,7 @@ class DeclarationVehicle
                     $recharge = (($fractionalPayments * $diffTrimester) * $recharges->value) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
-                    $total = $fractionalPayments + $recharge + $previousDebt + $valueDayMora;
+                    $total = ($fractionalPayments + $recharge + $previousDebt + $valueDayMora)*$valueDayMora;
                 }
                 $amounts = array(
                     'taxes' => $taxes,
@@ -201,7 +209,7 @@ class DeclarationVehicle
 
                 return $amounts;
             }
-        }
+        }*/
     }
 
 
