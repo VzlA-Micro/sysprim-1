@@ -25,14 +25,14 @@ use App\BankRate;
 
 class DeclarationVehicle
 {
-    public static function Declaration($id,$optionPayment)
+    public static function Declaration($id, $optionPayment)
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
-        $monthJanuary = Carbon::create(2018, 1, 01, 12, 00, 00);
+        $monthJanuary = Carbon::create(2020, 1, 01, 12, 00, 00);
         $january = 01;
         $april = 04;
         $total = 0;
@@ -50,25 +50,24 @@ class DeclarationVehicle
         $moreThereYear = null;
         $bank = BankRate::select('value_rate')->latest()->first();
         $rateBank = $bank->value_rate * 360;
+        $day = DeclarationVehicle::dayMora();
 
         $recharges = Recharge::where('branch', 'Pat.Vehiculo')->latest()->first();
         $helperTrimester = Trimester::verifyTrimester();
 
         if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
 
-
             if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
+                $dayMora = 31;
 
-                $diffDayMora = $dateCurrent->diffInDays($monthJanuary);
-                //dd($optionPayment);
-                $valueDayMora = $diffDayMora * $rateBank;
+                $valueDayMora = ($dayMora + intval($day)) * $rateBank;
             } else {
                 $diffDayMora = 0;
-                $valueDayMora = $diffDayMora * $rateBank;
+                $valueDayMora = intval($day) * $rateBank;
             }
         } else {
             $diffDayMora = 0;
-            $valueDayMora = $diffDayMora * $rateBank;
+            $valueDayMora = intval($day) * $rateBank;
         }
 
         if ($monthCurrent >= 1 and $monthCurrent <= 3) {
@@ -93,14 +92,10 @@ class DeclarationVehicle
         if ($diffYear < 3) {
             $rateYear = $vehicle[0]->type->rate;
             $taxes = $rateYear * $rate[0]->value;
-            //$valueDiscount = ($taxes * 20) / 100;
-            //$discount = $taxes - $valueDiscount;
             $moreThereYear = false;
         } else {
             $rateYear = $vehicle[0]->type->rate_UT;
             $taxes = $rateYear * $rate[0]->value;
-            //$valueDiscount = ($taxes * 20) / 100;
-            //$discount = $taxes - $valueDiscount;
             $moreThereYear = true;
         }
 
@@ -127,7 +122,6 @@ class DeclarationVehicle
             }
 
         } else {
-
             //INDICA QUE EL PAGO ES TRIMESTRAL, PERO SE DAN 2 CASOS
             // 1- ES PAGO TRIMESTRAL PERO ESTA DENTRO DEL PRIMER MES DE CADA TRIMESTRE POR LO TANTO NO TENDRA, NI RECARGOS, NI MULTAS
             $fractionalPayments = $taxes / 4;
@@ -166,7 +160,7 @@ class DeclarationVehicle
 
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
 
-                    $total = $fractionalPayments + $recharge + $previousDebt;
+                    $total = $fractionalPayments + $recharge + $previousDebt + $valueDayMora;
 
                     // 2 - ESTE CASO ES SI, HAY ALGUN REGISTRO CORESPONBDIENTE A ESTE VEHICULO
                 } else {
@@ -191,8 +185,7 @@ class DeclarationVehicle
                     $recharge = (($fractionalPayments * $diffTrimester) * $recharges->value) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
-                    $total = $fractionalPayments + $recharge + $previousDebt;
-
+                    $total = $fractionalPayments + $recharge + $previousDebt + $valueDayMora;
                 }
                 $amounts = array(
                     'taxes' => $taxes,
@@ -222,7 +215,7 @@ class DeclarationVehicle
         $mount_pay = null;
 
         if ($temporal) {
-            $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$vehicle->id)
+            $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle->id)
                 ->where('status', '=', 'Temporal')
                 ->get();
 
@@ -236,5 +229,11 @@ class DeclarationVehicle
                 }
             }
         }
+    }
+
+    public static function dayMora()
+    {
+        $varDayForMora = CheckCollectionDay::verify('Pat.Veh');
+        return $varDayForMora;
     }
 }

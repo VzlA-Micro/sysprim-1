@@ -304,24 +304,24 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $value = explode('-', $id);
-        $vehicle = Vehicle::where('id', $value[0])->with('company')->get();
-
-
-        if ($value[1]) {
-            $response = ['vehicle' => $vehicle, 'status' => 'company'];
+        $idVehicle = $value[0];
+        $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
+        if (isset($value[1])) {
+            $valor = $value[1];
         } else {
-            $response = ['vehicle' => $vehicle, 'status' => 'vehicle'];
-            if (session()->has('vehicle')) {
-                session()->forget(['vehicle']);
-                session()->put('vehicle', $vehicle[0]->id);
-            } else {
-                session()->put('vehicle', $vehicle[0]->id);
-            }
+            $valor = false;
+        }
+
+        if ($valor) {
+            $response = 'company';
+        } else {
+            $response = 'vehicle';
         }
 
 
         return view('modules.vehicles.details', array(
-            'vehicle' => $vehicle
+            'vehicle' => $vehicle,
+            'status' => $response
         ));
 
     }
@@ -487,8 +487,6 @@ class VehicleController extends Controller
 
     public function periodoFiscal($period)
     {
-
-        //var_dump($period);
         $trimester = Trimester::verifyTrimester();
         //si es TRUE es trimestral
         if ($period == 1) {
@@ -511,7 +509,26 @@ class VehicleController extends Controller
 
     public function manage($id)
     {
-        return view('modules.vehicles.manage', ['id' => $id]);
+        $value = explode('-', $id);
+        $idVehicle = $value[0];
+        if (isset($value[1])) {
+            $idCompany = $value[1];
+        } else {
+            $idCompany = false;
+        }
+        $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
+
+        if ($idCompany) {
+            $response = 'company';
+        } else {
+            $response = 'vehicle';
+        }
+        return view('modules.vehicles.manage', [
+            'id' => $idVehicle,
+            'idCompany' => $idCompany,
+            'status' => $response,
+            'vehicle' => $vehicle
+        ]);
     }
 
     public function vehicleCompanyRead($idCompany)

@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col s12">
             	<ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
-                    <li class="breadcrumb-item"><a href="#!">{{ $property[0]->code_cadastral }}</a></li>
+                    {{--<li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>--}}
+                    {{--<li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>--}}
+                    {{--<li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>--}}
                 </ul>
             </div>
             <div class="col s12 m8">
@@ -37,9 +37,6 @@
                             <div class="col s12 center-align">
                                 <a href="{{ route('companies.edit', ['id' => $property[0]->id]) }}" class="btn blue btn-rounded waves-light">Editar</a>
                             </div>
-                           <!-- <div class="col s12 m6 center-align">
-                                <a href="" class="btn red btn-rounded waves-light col s12">Eliminar</a>
-                            </div>-->
                         </div>
                     </div>
                     @endcan
@@ -48,12 +45,21 @@
             {{-- Mostrar seccion si es administrador o no --}}
            <div class="col s12 m4" style="margin-top: -7px">
                 <div class="row">
+                    {{--@if(\Carbon\Carbon::now()->format('m') >= '01' || \Carbon\Carbon::now()->format('m') <= '03')
                     <div class="col s12">
-                        <a href="{{route('inmueble.my-propertys')}}" class="btn-app white green-text">
+                        <a href="#mode" class="btn-app white green-text modal-trigger">
                             <i class="icon-payment"></i>
-                            <span class="truncate">Mis Pagos</span>
+                            <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
+                    @else--}}
+                    <div class="col s12">
+                        <a href="{{ route('properties.payments.manage', ['id' => $property[0]->id]) }}" class="btn-app white green-text">
+                            <i class="icon-payment"></i>
+                            <span class="truncate">Mis Declaraciones</span>
+                        </a>
+                    </div>
+                    {{--@endif--}}
                     {{--<div class="col s12">
                        <a href="" class="btn-app white orange-text">
                            <i class="icon-warning"></i>
