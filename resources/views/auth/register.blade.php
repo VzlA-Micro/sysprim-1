@@ -23,17 +23,17 @@
                             <label for="nationality">Nacionalidad</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." maxlength="12" required>
+                                <input id="ci" type="text" name="ci" value="{{ old('name') }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." maxlength="12" required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                             <i class="icon-person prefix"></i>                            
-                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="name" type="text" name="name" value="{{ old('name') }}" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                             <i class="icon-person prefix"></i>                            
-                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="surname" type="text" name="surname" value="{{ old('surname') }}" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
                             <label for="surname">Apellido</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user" >Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone_user" type="tel" name="phone" value="{{ old('phone') }}" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
                             <i class="icon-mail_outline prefix"></i>

@@ -29,10 +29,10 @@
                                 <li><b>Dirección: </b>{{ $data->address }}</li>
                                 <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                                 @else
-                                    <li><b>Nombre: </b>{{ $data->name}}</li>
-                                    <li><b>RIF O Cedula: </b>{{ $data->RIF }}</li>
-                                    <li><b>Dirección: </b>{{ $data->address }}</li>
-                                    <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
+                                    <li><b><p>Nombre: </b>{{ $data->name}}</li>
+                                    <li><b><p>RIF O Cedula: </b>{{ $data->RIF }}</li>
+                                    <li><b><p>Dirección: </b>{{ $data->address }}</li>
+                                    <li><b><p>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                                 @endif
 
                             </ul>

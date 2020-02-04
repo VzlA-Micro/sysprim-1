@@ -381,10 +381,7 @@ $(document).ready(function () {
     var statusBoton = false;
     $('#userUpdate').on('submit', function (e) {
         e.preventDefault();
-<<<<<<< HEAD
-=======
         var id=$('#id').val();
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if (statusBoton == true) {
             $.ajax({
                 url: url + "users/update",

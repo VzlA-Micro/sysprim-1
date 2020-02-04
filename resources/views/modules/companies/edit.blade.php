@@ -8,13 +8,13 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ $company->name }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.edit', ['id' => $company->id]) }}">Editar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.edit', ['id' => $company->id]) }}">Detalles</a></li>
                 </ul>
             </div>
             <div class="col s12 m12 l10 offset-l1">
                 <form action="{{ route('companies.update') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>Detalles de mi empresa</h5>
+                        <h5>Detalles de mi empresa.</h5>
                     </div>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -170,8 +170,8 @@
                     </div>
                     <div class="card-action center-align">
                         <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light peach">
-                            <i class="icon-navigate_before right"></i>
-                            Atras
+                            <i class="icon-navigate_before left"></i>
+                            Atrás
                         </button>
                     </div>
                 </form>
