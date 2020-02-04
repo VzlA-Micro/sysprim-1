@@ -1,10 +1,6 @@
 $(document).ready(function () {
 
     var url = "http://sysprim.com.devel/";
-<<<<<<< HEAD
-
-=======
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -999,15 +995,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
 });
 
     function initMap() {
