@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col s12">
             	<ul class="breadcrumb">
-                    {{--<li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>--}}
-                    {{--<li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>--}}
-                    {{--<li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>--}}
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>
                 </ul>
             </div>
             <div class="col s12 m8">

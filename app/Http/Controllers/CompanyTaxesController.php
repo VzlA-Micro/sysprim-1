@@ -785,7 +785,7 @@ class CompanyTaxesController extends Controller
                 //Obtengo Intereset del banco
                 $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                $amount_recharge = ($base_amount_sub-$anticipated_format)* $recharge->value / 100;
+                $amount_recharge = ($base_amount_sub - $anticipated_format)* $recharge->value / 100;
 
                 $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
 

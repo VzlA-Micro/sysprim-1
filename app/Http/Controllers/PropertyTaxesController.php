@@ -24,6 +24,9 @@ use App\Alicuota;
 use App\Property;
 use App\UserProperty;
 use App\User;
+use App\Helpers\CheckCollectionDay;
+use App\BankRate;
+use App\Company;
 
 
 class PropertyTaxesController extends Controller
@@ -75,7 +78,7 @@ class PropertyTaxesController extends Controller
     public function create($id, $status)
     {
 
-        $declaration = Declaration::VerifyDeclaration($id);
+        $declaration = Declaration::VerifyDeclaration($id, $status);
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
         //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
@@ -113,16 +116,17 @@ class PropertyTaxesController extends Controller
             $total = number_format($declaration['total'],2,',','.');
         }
         elseif($status == 'trimestral') {
-            $calculateBaseImponible = $declaration['baseImponible'];
+            $calculateBaseImponible = $declaration['baseImponible'] / 4;
             $calculateGround = $declaration['totalGround'] / 4;
             $calculateBuild = $declaration['totalBuild'] / 4;
             $calculateDiscount = $declaration['porcentaje'] / 4;
             $calculateTotal = $declaration['total'] / 4;
-            $baseImponible = number_format($declaration['baseImponible'],2,',','.');
-            $totalGround = number_format($declaration['totalGround'],2,',','.');
-            $totalBuild = number_format($declaration['totalBuild'],2,',','.');
-            $discount = number_format($declaration['porcentaje'],2,',','.');
+            $baseImponible = number_format($calculateBaseImponible,2,',','.');
+            $totalGround = number_format($calculateGround,2,',','.');
+            $totalBuild = number_format($calculateBuild,2,',','.');
+            $discount = number_format($calculateDiscount,2,',','.');
             $total = number_format($calculateTotal,2,',','.');
+//            dd($discount);
         }
 //        dd($discount); die();
 
@@ -142,7 +146,8 @@ class PropertyTaxesController extends Controller
             'totalGround' => $totalGround,
             'totalBuild' => $totalBuild,
             'discount' => $discount,
-            'total' => $total
+            'total' => $total,
+            'status' => $status
         ));
     }
 
@@ -176,6 +181,7 @@ class PropertyTaxesController extends Controller
         $valorInterest = str_replace('.', '', $valueInterest);
         $interest = str_replace(',', '.', $valorInterest);
 
+        $status = $request->input('status');
 //        dd($valueAlicuota); die();
 
         # --------------------------------------------------------------
@@ -185,7 +191,7 @@ class PropertyTaxesController extends Controller
 //        dd($baseImponible); die();
         $taxe->type='daily';
         $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
-        $taxe->branch='Inmuebles Urb.';
+        $taxe->branch='Inm.Urbanos';
         $taxe->amount = $amount;
         $taxe->save();
         $taxeId = $taxe->id;
@@ -200,6 +206,7 @@ class PropertyTaxesController extends Controller
 //        $propertyTaxes->discount = $discount;
         $propertyTaxes->alicuota = $alicuota;
         $propertyTaxes->interest = $interest;
+        $propertyTaxes->status = $status;
 
         $propertyTaxes->save();
         return response()->json(['status' => 'success','taxe_id' => $taxeId]);
@@ -265,6 +272,7 @@ class PropertyTaxesController extends Controller
             $type = 'user';
         }
         $propertyTaxes = PropertyTaxes::find($id_taxes);
+//        dd($propertyTaxes);
 
 
 //        dd($propertyTaxes); die();
@@ -298,7 +306,8 @@ class PropertyTaxesController extends Controller
             'property' => $property
         ]);
 
-//        return $pdf->stream();
+        return $pdf->stream();
+        die();
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Inmuebles Urbanos'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
