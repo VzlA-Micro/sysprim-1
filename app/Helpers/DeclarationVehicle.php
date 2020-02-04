@@ -32,7 +32,7 @@ class DeclarationVehicle
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
-        $monthJanuary = Carbon::create(2018, 1, 01, 12, 00, 00);
+        $monthJanuary = Carbon::create(2020, 1, 01, 12, 00, 00);
         $january = 01;
         $april = 04;
         $total = 0;
@@ -59,9 +59,10 @@ class DeclarationVehicle
 
             if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
 
-                $diffDayMora = $dateCurrent->diffInDays($monthJanuary);
+                DeclarationVehicle::dayMora();
+                //$diffDayMora = $dateCurrent->diffInDays($monthJanuary);
                 //dd($optionPayment);
-                $valueDayMora = $diffDayMora * $rateBank;
+                //$valueDayMora = $diffDayMora * $rateBank;
             } else {
                 $diffDayMora = 0;
                 $valueDayMora = $diffDayMora * $rateBank;
@@ -236,5 +237,11 @@ class DeclarationVehicle
                 }
             }
         }
+    }
+
+    public static function dayMora()
+    {
+        $varDayForMora=CheckCollectionDay::verify('Pat.Veh');
+        dd($varDayForMora);
     }
 }

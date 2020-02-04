@@ -23,6 +23,8 @@ class CheckCollectionDay{
 
 
         $prologue=Prologue::where('branch', $branch)->first();
+
+        var_dump($prologue);
         $date_limit=Carbon::parse($prologue->date_limit);
 
 

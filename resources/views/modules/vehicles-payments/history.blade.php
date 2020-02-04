@@ -58,7 +58,7 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{route('vehicle.taxes.download',['id'=>session()->get('vehicle').'-'.$taxe->id])}}"
+                                                <td><a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/'.true)}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
