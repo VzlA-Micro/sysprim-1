@@ -512,7 +512,7 @@ $('#model').prop('disabled', true);
                 if (data['status']=='success') {
                     swal({
                         title: "¡Bien Hecho!",
-                        text: data['message'],
+                        text: "Vehículo registrado con exito!",
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {

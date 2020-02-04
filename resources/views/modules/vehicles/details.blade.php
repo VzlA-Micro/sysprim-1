@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    @if(isset($idCompany))
+                    @if($status=="company")
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ session('company')}}</a>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
                         </li>
                         <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
@@ -54,12 +54,21 @@
             <div class="col s12 m4" style="margin-top: -7px">
 
                 <div class="row">
+                    @if($status=="company")
                     <div class="col s12">
-                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="modal-trigger btn-app white green-text">
+                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
+                    @else
+                        <div class="col s12">
+                            <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="btn-app white green-text">
+                                <i class="icon-payment"></i>
+                                <span class="truncate">Mis Declaraciones</span>
+                            </a>
+                        </div>
+                    @endif
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
                             <i class="icon-warning"></i>
