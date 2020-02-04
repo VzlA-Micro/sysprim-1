@@ -25,14 +25,14 @@ use App\BankRate;
 
 class DeclarationVehicle
 {
-    public static function Declaration($id)
+    public static function Declaration($id,$optionPayment)
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
-        $monthJanuary = Carbon::create(2018, 1, 30, 12, 00, 00)->format('m');
+        $monthJanuary = Carbon::create(2018, 1, 01, 12, 00, 00);
         $january = 01;
         $april = 04;
         $total = 0;
@@ -55,8 +55,12 @@ class DeclarationVehicle
         $helperTrimester = Trimester::verifyTrimester();
 
         if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
+
+
             if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
-                $diffDayMora = $dateCurrent->diffInDays($helperTrimester['monthIntermediate']);
+
+                $diffDayMora = $dateCurrent->diffInDays($monthJanuary);
+                //dd($optionPayment);
                 $valueDayMora = $diffDayMora * $rateBank;
             } else {
                 $diffDayMora = 0;
@@ -66,11 +70,6 @@ class DeclarationVehicle
             $diffDayMora = 0;
             $valueDayMora = $diffDayMora * $rateBank;
         }
-
-        //$day = Carbon::now()->format('d');
-        $array = explode('-', $id);
-        $idVehicle = $array[0];
-
 
         if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
@@ -85,23 +84,8 @@ class DeclarationVehicle
             $trimesterCurrent = 4;
         }
 
-        session_start();
-        if (isset($array[1])) {
-            $optionPayment = intval($array[1]);
-
-            if ($optionPayment === 1) {
-                $optionPayment = false;
-            }
-            if ($optionPayment === 0) {
-                $optionPayment = true;
-            }
-
-            $_SESSION['optionPayment'] = $optionPayment;
-        } else {
-            $optionPayment = $_SESSION['optionPayment'];
-        }
-
         $vehicle = Vehicle::where('id', $id)->get();
+
         $yearVehicle = $vehicle[0]->year;
 
         $diffYear = $yearCurrent - intval($yearVehicle);
@@ -143,6 +127,7 @@ class DeclarationVehicle
             }
 
         } else {
+
             //INDICA QUE EL PAGO ES TRIMESTRAL, PERO SE DAN 2 CASOS
             // 1- ES PAGO TRIMESTRAL PERO ESTA DENTRO DEL PRIMER MES DE CADA TRIMESTRE POR LO TANTO NO TENDRA, NI RECARGOS, NI MULTAS
             $fractionalPayments = $taxes / 4;
@@ -176,7 +161,8 @@ class DeclarationVehicle
                     if ($diffMonths > 3 and $diffMonths < 3.5) {
                         $diffMonths = 4;
                     }
-                    $recharge = (($fractionalPayments * $diffMonths) * $recharges) / 100;
+
+                    $recharge = (($fractionalPayments * $diffMonths) * $recharges->value) / 100;
 
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
 
@@ -202,7 +188,7 @@ class DeclarationVehicle
 
                     $diffTrimester = $trimesterCurrent - $trimester;
 
-                    $recharge = (($fractionalPayments * $diffTrimester) * $recharges) / 100;
+                    $recharge = (($fractionalPayments * $diffTrimester) * $recharges->value) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
                     $total = $fractionalPayments + $recharge + $previousDebt;
@@ -236,13 +222,16 @@ class DeclarationVehicle
         $mount_pay = null;
 
         if ($temporal) {
-            $vehicleTaxes = $vehicle->taxesVehicle()->where('status', '=', 'temporal')->get();//busco el ultimo pago realizado por la empresa
+            $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$vehicle->id)
+                ->where('status', '=', 'Temporal')
+                ->get();
 
             if (!$vehicleTaxes->isEmpty()) {
                 foreach ($vehicleTaxes as $tax) {
+
                     if ($tax->status !== 'cancel') {
-                        $tax = Taxe::find($tax->id);
-                        $tax->delete();
+                        $taxe = Taxe::find($tax->taxe_id);
+                        $taxe->delete();
                     }
                 }
             }

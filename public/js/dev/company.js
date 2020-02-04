@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
 
     $('#RIF').blur(function () {
@@ -171,103 +171,117 @@ $(document).ready(function () {
         e.preventDefault();
 
         $('#button-company').attr('disabled', 'disabled');
+        if($('#question_license').val()!==null) {
 
 
-        if ($('#lat').val() !== "") {
-            if ($('#sector').val() !== null && $('#parish').val() !== null) {
-                if ($('#ciu').val() !== undefined || $('#question_license').val() == 'false') {
-                    $.ajax({
-                        url: url + "companies/save",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: new FormData(this),
-                        method: "POST",
+            if ($('#lat').val() !== "") {
+                if ($('#sector').val() !== null && $('#parish').val() !== null) {
+                    if ($('#ciu').val() !== undefined || $('#question_license').val() == 'false') {
+                        $.ajax({
+                            url: url + "companies/save",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: new FormData(this),
+                            method: "POST",
 
-                        beforeSend: function () {
-                            $("#preloader").fadeIn('fast');
-                            $("#preloader-overlay").fadeIn('fast');
-                        },
-                        success: function (response) {
-                            swal({
-                                title: "¡Bien Hecho!",
-                                text: "La empresa se ha registrado con éxito.",
-                                icon: "success",
-                                button: {
-                                    text: "Esta bien",
-                                    className: "green-gradient"
-                                },
-                            }).then(function (accept) {
-                                window.location.href = url + "companies/my-business";
-                            });
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                        },
-                        error: function (err) {
-                            $('#button-company').removeAttr('disabled', '');
-                            console.log(err);
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                            swal({
-                                title: "¡Oh no!",
-                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                                icon: "error",
-                                button: {
-                                    text: "Entendido",
-                                    className: "red-gradient"
-                                },
-                            });
-                        }
-                    });
+                            beforeSend: function () {
+                                $("#preloader").fadeIn('fast');
+                                $("#preloader-overlay").fadeIn('fast');
+                            },
+                            success: function (response) {
+                                swal({
+                                    title: "¡Bien Hecho!",
+                                    text: "La empresa se ha registrado con éxito.",
+                                    icon: "success",
+                                    button: {
+                                        text: "Esta bien",
+                                        className: "green-gradient"
+                                    },
+                                }).then(function (accept) {
+                                    window.location.href = url + "companies/my-business";
+                                });
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+                            },
+                            error: function (err) {
+                                $('#button-company').removeAttr('disabled', '');
+                                console.log(err);
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+                                swal({
+                                    title: "¡Oh no!",
+                                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                    icon: "error",
+                                    button: {
+                                        text: "Entendido",
+                                        className: "red-gradient"
+                                    },
+                                });
+                            }
+                        });
+                    } else {
+                        $('#button-company').removeAttr('disabled', '');
+                        swal({
+                            title: "Información",
+                            text: "Debe tener al menos un ciiu para poder registrar una empresa..",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+
+                    }
+
                 } else {
+
+                    if ($('#sector').val() === null) {
+                        swal({
+                            title: "Información",
+                            text: "Selecione un sector para completar el registro.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    } else {
+                        swal({
+                            title: "Información",
+                            text: "Selecione la parroquia para completar el registro.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    }
                     $('#button-company').removeAttr('disabled', '');
-                    swal({
-                        title: "Información",
-                        text: "Debe tener al menos un ciiu para poder registrar una empresa..",
-                        icon: "info",
-                        button: {
-                            text: "Esta bien",
-                            className: "blue-gradient"
-                        },
-                    });
-
                 }
-
             } else {
-
-                if ($('#sector').val() === null) {
-                    swal({
-                        title: "Información",
-                        text: "Selecione un sector para completar el registro.",
-                        icon: "info",
-                        button: {
-                            text: "Esta bien",
-                            className: "blue-gradient"
-                        },
-                    });
-                } else {
-                    swal({
-                        title: "Información",
-                        text: "Selecione la parroquia para completar el registro.",
-                        icon: "info",
-                        button: {
-                            text: "Esta bien",
-                            className: "blue-gradient"
-                        },
-                    });
-                }
+                swal({
+                    title: "Información",
+                    text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
                 $('#button-company').removeAttr('disabled', '');
             }
-        } else {
+        }else{
             swal({
                 title: "Información",
-                text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
+                text: "Debe selecionar si posee licencia de funcionamiento.",
                 icon: "info",
                 button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
+
             $('#button-company').removeAttr('disabled', '');
         }
 
@@ -792,7 +806,19 @@ $(document).ready(function () {
             if (value < 0) {
                 $(this).val(1);
             }
+
         });
+
+
+        $('#number_employees').keyup(function () {
+            if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
+                $(this).val('');
+            }
+        });
+
+
+
+
 
 
         $('#question_license').change(function () {
@@ -951,6 +977,9 @@ $(document).ready(function () {
             localizar("map", "Venezuela, Baquisimeto Estado Lara. " + direccion);
         }
     });
+
+
+
 });
 
     function initMap() {
