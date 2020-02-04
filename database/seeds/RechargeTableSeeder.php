@@ -35,6 +35,15 @@ class RechargeTableSeeder extends Seeder
             'updated_at'=>Carbon::now()
         ]);
 
+        DB::table('recharges')->insert([
+            'name'=>'RECARGO DE INMUEBLES URBANOS',
+            'value'=>12,
+            'branch'=>'Inm.Urbanos',
+            'since'=>'2019-01-01',
+            'to'=>'2020-01-01',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);
 
     }
 }

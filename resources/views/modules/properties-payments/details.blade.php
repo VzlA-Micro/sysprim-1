@@ -10,6 +10,10 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.manage',['id' => $property[0]->id]) }}">Mis Declaraciones</a></li>
@@ -50,6 +54,7 @@
                         <input type="hidden" name="property_id" id="property_id" value="{{ $property[0]->id }}">
                         <input type="hidden" name="owner_id" id="owner_id" value="{{ $owner->id }}">
                         <input type="hidden" name="owner_type" id="owner_type" value="{{ $owner_type }}">
+                        <input type="hidden" name="status" id="status" value="{{ $status }}">
                         {{--<input type="hidden" name="totalGround" id="totalGround" class="validate money" value="" readonly>--}}
                         <div class="input-field col s12 m6">
                             <i class="prefix">
@@ -94,10 +99,28 @@
                                             <tr>
                                                 <td>{{ $response['declaration']['alicuota']->name }}</td>
                                                 <td>{{ $response['declaration']['alicuota']->value * 100 }}%</td>
-                                                <td>{{ number_format($response['declaration']['porcentaje'],2,',','.') }}</td>
+                                                <td>{{ $discount }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    @if($status == 'full')
+                                        <table class="centered" style="font-size: 10px;!important;">
+                                            <thead>
+                                            <tr>
+                                                <th>DESCUENTO</th>
+                                                <th>VALOR</th>
+                                                <th>COSTO</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>PAGO COMPLETO (PRIMER TRIMESTRE)</td>
+                                                <td>20%</td>
+                                                <td>{{ number_format($response['declaration']['discount'],2,',','.') }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    @endif
                                     {{--<div class="row" style="margin-top: 1rem">
                                         <div class="col s12 m6 ">
                                             <button type="button" id="fraccionado"
@@ -113,19 +136,20 @@
                                 </div>
                                 <div class="col s12 m6">
                                     <input type="hidden" name="alicuota" id="alicuota" value="{{ $response['declaration']['porcentaje'] }}">
+                                    <input type="hidden" name="discount" id="discount" value="{{ $response['declaration']['discount'] }}">
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="interest" id="interest" class="validate money" value="{{ $response['declaration']['interest'] }}" readonly>
+                                            <input type="text" name="interest" id="interest" class="validate money" value="{{ number_format($response['declaration']['interest'],2,',','.') }}" readonly>
                                             <label for="interest">Interés por Mora:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="recharge" id="recharge" class="validate money" value="{{ $response['declaration']['recharge'] }}" readonly>
+                                            <input type="text" name="recharge" id="recharge" class="validate money" value="{{ number_format($response['declaration']['recharge'],2,',','.') }}" readonly>
                                             <label for="recharge">Recargo Interes:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12">

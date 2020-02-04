@@ -27,7 +27,7 @@ class BankRateController extends Controller{
     }
 
     public function show() {
-        $BankRate = BankRate::all();
+        $BankRate = BankRate::orderBy('id','desc')->get();
         return view('modules.bank-rate.read', ['BankRates' => $BankRate]);
     }
 

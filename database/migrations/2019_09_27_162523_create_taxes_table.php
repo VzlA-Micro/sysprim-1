@@ -19,7 +19,7 @@ class CreateTaxesTable extends Migration
             $table->string('digit',3)->nullable();
             $table->string('bank',3)->nullable();
             $table->string('branch',20)->nullable();
-            $table->double('amount',11,2)->nullable();
+            $table->double('amount',15,2)->nullable();
             $table->string('status')->nullable();
             $table->date('fiscal_period');
             $table->date('fiscal_period_end')->nullable();

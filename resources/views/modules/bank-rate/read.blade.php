@@ -18,7 +18,7 @@
             <div class="col s12 m8 offset-m2">
             	<div class="card">
             		<div class="card-header center-align">
-            			<h4>Consultar Tasas</h4>
+            			<h4>Consultar Tasas de Bancos</h4>
             		</div>
             		<div class="card-content">
 		            	<table class="highlight centered" id="accessories-table" style="width: 100%">

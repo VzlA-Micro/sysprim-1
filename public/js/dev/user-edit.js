@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){

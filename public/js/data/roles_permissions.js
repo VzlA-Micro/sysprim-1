@@ -1,4 +1,4 @@
-var url = "http://sysprim.com.devel/";
+var url = localStorage.getItem('url');
 $(document).ready(function() {
 	$('#register').submit(function(e) {
         var  name = $('#name').val();

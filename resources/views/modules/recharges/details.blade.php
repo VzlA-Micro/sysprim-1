@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" class="breadcrumb">Gestionar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" class="breadcrumb">Consultar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.details',['id' => $recharge->id]) }}" class="breadcrumb">Detalles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" >Gestionar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" >Consultar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.details',['id' => $recharge->id]) }}">Detalles</a></li>
 
                 </ul>
             </div>

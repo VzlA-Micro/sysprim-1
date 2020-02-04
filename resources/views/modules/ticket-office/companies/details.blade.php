@@ -47,7 +47,7 @@
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom"
                              data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                             <input type="text" name="RIF" id="RIF" value="{{$company->document}}"
-                                   class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6"
+                                   class="validate number-date" pattern="[0-9]+" maxlength="10" minlength="6"
                                    title="Solo puede escribir números." required readonly>
                             <label for="RIF">RIF</label>
                         </div>
@@ -57,7 +57,7 @@
                             <input type="text" name="name" id="name" class="validate"
                                    pattern="[0-9A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ .,!?_-&%+-$]+"
                                    title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -"
-                                   value="{{ $company->name }}" required readonly>
+                                   value="{{ $company->name }}" required readonly maxlength="100">
                             <label for="name">Razón Social</label>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="left"
@@ -65,7 +65,7 @@
                             <i class="icon-chrome_reader_mode prefix"></i>
                             <input type="text" name="license" id="license" class="validate" pattern="[0-9A-Z]+"
                                    title="Solo puede usar números y letras en mayúsculas."
-                                   value="{{ $company->license }}" required readonly>
+                                   value="{{ $company->license }}" required readonly maxlength="13">
                             <label for="license">Licencia</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -76,9 +76,9 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-supervisor_account prefix"></i>
-                            <input type="number" name="number_employees" id="number_employees" class="validate"
+                            <input type="number" name="number_employees" id="number_employees" class="validate only-number-positive"
                                    pattern="[0-9]+" title="Solo puede usar números"
-                                   value="{{ $company->number_employees }}" disabled>
+                                   value="{{ $company->number_employees }}" disabled maxlength="2" >
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
                         <div class="input-field col m6 s12">
@@ -108,10 +108,10 @@
                         <div class="input-field col s12 m6 tooltipped" data-position="left"
                              data-tooltip="Código que revela la ubicación exacta del inmueble.">
                             <i class="icon-offline_pin prefix"></i>
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate"
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only"
                                    pattern="[0-9A-Z]+" minlength="20" maxlength="20"
                                    title="Solo puede usar números y letras en mayúsculas."
-                                   value="{{ $company->code_catastral }}" disabled required>
+                                   value="{{ $company->code_catastral }}"  disabled required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
                         <div class="input-field col s6 m3">
@@ -138,7 +138,7 @@
                              data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" value="{{ $company->numberPhone }}"
-                                   class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números."
+                                   class="validate" pattern="[0-9]+" title="Solo puede escribir números."
                                    placeholder="Ej. 1234567" maxlength="7" minlength="7" required disabled>
                         </div>
                         <div class="input-field col m6 s12">
@@ -197,7 +197,7 @@
                                 </div>
                                 @can('Habilitar/Deshabilitar CIIU Empresas')
                                     @if($ciu->pivot->status=='disabled')
-                                        <div class="input-field col s12 m1" id="bDelete">
+                                        <div class="input-field col s12 m2 center-align" id="bDelete">
                                             <button type="button"
                                                     class="btn waves-effect waves-light red col s12  disabled-ciu-selected"
                                                     value="{{$ciu->id}}" data-ciiu="enabled">
@@ -206,7 +206,7 @@
 
                                         </div>
                                     @else
-                                        <div class="input-field col s12 m1" id="bDelete">
+                                        <div class="input-field col s12 m2 center-align" id="bDelete">
                                             <button type="button"
                                                     class="btn waves-effect waves-light green col s12  disabled-ciu-selected"
                                                     value="{{$ciu->id}}" data-ciiu="disabled">
@@ -475,44 +475,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/datatables.js') }}"></script>
-    <script>
-        $('#history').DataTable({
-            responsive: true,
-            scroller: true,
-            "scrollX": true,
-            "pageLength": 10,
-            "aaSorting": [],
-            language: {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Todavia este contribuyente ningun pago.",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar:",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "<i class='icon-navigate_next'></i>",
-                    "sPrevious": "<i class='icon-navigate_before'></i>"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
-                }
-            }
-        });
-    </script>
     <script src="{{ asset('js/dev/company-edit.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU"
             type="text/javascript"></script>

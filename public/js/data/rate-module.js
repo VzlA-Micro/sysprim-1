@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
 
 
     $('#register').submit(function (e) {
@@ -144,7 +144,7 @@ $('document').ready(function () {
         $('select').formSelect();
         swal({
             title: "Información",
-            text: 'Campos Deshabilitado,Realice los cambios y guarde lo resultados.',
+            text: 'Campos Deshabilitado,Realice los cambios y guarde los resultados.',
             icon: "info",
             button: "Ok",
         });

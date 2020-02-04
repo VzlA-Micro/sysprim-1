@@ -67,9 +67,15 @@
                         <p>Elige la forma en la realizara su pago de Vehiculo</p>
                     </div>
                     <div class="modal-footer">
+<<<<<<< HEAD
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".true])}}"
+=======
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".'false'])}}"
                            class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".'true'])}}"
+>>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
                            class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
                     </div>
                 </div>

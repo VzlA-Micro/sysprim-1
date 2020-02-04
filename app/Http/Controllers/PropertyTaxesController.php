@@ -24,6 +24,9 @@ use App\Alicuota;
 use App\Property;
 use App\UserProperty;
 use App\User;
+use App\Helpers\CheckCollectionDay;
+use App\BankRate;
+use App\Company;
 
 
 class PropertyTaxesController extends Controller
@@ -74,8 +77,11 @@ class PropertyTaxesController extends Controller
 
     public function create($id, $status)
     {
-
-        $declaration = Declaration::VerifyDeclaration($id);
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        $actualDate = Carbon::now();
+        $declaration = Declaration::VerifyDeclaration($id, $status);
+        $statusTax = '';
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
         //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
@@ -83,6 +89,23 @@ class PropertyTaxesController extends Controller
         //$alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
         $period_fiscal = Carbon::now()->year;
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
+//        $propertyTaxes = PropertyTaxes::find('company_id', $id);
+        $propertyTaxes = Property::find($id);
+        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+        foreach ($taxes as $tax) {
+            if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
+                $statusTax = 'verified';
+            }else if($tax->status === 'temporal'){
+//                $tax->delete();
+                $statusTax = 'new';
+            }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
+                $statusTax = 'process';
+            } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
+                $statusTax = 'process';
+            }else{
+                $statusTax = 'new';
+            }
+        }
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
             $owner_id = $userProperty[0]->company_id;
@@ -99,12 +122,6 @@ class PropertyTaxesController extends Controller
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
-//        dd($person_id); die();
-        /*$baseImponible = number_format($declaration['baseImponible'],2,',','.');
-        $totalGround = number_format($declaration['totalGround'],2,',','.');
-        $totalBuild = number_format($declaration['totalBuild'],2,',','.');
-        $discount = number_format($declaration['porcentaje'],2,',','.');
-        $total = number_format($declaration['total'],2,',','.');*/
         if($status == 'full'){
             $baseImponible = number_format($declaration['baseImponible'],2,',','.');
             $totalGround = number_format($declaration['totalGround'],2,',','.');
@@ -112,20 +129,18 @@ class PropertyTaxesController extends Controller
             $discount = number_format($declaration['porcentaje'],2,',','.');
             $total = number_format($declaration['total'],2,',','.');
         }
-        elseif($status == 'trimestral') {
-            $calculateBaseImponible = $declaration['baseImponible'];
+        /*elseif($status == 'trimestral') {
+            $calculateBaseImponible = $declaration['baseImponible'] / 4;
             $calculateGround = $declaration['totalGround'] / 4;
             $calculateBuild = $declaration['totalBuild'] / 4;
             $calculateDiscount = $declaration['porcentaje'] / 4;
             $calculateTotal = $declaration['total'] / 4;
-            $baseImponible = number_format($declaration['baseImponible'],2,',','.');
-            $totalGround = number_format($declaration['totalGround'],2,',','.');
-            $totalBuild = number_format($declaration['totalBuild'],2,',','.');
-            $discount = number_format($declaration['porcentaje'],2,',','.');
-            $total = number_format($calculateTotal,2,',','.');
-        }
-//        dd($discount); die();
-
+            $baseImponible = number_format($calculateBaseImponible, 2, ',', '.');
+            $totalGround = number_format($calculateGround, 2, ',', '.');
+            $totalBuild = number_format($calculateBuild, 2, ',', '.');
+            $discount = number_format($calculateDiscount, 2, ',', '.');
+            $total = number_format($calculateTotal, 2, ',', '.');
+        }*/
         $response = array(
             'property' => $property,
             'declaration' => $declaration,
@@ -142,7 +157,9 @@ class PropertyTaxesController extends Controller
             'totalGround' => $totalGround,
             'totalBuild' => $totalBuild,
             'discount' => $discount,
-            'total' => $total
+            'total' => $total,
+            'status' => $status,
+            'statusTax' => $statusTax
         ));
     }
 
@@ -176,6 +193,7 @@ class PropertyTaxesController extends Controller
         $valorInterest = str_replace('.', '', $valueInterest);
         $interest = str_replace(',', '.', $valorInterest);
 
+        $status = $request->input('status');
 //        dd($valueAlicuota); die();
 
         # --------------------------------------------------------------
@@ -185,7 +203,7 @@ class PropertyTaxesController extends Controller
 //        dd($baseImponible); die();
         $taxe->type='daily';
         $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
-        $taxe->branch='Inmuebles Urb.';
+        $taxe->branch='Inm.Urbanos';
         $taxe->amount = $amount;
         $taxe->save();
         $taxeId = $taxe->id;
@@ -200,6 +218,7 @@ class PropertyTaxesController extends Controller
 //        $propertyTaxes->discount = $discount;
         $propertyTaxes->alicuota = $alicuota;
         $propertyTaxes->interest = $interest;
+        $propertyTaxes->status = $status;
 
         $propertyTaxes->save();
         return response()->json(['status' => 'success','taxe_id' => $taxeId]);
@@ -265,6 +284,7 @@ class PropertyTaxesController extends Controller
             $type = 'user';
         }
         $propertyTaxes = PropertyTaxes::find($id_taxes);
+//        dd($propertyTaxes);
 
 
 //        dd($propertyTaxes); die();
@@ -298,7 +318,8 @@ class PropertyTaxesController extends Controller
             'property' => $property
         ]);
 
-//        return $pdf->stream();
+        return $pdf->stream();
+        die();
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Inmuebles Urbanos'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);

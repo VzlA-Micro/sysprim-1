@@ -6,7 +6,7 @@ use App\Company;
 use App\Notification;
 use Illuminate\Support\Carbon;
 use App\Payments;
-
+use App\Prologue;
 
 class TaxesMonth{
     static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");

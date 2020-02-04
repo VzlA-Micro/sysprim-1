@@ -13,7 +13,7 @@
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{route('home.ticket-office') }}" class="btn-app white indigo-text text-darken-2">
                     <i class="icon-personal_video"></i>
-                    <span class="truncate">Taquilla Empresas</span>
+                    <span class="truncate">Taquilla Actividad Económica</span>
                 </a>
             </div>
             @endcan

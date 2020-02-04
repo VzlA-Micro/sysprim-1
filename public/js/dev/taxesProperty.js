@@ -1,9 +1,12 @@
 $('document').ready(function () {
+
+    var url = localStorage.getItem('url');
+
     var descuento = false;
     var fraccion = false;
     var btnDiscount = $('#descuento');
     var btnFractional = $('#fraccionado');
-    var url = "http://sysprim.com.devel/";
+
     var total = $('#total').val();
     $('#fraccionado').on('click', function () {
         if (descuento === false && fraccion === false) {
@@ -63,6 +66,7 @@ $('document').ready(function () {
         var interest = $('#interest').val();
         var alicuota = $('#alicuota').val();
         var amount = $('#amount').val();
+        var status = $('#status').val();
         console.log(amount, property_id);
         e.preventDefault();
         $.ajax({
@@ -75,7 +79,8 @@ $('document').ready(function () {
                 recharge: recharge,
                 interest: interest,
                 alicuota: alicuota,
-                amount: amount
+                amount: amount,
+                status: status
             },
             url: url + 'properties/taxes/store',
             beforeSend: function () {

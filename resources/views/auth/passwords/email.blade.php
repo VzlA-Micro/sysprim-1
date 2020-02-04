@@ -9,19 +9,22 @@
             </div>
             @endif
             <form method="post" action="{{ route('password.email') }}" class="col s12 m8 offset-m2">
-                <div class="card bg-light-opacity-8">
+                <div class="card bg-light-opacity-8" style="margin-top:40px">
                     <div class="card-header center-align">
-                        <h5>Resetear Contraseña</h5>
+                        <h5>Reestablecer Contraseña</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12">
-                            <label for="email">{{ __('E-Mail') }}</label>
+                            <i class="icon-contact_mail prefix"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
+                            <label for="email">{{ __('E-Mail') }}</label>
                         </div>
                     </div>
                     <div class="card-action center-align">
-                        <button type="submit" class="btn blue waves-effect waves-light">{{ __('Enviar Código para reestablecer Contraseña') }}</button>
+                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">{{ __('Enviar Código para reestablecer Contraseña') }}
+                        <i class="icon-send right"></i>
+                        </button>
                     </div>
                 </div>
             </form>

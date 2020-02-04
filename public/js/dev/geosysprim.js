@@ -1,5 +1,5 @@
 //var url = "https://sysprim.com/";
-var url = "https://sysprim.com/";
+var url = localStorage.getItem('url');
 
 
 

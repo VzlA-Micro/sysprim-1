@@ -1,8 +1,7 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
     var user = $('#user').val();
+    var url = localStorage.getItem('url');
 
-    // var url = "https://sysprim.com/";
 
 
 
@@ -175,6 +174,7 @@ $('document').ready(function () {
            $('#content').html('');
        }
     });
+>>>>>>> 4e561e211942ae55d03cb437ad3eec17ce9648b8
 
 
     $('#verification').on('submit', function (e) {
@@ -223,6 +223,8 @@ $('document').ready(function () {
 
 
     $('#property').on('submit', function (e) {
+        var type = $('#type').val();
+        var id = $('#id').val(); // Id de la compañia
         e.preventDefault();
         $.ajax({
             url: url + "properties/save",
@@ -244,7 +246,12 @@ $('document').ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url + "properties/my-properties";
+                    if(type == 'company') {
+                        window.location.href = url + "properties/company/my-properties/" + id;
+                    }
+                    else {
+                        window.location.href = url + "properties/my-properties";
+                    }
                 });
                 ;
 

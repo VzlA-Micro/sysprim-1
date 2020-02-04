@@ -1,5 +1,5 @@
 $('documents').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
     $('#verifyPaymentsBank').on('submit',function (e) {
         e.preventDefault();
             $.ajax({

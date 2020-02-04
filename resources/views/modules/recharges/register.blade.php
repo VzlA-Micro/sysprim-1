@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" class="breadcrumb">Gestionar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" class="breadcrumb">Registrar Recargo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}">Gestionar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}">Registrar Recargo</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
