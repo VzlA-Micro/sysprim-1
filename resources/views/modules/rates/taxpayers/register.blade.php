@@ -66,7 +66,7 @@
                             <div class="input-field col s12 m12">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion"
-                                          class="materialize-textarea rate" required></textarea>
+                                          class="materialize-textarea rate" required maxlength="200"></textarea>
                                 <label for="address">Dirección</label>
                             </div>
 

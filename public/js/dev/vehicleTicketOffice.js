@@ -220,7 +220,7 @@ $('document').ready(function () {
         });
     });
 
-    $('#license_plate').blur(function () {
+    $('#license_plate').change(function () {
         var license = $(this).val();
         var id = $('#id').val();
         console.log(license);
@@ -269,7 +269,7 @@ $('document').ready(function () {
         });
     });
 
-    $('#bodySerial').blur(function () {
+    $('#bodySerial').change(function () {
         var bodySerial = $(this).val();
         var id = $('#id').val();
         console.log(bodySerial);
@@ -323,7 +323,7 @@ $('document').ready(function () {
         });
     });
 
-    $('#serialEngine').blur(function () {
+    $('#serialEngine').change(function () {
         var serialEngine = $(this).val();
         var id = $('#id').val();
         $.ajax({
@@ -506,7 +506,7 @@ $('document').ready(function () {
 
     });
 
-    $('#licensePlate').blur(function () {
+    $('#licensePlate').change(function () {
         var license = $(this).val();
         $.ajax({
             type: "get",
@@ -574,9 +574,9 @@ $('document').ready(function () {
                     }).then(function (options) {
 
                         if (options) {
-                            period = 1;
+                            period = 'true';
                         } else {
-                            period = 0;
+                            period = 'false';
                         }
 
                         $.ajax({

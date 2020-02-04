@@ -41,6 +41,27 @@ class VehicleController extends Controller
         $brands = Brand::all();
         $type = VehicleType::all();
 
+
+        $vehicleCompa = explode('-', $register);
+
+
+        if ($vehicleCompa[0] == "COMPANY") {
+            return view('modules.vehicles.register', array(
+                'brand' => $brands,
+                'model' => $models,
+                'type' => $type,
+                'idCompany' => $vehicleCompa[1]
+            ));
+        }
+
+        if ($register == 0) {
+
+            return view('modules.vehicles.registerr', array(
+                'brand' => $brands,
+                'model' => $models,
+                'type' => $type
+            ));
+        }
         if (!$register) {
 
         } else {
@@ -51,13 +72,7 @@ class VehicleController extends Controller
             ));
         }
 
-        if ($register == 0) {
-            return view('modules.vehicles.register', array(
-                'brand' => $brands,
-                'model' => $models,
-                'type' => $type
-            ));
-        }
+
     }
 
     /**
@@ -69,12 +84,116 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         $vehicle = new Vehicle();
-        $vehicle->license_plate = $request->input('license_plate');
+
+        $vehicle->license_plate = strtoupper($request->input('license_plate'));
         $vehicle->color = $request->input('color');
-        $vehicle->body_serial = $request->input('bodySerial');
-        $vehicle->serial_engine = $request->input('serialEngine');
-        $vehicle->type_vehicle_id = $request->input('type');
+        $bodySerial = strtoupper($request->input('bodySerial'));
+
+        $vehicle->serial_engine = strtoupper($request->input('serialEngine'));
+        $vehicle->type_vehicle_id = $request->input('typeV');
         $vehicle->status = 'enabled';
+
+
+        $idCompany = $request->input('idCompany');
+
+        if (!empty($request->input('brand-n') && $request->input('model-n'))) {
+
+            $brandVehicles = new Brand();
+            $modelsVehicle = new ModelsVehicle();
+
+            $models = strtoupper($request->input('model-n'));
+            $brand = strtoupper($request->input('brand-n'));
+            $otherBrand = Brand::where('name', $brand)->exists();
+
+            if ($otherBrand) {
+
+            } else {
+                $brandVehicles->name = $brand;
+                $brandVehicles->save();
+
+                $modelsVehicle->name = $models;
+                $modelsVehicle->brand_id = $brandVehicles->id;
+                $modelsVehicle->save();
+
+                $vehicle->model_id = $modelsVehicle->id;
+            }
+
+        } else {
+            $vehicle->model_id = $request->input('model');
+
+        }
+
+        //$vehicle->model_id = $request->input('model');
+        $vehicle->year = $request->input('year');
+        $image = $request->file('image');
+
+        if ($image) {
+            $image_path_name = time() . $image->getClientOriginalName();
+            Storage::disk('vehicles')->put($image_path_name, File::get($image));
+            $vehicle->image = $image_path_name;
+        } else {
+            $vehicle->image = null;
+        }
+
+        $vehicle->body_serial = $bodySerial;
+
+        $vehicle->save();
+
+        $owner_id = $request->input('idUser');
+
+        $status = $request->input('status');
+        $userVehicle = new UserVehicle();
+
+        if ($status == "propietario") {
+            if (isset($idCompany)) {
+                $userVehicle->user_id = \Auth::user()->id;
+                $userVehicle->vehicle_id = $vehicle->id;
+                $userVehicle->person_id = \Auth::user()->id;
+                $userVehicle->company_id = $idCompany;
+                $userVehicle->status_user_vehicle = $request->input('status');
+            } else {
+                $userVehicle->user_id = \Auth::user()->id;
+                $userVehicle->vehicle_id = $vehicle->id;
+                $userVehicle->person_id = \Auth::user()->id;
+                $userVehicle->company_id = null;
+                $userVehicle->status_user_vehicle = $request->input('status');
+            }
+
+        } else {
+            $userVehicle->user_id = \Auth::user()->id;
+            $userVehicle->vehicle_id = $vehicle->id;
+            $userVehicle->person_id = $owner_id;
+            $userVehicle->company_id = null;
+            $userVehicle->status_user_vehicle = $request->input('status');
+
+        }
+
+        $userVehicle->save();
+
+        if ($vehicle->save() && $userVehicle->save()) {
+            $response = ['status' => 'success'];
+        } else {
+            $response = ['status' => 'fail'];
+        }
+
+        return response()->json($response);
+    }
+
+    /*public function store(Request $request)
+    {
+
+        $license_plate = strtoupper($request->input('license_plate'));
+        $color = $request->input('color');
+        $body_serial = $request->input('bodySerial');
+        $serial_engine = $request->input('serialEngine');
+        $type_vehicle_id = (int)$request->input('typeV');
+        $status = 'enabled';
+        $personId=(int)$request->input('idUser');
+        $image = $request->file('image');
+        $year=(int)$request->input('year');
+
+        $vehicle= new Vehicle();
+
         if (!empty($request->input('brand-n') && $request->input('model-n'))) {
 
             $brandVehicles = new Brand();
@@ -96,18 +215,21 @@ class VehicleController extends Controller
                 $modelsVehicle->save();
 
                 $vehicle->model_id = $modelsVehicle->id;
+
             }
 
         } else {
-            $models = $request->input('models');
-            $brand = $request->input('brand');
-            $vehicle->model_id = $request->input('model');
+            $vehicle->model_id =intval($request->input('model'));
         }
 
+        $vehicle->license_plate = $license_plate;
+        $vehicle->color = $color;
+        $vehicle->body_serial = $body_serial;
+        $vehicle->serial_engine = $serial_engine;
+        $vehicle->type_vehicle_id = $type_vehicle_id;
+        $vehicle->status = $status;
 
-        //$vehicle->model_id = $request->input('model');
-        $vehicle->year = $request->input('year');
-        $image = $request->file('image');
+        $vehicle->year = $year;
 
 
         if ($image) {
@@ -117,17 +239,46 @@ class VehicleController extends Controller
         } else {
             $vehicle->image = null;
         }
+
         $vehicle->save();
+        if ($vehicle->save()){
+            $vRegister=true;
+        }else{
+            $vRegister=false;
+        }
+
 
         $userVehicle = new UserVehicle();
 
-        $userVehicle->user_id = \Auth::user()->id;
-        $userVehicle->vehicle_id = $vehicle->id;
-        $userVehicle->status_user_vehicle = $request->input('status');
-        $userVehicle->save();
+        if ($status=="propietario") {
+            $userVehicle->user_id = \Auth::user()->id;
+            $userVehicle->vehicle_id = $vehicle->id;
+            $userVehicle->person_id=\Auth::user()->id;
+            $userVehicle->company_id=null;
+            $userVehicle->status_user_vehicle = $request->input('status');
+        } else {
+            $userVehicle->user_id = \Auth::user()->id;
+            $userVehicle->vehicle_id = $vehicle->id;
+            $userVehicle->person_id=$personId;
+            $userVehicle->company_id=null;
+            $userVehicle->status_user_vehicle = $request->input('status');
+        }
 
-        return response()->json(true);
-    }
+        if ($userVehicle->save()){
+            $uvRegister=true;
+        }else{
+            $uvRegister=false;
+        }
+
+        if ($vRegister && $uvRegister){
+            $response=['status'=>'success','message'=>'Has registrado el vehículo Con Exito'];
+        }else{
+            $response=['status'=>'fail'];
+        }
+
+
+       return response()->json($response);
+    }/*
 
     /**
      * Display the specified resource.
@@ -137,14 +288,11 @@ class VehicleController extends Controller
      */
     public function show()
     {
-
         $vehicle = \Auth::user()->vehicles()->get();
-
 
         return view('modules.vehicles.menu', array(
             'show' => $vehicle
         ));
-
     }
 
     /**
@@ -155,12 +303,20 @@ class VehicleController extends Controller
      */
     public function edit($id)
     {
-        $vehicle = Vehicle::findOrFail($id);
-        if (session()->has('vehicle')) {
-            session()->forget(['vehicle']);
-            session()->put('vehicle', $vehicle->id);
+        $value = explode('-', $id);
+        $vehicle = Vehicle::where('id', $value[0])->with('company')->get();
+
+
+        if ($value[1]) {
+            $response = ['vehicle' => $vehicle, 'status' => 'company'];
         } else {
-            session()->put('vehicle', $vehicle->id);
+            $response = ['vehicle' => $vehicle, 'status' => 'vehicle'];
+            if (session()->has('vehicle')) {
+                session()->forget(['vehicle']);
+                session()->put('vehicle', $vehicle[0]->id);
+            } else {
+                session()->put('vehicle', $vehicle[0]->id);
+            }
         }
 
 
@@ -335,18 +491,18 @@ class VehicleController extends Controller
         //var_dump($period);
         $trimester = Trimester::verifyTrimester();
         //si es TRUE es trimestral
-        if ($period==1) {
+        if ($period == 1) {
             $trimestre = $trimester['trimesterBegin'] . " - " . $trimester['trimesterEnd'];
-            $response=array(
-                "trimestre"=>$trimestre,
-                "status"=>"trimestre"
+            $response = array(
+                "trimestre" => $trimestre,
+                "status" => "trimestre"
             );
         } else {
             //ES FALSE POR LO TANTO ES ANUAL
-            $year = $trimester['current']->format('m-Y'). " - " ."12-". $trimester['current']->format('Y');
-            $response=array(
-             "year"=>$year,
-             "status"=>"year"
+            $year = $trimester['current']->format('m-Y') . " - " . "12-" . $trimester['current']->format('Y');
+            $response = array(
+                "year" => $year,
+                "status" => "year"
             );
         }
 
@@ -355,7 +511,17 @@ class VehicleController extends Controller
 
     public function manage($id)
     {
-        return view('modules.vehicles.manage',['id'=>$id]);
+        return view('modules.vehicles.manage', ['id' => $id]);
+    }
+
+    public function vehicleCompanyRead($idCompany)
+    {
+        $companyVehicle = Company::where('id', $idCompany)->with('vehicles')->get();
+        session('company', $companyVehicle[0]->name);
+        return view('modules.vehicles.menu', array(
+            'show' => $companyVehicle[0]->vehicles,
+            'company' => $companyVehicle[0]
+        ));
     }
 
 }

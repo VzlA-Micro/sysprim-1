@@ -24,25 +24,25 @@
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="since_date" id="since_date" class="datepicker" required>
-                            <label for="opening_date">Fecha de Inicio</label>
+                            <label for="since_date">Fecha de Inicio</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="to_date" id="to_date" class="datepicker" required>
-                            <label for="opening_date">Fecha de Fin</label>
+                            <label for="to_date">Fecha de Fin</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>   
-                            <input type="number" name="valueUndTributo" id="valueUndTributo" required>
+                            <input type="text" name="valueUndTributo" id="valueUndTributo" required class="validate number-only only-number-positive " maxlength="5">
                             <label for="valueUndTributo">Valor de unidad tributaria</label>
                         </div>
                     </div>
                     <div class="card-action center-align">
                         <button type="submit" class="btn btn-rounded btn-large waves-effect waves-light peach">
                             <i class="icon-send right"></i>
-                            Register
+                            Registrar
                         </button>
                     </div>
                 </form>

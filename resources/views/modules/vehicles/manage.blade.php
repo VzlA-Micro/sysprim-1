@@ -16,13 +16,13 @@
             </div>
 
             <div class="col s12 m4 animated bounceIn">
-                @if(\Carbon\Carbon::now()->format('m')=='01')
+                @if(Carbon\Carbon::now()->format('m')==='01')
                     <a href="#mode" class="modal-trigger btn-app white green-text">
                         <i class="icon-payment"></i>
                         <span class="truncate">Mis Declaraciones</span>
                     </a>
                 @else
-                    <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
+                    <a href="{{url('/taxes/vehicles/'.$id."-false")}}"
                        class="btn-app white green-text">
                         <i class="icon-payment"></i>
                         <span class="truncate">Mis Declaraciones</span>
@@ -48,9 +48,15 @@
                         <p>Elige la forma en la realizara su pago de Vehiculo</p>
                     </div>
                     <div class="modal-footer">
+<<<<<<< HEAD
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
                            class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".true])}}"
+=======
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".'false'])}}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".'true'])}}"
+>>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
                            class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
                     </div>
                 </div>

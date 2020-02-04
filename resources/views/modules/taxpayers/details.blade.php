@@ -19,9 +19,12 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 <form action="#" method="post" class="card" id="update">
+
                     <div class="card-header center-align">
                         <h5>Detalles del Usuario Web</h5>
                     </div>
+
+
                     <div class="card-content row">
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $user->id }}">
@@ -51,21 +54,28 @@
                             <label for="surname">Apellido</label>
                         </div>
 
-                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                             data-tooltip="Solo puede escribir números">
-                            <i class="icon-phone_android prefix tooltipped" data-position="left"
-                               data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
-                            <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="" pattern="[0-9+]+"
-                                   title="Solo puede escribir números." placeholder="Ej. +580001234567" maxlength="16"
-                                   minlength="7" value="{{ $user->phone }}" required disabled>
+                        <div class="input-field col s6 m3">
+                            <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
+                            <select name="country_code" id="country_code_company" required>
+                                <option value="null" selected disabled>...</option>
+                                <option value="+58412" @if ($user->operator=='+58412'){{"selected"}}@endif >(412)</option>
+                                <option value="+58414" @if ($user->operator=='+58414'){{"selected"}}@endif>(414)</option>
+                                <option value="+58416" @if ($user->operator=='+58416'){{"selected"}}@endif>(416)</option>
+                                <option value="+58424" @if ($user->operator=='+58424'){{"selected"}}@endif>(424)</option>
+                                <option value="+58426" @if ($user->operator=='+58426'){{"selected"}}@endif>(426)</option>
+                                <option value="+58251" @if ($user->operator=='+58251'){{"selected"}}@endif>(251)</option>
+                            </select>
+                            <label for="country_code_user" >Operadora</label>
                         </div>
-                        <div class="input-field col s12">
+                        <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
+                            <label for="phone_user">Teléfono</label>
+                            <input id="phone_user" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
+                        </div>                        <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom"
                                data-tooltip="Ej: correo@mail.com"></i>
-                            <input id="email" type="email" name="email" class="validate" value="{{ $user->email }}"
+                            <input id="email_edit" type="email" name="email" class="validate" value="{{ $user->email }}"
                                    disabled required>
-                            <label for="email">E-mail</label>
+                            <label for="email_edit">E-mail</label>
                         </div>
 
                         <div class="input-field col s6">
@@ -126,7 +136,7 @@
 
 
 
-                            <a href="#">
+                            <a href="{{route('taxpayers.details.vehicle',['id'=>$user->id])}}">
                                 <div class="col s12 m4">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon green-gradient white-text">
@@ -154,7 +164,7 @@
                                         <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light"
                                            id="btn-reset-password">
                                             <i class="icon-send right"></i>
-                                            Resetear Contraseña
+                                            Restablecer Contraseña
                                         </a>
                                     </div>
                                 @endcan
@@ -167,8 +177,8 @@
                                     <button type="submit"
                                             class="btn btn-rounded btn-large peach waves-effect waves-light"
                                             style="display: none" id="btn-update">
-                                        <i class="icon-update right"></i>
-                                        Actualizar
+                                        <i class="icon-save right"></i>
+                                        Guardar
                                     </button>
                                 </div>
                             </div>

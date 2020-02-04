@@ -57,6 +57,13 @@
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
+
+                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com">
+                            <i class="icon-mail_outline prefix"></i>
+                            <input id="email-confirm" type="email" name="email-confirm" class="validate" value="" required>
+                            <label for="email-confirm">Confirmar E-mail</label>
+                        </div>
+
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234">
                             <i class="icon-lock prefix"></i>
                             <input id="password" type="password" name="password" class="validate" pattern='[A-Za-z0-9]+{5,20}' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>

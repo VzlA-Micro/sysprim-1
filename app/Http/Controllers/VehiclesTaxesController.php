@@ -25,110 +25,139 @@ use App\Taxe;
 class VehiclesTaxesController extends Controller
 {
     public function create($id)
-    { $trimester = Trimester::verifyTrimester();
+    {
+        $array = explode('-', $id);
+        $idVehicle = $array[0];
+        $optionPayment=null;
+        if (isset($array[1])) {
+            if ($array[1]=='false'||$array[1]=='true'){
+                if ($array[1]=='false'){
+                    $optionPayment = false;
+                }else{
 
-        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
-            ->where('status', 'process')->get();
+                    $optionPayment = true;
+                }
+            }
+        }
 
-        $vehicleTaxesTem = VehiclesTaxe::where('vehicle_id', $id)
-            ->where('status', 'process')->get();
+        $trimester = Trimester::verifyTrimester();
 
-        if (!Empty($vehicleTaxe[0])) {
-            return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
+        $date = Carbon::now();
+
+        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $idVehicle)->get();
+
+        if ($vehicleTaxe->isEmpty()) {
+
+            $this->paymentsDeclaration($idVehicle,$optionPayment);
+
         } else {
 
-            if (!Empty($vehicleTaxesTem[0])) {
-                DeclarationVehicle::verify($id, $temporal = true);
-            }
-
-            $declaration = DeclarationVehicle::Declaration($id);
-
-            var_dump($declaration);
-            $type=null;
-
-            $vehicle = Vehicle::where('id', $id)->get();
-
-            $grossTaxes = 0;
-            $total = number_format($declaration['total'], 2, ',', '.');
-            $totalAux = $declaration['total'];
-            $paymentFractional = 0;
-            $valueDiscount = 0;
-            if ($declaration['valueMora'] == 0) {
-                $valueMora = 0;
+            $taxes = Taxe::where('id', $vehicleTaxe[0]->taxe_id)->get();
+            if ($taxes->isEmpty()) {
+                $this->paymentsDeclaration($idVehicle,$optionPayment);
             } else {
-                $valueMora = number_format($declaration['dayMora'], 2, ',', '.');
-            }
+                if ($taxes[0]->status !== 'cancel') {
 
-            if ($declaration['optionPayment']) {
-                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' .'12/'.$trimester['monthEnd']->format('Y');
-                $total = number_format($declaration['total'], 2, ',', '.');
-                $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
-                $rateYear = $declaration['rateYear'];
-                $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
-                $previousDebt = $declaration['previousDebt'];
-                $recharge = 0;
-                $period_fiscal_begin=$trimester['monthBegin']->format('Y-m-d');
-                $period_fiscal_end=$trimester['monthEnd']->format('Y').'-12-01';
-                $type="Anual";
+                    if ($taxes[0]->status == 'process' && $taxes[0]->created_at->format('Y-d-m') == $date->format('Y-d-m') || $taxes[0]->status == 'verified' || $taxes[0]->status == 'verified-sysprim') {
+                        return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
+                    }else {
 
-            } else {
-                $period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
-                $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
-                $grossTaxes = $paymentFractional;
-                $rateYear = $declaration['rateYear'];
-                $period_fiscal_begin=$trimester['monthBegin']->format('Y-m-d');
-                $period_fiscal_end=$trimester['monthEnd']->format('Y-m-d');
-                $type="Trimestral";
-                if (isset($declaration['recharge'])) {
-                    $recharge = number_format($declaration['recharge'], 2, ',', '.');
-                } else {
-                    $recharge = 0;
-                }
-                if (isset($declaration['previousDebt'])) {
-                    if ($declaration['previousDebt'] !== 0) {
+                        if (!$taxes->isEmpty()) {
+                            DeclarationVehicle::verify($idVehicle, $temporal = true);
+                        }
 
-                        $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                        $declaration = DeclarationVehicle::Declaration($idVehicle,$optionPayment);
+
+                        $type = null;
+
+                        $vehicle = Vehicle::where('id', $idVehicle)->get();
+
+                        $grossTaxes = 0;
+                        $total = number_format($declaration['total'], 2, ',', '.');
+                        $totalAux = $declaration['total'];
+                        $paymentFractional = 0;
+                        $valueDiscount = 0;
+                        if ($declaration['valueMora'] == 0) {
+                            $valueMora = 0;
+                        } else {
+                            $valueMora = number_format($declaration['valueMora'], 2, ',', '.');
+                        }
+
+                        if ($declaration['optionPayment']) {
+                            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . '12/' . $trimester['monthEnd']->format('Y');
+                            $total = number_format($declaration['total'], 2, ',', '.');
+                            $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
+                            $rateYear = $declaration['rateYear'];
+                            $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+                            $previousDebt = $declaration['previousDebt'];
+                            $recharge = 0;
+                            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+                            $period_fiscal_end = $trimester['monthEnd']->format('Y') . '-12-01';
+                            $type = "Anual";
+
+                        } else {
+                            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . $trimester['monthEnd']->format('m-Y');
+                            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+                            $grossTaxes = $paymentFractional;
+                            $rateYear = $declaration['rateYear'];
+                            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+                            $period_fiscal_end = $trimester['monthEnd']->format('Y-m-d');
+                            $type = "Trimestral";
+                            if (isset($declaration['recharge'])) {
+                                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+                            } else {
+                                $recharge = 0;
+                            }
+                            if (isset($declaration['previousDebt'])) {
+                                if ($declaration['previousDebt'] !== 0) {
+
+                                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                                }
+                            } else {
+                                $previousDebt = 0;
+                            }
+                        }
+
+                        $taxes = new Taxe();
+                        $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+                        $taxes->fiscal_period = $period_fiscal_begin;
+                        $taxes->fiscal_period_end = $period_fiscal_end;
+                        $taxes->type = $type;
+                        $taxes->save();
+
+
+
+                        $taxesId = $taxes->id;
+
+                        $vehicleTaxes = new VehiclesTaxe();
+                        $vehicleTaxes->vehicle_id = $vehicle[0]->id;
+                        $vehicleTaxes->taxe_id = $taxesId;
+                        $vehicleTaxes->status = 'Temporal';
+                        $vehicleTaxes->type_payments = $declaration['optionPayment'];
+                        $vehicleTaxes->fiscal_credits = 0;
+                        $vehicleTaxes->save();
+
+
+                        return view('modules.taxes.detailsVehicle', array(
+                            'vehicle' => $vehicle,
+                            'taxes' => $taxes,
+                            'grossTaxes' => $grossTaxes,
+                            'paymentFractional' => $paymentFractional,
+                            'period' => $period_fiscal,
+                            'valueDiscount' => $valueDiscount,
+                            'rateYear' => $rateYear,
+                            'recharge' => $recharge,
+                            'previousDebt' => $previousDebt,
+                            'total' => $total,
+                            'vehicleTaxes' => false,
+                            'valueMora' => $valueMora,
+                            'totalAux' => $totalAux
+                        ));
                     }
-                } else {
-                    $previousDebt = 0;
                 }
             }
-
-            $taxes = new Taxe();
-            $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period =$period_fiscal_begin ;
-            $taxes->fiscal_period_end=$period_fiscal_end;
-            $taxes->type=$type;
-            $taxes->save();
-
-            $taxesId = $taxes->id;
-
-            $vehicleTaxes = new VehiclesTaxe();
-            $vehicleTaxes->vehicle_id = $vehicle[0]->id;
-            $vehicleTaxes->taxe_id = $taxesId;
-            $vehicleTaxes->status = 'Temporal';
-            $vehicleTaxes->type_payments = $declaration['optionPayment'];
-            $vehicleTaxes->fiscal_credits = 0;
-            $vehicleTaxes->save();
-
-            //$period_fiscal = $trimester['monthBegin']->format('m-Y'). ' / ' . $trimester['monthEnd']->format('m-Y');
-
-            return view('modules.taxes.detailsVehicle', array(
-                'vehicle' => $vehicle,
-                'taxes' => $taxes,
-                'grossTaxes' => $grossTaxes,
-                'paymentFractional' => $paymentFractional,
-                'period' => $period_fiscal,
-                'valueDiscount' => $valueDiscount,
-                'rateYear' => $rateYear,
-                'recharge' => $recharge,
-                'previousDebt' => $previousDebt,
-                'total' => $total,
-                'vehicleTaxes' => false,
-                'valueMora' => $valueMora,
-                'totalAux' => $totalAux
-            ));
         }
+
     }
 
     public function taxesSave(Request $request)
@@ -193,7 +222,7 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxes->recharge_mora = $rechargeMora_format;
         $vehicleTaxes->base_imponible = $base_format;
         $vehicleTaxes->previous_debt = (float)$previouDebt_format;
-        $vehicleTaxes->discount=$discount_format;
+        $vehicleTaxes->discount = $discount_format;
         $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
@@ -234,9 +263,9 @@ class VehiclesTaxesController extends Controller
         $vehiclesTaxe->status = 'process';
         $vehiclesTaxe->update();
 
-        $vehicleTaxes=$taxes->vehicleTaxes()->get();
+        $vehicleTaxes = $taxes->vehicleTaxes()->get();
         $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
-        $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+        $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
 
         $subject = "PLANILLA DE PAGO";
@@ -245,10 +274,10 @@ class VehiclesTaxesController extends Controller
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt',
             [
                 'taxes' => $taxes,
-                'vehicleTaxes'=>$vehicleTaxes,
-                'vehicle'=>$vehicleFind,
-                'user'=>$user,
-                'diffYear'=>$diffYear,
+                'vehicleTaxes' => $vehicleTaxes,
+                'vehicle' => $vehicleFind,
+                'user' => $user,
+                'diffYear' => $diffYear,
                 'firm' => true
             ]);
 
@@ -269,27 +298,27 @@ class VehiclesTaxesController extends Controller
         return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
     }
 
-    public function downloadPDF($id,$download)
+    public function downloadPDF($id, $download)
     {
-        $taxes=Taxe::find($id);
+        $taxes = Taxe::find($id);
 
-        $vehicleTaxes=$taxes->vehicleTaxes()->get();
+        $vehicleTaxes = $taxes->vehicleTaxes()->get();
         $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
-        $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+        $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
 
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt',
             [
                 'taxes' => $taxes,
-                'vehicleTaxes'=>$vehicleTaxes,
-                'vehicle'=>$vehicleFind,
-                'user'=>$user,
-                'diffYear'=>$diffYear,
+                'vehicleTaxes' => $vehicleTaxes,
+                'vehicle' => $vehicleFind,
+                'user' => $user,
+                'diffYear' => $diffYear,
                 'firm' => true
             ]);
-        if ($download==="true") {
+        if ($download === "true") {
             return $pdf->download('PLANILLA_SOLVENCIA.pdf');
-        }else{
+        } else {
             return $pdf->stream('PLANILLA_SOLVENCIA.pdf');
         }
     }
@@ -315,4 +344,95 @@ class VehiclesTaxesController extends Controller
             }
         }
     }
+
+    public function paymentsDeclaration($id,$optionPayment)
+    {
+        $trimester = Trimester::verifyTrimester();
+
+        $declaration = DeclarationVehicle::Declaration($id,$optionPayment);
+
+        $type = null;
+
+        $vehicle = Vehicle::where('id', $id)->get();
+
+        $grossTaxes = 0;
+        $total = number_format($declaration['total'], 2, ',', '.');
+        $totalAux = $declaration['total'];
+        $paymentFractional = 0;
+        $valueDiscount = 0;
+        if ($declaration['valueMora'] == 0) {
+            $valueMora = 0;
+        } else {
+            $valueMora = number_format($declaration['valueMora'], 2, ',', '.');
+        }
+
+        if ($declaration['optionPayment']) {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . '12/' . $trimester['monthEnd']->format('Y');
+            $total = number_format($declaration['total'], 2, ',', '.');
+            $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
+            $rateYear = $declaration['rateYear'];
+            $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+            $previousDebt = $declaration['previousDebt'];
+            $recharge = 0;
+            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+            $period_fiscal_end = $trimester['monthEnd']->format('Y') . '-12-01';
+            $type = "Anual";
+
+        } else {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . $trimester['monthEnd']->format('m-Y');
+            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            $grossTaxes = $paymentFractional;
+            $rateYear = $declaration['rateYear'];
+            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+            $period_fiscal_end = $trimester['monthEnd']->format('Y-m-d');
+            $type = "Trimestral";
+            if (isset($declaration['recharge'])) {
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            } else {
+                $recharge = 0;
+            }
+            if (isset($declaration['previousDebt'])) {
+                if ($declaration['previousDebt'] !== 0) {
+
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                }
+            } else {
+                $previousDebt = 0;
+            }
+        }
+
+        $taxes = new Taxe();
+        $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxes->fiscal_period = $period_fiscal_begin;
+        $taxes->fiscal_period_end = $period_fiscal_end;
+        $taxes->type = $type;
+        $taxes->save();
+
+        $taxesId = $taxes->id;
+        $vehicleTaxes = new VehiclesTaxe();
+        $vehicleTaxes->vehicle_id = $vehicle[0]->id;
+        $vehicleTaxes->taxe_id = $taxesId;
+        $vehicleTaxes->status = 'Temporal';
+        $vehicleTaxes->type_payments = $declaration['optionPayment'];
+        $vehicleTaxes->fiscal_credits = 0;
+        $vehicleTaxes->save();
+
+        return view('modules.taxes.detailsVehicle', array(
+            'vehicle' => $vehicle,
+            'taxes' => $taxes,
+            'grossTaxes' => $grossTaxes,
+            'paymentFractional' => $paymentFractional,
+            'period' => $period_fiscal,
+            'valueDiscount' => $valueDiscount,
+            'rateYear' => $rateYear,
+            'recharge' => $recharge,
+            'previousDebt' => $previousDebt,
+            'total' => $total,
+            'vehicleTaxes' => false,
+            'valueMora' => $valueMora,
+            'totalAux' => $totalAux
+        ));
+    }
+
 }
+

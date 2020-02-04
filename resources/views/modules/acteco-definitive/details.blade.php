@@ -172,6 +172,8 @@
                         <div class="input-field col s12">
                             <div class="divider"></div>
                         </div>
+
+
                         @endforeach
                         <div class="col l12 s12">
                             <div class="col l6 s12">
@@ -203,11 +205,11 @@
 
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{'0'}}"  readonly>
+                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{$total_interest}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="recargo" class="validate money" value="{{'0'}}"  readonly>
+                                    <input type="text" name="recargo" class="validate money" value="{{$total_recharge}}"  readonly>
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">

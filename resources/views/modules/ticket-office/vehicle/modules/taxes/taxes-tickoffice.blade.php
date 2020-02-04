@@ -12,9 +12,9 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.taxes.getTaxes') }}">Pagar
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.payments') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.taxes.getTaxes') }}">Pagar
                             Planillas</a></li>
                 </ul>
             </div>

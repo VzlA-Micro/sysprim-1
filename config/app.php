@@ -188,6 +188,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\DeclarationPublicityServiceProvider::class,
+        App\Providers\CheckCollectionDayServiceProvider::class,
 
     ],
 
@@ -251,6 +252,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'DeclarationPublicity'=>App\Helpers\DeclarationPublicity::class,
+        'CheckCollectionDay'=>App\Helpers\DeclarationPublicity::class,
 
     ],
 

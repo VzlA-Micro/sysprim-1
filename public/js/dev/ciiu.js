@@ -1,7 +1,37 @@
 $('document').ready(function () {
 
-    // var url = "https://sysprim.com/";
-    var url ="http://sysprim.com.devel/";
+    var url = "http://sysprim.com.devel/";
+
+    $('#alicuota').change(function () {
+        if($(this).val()<1){
+            swal({
+                title: "Información",
+                text: "La alicuota tiene que se mayor o igual 1.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "amber-gradient"
+                },
+            });
+            $(this).val('');
+        }
+
+    });
+
+    $('#mTM').change(function () {
+        if($(this).val()<1){
+            swal({
+                title: "Información",
+                text: "El minimo tributable tiene que se mayor o igual 1.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "amber-gradient"
+                },
+            });
+            $(this).val('');
+        }
+    });
 
 
     $('#ciuu').on('submit',function (e) {
@@ -9,20 +39,20 @@ $('document').ready(function () {
 
         $.ajax({
 
-            url: url+"ciuBranch/save",
-            //cache:false,
-            //contentType:false,
-            //processData:false,
+            url: url+"ciu-branch/save",
+            cache:false,
+            contentType:false,
+            processData:false,
             data:new FormData(this),
-            dataType:json,
             method: "POST",
-
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-                cosole.log(response);
+
+
+                console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "CIIU registrado con exito",
@@ -56,8 +86,22 @@ $('document').ready(function () {
         });
     });
 
+    $('#btn-edit').click(function () {
+        $(this).hide();
+        $('#name').removeAttr('readonly','');
+        $('#code').removeAttr('readonly','');
+        $('#alicuota').removeAttr('readonly','');
+        $('#mTM').removeAttr('readonly','');
+        $('#idGroupCiiu').prop('disabled','');
+        $('select').formSelect();
+        $('#btn-update').show();
+    });
+
+
+
     $('#ciiu-details').on('submit',function (e) {
         e.preventDefault();
+
         $.ajax({
             url: url+"ciu-branch/update",
             cache:false,
@@ -72,8 +116,6 @@ $('document').ready(function () {
             },
             success: function (response) {
 
-
-                console.log(response);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "CIIU actualizaco con éxito.",
@@ -91,7 +133,6 @@ $('document').ready(function () {
 
             },
             error: function (err) {
-                console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
