@@ -2,7 +2,11 @@ $(document).ready(function () {
     //var url = "https://sysprim.com/";
     var url = "http://sysprim.com.devel/";
 
+<<<<<<< HEAD
+    $('#ci').blur(function () {
+=======
     $('#ci').change(function () {
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if ($('#ci').val() !== '' && $('#nationality').val() !== null && $('#company-tab').val() === undefined) {
             CheckCedula();
         } else {
@@ -11,7 +15,10 @@ $(document).ready(function () {
     });
 
     $('#ci').keyup(function () {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if ($('#nationality').val() === null) {
             swal({
                 title: "Información",
@@ -56,6 +63,26 @@ $(document).ready(function () {
 
     function CheckCedula() {
         if ($('#ci').val() !== '') {
+<<<<<<< HEAD
+            var ci = $('#ci').val();
+            var nationality = $('#nationality').val();
+            $.ajax({
+                method: "GET",
+                url: url + "users/verify-ci/" + nationality + ci,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+=======
 
             if ($('#ci').val().length >= 7) {
                 var ci = $('#ci').val();
@@ -101,9 +128,31 @@ $(document).ready(function () {
                             button: {
                                 text: "Entendido",
                                 className: "red-gradient"
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
                             },
                         });
                     }
+<<<<<<< HEAD
+
+                },
+                error: function (err) {
+                    console.log(err);
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+=======
                 });
             }else{
                 swal({
@@ -116,6 +165,7 @@ $(document).ready(function () {
                     },
                 });
             }
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         }
     }
 
@@ -382,7 +432,10 @@ $(document).ready(function () {
     var statusBoton = false;
     $('#userUpdate').on('submit', function (e) {
         e.preventDefault();
+<<<<<<< HEAD
+=======
         var id=$('#id').val();
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if (statusBoton == true) {
             $.ajax({
                 url: url + "users/update",
@@ -407,7 +460,11 @@ $(document).ready(function () {
                             className: "green-gradient"
                         },
                     }).then(function (accept) {
+<<<<<<< HEAD
+                        window.location.href = url + "users/manage";
+=======
                         window.location.href = url + "users/details/"+ id;
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
                     });
 
 
@@ -479,7 +536,6 @@ $(document).ready(function () {
             confirm='HABILITAR';
             past='habilitada';
         }
-
 
         swal({
             icon: "info",

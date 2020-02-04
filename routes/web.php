@@ -353,6 +353,7 @@ Route::middleware(['auth'])->group(/**
             //     'as'=>'dashboard',
             //     'uses'=>'DashboardController@dashboard'
             // ));
+        Route::get('company/vehicles/{idCompany}','VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
 
             // Nivel 1: Gestionar Contrubuyente, Pagos y Empresas
             Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
@@ -697,6 +698,7 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
                     Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
+                    Route::get('vehicles/manage/{id}','VehicleController@manage')->name('vehicles.manage');
                 });
             });
 

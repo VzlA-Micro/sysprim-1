@@ -95,6 +95,13 @@
                                 <span class="truncate">Declaración/Tasas</span>
                             </a>
                         </div>
+                        <div class="col s12">
+                            <a href="{{ route('company.vehicle.read', ['idCompany' => $company->id]) }}"
+                               class="btn-app white purple-text">
+                                <i class="icon-directions_car"></i>
+                                <span class="truncate">Vehículos</span>
+                            </a>
+                        </div>
 
 
                         <!-- <div class="col s12">

@@ -20,7 +20,6 @@ class TaxesMonth{
 
         $mount_pay=null;
 
-
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
                 if($tax->status!=='cancel'){

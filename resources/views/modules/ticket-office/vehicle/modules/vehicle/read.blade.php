@@ -19,7 +19,7 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Mis Vehículos</h5>
+                        <h5>Vehículos Registrados</h5>
                     </div>
                     <div class="card-content">
                         <table class="centered striped responsive-table" id="vehicle">

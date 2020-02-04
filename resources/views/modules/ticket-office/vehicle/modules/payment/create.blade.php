@@ -169,6 +169,7 @@
                                        readonly>
                                 <label for="total">Total<b> (Bs)</b></label>
                                 <input type="hidden" id="totalAux" name="totalAux" value="">
+                                <input type="hidden" id="taxesId" name="taxesId" value="">
                             </div>
 
                         </div>
