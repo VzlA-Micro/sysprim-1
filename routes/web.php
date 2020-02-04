@@ -293,6 +293,36 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+
+
+
+                Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
+                Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
+                Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
+                Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
+
+
+
+
+
+
+
+
+
+                    Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
+                    Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
+                    Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
+                    Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
+                    Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
+                    Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
+
+
+
+
+
+
+
+
         });
         // GeoSysPRIM
 

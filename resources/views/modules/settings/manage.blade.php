@@ -97,6 +97,24 @@
                     <span class="truncate">Días de Cobro</span>
                 </a>
             </div>
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('alicuota.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-done_all"></i>
+                    <span class="truncate">Alicuota Inmueble</span>
+                </a>
+            </div>
+
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-build"></i>
+                    <span class="truncate">Valores Catastrales de Construcción</span>
+                </a>
+            </div>
+
+
         </div>
     </div>
 @endsection
