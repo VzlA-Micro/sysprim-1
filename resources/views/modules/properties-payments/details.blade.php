@@ -21,6 +21,19 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
+                @if($statusTax == 'process')
+                <div class="card center-align col s12">
+                    <h5>Pago Declarado</h5>
+                    <h1><i class="icon-check green-text"></i></h1>
+                    <p>Ya has declarado tu pago, actualmete se encuentra en proceso.</p>
+                </div>
+                @elseif($statusTax == 'verified')
+                <div class="card center-align col s12">
+                    <h5>Pago Verificado</h5>
+                    <h1><i class="icon-check green-text"></i></h1>
+                    <p>Su pago ha sido verificado éxitosamente.</p>
+                </div>
+                @else
                 <form method="post" action="{{ route('properties.taxes.store') }}" class="card" id="property-taxes">
                     <div class="card-header center-align">
                         <h4>Resumen de Autoliquidación - Inmueble</h4>
@@ -179,6 +192,7 @@
 
                     <div>
                 </form>
+                @endif
             </div>
         </div>
     </div>
