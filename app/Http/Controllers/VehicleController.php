@@ -493,8 +493,6 @@ class VehicleController extends Controller
 
     public function periodoFiscal($period)
     {
-
-        //var_dump($period);
         $trimester = Trimester::verifyTrimester();
         //si es TRUE es trimestral
         if ($period == 1) {

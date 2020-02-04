@@ -30,14 +30,15 @@ class VehiclesTaxesController extends Controller
         $idVehicle = $array[0];
         $optionPayment=null;
         if (isset($array[1])) {
+
             if ($array[1]=='false'||$array[1]=='true'){
                 if ($array[1]=='false'){
                     $optionPayment = false;
                 }else{
-
                     $optionPayment = true;
                 }
             }
+
         }
 
         $trimester = Trimester::verifyTrimester();
@@ -47,13 +48,9 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $idVehicle)->get();
 
         if ($vehicleTaxe->isEmpty()) {
-
             $this->paymentsDeclaration($idVehicle,$optionPayment);
-
         } else {
-
             $taxes = Taxe::where('id', $vehicleTaxe[0]->taxe_id)->get();
-
 
             if ($taxes->isEmpty()) {
                 $this->paymentsDeclaration($idVehicle,$optionPayment);
@@ -127,8 +124,6 @@ class VehiclesTaxesController extends Controller
                         $taxes->fiscal_period_end = $period_fiscal_end;
                         $taxes->type = $type;
                         $taxes->save();
-
-
 
                         $taxesId = $taxes->id;
 
@@ -297,7 +292,6 @@ class VehiclesTaxesController extends Controller
     public function history($vehicleId)
     {
         $vehicle = Vehicle::find($vehicleId);
-
         return view('modules.vehicles-payments.history', ['taxes' => $vehicle->taxesVehicle()->get()]);
     }
 
@@ -328,8 +322,8 @@ class VehiclesTaxesController extends Controller
 
     public function creditsFiscal(Request $request)
     {
-        $total = $request->input('total');
-        $fiscalCredits = $request->input('creditsFiscal');
+        $total = (float)$request->input('total');
+        $fiscalCredits = (float)$request->input('creditsFiscal');
         $aux = 0;
 
         if ($fiscalCredits >= 0) {
