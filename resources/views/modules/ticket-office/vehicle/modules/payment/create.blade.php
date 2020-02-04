@@ -11,10 +11,12 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
-                            Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Generar Planilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla
+                            Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.vehicle.payments')}}">Gestionar Pagos</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Generar Planilla</a></li>
                 </ul>
             </div>
 

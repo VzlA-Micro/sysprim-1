@@ -30,15 +30,14 @@ class VehiclesTaxesController extends Controller
         $idVehicle = $array[0];
         $optionPayment=null;
         if (isset($array[1])) {
-
             if ($array[1]=='false'||$array[1]=='true'){
                 if ($array[1]=='false'){
                     $optionPayment = false;
                 }else{
+
                     $optionPayment = true;
                 }
             }
-
         }
 
         $trimester = Trimester::verifyTrimester();
@@ -48,8 +47,11 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $idVehicle)->get();
 
         if ($vehicleTaxe->isEmpty()) {
+
             $this->paymentsDeclaration($idVehicle,$optionPayment);
+
         } else {
+
             $taxes = Taxe::where('id', $vehicleTaxe[0]->taxe_id)->get();
 
             if ($taxes->isEmpty()) {
@@ -59,6 +61,7 @@ class VehiclesTaxesController extends Controller
                 if ($taxes[0]->status !== 'cancel') {
 
                     if ($taxes[0]->status == 'process' && $taxes[0]->created_at->format('Y-d-m') == $date->format('Y-d-m') || $taxes[0]->status == 'verified' || $taxes[0]->status == 'verified-sysprim') {
+                        dd($taxes);
                         return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
                     }else {
 

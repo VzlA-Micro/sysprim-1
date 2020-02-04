@@ -306,28 +306,22 @@ class VehicleController extends Controller
         $value = explode('-', $id);
         $idVehicle = $value[0];
         $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
-        if (isset($value[1])){
+        if (isset($value[1])) {
             $valor = $value[1];
-        }else{
-            $valor=false;
+        } else {
+            $valor = false;
         }
 
-
         if ($valor) {
-            $response = ['vehicle' => $vehicle, 'status' => 'company'];
+            $response = 'company';
         } else {
-            $response = ['vehicle' => $vehicle, 'status' => 'vehicle'];
-            if (session()->has('vehicle')) {
-                session()->forget(['vehicle']);
-                session()->put('vehicle', $vehicle[0]->id);
-            } else {
-                session()->put('vehicle', $vehicle[0]->id);
-            }
+            $response = 'vehicle';
         }
 
 
         return view('modules.vehicles.details', array(
-            'vehicle' => $vehicle
+            'vehicle' => $vehicle,
+            'status' => $response
         ));
 
     }
@@ -515,7 +509,26 @@ class VehicleController extends Controller
 
     public function manage($id)
     {
-        return view('modules.vehicles.manage', ['id' => $id]);
+        $value = explode('-', $id);
+        $idVehicle = $value[0];
+        if (isset($value[1])) {
+            $idCompany = $value[1];
+        } else {
+            $idCompany = false;
+        }
+        $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
+
+        if ($idCompany) {
+            $response = 'company';
+        } else {
+            $response = 'vehicle';
+        }
+        return view('modules.vehicles.manage', [
+            'id' => $idVehicle,
+            'idCompany' => $idCompany,
+            'status' => $response,
+            'vehicle' => $vehicle
+        ]);
     }
 
     public function vehicleCompanyRead($idCompany)
