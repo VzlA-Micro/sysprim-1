@@ -28,6 +28,7 @@ class PropertyController extends Controller
     {
         $userProperties = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
         $properties = Property::whereIn('id', $userProperties)->get();
+        session()->forget('company');
         return view('modules.properties.manage', ['properties' => $properties]);
     }
 
@@ -320,6 +321,8 @@ class PropertyController extends Controller
         $properties = Property::whereIn('id', $propertiesArray)->get();
 //        dd($properties); die();
         $company = Company::find($company_id);
+        session(['company' => $company]);
+
 //        dd($company); die();
         return view('modules.properties.manage', ['properties' => $properties, 'company' => $company]);
     }

@@ -77,8 +77,11 @@ class PropertyTaxesController extends Controller
 
     public function create($id, $status)
     {
-
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        $actualDate = Carbon::now();
         $declaration = Declaration::VerifyDeclaration($id, $status);
+        $statusTax = '';
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
         //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
@@ -86,6 +89,23 @@ class PropertyTaxesController extends Controller
         //$alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
         $period_fiscal = Carbon::now()->year;
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
+//        $propertyTaxes = PropertyTaxes::find('company_id', $id);
+        $propertyTaxes = Property::find($id);
+        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+        foreach ($taxes as $tax) {
+            if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
+                $statusTax = 'verified';
+            }else if($tax->status === 'temporal'){
+//                $tax->delete();
+                $statusTax = 'new';
+            }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
+                $statusTax = 'process';
+            } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
+                $statusTax = 'process';
+            }else{
+                $statusTax = 'new';
+            }
+        }
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
             $owner_id = $userProperty[0]->company_id;
@@ -102,12 +122,6 @@ class PropertyTaxesController extends Controller
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
-//        dd($person_id); die();
-        /*$baseImponible = number_format($declaration['baseImponible'],2,',','.');
-        $totalGround = number_format($declaration['totalGround'],2,',','.');
-        $totalBuild = number_format($declaration['totalBuild'],2,',','.');
-        $discount = number_format($declaration['porcentaje'],2,',','.');
-        $total = number_format($declaration['total'],2,',','.');*/
         if($status == 'full'){
             $baseImponible = number_format($declaration['baseImponible'],2,',','.');
             $totalGround = number_format($declaration['totalGround'],2,',','.');
@@ -115,21 +129,18 @@ class PropertyTaxesController extends Controller
             $discount = number_format($declaration['porcentaje'],2,',','.');
             $total = number_format($declaration['total'],2,',','.');
         }
-        elseif($status == 'trimestral') {
+        /*elseif($status == 'trimestral') {
             $calculateBaseImponible = $declaration['baseImponible'] / 4;
             $calculateGround = $declaration['totalGround'] / 4;
             $calculateBuild = $declaration['totalBuild'] / 4;
             $calculateDiscount = $declaration['porcentaje'] / 4;
             $calculateTotal = $declaration['total'] / 4;
-            $baseImponible = number_format($calculateBaseImponible,2,',','.');
-            $totalGround = number_format($calculateGround,2,',','.');
-            $totalBuild = number_format($calculateBuild,2,',','.');
-            $discount = number_format($calculateDiscount,2,',','.');
-            $total = number_format($calculateTotal,2,',','.');
-//            dd($discount);
-        }
-//        dd($discount); die();
-
+            $baseImponible = number_format($calculateBaseImponible, 2, ',', '.');
+            $totalGround = number_format($calculateGround, 2, ',', '.');
+            $totalBuild = number_format($calculateBuild, 2, ',', '.');
+            $discount = number_format($calculateDiscount, 2, ',', '.');
+            $total = number_format($calculateTotal, 2, ',', '.');
+        }*/
         $response = array(
             'property' => $property,
             'declaration' => $declaration,
@@ -147,7 +158,8 @@ class PropertyTaxesController extends Controller
             'totalBuild' => $totalBuild,
             'discount' => $discount,
             'total' => $total,
-            'status' => $status
+            'status' => $status,
+            'statusTax' => $statusTax
         ));
     }
 

@@ -10,6 +10,10 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.manage',['id' => $property[0]->id]) }}">Mis Declaraciones</a></li>
