@@ -92,19 +92,24 @@ class PropertyTaxesController extends Controller
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
-        foreach ($taxes as $tax) {
-            if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
-                $statusTax = 'verified';
-            }else if($tax->status === 'temporal'){
+        if(!empty($taxes)) {
+            foreach ($taxes as $tax) {
+                if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
+                    $statusTax = 'verified';
+                }else if($tax->status === 'temporal'){
 //                $tax->delete();
-                $statusTax = 'new';
-            }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
-                $statusTax = 'process';
-            } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
-                $statusTax = 'process';
-            }else{
-                $statusTax = 'new';
+                    $statusTax = 'new';
+                }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
+                    $statusTax = 'process';
+                } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
+                    $statusTax = 'process';
+                }else{
+                    $statusTax = 'new';
+                }
             }
+        }
+        else {
+            $statusTax = 'new';
         }
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
