@@ -53,8 +53,10 @@
                                 <label for="type">Ramo</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <i class="icon-format_list_numbered prefix"></i>
-                                <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only" required   value="{{$rate->cant_tax_unit}}" readonly>
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only only-number-positive" maxlength="5"  value="{{$rate->cant_tax_unit}}" required readonly>
                                 <label for="cant_tax_unit">Cantidad de Unidad Tributarias</label>
                             </div>
 
@@ -90,6 +92,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/data/accessories.js') }}"></script>
     <script src="{{ asset('js/data/rate-module.js') }}"></script>
 @endsection

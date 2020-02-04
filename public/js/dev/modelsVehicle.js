@@ -1,30 +1,27 @@
 
-var url = "https://sysprim.com/";
+var url = localStorage.getItem('url');
 
 var updateType = false;
 
 $('document').ready(function () {
 
-    $('#updateType').on('submit', function (e) {
-        e.preventDefault();
-        if (updateType == false) {
-            //console.log('estoy en el if');
-            $('#name').removeAttr('readonly');
-            $('#year').removeAttr('readonly');
-            //$('#brand').removeAttr('readonly');
-            updateType = true;
+    $('#btn-modify').click(function() {
+        $(this).hide();
+        $('#name').removeAttr('readonly');
+        $('#brand_id').removeAttr('disabled');
+        $('select').formSelect();
             swal({
-                title: "¡Actualizar!",
+                title: "Información",
                 text: "Puedes elegir los campos a modificar",
                 icon: "info",
                 button: "Ok",
             });
-        }
-        //
-        else {
+        $('#btn-update').removeClass('hide');
+    });
 
-            console.log(updateType);
-            console.log('else');
+
+    $('#updateType').on('submit', function (e) {
+        e.preventDefault();
             swal({
                 icon: "info",
                 title: "Actualizar Modelo De Vehiculo",
@@ -58,7 +55,6 @@ $('document').ready(function () {
 
                         beforeSend: function () {
                             $('#name').attr('readonly', 'readonly');
-                            $('#year').attr('readonly', 'readonly');
                             //$('#rate_ut').attr('readonly', 'readonly');
                         },
                         success: function (data) {
@@ -68,6 +64,8 @@ $('document').ready(function () {
                                     text: "Has Actualizado Los datos de modelo del vehicul Con Exito",
                                     icon: "success",
                                     button: "Ok",
+                                }).then(function () {
+                                    location.reload();
                                 });
                             }
                         },
@@ -78,8 +76,71 @@ $('document').ready(function () {
                     updateType = false;
                 }
             });
+    });
+
+
+
+    $('#register').submit(function(e) {
+        e.preventDefault();
+        if($('#brand').val()!==null) {
+
+            var formData = new FormData(this);
+            $.ajax({
+                url: url + "vehicles-models/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (resp) {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Se ha registrado el modelo de vehiculo exitosamente.",
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + "vehicles-models/read";
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }else{
+            swal({
+                title: "Información",
+                text: "Debe selecionar una marca valida para completar el registro.",
+                icon: "info",
+                button: "Ok",
+            });
         }
     });
+
+
+
+
+
+
+
+
 
 
 });

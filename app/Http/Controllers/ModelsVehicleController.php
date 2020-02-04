@@ -49,7 +49,6 @@ class ModelsVehicleController extends Controller
     {
         $models= new ModelsVehicle();
         $models->name= $request->input('models');
-        $models->year= $request->input('year');
         $models->brand_id= $request->input('brand');
         $models->save();
 
@@ -65,7 +64,7 @@ class ModelsVehicleController extends Controller
      */
     public function show()
     {
-        $models= ModelsVehicle::get();
+        $models= ModelsVehicle::orderby('id','desc')->get();
         return view('modules.vehicles_models.read',array(
             'showModels'=>$models
         ));
@@ -80,8 +79,10 @@ class ModelsVehicleController extends Controller
     public function edit($id)
     {
         $models= ModelsVehicle::findOrFail($id);
+        $brand=Brand::all();
         return view('modules.vehicles_models.details',array(
-            'models'=>$models
+            'models'=>$models,
+            'brands'=>$brand
         ));
 
     }
@@ -98,7 +99,7 @@ class ModelsVehicleController extends Controller
         //$id=$request->input('id');
         $models=ModelsVehicle::findOrFail($request->input('id'));
         $models->name= $request->input('name');
-        $models->year= $request->input('year');
+        $models->brand_id= $request->input('brand');
         $models->update();
         $update=true;
         return response()->json(['update'=>$update]);

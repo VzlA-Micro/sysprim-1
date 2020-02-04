@@ -9,8 +9,11 @@
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                         <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
                                 de Pagos</a></li>
                         <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     </ul>
@@ -65,13 +68,15 @@
                         @foreach($ciuTaxes as $ciu)
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code" id="code_{{$ciu->ciu->code}}" class="code" value="{{ $ciu->ciu->code }}"
+                                <input type="text" name="code" id="code_{{$ciu->ciu->code}}" class="code"
+                                       value="{{ $ciu->ciu->code }}"
                                        required readonly>
                                 <label for="code_{{$ciu->ciu->code}}">Código</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-assignment prefix"></i>
-                                <input type="text" name="ciu" id="ciu_{{$ciu->ciu->code}}" value="{{ $ciu->ciu->name }}" required readonly>
+                                <input type="text" name="ciu" id="ciu_{{$ciu->ciu->code}}" value="{{ $ciu->ciu->name }}"
+                                       required readonly>
                                 <label for="ciu_{{$ciu->ciu->code}}">CIU</label>
                             </div>
 
@@ -87,7 +92,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}" class="validate recargo money"
+                                <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}"
+                                       class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
                                 <label for="tasa_{{$ciu->ciu->code}}">Recargo (12%)<b> (Bs)</b></label>
                             </div>
@@ -96,7 +102,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="interest[]" id="interest_{{$ciu->ciu->code}}" class="validate money"
+                                <input type="text" name="interest[]" id="interest_{{$ciu->ciu->code}}"
+                                       class="validate money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
                                 <label for="interest_{{$ciu->ciu->code}}">Interes por mora<b> (Bs)</b></label>
                             </div>
@@ -104,55 +111,58 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="total_ciu[]" id="total_ciu_{{$ciu->ciu->code}}" class="validate total_ciu money"
+                                <input type="text" name="total_ciu[]" id="total_ciu_{{$ciu->ciu->code}}"
+                                       class="validate total_ciu money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu}}" readonly>
                                 <label for="total_ciu_{{$ciu->ciu->code}}">Impuesto Causado por CIU<b> (Bs)</b></label>
                             </div>
 
                             <div class="input-field col s12">
-                                    <div class="divider"></div>
+                                <div class="divider"></div>
                             </div>
 
                         @endforeach
 
 
                         @foreach($taxes->companies as $tax)
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-warning prefix"></i>
+                                    <input type="text" name="day_mora[]" id="day_mora" class="validate"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->day_mora }}"
+                                           readonly>
+                                    <label for="day_mora">Días de Atraso:</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    </i>
 
-                            <div class="input-field col s12 m6">
-                                <i class="icon-warning prefix"></i>
-                                <input type="text" name="day_mora[]" id="day_mora" class="validate"
-                                       pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->day_mora }}"
-                                       readonly>
-                                <label for="day_mora">Días de Atraso:</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>
-
-                                <input type="text" name="deductions[]" id="deductions" class="validate money"
-                                       pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->deductions }}"
-                                       readonly>
-                                <label for="deductions">Deducciones</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>
-                                <input type="text" name="withholding[]" id="withholdings" class="validate money"
-                                       pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->withholding }}"
-                                       readonly>
-                                <label for="withholdings">Retenciones</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
-                                </i>
-                                <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money"
-                                       pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->fiscal_credits }}"
-                                       readonly>
-                                <label for="fiscal_credits">Creditos Fiscales</label>
-                            </div>
+                                    <input type="text" name="deductions[]" id="deductions" class="validate money"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->deductions }}"
+                                           readonly>
+                                    <label for="deductions">Deducciones</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    </i>
+                                    <input type="text" name="withholding[]" id="withholdings" class="validate money"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
+                                           value="{{ $tax->pivot->withholding }}"
+                                           readonly>
+                                    <label for="withholdings">Retenciones</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <i class="prefix">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    </i>
+                                    <input type="text" name="fiscal_credits[]" id="fiscal_credits"
+                                           class="validate money"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
+                                           value="{{ $tax->pivot->fiscal_credits }}"
+                                           readonly>
+                                    <label for="fiscal_credits">Creditos Fiscales</label>
+                                </div>
 
                         @endforeach
 

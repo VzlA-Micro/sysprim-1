@@ -46,7 +46,7 @@ class BrandVehicleController extends Controller
     public function store(Request $request)
     {
         $brand= new Brand();
-        $brand->name= $request->input('name');
+        $brand->name= strtoupper($request->input('name'));
         $brand->save();
 
         return redirect()->route('vehicles.brand.read');
@@ -94,6 +94,7 @@ class BrandVehicleController extends Controller
         //$id=$request->input('id');
         $brand=Brand::findOrFail($request->input('id'));
         $brand->name= $request->input('name');
+        $brand->brand_id= $request->input('brand_id');
         $brand->update();
         $update=true;
         return response()->json(['update'=>$update]);

@@ -9,18 +9,18 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" class="breadcrumb">Gestionar Modelos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}">Gestionar Modelos De Vehículos</a></li>
                 </ul>
             </div>
             @can('Registrar Modelo de Vehiculo')
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.models.register') }}" class="btn-app white green-text">
-                    <i class="icon-add_circle"></i>
-                    <span class="truncate">Registrar Modelos De Vehículo</span>
-                </a>
-            </div>
+                    <a href="{{ route('vehicles.models.register') }}" class="btn-app white green-text">
+                        <i class="icon-add_circle"></i>
+                        <span class="truncate">Registrar Modelos De Vehículo</span>
+                    </a>
+                </div>
             @endcan
             @can('Consultar Modelos de Vehiculos')
             <div class="col s12 m4 animated bounceIn">

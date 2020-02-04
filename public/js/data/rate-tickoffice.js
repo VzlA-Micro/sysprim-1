@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
     var user=$('#user').val();
 
 
@@ -138,6 +138,7 @@ $('document').ready(function () {
         var id=$('#id').val();
 
 
+        $('#rates').DataTable().destroy();
 
         $("input[type=checkbox]:checked").each(function(){
             rate_id.push($(this).val());

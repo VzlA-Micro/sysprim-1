@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.register') }}" class="breadcrumb">Gestionar Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.register') }}">Gestionar Marcas De Vehiculos</a></li>
                 </ul>
             </div>
             @can('Registrar Marca de Vehiculo')

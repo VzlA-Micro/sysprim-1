@@ -1,12 +1,7 @@
 $(document).ready(function () {
-    //var url = "https://sysprim.com/";
-    var url = "http://sysprim.com.devel/";
+    var url = localStorage.getItem('url');
 
-<<<<<<< HEAD
-    $('#ci').blur(function () {
-=======
     $('#ci').change(function () {
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if ($('#ci').val() !== '' && $('#nationality').val() !== null && $('#company-tab').val() === undefined) {
             CheckCedula();
         } else {
@@ -15,10 +10,6 @@ $(document).ready(function () {
     });
 
     $('#ci').keyup(function () {
-<<<<<<< HEAD
-=======
-
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         if ($('#nationality').val() === null) {
             swal({
                 title: "Información",
@@ -63,27 +54,6 @@ $(document).ready(function () {
 
     function CheckCedula() {
         if ($('#ci').val() !== '') {
-<<<<<<< HEAD
-            var ci = $('#ci').val();
-            var nationality = $('#nationality').val();
-            $.ajax({
-                method: "GET",
-                url: url + "users/verify-ci/" + nationality + ci,
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
-                    if (response.status === 'error') {
-                        swal({
-                            title: "Información",
-                            text: response.message,
-                            icon: "info",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-=======
-
             if ($('#ci').val().length >= 7) {
                 var ci = $('#ci').val();
                 var nationality = $('#nationality').val();
@@ -128,33 +98,13 @@ $(document).ready(function () {
                             button: {
                                 text: "Entendido",
                                 className: "red-gradient"
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
                             },
                         });
                     }
-<<<<<<< HEAD
-
-                },
-                error: function (err) {
-                    console.log(err);
 
 
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
-                }
-            });
-=======
                 });
-            }else{
+            } else {
                 swal({
                     title: "Información",
                     text: "La logintud minima de la cedula debe ser 7, ingrese una cedula valida.",
@@ -165,7 +115,6 @@ $(document).ready(function () {
                     },
                 });
             }
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         }
     }
 
@@ -432,10 +381,7 @@ $(document).ready(function () {
     var statusBoton = false;
     $('#userUpdate').on('submit', function (e) {
         e.preventDefault();
-<<<<<<< HEAD
-=======
-        var id=$('#id').val();
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+        var id = $('#id').val();
         if (statusBoton == true) {
             $.ajax({
                 url: url + "users/update",
@@ -460,11 +406,7 @@ $(document).ready(function () {
                             className: "green-gradient"
                         },
                     }).then(function (accept) {
-<<<<<<< HEAD
-                        window.location.href = url + "users/manage";
-=======
-                        window.location.href = url + "users/details/"+ id;
->>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+                            window.location.href = url + "users/details/" + id;
                     });
 
 
@@ -527,20 +469,20 @@ $(document).ready(function () {
         var user_id = $('#id').val();
         var value = $(this).val();
 
-        var confirm,past;
+        var confirm, past;
 
-        if(value=== 'disabled'){
-            confirm='DESHABILITAR';
-            past='deshabilitada'
-        }else{
-            confirm='HABILITAR';
-            past='habilitada';
+        if (value === 'disabled') {
+            confirm = 'DESHABILITAR';
+            past = 'deshabilitada'
+        } else {
+            confirm = 'HABILITAR';
+            past = 'habilitada';
         }
 
         swal({
             icon: "info",
             title: "Activar Cuenta",
-            text: "¿Está seguro de '"+ confirm +"' esta cuenta? Si lo hace, no podrá revertir los cambios.",
+            text: "¿Está seguro de '" + confirm + "' esta cuenta? Si lo hace, no podrá revertir los cambios.",
             buttons: {
                 confirm: {
                     text: confirm,
@@ -565,7 +507,7 @@ $(document).ready(function () {
                     success: function (response) {
                         swal({
                             title: "¡Bien Hecho!",
-                            text: "La cuenta fue "+ past +", con éxito.",
+                            text: "La cuenta fue " + past + ", con éxito.",
                             icon: "success",
                             button: {
                                 text: "Esta bien",
@@ -601,12 +543,12 @@ $(document).ready(function () {
 
 
     $('#email-confirm').keyup(function () {
-        if($('#email').val()===''){
+        if ($('#email').val() === '') {
             swal({
                 title: "Información",
                 text: "Debe rellenar el campo E-mail  con un correo valido.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -617,12 +559,12 @@ $(document).ready(function () {
     });
 
     $('#email-confirm').change(function () {
-        if($('#email-confirm').val()!==$('#email').val()){
+        if ($('#email-confirm').val() !== $('#email').val()) {
             swal({
                 title: "Información",
                 text: "Los correos no coinciden.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -630,11 +572,6 @@ $(document).ready(function () {
             $('#email-confirm').val();
         }
     });
-
-
-
-
-
 });
 
 

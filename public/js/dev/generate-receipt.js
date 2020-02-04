@@ -1,6 +1,6 @@
 $('document').ready(function () {
 
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
 
     var companies_id='';
     var type_taxes='';

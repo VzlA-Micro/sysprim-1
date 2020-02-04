@@ -18,12 +18,12 @@
             <div class="col s12 m8 offset-m2">
                 <form action="" method="post" class="card" id="register">
                     <div class="card-header center-align">
-                        <h4>Registrar Tasa</h4>
+                        <h4>Registrar Tasa de Banco</h4>
                     </div>
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m12">
-                            <input type="text" name="value" id="value" class="validate number-only-float">
+                            <input type="text" name="value" id="value" class="validate number-only-float only-number-positive " maxlength="5">
                             <label for="value">Valor Tasa</label>
                         </div>
                     </div>
