@@ -288,9 +288,7 @@ class VehicleController extends Controller
      */
     public function show()
     {
-
-        $vehicleUser = UserVehicle::where('person_id',\Auth::user()->id)->get();
-
+        $vehicle = \Auth::user()->vehicles()->get();
 
         return view('modules.vehicles.menu', array(
             'show' => $vehicle
