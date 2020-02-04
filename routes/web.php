@@ -340,6 +340,51 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+       Route::get('/inmueble/mi-inmueble', 'PropertyController@details')->name('inmueble.my-propertys');
+
+
+        Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
+        Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+        Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
+        Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+        Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
+        Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
+        Route::get('/properties/details/{id}', 'PropertyController@details')->name('properties.details');
+
+        Route::get('/properties/payments/manage/{id}', 'PropertyTaxesController@manage')->name('properties.payments.manage');
+
+        Route::get('/properties/payments/create/{id}', 'PropertyTaxesController@create')->name('properties.payments.create');
+        Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
+        Route::post('/properties/discount', 'PropertyTaxesController@discount');
+
+        Route::get('/properties/taxes/create/{id}/{status}', 'PropertyTaxesController@create')->name('properties.taxes.create');
+        Route::post('/properties/taxes/store', 'PropertyTaxesController@store')->name('properties.taxes.store');
+        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
+        Route::post('/properties/payments/store', 'PropertyTaxesController@paymentStore')->name('properties.payments.store');
+        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
+        Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
+        Route::get('/properties/taxpayer/pdf/{id}/', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
+
+        //Mi Publicidad
+        Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
+            // Nivel 1: Consultar y Registrar
+            Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+            Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
+            // Nivel 2: Registrar
+            Route::group(['middleware' => ['permission:Registrar Mis Publicidades']], function () {
+                Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
+                Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
+                Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+                Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+            });
+            // Nivel 3: Detalles
+            Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {
+                Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
+                Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
+                Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
+            });
+        });
+
             // Route::get('/dashboard',array(
             //     'as'=>'dashboard',
             //     'uses'=>'DashboardController@dashboard'
@@ -521,7 +566,7 @@ Route::middleware(['auth'])->group(/**
                 return view('modules.notifications.details');
             })->name('notifications.details');
 
-            //Mi Publicidad
+           /* //Mi Publicidad
             Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
                 // Nivel 1: Consultar y Registrar
                 Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
@@ -539,7 +584,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
                     Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
                 });
-            });
+            });*/
 
             // Declaraciones de Publicidad
             Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
@@ -564,57 +609,6 @@ Route::middleware(['auth'])->group(/**
                 });
 
             });
-
-            // Mis Inmuebles
-            Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
-                // Nivel 1: Mis Inmuebles
-                Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
-                // Nivel 2: Registrar y Ver Detalles
-                Route::group(['middleware' => ['permission:Registrar Mis Inmuebles']], function () {
-                    Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
-                    Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-                });
-                // Nivel 3: Detalles
-                Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
-
-                });
-            });
-
-            /*
-             Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
-             Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
-             Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-         */
-            //Inmuebles
-            Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
-
-            Route::get('/inmueble/show/{id}', array(
-                'as' => 'show.inmueble',
-                'uses' => 'PropertyController@show'
-            ));
-            Route::get('/inmueble/mi-inmueble', 'PropertyController@myProperty')->name('inmueble.my-propertys');
-
-
-            Route::get('/inmueble/my-inmueble/{id}', array(
-                'uses' => 'PropertyTaxesController@create',
-                'as' => 'propertyStatement'
-            ));
-
-            Route::get('/inmueble/delaracion/{id}', array(
-                'uses' => 'PropertyTaxesController@create',
-                'as' => 'propertyStatement'
-            ));
-
-            Route::get('/inmueble/statement/{id}', array(
-                'uses' => 'PropertyTaxesController@create',
-                'as' => 'propertyStatement'
-            ));
-
-            Route::post('/inmueble/calcu', array(
-                'uses' => 'PropertyTaxesController@calcu',
-                'as' => 'propertyCalcu'
-            ));
-
 
             // Mis Vehiculos
             //Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
@@ -656,23 +650,7 @@ Route::middleware(['auth'])->group(/**
             //Cambiar de usuario
             Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
 
-            // Mis Inmuebles
-            Route::group(['middleware' => ['permission:Mis Inmuebles|Consultar Mis Inmuebles']], function () {
-                Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
-                Route::get('/inmueble/show/{id}', 'PropertyController@show')->name('show.inmueble');
-                Route::get('/inmueble/mi-inmueble', 'PropertyController@myProperty')->name('inmueble.my-propertys');
-                Route::get('/inmueble/my-inmueble/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
-                Route::get('/inmueble/delaracion/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
-                Route::get('/inmueble/statement/{id}', 'PropertyTaxesController@create')->name('propertyStatement');
-                Route::post('/inmueble/calcu', 'PropertyTaxesController@calcu')->name('propertyCalcu');
-                // Nivel 1: Mis Inmuebles
-                Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
-                // Nivel 2: Registrar y Ver Detalles
-                Route::group(['middleware' => ['permission:Registrar Mis Inmuebles']], function () {
-                    Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
-                    Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-                });
-            });
+
 
             Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
                 // Nivel 1: Consultar y Registrar

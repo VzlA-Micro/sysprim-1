@@ -52,17 +52,20 @@ class User extends Authenticatable  implements Auditable
         'email_verified_at' => 'datetime',
     ];
 
-    public function companies(){
+    public function companies()
+    {
         return $this->belongsToMany('App\Company', 'users_company')
             ->withPivot('company_id');
     }
 
-    public function property(){
+    public function property()
+    {
         return $this->belongsToMany('App\Inmueble', 'user_property')
             ->withPivot('property_id');
     }
 
-    public function vehicles(){
+    public function vehicles()
+    {
         return $this->belongsToMany('App\Vehicle', 'user_vehicle')
             ->withPivot('vehicle_id');
     }
@@ -73,13 +76,15 @@ class User extends Authenticatable  implements Auditable
 
 
 
-
     public function taxesRate(){
         return $this->belongsToMany('App\Taxe', 'rates_taxes')
             ->withPivot('taxe_id');
     }
 
-
+    /*public function taxesProperty(){
+        return $this->belongsToMany('App\Taxe', 'property_taxes')
+            ->withPivot('taxe_id','user_id');
+    }*/
 
     public function sendPasswordResetNotification($token)
     {

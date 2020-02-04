@@ -17,8 +17,8 @@ use App\CatastralConstruccion;
 use App\CatastralTerreno;
 use App\Val_cat_const_inmu;
 use App\Tributo;
-use TijsVerkoyen\CssToInlineStyles\Css\Property\Property;
 use App\Alicuota;
+use App\Property;
 
 class Declaration
 {
@@ -36,52 +36,54 @@ class Declaration
 
         $mes = 11;
 
-        if (($mes <= 12 && $mes >= 11) && ($day >= 01 && $day <= 31)) {
-            //if (($monthCurrent <= $march && $monthCurrent >= $january) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
-            $property = Inmueble::where('id', $id)->get();
-            $alicuota=Alicuota::where('id',$property[0]->type_inmueble_id)->get();
-
-
+//        if (($mes <= 12 && $mes >= 11) && ($day >= 01 && $day <= 31)) {
+        if (($monthCurrent >= $january && $monthCurrent <= $march) && ($dayCurrent >= 01 and $dayCurrent <= 31)) {
+            $recharge = 0;
+            $interest = 0;
+            $property = Property::where('id', $id)->get();
+            $alicuota = Alicuota::where('id',$property[0]->type_inmueble_id)->get();
+//            dd($property); die();
             $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
-
             $cadastralBuild = CatastralConstruccion::where('id', $buildProperty[0]->value_catas_const_id)->get();
-
             $cadastralGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
 
-            $tributo = Tributo::all();
+            $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
 
             if ($property[0]->area_ground !== 0) {
-
-                $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $tributo[0]->value;
-
-                $totalGround = number_format($totalground, 2,',','.');
-
+                $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
+//                $totalGround = number_format($totalground, 2,',','.');
             } else {
-                $totalGround = 0;
+                $totalground = 0;
             }
             if ($property[0]->area_build !== 0) {
-                $baseImponibleForBuild = $property[0]->area_build * $cadastralGround[0]->value_terreno_construccion * $tributo[0]->value;
-                $valueBuild = $cadastralBuild[0]->value_edificacion * $tributo[0]->value;
+                $baseImponibleForBuild = $property[0]->area_build * $cadastralGround[0]->value_terreno_construccion * $taxUnitPrice[0]->value;
+                $valueBuild = $cadastralBuild[0]->value_edificacion * $taxUnitPrice[0]->value;
                 $totalbuild = $baseImponibleForBuild + $valueBuild;
-                $totalBuild=number_format($totalbuild,2,',','.');
+//                $totalBuild=number_format($totalbuild,2,',','.');
 
             } else {
-                $totalBuild = 0;
+                $totalbuild = 0;
             }
-
-            $declaration = $totalground + $totalbuild;
-            $porcentaje=$declaration*$alicuota[0]->value;
-            $total=$declaration+$porcentaje;
-            $Total= number_format($total,2,',','.');
-
-        } else {
-            $Total = 0;
+            $baseImponible = $totalground + $totalbuild;
+//            $baseImponible = number_format($baseImp,2,',','.');
+            $base = $totalground + $totalbuild;
+            $porcentaje = $base * $alicuota[0]->value;
+            $total = $base + $porcentaje;
+//            $Total= number_format($total,2,',','.');
+    }
+        else {
+            $total = 0;
         }
 
         $amounts = array(
-            'totalGround' => $totalGround,
-            'totalBuild' => $totalBuild,
-            'declaration' => $Total
+            'baseImponible' => $baseImponible,
+            'porcentaje' => $porcentaje,
+            'alicuota' => $alicuota[0],
+            'totalGround' => $totalground,
+            'totalBuild' => $totalbuild,
+            'recharge' => $recharge,
+            'interest' => $interest,
+            'total' => $total
         );
 
         return $amounts;
