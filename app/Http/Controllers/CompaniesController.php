@@ -428,7 +428,7 @@ class CompaniesController extends Controller
     //Cambia usuario
 
     public function changeUser($company_id,$ci){
-        $user=User::where('ci',$ci)->first();
+        $user=User::where('ci',$ci)->where('status_account','!=','waiting')->first();
         if(is_object($user)){
             $company=Company::find($company_id);
             $company->users()->sync($user->id);
@@ -443,6 +443,5 @@ class CompaniesController extends Controller
     public function test(){
         $license=TaxesNumber::generateNumberLicense();
         dd($license);
-
     }
 }

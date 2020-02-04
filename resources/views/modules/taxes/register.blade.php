@@ -71,13 +71,6 @@
                                                 @endif
                                     @endforeach
 
-                                    @if(!isset($mount_pay['2019-12-01']))
-                                        <option value="{{"2019-12-01"}}">{{"2019-DICIEMBRE"}}</option>
-                                    @else
-                                        <option value="{{"2019-12-01"}}" disabled >{{"2019-DICIEMBRE|".$mount_pay['2019-12-01']}}</option>
-                                    @endif
-
-
                                 </select>
                                 <label>Perido Fiscal</label>
                             </div>

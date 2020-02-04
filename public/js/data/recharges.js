@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    // var url = "https://sysprim.com/";
-    var url ="http://sysprim.com.devel/";
-
+    var url = localStorage.getItem('url');
 
     var date = new Date();
     $('#to').datepicker({

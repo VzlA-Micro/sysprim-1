@@ -1,5 +1,4 @@
-// var url = "https://sysprim.com/";
-var url ="http://sysprim.com.devel/";
+var url = localStorage.getItem('url');
 
 
 var updateType = false;
@@ -23,7 +22,7 @@ $('document').ready(function () {
                     //$("#preloader").close();
                     swal({
                         title: "¡Marca Registrada!",
-                        text: "No puedes registrar esta marca",
+                        text: "No puedes registrar esta marca.",
                         icon: "warning",
                         button: {
                             text: "Aceptar",
@@ -42,8 +41,11 @@ $('document').ready(function () {
         });
     });
 
+
+
     $('#register').on('submit', function (e) {
         e.preventDefault();
+
         $.ajax({
             url: url + "vehicles-brand/save",
             data: {name: $('#brand').val()},
@@ -56,7 +58,6 @@ $('document').ready(function () {
             },
             success: function (data) {
                 if (data) {
-                    //$("#preloader").close();
                     swal({
                         title: "¡Bien Hecho!",
                         text: "Marca de vehiculo, registrada con exito!",
@@ -73,30 +74,40 @@ $('document').ready(function () {
 
             },
             error: function (e) {
-                console.log(e);
+
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
         });
     });
 
-    $('#updateBrand').on('submit', function (e) {
-        e.preventDefault();
-        if (updateType == false) {
-            //console.log('estoy en el if');
-            $('#name').removeAttr('readonly');
-            //$('#brand').removeAttr('readonly');
-            updateType = true;
-            swal({
-                title: "¡Actualizar!",
-                text: "Puedes elegir los campos a modificar",
-                icon: "info",
-                button: "Ok",
-            });
-        }
-        //
-        else {
 
-            console.log(updateType);
-            console.log('else');
+    $('#btn-modify').click(function() {
+        $(this).hide();
+        $('#name').removeAttr('readonly');
+        $('#btn-update').removeClass('hide');
+        swal({
+            title: "¡Actualizar!",
+            text: "Puedes elegir los campos a modificar",
+            icon: "info",
+            button: "Ok",
+        });
+    });
+
+
+
+    $('#updateBrand').on('submit', function (e) {
+            e.preventDefault();
+            $('#name').removeAttr('readonly');
+
+
             swal({
                 icon: "info",
                 title: "Actualizar Marca Del Vehiculo",
@@ -138,17 +149,26 @@ $('document').ready(function () {
                                     text: "Has Actualizado Los datos de marca de vehiculos, Con Exito",
                                     icon: "success",
                                     button: "Ok",
+                                }).then(function () {
+                                    location.reload();
                                 });
                             }
                         },
                         error: function (e) {
-                            console.log(e);
+                            swal({
+                                title: "¡Oh no!",
+                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                icon: "error",
+                                button:{
+                                    text: "Entendido",
+                                    className: "red-gradient"
+                                },
+                            });
                         }
                     });
                     updateType = false;
                 }
             });
-        }
     });
 });
 

@@ -1,9 +1,12 @@
 $('document').ready(function () {
+
+    var url = localStorage.getItem('url');
+
     var descuento = false;
     var fraccion = false;
     var btnDiscount = $('#descuento');
     var btnFractional = $('#fraccionado');
-    var url = "http://sysprim.com.devel/";
+
     var total = $('#total').val();
     $('#fraccionado').on('click', function () {
         if (descuento === false && fraccion === false) {

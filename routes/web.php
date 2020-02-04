@@ -111,6 +111,8 @@ Route::middleware(['auth'])->group(/**
                 })->name('ciu-group.register');
                 Route::post('/ciu-group/save', 'groupCiiuController@store')->name('ciu-group.save');
                 Route::get('/ciu-group/read', 'GroupCiiuController@show')->name('ciu-group.read');
+                Route::get('/ciu-group/verify-code/{code}', 'GroupCiiuController@verifyGroupCiu');
+
                 Route::get('/ciu-branch/manage', function () {
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
@@ -121,7 +123,6 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
                     Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
                     Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
-
                     Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
 
 

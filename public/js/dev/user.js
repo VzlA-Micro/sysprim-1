@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    //var url = "https://sysprim.com/";
-    var url = "http://sysprim.com.devel/";
+    var url = localStorage.getItem('url');
 
     $('#ci').change(function () {
         if ($('#ci').val() !== '' && $('#nationality').val() !== null && $('#company-tab').val() === undefined) {
@@ -55,7 +54,10 @@ $(document).ready(function () {
 
     function CheckCedula() {
         if ($('#ci').val() !== '') {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5dee84feb1ed1e3be3105366a08c3c4bc917256d
             if ($('#ci').val().length >= 7) {
                 var ci = $('#ci').val();
                 var nationality = $('#nationality').val();
@@ -103,8 +105,13 @@ $(document).ready(function () {
                             },
                         });
                     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5dee84feb1ed1e3be3105366a08c3c4bc917256d
                 });
-            }else{
+            } else {
                 swal({
                     title: "Información",
                     text: "La logintud minima de la cedula debe ser 7, ingrese una cedula valida.",
@@ -381,7 +388,7 @@ $(document).ready(function () {
     var statusBoton = false;
     $('#userUpdate').on('submit', function (e) {
         e.preventDefault();
-        var id=$('#id').val();
+        var id = $('#id').val();
         if (statusBoton == true) {
             $.ajax({
                 url: url + "users/update",
@@ -406,7 +413,11 @@ $(document).ready(function () {
                             className: "green-gradient"
                         },
                     }).then(function (accept) {
+<<<<<<< HEAD
                         window.location.href = url + "users/details/"+ id;
+=======
+                            window.location.href = url + "users/details/" + id;
+>>>>>>> 5dee84feb1ed1e3be3105366a08c3c4bc917256d
                     });
 
 
@@ -469,20 +480,20 @@ $(document).ready(function () {
         var user_id = $('#id').val();
         var value = $(this).val();
 
-        var confirm,past;
+        var confirm, past;
 
-        if(value=== 'disabled'){
-            confirm='DESHABILITAR';
-            past='deshabilitada'
-        }else{
-            confirm='HABILITAR';
-            past='habilitada';
+        if (value === 'disabled') {
+            confirm = 'DESHABILITAR';
+            past = 'deshabilitada'
+        } else {
+            confirm = 'HABILITAR';
+            past = 'habilitada';
         }
 
         swal({
             icon: "info",
             title: "Activar Cuenta",
-            text: "¿Está seguro de '"+ confirm +"' esta cuenta? Si lo hace, no podrá revertir los cambios.",
+            text: "¿Está seguro de '" + confirm + "' esta cuenta? Si lo hace, no podrá revertir los cambios.",
             buttons: {
                 confirm: {
                     text: confirm,
@@ -507,7 +518,7 @@ $(document).ready(function () {
                     success: function (response) {
                         swal({
                             title: "¡Bien Hecho!",
-                            text: "La cuenta fue "+ past +", con éxito.",
+                            text: "La cuenta fue " + past + ", con éxito.",
                             icon: "success",
                             button: {
                                 text: "Esta bien",
@@ -543,12 +554,12 @@ $(document).ready(function () {
 
 
     $('#email-confirm').keyup(function () {
-        if($('#email').val()===''){
+        if ($('#email').val() === '') {
             swal({
                 title: "Información",
                 text: "Debe rellenar el campo E-mail  con un correo valido.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -559,12 +570,12 @@ $(document).ready(function () {
     });
 
     $('#email-confirm').change(function () {
-        if($('#email-confirm').val()!==$('#email').val()){
+        if ($('#email-confirm').val() !== $('#email').val()) {
             swal({
                 title: "Información",
                 text: "Los correos no coinciden.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -572,11 +583,6 @@ $(document).ready(function () {
             $('#email-confirm').val();
         }
     });
-
-
-
-
-
 });
 
 

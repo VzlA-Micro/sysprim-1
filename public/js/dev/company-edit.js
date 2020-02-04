@@ -1,7 +1,5 @@
 
-// var url = "https://sysprim.com/";
-var url ="http://sysprim.com.devel/";
-
+var url = "http://sysprim.com.devel/";
 
 var addCiiu = false;
 var disabledCiiu = false;
@@ -152,8 +150,6 @@ $('document').ready(function () {
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
-
-
                     $('#document_type').prop("disabled", true);
                     $('select').formSelect();
                     $('#RIF').attr('readonly','readonly');
@@ -454,7 +450,7 @@ $('document').ready(function () {
     $('#change-users').click(function () {
         swal({
             title: "Información",
-            text: "Desea cambiar el usuario que administra esta empresa?, recuerda que los cambios son  permanentes.",
+            text: "¿Desea cambiar el usuario que administrará esta empresa?.Recuerda que los cambios son  permanentes.",
             icon: "info",
             buttons: {
                 confirm: {
@@ -671,7 +667,7 @@ $('document').ready(function () {
     $('#change-maps').click(function () {
         swal({
             title: "Información",
-            text: "Marca la nueva ubicación dentro del map",
+            text: "Marca la nueva ubicación dentro del mapa.",
             icon: "info",
             button:{
                 text: "Esta bien",
@@ -813,7 +809,7 @@ function addMark(myLatLng, map,image,marcadores,remove) {
 
         swal({
             title: "Información",
-            text: "Desea guardar la ubicación del mapa seleccionada?",
+            text: "¿Deseas guardar la ubicación del mapa seleccionada?",
             icon: "info",
             buttons: {
                 confirm: {

@@ -28,7 +28,7 @@
                             <label for="document_type">Documento</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="7" title="Solo puede escribir números." required>
+                            <input type="text" name="RIF" id="RIF" class="validate number-date" pattern="[0-9]+" maxlength="10" minlength="7" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
 
@@ -70,8 +70,8 @@
                         </div>-->
                         <div class="input-field col s12 m6">
                             <i class="icon-supervisor_account prefix tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87)."></i>                                                        
-                            <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required maxlength="5">
-                            <label for="number_employees">Número de Empleados</label>
+                            <input type="text" name="number_employees" id="number_employees" class="validate number-date only-number-positive " pattern="[0-9]+" title="Solo puede usar números" required maxlength="5">
+                            <label for="number_employees">Numero de Empleados</label>
                         </div>
 
                         <div class="input-field col m6 s12">

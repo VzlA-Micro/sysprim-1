@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://sysprim.com/.devel";
+    var url =localStorage.getItem('url');
 
 
     /*var company_id = 1;
