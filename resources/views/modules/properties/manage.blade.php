@@ -14,13 +14,15 @@
                 </ul>
             </div>
             @can('Consultar Mis Inmuebles')
-            @foreach($inmuebles as $inmueble)
+            @foreach($properties as $property)
                 <div class="col s12 m4">
-                    <a href="{{ route('show.inmueble', ['id' => $inmueble->id]) }}" class="btn-app white purple-text">
-                        <i class="icon-location_city"></i>
-                        <span class="truncate">{{ $inmueble->code_cadastral }}</span>
+{{--                    <a href="{{ route('properties.details', ['id' => $property->id]) }}" class="btn-app white purple-text">--}}
+                <a href="{{ url('/properties/details/'.$property->id) }}" class="btn-app white purple-text">
+                    <i class="icon-location_city"></i>
+                        <span class="truncate">{{ $property->code_cadastral }}</span>
                     </a>
                 </div>
+
             @endforeach
             @endcan
             @can('Registrar Mis Inmuebles')
