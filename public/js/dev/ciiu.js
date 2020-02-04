@@ -1,6 +1,8 @@
 $('document').ready(function () {
 
-    var url = "https://sysprim.com/";
+    // var url = "https://sysprim.com/";
+    var url ="http://sysprim.com.devel/";
+
 
     $('#ciuu').on('submit',function (e) {
         e.preventDefault();

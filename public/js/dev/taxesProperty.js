@@ -1,7 +1,9 @@
 var descuento = false;
 var fraccion = false;
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    // var url = "https://sysprim.com/";
+    var url ="http://sysprim.com.devel/";
+
 
     var total = $('#total').val();
 

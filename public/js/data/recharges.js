@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    var url = "https://sysprim.com/";
+    // var url = "https://sysprim.com/";
+    var url ="http://sysprim.com.devel/";
+
 
     var date = new Date();
     $('#to').datepicker({
