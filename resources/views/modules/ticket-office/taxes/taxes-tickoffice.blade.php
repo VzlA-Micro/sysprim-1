@@ -14,8 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.taxes.getTaxes') }}">Pagar
-                            Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.taxes.getTaxes') }}">Pagar Planillas</a></li>
                 </ul>
             </div>
             <div class="col s12">

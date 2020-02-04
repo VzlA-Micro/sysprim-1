@@ -69,20 +69,18 @@
 
                 @endcan
 
-                    <div class="card-footer">
-                        <div class="row">
-                            <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light"
-                               id="btn-edit">
-                                <i class="icon-send right"></i>
-                                Editar
-                            </a>
-                            <button type="submit"
-                                    class="btn btn-rounded btn-large peach waves-effect waves-light"
-                                    style="display: none" id="btn-update">
-                                <i class="icon-save right"></i>
-                                Guardar
-                            </button>
-                        </div>
+                    <div class="card-footer center-align">
+                        <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light "
+                           id="btn-edit">
+                            <i class="icon-send right"></i>
+                            Editar
+                        </a>
+                        <button type="submit"
+                                class="btn btn-rounded btn-large peach waves-effect waves-light"
+                                style="display: none" id="btn-update">
+                            <i class="icon-save right"></i>
+                            Guardar
+                        </button>
                     </div>
                 <!-- <div class="card-action center">
                         <a href="{{--route('ciu-branch.delete', ['id' => $ciu->id]) --}}" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>

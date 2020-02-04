@@ -22,8 +22,8 @@
                         @csrf
                         <div class="input-field col s12">
                             <i class="icon-featured_play_list prefix"></i>
-                            <select name="idGroupCiiu" id="idGroupCiiu" required>
-                                <option value="" disabled selected>Elije una opción...</option>
+                            <select name="idGroupCiiu" id="idGroupCiiu" >
+                                <option value="null" disabled selected>Elije una opción...</option>
                                 @foreach($groupCiiu as $group)
                                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                                 @endforeach
