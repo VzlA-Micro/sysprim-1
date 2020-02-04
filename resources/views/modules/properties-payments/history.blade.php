@@ -10,10 +10,10 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.details',['id'=>session('vehicle')])}}">Mis Declaraciones</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
-                    de Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property->id]) }}">{{ $property->code_cadastral }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.payments.manage', ['id' => $property->id]) }}">Mis Declaraciones</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.payments.history', ['id' => $property->id]) }}">Historial de Pagos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -34,8 +34,9 @@
                             <table class="centered highlight" id="history" style="width: 100%">
                                 <thead>
                                 <tr>
+                                    <th>Fecha</th>
                                     <th>Código</th>
-                                    <th>Periodo Fiscal</th>
+                                    <th>Ramo</th>
                                     <th class="tooltipped" data-position="right"
                                         data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
                                     </th>
@@ -44,46 +45,59 @@
                                 </thead>
                                 <tbody>
                                 @foreach($taxes as $taxe)
-                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim'|| $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
+                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>
+                                            <td>{{ $taxe->created_at->format('d-m-Y') }}</td>
                                             <td>{{ $taxe->code }}</td>
-
-                                            <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period)}}</td>
+                                            <td>{{$taxe->branch}}</td>
                                             @if($taxe->status==='process')
+
                                                 <td>
 
-                                                    <button class="btn green">
+                                                    <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/'.true)}}"
+                                                <td><a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
-                                            @elseif($taxe->status==='verified' ||$taxe->status=='verified-sysprim')
+
+
+                                            @elseif($taxe->status==='verified' || $taxe->status=='verified-sysprim' )
                                                 <td>
                                                     <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
+                                                        <i class="icon-check left"></i>
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
 
+
+
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light"><i
+                                                    <a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}" class="btn orange waves-effect waves-light"><i class="icon-description left">
+                                                        </i>Descargar Planilla.</a>
+                                                </td>
+
+
+
+                                            @elseif($taxe->status=='cancel')
+                                                <td>
+                                                    <button class="btn" disabled>
+                                                        <i class="icon-block left"></i>
+                                                        CANCELADA.
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <a href="#"
+                                                       class="btn indigo waves-effect waves-light" disabled><i
                                                                 class="icon-pageview left"></i>Detalles</a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>
 
-                                            @elseif($taxe->status=='cancel')
-                                                <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        CANCELADA.
-                                                    </button>
-                                                </td>
                                             @endif
                                         </tr>
                                     @endif

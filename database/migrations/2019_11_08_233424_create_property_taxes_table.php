@@ -16,9 +16,15 @@ class CreatePropertyTaxesTable extends Migration
         Schema::create('property_taxes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('property_id')->unsigned();
-            $table->integer('taxes_id')->unsigned();
+
+            $table->integer('taxe_id')->unsigned();
+//            $table->string('status',15);
+            $table->float('recharge',8,2)->nullable();;
+            $table->float('base_imponible',10,2)->nullable();
+            $table->float('alicuota',8,2)->nullable();
+            $table->float('interest',8,2)->nullable();
             $table->foreign('property_id')->references('id')->on('property');
-            $table->foreign('taxes_id')->references('id')->on('taxes');
+            $table->foreign('taxe_id')->references('id')->on('taxes');
             $table->timestamps();
         });
     }

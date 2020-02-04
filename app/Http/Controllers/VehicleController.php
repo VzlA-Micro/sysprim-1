@@ -304,10 +304,16 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $value = explode('-', $id);
-        $vehicle = Vehicle::where('id', $value[0])->with('company')->get();
+        $idVehicle = $value[0];
+        $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
+        if (isset($value[1])){
+            $valor = $value[1];
+        }else{
+            $valor=false;
+        }
 
 
-        if ($value[1]) {
+        if ($valor) {
             $response = ['vehicle' => $vehicle, 'status' => 'company'];
         } else {
             $response = ['vehicle' => $vehicle, 'status' => 'vehicle'];
@@ -487,8 +493,6 @@ class VehicleController extends Controller
 
     public function periodoFiscal($period)
     {
-
-        //var_dump($period);
         $trimester = Trimester::verifyTrimester();
         //si es TRUE es trimestral
         if ($period == 1) {
