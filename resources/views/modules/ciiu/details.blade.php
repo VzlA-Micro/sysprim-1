@@ -31,7 +31,7 @@
                                 <option value="#" disabled selected>Elije una opción...</option>
                                 @foreach($groupCiu as $group)
                                     @if($ciu->group_ciu_id==$group->id )
-                                         <option value="{{ $group->id }}" selected>{{ $group->name }}</option>
+                                        <option value="{{ $group->id }}" selected>{{ $group->name }}</option>
                                     @else
                                         <option value="{{ $group->id }}">{{ $group->name }}</option>
                                     @endif

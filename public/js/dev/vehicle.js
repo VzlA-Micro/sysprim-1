@@ -1,6 +1,6 @@
-//var url = "https://sysprim.com/";
-var url = "http://sysprim.com.devel/";
-// var url = "https://sysprim.com/";
+
+var url = localStorage.getItem('url');
+
 
 var user = $('#user').val();
 var updateType = false;
@@ -512,7 +512,7 @@ $('#model').prop('disabled', true);
                 if (data['status']=='success') {
                     swal({
                         title: "¡Bien Hecho!",
-                        text: data['message'],
+                        text: "Vehículo registrado con exito!",
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {

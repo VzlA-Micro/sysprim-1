@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-date rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="document">Cedula o RIF</label>
                             </div>
 

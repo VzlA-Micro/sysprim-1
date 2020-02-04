@@ -60,7 +60,7 @@ class VehicleTypeController extends Controller
      */
     public function show()
     {
-        $type= VehicleType::get();
+        $type= VehicleType::orderBy('id','desc')->get();
         return view('modules.vehicle_type.read',array(
             'showType'=>$type
         ));

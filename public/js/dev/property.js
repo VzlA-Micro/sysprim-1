@@ -1,8 +1,7 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
     var user = $('#user').val();
+    var url = localStorage.getItem('url');
 
-    // var url = "https://sysprim.com/";
 
 
 
@@ -175,6 +174,7 @@ $('document').ready(function () {
            $('#content').html('');
        }
     });
+>>>>>>> 4e561e211942ae55d03cb437ad3eec17ce9648b8
 
 
     $('#verification').on('submit', function (e) {

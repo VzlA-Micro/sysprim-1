@@ -1,6 +1,6 @@
 $(document).ready(function () {
    // var url = "https://sysprim.com/";
-    var url = "http://sysprim.com.devel/";
+    var url = localStorage.getItem('url');
 
     $('#ci').change(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null){

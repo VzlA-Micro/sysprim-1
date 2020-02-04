@@ -6,6 +6,7 @@ use App\CompanyTaxe;
 use App\FindCompany;
 use App\Helpers\Calculate;
 use App\Payment;
+use App\Prologue;
 use App\Taxe;
 use App\Vehicle;
 use Dompdf\Exception;
@@ -29,7 +30,6 @@ use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
 use App\Helpers\CheckCollectionDay;
-
 
 
 
@@ -202,8 +202,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = $payments_type. $code;
                     $taxes_find->status = 'process';
-
-
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
@@ -211,9 +209,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
-
-
-
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
@@ -400,7 +395,6 @@ class TicketOfficeController extends Controller
     public function registerTaxes(Request $request)
     {
 
-        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Anti');
         $datos = $request->all();
 
         $fiscal_period = $datos['fiscal_period'];
@@ -520,9 +514,8 @@ class TicketOfficeController extends Controller
             }
 
 
-            if ($verify_prologue['mora']) {
 
-                if ($date['mora']) {//si tiene mora
+            if ($date['mora']) {//si tiene mora
                     //Obtengo recargo
                     $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
                     if (is_null($recharge)) {
@@ -535,7 +528,6 @@ class TicketOfficeController extends Controller
                     $amount_recharge = $base_amount_sub * $recharge->value / 100;
                     $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
-                }
             }
             $taxe->taxesCiu()->attach(['taxe_id' => $id],
                 ['ciu_id' => $ciu_id[$i],
@@ -562,7 +554,7 @@ class TicketOfficeController extends Controller
 
         //Si tiene  multa
         $verify = TaxesMonth::calculateDayMora($taxe_update->fiscal_period, $taxe_update->companies[0]->typeCompany);
-        if ($verify['mora']&&$verify_prologue['mora']) {
+        if ($verify['mora']) {
             $company = Company::find($taxe_update->companies[0]->id);
             $fineCompany = FineCompany::where('fiscal_period', $taxe_update->fiscal_period)->get();
             if (!$fineCompany->isEmpty()) {
@@ -682,8 +674,6 @@ class TicketOfficeController extends Controller
                 }else{
                     $taxes = Payment::with('taxes')->whereIn('id', $id_taxes)->where('type_payment', '=', $type)->get();
                 }
-
-
 
 
 
@@ -851,6 +841,10 @@ class TicketOfficeController extends Controller
                     $taxes_find->code = $code;
                 }
 
+                elseif($taxes_find->branch==='Pat.Veh'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
+                    $taxes_find->code = $code;
+                }
 
                 $taxes_find->update();
             }
@@ -1343,23 +1337,27 @@ class TicketOfficeController extends Controller
                 ]);
 
         }
+        elseif ($taxes->branch=='Pat.Veh'){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => $firm
+            ]);
+
+        }
 
 
         return $pdf->stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

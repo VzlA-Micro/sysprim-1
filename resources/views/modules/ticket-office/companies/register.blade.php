@@ -40,7 +40,7 @@
                                 <label for="nationality">Nacionalidad</label>
                             </div>
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" maxlength="8" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <input id="ci" type="text" name="ci" maxlength="8" class="validate number-date" pattern="[0-9]+" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
@@ -85,7 +85,7 @@
                                 <label for="document_type">Documento</label>
                             </div>
                             <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
-                                <input type="text" name="RIF" id="RIF" class="validate company-validate number-only" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
+                                <input type="text" name="RIF" id="RIF" class="validate company-validate number-date" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
                                 <label for="RIF">RIF</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
@@ -121,7 +121,7 @@
 
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
                                 <i class="icon-supervisor_account prefix"></i>
-                                <input type="number" name="number_employees" id="number_employees" class="validate company-validate" maxlength="2000" pattern="[0-9]+" title="Solo puede usar números" data-validate="Número de empleados " required>
+                                <input type="text" name="number_employees" id="number_employees" class="validate company-validate number-date only-number-positive" maxlength="5" pattern="[0-9]+" title="Solo puede usar números" data-validate="Número de empleados " required>
                                 <label for="number_employees">Número de Empleados</label>
                             </div>
 

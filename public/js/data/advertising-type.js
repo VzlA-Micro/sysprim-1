@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
 
 	// Registrar
 	$('#register').submit(function(e) {

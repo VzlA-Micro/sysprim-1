@@ -41,7 +41,7 @@
 
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="search-code" id="search-code" >
+                                <input type="text" name="search-code" id="search-code" maxlength="12">
                                 <label for="search-code">Licencia O RIF</label>
                             </div>
 

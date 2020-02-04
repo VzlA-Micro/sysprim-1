@@ -7,7 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="">Detalles De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id)}}">Detalles De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
                 </ul>
             </div>
@@ -31,6 +31,7 @@
                                 <ul>
                                     <li><b>Periodo Fiscal: </b>{{ $period }}</li>
                                     <li><b>Fecha: </b>{{$taxes->created_at}}</li>
+                                    <li><b>U.T (Unidad Tributaria): </b>{{$rateYear}}</li>
                                 </ul>
                             </div>
                             <div class="col m6">
@@ -40,6 +41,7 @@
                                     <li><b>Marca: </b>{{ $vehicle[0]->model->brand->name}}</li>
                                     <li><b>Modelo: </b>{{ $vehicle[0]->model->name}}</li>
                                     --}}
+                                    <li><b>Tipo De Vehículo: </b>{{$vehicle[0]->type->name}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -79,7 +81,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="previous_debt" id="previous_debt" class="validate recargo money"
+                                <input type="text" name="previous_debt" id="previous_debt"
+                                       class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
                                        value="{{$previousDebt}}" readonly>
                                 <label for="previous_debt">Deuda Anterior<b> (Bs)</b></label>
@@ -122,7 +125,7 @@
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
                                        class="validate number-only" pattern="[0-9.,]+"
-                                       value="0"
+                                       value="0" maxlength="15"
                                 >
                                 <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
                             </div>
@@ -142,19 +145,6 @@
                                     <table class="centered responsive-table" style="font-size: 10px;!important;">
                                         <thead>
                                         <tr>
-                                            <th>TIPO DE VEHICULO</th>
-                                            <th>TARIFA (U.T)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{{$vehicle[0]->type->name}}</td>
-                                            <td>{{$rateYear}}</td>
-                                        </tr>
-                                        </tbody>
-
-                                        <thead>
-                                        <tr>
                                             <th>RECARGO</th>
                                             <th>VALOR</th>
                                         </tr>
@@ -168,11 +158,17 @@
                                     </table>
                                 </div>
                                 <div class="col l6 s12">
-                                    <div class="col s12 m12 ">
+                                    {{--<div class="col s12 m12 ">
                                         <input type="text" name="interest" class="validate money"
                                                value="{{$grossTaxes}}"
                                                readonly>
                                         <label for="interest">Impuesto Bruto:(Bs)</label>
+                                    </div>
+                                    <div class="col s12 m12 ">
+                                        <input type="text" name="previousDebt" class="validate money"
+                                               value="{{$previousDebt}}"
+                                               readonly>
+                                        <label for="previousDebt">Deuda Anterior:(Bs)</label>
                                     </div>
                                     <div class="col s12 m12 ">
                                         @if(isset($valueDiscount))
@@ -182,9 +178,9 @@
                                             <input type="text" name="recargo" class="validate money" value="0" readonly>
                                         @endif
                                         <label for="recargo">Descuento:(Bs)</label>
-                                    </div>
+                                    </div>--}}
                                     <div class="col s12 m12">
-                                        <input type="text" name="total" id="total" class="validate money"
+                                        <input type="text" name="total" id="total" class="validate money left-align"
                                                value="{{$total}}"
                                                readonly>
                                         <label for="total_pagar">Total a Pagar:(Bs)</label>
@@ -199,22 +195,19 @@
                             <div class="row">
                                 <div class="input-field col s12">
 
-                                    {{-- Modal trigger --}}
-                                    <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
-                                       class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
+                                    <a href="" class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                         Calcular de nuevo
-                                        <i class="icon-refresh right"></i></a>
+                                        <i class="icon-refresh right"></i>
+                                    </a>
 
-                                    <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
-                                         Descargar Calculo.
-                                         <i class="icon-cloud_download right"></i>
-                                     </a>-->
                                     <button type="submit"
                                             class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger"
                                             id="continue">
                                         Continuar
                                         <i class="icon-more_horiz right"></i>
                                     </button>
+
+
                                     {{-- Modal structure --}}
                                     <div id="modal1" class="modal modal-fixed-footer">
                                         <div class="modal-content">

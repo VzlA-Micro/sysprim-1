@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" class="breadcrumb">Gestionar Modelos De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.read') }}" class="breadcrumb">Ver Modelos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}" >Gestionar Modelos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.read') }}">Ver Modelos De Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -25,7 +25,6 @@
                             <thead>
                             <tr>
                                 <th>Modelo</th>
-                                <th>Año</th>
                                 <th>Marca</th>
                                 @can('Detalles Modelo de Vehiculos')
                                 <th>Detalles</th>
@@ -36,7 +35,6 @@
                             @foreach($showModels as $models)
                                 <tr>
                                     <td>{{$models->name}}</td>
-                                    <td>{{$models->year}}</td>
                                     <td>{{$models->brand->name}}</td>
                                     @can('Detalles Modelo de Vehiculos')
                                     <td>
@@ -61,11 +59,12 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla.",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -91,4 +90,5 @@
             }
         });
     </script>
+    <script src="{{ asset('js/dev/modelsVehicle.js') }}"></script>
 @endsection

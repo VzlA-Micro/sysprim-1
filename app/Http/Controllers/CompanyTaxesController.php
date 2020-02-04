@@ -789,10 +789,6 @@ class CompanyTaxesController extends Controller
 
                 $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
 
-
-
-
-
             } else {
                 $amount_recharge = 0;
                 $interest = 0;

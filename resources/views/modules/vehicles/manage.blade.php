@@ -9,9 +9,19 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis
-                            Vehículos</a></li>
+                    @if($status=="company")
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Mis
+                                Vehículos</a></li>
+                    @endif
                 </ul>
             </div>
 
@@ -48,9 +58,15 @@
                         <p>Elige la forma en la realizara su pago de Vehiculo</p>
                     </div>
                     <div class="modal-footer">
+<<<<<<< HEAD
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
+                        <a href="{{route('taxes.vehicle',['id'=>$id."-".true])}}"
+=======
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".'false'])}}"
                            class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".'true'])}}"
+>>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
                            class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
                     </div>
                 </div>

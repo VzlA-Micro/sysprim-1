@@ -18,7 +18,7 @@ if ((width>=300 && width <=1000) &&( height>=640 && height<= 1200) ){
 
 $('document').ready(function () {
 
-    var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
     var controller = "collection/statistics";
 
 

@@ -117,6 +117,13 @@
                                                                 class="icon-pageview"></i></a>
 
 
+                                            @elseif($taxe->taxes[0]->branch==='Pat.Veh')
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light">
+                                                        <i class="icon-pageview left"></i>
+                                                    </a>
+
                                             @endif
                                                 <a href="#"
                                                    class="btn btn-floating blue waves-effect waves-light details-payment"

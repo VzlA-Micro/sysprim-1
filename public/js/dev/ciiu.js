@@ -1,6 +1,6 @@
 $('document').ready(function () {
 
-    var url = "http://sysprim.com.devel/";
+    var url = localStorage.getItem('url');
 
     $('#alicuota').change(function () {
         if($(this).val()<1){
@@ -164,10 +164,6 @@ $('document').ready(function () {
             }
         });
     });
-
-
-
-
 
 
     $('#code').change(function () {
