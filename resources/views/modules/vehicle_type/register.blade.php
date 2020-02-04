@@ -20,27 +20,32 @@
                 {{csrf_field()}}
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Registrar Vehículo</h5>
+                        <h5>Registrar Tipo de Vehículo</h5>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: Carga">
+                            <i class="icon-motorcycle prefix"></i>
                             <input type="text" name="type_vehicle" id="type_vehicle" pattern="[a-zA-Z ]+"
                                    title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
                             <label for="type_vehicle">Tipo de vehiculo</label>
                         </div>
 
                         <div class="input-field col s12 m6">
+                            <i class="icon-payment prefix"></i>
                             <input type="text" name="rate" id="rate" class="validate" pattern="[A-Za-z0-9,.]+"
                                    title="Solo puede escribir letras y numeros." required>
                             <label for="rate">Tarifa %</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-payment prefix"></i>
                             <input type="text" name="rate_ut" id="rate_ut" class="validate" pattern="[A-Za-z0-9,.]+"
                                    title="Solo puede escribir letras." required>
                             <label for="rate_ut">Tarifa U.T</label>
                         </div>
                         <div class="input-field col s12 center-align">
-                            <button type="submit" class="btn btn-rounded green waves-effect">Registrar</button>
+                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect">Registrar
+                            <i class="icon-send right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -34,7 +34,7 @@
                     </div>
                     <div class="card-action center">
                         @can('Actualizar Marcas de Vehiculos')
-                        <button type="submit" class="btn btn-rounded green waves-effect waves-light">Actualizar <i class="icon-update right"></i></button>
+                        <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light">Actualizar <i class="icon-update right"></i></button>
                         @endcan
                         {{--<a href="#" class="btn btn-rounded red waves-effect waves-light">Eliminar  <i class="icon-delete right"></i></a>--}}
                     </div>

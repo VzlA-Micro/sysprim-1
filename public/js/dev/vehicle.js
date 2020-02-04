@@ -501,23 +501,6 @@ $('#model').prop('disabled', true);
             data: new FormData(this),
 
             beforeSend: function () {
-<<<<<<< HEAD
-                $('#button-vehicle').prop('disabled', true);
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function () {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: "Has Actualizado Los datos de tipo de vehiculos Con Exito",
-                    icon: "success",
-                    button: "Ok",
-                }).then(function (accept) {
-                    window.location.href = url + "vehicles/read";
-                });
-=======
                 //$('#button-vehicle').prop('disabled', true);
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
@@ -546,7 +529,6 @@ $('#model').prop('disabled', true);
                         },
                     });
                 }
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
             },
             error: function (e) {
                 $("#preloader").fadeOut('fast');

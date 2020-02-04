@@ -34,7 +34,7 @@
                             <label for="brand"> Marca de Vehiculo</label>
                         </div>
                         <div class="input-field col s12 center-align">
-                            <button type="submit" id="brandRegister" class="btn btn-rounded green waves-effect">
+                            <button type="submit" id="brandRegister" class="btn btn-rounded btn-large peach waves-effect">
                                 <i class="icon-send right"></i>Registrar
                             </button>
                         </div>
