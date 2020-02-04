@@ -10,10 +10,10 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('tickOffice.companies.register') }}">Registrar
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquilla Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="#">Registrar
                             Vehículos</a></li>
                 </ul>
             </div>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-event_note prefix"></i>
-                                <input type="text" name="year" id="year" class="validate" pattern="[0-9]+" minlength="4"
+                                <input type="text" name="year" id="year" class="validate number-only" pattern="[0-9]+" minlength="4"
                                        maxlength="4"
                                        title="Solo puede escribir numeros." required>
                                 <label for="year">Año</label>
@@ -162,23 +162,27 @@
                             <div id="group-new-MB">
 
                             </div>
+                            <div class="container">
+                                <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo no se encuentre registrado en nuestro sistema, presiona el botón de registrar marcas e introduce los siguientes datos:<br> 1- Marca<br> 2- Modelo<br></p>
+                            </div>
                             <div class="input-field col s12 center-align">
                                 <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
                                             class="icon-file_upload right"></i></a>
                             </div>
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="company-previous" class="btn peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-company">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
                         </div>
-                        <div class="input-field col s6 left-align">
-                            <a href="#" id="company-previous" class="btn peach waves-effect waves light">
-                                Anterior
-                                <i class="icon-navigate_before left"></i>
-                            </a>
-                        </div>
-                        <div class="input-field col s6 right-align">
-                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-company">
-                                <i class="icon-send right"></i>
-                                Registrar
-                            </button>
-                        </div>
+
 
                     </div>
                 </form>

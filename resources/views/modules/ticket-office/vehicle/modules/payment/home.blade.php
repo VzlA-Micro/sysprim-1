@@ -25,7 +25,7 @@
             @endcan
             @can('Pagar Planilla')
                 <div class="col s12 m4 animated bounceIn">
-                    <a href="{{ route('ticket-office.taxes.getTaxes')}}" class="btn-app white amber-text">
+                    <a href="{{ route('ticketOffice.vehicle.taxes.getTaxes')}}" class="btn-app white amber-text">
                         <i class="icon-payment"></i>
                         <span class="truncate">Pagar Planilla</span>
                     </a>

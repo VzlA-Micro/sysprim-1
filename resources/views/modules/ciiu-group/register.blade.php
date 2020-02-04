@@ -20,12 +20,12 @@
                         @csrf
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code" required>
-                            <label for="code">Codigo</label>
+                            <input id="code" type="text" name="code" required minlength="5" maxlength="10">
+                            <label for="code">Código</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>
-                            <input id="name" type="text" name="name" required>
+                            <input id="name" type="text" name="name" required minlength="5" maxlength="200">
                             <label for="name">Nombre</label>
                         </div>
                     </div>

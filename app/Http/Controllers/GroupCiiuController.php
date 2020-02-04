@@ -94,4 +94,18 @@ class GroupCiiuController extends Controller
         $ciu=ciu::destroy($id);
         return redirect()->route('readCiu');
     }
+
+
+
+    public function verifyCiu($code){
+        $ciu_find = Ciu::where('code',$code)->get();
+        if(!$ciu_find->isEmpty()){
+            $response=array('status'=>'error','message'=>'El CIIU ingresado ya se encuentra registrado.');
+        }else{
+            $response=array('status'=>'success','message'=>'No encontrado');
+        }
+
+        return response()->json($response);
+
+    }
 }

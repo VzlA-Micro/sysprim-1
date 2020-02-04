@@ -6,7 +6,6 @@ use App\Company;
 use App\Notification;
 use Illuminate\Support\Carbon;
 use App\Payments;
-use App\Prologue;
 
 
 class TaxesMonth{
@@ -20,7 +19,6 @@ class TaxesMonth{
         $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orWhereMonth('fiscal_period','=',12)->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
 
         $mount_pay=null;
-
 
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
@@ -232,14 +230,15 @@ class TaxesMonth{
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dayMoraEspecial=5;//el dia de cobro para lo que tienen mora y son agente de retencion
 
-        $prologue=Prologue::where('branch', 'Act.Eco.Anti')->first();
+        $prologue=Prologue::where('branch', '')->first();
 
-        $dayMoraNormal=Carbon::parse($prologue->date_limit)->format('d');//el dia de cobro para lo que no son agente de retención
+        $dayMoraNormal=14;//el dia de cobro para lo que no son agente de retención
+
+
+
         $diffDayMora=0;
-
         $fiscal_period=Carbon::parse($fiscal_period);
         $now_pay = Carbon::now();//fecha de pago
-
 
 
         if($now_pay->diffInMonths($fiscal_period)<2){

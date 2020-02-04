@@ -78,4 +78,11 @@ class Company extends Model implements Auditable {
         return $this->phone=substr($this->phone,6,11);
     }
 
+    public function vehicles(){
+        return $this->belongsToMany('App\Vehicle','user_vehicle')
+            ->withPivot('vehicle_id',
+                'user_id'
+            );
+    }
+
 }

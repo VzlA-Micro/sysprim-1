@@ -121,10 +121,19 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
                 // Nivel 4 (Gestionar Ramo CIIU)
+
+
+
                 Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
                     Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
                     Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
                     Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
+
+                    Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
+
+
+
+
                     // Nivel 5 (Detalles)
                     Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function () {
                         Route::get('/ciu-branch/details/{id}', 'CiuController@edit')->name('ciu-branch.details');
@@ -389,6 +398,7 @@ Route::middleware(['auth'])->group(/**
             //     'as'=>'dashboard',
             //     'uses'=>'DashboardController@dashboard'
             // ));
+        Route::get('company/vehicles/{idCompany}','VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
 
             // Nivel 1: Gestionar Contrubuyente, Pagos y Empresas
             Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
@@ -666,6 +676,7 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Mis Vehiculos']], function () {
                     Route::get('/vehicles/details/{id}', 'VehicleController@edit')->name('vehicles.details');
+                    Route::get('vehicles/manage/{id}','VehicleController@manage')->name('vehicles.manage');
                 });
             });
 

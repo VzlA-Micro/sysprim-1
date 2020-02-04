@@ -12,9 +12,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.taxes.getTaxes') }}">Pagar Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.payments') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.taxes.getTaxes') }}">Pagar
+                            Planillas</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -31,12 +32,11 @@
                             <table class="centered highlight" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>Contribuyente</th>
-                                    <th>Licencia</th>
+                                    <th>Fecha</th>
                                     <th>Código</th>
-                                    <th>Periodo Fiscal</th>
-                                    <th>Planilla</th>
+                                    <th>Ramo</th>
                                     <th>Monto</th>
+                                    <th>Planilla</th>
                                     @can('Detalles Planilla')
                                         <th>Acción</th>
                                     @endcan
@@ -44,49 +44,31 @@
                                 </thead>
 
                                 <tbody id="receipt-body">
-
-
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
 
-                                            <td>{{$taxe->companies[0]->name}}</td>
-                                            <td>{{$taxe->companies[0]->license}}</td>
+                                            <td>{{$taxe->created_at}}</td>
                                             <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->fiscalPeriodFormat}}</td>
+                                            <td>{{$taxe->branch}}</td>
+                                            <td>{{number_format($taxe->amount,2)}}</td>
 
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"
-                                                           data-company="{{$taxe->companies[0]->id}}"
-                                                           data-taxes="{{$taxe->type}}"/>
+                                                           value="{{$taxe->id}}"/>
                                                     <span></span>
                                                 </label>
                                             </td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
+
                                             @can('Detalles Planilla')
-
-                                                @if($taxe->type!=='definitive')
-
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
-                                                           class="btn indigo waves-effect waves-light">
-                                                            <i class="icon-pageview left"></i>
-                                                            Detalles
-                                                        </a>
-                                                    </td>
-                                                @else
-
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
-                                                           class="btn indigo waves-effect waves-light"><i
-                                                                    class="icon-pageview left"></i>Detalles</a>
-                                                    <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
-                                                    </td>
-
-                                                @endif
-
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                       class="btn indigo waves-effect waves-light">
+                                                        <i class="icon-pageview left"></i>
+                                                        Detalles
+                                                    </a>
+                                                </td>
                                             @endcan
                                         </tr>
                                     @endforeach
@@ -478,10 +460,7 @@
                         <button type="button" class="modal-close btn btn-large btn-rounded peach waves-effect waves-light">BUSCAR<i class="icon-search right"></i>
                         </button>
                     </div>
-
-
                 </div>
-
             </div>
             <div class="modal-footer">
             </div>
@@ -508,7 +487,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
+    <script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
-
 @endsection

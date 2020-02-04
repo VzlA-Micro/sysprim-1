@@ -1,22 +1,30 @@
 $(document).ready(function () {
     //var url = "https://sysprim.com/";
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
 
+<<<<<<< HEAD
     $('#ci').blur(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){
+=======
+    $('#ci').change(function () {
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+        if ($('#ci').val() !== '' && $('#nationality').val() !== null && $('#company-tab').val() === undefined) {
             CheckCedula();
-        }else{
+        } else {
 
         }
     });
 
     $('#ci').keyup(function () {
-        if($('#nationality').val()===null){
+<<<<<<< HEAD
+=======
+
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+        if ($('#nationality').val() === null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -28,7 +36,7 @@ $(document).ready(function () {
 
 
     $('#nationality').change(function () {
-        if($('#ci').val()!==''&&$('#nationality').val()!==null){
+        if ($('#ci').val() !== '' && $('#nationality').val() !== null) {
             CheckCedula();
         }
 
@@ -37,12 +45,12 @@ $(document).ready(function () {
 
     $('#phone_user').keyup(function () {
         console.log($('#country_code_user').val());
-        if($('#country_code_user').val()===null){
+        if ($('#country_code_user').val() === null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -53,17 +61,14 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
     function CheckCedula() {
         if ($('#ci').val() !== '') {
+<<<<<<< HEAD
             var ci = $('#ci').val();
             var nationality = $('#nationality').val();
             $.ajax({
                 method: "GET",
-                url: url+"users/verify-ci/"+nationality+ci,
+                url: url + "users/verify-ci/" + nationality + ci,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -74,23 +79,64 @@ $(document).ready(function () {
                             title: "Información",
                             text: response.message,
                             icon: "info",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
-                            },
-                        });
+=======
 
-                        $('#ci').addClass('invalid');
-                        $('#ci').val('');
+            if ($('#ci').val().length >= 7) {
+                var ci = $('#ci').val();
+                var nationality = $('#nationality').val();
+                $.ajax({
+                    method: "GET",
+                    url: url + "users/verify-ci/" + nationality + ci,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        if (response.status === 'error') {
+                            swal({
+                                title: "Información",
+                                text: response.message,
+                                icon: "info",
+                                button: {
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
+                            });
+
+                            $('#ci').addClass('invalid');
+                            $('#ci').val('');
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                        } else {
+                            findUser(nationality, ci);
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+
+
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
-                    } else {
-                        findUser(nationality, ci);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+                            },
+                        });
                     }
+<<<<<<< HEAD
 
                 },
                 error: function (err) {
-                        console.log(err);
+                    console.log(err);
 
 
                     $("#preloader").fadeOut('fast');
@@ -99,13 +145,27 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "red-gradient"
                         },
                     });
                 }
             });
+=======
+                });
+            }else{
+                swal({
+                    title: "Información",
+                    text: "La logintud minima de la cedula debe ser 7, ingrese una cedula valida.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
         }
     }
 
@@ -114,7 +174,7 @@ $(document).ready(function () {
             var email = $('#email').val();
             $.ajax({
                 method: "GET",
-                url: url+"users/verify-email/"+email,
+                url: url + "users/verify-email/" + email,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -128,7 +188,7 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
@@ -143,7 +203,7 @@ $(document).ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "blue-gradient"
                         },
@@ -155,14 +215,13 @@ $(document).ready(function () {
     });
 
 
-
     $('#email_edit').change(function () {
         if ($('#email_edit').val() !== '') {
             var email = $('#email_edit').val();
             var id = $('#id').val();
             $.ajax({
                 method: "GET",
-                url: url+"users/verify-email/"+email+'/'+id,
+                url: url + "users/verify-email/" + email + '/' + id,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -199,22 +258,22 @@ $(document).ready(function () {
     function findUser(nationality, ci) {
         $.ajax({
             method: "GET",
-            url: url+"users/find/"+nationality+"/"+ci,
+            url: url + "users/find/" + nationality + "/" + ci,
             success: function (response) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
-                    $('#name').attr('readonly','readonly');
+                    $('#name').attr('readonly', 'readonly');
 
 
-                    if($('#name_user').val()!==undefined){
+                    if ($('#name_user').val() !== undefined) {
                         $('#name_user').val(response.response.nombres);
-                        $('#name_user').attr('readonly','readonly')
+                        $('#name_user').attr('readonly', 'readonly')
                     }
                     $('#surname').val(response.response.apellidos);
-                    $('#surname').attr('readonly','readonly');
+                    $('#surname').attr('readonly', 'readonly');
 
 
                     console.log(response);
@@ -229,7 +288,7 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button:{
+                    button: {
                         text: "Entendido",
                         className: "red-gradient"
                     },
@@ -260,7 +319,7 @@ $(document).ready(function () {
                     title: "¡Bien Hecho!",
                     text: "El usuario se ha registrado con éxito.",
                     icon: "success",
-                    button: { text: "Esta bien!", className: "green-gradient"},
+                    button: {text: "Esta bien!", className: "green-gradient"},
                 }).then(function (accept) {
                     window.location.href = url + "users/manage";
                 });
@@ -278,7 +337,7 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button:{
+                    button: {
                         text: "Entendido",
                         className: "red-gradient"
                     },
@@ -287,7 +346,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#btn-reset-password').click(function() {
+    $('#btn-reset-password').click(function () {
         var id = $('#id').val();
         var ci = $('#ci').val();
         swal({
@@ -304,12 +363,12 @@ $(document).ready(function () {
                 cancel: {
                     text: "Cancelar",
                     value: false,
-                    visible: true, 
+                    visible: true,
                     className: "grey lighten-2"
                 }
             }
         }).then(confirm => {
-            if(confirm) {
+            if (confirm) {
                 $.ajax({
                     method: 'POST',
                     datType: 'json',
@@ -318,7 +377,7 @@ $(document).ready(function () {
                         ci: ci
                     },
                     url: url + "users/reset-password",
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
                     },
@@ -336,9 +395,9 @@ $(document).ready(function () {
                                 }
                             }
                         })
-                        .then(exit => {
-                            location.href = url + 'users/manage';
-                        });
+                            .then(exit => {
+                                location.href = url + 'users/manage';
+                            });
                     },
                     error: function (err) {
                         console.log(err);
@@ -367,107 +426,124 @@ $(document).ready(function () {
                     }
                 });
             }
-        }); 
+        });
     });
 
     var statusBoton = false;
-        $('#userUpdate').on('submit', function (e) {
-            e.preventDefault();
-            if (statusBoton==true){
-                $.ajax({
-                    url: url + "users/update",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: new FormData(this),
-                    method: "POST",
+    $('#userUpdate').on('submit', function (e) {
+        e.preventDefault();
+<<<<<<< HEAD
+=======
+        var id=$('#id').val();
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+        if (statusBoton == true) {
+            $.ajax({
+                url: url + "users/update",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
 
-                    beforeSend: function () {
-                        $("#preloader").fadeIn('fast');
-                        $("#preloader-overlay").fadeIn('fast');
-                    },
-                    success: function (response) {
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
 
-                        swal({
-                            title: "¡Bien Hecho!",
-                            text: "El usuario se ha modificado con éxito.",
-                            icon: "success",
-                            button:{
-                                text: "Esta bien",
-                                className: "green-gradient"
-                            },
-                        }).then(function (accept) {
-                            window.location.href = url + "users/manage";
-                        });
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "El usuario se ha modificado con éxito.",
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        },
+                    }).then(function (accept) {
+<<<<<<< HEAD
+                        window.location.href = url + "users/manage";
+=======
+                        window.location.href = url + "users/details/"+ id;
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
+                    });
 
 
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                            icon: "error",
-                            button:{
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
-                    }
-                });
-            }
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+                }
+            });
+        }
 
-            if (statusBoton == false) {
+        if (statusBoton == false) {
 
-                $('#phone_user').removeAttr('readonly');
-                $('#email').removeAttr('readonly');
-                $('#rol').attr('readonly','disabled');
-                $('#actualizar').text('Guardar');
-                statusBoton=true;
-            }
+            $('#phone_user').removeAttr('readonly');
+            $('#email').removeAttr('readonly');
+            $('#rol').attr('readonly', 'disabled');
+            $('#actualizar').text('Guardar');
+            statusBoton = true;
+        }
 
-        });
+    });
 
 
     function online() {
-      $.ajax({
+        $.ajax({
             async: false,
             method: "GET",
-            url: url+"online",
+            url: url + "online",
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-              return   online=true;
+                return online = true;
             },
             error: function (err) {
-               return  online = false;
+                return online = false;
             }
         });
 
 
-       return online;
+        return online;
     }
 
 
+    $('#button-enable').click(function () {
+        var user_id = $('#id').val();
+        var value = $(this).val();
 
- $('#button-enable').click(function () {
-        var user_id=$('#id').val();
-        var value=$(this).val();
+        var confirm,past;
+
+        if(value=== 'disabled'){
+            confirm='DESHABILITAR';
+            past='deshabilitada'
+        }else{
+            confirm='HABILITAR';
+            past='habilitada';
+        }
 
         swal({
             icon: "info",
             title: "Activar Cuenta",
-            text: "¿Está seguro de habilitar esta cuenta? Si lo hace, no podrá revertir los cambios.",
+            text: "¿Está seguro de '"+ confirm +"' esta cuenta? Si lo hace, no podrá revertir los cambios.",
             buttons: {
                 confirm: {
-                    text: "Habilitar",
+                    text: confirm,
                     value: true,
                     visible: true,
                     className: "green-gradient"
@@ -481,17 +557,17 @@ $(document).ready(function () {
             }
         }).then(function (accept) {
 
-            if(accept){
+            if (accept) {
                 $.ajax({
                     method: "GET",
-                    url: url+"users/account/"+user_id+"/"+value,
+                    url: url + "users/account/" + user_id + "/" + value,
 
                     success: function (response) {
                         swal({
                             title: "¡Bien Hecho!",
-                            text: "La cuenta fue habilitada con éxito.",
+                            text: "La cuenta fue "+ past +", con éxito.",
                             icon: "success",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "green-gradient"
                             },
@@ -511,7 +587,7 @@ $(document).ready(function () {
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                             icon: "error",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
@@ -524,5 +600,42 @@ $(document).ready(function () {
     });
 
 
+    $('#email-confirm').keyup(function () {
+        if($('#email').val()===''){
+            swal({
+                title: "Información",
+                text: "Debe rellenar el campo E-mail  con un correo valido.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $('#email-confirm').val('')
+        }
+
+    });
+
+    $('#email-confirm').change(function () {
+        if($('#email-confirm').val()!==$('#email').val()){
+            swal({
+                title: "Información",
+                text: "Los correos no coinciden.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $('#email-confirm').val();
+        }
+    });
+
+
+
+
 
 });
+
+
+
