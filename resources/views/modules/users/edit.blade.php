@@ -33,7 +33,7 @@
 
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required disabled>
-                                <option value="null">...</option>
+                                <option value="null" disabled selected>...</option>
                                 <option value="V" @if ($user->TypeDocument=='V'){{"selected"}}@endif>V</option>
                                 <option value="E" @if ($user->TypeDocument=='E'){{"selected"}}@endif>E</option>
                             </select>
@@ -68,12 +68,12 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
+                            <input id="phone_user" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
                         </div>
 
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
-                            <input id="email_edit" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly0>
+                            <input id="email_edit" type="email" name="email" class="validate" value="{{ $user->email }}" required readonly>
                             <label for="email_edit">E-mail</label>
                         </div>
 

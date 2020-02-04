@@ -102,6 +102,11 @@
 
                                                 </td>
                                             @endif
+
+
+
+
+
                                         @endcan
                                     </tr>
                                 @endforeach

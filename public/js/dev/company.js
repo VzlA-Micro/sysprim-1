@@ -1,7 +1,10 @@
 $(document).ready(function () {
 
     var url = "http://sysprim.com.devel/";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
 
     $('#RIF').blur(function () {
         if ($('#RIF').val() !== '' && $('#document_type').val() !== null) {
@@ -224,7 +227,7 @@ $(document).ready(function () {
                         $('#button-company').removeAttr('disabled', '');
                         swal({
                             title: "Información",
-                            text: "Debe tener al menos un ciiu para poder registrar una empresa..",
+                            text: "Debe tener al menos un ciiu para poder registrar una empresa.",
                             icon: "info",
                             button: {
                                 text: "Esta bien",
@@ -510,7 +513,7 @@ $(document).ready(function () {
         $('#company-register-ticket').submit(function (e) {
             e.preventDefault();
 
-            console.log(e);
+
 
 
 
@@ -606,15 +609,7 @@ $(document).ready(function () {
                 success: function (response) {
 
                     if (response.status === 'error') {
-                        swal({
-                            title: "Información",
-                            text: response.message,
-                            icon: "info",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
+
                         var company = response.company[0];
                         $('#name').val(company.name);
                         $("#preloader").fadeOut('fast');
@@ -838,11 +833,15 @@ $(document).ready(function () {
                 $('#license').removeAttr('disabled', '');
                 $('#code_catastral').removeAttr('disabled', '');
                 $('#code').removeAttr('disabled', '');
+                $('#search-ciu').removeAttr('disabled','');
+
+
 
             } else {
                 $('#license').attr('disabled', '');
                 $('#code_catastral').attr('disabled', '');
                 $('#code').attr('disabled', '');
+                $('#search-ciu').attr('disabled','');
             }
         });
 
@@ -876,11 +875,9 @@ $(document).ready(function () {
             var band = true;
 
 
-            console.log($('#question_license').val());
-
-
             $('.company-validate').each(function () {
-                if (($(this).val() === '' || $(this).val() === null) && ($('#question_license').val() != 'false') && ($(this).attr('data-validate') == 'licencia'||$(this).attr('data-validate')=='Código Catastral')) {
+
+                if (($(this).val() === '' || $(this).val() === null)) {
 
                     swal({
                         title: "Información",
@@ -891,7 +888,6 @@ $(document).ready(function () {
                             className: "blue-gradient"
                         },
                     });
-
 
                     band = false;
                 } else if ($('#question_license').val() !== 'false' && $('#ciu').val() === undefined) {
@@ -909,13 +905,38 @@ $(document).ready(function () {
 
             });
 
+
+        $('.question_license_validate').each(function () {
+
+
+            if ($('#question_license').val() != 'false' && ($(this).val() === '' || $(this).val() === null)) {
+                swal({
+                    title: "Información",
+                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+                band = false;
+            }
+        });
+
+
             if (band) {
                 $('#map-tab-three').removeClass('disabled');
                 $('ul.tabs').tabs();
                 $('ul.tabs').tabs("select", "map-tab");
             }
 
+
         });
+
+
+
+
 
 
         $('#company-previous').click(function () {
@@ -980,6 +1001,13 @@ $(document).ready(function () {
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 96a422a7376ac63af6e5eeff567dcbec95298bb4
 });
 
     function initMap() {

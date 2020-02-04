@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "https://sysprim.com/";
+    var url = "http://sysprim.com.devel/";
     var user=$('#user').val();
 
 
@@ -264,13 +264,17 @@ $('document').ready(function () {
 
                             var user = response.user.response;
                             $('#name').val(user.nombres + ' ' + user.apellidos);
-                            $('#name').attr('readonly');
+
+                            $('#name').attr('readonly','');
+
                             $('#surname').val(user.apellidos);
+
                             $('#user_name').val(user.nombres);
+
                             $('#type').val('user');
                             $('#id').val(user.id);
 
-
+                            $('#address').removeAttr('readonly', '');
                         } else if (response.type == 'user') {
 
                             var user = response.user;

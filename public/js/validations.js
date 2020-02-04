@@ -17,6 +17,21 @@ $(document).ready(function(){
     });
 
 
+    $('.only-number-positive').change(function () {
+         if($(this).val()<1) {
+             swal({
+                 title: "Información",
+                 text: "El campo no debe ser mayor o igual 1.",
+                 icon: "info",
+                 button: {
+                     text: "Esta bien",
+                     className: "blue-gradient"
+                 },
+             });
+             $(this).val('');
+        }
+    });
+
 
 
 

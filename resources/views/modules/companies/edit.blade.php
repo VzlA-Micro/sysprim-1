@@ -14,7 +14,7 @@
             <div class="col s12 m12 l10 offset-l1">
                 <form action="{{ route('companies.update') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>Editar datos de mi empresa</h5>
+                        <h5>Detalles de mi empresa</h5>
                     </div>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
