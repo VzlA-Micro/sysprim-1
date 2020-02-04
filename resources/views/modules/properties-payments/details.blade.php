@@ -24,7 +24,7 @@
                 @if($statusTax == 'process')
                 <div class="card center-align col s12">
                     <h5>Pago Declarado</h5>
-                    <h1><i class="icon-check green-text"></i></h1>
+                    <h1><i class="icon-access_alarms orange-text"></i></h1>
                     <p>Ya has declarado tu pago, actualmete se encuentra en proceso.</p>
                 </div>
                 @elseif($statusTax == 'verified')
