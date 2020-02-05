@@ -199,7 +199,7 @@ $('document').ready(function () {
                 }).then(function (accept) {
                     $('#address').val(response[0]['direction']);
                 });
-                ;
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');

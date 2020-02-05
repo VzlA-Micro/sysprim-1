@@ -831,7 +831,7 @@ $(document).ready(function () {
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
-                            text: "El Contribuyente no esta registrado, debe registrar el contribuyente.",
+                            text: "El usuario no esta registrado, debe ingresar un valido.",
                             icon: "info",
                             buttons: {
                                 confirm: {

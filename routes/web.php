@@ -1017,6 +1017,11 @@ Route::middleware(['auth'])->group(/**
         Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
         Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
         Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
+        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
+        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
+
+        Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
 
 
 

@@ -12,7 +12,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}">Modulo - Inmuebles Urbanos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -29,39 +30,41 @@
                         <div class="card-content row">
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
                                 <i class="icon-public prefix"></i>
-                                <select name="type_document" id="type_document" required>
+                                <select name="type_document" id="type_document_full" required>
                                     <option value="null" selected disabled>...</option>
                                     <option value="V">V</option>
                                     <option value="E">E</option>
+                                    <option value="J">J</option>
+                                    <option value="J">G</option>
                                     <!--<option value="J">J</option>-->
                                 </select>
-                                <label for="type_document">Documento</label>
+                                <label for="type_document_full">Documento</label>
                             </div>
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
-                                <label for="document">Identificación</label>
+                                <input id="document_full" type="text" name="document_full" data-validate="documento" maxlength="8" class="validate number-date rate" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <label for="document_full">Identificación</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
+                                <input id="name_full" type="text" name="name_full" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
                                        title="Solo puede agregar letras (con acentos)." required>
-                                <label for="name">Nombre</label>
+                                <label for="name_full">Nombre</label>
                             </div>
                             <div class="input-field col s12 m12">
                                 <i class="icon-directions prefix"></i>
-                                <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
-                                <label for="address">Dirección</label>
+                                <textarea name="address" id="address_full" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
+                                <label for="address_full">Dirección</label>
                             </div>
                             <input id="surname" type="hidden" name="surname" class="validate" value="">
                             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
 
 
-                            <div class="input-field col s12">
+                            <div class="input-field col s12" id="condition">
                                 <i class="icon-person prefix"></i>
-                                <select name="status" id="status" required>
-                                    <option value="null" disabled>Selecciona Condicion</option>
-                                    <option value="propietario" selected>Propietario</option>
+                                <select name="status_view" id="status_view" required>
+                                    <option value="null" disabled selected>Selecciona Condicion</option>
+                                    <option value="propietario" >Propietario</option>
                                     <option value="responsable">Responsable</option>
                                 </select>
                                 <label for="model">Condición Legal</label>
@@ -88,6 +91,9 @@
                         </div>
 
                         <input type="hidden" name="id" value="" id="id">
+                        <input type="hidden" name="person_id" value="" id="person_id" >
+                        <input type="hidden" name="status" value="" id="status" >
+
                         <input type="hidden" name="type" value="" id="type">
 
                         <div class="card-content row">
@@ -96,56 +102,56 @@
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C1" id="C1" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C1" id="C1" class="validate number-date" pattern="[0-9]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required value="13" readonly>
                                 <label for="C1">Estado</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C2" id="C2" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C2" id="C2" class="validate number-date" pattern="[0-9]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required value="3" readonly>
                                 <label for="C2">Municipio</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C3" id="C3" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C3" id="C3" class="validate number-date" pattern="[0-9]+"
                                        maxlength="3" minlength="2" title="Solo puede escribir números."
                                        required>
                                 <label for="C3">Parroquia</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C4" id="C4" class="validate number-only" pattern="[0-9a-zA-Z]+"
+                                <input type="text" name="C4" id="C4" class="validate number-date" pattern="[0-9a-zA-Z]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C4">Sector</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C5" id="C5" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C5" id="C5" class="validate number-date" pattern="[0-9]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required>
                                 <label for="C5">Comuna</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C6" id="C6" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C6" id="C6" class="validate number-date" pattern="[0-9]+"
                                        maxlength="4" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C6">Barrio</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C7" id="C7" class="validate number-only" pattern="[0-9]+"
+                                <input type="text" name="C7" id="C7" class="validate number-date" pattern="[0-9]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C7">Manzana</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C8" id="C8" class="validate number-only" pattern="[0-9a-zA-Z]+"
+                                <input type="text" name="C8" id="C8" class="validate number-date" pattern="[0-9a-zA-Z]+"
                                        maxlength="8" minlength="3" title="."
                                        required>
                                 <label for="C8">Terreno</label>
@@ -175,12 +181,12 @@
                                 <i class="icon-panorama_horizontal prefix"></i>
                                 <input type="text" name="area_ground" id="area_ground" class="validate number-only" pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
-                                       required>
+                                       required maxlength="8">
                                 <label for="area_ground">Area de Terreno</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-location_city prefix"></i>
-                                <input type="text" name="area_build" id="area_build" class="validate number-only" pattern="[0-9.]+"
+                                <input type="text" name="area_build" id="area_build" maxlength="8" class="validate number-only" pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                        required>
                                 <label for="area_build">Area de Construcción</label>
@@ -209,7 +215,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-directions prefix"></i>
-                                <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required></textarea>
+                                <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required maxlength="200"></textarea>
                                 <label for="address">Dirección</label>
                             </div>
                             <div class="input-field col s12 location-container tooltipped" data-position="bottom"
@@ -242,7 +248,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/property.js') }}"></script>
+    <script src="{{ asset('js/data/property-module.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"

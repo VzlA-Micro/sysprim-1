@@ -11,36 +11,45 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Modulo - Consultar Inmubles Urbanos</a></li>
+
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Empresas Registradas</h5>
+                        <h5>Inmuebles Urbanos Registrados</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight centered" id="companies"  style="width: 100%">
+                        <table class="highlight centered" id="property"  style="width: 100%">
                             <thead>
                                 <tr>
-                                    <th>Razon Social</th>
-                                    <th>RIF</th>
-                                    <th>Licencia</th>
+                                    <th>Código Catastral</th>
+                                    <th>Tipo de Inmueble</th>
+                                    <th>Ubicación Catastral</th>
+                                    <th>Parroquia </th>
                                     <th>Dirección</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($companies as $company)
+                            @foreach($properties as $property)
+
+
                                 <tr>
-                                    <td>{{$company->name}}</td>
-                                    <td>{{$company->RIF}}</td>
-                                    <td>{{$company->license}}</td>
-                                    <td>{{$company->address}}</td>
-                                    <td><a href="{{route('tickOffice.companies.details',['id'=>$company->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
+                                    <td>{{$property->code_cadastral}}</td>
+                                    <td>{{$property->type->name}}</td>
+                                    <td>{{$property->valueGround->name}}</td>
+                                    <td>{{$property->parish->name}}</td>
+                                    <td>{{$property->address}}</td>
+                                    <td><a href="{{route('property.ticket-office.details-property',['id'=>$property->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
                                 </tr>
+
+
+
+
                             @endforeach
                             </tbody>
                         </table>
@@ -54,7 +63,7 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#companies').DataTable({
+        $('#property').DataTable({
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
