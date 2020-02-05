@@ -17,7 +17,7 @@ class CreateCatastralConstruccionTable extends Migration
             $table->increments('id');
             $table->text('name');
             $table->boolean('regimen_horizontal');
-            $table->float('value_edificacion',8,3);
+            $table->integer('value_edificacion');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCatastralConstruccionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('value_catastral_construccion');
     }
 }
