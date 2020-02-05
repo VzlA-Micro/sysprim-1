@@ -326,4 +326,12 @@ class PropertyController extends Controller
 //        dd($company); die();
         return view('modules.properties.manage', ['properties' => $properties, 'company' => $company]);
     }
+
+
+    public function homeTicketOffice(){
+        return view('modules.ticket-office.property.home');
+    }
+
+
+
 }

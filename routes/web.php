@@ -1010,4 +1010,19 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
 
+
+        /*  Taquillas Property*/
+
+        Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+        Route::get('property/ticket-office/manager-property','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+
+
+
+
+
+
+
+
+
+
     });
