@@ -67,7 +67,6 @@
                         <p>Elige la forma en la realizara su pago de Vehiculo</p>
                     </div>
                     <div class="modal-footer">
-
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".false])}}"
                            class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
                         <a href="{{route('taxes.vehicle',['id'=>$id."-".true])}}"

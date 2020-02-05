@@ -75,7 +75,7 @@ class PropertyTaxesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create($id, $status)
+    public function create($id, $status = 'full')
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
@@ -198,8 +198,17 @@ class PropertyTaxesController extends Controller
         $valorInterest = str_replace('.', '', $valueInterest);
         $interest = str_replace(',', '.', $valorInterest);
 
+        $valueDiscount = strval($request->input('discount'));
+        $valorDiscount = str_replace('.', '', $valueDiscount);
+        $discount = str_replace(',', '.', $valorDiscount);
+
+        $valueFiscalCredit = strval($request->input('fiscal_credit'));
+        $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
+        $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
+
+//        dd($fiscalCredit);
+
         $status = $request->input('status');
-//        dd($valueAlicuota); die();
 
         # --------------------------------------------------------------
         $taxe = new Taxe();
@@ -220,13 +229,56 @@ class PropertyTaxesController extends Controller
 
         $propertyTaxes->base_imponible = $baseImponible;
         $propertyTaxes->recharge = $recharge;
-//        $propertyTaxes->discount = $discount;
+        $propertyTaxes->discount = $discount;
         $propertyTaxes->alicuota = $alicuota;
         $propertyTaxes->interest = $interest;
+        if($fiscalCredit == '') {
+            $propertyTaxes->fiscal_credit = 0;
+        }
+        else {
+            $propertyTaxes->fiscal_credit = $fiscalCredit;
+        }
         $propertyTaxes->status = $status;
 
         $propertyTaxes->save();
+//        dd($propertyTaxes);
         return response()->json(['status' => 'success','taxe_id' => $taxeId]);
+    }
+
+    public function calculateAmount(Request $request) {
+        $value = strval($request->input('amount'));
+        $valor = str_replace('.', '', $value);
+        $amount = str_replace(',', '.', $valor);
+
+        $valueFiscalCredit = strval($request->input('fiscal_credit'));
+        $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
+        $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
+
+        if($fiscalCredit == '' || $fiscalCredit == null) {
+            return response()->json([
+                'status' => 'void',
+                'message' => ''
+            ]);
+        }
+        elseif($fiscalCredit > $amount) {
+            $total = 0;
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El crédito fiscal no puede ser mayor al monto total del impuesto.',
+                'total' => $total,
+            ]);
+        }
+        else {
+            $totalAmount = $amount - $fiscalCredit;
+//            var_dump($totalAmount);
+            $total = number_format($totalAmount,2,',','.');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Su total a pagar se ha reducido por un crédito fiscal.',
+                'total' => $total,
+                'fiscal_credit' => $fiscalCredit
+            ]);
+        }
     }
 
 

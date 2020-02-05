@@ -125,7 +125,7 @@
                         <div class="input-field col s12 center-align">
                             <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
                                         class="icon-file_upload right"></i></a>
-                            <button id="button-vehicle" type="submit" class="btn btn-rounded green waves-effect">
+                            <button id="button-vehicle" type="submit" class="btn btn-rounded btn-large peach waves-effect">
                                 Registrar<i class="icon-send right"></i></button>
                         </div>
                     </div>

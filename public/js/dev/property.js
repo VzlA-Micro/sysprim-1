@@ -119,7 +119,7 @@ $('document').ready(function () {
                     <option value="null" selected disabled>...</option>
                     <option value="V">V</option>
                     <option value="E">E</option>
-                    <option value="J">J</option>
+                    <!--<option value="J">J</option>-->
                 </select>
                 <label for="type_document">Documento</label>
             </div>
