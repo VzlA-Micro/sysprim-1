@@ -212,6 +212,8 @@ class TicketOfficeVehicleController extends Controller
     {
         $vehicle = new Vehicle();
 
+        var_dump($request->input());
+        die();
         $licensePlate = $request->input('license_plate');
         $color = $request->input('color');
         $body_serial = $request->input('bodySerial');
@@ -257,11 +259,37 @@ class TicketOfficeVehicleController extends Controller
         $vehicle->save();
         $id_user = $request->input('user_id');
 
+
         $userVehicle = new UserVehicle();
         $userVehicle->user_id = $id_user;
         $userVehicle->vehicle_id = $vehicle->id;
         $userVehicle->status_user_vehicle = $request->input('status');
         $userVehicle->save();
+
+        if ($status == "propietario") {
+            if (isset($idCompany)) {
+                $userVehicle->user_id = \Auth::user()->id;
+                $userVehicle->vehicle_id = $vehicle->id;
+                $userVehicle->person_id = null;
+                $userVehicle->company_id = $idCompany;
+                $userVehicle->status_user_vehicle = $request->input('status');
+            } else {
+                $userVehicle->user_id = \Auth::user()->id;
+                $userVehicle->vehicle_id = $vehicle->id;
+                $userVehicle->person_id = \Auth::user()->id;
+                $userVehicle->company_id = null;
+                $userVehicle->status_user_vehicle = $request->input('status');
+            }
+
+        } else {
+            $userVehicle->user_id = \Auth::user()->id;
+            $userVehicle->vehicle_id = $vehicle->id;
+            $userVehicle->person_id = $owner_id;
+            $userVehicle->company_id = null;
+            $userVehicle->status_user_vehicle = $request->input('status');
+
+        }
+
     }
 
     public function statusVehicle(Request $request)
