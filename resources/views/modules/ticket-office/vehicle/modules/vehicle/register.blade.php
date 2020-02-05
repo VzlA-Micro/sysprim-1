@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn green text  waves-light">
+                                <a href="#" id='data-next' class="btn peach text  waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>
@@ -188,11 +188,11 @@
                                     e introduce los siguientes datos:<br> <b>1- Marca</b><br> <b>2- Modelo</b><br></p>
                             </div>
                             <div class="input-field col s12 center-align">
-                                <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
+                                <a href="#" id="button-brand" class="btn btn-rounded blue waves-effect">Registrar Marca<i
                                             class="icon-file_upload right"></i></a>
                             </div>
                             <div class="input-field col s6 left-align">
-                                <a href="#" id="company-previous" class="btn peach waves-effect waves light">
+                                <a href="#" id="company-previous" class="btn btn-large btn-rounded peach waves-effect waves light">
                                     Anterior
                                     <i class="icon-navigate_before left"></i>
                                 </a>
