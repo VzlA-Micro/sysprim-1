@@ -17,6 +17,15 @@ class Property extends Model
                 'status');
     }
 
+
+
+    public function person(){
+        return $this->belongsTo('App\User','person_id');
+    }
+
+
+
+
     public function catastralConstruction() {
         return $this->belongsToMany('App\CatastralConstruccion','val_cat_const_inmu')
             ->withPivot('value_catas_const_id');
@@ -27,6 +36,12 @@ class Property extends Model
             ->withPivot('value_catas_const_id');
     }*/
 
+
+
+
+    public function parish(){
+        return $this->belongsTo('App\Parish','parish_id');
+    }
     public function valueGround(){
         return $this->belongsTo('App\CatastralTerreno','value_cadastral_ground_id');
     }

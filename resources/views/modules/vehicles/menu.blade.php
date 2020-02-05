@@ -38,7 +38,7 @@
                                    class="btn-app white purple-text">
                                     <i class="icon-directions_car"></i>
                                     <span class="truncate">{{ $vehicle->license_plate}}</span>
-                                    <span class="truncate">(Juridíco)</span>
+                                    <span class="truncate"> <b>Juridíco</b></span>
                                 </a>
                             </div>
                         @else
@@ -47,7 +47,7 @@
                                    class="btn-app white purple-text">
                                     <i class="icon-directions_car"></i>
                                     <span class="truncate">{{ $vehicle->license_plate}}</span>
-                                    <span class="truncate">(Natural)</span>
+                                    <span class="truncate"><b>Natural</b></span>
                                 </a>
                             </div>
                         @endif

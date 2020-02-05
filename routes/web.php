@@ -759,7 +759,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('ticketOffice/vehicle/generatedPlanilla/{value}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
 
         Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
-
+        Route::get('vehicle/change-user-web/{type}/{document}/{id}','TicketOfficeVehicleController@changeUserWeb')->name('vehicle.changeUserWeb');
+        Route::get('vehicle/change-user/{type}/{document}/{id}','TicketOfficeVehicleController@changeUser')->name('vehicle.changeUser');
         Route::get('/ticketOffice/vehicle/payments/', function () {
             return view('modules.ticket-office.vehicle.modules.payment.home');
         })->name('ticketOffice.vehicle.payments');
@@ -1021,7 +1022,13 @@ Route::middleware(['auth'])->group(/**
         /*  Taquillas Property*/
 
         Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
-        Route::get('property/ticket-office/manager-property','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+        Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
+        Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
+        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
+        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
+
+        Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
 
 
 

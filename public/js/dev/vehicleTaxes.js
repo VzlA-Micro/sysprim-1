@@ -22,6 +22,8 @@ $('document').ready(function () {
             success: function (data) {
                 console.log(data[0]);
                 console.log(data[1]);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast')
                 if (data[0]) {
                     swal({
                         title: "Valor incorrecto",
@@ -31,6 +33,8 @@ $('document').ready(function () {
                     });
                     $('#continue').prop('disabled', true);
                 } else {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast')
                     $('#fiscal_credits').val(data[2]);
                     $('#total').val(data[1]);
                     $('#continue').prop('disabled', false);

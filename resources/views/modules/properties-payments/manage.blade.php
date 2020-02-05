@@ -21,8 +21,8 @@
             </div>
             @if(\Carbon\Carbon::now()->format('m') >= '01' || \Carbon\Carbon::now()->format('m') <= '03')
                 <div class="col s12 m4">
-                    <a href="#mode" class="btn-app white green-text modal-trigger">
-                        <i class="icon-payment"></i>
+                    <a href="#mode" class="btn-app white red-text modal-trigger">
+                        <i class="icon-report"></i>
                         <span class="truncate">Declarar Inmueble</span>
                     </a>
                 </div>

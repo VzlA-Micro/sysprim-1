@@ -11,8 +11,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar
+                            Vehículo</a></li>
                     <li class="breadcrumb-item"><a href="#">Ver Vehículos</a></li>
                 </ul>
             </div>
@@ -35,20 +37,29 @@
 
                             </tr>
                             </thead>
+
                             <tbody>
-                            @foreach($show as $vehicle)
+                            @if(isset($show))
+                                @foreach($show as $vehicle)
+                                    <tr>
+                                        <td>{{$vehicle->license_plate}}</td>
+                                        <td>{{$vehicle->color}}</td>
+                                        <td>{{$vehicle->model->brand->name}}</td>
+                                        <td>{{$vehicle->model->name}}</td>
+                                        <td>{{$vehicle->year}}</td>
+                                        <td>
+                                            <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}"
+                                               class="btn btn-floating orange waves-light"><i
+                                                        class="icon-pageview"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>{{$vehicle->license_plate}}</td>
-                                    <td>{{$vehicle->color}}</td>
-                                    <td>{{$vehicle->model->brand->name}}</td>
-                                    <td>{{$vehicle->model->name}}</td>
-                                    <td>{{$vehicle->year}}</td>
-                                    <td>
-                                        <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light"><i
-                                                    class="icon-pageview"></i></a>
-                                    </td>
+                                    <td>No hay vehículos registrados hasta el momento</td>
                                 </tr>
-                            @endforeach
+
+                            @endif
                             </tbody>
                         </table>
                     </div>

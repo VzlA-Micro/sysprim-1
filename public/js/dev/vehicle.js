@@ -348,7 +348,8 @@ $('#model').prop('disabled', true);
                 success: function (data) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-console.log(data);
+
+
                     if (data['status'] == "error") {
                         swal({
                             title: "¡Placa Registrada!",
@@ -712,7 +713,7 @@ console.log(data);
 
     });
 
-
+/*
     $('#company-next').click(function () {
         var band = true;
 
@@ -751,12 +752,7 @@ console.log(data);
         }
 
     });
-
-
-    $('#company-previous').click(function () {
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs("select", "user-tab");
-    });
+*/
 
     $('#vehicle-register-ticket').submit(function (e) {
         e.preventDefault();
@@ -777,6 +773,7 @@ console.log(data);
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
+                console.log(response);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
@@ -789,7 +786,7 @@ console.log(data);
                     },
                 }).then(function (accept) {
                     if (accept) {
-                        window.location.href = url + "ticketOffice/vehicle/read";
+                        //window.location.href = url + "ticketOffice/vehicle/read";
                     }
                 });
 

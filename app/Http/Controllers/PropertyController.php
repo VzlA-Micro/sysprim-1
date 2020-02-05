@@ -15,7 +15,7 @@ use App\Alicuota;
 use App\Property;
 use App\Company;
 use App\User;
-
+use App\Helpers\CedulaVE;
 class PropertyController extends Controller
 {
 
@@ -333,4 +333,188 @@ class PropertyController extends Controller
     public function homeTicketOffice(){
         return view('modules.properties.ticket-office.home');
     }
+
+
+    public function managerPropertyTicketOffice(){
+        return view('modules.properties.module.manager');
+    }
+
+
+    public function createPropertyTicketOffice(){
+        $catastralTerre = CatastralTerreno::all();
+        $catastralConst = CatastralConstruccion::all();
+        $parish = Parish::all();
+        $alicuota= Alicuota::all();
+        return view('modules.properties.module.register',[
+            'parish' => $parish,
+            'catasTerreno' => $catastralTerre,
+            'catasConstruccion' => $catastralConst,
+            'alicuota'=>$alicuota]);
+    }
+
+
+    public function detailsPropertyTicketOffice($id){
+        $property=Property::find($id);
+        $catastralTerre = CatastralTerreno::all();
+        $catastralConst = CatastralConstruccion::all();
+        $parish = Parish::all();
+        $alicuota= Alicuota::all();
+
+
+        return view('modules.properties.module.details',[
+            'parish' => $parish,
+            'catasTerreno' => $catastralTerre,
+            'catasConstruccion' => $catastralConst,
+            'alicuota'=>$alicuota,
+            'property'=>$property
+
+        ]);
+    }
+
+    public function readPropertyTicketOffice(){
+        $properties=Property::orderBy('id','desc')->get();
+        return view('modules.properties.module.read',['properties'=>$properties]);
+    }
+
+
+
+
+    public function savePropertyTicketOffice(Request $request){
+
+
+        $type=$request->input('type');
+
+        $person_id=null;
+        $company_id=null;
+
+
+        $code_cadastral =
+            $request->input('C1') .
+            '-' . $request->input('C2') .
+            '-' . $request->input('C3') .
+            '-' . $request->input('C4') .
+            '-' . $request->input('C5') .
+            '-' . $request->input('C6') .
+            '-' . $request->input('C7') .
+            '-' . $request->input('C8');
+
+        $location_cadastral = $request->input('location_cadastral');
+        $area_build = $request->input('area_build');
+        $area_ground = $request->input('area_ground');
+        $parish = $request->input('parish');
+        $address = $request->input('address');
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $typeConst = $request->input('type_const');
+        $type_inmueble_id = $request->input('type_inmueble_id');
+        $status = $request->input('status');
+//        $type = $request->input('type');
+        $owner_id = $request->input('id');
+        $person_id = $request->input('person_id');
+
+
+        $property = new Property();
+        $property->parish_id = $parish;
+        $property->value_cadastral_ground_id = $location_cadastral;
+        $property->code_cadastral = $code_cadastral;
+        $property->address = $address;
+        $property->area_build = $area_build;
+        $property->area_ground = $area_ground;
+        $property->lat = $lat;
+        $property->lng = $lng;
+        $property->type_inmueble_id = $type_inmueble_id;
+        $property->value_cadastral_build_id = $typeConst;
+//        dd($owner_id); die();
+        $property->save();
+
+        $id = $property->id; // Obtengo el id del inmueble que registro
+
+
+
+
+            if($type == 'company'){
+                $company=Company::find($owner_id);
+                $user = $company->users()->get();
+
+
+                $user_id = $user[0]->id;
+                $company_id = $owner_id;
+            } else {
+                $user_id = $owner_id;
+            }
+
+
+
+
+//        $property->catastralConstruction()->attach(['value_catas_const_id' => $typeConst], ['property_id' => $id]); // Inserto en la tabla puente
+        $property->users()->attach(['property_id' => $id], [
+                                                            'user_id' => $user_id,
+                                                            'status' => $status,
+                                                            'person_id' => $person_id,
+                                                            'company_id' => $company_id
+            ]);
+
+        /*elseif($status == 'responsable') {
+            $property->users()->attach(
+                ['property_id' => $id],
+                ['user_id' => $user_id],
+                ['status' => $status],
+                ['person_id' => $owner_id]);
+        }*/
+        $valCat = new Val_cat_const_inmu();
+        $valCat->value_catas_const_id = $typeConst;
+        $valCat->property_id = $id;
+        $valCat->save();
+        return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    public function findTaxPayers($type_document,$document,$band){
+        if($type_document=='V'||$type_document=='E'){
+            $user=User::where('ci', $type_document.$document)->get();
+            if($user->isEmpty()){
+                if($band==='true'){
+                    $user=CedulaVE::get($type_document,$document,false);
+                    $data=['status'=>'success','type'=>'not-user','user'=>$user];
+                }else{
+                    $data=['status'=>'success','type'=>'not-user'];
+                }
+            }else{
+                $data=['status'=>'success','type'=>'user','user'=>$user[0]];
+            }
+
+        }else{
+            $company=Company::where('RIF', $type_document.$document)->orWhere('license',$type_document.$document)->get();
+
+            if($company->isEmpty()){
+                $data=['status'=>'error','type'=>'not-company','company'=>null];
+            }else{
+
+                if($company->count()>1){
+                    $data=['status'=>'error','message'=>'Este RIF, posse 2 licencia, por lo cual debe ingresar una licencia para indentificarla, selecione de tipo de documento la L e introduza el N de licencia..'];
+
+                }else{
+                    $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+                }
+
+            }
+
+        }
+        return response()->json($data);
+    }
+
+
+
 }
