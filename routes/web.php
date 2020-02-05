@@ -753,7 +753,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('ticketOffice/vehicle/generatedPlanilla/{value}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
 
         Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
-
+        Route::get('vehicle/change-user-web/{type}/{document}/{id}','TicketOfficeVehicleController@changeUserWeb')->name('vehicle.changeUserWeb');
+        Route::get('vehicle/change-user/{type}/{document}/{id}','TicketOfficeVehicleController@changeUser')->name('vehicle.changeUser');
         Route::get('/ticketOffice/vehicle/payments/', function () {
             return view('modules.ticket-office.vehicle.modules.payment.home');
         })->name('ticketOffice.vehicle.payments');

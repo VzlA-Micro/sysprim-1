@@ -1,4 +1,3 @@
-
 var url = localStorage.getItem('url');
 
 var updateType = true;
@@ -281,7 +280,7 @@ $('document').ready(function () {
             url: url + "vehicles/verifyLicense",
             data: {
                 license: license,
-                id:id
+                id: id
             },
 
             beforeSend: function () {
@@ -791,14 +790,13 @@ $('document').ready(function () {
     });
 
 
-
     $('#document').keyup(function () {
-        if($('#type_document').val()===null){
+        if ($('#type_document').val() === null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar el tipo de documento, antes de ingresar el número de documento.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -819,11 +817,11 @@ $('document').ready(function () {
     });
 
     $('#data-next').click(function () {
-        band=true;
+        band = true;
 
 
         $('.rate').each(function () {
-            if(($(this).val()===''||$(this).val()===null) && $('#type_company').val()!='company'&& $(this).attr('data-validate')!='email') {
+            if (($(this).val() === '' || $(this).val() === null) && $('#type_company').val() != 'company' && $(this).attr('data-validate') != 'email') {
                 swal({
                     title: "Información",
                     text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
@@ -839,8 +837,7 @@ $('document').ready(function () {
         });
 
 
-
-        if(band) {
+        if (band) {
             if ($('#id').val() == '') {
                 var type = $('#type').val();
                 var name;
@@ -862,12 +859,12 @@ $('document').ready(function () {
                     data: {
                         name: name,
                         surname: surname,
-                        email:email,
+                        email: email,
                         type_document: type_document,
                         document: document,
                         address: address,
                         type: type,
-                        user:user,
+                        user: user,
 
                     },
                     url: url + 'rate/taxpayers/company-user/register',
@@ -915,8 +912,8 @@ $('document').ready(function () {
     });
 
     function findDocument() {
-        var type_document=$('#type_document').val();
-        var document=$('#document').val();
+        var type_document = $('#type_document').val();
+        var document = $('#document').val();
         $('#surname').val('');
         $('#user_name').val('');
         $('#type').val('');
@@ -924,17 +921,17 @@ $('document').ready(function () {
         $('#name').val('');
 
 
-        if(document!=='') {
+        if (document !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "rate/taxpayers/find/" + type_document  +"/"+document,
+                url: url + "rate/taxpayers/find/" + type_document + "/" + document,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
 
-                    if(response.type=='not-user') {
+                    if (response.type == 'not-user') {
                         var user = response.user.response;
                         $('#name').val(user.nombres + ' ' + user.apellidos);
                         $('#name').attr('readonly');
@@ -943,7 +940,7 @@ $('document').ready(function () {
                         $('#type').val('user');
                         $('#id').val(user.id);
 
-                    }else if(response.type=='user'){
+                    } else if (response.type == 'user') {
 
                         var user = response.user;
                         $('#name').val(user.name + ' ' + user.surname);
@@ -956,11 +953,11 @@ $('document').ready(function () {
 
                         $('#type').val('user');
 
-                        $('#address').attr('readonly','');
-                        $('#email').attr('readonly','');
+                        $('#address').attr('readonly', '');
+                        $('#email').attr('readonly', '');
                         $('#statusTicketOffice').show();
 
-                    }else if(response.type=='company'){
+                    } else if (response.type == 'company') {
                         var company = response.company;
                         $('#name').val(company.name);
                         $('#address').val(company.address);
@@ -968,11 +965,11 @@ $('document').ready(function () {
                         $('#address').attr('disabled');
                         $('#id').val(company.id);
                         $('#type').val('company');
-                        $('#address').attr('readonly','');
-                        $('#email').attr('readonly','');
+                        $('#address').attr('readonly', '');
+                        $('#email').attr('readonly', '');
                         $('#statusTicketOffice').hide();
 
-                    }else if(response.type=='not-company'){
+                    } else if (response.type == 'not-company') {
                         swal({
                             title: "Información",
                             text: "La empresa no esta registrada en el sistema, debes ingresar un empresa valida.",
@@ -999,8 +996,6 @@ $('document').ready(function () {
                         });
 
 
-
-
                         $('#document').val('');
                     }
 
@@ -1024,7 +1019,6 @@ $('document').ready(function () {
     }
 
 
-
     $('#general-next').click(function () {
 
         if ($('#vehicle_id').val() === '') {
@@ -1044,7 +1038,7 @@ $('document').ready(function () {
             console.log(period);
             $.ajax({
                 type: "get",
-                url: url + "ticketOffice/vehicle/generatedPlanilla/" + id + "-" + period,
+                url: url + "ticketOffice/vehicle/generatedPlanilla/" + id + "-" + true,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -1200,8 +1194,8 @@ $('document').ready(function () {
                             }).then(function (options) {
                                 if (options) {
                                     location.reload();
-                                }else {
-                                    window.location=url+"ticketOffice/vehicle/taxes/";
+                                } else {
+                                    window.location = url + "ticketOffice/vehicle/taxes/";
                                 }
                             });
                         }
@@ -1226,18 +1220,15 @@ $('document').ready(function () {
     });
 
 
-
-
-
     $('.payroll').change(function () {
 
-        var c=0;
+        var c = 0;
 
-        $("input[type=checkbox]:checked").each(function(index, check ){
+        $("input[type=checkbox]:checked").each(function (index, check) {
             c++;
         });
 
-        if(c>1) {
+        if (c > 1) {
             swal({
                 title: "Información",
                 text: "Solo se puede selecionar una planilla para realiazar el pago. ",
@@ -1250,18 +1241,16 @@ $('document').ready(function () {
     });
 
 
-
-
     $('#select-next').click(function () {
         var acum = '';
-        var band=false;
+        var band = false;
 
         $('input.payroll:checked').each(function () {
-            band=true;
+            band = true;
             acum += $(this).val() + '-';
         });
 
-        if(band){
+        if (band) {
             $('#two').removeClass('disabled');
             $('ul.tabs').tabs("select", "payment-tab");
             $.ajax({
@@ -1273,12 +1262,12 @@ $('document').ready(function () {
                 },
                 success: function (response) {
 
-                    if(response.status==='success'){
+                    if (response.status === 'success') {
                         $('.taxes_id').each(function () {
                             $(this).val(acum);
                         });
 
-                        $('.amount').each(function(){
+                        $('.amount').each(function () {
                             $(this).val(response.amount);
                         });
 
@@ -1298,14 +1287,14 @@ $('document').ready(function () {
 
                         M.updateTextFields();
 
-                    }else{
+                    } else {
                         swal({
                             title: "!Bien Hecho",
                             text: "La planilla ingresada se ha verificada con éxito, ya que el dinero a pagar es igual a 0.",
                             icon: "success",
                             button: "Ok",
                         }).then(function () {
-                            window.open(url + 'ticket-office/generate-receipt/' +acum, "RECIBO DE PAGO", "width=500, height=600");
+                            window.open(url + 'ticket-office/generate-receipt/' + acum, "RECIBO DE PAGO", "width=500, height=600");
 
                             location.reload();
                         });
@@ -1324,7 +1313,7 @@ $('document').ready(function () {
                     });
                 }
             });
-        }else{
+        } else {
             swal({
                 title: "Información",
                 text: "Debes selecionar una planilla válida.",
@@ -1334,8 +1323,6 @@ $('document').ready(function () {
         }
 
     });
-
-
 
 
     /*
@@ -1458,7 +1445,7 @@ $('document').ready(function () {
                             localStorage.setItem('bank', bank);
                             var hoy = new Date();
                             var dd = hoy.getDate();
-                            localStorage.setItem('day',dd);
+                            localStorage.setItem('day', dd);
                             swal({
                                 title: "Bien hecho",
                                 text: "Ya puedes empezar a registrar pagos valido.",
@@ -1482,14 +1469,14 @@ $('document').ready(function () {
     var hoy = new Date();
     var dd = hoy.getDate();
 
-    if(localStorage.getItem('day')!=dd){
+    if (localStorage.getItem('day') != dd) {
         localStorage.removeItem('bank');
         localStorage.removeItem('lot');
         localStorage.removeItem('day');
     }
 
 
-    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
+    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null && $('.content').val() !== undefined) {
         swal({
             title: "Información",
             text: "Debe abrir caja, para empezar a registrar pagos.",
@@ -1515,7 +1502,6 @@ $('document').ready(function () {
 
         $('#content').css('display', 'block');
     }
-
 
 
     $('#close-cashier').click(function () {
@@ -1559,18 +1545,17 @@ $('document').ready(function () {
     });
 
 
-
     $('#register-payment').submit(function (e) {
         e.preventDefault();
         var amount = $('#amount_total').val();
         var amount_pay = $('#amount').val();
 
-        amount=amount.replace(/\./g,'');
-        amount_pay=amount_pay.replace(/\./g,'');
+        amount = amount.replace(/\./g, '');
+        amount_pay = amount_pay.replace(/\./g, '');
 
 
-        amount=amount.replace(/,/g, "");
-        amount_pay=amount_pay.replace(/,/g, "");
+        amount = amount.replace(/,/g, "");
+        amount_pay = amount_pay.replace(/,/g, "");
 
 
         if (parseInt(amount_pay) > parseInt(amount)) {
@@ -1618,12 +1603,11 @@ $('document').ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
-                            if(accept||!accept){
+                            if (accept || !accept) {
                                 generateReceipt();
                                 location.reload();
                             }
                         });
-
 
 
                     }
@@ -1651,13 +1635,13 @@ $('document').ready(function () {
     });
 
     $('input[type="text"].money_keyup').on('keyup', function (event) {
-        var total=$(this).val();
+        var total = $(this).val();
 
-        if($(this).val()==0&&$(this).val().toString().length>=2){
+        if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
             $(this).val('');
-        }else if($(this).val().toString().length>=2&&total[0]==0){
+        } else if ($(this).val().toString().length >= 2 && total[0] == 0) {
             $(this).val('');
-        }else{
+        } else {
             $(event.target).val(function (index, value) {
                 return value.replace(/\D/g, "")
                     .replace(/([0-9])([0-9]{2})$/, '$1,$2')
@@ -1667,8 +1651,8 @@ $('document').ready(function () {
     });
 
     function generateReceipt() {
-        var taxes_id=$('.taxes_id').val();
-        window.open(url + 'vehicle/payments/taxes/download/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
+        var taxes_id = $('.taxes_id').val();
+        window.open(url + 'vehicle/payments/taxes/download/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
     }
 
 
@@ -1731,26 +1715,26 @@ $('document').ready(function () {
                         }).then(function (accept) {
                             var link;
 
-                            link='<a href='+url+'rate/ticket-office/details/'+taxe.id+'"' +
+                            link = '<a href=' + url + 'rate/ticket-office/details/' + taxe.id + '"' +
                                 '\nclass="btn indigo waves-effect waves-light"><i\n' +
                                 'class="icon-pageview left"></i>Detalles</a>';
 
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
-                                '<td><i class="icon-check text-green"></i>'+taxe.created_at+'</td>'+
-                                '<td>' +taxe.code+'</td>'+
-                                '<td>' +taxe.branch+'</td>'+
-                                '<td>' +taxe.amountFormat+'</td>'+
-                                '<td>' +'<p>' +
+                                '<td><i class="icon-check text-green"></i>' + taxe.created_at + '</td>' +
+                                '<td>' + taxe.code + '</td>' +
+                                '<td>' + taxe.branch + '</td>' +
+                                '<td>' + taxe.amountFormat + '</td>' +
+                                '<td>' + '<p>' +
                                 '  <label>\n' +
                                 '           <input type="checkbox" name="payroll" class="payroll"\n' +
-                                '                       value="'+taxe.id+'"/>\n' +
+                                '                       value="' + taxe.id + '"/>\n' +
                                 '                         <span></span>\n' +
                                 '                                  </label>\n' +
-                                '</p>'+
-                                '</td>'+
-                                '<td>'+link+'</td>'+
+                                '</p>' +
+                                '</td>' +
+                                '<td>' + link + '</td>' +
                                 '</tr>');
 
                             $(this).val();
@@ -1767,7 +1751,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-                },error: function (err) {
+                }, error: function (err) {
                     $('#license').val('');
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -1785,7 +1769,7 @@ $('document').ready(function () {
     $('#register-payment-depo').submit(function (e) {
         e.preventDefault();
 
-        if($('input:radio:checked.check-payment').val()!==undefined&&$('input:radio:checked.bank-div').val()!==undefined){
+        if ($('input:radio:checked.check-payment').val() !== undefined && $('input:radio:checked.bank-div').val() !== undefined) {
             $.ajax({
                 url: url + "ticket-office/payment/save",
                 contentType: false,
@@ -1798,7 +1782,7 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    var taxes_id=$('.taxes_id').val();
+                    var taxes_id = $('.taxes_id').val();
                     swal({
                         title: "¡Bien hecho!",
                         text: "Planilla ingresa y registrada con éxito.",
@@ -1807,7 +1791,7 @@ $('document').ready(function () {
                     }).then(function (accept) {
                         $('#amount_total_tr').val('');
                         if ($('#company_id').val() !== '') {
-                            window.open(url + 'vehicle/payments/taxes/download/' +taxes_id+'/false', "RECIBO DE PAGO", "width=500, height=600");
+                            window.open(url + 'vehicle/payments/taxes/download/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
                             location.reload();
                         }
 
@@ -1829,15 +1813,15 @@ $('document').ready(function () {
                 }
             });
 
-        }else{
-            if($('input:radio:checked.check-payment').val()===undefined){
+        } else {
+            if ($('input:radio:checked.check-payment').val() === undefined) {
                 swal({
                     title: "Información",
                     text: "Debes de selecionar la forma de pago en que se va hacer el deposito.",
                     icon: "warning",
                     button: "Ok",
                 });
-            }else if($('input:radio:checked.bank-div').val()===undefined){
+            } else if ($('input:radio:checked.bank-div').val() === undefined) {
                 swal({
                     title: "Información",
                     text: "Debes de selecionar el banco en el cual se va realizar el deposito.",
@@ -1857,14 +1841,12 @@ $('document').ready(function () {
         var amount = $('#amount_total_tr').val();
         var amount_pay = $('#amount_tr').val();
 
-        amount=amount.replace(/\./g,'');
-        amount_pay=amount_pay.replace(/\./g,'');
+        amount = amount.replace(/\./g, '');
+        amount_pay = amount_pay.replace(/\./g, '');
 
 
-        amount=amount.replace(/,/g, "");
-        amount_pay=amount_pay.replace(/,/g, "");
-
-
+        amount = amount.replace(/,/g, "");
+        amount_pay = amount_pay.replace(/,/g, "");
 
 
         if (parseInt(amount_pay) > parseInt(amount)) {
@@ -1877,7 +1859,7 @@ $('document').ready(function () {
 
         } else {
 
-            if($('#bank_destinations_tr').val()!=null&&$('#bank_tr').val()!=null) {
+            if ($('#bank_destinations_tr').val() != null && $('#bank_tr').val() != null) {
                 $.ajax({
                     url: url + "ticket-office/payment/save",
                     contentType: false,
@@ -1937,15 +1919,15 @@ $('document').ready(function () {
                     }
                 });
 
-            }else{
-                if($('#bank_destinations_tr').val()===null){
+            } else {
+                if ($('#bank_destinations_tr').val() === null) {
                     swal({
                         title: "Información",
                         text: "Debe selecionar el banco donde el dinero va ingresar.",
                         icon: "info",
                         button: "Ok",
                     });
-                }else if($('#bank_tr').val()===null){
+                } else if ($('#bank_tr').val() === null) {
                     swal({
                         title: "Información",
                         text: "Debe selecionar el banco de donde se realizara la transferencia.",
@@ -1956,21 +1938,19 @@ $('document').ready(function () {
             }
 
 
-
         }
 
     });
 
     $('.check-payment').click(function () {
-        if($(this).val()==='PPC'){
+        if ($(this).val() === 'PPC') {
             $('#ref_depo').removeAttr('readonly');
-        }else{
-            $('#ref_depo').attr('readonly','readonly');
+        } else {
+            $('#ref_depo').attr('readonly', 'readonly');
             $('#ref_depo').val('');
         }
         $('#payments_type_depo').val($(this).val());
     });
-
 
 
     $('#email').blur(function () {
@@ -1980,7 +1960,7 @@ $('document').ready(function () {
             var email = $('#email').val();
             $.ajax({
                 method: "GET",
-                url: url+"rate/ticket-office/verify-email/"+email,
+                url: url + "rate/ticket-office/verify-email/" + email,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -1994,7 +1974,7 @@ $('document').ready(function () {
                             title: "¡Oh no!",
                             text: response.message,
                             icon: "error",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
@@ -2009,7 +1989,7 @@ $('document').ready(function () {
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
-                        button:{
+                        button: {
                             text: "Entendido",
                             className: "blue-gradient"
                         },
@@ -2020,4 +2000,203 @@ $('document').ready(function () {
         }
 
     });
+
+
+    $('#change-users').click(function () {
+        var template = `
+        <h5 class="center">Cambiar Usuario</h5>
+        <div class="input-field col s6 tooltipped" data-tooltip="V: Venezolano; E: Extranjero">
+            <i class="icon-public prefix"></i>
+            <select name="typeDocument" id="typeDocument" required>
+                <option value="J" selected>J</option>
+                <option value="E" >E</option>
+                <option value="G" >G</option>
+                <option value="V" >V</option>
+            </select>
+            <label for="typeDocument">Tipo de documento</label>
+        </div>
+        <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                <i class="icon-person prefix"></i>
+                <input id="Document" type="text" name="Document" class="validate" pattern="[0-9]+"
+                    title="Solo puede escribir números." required
+                    value="">
+                <label for="Document">Documento</label>
+        </div>`;
+
+        $('#change').html(template);
+        $('select').formSelect();
+        $('#Document').focus();
+        $(this).hide();
+        $('#save-change').removeClass('hide');
+
+    });
+
+    $('#save-change').click(function () {
+        var type = $('#typeDocument').val();
+        var document = $('#Document').val();
+        var id = $('#id').val();
+
+        console.log(document);
+        console.log(type);
+        console.log(id);
+
+        $.ajax({
+            type: "get",
+            url: url + "vehicle/change-user-web/" + type + "/" + document + "/" + id,
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                if (data['status'] === "success") {
+                    swal({
+                        title: "Cambio de Usuario",
+                        text: 'Ha sido exitoso',
+                        icon: "success",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient",
+                            value:true
+                        },
+
+                    }).then(function (options) {
+                        if (options) {
+                            location.reload();
+                        }
+                    });
+                }else{
+                    swal({
+                        title: "Cambio de Usuario",
+                        text: 'Usuario no encontrado, Verifica los datos por favor',
+                        icon: "info",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient",
+                            value:true
+                        },
+
+                    })
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+
+        });
+    });
+
+    $('#changeUW').click(function () {
+        var template = `
+        <h5 class="center">Cambiar Usuario Web</h5>
+        <div class="input-field col s6 tooltipped" data-tooltip="V: Venezolano; E: Extranjero">
+            <i class="icon-public prefix"></i>
+            <select name="typeDocument" id="typeDocument" required>
+                <option value="E" >E</option>
+                <option value="V"selected >V</option>
+            </select>
+            <label for="typeDocument">Tipo de documento</label>
+        </div>
+        <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                <i class="icon-person prefix"></i>
+                <input id="Document" type="text" name="Document" class="validate" pattern="[0-9]+"
+                    title="Solo puede escribir números." required
+                    value="">
+                <label for="Document">Documento</label>
+        </div>`;
+
+        $('#changeUserWeb').html(template);
+        $('select').formSelect();
+        $('#Document').focus();
+        $(this).hide();
+        $('#saveUW').removeClass('hide');
+    });
+
+    $('#saveUW').click(function () {
+        var type = $('#typeDocument').val();
+        var document = $('#Document').val();
+        var id = $('#id').val();
+
+        console.log(document);
+        console.log(type);
+        console.log(id);
+
+        $.ajax({
+            type: "get",
+            url: url + "vehicle/change-user-web/" + type + "/" + document + "/" + id,
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                if (data['status'] === "success") {
+                    swal({
+                        title: "Cambio de Usuario",
+                        text: 'Ha sido exitoso',
+                        icon: "success",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient",
+                            value:true
+                        },
+
+                    }).then(function (options) {
+                        if (options) {
+                            location.reload();
+                        }
+                    });
+                }else{
+                    swal({
+                        title: "Cambio de Usuario",
+                        text: 'Usuario no encontrado, Verifica los datos por favor',
+                        icon: "info",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient",
+                            value:true
+                        },
+
+                    })
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+
+
 });
+

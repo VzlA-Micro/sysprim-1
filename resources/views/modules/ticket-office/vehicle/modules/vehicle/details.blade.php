@@ -9,9 +9,12 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.read') }}">Ver Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículo</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar
+                            Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.read') }}">Ver Vehículos</a>
+                    </li>
                     <li class="breadcrumb-item"><a href="#">Detalles Vehículos</a></li>
                 </ul>
             </div>
@@ -25,19 +28,147 @@
 
                         <input type="hidden" name="id" id="id" value="{{ $vehicle->id }}">
 
-                        <div class="input-field col s6">
+                        <h5 class="center">Datos del propietario</h5>
+
+                        @if(isset($vehicle->company[0]))
+                            <div class="input-field col s6 tooltipped" data-position="bottom"
+                                 data-tooltip="V: Venezolano; E: Extranjero">
+                                <i class="icon-public prefix"></i>
+                                <select name="nationality" id="nationality" required disabled>
+                                    <option value="null">...</option>
+                                    <option value="V" selected>{{$vehicle->company[0]->typeDocument}}</option>
+                                    <option value="E" >E</option>
+                                    <option value="E" >G</option>
+                                    <option value="E" >V</option>
+                                </select>
+                                <label for="nationality">Nacionalidad</label>
+                            </div>
+
+                            <div class="input-field col s6 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede escribir números. Ej: 12345678">
+                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                                       title="Solo puede escribir números." required
+                                       value="{{$vehicle->company[0]->document }}"
+                                       readonly disabled>
+                                <label for="ci">Cedula</label>
+                            </div>
+
+                            <div class="input-field col s12 m12 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="name_user" type="text" name="name" class="validate"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)."
+                                       value="{{$vehicle->company[0]->name }}" required disabled>
+                                <label for="name">Nombre</label>
+                            </div>
+                        @elseif(isset($vehicle->person[0]))
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="name_user" type="text" name="name" class="validate"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)."
+                                       value="{{$vehicle->person[0]->name }}" required readonly>
+                                <label for="name">Nombre</label>
+                            </div>
+
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="surname" type="text" name="surname" class="validate"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)."
+                                       value="{{$vehicle->person[0]->surname}}" required readonly>
+                                <label for="surname">Apellido</label>
+                            </div>
+
+                            <div class="input-field col s6 tooltipped" data-position="bottom"
+                                 data-tooltip="V: Venezolano; E: Extranjero">
+                                <i class="icon-public prefix"></i>
+                                <select name="nationality" id="nationality" required disabled>
+                                    <option value="null">...</option>
+                                    <option value="V" @if ($vehicle->person[0]->typeDocument=='V'){{"selected"}}@endif>V
+                                    </option>
+                                    <option value="E" @if ($vehicle->person[0]->typeDocument=='E'){{"selected"}}@endif>E
+                                    </option>
+                                </select>
+                                <label for="nationality">Nacionalidad</label>
+                            </div>
+
+                            <div class="input-field col s6 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede escribir números. Ej: 12345678">
+                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                                       title="Solo puede escribir números." required
+                                       value="{{$vehicle->person[0]->document }}"
+                                       readonly>
+                                <label for="ci">Cedula</label>
+                            </div>
+
+                            @endif
+                        {{--@else
+
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede agregar letras (con acentos).">
+                            <i class="icon-person prefix"></i>
+                            <input id="name_user" type="text" name="name" class="validate"
+                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                   title="Solo puede agregar letras (con acentos)."
+                                   value="{{$vehicle->users[0]->name }}" required readonly>
+                            <label for="name">Nombre</label>
+                        </div>
+
+                        <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede agregar letras (con acentos).">
+                            <i class="icon-person prefix"></i>
+                            <input id="surname" type="text" name="surname" class="validate"
+                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                   title="Solo puede agregar letras (con acentos)."
+                                   value="{{$vehicle->users[0]->surname}}" required readonly>
+                            <label for="surname">Apellido</label>
+                        </div>
+
+                        <div class="input-field col s6 tooltipped" data-position="bottom"
+                             data-tooltip="V: Venezolano; E: Extranjero">
+                            <i class="icon-public prefix"></i>
+                            <select name="nationality" id="nationality" required disabled>
+                                <option value="null">...</option>
+                                <option value="V" @if ($vehicle->users[0]->typeDocument=='V'){{"selected"}}@endif>V
+                                </option>
+                                <option value="E" @if ($vehicle->users[0]->typeDocument=='E'){{"selected"}}@endif>E
+                                </option>
+                            </select>
+                            <label for="nationality">Nacionalidad</label>
+                        </div>
+
+                        <div class="input-field col s6 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 12345678">
+                            <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                                   title="Solo puede escribir números." required
+                                   value="{{$vehicle->users[0]->document }}"
+                                   readonly>
+                            <label for="ci">Cedula</label>
+                        </div>
+
+                        @endif--}}
+
+                        <div id="change">
+
+                        </div>
+
+                        <h5 class="center">Datos del vehículo</h5>
+
+                        {{--<div class="input-field col s6">
                             <i class="icon-person prefix"></i>
                             <select name="status" id="status" required disabled>
-                                {{--<option value="null" disabled selected>Selecciona Condicion</option>--}}
-                                <option value="propietario"@if ($vehicle->users[0]->status_user_vehicle=='propietario'){{"selected"}}@endif>
-                                    Propietario
+                                <option value="propietario"@if ($vehicle->users[0]->status_user_vehicle=='propietario'){{"selected"}}@endif>Propietario
                                 </option>
-                                <option value="responsable"@if ($vehicle->users[0]->status_user_vehicle=='responsable'){{"selected"}}@endif>
-                                    Responsable
+                                <option value="responsable"@if ($vehicle->users[0]->status_user_vehicle=='responsable'){{"selected"}}@endif>Responsable
                                 </option>
                             </select>
                             <label for="status">Condición Legal</label>
-                        </div>
+                        </div>--}}
+
 
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: L1S2M3">
                             <i class="icon-crop_16_9 prefix"></i>
@@ -111,67 +242,80 @@
                             <div class="input-field col s6">
                                 <i class="icon-local_shipping prefix"></i>
                                 <select name="model" id="model" disabled required>
-                                        <option value="{{$vehicle->model->id}}")>{{$vehicle->model->name}}</option>
+                                    <option value="{{$vehicle->model->id}}" )>{{$vehicle->model->name}}</option>
                                 </select>
                                 <label for="model">Módelo</label>
                             </div>
                         </div>
-                        @if($vehicle->status===null||$vehicle->status==='enabled')
-                            <div class="input-field col s12 m6" id="estado">
-                                <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
-                                >Habilitado
-                                    <i class="icon-check right"></i>
+
+                            @if($vehicle->status===null||$vehicle->status==='enabled')
+                                <div class="input-field col s12 m6" id="estado">
+                                    <a href="#"
+                                       class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
+                                    >Habilitado
+                                        <i class="icon-check right"></i>
+                                    </a>
+                                </div>
+
+                            @else
+                                <div class="input-field col s12 m6" id="estado">
+                                    <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
+                                    >Deshabilitado
+                                        <i class="icon-refresh right"></i>
+                                    </a>
+                                </div>
+
+                            @endif
+
+
+                        <div class="row">
+
+                            <div class="col s12 m6">
+                                <a href="#" class="btn btn-large waves-effect waves-light blue col s12 "
+                                   id="change-users">
+                                    Cambiar Propietario
+                                    <i class="icon-refresh right"></i>
                                 </a>
-                            </div>
-
-
-                        @else
-                            <div class="input-field col s12 m6" id="estado">
-                                <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
-                                >Deshabilitado
+                                <a href="#" class=" hide btn btn-large waves-effect waves-light blue col s12"
+                                   id="save-change">
+                                    Guardar Cambios
                                     <i class="icon-refresh right"></i>
                                 </a>
                             </div>
 
-                        @endif
+                            @can('Actualizar Vehiculos')
+                                <div class="col s12 m6">
+                                    <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
+                                       id="update-vehicle">
+                                        Actualizar
+                                        <i class="icon-refresh right"></i>
+                                    </a>
+                                </div>
+                            @endcan
 
-                        <div class="col l12">
-                            <div class="row">
-                                @can('Actualizar Vehiculos')
-                                    <div class="col s12 m6">
-                                        <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
-                                           id="update-vehicle">
-                                            Actualizar
-                                            <i class="icon-refresh right"></i>
-                                        </a>
+
+
+                            @can('Habilitar/Deshabilitar Vehiculo')
+                                @if($vehicle->status===null||$vehicle->status==='enabled')
+                                    <div class="col s12 m6" id="button-status">
+                                        <button type="button"
+                                                class="btn btn-large waves-effect waves-light red col s12 "
+                                                id="vehicle-status" value="disabled">
+                                            Deshabilitar Vehículo
+                                            <i class="icon-sync_disabled right"></i>
+                                        </button>
                                     </div>
-                                @endcan
-
-                                @can('Habilitar/Deshabilitar Vehiculo')
-                                    @if($vehicle->status===null||$vehicle->status==='enabled')
-                                        <div class="col s12 m6" id="button-status">
-                                            <button type="button"
-                                                    class="btn btn-large waves-effect waves-light red col s12 "
-                                                    id="vehicle-status" value="disabled">
-                                                Deshabilitar Vehículo
-                                                <i class="icon-sync_disabled right"></i>
-                                            </button>
-                                        </div>
-                                    @else
-                                        <div class="col s12 m6" id="button-status">
-                                            <button type="button"
-                                                    class="btn btn-large waves-effect waves-light green col s12 "
-                                                    id="vehicle-status" value="enabled">
-                                                Activar Vehículo
-                                                <i class="icon-check right"></i>
-                                            </button>
-                                        </div>
-                                    @endif
-                                @endcan
-
-
-                            </div>
-
+                                @else
+                                    <div class="col s12 m6" id="button-status">
+                                        <button type="button"
+                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                id="vehicle-status" value="enabled">
+                                            Activar Vehículo
+                                            <i class="icon-check right"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                            @endcan
                         </div>
                     </div>
                 </form>
@@ -199,7 +343,7 @@
                                 <option value="V" @if ($vehicle->users[0]->typeDocument=='V'){{"selected"}}@endif>V
                                 </option>
                                 <option value="E" @if ($vehicle->users[0]->typeDocument=='E'){{"selected"}}@endif>E
-                                </option>
+                            </option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
@@ -271,17 +415,21 @@
                                    value="{{ $vehicle->users[0]->email }}" required readonly>
                             <label for="email">E-mail</label>
                         </div>
+                        <div id="changeUserWeb">
+
+                        </div>
                         @can('Cambiar Usuario - Vehiculo')
-                            <div class="input-field col s12 m6">
-                                <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
-                                   id="change-users">Cambiar Usuario
-                                    <i class="icon-refresh right"></i>
-                                </a>
-                            </div>
+
                         @endcan
+                        <div class="input-field col s12 m12 ">
+                            <a id="changeUW" href="#" class="center btn btn-large waves-effect waves-light green col s12 btn-rounded ">Cambiar Usuario Web
+                                <i class="icon-refresh right"></i>
+                            </a>
+                            <a id="saveUW" href="#" class="hide btn btn-large waves-effect waves-light green col s12 btn-rounded ">Guardar Cambios
+                                <i class="icon-refresh right"></i>
+                            </a>
+                        </div>
                     </div>
-
-
                 </form>
             </div>
         </div>

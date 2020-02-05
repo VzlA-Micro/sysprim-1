@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Helpers\Calculate;
 use App\Payment;
 use App\Taxe;
@@ -318,6 +319,7 @@ class TicketOfficeVehicleController extends Controller
         $brands = Brand::all();
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
+        dd($vehicle->person[0]);
         return view('modules.ticket-office.vehicle.modules.vehicle.details', [
             'vehicle' => $vehicle,
             'brand' => $brands,
@@ -1323,8 +1325,64 @@ class TicketOfficeVehicleController extends Controller
                 'taxeId' => $taxesId
             )
         );
+    }
 
+    public function changeUser($type,$document,$id)
+    {
+        $vehicle=UserVehicle::where('vehicle_id',$id)->get();
+        $vehicleUser=UserVehicle::find($vehicle[0]->id);
 
+        if ($type=="J" || $type=="G"){
+            $company=Company::where('RIF',$type.$document)->get();
+
+            if (!$company->isEmpty()){
+
+                $vehicleUser->user_id=$company[0]->users[0]->id;
+                $vehicleUser->company_id=$company[0]->id;
+                $vehicleUser->person_id=null;
+                $response=['status'=>'success'];
+            }else{
+                $response=['status'=>'fail'];
+            }
+        }
+        elseif($type=="E" || $type=="V"){
+            var_dump($type);
+            $user=User::where('ci',$type.$document)->get();
+            if (!$user->isEmpty()){
+                $vehicleUser->company_id=null;
+                $vehicleUser->person_id=$user[0]->id;
+
+                $response=['status'=>'success'];
+            }else{
+                $response=['status'=>'fail'];
+            }
+
+        }
+
+        $vehicleUser->update();
+
+        return Response()->json($response);
+    }
+
+    public function changeUserWeb($type,$document,$id)
+    {
+        $vehicle=UserVehicle::where('vehicle_id',$id)->get();
+        $vehicleUser=UserVehicle::find($vehicle[0]->id);
+
+        if($type=="E" || $type=="V"){
+            $user=User::where('ci',$type.$document)->get();
+            if (!$user->isEmpty()){
+                $vehicleUser->user_id=$user[0]->id;
+                $vehicleUser->company_id=null;
+                $response=['status'=>'success'];
+            }else{
+                $response=['status'=>'fail'];
+            }
+
+        }
+
+        $vehicleUser->update();
+
+        return Response()->json($response);
     }
 }
-
