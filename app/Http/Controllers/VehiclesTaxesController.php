@@ -26,6 +26,7 @@ class VehiclesTaxesController extends Controller
 {
     public function create($id)
     {
+
         $array = explode('-', $id);
         $idVehicle = $array[0];
         $optionPayment = null;
@@ -46,9 +47,12 @@ class VehiclesTaxesController extends Controller
 
         $date = Carbon::now();
 
-        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $idVehicle)->get();
-
-        $taxes = Taxe::where('id', $vehicleTaxe[0]->taxe_id)->get();
+        $vehicleTaxe = Vehicle::find($idVehicle);
+        if ($vehicleTaxe->pivot === null) {
+            $taxes = '';
+        } else {
+            $taxes = Taxe::where('id', $vehicleTaxe->pivot->taxe_id)->get();
+        }
 
         if (!empty($taxes)) {
             foreach ($taxes as $tax) {
@@ -155,7 +159,7 @@ class VehiclesTaxesController extends Controller
             'vehicleTaxes' => false,
             'valueMora' => $valueMora,
             'totalAux' => $totalAux,
-            'statusTax'=>$statusTax
+            'statusTax' => $statusTax
         ));
     }
 

@@ -38,6 +38,9 @@
                                     <option value="null" selected disabled>...</option>
                                     <option value="V">V</option>
                                     <option value="E">E</option>
+                                    <option value="J">J</option>
+                                    <option value="G">G</option>
+                                </select>
                                 </select>
 
                                 <label for="nationality">Nacionalidad</label>
@@ -59,10 +62,10 @@
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="surname" type="text" name="surname" class="validate"
-                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." required readonly>
-                                <label for="surname">Apellido</label>
+                                <input id="address" type="text" name="address" class="validate"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ-.,()[]{}]+"
+                                       title="Solo puede agregar letras, numero y signo." required readonly>
+                                <label for="address">Dirección</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Ej: correo@mail.com" readonly>
