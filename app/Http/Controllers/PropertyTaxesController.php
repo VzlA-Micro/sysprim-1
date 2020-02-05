@@ -27,6 +27,7 @@ use App\User;
 use App\Helpers\CheckCollectionDay;
 use App\BankRate;
 use App\Company;
+use App\Parish;
 
 
 class PropertyTaxesController extends Controller
@@ -557,4 +558,209 @@ class PropertyTaxesController extends Controller
         return response()->json(['value' => $fraccionado]);
     }
 
+    public function manageTicketOffice() {
+        return view('modules.properties.ticket-office.manage');
+    }
+
+    public function generateTicketOfficePayroll() {
+        $catastralTerreno = CatastralTerreno::all();
+//        dd($catastralTerreno[0]);
+        $catastralConstruccion = CatastralConstruccion::all();
+        $parish = Parish::all();
+        $alicuota= Alicuota::all();
+        return view('modules.properties.ticket-office.generate',[
+            'catastralConstruccion' => $catastralConstruccion,
+            'catastralTerreno' => $catastralTerreno,
+            'parish' => $parish,
+            'alicuota' => $alicuota
+        ]);
+    }
+
+    public function findCode($code) {
+        $property = Property::where('code_cadastral', $code)->with('users')->get();
+        if($property->isEmpty()) {
+            $response = [
+                'status' => 'error',
+                'message' => 'El inmueble con el código catastral ' . $property[0]->code_cadastral . 'no se encuentra registrado. Por favor, ingrese un código valido.'
+            ];
+        }
+        else {
+            $response = [
+                'status' => 'success',
+                'property' => $property
+            ];
+        }
+        return response()->json($response);
+    }
+
+    public function taxesTicketOfficePayroll($id, $status) {
+//        $id = $request->input('property_id');
+//        $status = $request->input('status');
+        $actualDate = Carbon::now();
+        $declaration = Declaration::VerifyDeclaration($id, $status);
+        $statusTax = '';
+        $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
+//        var_dump($property);
+        $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
+        //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
+        $catasBuild = CatastralConstruccion::where('id', $constProperty[0]->value_catas_const_id)->get();
+        //$alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
+        $period_fiscal = Carbon::now()->year;
+        $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
+//        $propertyTaxes = PropertyTaxes::find('company_id', $id);
+        $propertyTaxes = Property::find($id);
+        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+
+        if(!empty($taxes)) {
+            foreach ($taxes as $tax) {
+                if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
+                    $statusTax = 'verified';
+                }else if($tax->status === 'temporal'){
+//                $tax->delete();
+                    $statusTax = 'new';
+                }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
+                    $statusTax = 'process';
+                } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
+                    $statusTax = 'process';
+                }else{
+                    $statusTax = 'new';
+                }
+            }
+        }
+        else {
+            $statusTax = 'new';
+        }
+        // Realizar verificacion si el propietario es una compañia o es una persona
+        if($userProperty[0]->company_id != null) {
+            $owner_id = $userProperty[0]->company_id;
+            $owner_type = 'company';
+            $owner = Company::find($owner_id);
+        }
+        elseif($userProperty[0]->person_id != null) {
+            $owner_id = $userProperty[0]->person_id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+        else{
+            $owner_id = \Auth::user()->id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+        if($status == 'full'){
+            $baseImponible = number_format($declaration['baseImponible'],2,',','.');
+            $totalGround = number_format($declaration['totalGround'],2,',','.');
+            $totalBuild = number_format($declaration['totalBuild'],2,',','.');
+            $discount = number_format($declaration['porcentaje'],2,',','.');
+            $recharge = number_format($declaration['recharge'],2,',','.');
+            $interest = number_format($declaration['interest'],2,',','.');
+            $total = number_format($declaration['total'],2,',','.');
+        }
+        /*elseif($status == 'trimestral') {
+            $calculateBaseImponible = $declaration['baseImponible'] / 4;
+            $calculateGround = $declaration['totalGround'] / 4;
+            $calculateBuild = $declaration['totalBuild'] / 4;
+            $calculateDiscount = $declaration['porcentaje'] / 4;
+            $calculateTotal = $declaration['total'] / 4;
+            $baseImponible = number_format($calculateBaseImponible, 2, ',', '.');
+            $totalGround = number_format($calculateGround, 2, ',', '.');
+            $totalBuild = number_format($calculateBuild, 2, ',', '.');
+            $discount = number_format($calculateDiscount, 2, ',', '.');
+            $total = number_format($calculateTotal, 2, ',', '.');
+        }*/
+//        dd($baseImponible);
+        $resp = [
+            'state' => 'success',
+            'message' => 'Por favor, verifique los montos antes de generar la planilla',
+            'property' => $property,
+            'declaration' => $declaration,
+            'build' => $catasBuild,
+            'userProperty' => $userProperty[0],
+            'period' => $period_fiscal,
+//            'property' => $property,
+//            'response'=>$response,
+            'owner_type' => $owner_type,
+            'owner' => $owner,
+            'baseImponible' => $baseImponible,
+            'totalGround' => $totalGround,
+            'totalBuild' => $totalBuild,
+            'discount' => $discount,
+            'total' => $total,
+            'recharge' => $recharge,
+            'interest' => $interest,
+            'status' => $status,
+            'statusTax' => $statusTax
+        ];
+//        dd($resp);
+        return response()->json($resp);
+    }
+
+    public function storeTicketOffice(Request $request) {
+        # Transformacion para los montos
+        $value = strval($request->input('amount'));
+        $valor = str_replace('.', '', $value);
+        $amount = str_replace(',', '.', $valor);
+
+        $valueBase = strval($request->input('base_imponible'));
+        $valorBase = str_replace('.', '', $valueBase);
+        $baseImponible = str_replace(',', '.', $valorBase);
+
+        $valueRecharge = strval($request->input('recharge'));
+        $valorRecharge = str_replace('.', '', $valueRecharge);
+        $recharge = str_replace(',', '.', $valorRecharge);
+
+        $valueAlicuota = strval($request->input('alicuota'));
+        $valorAlicuota = str_replace('.', '', $valueAlicuota);
+        $alicuota = str_replace(',', '.', $valorAlicuota);
+
+
+        $valueInterest = strval($request->input('interest'));
+        $valorInterest = str_replace('.', '', $valueInterest);
+        $interest = str_replace(',', '.', $valorInterest);
+
+        $valueDiscount = strval($request->input('discount'));
+        $valorDiscount = str_replace('.', '', $valueDiscount);
+        $discount = str_replace(',', '.', $valorDiscount);
+
+        $valueFiscalCredit = strval($request->input('fiscal_credit'));
+        $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
+        $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
+
+//        dd($fiscalCredit);
+
+        $status = $request->input('status');
+
+        # --------------------------------------------------------------
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('PTS');
+        $taxe->status = 'ticket-office';
+//        dd($baseImponible); die();
+        $taxe->type='daily';
+        $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
+        $taxe->branch='Inm.Urbanos';
+        $taxe->amount = $amount;
+        $taxe->save();
+        $taxeId = $taxe->id;
+
+        //$taxes = Taxe::where('id', $taxesId)->get();
+        $propertyTaxes = new PropertyTaxes();
+        $propertyTaxes->property_id = $request->input('property_id');
+        $propertyTaxes->taxe_id = $taxeId;
+
+        $propertyTaxes->base_imponible = $baseImponible;
+        $propertyTaxes->recharge = $recharge;
+        $propertyTaxes->discount = $discount;
+        $propertyTaxes->alicuota = $alicuota;
+        $propertyTaxes->interest = $interest;
+        if($fiscalCredit == '') {
+            $propertyTaxes->fiscal_credit = 0;
+        }
+        else {
+            $propertyTaxes->fiscal_credit = $fiscalCredit;
+        }
+        $propertyTaxes->status = $status;
+
+        $propertyTaxes->save();
+//        dd($propertyTaxes);
+        return response()->json(['status' => 'success','taxe_id' => $taxeId]);
+    }
 }
