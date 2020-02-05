@@ -380,16 +380,25 @@ class VehicleController extends Controller
             $id = $request->input('id');
         }
 
+
+
         if (is_null($id)) {
             $license = Vehicle::where('license_plate', $request->input('license'))->get();
-        } else {
-            $license = Vehicle::where('license_plate', $request->input('license'))->where('id', '!=', $id);
         }
+        /*else {
+
+            $license = Vehicle::where('license_plate', $request->input('license'))
+                ->where('id', '!=', $id);
+        }*/
+
+
         if (!$license->isEmpty()) {
             $response = array('status' => 'error', 'message' => 'La Placa "' . $request->input('license') . '" se encuentra registrada en el sistema. Por favor, ingrese una placa valida.');
+
         } else {
             $response = array('status' => 'success', 'message' => 'No registrada.');
         }
+
 
         return response()->json($response);
         // $license = Vehicle::where('license_plate', $request->input('license'))->exists();

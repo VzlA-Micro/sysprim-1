@@ -348,7 +348,7 @@ $('#model').prop('disabled', true);
                 success: function (data) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-
+console.log(data);
                     if (data['status'] == "error") {
                         swal({
                             title: "¡Placa Registrada!",
