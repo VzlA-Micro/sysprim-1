@@ -100,7 +100,7 @@
 
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{route('alicuota.manage')}}" class="btn-app white  blue-text">
-                    <i class="icon-done_all"></i>
+                    <i class="icon-format_list_numbered"></i>
                     <span class="truncate">Alicuota Inmueble</span>
                 </a>
             </div>
@@ -115,6 +115,14 @@
             </div>
 
 
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-nature_people"></i>
+                    <span class="truncate">Valores Catastrales de Terreno</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection

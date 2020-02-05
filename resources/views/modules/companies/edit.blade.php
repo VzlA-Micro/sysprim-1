@@ -100,9 +100,10 @@
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-satellite prefix"></i>
+
                             <select  name="parish" required disabled>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
-                                @foreach($parish as $parish):
+                                @foreach($parish as $parish)
                                 @if($parish->id===$company->parish_id)
                                     <option value="{{ $parish->id }}" selected>{{ $parish->name }}</option>
                                 @else
@@ -110,6 +111,8 @@
                                 @endif
                                 @endforeach
                             </select>
+
+
                             <label>Parroquia</label>
                         </div>
                         @if($company->opening_date)

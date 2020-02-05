@@ -11,21 +11,22 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Contrucción Catastral</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.read') }}">Consultar  Valor de Contrucción Catastral</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de  Terreno</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.read') }}">Consultar  Valor  Catastral de Terreno</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
             	<div class="card">
             		<div class="card-header center-align">
-            			<h4>Consultar Valor de Construcción</h4>
+            			<h4>Consultar Valores Catastrales de Terreno</h4>
             		</div>
             		<div class="card-content">
 		            	<table class="highlight centered" id="accessories-table" style="width: 100%">
 		            		<thead>
 		            			<tr>
 		            				<th>Nombre</th>
-                                    <th>Cantidad UT</th>
+                                    <th>Valor de terreno en construcción</th>
+                                    <th>Valor de terreno vacio</th>
 		            				<th>Detalles</th>
 		            			</tr>
 		            		</thead>
@@ -33,10 +34,11 @@
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
-                                    <td>{{ $cat->value_edificacion }} UT</td>
+                                    <td>{{ $cat->value_terreno_construccion}} UT</td>
+                                    <td>{{ $cat->value_terreno_vacio}} UT</td>
 
                                     <td>
-                                        <a href="{{ route('catrastal.construction.details', ['id' => $cat->id]) }}"
+                                        <a href="{{ route('catrastal.terreno.details', ['id' => $cat->id]) }}"
                                             class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>

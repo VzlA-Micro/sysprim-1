@@ -22,13 +22,14 @@ class CatastralConstruccionController extends Controller{
     public function store(Request $request) {
         $catastral = new CatastralConstruccion();
         $catastral->name = $request->input('name');
-        $catastral->regime_horizontal = $request->input('regimen_horizontal');
-        $catastral->value_edification = $request->input('value_edificacion');
+        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->regimen_horizontal =$request->input('regimen_horizontal');
         $catastral->save();
+        return response()->json(['status'=>'success'],200);
     }
 
     public function show() {
-        $catastral = CatastralConstruccion::all();
+        $catastral = CatastralConstruccion::orderBy('id','desc')->get();
         return view('modules.catastral-construction.read', ['catastral' => $catastral]);
 
     }
@@ -40,10 +41,12 @@ class CatastralConstruccionController extends Controller{
 
     public function update(Request $request) {
         $id = $request->input('id');
-        $accessory = CatastralConstruccion::find($id);
-        $accessory->name = $request->input('name');
-        $accessory->value = $request->input('value');
-        $accessory->update();
+        $catastral = CatastralConstruccion::find($id);
+        $catastral->name = $request->input('name');
+        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->regimen_horizontal =$request->input('regimen_horizontal');
+        $catastral->update();
+        return response()->json(['status'=>'success'],200);
     }
 
 

@@ -19,8 +19,8 @@ class CreateCatastralTerrenoTable extends Migration
             $table->integer('sector_nueva_nomenclatura')->nullable();
             $table->integer('sector_catastral');
             $table->text('name');
-            $table->float('value_terreno_construccion',8,3);
-            $table->float('value_terreno_vacio',8,3);
+            $table->integer('value_terreno_construccion');
+            $table->integer('value_terreno_vacio');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateCatastralTerrenoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('value_catastral_terreno');
     }
 }
