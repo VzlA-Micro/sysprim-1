@@ -36,8 +36,8 @@
 
             @can('Verificar Pagos - Archivo')
                 <div class="col s12 m3 animated bounceIn">
-                    <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
-                        <i class="icon-file_upload"></i>
+                    <a href="{{ route('payments.verify.manage') }}" class="btn-app white green-text text-darken-4">
+                        <i class="icon-verified_user"></i>
                         <span class="truncate">Verificación de Pagos</span>
                     </a>
                 </div>
@@ -56,7 +56,7 @@
             @can('Ver Pagos')
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white teal-text">
-                        <i class="icon-format_list_bulleted"></i>
+                        <i class="icon-pageview"></i>
                         <span class="truncate">Ver Pagos</span>
                     </a>
                 </div>

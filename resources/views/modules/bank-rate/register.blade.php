@@ -23,6 +23,7 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m12">
+                            <i class="icon-looks_one prefix"></i>
                             <input type="text" name="value" id="value" class="validate number-only-float only-number-positive " maxlength="5">
                             <label for="value">Valor Tasa</label>
                         </div>
