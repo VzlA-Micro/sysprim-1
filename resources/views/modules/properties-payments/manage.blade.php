@@ -43,14 +43,14 @@
             <div id="mode" class="modal">
                 <div class="">
                     <div class="modal-content">
-                        <h5 class="">Modos de pago</h5>
-                        <p>Elige la forma en la realizara su pago de Vehiculo</p>
+                        <h5 class="center-align">Forma de Pago</h5>
+                        <p>Seleccione la forma en que realizará el pago de su Inmueble.</p>
                     </div>
                     <div class="modal-footer">
                         <a href="{{  route('properties.taxes.create',['id' => $property->id, 'status' => 'full']) }}"
-                           class="modal-close waves-effect waves-green btn-small">Pago Completo</a>
-                        <a href="{{ route('properties.taxes.create',['id' => $property->id, 'status' => 'trimestral']) }}"
-                           class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>
+                           class="modal-close green waves-effect waves-green btn-small"><i class="icon-payment right"></i>Pago Completo Anual</a>
+                        {{--<a href="{{ route('properties.taxes.create',['id' => $property->id, 'status' => 'trimestral']) }}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>--}}
                     </div>
                 </div>
             </div>
