@@ -148,7 +148,7 @@ class VehicleController extends Controller
             if (isset($idCompany)) {
                 $userVehicle->user_id = \Auth::user()->id;
                 $userVehicle->vehicle_id = $vehicle->id;
-                $userVehicle->person_id = \Auth::user()->id;
+                $userVehicle->person_id = null;
                 $userVehicle->company_id = $idCompany;
                 $userVehicle->status_user_vehicle = $request->input('status');
             } else {
@@ -288,8 +288,7 @@ class VehicleController extends Controller
      */
     public function show()
     {
-        $vehicle = \Auth::user()->vehicles()->get();
-
+        $vehicle = \Auth::user()->vehicles()->with('company')->get();
         return view('modules.vehicles.menu', array(
             'show' => $vehicle
         ));
@@ -381,16 +380,25 @@ class VehicleController extends Controller
             $id = $request->input('id');
         }
 
+
+
         if (is_null($id)) {
             $license = Vehicle::where('license_plate', $request->input('license'))->get();
-        } else {
-            $license = Vehicle::where('license_plate', $request->input('license'))->where('id', '!=', $id);
         }
+        /*else {
+
+            $license = Vehicle::where('license_plate', $request->input('license'))
+                ->where('id', '!=', $id);
+        }*/
+
+
         if (!$license->isEmpty()) {
             $response = array('status' => 'error', 'message' => 'La Placa "' . $request->input('license') . '" se encuentra registrada en el sistema. Por favor, ingrese una placa valida.');
+
         } else {
             $response = array('status' => 'success', 'message' => 'No registrada.');
         }
+
 
         return response()->json($response);
         // $license = Vehicle::where('license_plate', $request->input('license'))->exists();
@@ -540,5 +548,27 @@ class VehicleController extends Controller
             'company' => $companyVehicle[0]
         ));
     }
+
+    public function findTaxpayersCompany($type_document,$document){
+        if($type_document=='V'||$type_document=='E'){
+            $user = User::where('ci', $type_document.$document)->get();
+            if($user->isEmpty()){
+                $user = CedulaVE::get($type_document,$document,false);
+                $data=['status'=>'success','type'=>'not-user','user'=>$user];
+            }else{
+                $data=['status'=>'success','type'=>'user','user'=>$user[0]];
+            }
+        }else{
+            $company=Company::where('RIF', $type_document.$document)->get();
+
+            if($company->isEmpty()){
+                $data=['status'=>'error','type'=>'not-company','company'=>null];
+            }else{
+                $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+            }
+        }
+        return response()->json($data);
+    }
+
 
 }

@@ -14,7 +14,7 @@
             @foreach($companies as $company)
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="btn-app white">
-                    <i class="icon-location_city grey-text"></i>
+                    <i class="icon-work grey-text"></i>
                     <span class="truncate black-text">{{ $company->name }}</span>
                 </a>
             </div>

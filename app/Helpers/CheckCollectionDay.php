@@ -16,7 +16,8 @@ class CheckCollectionDay{
         verify:Parametro que retorna la funcion si verify :
          * true:PAGO FUERA DE LAPSO.
          * false:Esta pagando en lapso correspondiente
-         **/
+         *
+         */
 
         $now=Carbon::now();
         $verify=[];

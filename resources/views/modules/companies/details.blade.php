@@ -91,7 +91,7 @@
                         <div class="col s12">
                             <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
                                class="btn-app white amber-text">
-                                <i class="icon-picture_as_pdf"></i>
+                                <i class="icon-redeem"></i>
                                 <span class="truncate">Declaración / Tasas</span>
                             </a>
                         </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="col s12">
                             <a href="{{ route('properties.company.my-properties', ['company_id' => $company->id]) }}"
-                                   class="btn-app white grey-text text-darken-2">
+                                   class="btn-app white green-text text-darken-2">
                                  <i class="icon-location_city"></i>
                                  <span class="truncate">Inmuebles</span>
                             </a>

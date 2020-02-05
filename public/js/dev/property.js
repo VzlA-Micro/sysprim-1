@@ -175,7 +175,6 @@ $('document').ready(function () {
        }
     });
 
-
     $('#verification').on('submit', function (e) {
         e.preventDefault();
         $.ajax({

@@ -28,6 +28,6 @@ class CreateAlicuotaInmuebleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('alicuota_inmueble');
     }
 }

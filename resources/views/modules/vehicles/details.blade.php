@@ -11,7 +11,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('company.vehicle.read', ['idCompany' => $vehicle[0]->company[0]->id])}}">Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
                     @else
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
@@ -56,14 +56,14 @@
                 <div class="row">
                     @if($status=="company")
                     <div class="col s12">
-                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white green-text">
+                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white blue-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
                     @else
                         <div class="col s12">
-                            <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="btn-app white green-text">
+                            <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="btn-app white blue-text">
                                 <i class="icon-payment"></i>
                                 <span class="truncate">Mis Declaraciones</span>
                             </a>

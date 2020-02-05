@@ -24,7 +24,7 @@
             @can('Gestionar Unidad Tribuaria')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('tax-unit.manage') }}" class="btn-app white orange-text text-darken-1">
-                    <i class="icon-rv_hookup"></i>
+                    <i class="icon-exposure_plus_1"></i>
                     <span class="truncate">Gestionar Unidad Tributaria</span>
                 </a>
             </div>
@@ -95,6 +95,32 @@
                 <a href="{{route('prologue.manage')}}" class="btn-app white light-green-text text-accent-3 ">
                     <i class="icon-date_range"></i>
                     <span class="truncate">Días de Cobro</span>
+                </a>
+            </div>
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('alicuota.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-format_list_numbered"></i>
+                    <span class="truncate">Alicuota Inmueble</span>
+                </a>
+            </div>
+
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-build"></i>
+                    <span class="truncate">Valores Catastrales de Construcción</span>
+                </a>
+            </div>
+
+
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white  blue-text">
+                    <i class="icon-nature_people"></i>
+                    <span class="truncate">Valores Catastrales de Terreno</span>
                 </a>
             </div>
         </div>
