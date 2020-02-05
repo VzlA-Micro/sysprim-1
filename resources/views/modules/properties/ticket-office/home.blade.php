@@ -12,7 +12,7 @@
             </div>
 
             <div class="col s12 m3 animated bounceIn">
-                <a href="#" class="btn-app white grey-text text-darken-2">
+                <a href="{{route('property.ticket-office.manager-property')}}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-location_city"></i>
                     <span class="truncate">Gestionar Inmuebles Urbanos</span>
                 </a>

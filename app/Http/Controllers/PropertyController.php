@@ -333,4 +333,36 @@ class PropertyController extends Controller
     public function homeTicketOffice(){
         return view('modules.properties.ticket-office.home');
     }
+
+
+    public function managerPropertyTicketOffice(){
+        return view('modules.properties.module.manager');
+    }
+
+
+    public function createPropertyTicketOffice(){
+        $catastralTerre = CatastralTerreno::all();
+        $catastralConst = CatastralConstruccion::all();
+        $parish = Parish::all();
+        $alicuota= Alicuota::all();
+        return view('modules.properties.module.register',[
+            'parish' => $parish,
+            'catasTerreno' => $catastralTerre,
+            'catasConstruccion' => $catastralConst,
+            'alicuota'=>$alicuota]);
+    }
+
+
+    public function detailsPropertyTicketOffice($id){
+        return view('modules.properties.module.details');
+    }
+
+    public function readPropertyTicketOffice(){
+        return view('modules.properties.module.details');
+    }
+
+
+
+
+
 }

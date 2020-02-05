@@ -1015,7 +1015,8 @@ Route::middleware(['auth'])->group(/**
         /*  Taquillas Property*/
 
         Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
-        Route::get('property/ticket-office/manager-property','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+        Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
+        Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
 
 
 
