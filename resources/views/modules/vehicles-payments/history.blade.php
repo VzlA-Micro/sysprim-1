@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    @if($vehicle->company[0])
+                    @if(isset($vehicle->company[0]))
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                         <li class="breadcrumb-item"><a

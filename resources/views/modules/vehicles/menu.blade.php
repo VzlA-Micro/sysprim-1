@@ -32,14 +32,26 @@
                             </a>
                         </div>
                     @else
-                        <div class="col s12 m4 animated bounceIn">
-                            <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.false])}}"
-                               class="btn-app white purple-text">
-                                <i class="icon-directions_car"></i>
-                                {{--<span class="truncate">{{ $vehicle->model->brand->name."-".$vehicle->model->name}}</span>--}}
-                                <span class="truncate">{{ $vehicle->license_plate}}</span>
-                            </a>
-                        </div>
+                        @if(isset($vehicle->company[0]->id))
+                            <div class="col s12 m4 animated bounceIn">
+                                <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.false])}}"
+                                   class="btn-app white purple-text">
+                                    <i class="icon-directions_car"></i>
+                                    <span class="truncate">{{ $vehicle->license_plate}}</span>
+                                    <span class="truncate">(Juridíco)</span>
+                                </a>
+                            </div>
+                        @else
+                            <div class="col s12 m4 animated bounceIn">
+                                <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.false])}}"
+                                   class="btn-app white purple-text">
+                                    <i class="icon-directions_car"></i>
+                                    <span class="truncate">{{ $vehicle->license_plate}}</span>
+                                    <span class="truncate">(Natural)</span>
+                                </a>
+                            </div>
+                        @endif
+
                     @endif
                 @endforeach
             @endcan
@@ -57,6 +69,7 @@
                         <a href="{{ route('vehicles.register',['register'=>'']) }}" class="btn-app white orange-text">
                             <i class="icon-add_circle"></i>
                             <span class="truncate">Agregar nuevo vehiculo...</span>
+                            <span class="truncate white-text">w</span>
                         </a>
                     </div>
                 @endif
