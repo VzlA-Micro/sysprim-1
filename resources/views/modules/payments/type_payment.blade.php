@@ -17,7 +17,7 @@
             @can('Ver Pagos - Transferencias')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment.type',['type'=>'TRANSFERENCIA BANCARIA'])}}" class="btn-app white indigo-text">
-                    <i class="icon-format_list_bulleted"></i>
+                    <i class="icon-swap_vert"></i>
                     <span class="truncate">Transferencias</span>
                 </a>
             </div>
@@ -25,7 +25,7 @@
             @can('Ver Pagos - Punto de Venta')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment.type',['type'=>'PUNTO DE VENTA'])}}" class="btn-app white red-text">
-                    <i class="icon-format_list_bulleted"></i>
+                    <i class="icon-settings_remote"></i>
                     <span class="truncate">Punto de Venta</span>
                 </a>
             </div>
@@ -33,7 +33,7 @@
             @can('Ver Pagos - Depositos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment.type',['type'=>'DEPOSITO BANCARIO'])}}" class="btn-app white green-text">
-                    <i class="icon-format_list_bulleted"></i>
+                    <i class="icon-payment"></i>
                     <span class="truncate">Depositos</span>
                 </a>
             </div>
@@ -41,7 +41,7 @@
             @can('Mi Taquilla - Punto de Venta')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment',['type'=>'PUNTO DE VENTA'])}}" class="btn-app white orange-text">
-                    <i class="icon-format_list_bulleted"></i>
+                    <i class="icon-personal_video"></i>
                     <span class="truncate">Mi Taquilla (PUNTO DE VENTA)</span>
                 </a>
             </div>
@@ -49,7 +49,7 @@
             @can('Mi Taquilla - Deposito')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ticket-office.payment',['type'=>'DEPOSITO BANCARIO'])}}" class="btn-app white amber-text">
-                    <i class="icon-format_list_bulleted"></i>
+                    <i class="icon-personal_video"></i>
                     <span class="truncate">Mi Taquilla (DEPOSITO)</span>
                 </a>
             </div>
