@@ -331,9 +331,6 @@ class PropertyController extends Controller
 
 
     public function homeTicketOffice(){
-        return view('modules.ticket-office.property.home');
+        return view('modules.properties.ticket-office.home');
     }
-
-
-
 }
