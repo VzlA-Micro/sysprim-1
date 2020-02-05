@@ -18,15 +18,41 @@
                 </ul>
             </div>
             @can('Consultar Mis Inmuebles')
-            @foreach($properties as $property)
+            @foreach($properties as $index => $property)
+                @if($userProperties[$index]->user_id == \Auth::user()->id && $userProperties[$index]->person_id != null)
+                {{--<div class="col s12">--}}
+                    {{--<p><b>Usuario Web</b></p>--}}
+                {{--</div>--}}
                 <div class="col s12 m4">
-{{--                    <a href="{{ route('properties.details', ['id' => $property->id]) }}" class="btn-app white purple-text">--}}
                 <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
                     <i class="icon-location_city"></i>
                         <span class="truncate">{{ $property->code_cadastral }}</span>
+                        <span><b>Persona Natural</b></span>
                     </a>
                 </div>
-
+                {{--@elseif()--}}{{--
+                <div class="col s12">
+                     <p><b>Persona Natural</b></p>
+                </div>--}}{{--
+                <div class="col s12 m4">
+                     <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
+                        <i class="icon-location_city"></i>
+                        <span class="truncate">{{ $property->code_cadastral }}</span>
+                         <span><b>Persona Natural</b></span>
+                      </a>
+                </div>--}}
+                @elseif($userProperties[$index]->person_id == null)
+                {{--<div class="col s12">--}}
+                      {{--<p><b>Juridico</b></p>--}}
+                {{--</div>--}}
+                <div class="col s12 m4">
+                     <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
+                         <i class="icon-location_city"></i>
+                         <span class="truncate">{{ $property->code_cadastral }}</span>
+                         <span><b>Juridico</b></span>
+                     </a>
+                </div>
+                @endif
             @endforeach
             @endcan
             @can('Registrar Mis Inmuebles')
@@ -36,7 +62,7 @@
                 @else
                 <a href="{{ route('properties.register') }}" class="btn-app white orange-text">
                 @endif
-                    <i class="icon-add_circle"></i>
+                    <i class="icon-add_circle"></i><br>
                     <span class="truncate">Agregar nuevo Inmueble...</span>
                 </a>
             </div>

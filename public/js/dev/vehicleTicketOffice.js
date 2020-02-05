@@ -220,6 +220,58 @@ $('document').ready(function () {
         });
     });
 
+    $('#license_plates').change(function () {
+        var license = $(this).val();
+        console.log(license);
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifyLicense",
+            data: {
+                license: license
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Placa Registrada!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
     $('#license_plate').change(function () {
         var license = $(this).val();
         var id = $('#id').val();
@@ -229,7 +281,7 @@ $('document').ready(function () {
             url: url + "vehicles/verifyLicense",
             data: {
                 license: license,
-
+                id:id
             },
 
             beforeSend: function () {
@@ -250,6 +302,63 @@ $('document').ready(function () {
                     $(this).text('');
                     $('#button-vehicle').prop('disabled', true);
                 } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+    $('#bodySerials').change(function () {
+        var bodySerial = $(this).val();
+        console.log(bodySerial);
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifyBodySerial",
+            data: {
+                bodySerial: bodySerial
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Serial de Carroceria Registrado!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
                     $('#button-vehicle').prop('disabled', false);
                 }
             },
@@ -292,6 +401,57 @@ $('document').ready(function () {
                 if (data['status'] == "error") {
                     swal({
                         title: "¡Serial de Carroceria Registrado!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+    $('#serialEngines').change(function () {
+        var serialEngine = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifySerialEngine",
+            data: {
+                serialEngine: serialEngine
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Serial del Motor Registrado!",
                         text: data['message'],
                         icon: "info",
                         button: "Ok",
@@ -696,10 +856,6 @@ $('document').ready(function () {
                 var surname = $('#surname').val();
                 var email = $('#email').val();
 
-
-
-
-
                 $.ajax({
                     method: "POST",
                     dataType: "json",
@@ -798,14 +954,11 @@ $('document').ready(function () {
                         $('#email').val(user.email);
 
 
-
                         $('#type').val('user');
-
 
                         $('#address').attr('readonly','');
                         $('#email').attr('readonly','');
-
-
+                        $('#statusTicketOffice').show();
 
                     }else if(response.type=='company'){
                         var company = response.company;
@@ -817,6 +970,7 @@ $('document').ready(function () {
                         $('#type').val('company');
                         $('#address').attr('readonly','');
                         $('#email').attr('readonly','');
+                        $('#statusTicketOffice').hide();
 
                     }else if(response.type=='not-company'){
                         swal({
@@ -868,16 +1022,6 @@ $('document').ready(function () {
             });
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

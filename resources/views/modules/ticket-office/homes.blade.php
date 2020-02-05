@@ -34,6 +34,15 @@
             </div>
             {{--@endcan--}}
 
+
+
+            <div class="col s12 m3 animated bounceIn">
+                <a href="{{route('property.ticket-office.home')}}" class="btn-app white orange-text text-darken-3">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla Inmuebles Urbanos</span>
+                </a>
+            </div>
+
             @can('Verificar Pagos - Archivo')
                 <div class="col s12 m3 animated bounceIn">
                     <a href="{{ route('payments.verify.manage') }}" class="btn-app white green-text text-darken-4">

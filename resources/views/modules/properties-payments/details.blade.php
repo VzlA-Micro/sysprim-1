@@ -87,8 +87,8 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input type="text" name="withholding" id="withholdings" class="validate money" value="0" readonly>
-                            <label for="withholdings">Exedente</label>
+                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup">
+                            <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">

@@ -388,13 +388,14 @@ Route::middleware(['auth'])->group(/**
         Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
         Route::post('/properties/discount', 'PropertyTaxesController@discount');
 
-        Route::get('/properties/taxes/create/{id}/{status}', 'PropertyTaxesController@create')->name('properties.taxes.create');
+        Route::get('/properties/taxes/create/{id}/{status?}', 'PropertyTaxesController@create')->name('properties.taxes.create');
         Route::post('/properties/taxes/store', 'PropertyTaxesController@store')->name('properties.taxes.store');
         Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
         Route::post('/properties/payments/store', 'PropertyTaxesController@paymentStore')->name('properties.payments.store');
         Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
         Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
         Route::get('/properties/taxpayer/pdf/{id}/', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
+        Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
 
         Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
 
@@ -1008,6 +1009,22 @@ Route::middleware(['auth'])->group(/**
         Route::get('test/home', 'HomeController@test');
 
         Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
+
+
+
+        /*  Taquillas Property*/
+
+        Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+        Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
+        Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
+
+
+
+
+
+
+
+
 
 
     });
