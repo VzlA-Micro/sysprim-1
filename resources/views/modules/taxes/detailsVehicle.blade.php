@@ -11,7 +11,9 @@
                         <li class="breadcrumb-item"><a
                                     href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('company.vehicle.read', ['idCompany' => $vehicle[0]->company[0]->id])}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('company.vehicle.read', ['idCompany' => $vehicle[0]->company[0]->id])}}">Vehículos</a>
+                        </li>
                         <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id.'-'.true)}}">Detalles
                                 De
                                 Vehículos</a></li>
@@ -32,14 +34,22 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
-                @if($vehicleTaxes==true)
+                @if( $statusTax=== 'process')
                     <div class="row">
                         <div class="col s12 center card">
                             <h5>Pago Declarado</h5>
-                            <h1><i class="icon-check green-text"></i></h1>
+                            <h1><i class="icon-restore orange-text"></i></h1>
                             <p>Ya has declarado tu pago, actualmete se encuentra en proceso</p>
                         </div>
 
+                    </div>
+                @elseif($statusTax==='verified')
+                    <div class="row">
+                        <div class="col s12 center card">
+                            <h5>Pago Verificado</h5>
+                            <h1><i class="icon-check green-text"></i></h1>
+                            <p>Tu pago ha sido Verificado, Actualmete no puede declarar su impuesto</p>
+                        </div>
                     </div>
                 @else
                     <div class="card">
