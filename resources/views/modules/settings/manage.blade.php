@@ -24,7 +24,7 @@
             @can('Gestionar Unidad Tribuaria')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('tax-unit.manage') }}" class="btn-app white orange-text text-darken-1">
-                    <i class="icon-rv_hookup"></i>
+                    <i class="icon-exposure_plus_1"></i>
                     <span class="truncate">Gestionar Unidad Tributaria</span>
                 </a>
             </div>

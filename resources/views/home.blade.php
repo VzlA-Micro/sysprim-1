@@ -116,7 +116,7 @@
             @can('Generar Tasas')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white green-text accent-3">
-                    <i class="icon-class"></i>
+                    <i class="icon-redeem"></i>
                     <span class="truncate">Gestión de  Tasas</span>
                 </a>
             </div>

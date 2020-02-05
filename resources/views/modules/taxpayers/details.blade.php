@@ -122,7 +122,7 @@
                                 <div class="col s12 m4">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon red-gradient white-text">
-                                            <i class="fas fa-file-pdf"></i>
+                                            <i class="fas fa-briefcase"></i>
                                         </div>
                                         <div class="widget-stats-content">
                                             <span class="widget-stats-title black-text">Tasas</span>

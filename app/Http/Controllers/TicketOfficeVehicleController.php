@@ -1002,48 +1002,7 @@ class TicketOfficeVehicleController extends Controller
                     }
                 }
             }
-<<<<<<< HEAD
 
-            $taxes = new Taxe();
-            $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period =$period_fiscal_begin ;
-            $taxes->fiscal_period_end=$period_fiscal_end;
-            $taxes->type=$type;
-            $taxes->save();
-
-            $taxesId = $taxes->id;
-
-            $vehicleTaxes = new VehiclesTaxe();
-            $vehicleTaxes->vehicle_id = $vehicle[0]->id;
-            $vehicleTaxes->taxe_id = $taxesId;
-            $vehicleTaxes->status = 'ticket-office';
-            $vehicleTaxes->type_payments = $declaration['optionPayment'];
-            $vehicleTaxes->fiscal_credits = 0;
-            $vehicleTaxes->save();
-
-            //$trimester = Trimester::verifyTrimester();
-            //$period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
-
-            return response()->json(array(
-                    'process' => false,
-                    'vehicle' => $vehicle,
-                    'taxes' => $taxes,
-                    'grossTaxes' => $grossTaxes,
-                    'paymentFractional' => $paymentFractional,
-                    'valueDiscount' => $valueDiscount,
-                    'rateYear' => $rateYear,
-                    'recharge' => $recharge,
-                    'previousDebt' => $previousDebt,
-                    'total' => $total,
-                    'totalAux'=>$declaration['total'],
-                    'vehicleTaxes' => false,
-                    'valueMora' => $valueMora,
-                    'totalAux' => $totalAux,
-                    'taxeId'=>$taxesId
-                )
-            );
-=======
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
         }
     }
 
@@ -1156,20 +1115,12 @@ class TicketOfficeVehicleController extends Controller
             $rechargeMora_format = 0;
         }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'ticket-office';
         $taxes->branch = 'Pat.Veh';
-<<<<<<< HEAD
         $taxes->code=TaxesNumber::generateNumberTaxes('PTS'.'85');
-=======
-        $taxes->code = TaxesNumber::generateNumberTaxes('PTS' . '85');
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
+
         $taxes->update();
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
@@ -1183,11 +1134,8 @@ class TicketOfficeVehicleController extends Controller
 
         $vehicleTaxes->previous_debt = $previousDebt_format;
 
-<<<<<<< HEAD
         $vehicleTaxes->discount=$discount_format;
-=======
-        $vehicleTaxes->discount = $discount_format;
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
+
         $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
@@ -1195,12 +1143,8 @@ class TicketOfficeVehicleController extends Controller
         // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
 
-<<<<<<< HEAD
-
         return response()->json(['status'=>'success']);
-=======
-        return response()->json(['status' => 'success']);
->>>>>>> 33116e2b65c61ba75ceb0af432725de3a46b5c0c
+
     }
 
     /* public function payments(Request $request)

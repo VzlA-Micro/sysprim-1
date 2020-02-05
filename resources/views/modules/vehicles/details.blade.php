@@ -56,14 +56,14 @@
                 <div class="row">
                     @if($status=="company")
                     <div class="col s12">
-                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white green-text">
+                        <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white blue-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
                     @else
                         <div class="col s12">
-                            <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="btn-app white green-text">
+                            <a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}" class="btn-app white blue-text">
                                 <i class="icon-payment"></i>
                                 <span class="truncate">Mis Declaraciones</span>
                             </a>

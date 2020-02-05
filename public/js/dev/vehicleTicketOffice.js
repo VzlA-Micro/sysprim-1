@@ -229,7 +229,7 @@ $('document').ready(function () {
             url: url + "vehicles/verifyLicense",
             data: {
                 license: license,
-                id: id
+
             },
 
             beforeSend: function () {
@@ -629,6 +629,257 @@ $('document').ready(function () {
             }
         });
     });
+
+
+
+    $('#document').keyup(function () {
+        if($('#type_document').val()===null){
+            swal({
+                title: "Información",
+                text: "Debes seleccionar el tipo de documento, antes de ingresar el número de documento.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $('#document').val('')
+        }
+
+    });
+
+
+    $('#document').change(function () {
+        findDocument();
+    });
+
+
+    $('#type_document').change(function () {
+        findDocument();
+    });
+
+    $('#data-next').click(function () {
+        band=true;
+
+
+        $('.rate').each(function () {
+            if(($(this).val()===''||$(this).val()===null) && $('#type_company').val()!='company'&& $(this).attr('data-validate')!='email') {
+                swal({
+                    title: "Información",
+                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+                band = false;
+            }
+        });
+
+
+
+        if(band) {
+            if ($('#id').val() == '') {
+                var type = $('#type').val();
+                var name;
+                if (type == 'user') {
+                    name = $('#user_name').val();
+                } else {
+                    name = $('#name').val();
+                }
+
+                var type_document = $('#type_document').val();
+                var document = $('#document').val();
+                var address = $('#address').val();
+                var surname = $('#surname').val();
+                var email = $('#email').val();
+
+
+
+
+
+                $.ajax({
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        name: name,
+                        surname: surname,
+                        email:email,
+                        type_document: type_document,
+                        document: document,
+                        address: address,
+                        type: type,
+                        user:user,
+
+                    },
+                    url: url + 'rate/taxpayers/company-user/register',
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        $('#id').val(response.id);
+
+                        $('#two').removeClass('disabled');
+                        $('#one').addClass('disabled');
+                        $('ul.tabs').tabs("select", "rate-tab");
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            }
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }
+                });
+            } else {
+                $('#two').removeClass('disabled');
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "rate-tab");
+            }
+        }
+
+
+    });
+
+    function findDocument() {
+        var type_document=$('#type_document').val();
+        var document=$('#document').val();
+        $('#surname').val('');
+        $('#user_name').val('');
+        $('#type').val('');
+        $('#address').val('');
+        $('#name').val('');
+
+
+        if(document!=='') {
+            $.ajax({
+                method: "GET",
+                url: url + "rate/taxpayers/find/" + type_document  +"/"+document,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+                    if(response.type=='not-user') {
+                        var user = response.user.response;
+                        $('#name').val(user.nombres + ' ' + user.apellidos);
+                        $('#name').attr('readonly');
+                        $('#surname').val(user.apellidos);
+                        $('#user_name').val(user.nombres);
+                        $('#type').val('user');
+                        $('#id').val(user.id);
+
+                    }else if(response.type=='user'){
+
+                        var user = response.user;
+                        $('#name').val(user.name + ' ' + user.surname);
+                        $('#name').attr('readonly');
+                        $('#surname').val(user.surname);
+                        $('#id').val(user.id);
+                        $('#address').val(user.address);
+                        $('#email').val(user.email);
+
+
+
+                        $('#type').val('user');
+
+
+                        $('#address').attr('readonly','');
+                        $('#email').attr('readonly','');
+
+
+
+                    }else if(response.type=='company'){
+                        var company = response.company;
+                        $('#name').val(company.name);
+                        $('#address').val(company.address);
+                        $('#name').attr('readonly');
+                        $('#address').attr('disabled');
+                        $('#id').val(company.id);
+                        $('#type').val('company');
+                        $('#address').attr('readonly','');
+                        $('#email').attr('readonly','');
+
+                    }else if(response.type=='not-company'){
+                        swal({
+                            title: "Información",
+                            text: "La empresa no esta registrada en el sistema, debes ingresar un empresa valida.",
+                            icon: "info",
+                            buttons: {
+                                confirm: {
+                                    text: "Registrarla",
+                                    value: true,
+                                    visible: true,
+                                    className: "green-gradient"
+
+                                },
+                                cancel: {
+                                    text: "Cancelar",
+                                    value: false,
+                                    visible: true,
+                                    className: "grey lighten-2"
+                                }
+                            }
+                        }).then(function (aceptar) {
+                            if (aceptar) {
+                                window.location.href = url + "ticketOffice/company/register";
+                            }
+                        });
+
+
+
+
+                        $('#document').val('');
+                    }
+
+                    M.updateTextFields();
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     $('#general-next').click(function () {
 
