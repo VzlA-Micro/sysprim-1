@@ -288,8 +288,7 @@ class VehicleController extends Controller
      */
     public function show()
     {
-        $vehicle = \Auth::user()->vehicles()->get();
-
+        $vehicle = \Auth::user()->vehicles()->with('company')->get();
         return view('modules.vehicles.menu', array(
             'show' => $vehicle
         ));
@@ -540,5 +539,27 @@ class VehicleController extends Controller
             'company' => $companyVehicle[0]
         ));
     }
+
+    public function findTaxpayersCompany($type_document,$document){
+        if($type_document=='V'||$type_document=='E'){
+            $user = User::where('ci', $type_document.$document)->get();
+            if($user->isEmpty()){
+                $user = CedulaVE::get($type_document,$document,false);
+                $data=['status'=>'success','type'=>'not-user','user'=>$user];
+            }else{
+                $data=['status'=>'success','type'=>'user','user'=>$user[0]];
+            }
+        }else{
+            $company=Company::where('RIF', $type_document.$document)->get();
+
+            if($company->isEmpty()){
+                $data=['status'=>'error','type'=>'not-company','company'=>null];
+            }else{
+                $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+            }
+        }
+        return response()->json($data);
+    }
+
 
 }
