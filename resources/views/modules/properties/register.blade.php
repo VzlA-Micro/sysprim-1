@@ -10,6 +10,10 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.register') }}">Registrar Inmueble</a></li>
                 </ul>
@@ -29,9 +33,15 @@
                             <div class="input-field col s12">
                                 <i class="icon-person prefix"></i>
                                 <select name="status" id="status" required>
+                                    @if($company != '')
+                                    <option value="null" disabled>Selecciona Condicion</option>
+                                    <option value="propietario" selected>Propietario</option>
+                                    <option value="responsable" disabled="">Responsable</option>
+                                    @else
                                     <option value="null" disabled selected>Selecciona Condicion</option>
                                     <option value="propietario">Propietario</option>
                                     <option value="responsable">Responsable</option>
+                                    @endif
                                 </select>
                                 <label for="model">Condición Legal</label>
                             </div>
@@ -50,8 +60,13 @@
                         <div class="card-header center-align">
                             <h5>Datos del Inmueble</h5>
                         </div>
+                        @if($company != '')
+                        <input type="hidden" name="id" value="{{ $company->id }}" id="id">
+                        <input type="hidden" name="type" value="company" id="type">
+                        @else
                         <input type="hidden" name="id" value="" id="id">
                         <input type="hidden" name="type" value="" id="type">
+                        @endif
                         <div class="card-content row">
                             <div class="center-align">
                                 <span style="font-size: 20px">Codigo Catastral</span>

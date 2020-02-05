@@ -774,18 +774,20 @@ class CompanyTaxesController extends Controller
                 $base_amount_sub=$min_amount;
             }
 
-
-
             $amount_total+=$base_amount_sub-$anticipated_format;
 
 
             if ($verify_prologue['mora']) {//si tiene mora
 
+
+
                 $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
+
+
                 //Obtengo Intereset del banco
                 $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                $amount_recharge = ($base_amount_sub-$anticipated_format)* $recharge->value / 100;
+                $amount_recharge = ($base_amount_sub - $anticipated_format)* $recharge->value / 100;
 
                 $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
 

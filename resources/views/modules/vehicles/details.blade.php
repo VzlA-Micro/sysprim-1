@@ -11,7 +11,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('company.vehicle.read', ['idCompany' => $vehicle[0]->company[0]->id])}}">Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="#">Detalles De Vehículos</a></li>
                     @else
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>

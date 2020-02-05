@@ -8,4 +8,9 @@ class UserProperty extends Model
 {
     //
     protected $table='user_property';
+
+    public function property() {
+        return $this->belongsToMany('App\Property', 'property')
+            ->withPivot('property_id');
+    }
 }

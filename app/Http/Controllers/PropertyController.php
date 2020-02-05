@@ -28,10 +28,8 @@ class PropertyController extends Controller
     {
         $userProperties = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
         $properties = Property::whereIn('id', $userProperties)->get();
-//        dd($properties); die();
+        session()->forget('company');
         return view('modules.properties.manage', ['properties' => $properties]);
-//        $inmuebles = 1;
-//        return view('modules.properties.manage5', ['inmuebles' => $inmuebles]);
     }
 
 
@@ -46,8 +44,15 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($company_id = "")
     {
+//        dd($company); die();
+        if($company_id != '') {
+            $company = Company::find($company_id);
+        }
+        else{
+            $company = '';
+        }
         $catastralTerre = CatastralTerreno::all();
         $catastralConst = CatastralConstruccion::all();
         $parish = Parish::all();
@@ -56,7 +61,8 @@ class PropertyController extends Controller
             'parish' => $parish,
             'catasTerreno' => $catastralTerre,
             'catasConstruccion' => $catastralConst,
-            'alicuota'=>$alicuota
+            'alicuota'=>$alicuota,
+            'company' => $company
         ]);
     }
 
@@ -111,8 +117,14 @@ class PropertyController extends Controller
         $person_id=null;
         $company_id=null;
         if($status == 'propietario'){
-            $person_id = \Auth::user()->id;
-            $user_id = \Auth::user()->id;
+            if($type == 'company'){
+                $user_id = \Auth::user()->id;
+                $company_id = $owner_id;
+            }
+            else {
+                $person_id = \Auth::user()->id;
+                $user_id = \Auth::user()->id;
+            }
         }
         else{
             if($type=='user'){
@@ -138,6 +150,7 @@ class PropertyController extends Controller
         $valCat->value_catas_const_id = $typeConst;
         $valCat->property_id = $id;
         $valCat->save();
+        return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
     }
 
     /**
@@ -296,8 +309,21 @@ class PropertyController extends Controller
             $id=$company->id;
 
         }
-
-
         return response(['status'=>'success','id'=>$id,'type'=>$type]);
+    }
+
+    public function readCompanyProperties($company_id) {
+        $propertiesArray = [];
+        $userProperties = UserProperty::where('company_id', $company_id)->get();
+        foreach($userProperties as $prop) {
+            $propertiesArray[] = $prop->property_id;
+        }
+        $properties = Property::whereIn('id', $propertiesArray)->get();
+//        dd($properties); die();
+        $company = Company::find($company_id);
+        session(['company' => $company]);
+
+//        dd($company); die();
+        return view('modules.properties.manage', ['properties' => $properties, 'company' => $company]);
     }
 }

@@ -492,33 +492,60 @@ $('#model').prop('disabled', true);
 
     $('#vehicle').on('submit', function (e) {
         e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/save",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: new FormData(this),
+        var brand=$('#brand').val();
+        if (brand===null){
+            swal({
+                title: "Información",
+                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+            $('#brand').focus();
+        }else {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
 
-            beforeSend: function () {
-                //$('#button-vehicle').prop('disabled', true);
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                console.log(data);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                if (data['status']=='success') {
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Vehículo registrado con exito!",
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        window.location.href = url + "vehicles/read";
-                    });
-                }else{
+                beforeSend: function () {
+                    //$('#button-vehicle').prop('disabled', true);
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    if (data['status'] == 'success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Vehículo registrado con exito!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            window.location.href = url + "vehicles/read";
+                        });
+                    } else {
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -529,22 +556,9 @@ $('#model').prop('disabled', true);
                         },
                     });
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
-        updateType = false;
+            });
+            updateType = false;
+        }
     });
 
 

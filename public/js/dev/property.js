@@ -223,6 +223,8 @@ $('document').ready(function () {
 
 
     $('#property').on('submit', function (e) {
+        var type = $('#type').val();
+        var id = $('#id').val(); // Id de la compañia
         e.preventDefault();
         $.ajax({
             url: url + "properties/save",
@@ -244,7 +246,12 @@ $('document').ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url + "properties/my-properties";
+                    if(type == 'company') {
+                        window.location.href = url + "properties/company/my-properties/" + id;
+                    }
+                    else {
+                        window.location.href = url + "properties/my-properties";
+                    }
                 });
                 ;
 

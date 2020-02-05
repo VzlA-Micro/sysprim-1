@@ -293,6 +293,36 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+
+
+
+                Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
+                Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
+                Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
+                Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
+
+
+
+
+
+
+
+
+
+                    Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
+                    Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
+                    Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
+                    Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
+                    Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
+                    Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
+
+
+
+
+
+
+
+
         });
         // GeoSysPRIM
 
@@ -347,11 +377,10 @@ Route::middleware(['auth'])->group(/**
         Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
         Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
         Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
-        Route::get('/properties/register', 'PropertyController@create')->name('properties.register');
+        Route::get('/properties/register/{company_id?}', 'PropertyController@create')->name('properties.register');
         Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
         Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
         Route::get('/properties/details/{id}', 'PropertyController@details')->name('properties.details');
-
         Route::get('/properties/payments/manage/{id}', 'PropertyTaxesController@manage')->name('properties.payments.manage');
 
         Route::get('/properties/payments/create/{id}', 'PropertyTaxesController@create')->name('properties.payments.create');
@@ -365,6 +394,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
         Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
         Route::get('/properties/taxpayer/pdf/{id}/', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
+
+        Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
 
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
