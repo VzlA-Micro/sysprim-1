@@ -385,6 +385,10 @@ console.log(status);
                     band = false;
                 }
             });
+            if($('#person_id').val()!==''){
+                band=false;
+            }
+
             if (band) {
                 var type = $('#type').val();
                 var name;
