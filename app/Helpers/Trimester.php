@@ -98,8 +98,8 @@ class Trimester
         $periodFinal = Carbon::parse("31-12-" . $year);
 
         return array(
-            'periodInit' => $periodInit,
-            'periodFinal' => $periodFinal
+            'periodInit' => $periodInit->format('m-Y'),
+            'periodFinal' => $periodFinal->format('m-Y')
         );
     }
 
