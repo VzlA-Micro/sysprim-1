@@ -21,7 +21,7 @@ class CreateCompanyTaxesTable extends Migration
             $table->decimal('withholding',12,2)->nullable();//retenciones
             $table->decimal('fiscal_credits',12,2)->nullable();//credito fiscal
             $table->integer('day_mora')->default(0);//dia que lleva moroso
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')->onUpdate('cascade');
         });
     }

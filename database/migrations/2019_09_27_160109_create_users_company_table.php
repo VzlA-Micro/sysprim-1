@@ -17,8 +17,8 @@ class CreateUsersCompanyTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('company_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateUsersCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_companys');
+        Schema::dropIfExists('users_company');
     }
 }

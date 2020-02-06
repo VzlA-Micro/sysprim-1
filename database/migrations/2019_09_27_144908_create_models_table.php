@@ -17,7 +17,7 @@ class CreateModelsTable extends Migration
             $table->increments('id');
             $table->string('name',40);
             $table->integer('brand_id')->unsigned();
-            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->timestamps();
         });
 

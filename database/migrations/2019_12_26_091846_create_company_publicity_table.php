@@ -17,8 +17,8 @@ class CreateCompanyPublicityTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->integer('publicity_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('company');
-            $table->foreign('publicity_id')->references('id')->on('publicity');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
+            $table->foreign('publicity_id')->references('id')->on('publicity')->onDelete('cascade');
             $table->timestamps();
         });
     }

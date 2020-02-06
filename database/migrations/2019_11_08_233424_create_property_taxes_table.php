@@ -25,8 +25,8 @@ class CreatePropertyTaxesTable extends Migration
             $table->float('interest',10,2)->nullable();
             $table->float('discount',10,2)->nullable();
             $table->float('fiscal_credit',10,2)->nullable();
-            $table->foreign('property_id')->references('id')->on('property');
-            $table->foreign('taxe_id')->references('id')->on('taxes');
+            $table->foreign('property_id')->references('id')->on('property')->onDelete('cascade');
+            $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade');
             $table->timestamps();
         });
     }

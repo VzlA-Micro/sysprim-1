@@ -25,7 +25,7 @@ class CreateVehiclesTaxesTable extends Migration
             $table->float('discount',8,2)->nullable();
             $table->float('previous_debt',8,2)->nullable();
             $table->boolean('type_payments');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade');
             $table->timestamps();
         });
