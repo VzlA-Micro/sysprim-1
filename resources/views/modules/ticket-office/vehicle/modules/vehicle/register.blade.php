@@ -195,7 +195,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/vehicle.js') }}"></script>
+    <script src="{{ asset('js/data/vehicle-module.js') }}"></script>
     <script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
