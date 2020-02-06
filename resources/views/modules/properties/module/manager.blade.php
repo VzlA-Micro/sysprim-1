@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
                 </ul>
             </div>
 
@@ -21,7 +21,7 @@
 
 
             <div class="col s12 m3 animated bounceIn">
-                <a href="#" class="btn-app white grey-text text-darken-2">
+                <a href="{{route('property.ticket-office.read-property')}}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-list"></i>
                     <span class="truncate">Consultar Inmuebles Urbanos</span>
                 </a>
