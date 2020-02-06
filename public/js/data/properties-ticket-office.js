@@ -32,16 +32,19 @@ $(document).ready(function() {
                         var id = property.id;
                         $('#property_id').val(property.id);
                         console.log($('#property_id').val());
-                        $('#area_ground').val(property.area_ground).prop('readonly');
-                        $('#area_build').val(property.area_build).prop('readonly');
-                        $('#address').val(property.address).prop('readonly');
-                        $('#person').val(user.name + " " + user.surname).prop('readonly');
-                        $('#value_cadastral_ground_id option[value='+ property.value_cadastral_ground_id + ']').attr('selected',true);                        $('#value_cadastral_ground_id option[value='+ property.value_cadastral_ground_id + ']').attr('selected',true);
+                        $('#area_ground').val(property.area_ground).attr('disabled',true);
+                        $('#area_build').val(property.area_build).attr('disabled',true);
+                        $('#address').val(property.address).attr('disabled',true);
+                        $('#person').val(user.name + " " + user.surname).attr('disabled',true);
+                        $('#value_cadastral_ground_id option[value='+ property.value_cadastral_ground_id + ']').attr('selected',true);
+                        $('#value_cadastral_ground_id').attr('disabled',true);
                         $('#value_cadastral_build_id option[value='+ property.value_cadastral_build_id + ']').attr('selected',true);
+                        $('#value_cadastral_build_id').attr('disabled',true);
                         $('#type_inmueble_id option[value='+ property.type_inmueble_id + ']').attr('selected',true);
+                        $('#type_inmueble_id').attr('disabled',true);
                         $('#parish_id option[value='+ property.parish_id + ']').attr('selected',true);
-
-                        $('select')/*.attr('disabled',true)*/.formSelect();
+                        $('#parish_id').attr('disabled',true);
+                        $('select').formSelect();
                         // $('#status').attr('disabled',false);
                         M.updateTextFields();
                     }
@@ -119,28 +122,28 @@ $(document).ready(function() {
                 success: function(resp) {
                     console.log(resp);
                     if(resp.state == 'success') {
+                        var property = resp.property[0];
+                        var owner_id = resp.owner_od;
+                        var owner = resp.owner;
+                        var alicuota = resp.declaration['porcentaje'];
+                        var discount = resp.declaration['discount'];
+                        var interest = resp.interest;
+                        var recharge = resp.recharge;
+                        var status = resp.status;
+                        var total = resp.total;
+                        console.log(resp.totalGround, resp.totalBuild);
+                        $('#owner_id').val(owner_id);
+                        $('#totalGround').val(resp.totalGround);
+                        $('#totalBuild').val(resp.totalBuild);
+                        $('#base_imponible').val(resp.baseImponible)
+                        $('#alicuota').val(alicuota);
+                        $('#discount').val(discount);
+                        $('#interest').val(interest);
+                        $('#recharge').val(recharge);
+                        $('#statusTax').val(status);
+                        $('#amount').val(total);
+                        M.updateTextFields();
                     }
-                    var property = resp.property[0];
-                    var owner_id = resp.owner_od;
-                    var owner = resp.owner;
-                    var alicuota = resp.declaration['porcentaje'];
-                    var discount = resp.declaration['discount'];
-                    var interest = resp.interest;
-                    var recharge = resp.recharge;
-                    var status = resp.status;
-                    var total = resp.total;
-                    console.log(resp.totalGround, resp.totalBuild);
-                    $('#owner_id').val(owner_id);
-                    $('#totalGround').val(resp.totalGround);
-                    $('#totalBuild').val(resp.totalBuild);
-                    $('#base_imponible').val(resp.baseImponible)
-                    $('#alicuota').val(alicuota);
-                    $('#discount').val(discount);
-                    $('#interest').val(interest);
-                    $('#recharge').val(recharge);
-                    $('#status').val(status);
-                    $('#amount').val(total);
-                    M.updateTextFields();
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                 },
@@ -200,6 +203,35 @@ $(document).ready(function() {
             success: function(resp) {
                 console.log(resp.taxe_id);
                 swal({
+                    title: "¡Bien Hecho!",
+                    text: resp.message + " ¿Desea seguir generando planillas?",
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: "Si",
+                            value: true,
+                            visible: true,
+                            className: "green-gradient"
+
+                        },
+                        cancel: {
+                            text: "No",
+                            value: false,
+                            visible: true,
+                            className: "grey lighten-2"
+                        }
+                    }
+
+                }).then(function (confirm) {
+                    if (confirm) {
+                        location.reload();
+                    } else {
+                        url=localStorage.getItem('url');
+                        window.location.href = url + 'properties/ticket-office/payments/taxes';
+                    }
+                });
+                /*console.log(resp.taxe_id);
+                swal({
                     title: "!Bien Hecho!",
                     text: "Se ha generado una Planilla. Ahora debes proceder con el pago.",
                     icon: "success",
@@ -209,7 +241,7 @@ $(document).ready(function() {
                     },
                 }).then(function() {
                     location.href = url + 'properties/taxes/payments/' + resp.taxe_id;
-                });
+                });*/
             },
             error: function (err) {
                 console.log(err);
@@ -302,5 +334,551 @@ $(document).ready(function() {
         }
     });
 
+//    Caja
+    $('#open-cashier').click(function () {
+        if (localStorage.getItem('bank') == null) {
+            swal({
+                title: "PUNTO DE VENTA 1/2",
+                text: "Introduzca el numero de lote del punto de venta:",
+                icon: "info",
+                content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "Escribe un numero",
+                        type: "number",
+                    },
+                },
+            }).then(function (name) {
+                if (name === null || isNaN(name) || name <= 0) {
+                    swal({
+                        title: "Información",
+                        text: "Acción cancelada,debe ingresar un numero de lote valido.",
+                        icon: 'info'
+                    });
+                } else {
+                    localStorage.setItem('lot', name);
+                    swal({
+                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2",
+                        icon: "info",
+                        buttons: {
+                            cancel: true,
+                            BANCO: {text: "100%BANCO", value: "33", className: "blue"},
+                            BOD: {text: "BOD", value: "44", className: "green width"},
+                        }
+                    }).then(function (bank) {
+                        if (bank === null) {
+                            swal({
+                                title: "Información",
+                                text: "Acción cancelada,debe ingresar un punto.",
+                                icon: 'info'
+                            });
+                        } else {
+                            localStorage.setItem('bank', bank);
+                            var hoy = new Date();
+                            var dd = hoy.getDate();
+                            localStorage.setItem('day',dd);
+                            swal({
+                                title: "Bien hecho",
+                                text: "Ya puedes empezar a registrar pagos valido.",
+                                icon: "success",
+                            });
 
+                            location.reload();
+                        }
+                    })
+                }
+            });
+
+        } else {
+            swal({
+                title: "Información",
+                text: "Acción cancelada, debe abrir caja.",
+                icon: 'info'
+            });
+        }
+    });
+
+    var hoy = new Date();
+    var dd = hoy.getDate();
+
+    if(localStorage.getItem('day')!=dd){
+        localStorage.removeItem('bank');
+        localStorage.removeItem('lot');
+        localStorage.removeItem('day');
+    }
+
+
+    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
+        swal({
+            title: "Información",
+            text: "Debe abrir caja, para empezar a registrar pagos.",
+            icon: "info",
+        });
+        $('.content').css('display', 'none');
+    } else {
+
+        var bank = localStorage.getItem('bank');
+        var lot = localStorage.getItem('lot');
+
+
+        if (bank === "44") {
+            $('#name_bank').val('BOD');
+        } else {
+            $('#name_bank').val("100%BANCO");
+        }
+
+        $('#bank').val(bank);
+        $('#lot').val(lot);
+
+        M.updateTextFields();
+
+        $('#content').css('display', 'block');
+    }
+
+    $('#close-cashier').click(function () {
+        if (localStorage.getItem('bank') !== null) {
+            swal({
+                title: "Información",
+                text: "¿Estas seguro?, Si cierras las caja, no podras revertir los cambios.",
+                icon: "warning",
+                buttons: {
+                    confirm: {
+                        text: "Si",
+                        value: true,
+                        visible: true,
+                        className: "green"
+
+                    },
+                    cancel: {
+                        text: "No",
+                        value: false,
+                        visible: true,
+                        className: "grey lighten-2"
+                    }
+                }
+            }).then(function (aceptar) {
+                if (aceptar) {
+                    localStorage.removeItem('bank');
+                    localStorage.removeItem('lot');
+                    location.href = url + 'ticket-office/payments';
+                }
+            });
+
+
+        } else {
+            swal({
+                title: "Información",
+                text: "Acción cancelada, debe abrir la caja para poder cerrarla.",
+                icon: 'info'
+            });
+
+        }
+    });
+
+    $('#select-next').click(function () {
+        var acum = '';
+        var band=false;
+
+
+        $('input.payroll:checked').each(function () {
+            band=true;
+            acum += $(this).val() + '-';
+        });
+
+        if(band){
+            $('#two').removeClass('disabled');
+            $('ul.tabs').tabs("select", "payment-tab");
+            $.ajax({
+                method: "GET",
+                url: url + "ticket-office/taxes/calculate/" + acum,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+
+
+                    if(response.status==='success'){
+                        $('.taxes_id').each(function () {
+                            $(this).val(acum);
+                        });
+
+                        $('.amount').each(function(){
+                            $(this).val(response.amount);
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                        $('#amount_total_depo').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        $('#amount_total').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+                        $('#amount_total_tr').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        M.updateTextFields();
+
+                    }else{
+                        swal({
+                            title: "!Bien Hecho",
+                            text: "La planilla ingresada se ha verificada con éxito, ya que el dinero a pagar es igual a 0.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.open(url + 'ticket-office/generate-receipt/' +acum, "RECIBO DE PAGO", "width=500, height=600");
+
+                            location.reload();
+                        });
+                    }
+                },
+
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }else{
+            swal({
+                title: "Información",
+                text: "Debes selecionar una planilla válida.",
+                icon: "info",
+                button: "Ok",
+            });
+        }
+
+    });
+
+    $('#register-payment').submit(function (e) {
+        e.preventDefault();
+        var amount = $('#amount_total').val();
+        var amount_pay = $('#amount').val();
+
+        amount=amount.replace(/\./g,'');
+        amount_pay=amount_pay.replace(/\./g,'');
+
+
+        amount=amount.replace(/,/g, "");
+        amount_pay=amount_pay.replace(/,/g, "");
+
+
+        if (parseInt(amount_pay) > parseInt(amount)) {
+            swal({
+                title: "Error",
+                text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
+                icon: "error",
+                button: "Ok",
+            });
+
+        } else {
+            $.ajax({
+                url: url + "ticket-office/payment/save",
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+                    console.log(response);
+                    if (response.status === 'process') {
+                        $('#amount_total').val(response.payment);
+                        $('#amount_total').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        swal({
+                            title: "Información",
+                            text: "Para conciliar esta planilla " +
+                            "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total').val() + "Bs",
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+                    } else {
+                        swal({
+                            title: "¡Bien hecho!",
+                            text: "Planillas ingresa y conciliada con éxito.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            if(accept||!accept){
+                                generateReceipt();
+                                location.reload();
+                            }
+                        });
+
+
+
+                    }
+                    $('#ref').val('');
+                    $('#amount').val('');
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+        }
+    });
+
+    function generateReceipt() {
+        var taxes_id=$('.taxes_id').val();
+        window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/true', "RECIBO DE PAGO", "width=500, height=600");
+    }
+
+    $('#register-payment-depo').submit(function (e) {
+        e.preventDefault();
+
+        if($('input:radio:checked.check-payment').val()!==undefined&&$('input:radio:checked.bank-div').val()!==undefined){
+            $.ajax({
+                url: url + "ticket-office/payment/save",
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    var taxes_id=$('.taxes_id').val();
+                    swal({
+                        title: "¡Bien hecho!",
+                        text: "Planilla ingresa y registrada con éxito.",
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        $('#amount_total_tr').val('');
+                        if ($('#company_id').val() !== '') {
+                            window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
+                            location.reload();
+                        }
+
+                    });
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+        }else{
+            if($('input:radio:checked.check-payment').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debes de selecionar la forma de pago en que se va hacer el deposito.",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            }else if($('input:radio:checked.bank-div').val()===undefined){
+                swal({
+                    title: "Información",
+                    text: "Debes de selecionar el banco en el cual se va realizar el deposito.",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            }
+
+
+        }
+
+    });
+
+
+    $('#register-payment-tr').submit(function (e) {
+        e.preventDefault();
+        var amount = $('#amount_total_tr').val();
+        var amount_pay = $('#amount_tr').val();
+
+        amount=amount.replace(/\./g,'');
+        amount_pay=amount_pay.replace(/\./g,'');
+
+
+        amount=amount.replace(/,/g, "");
+        amount_pay=amount_pay.replace(/,/g, "");
+
+
+
+
+        if (parseInt(amount_pay) > parseInt(amount)) {
+            swal({
+                title: "Error",
+                text: "El monto del punto de venta, no puede ser mayor que el monto total a pagar.",
+                icon: "error",
+                button: "Ok",
+            });
+
+        } else {
+
+            if($('#bank_destinations_tr').val()!=null&&$('#bank_tr').val()!=null) {
+                $.ajax({
+                    url: url + "ticket-office/payment/save",
+                    contentType: false,
+                    processData: false,
+                    data: new FormData(this),
+                    method: "POST",
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        var taxes_id = $('.taxes_id').val();
+
+                        console.log(response);
+                        if (response.status === 'process') {
+                            $('#amount_total_tr').val(response.payment);
+
+                            $('#amount_total_tr').val(function (index, value) {
+                                return number_format(value, 2);
+                            });
+                            swal({
+                                title: "Información",
+                                text: "Para conciliar esta planilla " +
+                                "el monto debe ser cancelado en su totalidad.Debe cancelar el dinero restante:" + $('#amount_total_tr').val() + "Bs",
+                                icon: "info",
+                                button: "Ok",
+                            });
+
+                        } else {
+                            swal({
+                                title: "¡Bien hecho!",
+                                text: "Planilla ingresa, una vez se verifique el pago se enviara la planilla, al correo afiliado a esta empresa.",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function (accept) {
+                                location.reload();
+                            });
+
+                        }
+                        $('#ref_tr').val('');
+                        $('#amount_tr').val('');
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    }
+                });
+
+            }else{
+                if($('#bank_destinations_tr').val()===null){
+                    swal({
+                        title: "Información",
+                        text: "Debe selecionar el banco donde el dinero va ingresar.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }else if($('#bank_tr').val()===null){
+                    swal({
+                        title: "Información",
+                        text: "Debe selecionar el banco de donde se realizara la transferencia.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+            }
+
+
+
+        }
+
+    });
+
+    $('.check-payment').click(function () {
+        if($(this).val()==='PPC'){
+            $('#ref_depo').removeAttr('readonly');
+        }else{
+            $('#ref_depo').attr('readonly','readonly');
+            $('#ref_depo').val('');
+        }
+        $('#payments_type_depo').val($(this).val());
+    });
+
+    function formatMoney() {
+        $('input[type="text"].money').each(function () {
+            $(this).val(function (index, value) {
+                return number_format(value, 2);
+            });
+        });
+
+        $('#amount').text(function (index, value) {
+            return number_format(value, 2);
+        });
+
+
+    }
+
+    function number_format(amount, decimals) {
+
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+        decimals = decimals || 0; // por si la variable no fue fue pasada
+
+        // si no es un numero o es igual a cero retorno el mismo cero
+        if (isNaN(amount) || amount === 0)
+            return parseFloat(0).toFixed(decimals);
+
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(decimals);
+
+        var amount_parts = amount.split('.'),
+            regexp = /(\d+)(\d{3})/;
+
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + '.' + '$2');
+
+        return amount_parts.join(',');
+    }
 });

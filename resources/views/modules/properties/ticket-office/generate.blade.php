@@ -130,7 +130,7 @@
                             <input type="hidden" name="owner_id" id="owner_id" value="">
                             {{--<input type="hidden" name="owner_type" id="owner_type" value="{{ $owner_type }}">--}}
                             {{--<input type="hidden" name="status" id="status" value="{{ $status }}">--}}
-                            <input type="hidden" name="status" id="status" value="">
+                            <input type="hidden" name="status" id="statusTax" value="">
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">

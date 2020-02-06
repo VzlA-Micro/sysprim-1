@@ -1,76 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Planilla</title>
-    {{-- <link rel="stylesheet" href="http://sysprim.com.devel/css/materialize.min.css">
-    <link rel="stylesheet" href="http://sysprim.com.devel/css/material-componente.css"> --}}
-    <link rel="stylesheet" href="http://sysprim.com.devel/css/pdf.css">
-    <style>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Planilla</title>
+            {{-- <link rel="stylesheet" href="http://sysprim.com.devel/css/materialize.min.css">
+            <link rel="stylesheet" href="http://sysprim.com.devel/css/material-componente.css"> --}}
+            <link rel="stylesheet" href="http://sysprim.com.devel/css/pdf.css">
+            <style>
         body {
 
-        }
+}
 
         td.border {
-            border: 1px solid black;
-        !important;
-            border-right: none;
+border: 1px solid black;
+!important;
+border-right: none;
             border-left: none;
-            margin: 0 !important;
+margin: 0 !important;
 
-        }
-    </style>
-</head>
-<body style="font-family:Helvetica!important;">
-@php setlocale(LC_MONETARY, 'en_US');@endphp
-<div class="receipt-header" style="">
-    <table style="width: 100%; border-collapse: collapse;">
-        <tr style="text-align: center">
-            <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt=""><br>
-                <span></span><br>
-                <span style="font-size: 5px;"></span><br>
-            </td>
-            <td style="width: 50%;" style="text-align: center;font-size: 10px !important;" rowspan="2">
-					<span style="font-size: 12px !important;">
+}
+            </style>
+        </head>
+        <body style="font-family:Helvetica!important;">
+        @php setlocale(LC_MONETARY, 'en_US');@endphp
+        <div class="receipt-header" style="">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="text-align: center">
+                    <td style="width: 25%;" rowspan="2">
+                        <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt=""><br>
+                        <span></span><br>
+                        <span style="font-size: 5px;"></span><br>
+                    </td>
+                    <td style="width: 50%;" style="text-align: center;font-size: 10px !important;" rowspan="2">
+                        <span style="font-size: 12px !important;">
 
-					República Bolivariana de Venezuela <br>
-					Alcaldía Bolivariana del Municipio Iribarren <br>
-					Barquisimeto - Edo. Lara
+                            República Bolivariana de Venezuela <br>
+                            Alcaldía Bolivariana del Municipio Iribarren <br>
+                            Barquisimeto - Edo. Lara
 					</span>
-            </td>
-            <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
-                <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
-                <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
+                    </td>
+                    <td style="width: 25%;" rowspan="2">
+                        <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
+                        <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
+                        <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
 
-            </td>
-        </tr><!--
-	        <tr>
-	            <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>
-	            <td style="width: 40%; border: solid 1px #00FF00;">BBB</td>
-	            <td style="width: 30%; border: solid 1px #0000FF;">CCC</td>
-	        </tr>
-	        <tr>
-	            <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>
-	            <td style="width: 40%; border: solid 1px #00FF00;">BBB</td>
-	            <td style="width: 30%; border: solid 1px #0000FF;">CCC</td>
-	        </tr> -->
-    </table>
-</div>
+                    </td>
+                </tr><!--
+                    <tr>
+                    <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>
+                    <td style="width: 40%; border: solid 1px #00FF00;">BBB</td>
+                    <td style="width: 30%; border: solid 1px #0000FF;">CCC</td>
+                    </tr>
+                    <tr>
+                    <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>
+                    <td style="width: 40%; border: solid 1px #00FF00;">BBB</td>
+                    <td style="width: 30%; border: solid 1px #0000FF;">CCC</td>
+                    </tr> -->
+            </table>
+        </div>
 
-@if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
-    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (INMUEBLES URBANOS)</h4>
-@else
-    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(INMUEBLES URBANOS)</h4>
-@endif
-<table style="width: 100%; border-collapse: collapse;">
-    <tr style="">
-        <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+        @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+            <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (INMUEBLES URBANOS)</h4>
+        @else
+            <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(INMUEBLES URBANOS)</h4>
+        @endif
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="">
+                <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
 
-        <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
+                <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
 
 
         {{--        @if($property->code_catastal)--}}
@@ -85,7 +85,7 @@
     <tr>
         <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
         <td style="width:35%;font-size: 11px !important;">{{$data->ci .''. $data->RIF}}</td>
-        @if($data->license)
+    @if($data->license)
             <td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
             <td style="width:30%;font-size: 11px !important">{{$data->license}}</td>
             {{--@else
@@ -93,7 +93,6 @@
                 <td style="width:30%;font-size: 11px !important;"></td> --}}
         @endif
     </tr>
-
 
     <tr>
         <td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
@@ -142,9 +141,9 @@
         <td style="width: 30%;font-size: 10px;!important;">{{ $property->valueBuild->name }}</td>
         <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
         <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
-        <td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2) }}</td>
+        <td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2,',','.') }}</td>
         <td style="width: 15%;font-size: 10px;!important"></td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($propertyTaxes->base_imponible,2)}}</td>
+        <td style="width: 10%;font-size: 10px;!important">{{number_format($propertyTaxes->base_imponible,2,',','.')}}</td>
     </tr>
     {{--@endforeach--}}
 
@@ -154,10 +153,10 @@
         <td style="width: 10%;font-size: 10px !important;">Alicuota</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->alicuota,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->alicuota,2,',','.') }}</td>
         @php $totalAmount += $propertyTaxes->alicuota @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
     </tr>
     @if($propertyTaxes->recharge != 0)
     <tr>
@@ -165,7 +164,7 @@
         <td style="width: 10%;font-size: 10px !important;">Recargos</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->recharge,2) }}</td>
         @php $totalAmount += ($propertyTaxes->base_imponible + $propertyTaxes->recharge); @endphp
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
@@ -177,10 +176,10 @@
         <td style="width: 10%;font-size: 10px !important;">Interés por Mora</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->interest,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->interest,2,',','.') }}</td>
         @php $totalAmount += $propertyTaxes->interest; @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
     </tr>
     @endif
     @if($propertyTaxes->discount != 0)
@@ -189,10 +188,10 @@
         <td style="width: 10%;font-size: 10px !important;">Descuento: 20%</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
-        <td style="width: 10%;font-size: 10px !important;">-{{ number_format($propertyTaxes->discount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+        <td style="width: 10%;font-size: 10px !important;">-{{ number_format($propertyTaxes->discount,2,',','.') }}</td>
         @php $totalAmount -= $propertyTaxes->discount; @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
     </tr>
     @endif
     @if($propertyTaxes->fiscal_credit != 0)
@@ -201,10 +200,10 @@
         <td style="width: 10%;font-size: 10px !important;">Créditos Fiscales</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
-        <td style="width: 10%;font-size: 10px !important;">-{{ number_format($propertyTaxes->fiscal_credit,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+        <td style="width: 10%;font-size: 10px !important;">-{{ number_format($propertyTaxes->fiscal_credit,2,',','.') }}</td>
         @php $totalAmount -= $propertyTaxes->fiscal_credit; @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
     </tr>
     @endif
     <tr>
@@ -214,7 +213,7 @@
         <td></td>
         <td></td>
         <td>TOTAL</td>
-        <td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2)}}</td>
+        <td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2,',','.')}}</td>
     </tr>
     </tbody>
 

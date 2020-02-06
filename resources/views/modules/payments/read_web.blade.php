@@ -85,7 +85,13 @@
                                                                 class="icon-pageview"></i></a>
 
                                                 </td>
+                                        @elseif($taxe->branch==='Inm.Urbanos')
+                                            <td>
+                                                <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->id])  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
 
+                                            </td>
                                             @endif
 
                                     @endcan
