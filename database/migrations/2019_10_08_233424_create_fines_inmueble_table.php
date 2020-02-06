@@ -18,8 +18,8 @@ class CreateFinesInmuebleTable extends Migration
             $table->integer('property_id')->unsigned();
             $table->integer('fine_id')->unsigned();
             $table->float('unid_tribu_value',12);
-            $table->foreign('fine_id')->references('id')->on('fines');
-            $table->foreign('property_id')->references('id')->on('property');
+            $table->foreign('fine_id')->references('id')->on('fines')->onDelete('cascade');
+            $table->foreign('property_id')->references('id')->on('property')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateFinesInmuebleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines_company');
+        Schema::dropIfExists('fines_property');
     }
 }

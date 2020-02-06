@@ -20,10 +20,10 @@ class CreateUserVehicleTable extends Migration
             $table->integer('company_id')->nullable()->unsigned();
             $table->integer('person_id')->nullable()->unsigned();
             $table->string('status_user_vehicle',15);
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
-            $table->foreign('company_id')->references('id')->on('company');
-            $table->foreign('person_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
+            $table->foreign('person_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateUserVehicleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_vehicles');
+        Schema::dropIfExists('user_vehicle');
     }
 }
