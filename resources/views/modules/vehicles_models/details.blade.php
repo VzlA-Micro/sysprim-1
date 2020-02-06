@@ -9,7 +9,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.models.vehicles') }}">Gestionar Modelos De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.models.read') }}">Ver Modelos De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.details',['id'=>$models->id]) }}">Detalles De Modelo De Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.models.details',['id'=>$models->id]) }}">Detalles</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -24,7 +24,7 @@
                         </div>-->
                         <input id="id" type="hidden" name="id" value="{{ $models->id }}">
 
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>
                             <input id="name" type="text" name="name" readonly value="{{ $models->name }}">
                             <label for="name">Modelo</label>
