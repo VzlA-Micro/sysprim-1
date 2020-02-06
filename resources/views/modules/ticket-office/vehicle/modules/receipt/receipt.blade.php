@@ -62,10 +62,10 @@
     </table>
 </div>
 
-@if($firm)
-    <h4 style="text-align:center">RECIBO DE PAGO</h4>
+@if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (PATENTES DE VEHÍCULOS)</h4>
 @else
-    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL</h4>
+    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(PATENTES DE VEHÍCULOS)</h4>
 @endif
 <table style="width: 100%; border-collapse: collapse;">
     @if(isset($vehicle->company[0]))

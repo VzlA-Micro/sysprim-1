@@ -74,7 +74,7 @@
                                 <select id="fiscal_period" disabled>
                                     <option value="null">Seleccione</option>
                                     @while($cont >= 2010)
-                                        <option value="{{$cont}}">{{$cont}}</option>
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
                                         @php $cont--; @endphp
                                     @endwhile
                                 </select>

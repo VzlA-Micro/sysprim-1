@@ -1398,35 +1398,26 @@ class TicketOfficeVehicleController extends Controller
 
     public function fiscalPeriod($id, $year)
     {
-        $date=Carbon::now();
+        $date = Carbon::now();
         $vehicleTaxe = Vehicle::find($id);
-        if ($vehicleTaxe->taxesVehicle->isEmpty()) {
+        $tax = $vehicleTaxe->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        if (is_null($tax)) {
             $statusTax = false;
         } else {
-            foreach ($vehicleTaxe->taxesVehicle as $tax) {
-
-                $taxesYear = Carbon::parse($tax->fiscal_peridod);
-
-                if ($year == $taxesYear->format('Y'))
-                {
-                    if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
-                        $statusTax=true;
-                    }else if ($tax->status === 'temporal') {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                $statusTax = true;
+            } else if ($tax->status === 'temporal') {
 //                      $tax->delete();
-                        $statusTax = false;
-                    }else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
-                        $statusTax = true;
-                    }else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
-                        $statusTax = true;
-                    }else if ($tax->status === 'cancel'){
-                        $statusTax = false;
-                    }
-                } else {
-                    $statusTax = false;
-                }
+                $statusTax = false;
+            } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'cancel') {
+                $statusTax = false;
             }
-        }
 
-        return Response()->json($statusTax);
+            return Response()->json($statusTax);
+        }
     }
 }
