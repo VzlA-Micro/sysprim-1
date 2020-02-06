@@ -320,6 +320,7 @@ class TicketOfficeController extends Controller
         $number_vehicle=$company->companyVehicle()->orderBy('id','desc')->count();
         $number_property=$company->companyProperty()->orderBy('id','desc')->count();
 
+
         return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco,'number_property'=>$number_property,'number_vehicle'=>$number_vehicle]);
     }
 
@@ -489,7 +490,6 @@ class TicketOfficeController extends Controller
         $taxe->status = 'ticket-office';
         $taxe->save();
         $id = $taxe->id;
-
 
         for ($i = 0; $i < count($base); $i++) {
 

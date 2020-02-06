@@ -148,8 +148,8 @@
                                                             <div class="input-field col s12 m6 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="lot" id="lot" value=""
-                                                                       class="validate"
-                                                                       required readonly>
+                                                                       class="validate number-date"
+                                                                       required readonly maxlength="10">
                                                                 <label for="lot">LOTE</label>
                                                             </div>
                                                             <div class="input-field col s12 m6 ">
@@ -167,7 +167,7 @@
                                                             <div class="input-field col s12 m6 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref" value=""
-                                                                       class="validate"
+                                                                       class="validate number-date"
                                                                        required minlength="3" maxlength="10">
                                                                 <label for="ref">Ref o Código</label>
                                                             </div>
@@ -329,7 +329,7 @@
                                                                         <input type="text" name="amount"
                                                                                id="amount_total_tr" value=""
                                                                                class="validate money amount"
-                                                                               required>
+                                                                               required readonly>
                                                                         <label for="amount_total_tr">Total a
                                                                             Pagar</label>
                                                                     </div>
@@ -384,7 +384,7 @@
                                                             <div class="input-field col s12 m12 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref_depo" value=""
-                                                                       class="validate"
+                                                                       class="validate number-date"
                                                                        required minlength="3"  readonly>
                                                                 <label for="ref_depo">N DE CHEQUE</label>
                                                             </div>
@@ -438,7 +438,7 @@
                                                                 <input type="text" name="amount_total"
                                                                        id="amount_total_depo" value=""
                                                                        class="validate money amount"
-                                                                       required>
+                                                                       required readonly>
                                                                 <label for="amount_total_depo">Total a Pagar</label>
                                                             </div>
                                                             <div class="col s12 center-align">

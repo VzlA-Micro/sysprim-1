@@ -120,6 +120,7 @@ class PropertyController extends Controller
         $id = $property->id; // Obtengo el id del inmueble que registro
         $person_id=null;
         $company_id=null;
+
         if($status == 'propietario'){
             if($type == 'company'){
                 $user_id = \Auth::user()->id;
@@ -501,7 +502,15 @@ class PropertyController extends Controller
 
     public function findTaxPayers($type_document,$document,$band){
         if($type_document=='V'||$type_document=='E'){
-            $user=User::where('ci', $type_document.$document)->get();
+
+            if($band==='true'){
+                $user=User::where('ci', $type_document.$document)->get();
+            }else{
+                $user=User::where('ci', $type_document.$document)->where('status_account','!=','waiting')->get();
+            }
+
+
+
             if($user->isEmpty()){
                 if($band==='true'){
                     $user=CedulaVE::get($type_document,$document,false);
