@@ -30,6 +30,6 @@ class PaymentsTaxes extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('payments_taxes');
     }
 }

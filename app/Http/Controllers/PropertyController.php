@@ -16,6 +16,8 @@ use App\Property;
 use App\Company;
 use App\User;
 use App\Helpers\CedulaVE;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+
 class PropertyController extends Controller
 {
 
@@ -372,8 +374,8 @@ class PropertyController extends Controller
         }else{
             $type='company';
             $data=Company::find($property->users[0]->pivot->company_id);
-        }
 
+        }
 
 
         return view('modules.properties.module.details',[
@@ -529,6 +531,109 @@ class PropertyController extends Controller
 
         }
         return response()->json($data);
+    }
+
+
+    public function updatePropertyTicketOffice(Request $request){
+
+
+        $id = $request->input('id');
+        $location_cadastral = $request->input('location_cadastral');
+        $area_build = $request->input('area_build');
+        $area_ground = $request->input('area_ground');
+        $parish = $request->input('parish');
+        $address = $request->input('address');
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $typeConst = $request->input('type_const');
+        $type_inmueble_id = $request->input('type_inmueble_id');
+        $status = $request->input('status');
+//        $type = $request->input('type');
+        $owner_id = $request->input('id');
+
+        $property =Property::find($id);
+        $property->parish_id = $parish;
+        $property->value_cadastral_ground_id = $location_cadastral;
+       // $property->code_cadastral = $code_cadastral;
+        $property->address = $address;
+        $property->area_build = $area_build;
+        $property->area_ground = $area_ground;
+        $property->lat = $lat;
+        $property->lng = $lng;
+        $property->type_inmueble_id = $type_inmueble_id;
+        $property->value_cadastral_build_id = $typeConst;
+//        dd($owner_id); die();
+        $property->update();
+
+        response()->json(['status'=>'success','message'=>'Los datos del inmueble han sido actualizado con éxito']);
+
+    }
+
+
+
+    public function changeUserPropertyTicketOffice($property_id,$ci){
+
+        $user=User::where('ci',$ci)->where('status_account','!=','waiting')->first();
+        if(is_object($user)){
+            $property=UserProperty::where('property_id',$property_id)->first();
+
+            $property->user_id=$user->id;
+            $property->update();
+            $response=['status'=>'success','message'=>'Usuario de inmueble actualizado con éxito'];
+        }else{
+            $response=['status'=>'error','message'=>'Usuario no encontrado'];
+        }
+        return $response;
+
+    }
+
+
+
+    public function changePropietarioPropertyTicketOffice($type,$document,$property_id){
+
+        if($type==='user'){
+            $user=User::where('ci',$document)->where('status_account','!=','waiting')->first();
+
+            if(is_object($user)){
+                $property=UserProperty::where('property_id',$property_id)->first();
+                $property->person_id=$user->id;
+                $property->company_id=null;
+                $property->update();
+                $response=['status'=>'success','message'=>'Propietario de inmueble actualizado con éxito'];
+            }else {
+                $response = ['status' => 'error', 'message' => 'Usuario no encontrado'];
+            }
+        }else{
+            $company=Company::where('RIF',$document)->first();
+
+            if(is_object($company)){
+                $property=UserProperty::where('property_id',$property_id)->first();
+                $property->person_id=null;
+                $property->company_id=$company->id;
+                $property->update();
+                $response=['status'=>'success','message'=>'Propietario de inmueble actualizado con éxito'];
+            }else {
+                $response = ['status' => 'error', 'message' => 'Empresa no encontrada no encontrado'];
+            }
+
+        }
+
+
+        return response()->json($response);
+    }
+
+
+    public function updatedMapPropertyTicketOffice(Request $request){
+        $id=$request->input('id');
+        $lat=$request->input('lat');
+        $lng=$request->input('lng');
+
+        $property=Property::find($id);
+        $property->lat=$lat;
+        $property->lng=$lng;
+        $property->update();
+
+        return response()->json(['status'=>'success']);
     }
 
 

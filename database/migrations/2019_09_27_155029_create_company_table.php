@@ -29,7 +29,7 @@ class CreateCompanyTable extends Migration
             $table->string('image',255)->nullable();
             $table->integer('parish_id')->unsigned()->nullable();
             $table->string('status',10)->nullable();
-            $table->foreign('parish_id')->references('id')->on('parish');
+            $table->foreign('parish_id')->references('id')->on('parish')->onDelete('cascade');
             $table->timestamps();
         });
     }

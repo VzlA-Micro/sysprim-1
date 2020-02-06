@@ -17,8 +17,8 @@ class CompanyBranches extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->integer('branch_id')->unsigned();
-            $table->foreign('branch_id')->references('id')->on('company');
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('branch_id')->references('id')->on('company')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CompanyBranches extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('company_branches');
     }
 }

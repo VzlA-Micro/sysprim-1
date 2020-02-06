@@ -1031,6 +1031,11 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
 
+        Route::get('property/ticket-office/change-user/{property_id}/{ci}','PropertyController@changeUserPropertyTicketOffice');
+        Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
+        Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
+        Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+
 
 
 

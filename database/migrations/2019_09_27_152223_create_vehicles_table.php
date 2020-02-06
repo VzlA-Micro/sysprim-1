@@ -24,8 +24,8 @@ class CreateVehiclesTable extends Migration
             $table->string('status',10);
             $table->integer('type_vehicle_id')->unsigned();
             $table->integer('model_id')->unsigned()->nullable();
-            $table->foreign('model_id')->references('id')->on('models');
-            $table->foreign('type_vehicle_id')->references('id')->on('vehicle_type');
+            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
+            $table->foreign('type_vehicle_id')->references('id')->on('vehicle_type')->onDelete('cascade');
             $table->timestamps();
         });
     }

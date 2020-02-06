@@ -32,11 +32,11 @@ class CreateRatesTaxesTable extends Migration
 
 
 
-            $table->foreign('company_id')->references('id')->on('company');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('person_id')->references('id')->on('users');
-            $table->foreign('rate_id')->references('id')->on('rates');
-            $table->foreign('taxe_id')->references('id')->on('taxes');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('person_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('rate_id')->references('id')->on('rates')->onDelete('cascade');
+            $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade');
 
             $table->timestamps();
         });

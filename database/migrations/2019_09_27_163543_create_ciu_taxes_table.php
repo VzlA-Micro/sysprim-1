@@ -25,7 +25,7 @@ class CreateCiuTaxesTable extends Migration
             $table->integer('ciu_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreign('ciu_id')->references('id')->on('ciu');
+            $table->foreign('ciu_id')->references('id')->on('ciu')->onDelete('cascade');
         });
     }
 

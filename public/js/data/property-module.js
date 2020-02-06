@@ -4,11 +4,11 @@ $(document).ready(function () {
 
     $('#type_document_full').change(function () {
         console.log($(this).val());
-        if($(this).val()==='J'||$(this).val()==='G'){
+        if ($(this).val() === 'J' || $(this).val() === 'G') {
             $('#condition').addClass('hide');
             $('#status').val('propietario');
             $('#type').val('company');
-        }else{
+        } else {
             $('#condition').removeClass('hide');
             $('#type').val('');
             $('#status').val('')
@@ -17,17 +17,13 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
     $('#document_full').keyup(function () {
-        if($('#type_document_full').val()===null){
+        if ($('#type_document_full').val() === null) {
             swal({
                 title: "Información",
                 text: "Debes seleccionar el tipo de documento, antes de ingresar el número de documentos.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
@@ -38,7 +34,7 @@ $(document).ready(function () {
 
 
     $('#document_full').change(function () {
-        if($('#type_document_full').val()!==null){
+        if ($('#type_document_full').val() !== null) {
             findDocument();
         }
     });
@@ -49,33 +45,29 @@ $(document).ready(function () {
     });
 
 
-
     $('#status_view').click(function () {
-
-
 
 
     });
 
 
+    $('#status_view').change(function () {
 
-    $('#status_view').change(function() {
 
-
-        var document=  $('#document_full').val();
-        if(document==''){
+        var document = $('#document_full').val();
+        if (document == '') {
             swal({
                 title: "Información",
                 text: "Debes ingresar una cedula valida para poder selecionar la condicion legal del usuario.",
                 icon: "info",
-                button:{
+                button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
             $("#status_view").prop("selectedIndex", 0); // set the first option as selected
             $("#status_view").formSelect();
-        }else {
+        } else {
 
 
             var status = $(this).val();
@@ -152,28 +144,24 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
     function findDocument() {
-        var type_document=$('#type_document_full').val();
-        var document=$('#document_full').val();
+        var type_document = $('#type_document_full').val();
+        var document = $('#document_full').val();
         $('#surname_full').val('');
         $('#user_name_full').val('');
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
-        if(document!=='') {
+        if (document !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "property/find/" + type_document  + "/" + document+'/false', // Luego cambiar ruta
+                url: url + "property/find/" + type_document + "/" + document + '/false', // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status!=='error') {
+                    if (response.status !== 'error') {
                         if (response.type == 'not-user') {
 
                             swal({
@@ -213,7 +201,6 @@ $(document).ready(function () {
                             $('#address_full').attr('readonly', '');
 
 
-
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name_full').val(company.name);
@@ -227,7 +214,7 @@ $(document).ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    }else{
+                    } else {
                         swal({
                             title: "Información",
                             text: "La empresa no esta registrada, debe ingresar un RIF valido.",
@@ -275,27 +262,24 @@ $(document).ready(function () {
     }
 
 
-
-
-
     function findDocumentResponsable() {
-        var type_document=$('#type_document').val();
-        var document=$('#document').val();
+        var type_document = $('#type_document').val();
+        var document = $('#document').val();
         $('#surname').val('');
         $('#user_name').val('');
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
-        if(document!=='') {
+        if (document !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "property/find/" + type_document  + "/" + document+'/true', // Luego cambiar ruta
+                url: url + "property/find/" + type_document + "/" + document + '/true', // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status!=='error') {
+                    if (response.status !== 'error') {
                         if (response.type == 'not-user') {
 
                             var user = response.user.response;
@@ -331,12 +315,7 @@ $(document).ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    }else{
-
-
-
-
-
+                    } else {
 
 
                         $('#document').val('');
@@ -365,30 +344,30 @@ $(document).ready(function () {
         var status = $('#status').val();
 
 
-        if($('#type').val()=='company'){
-            status='propietario';
+        if ($('#type').val() == 'company') {
+            status = 'propietario';
         }
 
 
-        if((status == null || status == '')) {
+        if ((status == null || status == '')) {
             swal({
                 title: "Información",
-                text: "Debe seleccionar una condicion social para continuar con el registro.",
+                text: "Debe seleccionar una condicion legal para continuar con el registro.",
                 icon: "info",
                 button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
-        }else if(status == 'propietario') {
+        } else if (status == 'propietario') {
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "property-tab");
-        }else {
+        } else {
 
-            band=true;
+            band = true;
             $('.rate').each(function () {
-                if($(this).val()===''||$(this).val()===null) {
+                if ($(this).val() === '' || $(this).val() === null) {
                     swal({
                         title: "Información",
                         text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
@@ -403,78 +382,76 @@ $(document).ready(function () {
             });
 
 
-            if($('#person_id').val()!==''){
-                band=false;
+            if ($('#person_id').val() !== '') {
+                band = false;
             }
 
 
-
-            if(band) {
-                    var type = $('#type').val();
-                    var name;
-                    if (type == 'user') {
-                        name = $('#user_name').val();
-                    } else {
-                        name = $('#name').val();
-                    }
-
-                    var type_document = $('#type_document').val();
-                    var document = $('#document').val();
-                    var address = $('#address').val();
-                    var surname = $('#surname').val();
-
-                    $.ajax({
-                        method: "POST",
-                        dataType: "json",
-                        data: {
-                            name: name,
-                            surname: surname,
-                            type_document: type_document,
-                            document: document,
-                            address: address,
-                            type: type
-                        },
-                        url: url + 'properties/taxpayers/company-user/register',
-
-                        beforeSend: function () {
-                            $("#preloader").fadeIn('fast');
-                            $("#preloader-overlay").fadeIn('fast');
-                        },
-                        success: function (response) {
-                            $('#person_id').val(response.id);
-                            $('#two').removeClass('disabled');
-                            $('#one').addClass('disabled');
-                            $('ul.tabs').tabs("select", "property-tab");
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                        },
-                        error: function (err) {
-                            console.log(err);
-                            swal({
-                                title: "¡Oh no!",
-                                text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
-                                icon: "error",
-                                button: {
-                                    text: "Aceptar",
-                                    visible: true,
-                                    value: true,
-                                    className: "green",
-                                    closeModal: true
-                                }
-                            });
-
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                        }
-                    });
+            if (band) {
+                var type = $('#type').val();
+                var name;
+                if (type == 'user') {
+                    name = $('#user_name').val();
                 } else {
-                    $('#two').removeClass('disabled');
-                    $('#one').addClass('disabled');
-                    $('ul.tabs').tabs("select", "property-tab");
+                    name = $('#name').val();
                 }
+
+                var type_document = $('#type_document').val();
+                var document = $('#document').val();
+                var address = $('#address').val();
+                var surname = $('#surname').val();
+
+                $.ajax({
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        name: name,
+                        surname: surname,
+                        type_document: type_document,
+                        document: document,
+                        address: address,
+                        type: type
+                    },
+                    url: url + 'properties/taxpayers/company-user/register',
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        $('#person_id').val(response.id);
+                        $('#two').removeClass('disabled');
+                        $('#one').addClass('disabled');
+                        $('ul.tabs').tabs("select", "property-tab");
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            }
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }
+                });
+            } else {
+                $('#two').removeClass('disabled');
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "property-tab");
+            }
         }
     });
-
 
 
     $('#property').on('submit', function (e) {
@@ -501,14 +478,9 @@ $(document).ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    if (type == 'company') {
-                        window.location.href = url + "properties/company/my-properties/" + id;
-                    }
-                    else {
-                        window.location.href = url + "properties/my-properties";
-                    }
+                    window.location.href = url + "property/ticket-office/read-property";
                 });
-                ;
+
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -528,9 +500,11 @@ $(document).ready(function () {
         });
 
     });
-});
 
-function localizar(elemento,direccion) {
+
+
+});
+function localizar(elemento, direccion) {
     var geocoder = new google.maps.Geocoder();
     var marcadores = [];
 
@@ -539,10 +513,10 @@ function localizar(elemento,direccion) {
         zoom: 15,
         scrollwheel: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        restriction: {latLngBounds:{north: 83.8, south: -57, west: -180, east: 180}}
+        restriction: {latLngBounds: {north: 83.8, south: -57, west: -180, east: 180}}
     });
 
-    geocoder.geocode({'address': direccion}, function(results, status) {
+    geocoder.geocode({'address': direccion}, function (results, status) {
 
 
         if (status === 'OK') {
@@ -554,9 +528,8 @@ function localizar(elemento,direccion) {
 
 
             map.addListener('click', function (e) {
-                addMark(e.latLng, map,marcadores);
+                addMark(e.latLng, map, marcadores);
             });
-
 
 
         } else {
@@ -575,17 +548,11 @@ function localizar(elemento,direccion) {
 }
 
 $('#address').change(function () {
-    var direccion=$(this).val();
-    if(direccion!==''){
-        localizar("map", "Venezuela, Baquisimeto Estado Lara. "+ direccion);
+    var direccion = $(this).val();
+    if (direccion !== '') {
+        localizar("map", "Venezuela, Baquisimeto Estado Lara. " + direccion);
     }
 });
-
-
-
-
-
-
 
 function initMap() {
     var marcadores = [];
@@ -596,13 +563,14 @@ function initMap() {
 
     map.addListener('click', function (e) {
         console.log(e.latLng);
-        addMark(e.latLng, map,marcadores);
+        addMark(e.latLng, map, marcadores);
     });
 
 
-
-
 }
+
+
+
 //    swal({
 //        title: "Información",
 //        text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
@@ -617,8 +585,7 @@ function initMap() {
 //    $('#lat').val(marcadores[0].getPosition().lat());
 //    M.updateTextFields();
 
-function addMark(latLng, map,marcadores) {
-
+function addMark(latLng, map, marcadores) {
 
 
     function removeItemFromArr(arr, item) {

@@ -21,7 +21,7 @@ class CreatePaymentsFinesTable extends Migration
             $table->float('amount');
             $table->string('status',40);
             $table->integer('fine_company_id')->unsigned();
-            $table->foreign('fine_company_id')->references('id')->on('fines_company');
+            $table->foreign('fine_company_id')->references('id')->on('fines_company')->onDelete('cascade');
             $table->timestamps();
         });
     }

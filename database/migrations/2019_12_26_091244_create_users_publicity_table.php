@@ -17,8 +17,8 @@ class CreateUsersPublicityTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('publicity_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('publicity_id')->references('id')->on('publicity');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('publicity_id')->references('id')->on('publicity')->onDelete('cascade');
             $table->timestamps();
         });
     }

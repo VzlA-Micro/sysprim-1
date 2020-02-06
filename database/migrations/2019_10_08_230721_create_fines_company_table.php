@@ -19,8 +19,8 @@ class CreateFinesCompanyTable extends Migration
             $table->integer('fine_id')->unsigned();
             $table->date('fiscal_period')->nullable();
             $table->float('unid_tribu_value',12);
-            $table->foreign('fine_id')->references('id')->on('fines');
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('fine_id')->references('id')->on('fines')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->timestamps();
         });
     }

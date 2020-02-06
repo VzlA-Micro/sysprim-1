@@ -17,8 +17,8 @@ class CreateVehiclesCompanyTable extends Migration
             $table->increments('id');
             $table->integer('vehicle_id')->unsigned();
             $table->integer('company_id')->unsigned();
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->timestamps();
         });
     }
