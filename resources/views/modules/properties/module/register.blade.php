@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}">Registrar - Inmuebles Urbanos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -248,9 +248,10 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/data/property-module.js') }}"></script>
-    <script src="{{ asset('js/validations.js') }}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU&callback=initMap"
             type="text/javascript"></script>
+    <script src="{{ asset('js/data/property-module.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
+
 @endsection
