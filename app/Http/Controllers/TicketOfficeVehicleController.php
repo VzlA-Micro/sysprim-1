@@ -27,6 +27,7 @@ use App\VehicleType;
 use App\VehiclesTaxe;
 use App\Helpers\DeclarationVehicle;
 use App\Helpers\Trimester;
+use App\Exceptions\Handler;
 
 
 class TicketOfficeVehicleController extends Controller
@@ -209,18 +210,34 @@ class TicketOfficeVehicleController extends Controller
         return response()->json($data);
     }
 
-    public function storeVehicle(Request $request)
+    public function storeVehicle(Request $request, Exception $e)
     {
         $vehicle = new Vehicle();
+        $type = $request->input('type');
 
-        var_dump($request->input());
-        die();
-        $licensePlate = $request->input('license_plate');
+        $person_id = null;
+        $company_id = null;
+
+        $licensePlate = strtoupper($request->input('license_plates'));
         $color = $request->input('color');
-        $body_serial = $request->input('bodySerial');
-        $serial_engine = $request->input('serialEngine');
-        $type_vehicle_id = $request->input('type');
+        $body_serial = strtoupper($request->input('bodySerials'));
+        $serial_engine = strtoupper($request->input('serialEngines'));
+        $type_vehicle_id = $request->input('typeV');
         $year = $request->input('year');
+        $status_view = $request->input('status_view');
+        $status = $request->input('status');
+        $owner_id = $request->input('id');
+        $person_id = $request->input('person_id');
+
+        if ($type == 'company') {
+            $company = Company::find($owner_id);
+            $user = $company->users()->get();
+            $user_id = $user[0]->id;
+            $company_id = $owner_id;
+        } else {
+            $user_id = $owner_id;
+        }
+
 
         if (!empty($request->input('brand-n') && $request->input('model-n'))) {
             $brandVehicles = new Brand();
@@ -244,8 +261,6 @@ class TicketOfficeVehicleController extends Controller
             }
 
         } else {
-            $models = $request->input('models');
-            $brand = $request->input('brand');
             $vehicle->model_id = $request->input('model');
         }
 
@@ -257,43 +272,30 @@ class TicketOfficeVehicleController extends Controller
         $vehicle->year = $year;
         $vehicle->status = 'enabled';
 
-        $vehicle->save();
-        $id_user = $request->input('user_id');
-
+       $vehicle->save();
 
         $userVehicle = new UserVehicle();
-        $userVehicle->user_id = $id_user;
+
+        $userVehicle->user_id = $user_id;
         $userVehicle->vehicle_id = $vehicle->id;
-        $userVehicle->status_user_vehicle = $request->input('status');
+        $userVehicle->person_id = $person_id;
+        $userVehicle->company_id = $company_id;
+        $userVehicle->status_user_vehicle = $status;
+
         $userVehicle->save();
 
-        if ($status == "propietario") {
-            if (isset($idCompany)) {
-                $userVehicle->user_id = \Auth::user()->id;
-                $userVehicle->vehicle_id = $vehicle->id;
-                $userVehicle->person_id = null;
-                $userVehicle->company_id = $idCompany;
-                $userVehicle->status_user_vehicle = $request->input('status');
-            } else {
-                $userVehicle->user_id = \Auth::user()->id;
-                $userVehicle->vehicle_id = $vehicle->id;
-                $userVehicle->person_id = \Auth::user()->id;
-                $userVehicle->company_id = null;
-                $userVehicle->status_user_vehicle = $request->input('status');
-            }
-
+        if ($vehicle->save() && $userVehicle->save()) {
+            $response = ['status' => 'success'];
         } else {
-            $userVehicle->user_id = \Auth::user()->id;
-            $userVehicle->vehicle_id = $vehicle->id;
-            $userVehicle->person_id = $owner_id;
-            $userVehicle->company_id = null;
-            $userVehicle->status_user_vehicle = $request->input('status');
-
+            $response = ['status' => 'fail'];
         }
 
+        return response()->json($response);
     }
 
-    public function statusVehicle(Request $request)
+
+    public
+    function statusVehicle(Request $request)
     {
 
         if ($request->input('status') == 'true') {
@@ -313,16 +315,17 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function detailsVehicle($id)
+    public
+    function detailsVehicle($id)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
-        if (isset($vehicle->person[0]->pivot->person_id)){
-            $person=User::find($vehicle->person[0]->pivot->person_id);
-        }else {
-        $person='';
+        if (isset($vehicle->person[0]->pivot->person_id)) {
+            $person = User::find($vehicle->person[0]->pivot->person_id);
+        } else {
+            $person = '';
         }
 
 
@@ -331,13 +334,14 @@ class TicketOfficeVehicleController extends Controller
             'brand' => $brands,
             'model' => $models,
             'type' => $type,
-            'person'=>$person
+            'person' => $person
         ]);
     }
 
-    //find-license
+//find-license
 
-    public function findCode($code)
+    public
+    function findCode($code)
     {
         $company = Company::where('license', $code)->orWhere('RIF', $code)->with('ciu')->with('users')->get();
 
@@ -361,7 +365,9 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function getTaxes(){
+    public
+    function getTaxes()
+    {
         $taxes = Audit::where('user_id', \Auth::user()->id)
             ->where('event', 'created')
             ->where('auditable_type', 'App\Taxe')
@@ -385,7 +391,8 @@ class TicketOfficeVehicleController extends Controller
         return view('modules.ticket-office.vehicle.modules.taxes.taxes-tickoffice', ['taxes' => $taxes]);
     }
 
-    public function registerTaxes(Request $request)
+    public
+    function registerTaxes(Request $request)
     {
 
         $datos = $request->all();
@@ -587,7 +594,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function verifyTaxes($fiscal_period, $company_id)
+    public
+    function verifyTaxes($fiscal_period, $company_id)
     {
         $band = true;
         $company = Company::where('id', '=', $company_id)->with('taxesCompanies')->get();
@@ -608,7 +616,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function pdfTaxes($id)
+    public
+    function pdfTaxes($id)
     {
         $taxes = Taxe::findOrFail($id);
 
@@ -646,7 +655,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function myPaymentsTickOffice($type)
+    public
+    function myPaymentsTickOffice($type)
     {
 
         $amount_taxes = 0;
@@ -705,7 +715,8 @@ class TicketOfficeVehicleController extends Controller
     */
 
 
-    public function generateReceipt($taxes_data)
+    public
+    function generateReceipt($taxes_data)
     {
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode = explode('-', $taxes_data);
@@ -729,7 +740,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function calculatePayments($taxes_data)
+    public
+    function calculatePayments($taxes_data)
     {
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode = explode('-', $taxes_data);
@@ -764,7 +776,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function changeStatustaxes($id, $status)
+    public
+    function changeStatustaxes($id, $status)
     {
         $taxes = Taxe::find($id);
         $taxes->status = $status;
@@ -810,21 +823,24 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function paymentsDetails($id)
+    public
+    function paymentsDetails($id)
     {
         $payment = Payment::with('taxes')->where('id', '=', $id)->get();
         return view('modules.payments.details', ['payments' => $payment[0]]);
     }
 
 
-    public function paymentsWeb()
+    public
+    function paymentsWeb()
     {
         $taxes = Taxe::with('companies')->where('status', '!=', 'cancel')->orderBy('id', 'desc')->get();
         return view('modules.payments.read_web', ['taxes' => $taxes]);
     }
 
 
-    public function sendEmailVerified($id)
+    public
+    function sendEmailVerified($id)
     {
         $taxes = Taxe::findOrFail($id);;
         if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
@@ -868,7 +884,8 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function changeStatusPayment($id, $status)
+    public
+    function changeStatusPayment($id, $status)
     {
         $payments = Payment::find($id);
         $payments->status = $status;
@@ -896,16 +913,18 @@ class TicketOfficeVehicleController extends Controller
         return response()->json(['status' => $message]);
     }
 
-    //*________DEFINITIVE_________*
+//*________DEFINITIVE_________*
 
-    public function verifyDefinitive($company_id)
+    public
+    function verifyDefinitive($company_id)
     {
         $status = TaxesMonth::verifyDefinitive($company_id);
         return response()->json(['status' => $status]);
     }
 
-    //declarar y generar la planilla
-    public function create($id)
+//declarar y generar la planilla
+    public
+    function create($id)
     {
         $array = explode('-', $id);
         $idVehicle = $array[0];
@@ -1043,7 +1062,7 @@ class TicketOfficeVehicleController extends Controller
         }
     }
 
-    //::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
+//::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
     public
     function saveRateTicketOffice(Request $request)
     {
@@ -1100,7 +1119,7 @@ class TicketOfficeVehicleController extends Controller
         return response()->json(['status' => 'success', 'taxe_id' => $id]);
     }
 
-    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     public
     function taxesSave(Request $request)
@@ -1156,7 +1175,7 @@ class TicketOfficeVehicleController extends Controller
         $taxes->amount = $amount_format;
         $taxes->status = 'ticket-office';
         $taxes->branch = 'Pat.Veh';
-        $taxes->code=TaxesNumber::generateNumberTaxes('PTS'.'85');
+        $taxes->code = TaxesNumber::generateNumberTaxes('PTS' . '85');
 
         $taxes->update();
 
@@ -1171,7 +1190,7 @@ class TicketOfficeVehicleController extends Controller
 
         $vehicleTaxes->previous_debt = $previousDebt_format;
 
-        $vehicleTaxes->discount=$discount_format;
+        $vehicleTaxes->discount = $discount_format;
 
         $vehicleTaxes->update();
 
@@ -1180,7 +1199,7 @@ class TicketOfficeVehicleController extends Controller
         // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
 
-        return response()->json(['status'=>'success']);
+        return response()->json(['status' => 'success']);
 
     }
 
@@ -1242,11 +1261,12 @@ class TicketOfficeVehicleController extends Controller
         return view('modules.ticket-office.vehicle.modules.payroll.details', array('response' => $response));
     }
 
-    public function paymentsDeclaration($id,$optionPayment)
+    public
+    function paymentsDeclaration($id, $optionPayment)
     {
         $trimester = Trimester::verifyTrimester();
 
-        $declaration = DeclarationVehicle::Declaration($id,$optionPayment);
+        $declaration = DeclarationVehicle::Declaration($id, $optionPayment);
 
         $type = null;
 
@@ -1334,34 +1354,34 @@ class TicketOfficeVehicleController extends Controller
         );
     }
 
-    public function changeUser($type,$document,$id)
+    public
+    function changeUser($type, $document, $id)
     {
-        $vehicle=UserVehicle::where('vehicle_id',$id)->get();
-        $vehicleUser=UserVehicle::find($vehicle[0]->id);
+        $vehicle = UserVehicle::where('vehicle_id', $id)->get();
+        $vehicleUser = UserVehicle::find($vehicle[0]->id);
 
-        if ($type=="J" || $type=="G"){
-            $company=Company::where('RIF',$type.$document)->get();
+        if ($type == "J" || $type == "G") {
+            $company = Company::where('RIF', $type . $document)->get();
 
-            if (!$company->isEmpty()){
+            if (!$company->isEmpty()) {
 
-                $vehicleUser->user_id=$company[0]->users[0]->id;
-                $vehicleUser->company_id=$company[0]->id;
-                $vehicleUser->person_id=null;
-                $response=['status'=>'success'];
-            }else{
-                $response=['status'=>'fail'];
+                $vehicleUser->user_id = $company[0]->users[0]->id;
+                $vehicleUser->company_id = $company[0]->id;
+                $vehicleUser->person_id = null;
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
             }
-        }
-        elseif($type=="E" || $type=="V"){
+        } elseif ($type == "E" || $type == "V") {
             var_dump($type);
-            $user=User::where('ci',$type.$document)->get();
-            if (!$user->isEmpty()){
-                $vehicleUser->company_id=null;
-                $vehicleUser->person_id=$user[0]->id;
+            $user = User::where('ci', $type . $document)->get();
+            if (!$user->isEmpty()) {
+                $vehicleUser->company_id = null;
+                $vehicleUser->person_id = $user[0]->id;
 
-                $response=['status'=>'success'];
-            }else{
-                $response=['status'=>'fail'];
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
             }
 
         }
@@ -1371,19 +1391,20 @@ class TicketOfficeVehicleController extends Controller
         return Response()->json($response);
     }
 
-    public function changeUserWeb($type,$document,$id)
+    public
+    function changeUserWeb($type, $document, $id)
     {
-        $vehicle=UserVehicle::where('vehicle_id',$id)->get();
-        $vehicleUser=UserVehicle::find($vehicle[0]->id);
+        $vehicle = UserVehicle::where('vehicle_id', $id)->get();
+        $vehicleUser = UserVehicle::find($vehicle[0]->id);
 
-        if($type=="E" || $type=="V"){
-            $user=User::where('ci',$type.$document)->get();
-            if (!$user->isEmpty()){
-                $vehicleUser->user_id=$user[0]->id;
-                $vehicleUser->company_id=null;
-                $response=['status'=>'success'];
-            }else{
-                $response=['status'=>'fail'];
+        if ($type == "E" || $type == "V") {
+            $user = User::where('ci', $type . $document)->get();
+            if (!$user->isEmpty()) {
+                $vehicleUser->user_id = $user[0]->id;
+                $vehicleUser->company_id = null;
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
             }
 
         }
