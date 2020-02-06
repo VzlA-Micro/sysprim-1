@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carnet - Alguien</title>
+    <title>Carnet</title>
 </head>
 <body>
     <table style="width:100%; border: solid 1px black; font-family: Helvetica;">
@@ -32,9 +32,9 @@
 
             <tr>
                 <td style="width:25%; text-align: left;">
-                    <b>Fecha WEB: </b>
+                    <b>Fecha de Registro: </b>
                 </td>
-                <td style="width:60%; text-align: left;">
+                <td style="width:60%; text-align: left;font-size: 12px!important;">
                     <span>{{ $company->created_at->format('d-m-Y') }}</span>
                 </td>
             </tr>
@@ -42,7 +42,7 @@
                 <td style="width:15%; text-align: left;">
                     <b>Razón Social: </b>
                 </td>
-                <td style="width:60%; text-align: left;" colspan="">
+                <td style="width:60%; text-align: left;font-size: 12px!important;" colspan="">
                     <span>{{ $company->name }}</span>
                 </td>
                 <td style="width:20%;" rowspan="5">
@@ -53,7 +53,7 @@
                 <td style="width:15%; text-align: left;">
                     <b>RIF: </b>
                 </td>
-                <td style="width:60%; text-align: left;">
+                <td style="width:60%; text-align: left;font-size: 12px!important;">
                     <span>{{ $company->RIF }}</span>
                 </td>
             </tr>
@@ -61,15 +61,15 @@
                 <td style="width:15%; text-align: left;">
                     <b>Dirección: </b>
                 </td>
-                <td style="width:60%; text-align: left;">
-                    <span>{{ $company->address }}</span>
+                <td style="width:60%; text-align: left;font-size: 12px!important;">
+                    <span>{{ $company->address}}</span>
                 </td>
             </tr>
             <tr>
                 <td style="width:15%; text-align: left;">
                     <b>Licencia: </b>
                 </td>
-                <td style="width:60%; text-align: left;">
+                <td style="width:60%; text-align: left;font-size: 12px!important;">
                     <span>{{ $company->license }}</span>
                 </td>
             </tr>
@@ -78,7 +78,7 @@
                     <img src="{{ asset('images/logo.png') }}" style="width: 160px; height: 120px;" alt="">
                 </td>
                 <td style="width:60%;font-size: 10px;text-align: center;">
-                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: absolute; left: 270px !important; top: 180px" alt=""><br>
+                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: relative; left: 270px !important; top: 180px; margin-bottom:-13px;" alt=""><br>
                     __________________________________________<br>
                     ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
                     Directora (E) de la Dirección de Hacienda y<br>

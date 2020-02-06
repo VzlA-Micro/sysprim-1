@@ -432,7 +432,7 @@ $(document).ready(function () {
         if (statusBoton == false) {
 
             $('#phone_user').removeAttr('readonly');
-            $('#email').removeAttr('readonly');
+            $('#email_edit').removeAttr('readonly','');
             $('#rol').attr('readonly', 'disabled');
             $('#actualizar').text('Guardar');
             statusBoton = true;

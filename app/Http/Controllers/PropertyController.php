@@ -609,9 +609,12 @@ class PropertyController extends Controller
             if(is_object($company)){
                 $property=UserProperty::where('property_id',$property_id)->first();
                 $property->person_id=null;
+                $property->user_id=$company->users[0]->id;
                 $property->company_id=$company->id;
+
+
                 $property->update();
-                $response=['status'=>'success','message'=>'Propietario de inmueble actualizado con éxito'];
+                $response=['status'=>'success','message'=>'Propietario de inmueble y usuario web actualizado con éxito.'];
             }else {
                 $response = ['status' => 'error', 'message' => 'Empresa no encontrada no encontrado'];
             }

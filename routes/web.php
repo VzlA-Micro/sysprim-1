@@ -451,6 +451,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/taxpayers/details/company/{id}', 'UserController@detailsCompanyTaxPayers')->name('taxpayers.details.company');
                     Route::get('/taxpayers/details/rates/{id}', 'UserController@detailsRatesTaxPayers')->name('taxpayers.details.rates');
                     Route::get('/taxpayers/details/vehicle/{id}', 'UserController@detailsVehicleTaxPayers')->name('taxpayers.details.vehicle');
+                    Route::get('/taxpayers/details/property/{id}', 'UserController@detailsPropertyTaxPayers')->name('taxpayers.details.property');
 
 
                     // Nivel 4: Actualizar, Resetear, Habilitar

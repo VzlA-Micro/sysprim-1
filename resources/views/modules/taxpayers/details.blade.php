@@ -104,7 +104,7 @@
                         <div class="col  l12">
 
                             <a href="{{route('taxpayers.details.company',['id'=>$user->id])}}">
-                                <div class="col s12 m4">
+                                <div class="col s12 m3">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon blue-gradient">
                                             <i class="fas fa-home"></i>
@@ -119,7 +119,7 @@
 
 
                             <a href="{{route('taxpayers.details.rates',['id'=>$user->id])}}">
-                                <div class="col s12 m4">
+                                <div class="col s12 m3">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon red-gradient white-text">
                                             <i class="fas fa-briefcase"></i>
@@ -137,7 +137,7 @@
 
 
                             <a href="{{route('taxpayers.details.vehicle',['id'=>$user->id])}}">
-                                <div class="col s12 m4">
+                                <div class="col s12 m3">
                                     <div class="widget bootstrap-widget stats white-text">
                                         <div class="widget-stats-icon green-gradient white-text">
                                             <i class="fas fa-car"></i>
@@ -145,6 +145,21 @@
                                         <div class="widget-stats-content">
                                             <span class="widget-stats-title black-text">Vehiculos</span>
                                             <span class="widget-stats-number black-text">{{$number_vehicle}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            <a href="{{route('taxpayers.details.property',['id'=>$user->id])}}">
+                                <div class="col s12 m3">
+                                    <div class="widget bootstrap-widget stats white-text">
+                                        <div class="widget-stats-icon green-gradient white-text">
+                                            <i class="fas icon-location_city"></i>
+                                        </div>
+                                        <div class="widget-stats-content">
+                                            <span class="widget-stats-title black-text">Inmuebles</span>
+                                            <span class="widget-stats-number black-text">{{$number_property}}</span>
                                         </div>
                                     </div>
                                 </div>
