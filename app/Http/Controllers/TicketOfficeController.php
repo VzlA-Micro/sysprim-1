@@ -981,9 +981,12 @@ class TicketOfficeController extends Controller
             $email=$user->email;
             $band=true;
         } elseif ($taxes->branch=='Inm.Urbanos'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+
+
             $owner = $taxes->properties()->get();
             $userProperty = UserProperty::find($owner[0]->pivot->property_id);
             $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::find($taxes->id);
 
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
@@ -992,19 +995,16 @@ class TicketOfficeController extends Controller
                 $data = User::find($userProperty->person_id);
                 $type = 'user';
             }
-            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
                 'taxes' => $taxes,
-                'owner' => $owner,
-                'userProperty' => $userProperty,
-                'property' => $property,
                 'data' => $data,
-                'type' => $type,
-                'firm' => true
+                'property' => $property,
+                'propertyTaxes' => $propertyTaxes,
+                'firm'=>true
             ]);
 
-
-
-            $email=$user[0]->email;
+            $user=User::find($userProperty->user_id);
+            $email=$user->email;
             $band=true;
         }
         elseif ($taxes->branch=='Pat.Veh'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
