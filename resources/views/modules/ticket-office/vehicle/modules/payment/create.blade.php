@@ -71,7 +71,7 @@
                             @endphp
                             <div class="input-field col s12 m4">
                                 <i class="icon-date_range prefix"></i>
-                                <select id="fiscal_period" disabled>
+                                <select id="fiscal_period" name="fiscal_period" disabled>
                                     <option value="null">Seleccione</option>
                                     @while($cont >= 2010)
                                         <option value="{{$cont.'-01-01'}}">{{$cont}}</option>

@@ -28,6 +28,7 @@
                         <div class="card-content row">
                             <input type="hidden" name="property_id" id="property_id">
                             <input type="hidden" name="user_id" id="user_id">
+                            <input type="hidden" name="taxe_id" id="taxe_id">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="code_cadastral" id="code_cadastral" maxlength="35">
@@ -98,15 +99,23 @@
                                 <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required readonly></textarea>
                                 <label for="address">Dirección</label>
                             </div>
+                            @php
+                                $cont=(int)date('Y');
+                            @endphp
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"
-                                       value="">
-                                <label for="fiscal_period">Periodo Fiscal</label>
+                                <select id="fiscal_period" disabled>
+                                    <option value="null">Seleccione</option>
+                                    @while($cont >= 2010)
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                        @php $cont--; @endphp
+                                    @endwhile
+                                </select>
+                                <label>Periodo Fiscal</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-supervisor_account prefix"></i>
-                                <select name="status" id="status" required>
+                                <select name="status" id="status" disabled required>
                                     <option value="null" disabled>Selecciona la Forma de Pago</option>
                                     <option value="full" selected>Pago Completo Anual</option>
                                     {{--<option value="trimestral">Pago Trimestral</option>--}}

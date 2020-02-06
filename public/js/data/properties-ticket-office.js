@@ -15,23 +15,13 @@ $(document).ready(function() {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function(response) {
-                    if(response.status == 'error') {
-                        swal({
-                            title: "Información",
-                            text: response.message,
-                            icon: "warning",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
-                    }
-                    else if(response.status == 'success') {
-                        var property = response.property[0];
-                        var user = response.property[0].users[0];
+                    if(response.status == 'success') {
+                        var property = response.property;
+                        var user = response.property.users[0];
                         var id = property.id;
+                        console.log(response.taxe_id);
                         $('#property_id').val(property.id);
-                        console.log($('#property_id').val());
+                        // console.log($('#property_id').val());
                         $('#area_ground').val(property.area_ground).attr('disabled',true);
                         $('#area_build').val(property.area_build).attr('disabled',true);
                         $('#address').val(property.address).attr('disabled',true);
@@ -44,9 +34,23 @@ $(document).ready(function() {
                         $('#type_inmueble_id').attr('disabled',true);
                         $('#parish_id option[value='+ property.parish_id + ']').attr('selected',true);
                         $('#parish_id').attr('disabled',true);
+                        $('#fiscal_period').attr('disabled',false);
+                        $('#status').attr('disabled',false);
+                        $('#taxe_id').val(response.taxe_id);
                         $('select').formSelect();
                         // $('#status').attr('disabled',false);
                         M.updateTextFields();
+                    }
+                    else {
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "warning",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
                     }
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -67,6 +71,47 @@ $(document).ready(function() {
                 }
             })
         }
+    });
+
+    $('#fiscal_period').change(function () {
+        var fiscalPeriod = $(this).val();
+        var id = $('#property_id').val();
+
+        $.ajax({
+            type: "GET",
+            url: url + "properties/verify/fiscal-period/" + id + "/" + fiscalPeriod,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                if (data) {
+                    swal({
+                        title: "Información",
+                        text: 'Ya tiene un pago declarado para este periodo fiscal',
+                        icon: "info",
+                    });
+                }else {
+
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
     });
 
     $('#general-next').click(function () {
@@ -176,6 +221,7 @@ $(document).ready(function() {
         var interest = $('#interest').val();
         var alicuota = $('#alicuota').val();
         var fiscal_credit = $('#fiscal_credit').val();
+        var fiscal_period = $('#fiscal_period').val();
         var discount = $('#discount').val();
         var amount = $('#amount').val();
         var status = $('#status').val();
@@ -191,6 +237,7 @@ $(document).ready(function() {
                 interest: interest,
                 alicuota: alicuota,
                 fiscal_credit: fiscal_credit,
+                fiscal_period: fiscal_period,
                 discount: discount,
                 amount: amount,
                 status: status

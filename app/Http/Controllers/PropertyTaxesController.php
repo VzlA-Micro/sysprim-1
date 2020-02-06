@@ -220,9 +220,11 @@ class PropertyTaxesController extends Controller
         $taxe->type='daily';
 
 
+        $date = Carbon::now();
+        $year = $date->year;
 
-
-        $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
+        $taxe->fiscal_period = Carbon::parse('01-01-'.$year)->format('Y-m-d');
+        $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
         $taxe->branch='Inm.Urbanos';
         $taxe->amount = $amount;
         $taxe->save();
@@ -583,17 +585,20 @@ class PropertyTaxesController extends Controller
     }
 
     public function findCode($code) {
-        $property = Property::where('code_cadastral', $code)->with('users')->get();
-        if($property->isEmpty()) {
+        $property = Property::where('code_cadastral', $code)->with('users')->first();
+        $taxe = $property->propertyTaxes()->first();
+        $taxe_id = $taxe->id;
+        if($property == null) {
             $response = [
                 'status' => 'error',
-                'message' => 'El inmueble con el código catastral ' . $property[0]->code_cadastral . 'no se encuentra registrado. Por favor, ingrese un código valido.'
+                'message' => 'El inmueble con el código catastral "' . $code . '"" no se encuentra registrado. Por favor, ingrese un código valido.'
             ];
         }
         else {
             $response = [
                 'status' => 'success',
-                'property' => $property
+                'property' => $property,
+                'taxe_id' => $taxe_id
             ];
         }
         return response()->json($response);
@@ -609,7 +614,7 @@ class PropertyTaxesController extends Controller
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
-
+        $taxe_id = $taxes[0]->id;
         if(!empty($taxes)) {
             foreach ($taxes as $tax) {
                 if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
@@ -686,7 +691,8 @@ class PropertyTaxesController extends Controller
             'recharge' => $recharge,
             'interest' => $interest,
             'status' => $status,
-            'statusTax' => $statusTax
+            'statusTax' => $statusTax,
+            'taxe_id' => $taxe_id
         ];
 //        dd($resp);
         return response()->json($resp);
@@ -724,14 +730,18 @@ class PropertyTaxesController extends Controller
         $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
 
         $status = $request->input('status');
-
+        $fiscalPeriod = $request->input('fiscal_period');
         # --------------------------------------------------------------
+        $date = Carbon::parse($fiscalPeriod);
+        $year = $date->year;
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('PTS84');
         $taxe->status = 'ticket-office';
 //        dd($baseImponible); die();
         $taxe->type='daily';
-        $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
+
+        $taxe->fiscal_period = $fiscalPeriod;
+        $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
         $taxe->branch='Inm.Urbanos';
         $taxe->amount = $amount;
         $taxe->save();
@@ -821,5 +831,32 @@ class PropertyTaxesController extends Controller
             'owner' => $owner,
             'type' => $type
         ]);
+    }
+
+    public function verifyFiscalPeriod($id, $year)
+    {
+        $date = Carbon::now();
+        $property = Property::find($id);
+        $taxe = $property->propertyTaxes()->whereDate('fiscal_period',$year)->first();
+//        dd($taxe);
+//        $propertyTaxe = $pr->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        if (is_null($taxe)) {
+            $statusTax = false;
+        } else {
+            if ($taxe->status === 'verified' || $taxe->status === 'verified-sysprim') {
+                $statusTax = true;
+            } else if ($taxe->status === 'temporal') {
+//                      $tax->delete();
+                $statusTax = false;
+            } else if ($taxe->status === 'ticket-office' && $taxe->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($taxe->status === 'process' && $taxe->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($taxe->status === 'cancel') {
+                $statusTax = false;
+            }
+
+            return Response()->json($statusTax);
+        }
     }
 }
