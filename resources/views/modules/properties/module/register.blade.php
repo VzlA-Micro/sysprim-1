@@ -35,7 +35,7 @@
                                     <option value="V">V</option>
                                     <option value="E">E</option>
                                     <option value="J">J</option>
-                                    <option value="J">G</option>
+                                    <option value="G">G</option>
                                     <!--<option value="J">J</option>-->
                                 </select>
                                 <label for="type_document_full">Documento</label>

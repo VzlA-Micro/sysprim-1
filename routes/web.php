@@ -396,8 +396,14 @@ Route::middleware(['auth'])->group(/**
         Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
         Route::get('/properties/taxpayer/pdf/{id}/', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
-
         Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
+
+        # ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
+        Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
+        Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
+        Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
+        Route::get('/properties/ticket-office/taxes/{id}/{status}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
+        Route::post('/properties/ticket-office/taxes/store', 'PropertytaxesController@storeTicketOffice')->name('properties.ticket-office.taxes.store');
 
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
