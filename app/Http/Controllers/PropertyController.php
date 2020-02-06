@@ -360,14 +360,30 @@ class PropertyController extends Controller
         $parish = Parish::all();
         $alicuota= Alicuota::all();
 
+        $type='';
+
+
+
+
+        if(!is_null($property->users[0]->pivot->person_id)){
+            $type='users';
+            $data=User::find($property->users[0]->pivot->person_id);
+
+        }else{
+            $type='company';
+            $data=Company::find($property->users[0]->pivot->company_id);
+        }
+
+
 
         return view('modules.properties.module.details',[
             'parish' => $parish,
             'catasTerreno' => $catastralTerre,
             'catasConstruccion' => $catastralConst,
             'alicuota'=>$alicuota,
-            'property'=>$property
-
+            'property'=>$property,
+            'type'=>$type,
+            'data'=>$data
         ]);
     }
 

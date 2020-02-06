@@ -381,7 +381,6 @@ $(document).ready(function () {
                 },
             });
         }else if(status == 'propietario') {
-
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "property-tab");
@@ -402,6 +401,14 @@ $(document).ready(function () {
                     band = false;
                 }
             });
+
+
+            if($('#person_id').val()!==''){
+                band=false;
+            }
+
+
+
             if(band) {
                     var type = $('#type').val();
                     var name;

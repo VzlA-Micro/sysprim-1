@@ -29,21 +29,47 @@
                             <h5 class="center-align">Datos del Propietario</h5>
                         </div>
 
-                        <div class="input-field col s12 m6">
+
+                        <div class="input-field col s4 m4">
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero"></i>
+                            <select name="document_type" id="document_type" disabled>
+                                <option value="null" selected disabled>...</option>
+                                <option value="J" @if ($data->typeDocument=='J'){{"selected"}}@endif>J</option>
+                                <option value="V" @if ($data->typeDocument=='V'){{"selected"}}@endif>V</option>
+                                <option value="G" @if ($data->typeDocument=='G'){{"selected"}}@endif>G</option>
+                                <option value="E" @if ($data->typeDocument=='E'){{"selected"}}@endif>E</option>
+                            </select>
+                            <label for="document_type">Documento</label>
+                        </div>
+
+
+
+
+
+
+                        <div class="input-field col s12 m4">
                             <i class="icon-account_box prefix"></i>
-                            <input id="lat" type="text" name="document" value="{{$property->person[0]->ci}}}" readonly>
+                            <input id="document" type="text" name="document" value="{{$data->document}}" readonly>
                             <label for="document">Cedula o RIF</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+
+
+                        <div class="input-field col s12 m4">
                             <i class="icon-account_box prefix"></i>
-                            <input id="lat" type="text" name="name " value="" readonly>
+                            <input id="lat" type="text" name="name "
+                                   @if($type=='users')
+                                      value="{{$data->name. ' '. $data->surname}}"
+                                   @else
+                                         value="{{$data->name}}"
+                                   @endif
+                                   readonly>
                             <label for="name">Nombre</label>
                         </div>
 
                         <div class="input-field col s12">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea"  readonly required maxlength="200">{{$property->address}}</textarea>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea"  readonly required maxlength="200">{{$data->address}}</textarea>
                             <label for="address">Dirección</label>
                         </div>
 
