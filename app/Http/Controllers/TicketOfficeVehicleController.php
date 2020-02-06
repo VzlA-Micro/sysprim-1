@@ -319,12 +319,19 @@ class TicketOfficeVehicleController extends Controller
         $brands = Brand::all();
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
-        dd($vehicle->person[0]);
+        if (isset($vehicle->person[0]->pivot->person_id)){
+            $person=User::find($vehicle->person[0]->pivot->person_id);
+        }else {
+        $person='';
+        }
+
+
         return view('modules.ticket-office.vehicle.modules.vehicle.details', [
             'vehicle' => $vehicle,
             'brand' => $brands,
             'model' => $models,
-            'type' => $type
+            'type' => $type,
+            'person'=>$person
         ]);
     }
 

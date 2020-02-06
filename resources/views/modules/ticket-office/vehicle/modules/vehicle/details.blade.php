@@ -62,14 +62,14 @@
                                        value="{{$vehicle->company[0]->name }}" required disabled>
                                 <label for="name">Nombre</label>
                             </div>
-                        @elseif(isset($vehicle->person[0]))
+                        @elseif(isset($person))
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
                                 <input id="name_user" type="text" name="name" class="validate"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
                                        title="Solo puede agregar letras (con acentos)."
-                                       value="{{$vehicle->person[0]->name }}" required readonly>
+                                       value="{{$person->name }}" required readonly>
                                 <label for="name">Nombre</label>
                             </div>
 
@@ -79,7 +79,7 @@
                                 <input id="surname" type="text" name="surname" class="validate"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
                                        title="Solo puede agregar letras (con acentos)."
-                                       value="{{$vehicle->person[0]->surname}}" required readonly>
+                                       value="{{$person->surname}}" required readonly>
                                 <label for="surname">Apellido</label>
                             </div>
 
@@ -88,9 +88,9 @@
                                 <i class="icon-public prefix"></i>
                                 <select name="nationality" id="nationality" required disabled>
                                     <option value="null">...</option>
-                                    <option value="V" @if ($vehicle->person[0]->typeDocument=='V'){{"selected"}}@endif>V
+                                    <option value="V" @if ($person->typeDocument=='V'){{"selected"}}@endif>V
                                     </option>
-                                    <option value="E" @if ($vehicle->person[0]->typeDocument=='E'){{"selected"}}@endif>E
+                                    <option value="E" @if ($person->typeDocument=='E'){{"selected"}}@endif>E
                                     </option>
                                 </select>
                                 <label for="nationality">Nacionalidad</label>
@@ -100,7 +100,7 @@
                                  data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
                                        title="Solo puede escribir números." required
-                                       value="{{$vehicle->person[0]->document }}"
+                                       value="{{$person->document }}"
                                        readonly>
                                 <label for="ci">Cedula</label>
                             </div>
