@@ -22,7 +22,7 @@ class CreatePaymentsVehicleTable extends Migration
             $table->string('status',40);
             $table->date('fiscal_period');
             $table->integer('vehicle_id')->unsigned();
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->timestamps();
         });
     }

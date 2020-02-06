@@ -218,6 +218,10 @@ class PropertyTaxesController extends Controller
         $taxe->status = 'temporal';
 //        dd($baseImponible); die();
         $taxe->type='daily';
+
+
+
+
         $taxe->fiscal_period = Carbon::now()->format('Y-m-d');
         $taxe->branch='Inm.Urbanos';
         $taxe->amount = $amount;

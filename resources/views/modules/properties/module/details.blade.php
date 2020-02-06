@@ -12,10 +12,11 @@
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Modulo - Consultar Inmubles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Modulo - Detalles de Inmubles Urbanos</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8">
-                <form action="#" method="POST" class="card" enctype="multipart/form-data">
+                <form action="#" method="POST" class="card" id="update-property" enctype="multipart/form-data">
                     <div class="card-header center-align">
                         <h5>{{$property->code_cadastral}}</h5>
                     </div>
@@ -29,23 +30,55 @@
                             <h5 class="center-align">Datos del Propietario</h5>
                         </div>
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-account_box prefix"></i>
-                            <input id="lat" type="text" name="document" value="{{$property->person[0]->ci}}}" readonly>
-                            <label for="document">Cedula o RIF</label>
+
+                        <div class="input-field col s4 m4">
+                            <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero"></i>
+                            <select name="document_type_prop" id="document_type_prop" disabled>
+                                <option value="null" selected disabled>...</option>
+                                <option value="J" @if ($data->typeDocument=='J'){{"selected"}}@endif>J</option>
+                                <option value="V" @if ($data->typeDocument=='V'){{"selected"}}@endif>V</option>
+                                <option value="G" @if ($data->typeDocument=='G'){{"selected"}}@endif>G</option>
+                                <option value="E" @if ($data->typeDocument=='E'){{"selected"}}@endif>E</option>
+                            </select>
+                            <label for="document_type_prop">Documento</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+
+
+
+
+
+                        <div class="input-field col s8 m4">
                             <i class="icon-account_box prefix"></i>
-                            <input id="lat" type="text" name="name " value="" readonly>
+                            <input id="document_pro" type="text" name="document" class="validate number-date" value="{{$data->document}}" readonly maxlength="8">
+                            <label for="document_pro">Cedula o RIF</label>
+                        </div>
+
+
+
+                        <div class="input-field col s12 m4">
+                            <i class="icon-account_box prefix"></i>
+                            <input id="name" type="text" name="name "
+                                   @if($type=='users')
+                                      value="{{$data->name. ' '. $data->surname}}"
+                                   @else
+                                         value="{{$data->name}}"
+                                   @endif
+                                   readonly>
                             <label for="name">Nombre</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col m12 s12">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea"  readonly required maxlength="200">{{$property->address}}</textarea>
-                            <label for="address">Dirección</label>
+                            <textarea name="address" id="address_full" cols="30" rows="12" class="materialize-textarea"  readonly required maxlength="200">{{$data->address}}</textarea>
+                            <label for="address_full">Dirección</label>
                         </div>
+
+                        <button type="button" class="btn btn-large waves-effect waves-light blue col m6 s12 hide"
+                                id="update-propietario">
+                            Guardar Propietario
+                            <i class="icon-save right"></i>
+                        </button>
 
 
 
@@ -70,7 +103,7 @@
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-domain prefix"></i>
-                            <select name="type_const" id="type_const" required>
+                            <select name="type_const" id="type_const" required disabled>
                                 <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
                                 @foreach($catasConstruccion as $cC):
                                 @if($property->valueBuild->id==$cC->id)
@@ -132,8 +165,10 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea"  readonly required maxlength="200">{{$property->address}}</textarea>
+                            <textarea name="address" id="address" cols="30" rows="10" class="materialize-textarea"
+                                      required disabled>{{$property->address}}</textarea>
                             <label for="address">Dirección</label>
+
                         </div>
 
 
@@ -151,18 +186,35 @@
                         </div>
 
 
-                        <div class="col l12">
+                        <div class="col s12">
                             <div class="row">
-
-                                    <div class="col s12 m3">
-                                        <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
-                                           id="update-company">
-                                            Actualizar
-                                            <i class="icon-refresh right"></i>
-                                        </a>
-                                    </div>
-
+                                <div class="col s6 offset-s4">
+                                        <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
+                                            <i class="icon-mode_edit right"></i>
+                                            Editar Inmueble
+                                        </button>
+                                         <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide" id="update-btn">
+                                            Guardar
+                                            <i class="icon-save right"></i>
+                                        </button>                                  
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col s6">
+                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
+                                        <i class="icon-account_circle right"></i>    
+                                             Cambiar Propietario
+                                    </button>
+                                </div>
+                               
+                                <div class="col s6">
+                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
+                                        <i class="icon-map right"></i>
+                                            Cambiar Ubicación     
+                                    </button>
+                                </div>                
+                            </div>      
                         </div>
                     </div>
                 </form>
@@ -262,21 +314,21 @@
                                    value="{{ $property->users[0]->email }}" required readonly>
                             <label for="email">E-mail</label>
                         </div>
-                        @can('Cambiar Usuario - Empresa')
+
+
+
                         <div class="input-field col s12 m6">
                             <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">Cambiar Usuario
                                 <i class="icon-refresh right"></i>
                             </a>
                         </div>
-                        @endcan
                     </div>
-
 
                 </form>
             </div>
         </div>
 
-        @can('Historial de Pago - Empresas')
+
 
 
         <div class="row">
@@ -287,27 +339,21 @@
             </div>
         </div>
 
-        @endcan
+
 
         <div class="col s12 location-container tooltipped mb-2" id="div-map" data-position="left"
              data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
             <div id="map" style="height: 500px;width: 100%; margin-top:1rem"></div>
         </div>
 
-
-
-
-
     </div>
 
     </div>
 @endsection
 @section('scripts')
-
-    {{--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU"
-            type="text/javascript"></script>--}}
-
-
-
+    <script src="{{ asset('js/data/property-edit.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWMT2X7UmvgCAphCXoD0X4bAr8Isyb7LU"
+            type="text/javascript"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
+
 @endsection

@@ -17,8 +17,8 @@ class CreatePublicityTaxesTable extends Migration
             $table->increments('id');
             $table->integer('taxe_id')->unsigned();
             $table->integer('publicity_id')->unsigned();
-            $table->foreign('taxe_id')->references('id')->on('taxes');
-            $table->foreign('publicity_id')->references('id')->on('publicity');
+            $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade');
+            $table->foreign('publicity_id')->references('id')->on('publicity')->onDelete('cascade');
             $table->timestamps();
         });
     }

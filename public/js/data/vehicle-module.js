@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    var buttonBrand = true;
+    var controlButtonBrand = true;
+
+    $('#model').prop('disabled', true);
+    $('select').formSelect();
     var url = localStorage.getItem('url');
 
     $('#type_document_full').change(function () {
@@ -55,6 +60,7 @@ $(document).ready(function () {
 
 
         var document = $('#document_full').val();
+        console.log($('#document_full').val());
         if (document == '') {
             swal({
                 title: "Información",
@@ -143,25 +149,24 @@ $(document).ready(function () {
         }
     });
 
-
     function findDocument() {
-        var type_document = $('#type_document_full').val();
-        var document = $('#document_full').val();
+        var type_document=$('#type_document_full').val();
+        var document=$('#document_full').val();
         $('#surname_full').val('');
         $('#user_name_full').val('');
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
-        if (document !== '') {
+        if(document!=='') {
             $.ajax({
                 method: "GET",
-                url: url + "property/find/" + type_document + "/" + document + '/false', // Luego cambiar ruta
+                url: url + "property/find/" + type_document  + "/" + document+'/false', // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if (response.status !== 'error') {
+                    if(response.status!=='error') {
                         if (response.type == 'not-user') {
 
                             swal({
@@ -201,6 +206,7 @@ $(document).ready(function () {
                             $('#address_full').attr('readonly', '');
 
 
+
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name_full').val(company.name);
@@ -214,7 +220,7 @@ $(document).ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    } else {
+                    }else{
                         swal({
                             title: "Información",
                             text: "La empresa no esta registrada, debe ingresar un RIF valido.",
@@ -260,7 +266,6 @@ $(document).ready(function () {
             });
         }
     }
-
 
     function findDocumentResponsable() {
         var type_document = $('#type_document').val();
@@ -339,7 +344,6 @@ $(document).ready(function () {
         }
     }
 
-
     $('#data-next').click(function () {
         var status = $('#status').val();
 
@@ -348,11 +352,11 @@ $(document).ready(function () {
             status = 'propietario';
         }
 
-
+console.log(status);
         if ((status == null || status == '')) {
             swal({
                 title: "Información",
-                text: "Debe seleccionar una condicion legal para continuar con el registro.",
+                text: "Debe seleccionar una condicion social para continuar con el registro.",
                 icon: "info",
                 button: {
                     text: "Esta bien",
@@ -360,9 +364,10 @@ $(document).ready(function () {
                 },
             });
         } else if (status == 'propietario') {
+
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
-            $('ul.tabs').tabs("select", "property-tab");
+            $('ul.tabs').tabs("select", "vehicle-tab");
         } else {
 
             band = true;
@@ -380,12 +385,9 @@ $(document).ready(function () {
                     band = false;
                 }
             });
-
-
-            if ($('#person_id').val() !== '') {
-                band = false;
+            if($('#person_id').val()!==''){
+                band=false;
             }
-
 
             if (band) {
                 var type = $('#type').val();
@@ -448,11 +450,10 @@ $(document).ready(function () {
             } else {
                 $('#two').removeClass('disabled');
                 $('#one').addClass('disabled');
-                $('ul.tabs').tabs("select", "property-tab");
+                $('ul.tabs').tabs("select", "vehicle-tab");
             }
         }
     });
-
 
     $('#property').on('submit', function (e) {
         var type = $('#type').val();
@@ -478,9 +479,14 @@ $(document).ready(function () {
                     icon: "success",
                     button: "Ok",
                 }).then(function (accept) {
-                    window.location.href = url + "property/ticket-office/read-property";
+                    if (type == 'company') {
+                        window.location.href = url + "properties/company/my-properties/" + id;
+                    }
+                    else {
+                        window.location.href = url + "properties/my-properties";
+                    }
                 });
-
+                ;
 
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -501,136 +507,316 @@ $(document).ready(function () {
 
     });
 
+    $('#license_plates').change(function () {
+        var license = $(this).val();
+        console.log(license);
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifyLicense",
+            data: {
+                license: license
+            },
 
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
 
-});
-function localizar(elemento, direccion) {
-    var geocoder = new google.maps.Geocoder();
-    var marcadores = [];
-
-
-    var map = new google.maps.Map(document.getElementById(elemento), {
-        zoom: 15,
-        scrollwheel: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        restriction: {latLngBounds: {north: 83.8, south: -57, west: -180, east: 180}}
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Placa Registrada!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
     });
 
-    geocoder.geocode({'address': direccion}, function (results, status) {
+    $('#bodySerials').change(function () {
+        var bodySerial = $(this).val();
+        console.log(bodySerial);
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifyBodySerial",
+            data: {
+                bodySerial: bodySerial
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Serial de Carroceria Registrado!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+    $('#serialEngines').change(function () {
+        var serialEngine = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifySerialEngine",
+            data: {
+                serialEngine: serialEngine
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Serial del Motor Registrado!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+    $('#brand').change(function () {
+        var brand = $(this).val();
+        console.log(brand);
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/searchBrand",
+            data: {
+                brand: brand,
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                if (data) {
+                    $('#model').prop('disabled', false);
+                    $('select').formSelect();
+
+                    $('select').formSelect();
+                    $('#model').html('');
 
 
-        if (status === 'OK') {
-            var resultados = results[0].geometry.location,
-                resultados_lat = resultados.lat(),
-                resultados_long = resultados.lng();
+                    var i = 0;
+                    for (i; i < data[1]; i++) {
+                        console.log(data[0][i]['name']);
+                        var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
+                        $('select').formSelect();
+                        $('#model').append(template);
+                    }
+                }
 
-            map.setCenter(results[0].geometry.location);
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
 
-
-            map.addListener('click', function (e) {
-                addMark(e.latLng, map, marcadores);
-            });
-
+    $('#button-brand').on('click', function (e) {
+        e.preventDefault();
+        if (buttonBrand) {
+            if (controlButtonBrand) {
+                $('#group-MB').hide();
+                var html =
+                    `<div class="input-field col s6">
+                        <i class="icon-directions_car prefix"></i>
+                        <input type="text" name="brand-n" id="brand-n" minlength="1" maxlength="20"
+                        >
+                         <label for="brand-n">Marca</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="icon-local_shipping prefix"></i>
+                        <input type="text" name="model-n" id="model-n" minlength="1" maxlength="20">
+                        <label for="model-n">Módelo</label>
+                    </div>`;
+                $('#group-new-MB').html(html);
+                $('#brand-n').focus();
+                console.log(buttonBrand);
+                buttonBrand = false;
+                controlButtonBrand = false;
+            } else {
+                $('#group-MB').hide();
+                $('#group-new-MB').show();
+                $('#brand-n').focus();
+            }
 
         } else {
-            var mensajeError = "";
-            if (status === "ZERO_RESULTS") {
-                mensajeError = "No hubo resultados para la dirección ingresada.";
-                initMap();
-            } else if (status === "OVER_QUERY_LIMIT" || status === "REQUEST_DENIED" || status === "UNKNOWN_ERROR") {
-                mensajeError = "Error general del mapa.";
-            } else if (status === "INVALID_REQUEST") {
-                mensajeError = "Error de la web. Contacte con Name Agency.";
+            $('#group-new-MB').hide();
+            $('#group-MB').show();
+            buttonBrand = true;
+            swal({
+                title: "¡Oh no!",
+                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                icon: "error",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+        }
+
+
+    });
+
+    $('#vehicle-register-ticket').submit(function (e) {
+        e.preventDefault();
+
+        //$('#button-company').attr('disabled', 'disabled');
+
+        $.ajax({
+            url: url + "ticketOffice/vehicle/save",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: new FormData(this),
+            method: "POST",
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                if (data['status'] == 'success') {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Vehículo registrado con exito!",
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        window.location.href = url + "ticketOffice/vehicle/read";
+                    });
+                } else {
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            },
+            error: function (err) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
             }
-            alert(mensajeError);
-        }
-    });
-}
-
-$('#address').change(function () {
-    var direccion = $(this).val();
-    if (direccion !== '') {
-        localizar("map", "Venezuela, Baquisimeto Estado Lara. " + direccion);
-    }
-});
-
-function initMap() {
-    var marcadores = [];
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: 10.0736954, lng: -69.3498597}
-    });
-
-    map.addListener('click', function (e) {
-        console.log(e.latLng);
-        addMark(e.latLng, map, marcadores);
-    });
-
-
-}
-
-
-
-//    swal({
-//        title: "Información",
-//        text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-//        icon: "info",
-//        button:{
-//            text: "Esta bien",
-//            className: "blue-gradient"
-//        },
-//    });
-// else {
-//    $('#lng').val(marcadores[0].getPosition().lng());
-//    $('#lat').val(marcadores[0].getPosition().lat());
-//    M.updateTextFields();
-
-function addMark(latLng, map, marcadores) {
-
-
-    function removeItemFromArr(arr, item) {
-        var i = arr.indexOf(item);
-
-        if (i !== -1) {
-            arr.splice(i, 1);
-        }
-    }
-
-
-    var image = 'http://sysprim.com/images/mark-map.png';
-
-
-    var marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        icon: image,
-        title: "ESTOY AQUÍ",
-        animation: google.maps.Animation.BOUNCE
-    });
-    map.panTo(latLng);
-
-    marcadores.push(marker);
-
-    if (marcadores.length > 1) {
-        removeItemFromArr(marcadores, marker);
-        marker.setMap(null);
-
-        swal({
-            title: "Información",
-            text: "Solo puedes hacer una marca para ubicar tu empresa, si te equivocaste añadiendo la marca, haga click en ella y esta se eliminara automaticamente.",
-            icon: "info",
-            button: "Ok",
         });
-    } else {
-        $('#lng').val(marcadores[0].getPosition().lng());
-        $('#lat').val(marcadores[0].getPosition().lat());
-        M.updateTextFields();
-    }
-    google.maps.event.addListener(marker, 'click', function () {
-        removeItemFromArr(marcadores, marker);
-        marker.setMap(null); //borramos el marcador del mapa
-        $('#lng').val(" ");
-        $('#lat').val(" ")
+
     });
-    console.log(marcadores[0].getPosition().lat() + '-' + marcadores[0].getPosition().lng());
-}
+});

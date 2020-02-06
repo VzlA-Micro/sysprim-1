@@ -431,7 +431,7 @@
 
             </div>
             <a href="{{route('tickOffice.companies.details-taxes',['id'=>$company->id,'type'=>'Act.Eco'])}}">
-            <div class="col s12 m4">
+            <div class="col s12 m6">
                 <div class="widget bootstrap-widget stats white-text">
                     <div class="widget-stats-icon blue-gradient">
                         <i class="fas fa-credit-card"></i>
@@ -445,7 +445,7 @@
             </a>
 
             <a href="{{route('tickOffice.companies.details-taxes',['id'=>$company->id,'type'=>'Tasas y Cert'])}}">
-                <div class="col s12 m4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats white-text">
                         <div class="widget-stats-icon red-gradient white-text">
                             <i class="fas fa-briefcase"></i>
@@ -460,6 +460,44 @@
         </div>
 
         @endcan
+
+        <div class="row">
+
+            <div class="row">
+                <h4 class="center-align">Propiedades:</h4>
+            </div>
+
+
+            <a href="{{route('taxpayers.details.vehicle',['id'=>$company->users[0]->id])}}">
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats white-text">
+                        <div class="widget-stats-icon green-gradient white-text">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title black-text">Vehiculos</span>
+                            <span class="widget-stats-number black-text">{{$number_vehicle}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="{{route('taxpayers.details.property',['id'=>$company->users[0]->id])}}">
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats white-text">
+                        <div class="widget-stats-icon green-gradient white-text">
+                            <i class="fas icon-location_city"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title black-text">Inmuebles</span>
+                            <span class="widget-stats-number black-text">{{$number_property}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
 
         <div class="col s12 location-container tooltipped mb-2" id="div-map" data-position="left"
              data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">

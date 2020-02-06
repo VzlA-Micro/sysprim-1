@@ -321,9 +321,10 @@ class TicketOfficeController extends Controller
         $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
         $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
 
+        $number_vehicle=$company->companyVehicle()->orderBy('id','desc')->count();
+        $number_property=$company->companyProperty()->orderBy('id','desc')->count();
 
-
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco]);
+        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco,'number_property'=>$number_property,'number_vehicle'=>$number_vehicle]);
     }
 
 
@@ -1168,9 +1169,6 @@ class TicketOfficeController extends Controller
             $base_amount_sub = $ciu->alicuota * $base_format_verify;
 
 
-
-
-
             if ($min_amount > $base_amount_sub) {
                 $total_base = $total_base + $min_amount-$anticipated_format_verify ;
             } else {
@@ -1411,6 +1409,9 @@ class TicketOfficeController extends Controller
                 'propertyTaxes' => $propertyTaxes
             ]);
         }
+
+
+
 
 
         return $pdf->stream();

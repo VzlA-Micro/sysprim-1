@@ -79,7 +79,7 @@
                 <div class="col s12 m3" style="margin-top: -7px">
                     <div class="row">
                         @can('Declarar Actividad Económica')
-                            <div class="col s12">
+                            <div class="col s12 m12">
 
                                 <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
                                    class="btn-app white cyan-text">
@@ -88,21 +88,21 @@
                                 </a>
                             </div>
                         @endcan
-                        <div class="col s12">
+                        <div class="col s12 m12">
                             <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
                                class="btn-app white amber-text">
                                 <i class="icon-redeem"></i>
                                 <span class="truncate">Declaración / Tasas</span>
                             </a>
                         </div>
-                        <div class="col s12">
+                        <div class="col s12 m12">
                             <a href="{{ route('company.vehicle.read', ['idCompany' => $company->id]) }}"
                                class="btn-app white purple-text">
                                 <i class="icon-directions_car"></i>
                                 <span class="truncate">Vehículos</span>
                             </a>
                         </div>
-                        <div class="col s12">
+                        <div class="col s12 m12">
                             <a href="{{ route('properties.company.my-properties', ['company_id' => $company->id]) }}"
                                    class="btn-app white green-text text-darken-2">
                                  <i class="icon-location_city"></i>

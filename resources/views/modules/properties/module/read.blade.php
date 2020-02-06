@@ -12,8 +12,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Modulo - Consultar Inmubles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="preview-view">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar - Inmubles Urbanos</a></li>
 
                 </ul>
             </div>
@@ -37,7 +37,6 @@
                             <tbody>
                             @foreach($properties as $property)
 
-
                                 <tr>
                                     <td>{{$property->code_cadastral}}</td>
                                     <td>{{$property->type->name}}</td>
@@ -46,7 +45,6 @@
                                     <td>{{$property->address}}</td>
                                     <td><a href="{{route('property.ticket-office.details-property',['id'=>$property->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
                                 </tr>
-
 
 
 
@@ -67,6 +65,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

@@ -214,12 +214,15 @@ class UserController extends Controller{
         $number_rate=$user->taxesRate()->count();
 
         $number_vehicle=$user->vehicles()->count();
+        $number_property=$user->property()->count();
+
 
         return view('modules.taxpayers.details', array(
             'user' => $user,
             'number_company'=>$number_company,
             'number_rate'=>$number_rate,
-            'number_vehicle'=>$number_vehicle
+            'number_vehicle'=>$number_vehicle,
+            'number_property'=>$number_property
         ));
 
     }
@@ -334,5 +337,13 @@ class UserController extends Controller{
         return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
             'show' => $vehicle
         ));
+    }
+
+
+    //Muestra los inmuebles de este contribuyente
+    public function detailsPropertyTaxPayers($id){
+        $user = User::find($id);
+        $properties=$user->property()->get();
+        return view('modules.properties.module.read', ['properties'=>$properties]);
     }
 }

@@ -29,7 +29,7 @@
                             <label for="models">Modelo Vehiculo</label>
                         </div>
 
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <i class="icon-directions_car prefix"></i>
                             <select name="brand" id="brand" required>
                                 <option value="null" disabled selected>Selecciona la marca</option>

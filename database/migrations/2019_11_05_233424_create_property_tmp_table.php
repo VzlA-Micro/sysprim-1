@@ -30,6 +30,6 @@ class CreatePropertyTmpTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('property_tmp');
     }
 }

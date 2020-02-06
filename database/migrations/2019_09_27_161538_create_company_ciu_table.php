@@ -17,8 +17,8 @@ class CreateCompanyCiuTable extends Migration
             $table->increments('id');
             $table->integer('ciu_id')->unsigned();
             $table->integer('company_id')->unsigned();
-            $table->foreign('ciu_id')->references('id')->on('ciu');
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('ciu_id')->references('id')->on('ciu')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->string('status',10)->nullable();
             $table->timestamps();
         });
