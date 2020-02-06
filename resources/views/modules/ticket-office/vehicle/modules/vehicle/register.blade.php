@@ -28,82 +28,64 @@
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
-                            <h4>Usuario Web</h4>
+                            <h5>Datos Generales</h5>
                         </div>
                         <div class="card-content row">
-                            <input type="hidden" name="id" value="" id="id">
-                            <input type="hidden" name="type" value="" id="type">
-
-
-                            <div class="input-field col s6 m3 tooltipped" data-position="bottom"
-                                 data-tooltip="V: Venezolano; E: Extranjero">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
                                 <i class="icon-public prefix"></i>
-                                <select name="type_document" id="type_document" required>
+                                <select name="type_document" id="type_document_full" required>
                                     <option value="null" selected disabled>...</option>
                                     <option value="V">V</option>
                                     <option value="E">E</option>
                                     <option value="J">J</option>
                                     <option value="G">G</option>
+                                    <!--<option value="J">J</option>-->
                                 </select>
-                                <label for="type_document"></label>
+                                <label for="type_document_full">Documento</label>
                             </div>
-
-                            <div class="input-field col s6 m3 tooltipped" data-position="bottom"
-                                 data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="document" type="text" name="document" data-validate="documento" maxlength="8"
-                                       class="validate number-date rate" pattern="[0-9]+"
-                                       title="Solo puede escribir números." required>
-                                <label for="document">Cedula o RIF</label>
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                                <input id="document_full" type="text" name="document_full" data-validate="documento" maxlength="8" class="validate number-date rate" pattern="[0-9]+" title="Solo puede escribir números." required>
+                                <label for="document_full">Identificación</label>
                             </div>
-
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
+                                <input id="name_full" type="text" name="name_full" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
                                        title="Solo puede agregar letras (con acentos)." required>
-                                <label for="name">Nombre</label>
+                                <label for="name_full">Nombre</label>
                             </div>
-
-
+                            <div class="input-field col s12 m12">
+                                <i class="icon-directions prefix"></i>
+                                <textarea name="address" id="address_full" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
+                                <label for="address_full">Dirección</label>
+                            </div>
                             <input id="surname" type="hidden" name="surname" class="validate" value="">
                             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
 
 
-                            <input id="user" type="hidden" name="user" class="validate" value="true">
-
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
-                                 data-tooltip="Solo puede agregar letras (con acentos).">
-                                <i class="icon-mail_outline prefix"></i>
-                                <input id="email" type="text" name="email" class="validate rate" data-validate="email"
-                                       title="Solo puede agregar letras (con acentos)." required>
-                                <label for="email">Correo</label>
-                            </div>
-
-                            <div class="input-field col s6 m6">
-                                <i class="icon-directions prefix"></i>
-                                <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion"
-                                          class="materialize-textarea rate" required></textarea>
-                                <label for="address">Dirección</label>
-                            </div>
-
-                            <input type="hidden" name="status" id="statu">
-                            <div class="input-field col s6" id="statusTicketOffice">
+                            <div class="input-field col s12" id="condition">
                                 <i class="icon-person prefix"></i>
-                                <select name="status" id="status" required>
+                                <select name="status_view" id="status_view" required>
                                     <option value="null" disabled selected>Selecciona Condicion</option>
-                                    <option value="propietario">Propietario</option>
+                                    <option value="propietario" >Propietario</option>
                                     <option value="responsable">Responsable</option>
                                 </select>
                                 <label for="model">Condición Legal</label>
                             </div>
 
-                            <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn peach text  waves-light">
-                                    Siguiente
-                                    <i class="icon-navigate_next right"></i>
-                                </a>
+
+
+
+
+                            <div id="content">
+
                             </div>
+                        </div>
+                        <div class="card-footer right-align">
+                            <a href="#" id='data-next' class="btn peach waves-effect waves-light">
+                                Siguiente
+                                <i class="icon-navigate_next right"></i>
+                            </a>
                         </div>
                     </div>
                     <div id="rate-tab">
