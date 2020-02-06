@@ -23,10 +23,12 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12 m6">
+                            <i class="icon-brush prefix"></i>
                             <input type="text" name="name" id="name">
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
+                            <i class="icon-exposure_plus_1 prefix"></i>
                             <input type="number" name="value" id="value">
                             <label for="value">Valor UTC</label>
                         </div>

@@ -34,7 +34,7 @@
                             <input id="name" type="text" name="name" required minlength="3" maxlength="100">
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="type" id="type">
                                 <option value="null" selected disabled>Elija un Ramo</option>

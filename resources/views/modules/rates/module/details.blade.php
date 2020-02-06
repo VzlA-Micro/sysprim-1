@@ -10,7 +10,7 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('rate.manager') }}">Gestionar Tasas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('rate.index') }}">Consultar Tasas</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
@@ -41,7 +41,7 @@
                                 <input id="name" type="text" name="name" required minlength="3" maxlength="100" value="{{$rate->name}}" readonly>
                                 <label for="name">Nombre</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <select name="type" id="type"  disabled>
                                     <option value="null" selected disabled>Elija un Ramo</option>

@@ -142,8 +142,8 @@
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordion">
                             <li class="bold">
-                                <a href="#!" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración <i class="icon-arrow_drop_down right"></i></a>
-                                <div class="collapsible-body">
+                                <a href="{{ route('settings.manage') }}" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración</a>
+                                {{-- <div class="collapsible-body">
                                     <ul>
                                         @can('Gestionar CIIU')
                                         <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
@@ -170,7 +170,7 @@
                                         <li class="waves-efect waves-light truncate"><a href="{{ route('advertising-type.manage') }}"><i class="icon-folder_special"></i>Gestionar Tipos de Publicidad</a></li>
                                         @endcan
                                     </ul>
-                                </div>
+                                </div> --}}
                             </li>
                         </ul>
                     </li>
@@ -179,7 +179,7 @@
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordion">
                             <li class="bold">
-                                <a href="#!" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquillas<i class="icon-arrow_drop_down right"></i></a>
+                                <a href="{{ route('ticketOffice.home') }}" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquillas</a>
                                 <div class="collapsible-body">
                                     <ul>
                                         {{-- @can('Gestionar Empresas')
@@ -192,10 +192,10 @@
                                         @can('Verificar Pagos - Archivo')
                                         <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
                                         @endcan --}}
-                                        @can('Taquilla - Actividad Económica')
-                                        <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li>
-                                        @endcan
-                                        <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li>
+                                        {{-- @can('Taquilla - Actividad Económica') --}}
+                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li> --}}
+                                        {{-- @endcan --}}
+                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li> --}}
 
                                     </ul>
                                 </div>
@@ -217,6 +217,9 @@
                     @endcan
                     @can('Mis Publicidades')
                     <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
+                    @endcan
+                    @can('Generar Tasas')
+                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="icon-redeem left"></i>Gestión de Tasas</a></li>
                     @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
