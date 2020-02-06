@@ -99,7 +99,7 @@ margin: 0 !important;
         <td style="width:35%;font-size: 11px !important">{{$data->address}}</td>
 
         <td style="width:15%;font-size: 12px !important;"><b>Pers. Responsable</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{ \Auth::user()->name . ' ' . \Auth::user()->surname }}</td>
+        <td style="width:35%;font-size: 11px !important;">{{ $property->users[0]->name. ' ' . $property->users[0]->surname }}</td>
     </tr>
     <tr>
         @if($data->phone)
@@ -112,17 +112,18 @@ margin: 0 !important;
     </tr>
     <tr>
         <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
-        <td style="width:35%;font-size: 11px !important;">{{ \Auth::user()->email }}</td>
+        <td style="width:35%;font-size: 11px !important;">{{ $property->users[0]->email }}</td>
         <td style="width:20%;font-size: 12px !important;"><b>Telf. Responsable</b></td>
-        <td style="width:30%;font-size: 11px !important;">{{ \Auth::user()->phone }}</td>
+        <td style="width:30%;font-size: 11px !important;">{{ $property->users[0]->phone }}</td>
     </tr>
 </table>
 
 <table style="width: 100%;">
     <thead>
     <tr style="border: 1px solid #000; !important;">
-        <td style="width: 10%;font-size: 12px !important;" class="border">Código</td>
+        {{--<td style="width: 10%;font-size: 12px !important;" class="border">Código</td>--}}
         <td style="width: 20%;font-size: 12px !important;" class="border">Descripción</td>
+        <td style="width: 10%;font-size: 12px !important;" class="border"></td>
         <td style="width: 10%;font-size: 12px !important;" class="border">Ramo</td>
         <td style="width: 10%;font-size: 12px !important;" class="border">Lapso</td>
         <td style="width: 15%;font-size: 12px !important;" class="border">Base Imponible</td>
@@ -137,8 +138,10 @@ margin: 0 !important;
 
 
     <tr>
-        <td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>
+        {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
         <td style="width: 30%;font-size: 10px;!important;">{{ $property->valueBuild->name }}</td>
+        <td style="width: 10%;font-size: 10px !important;"></td>
+
         <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
         <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
         <td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2,',','.') }}</td>
