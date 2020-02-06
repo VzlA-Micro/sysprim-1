@@ -24,6 +24,7 @@ class Trimester
         $trimesterBegin = 0;
         $trimesterEnd = 0;
 
+
         if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
             $trimesterBegin = '01' . '-' . $yearCurrent;
@@ -88,6 +89,17 @@ class Trimester
             'monthIntermediate' => $monthIntermediate,
             'monthEnd' => $monthEnd,
             'current' => $dateCurrent
+        );
+    }
+
+    public static function yearPayment($year)
+    {
+        $periodInit = Carbon::parse("01-01-" . $year);
+        $periodFinal = Carbon::parse("31-12-" . $year);
+
+        return array(
+            'periodInit' => $periodInit->format('m-Y'),
+            'periodFinal' => $periodFinal->format('m-Y')
         );
     }
 

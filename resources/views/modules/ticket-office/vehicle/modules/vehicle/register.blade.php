@@ -19,11 +19,11 @@
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" method="post" class="card" id="vehicle-register-ticket">
+                <form action="#" class="card" id="vehicle-register-ticket">
                     <ul class="tabs">
                         <li class="tab col s6" id="user-tab-one"><a href="#user-tab"><i class="icon-filter_1"></i>Usuario
                                 Web</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#rate-tab"><i
+                        <li class="tab col s6 disabled" id="two"><a href="#vehicle-tab"><i
                                         class="icon-filter_2"></i> Datos del vehículo</a></li>
                     </ul>
                     <div id="user-tab">
@@ -70,12 +70,8 @@
                                     <option value="propietario" >Propietario</option>
                                     <option value="responsable">Responsable</option>
                                 </select>
-                                <label for="model">Condición Legal</label>
+                                <label for="status_view">Condición Legal</label>
                             </div>
-
-
-
-
 
                             <div id="content">
 
@@ -88,10 +84,15 @@
                             </a>
                         </div>
                     </div>
-                    <div id="rate-tab">
+                    <div id="vehicle-tab">
                         <div class="card-header center-align">
                             <h4>Datos del Vehículo</h4>
                         </div>
+
+                        <input type="hidden" name="id" value="" id="id">
+                        <input type="hidden" name="person_id" value="" id="person_id" >
+                        <input type="hidden" name="status" value="" id="status" >
+                        <input type="hidden" name="type" value="" id="type">
                         <div class="card-content row">
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Ej: L1S2M3">
@@ -105,13 +106,13 @@
 
                             <div class="input-field col s6">
                                 <i class="icon-airport_shuttle prefix"></i>
-                                <select name="type" id="type" required>
+                                <select name="typeV" id="typev" required>
                                     {{--<option value="null" disabled selected>Selecciona el tipo de vehiculo</option>--}}
                                     @foreach($type as $types)
                                         <option value="{{$types->id}}">{{$types->name}}</option>
                                     @endforeach
                                 </select>
-                                <label for="type">Tipo De Vehiculo</label>
+                                <label for="typeV">Tipo De Vehiculo</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
@@ -195,7 +196,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/vehicle.js') }}"></script>
-    <script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>
+    <script src="{{ asset('js/data/vehicle-module.js') }}"></script>
+    {{--<script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>--}}
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

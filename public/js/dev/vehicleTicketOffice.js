@@ -221,7 +221,6 @@ $('document').ready(function () {
 
     $('#license_plates').change(function () {
         var license = $(this).val();
-        console.log(license);
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifyLicense",
@@ -274,7 +273,8 @@ $('document').ready(function () {
     $('#license_plate').change(function () {
         var license = $(this).val();
         var id = $('#id').val();
-        console.log(license);
+
+        console.log(id);
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifyLicense",
@@ -689,15 +689,10 @@ $('document').ready(function () {
                     $('#modelTo').prop('disabled', true);
                     $('#colorTo').prop('disabled', true);
                     $('#personTo').prop('disabled', true);
-                    $('#fiscal_periodTo').prop('disabled', true);
+                    $('#fiscal_period').prop('disabled', true);
 
                 } else {
 
-                    $('#brandTo').prop('disabled', false);
-                    $('#modelTo').prop('disabled', false);
-                    $('#colorTo').prop('disabled', false);
-                    $('#personTo').prop('disabled', false);
-                    $('#fiscal_periodTo').prop('disabled', false);
 
                     $('#vehicle_id').val(data['vehicle'][0].id);
                     M.updateTextFields();
@@ -710,7 +705,10 @@ $('document').ready(function () {
                     $('#personTo').val(data['userVehicle'][0].name);
                     M.updateTextFields();
 
-                    swal({
+
+                    $('#fiscal_period').prop('disabled', false);
+                    $('select').formSelect();
+                    /*swal({
                         title: "Periodo Fiscal",
                         text: "Elija entre los siguientes periodo",
                         icon: "info",
@@ -729,7 +727,8 @@ $('document').ready(function () {
                                 className: "blue",
                                 closeModal: true
                             }
-                        }
+                        } M.updateTextFields();
+
                     }).then(function (options) {
 
                         if (options) {
@@ -770,7 +769,7 @@ $('document').ready(function () {
                                 });
                             }
                         });
-                    })
+                    })*/
                 }
             },
             error: function (e) {
@@ -1035,10 +1034,11 @@ $('document').ready(function () {
             $('#two').removeClass('disabled');
             $('ul.tabs').tabs("select", "details-tab");
             var id = $('#vehicle_id').val();
-            console.log(period);
+            var year = $('#fiscal_period').val();
             $.ajax({
                 type: "get",
-                url: url + "ticketOffice/vehicle/generatedPlanilla/" + id + "-" + true,
+                url: url + "ticketOffice/vehicle/generatedPlanilla/" + id + "-" + true + "/" + year,
+
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -1219,6 +1219,46 @@ $('document').ready(function () {
         });
     });
 
+    $('#fiscal_period').change(function () {
+        var fiscalPeriod = $(this).val();
+        var id = $('#vehicle_id').val();
+
+        $.ajax({
+            type: "get",
+            url: url + "ticketOffice/vehicle/fiscal-period/"+id+"/"+fiscalPeriod,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                if (data) {
+                    swal({
+                        title: "Información",
+                        text: 'Ya tiene un pago declarado para este periodo fiscal',
+                        icon: "info",
+                    });
+                }else {
+
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
 
     $('.payroll').change(function () {
 
@@ -2042,7 +2082,7 @@ $('document').ready(function () {
 
         $.ajax({
             type: "get",
-            url: url + "vehicle/change-user-web/" + type + "/" + document + "/" + id,
+            url: url + "vehicle/change-user/" + type + "/" + document + "/" + id,
 
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
@@ -2062,7 +2102,7 @@ $('document').ready(function () {
                         button: {
                             text: "Entendido",
                             className: "blue-gradient",
-                            value:true
+                            value: true
                         },
 
                     }).then(function (options) {
@@ -2070,7 +2110,7 @@ $('document').ready(function () {
                             location.reload();
                         }
                     });
-                }else{
+                } else {
                     swal({
                         title: "Cambio de Usuario",
                         text: 'Usuario no encontrado, Verifica los datos por favor',
@@ -2078,7 +2118,7 @@ $('document').ready(function () {
                         button: {
                             text: "Entendido",
                             className: "blue-gradient",
-                            value:true
+                            value: true
                         },
 
                     })
@@ -2158,7 +2198,7 @@ $('document').ready(function () {
                         button: {
                             text: "Entendido",
                             className: "blue-gradient",
-                            value:true
+                            value: true
                         },
 
                     }).then(function (options) {
@@ -2166,7 +2206,7 @@ $('document').ready(function () {
                             location.reload();
                         }
                     });
-                }else{
+                } else {
                     swal({
                         title: "Cambio de Usuario",
                         text: 'Usuario no encontrado, Verifica los datos por favor',
@@ -2174,7 +2214,7 @@ $('document').ready(function () {
                         button: {
                             text: "Entendido",
                             className: "blue-gradient",
-                            value:true
+                            value: true
                         },
 
                     })
@@ -2195,7 +2235,6 @@ $('document').ready(function () {
             }
         });
     });
-
 
 
 });

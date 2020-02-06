@@ -385,12 +385,13 @@ class VehicleController extends Controller
             $license = Vehicle::where('license_plate',$licencia )->get();
         }
         else {
-
             $license = Vehicle::where('license_plate', $licencia)
-                ->where('id', '!=', $id);
+                ->where('id', '!=', $id)->get();
+
         }
 
         if (!$license->isEmpty()) {
+
             $response = array('status' => 'error', 'message' => 'La Placa "' . $request->input('license') . '" se encuentra registrada en el sistema. Por favor, ingrese una placa valida.');
 
         } else {
@@ -399,8 +400,7 @@ class VehicleController extends Controller
 
 
         return response()->json($response);
-        // $license = Vehicle::where('license_plate', $request->input('license'))->exists();
-        //return response()->json($license);
+
     }
 
 
@@ -414,7 +414,8 @@ class VehicleController extends Controller
         if (is_null($id)) {
             $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->get();
         } else {
-            $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->where('id', '!=', $id);
+            $serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))
+                ->where('id', '!=', $id)->get();
         }
         if (!$serialEngine->isEmpty()) {
             $response = array('status' => 'error', 'message' => 'El serial del motor "' . $request->input('serialEngine') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial válido.');
@@ -423,8 +424,7 @@ class VehicleController extends Controller
         }
 
         return response()->json($response);
-        //$serialEngine = Vehicle::where('serial_engine', $request->input('serialEngine'))->exists();
-        //return response()->json($serialEngine);
+
     }
 
 
@@ -438,7 +438,8 @@ class VehicleController extends Controller
         if (is_null($id)) {
             $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->get();
         } else {
-            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->where('id', '!=', $id);
+            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))
+                ->where('id', '!=', $id)->get();
         }
         if (!$bodySerial->isEmpty()) {
             $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('body_serial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
@@ -447,8 +448,7 @@ class VehicleController extends Controller
         }
 
         return response()->json($response);
-        //$bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))->exists();
-        //return response()->json($bodySerial);
+
     }
 
     public function getImage($filename)

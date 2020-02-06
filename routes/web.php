@@ -756,7 +756,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
         Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
         Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
-        Route::get('ticketOffice/vehicle/generatedPlanilla/{value}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
+        Route::get('ticketOffice/vehicle/generatedPlanilla/{value}/{year}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
+        Route::get('ticketOffice/vehicle/fiscal-period/{id}/{year}', 'TicketOfficeVehicleController@fiscalPeriod')->name('ticketOffice.vehicle.fiscalPeriod');
 
         Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
         Route::get('vehicle/change-user-web/{type}/{document}/{id}','TicketOfficeVehicleController@changeUserWeb')->name('vehicle.changeUserWeb');
@@ -1029,6 +1030,11 @@ Route::middleware(['auth'])->group(/**
         Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
 
         Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
+
+        Route::get('property/ticket-office/change-user/{property_id}/{ci}','PropertyController@changeUserPropertyTicketOffice');
+        Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
+        Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
+        Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
 
 
 
