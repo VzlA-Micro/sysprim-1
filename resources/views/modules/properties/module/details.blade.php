@@ -186,36 +186,35 @@
                         </div>
 
 
-                        <div class="col l12">
+                        <div class="col s12">
                             <div class="row">
-                                        <button type="button" class="btn btn-large waves-effect waves-light green col s4 "
-                                           id="edit-btn">
-                                            Editar Inmueble
+                                <div class="col s6 offset-s4">
+                                        <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
                                             <i class="icon-mode_edit right"></i>
+                                            Editar Inmueble
                                         </button>
-
-                                        <button type="submit" class="btn btn-large waves-effect waves-light blue col s4  hide"
-                                           id="update-btn">
+                                         <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide" id="update-btn">
                                             Guardar
                                             <i class="icon-save right"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-large waves-effect waves-light green col s4 "
-                                                id="edit-propietario">
-                                            Cambiar Propietario
-                                            <i class="icon-account_circle right"></i>
-                                        </button>
-
-
-                                        <button type="button"
-                                                class="btn btn-large waves-effect waves-light green col s4 "
-                                                id="change-maps">
-                                            Cambiar Ubicación
-                                            <i class="icon-map right"></i>
-                                        </button>
-
-
+                                        </button>                                  
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col s6">
+                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
+                                        <i class="icon-account_circle right"></i>    
+                                             Cambiar Propietario
+                                    </button>
+                                </div>
+                               
+                                <div class="col s6">
+                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
+                                        <i class="icon-map right"></i>
+                                            Cambiar Ubicación     
+                                    </button>
+                                </div>                
+                            </div>      
                         </div>
                     </div>
                 </form>
