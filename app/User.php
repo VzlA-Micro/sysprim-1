@@ -60,7 +60,7 @@ class User extends Authenticatable  implements Auditable
 
     public function property()
     {
-        return $this->belongsToMany('App\Inmueble', 'user_property')
+        return $this->belongsToMany('App\Property', 'user_property')
             ->withPivot('property_id');
     }
 

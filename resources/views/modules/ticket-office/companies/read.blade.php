@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="preview-view">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
                 </ul>
             </div>
