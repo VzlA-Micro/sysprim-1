@@ -780,8 +780,11 @@ class CompanyTaxesController extends Controller
             if ($verify_prologue['mora']) {//si tiene mora
 
 
-
                 $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
+                if (is_null($recharge)) {
+                    $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+                }
+
 
 
                 //Obtengo Intereset del banco

@@ -1042,6 +1042,9 @@ Route::middleware(['auth'])->group(/**
 
 
 
+        Route::get('test/{code}/{date_limit}','VerifyPaymentsBankImportController@verifyPaymentsTaxes');
+
+
 
 
 

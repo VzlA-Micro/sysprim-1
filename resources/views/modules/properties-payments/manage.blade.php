@@ -40,7 +40,7 @@
                     <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
-            <div id="mode" class="modal">
+            <div id="mode" class="modal modal-sm">
                 <div class="">
                     <div class="modal-content">
                         <h5 class="center-align">Forma de Pago</h5>
