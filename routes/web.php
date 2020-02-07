@@ -293,7 +293,7 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
-
+            // GEstion de Alicuotas
             Route::group(['middleware' => ['permission:Gestionar Alicuotas']], function(){
                 Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
                 # Nivel 1: Registrar y Consultar
