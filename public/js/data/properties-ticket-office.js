@@ -114,6 +114,69 @@ $(document).ready(function() {
         });
     });
 
+    $('#fiscal_credit').blur(function() {
+        var fiscal_credit = $(this).val();
+        var amount = $('#amount').val();
+        $.ajax({
+            method: 'post',
+            dataType: 'json',
+            data: {
+                fiscal_credit: fiscal_credit,
+                amount: amount
+            },
+            url: url + 'properties/taxes/total',
+            beforeSend: function() {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function(resp) {
+                if(resp.status == 'success') {
+                    swal({
+                        title: '¡Bien Hecho!',
+                        text: resp.message,
+                        icon: 'success',
+                        button: {
+                            text: 'Entendido',
+                            className: 'blue-gradient'
+                        }
+                    });
+                    /*$('#fiscal_credit').val(resp.fiscal_credit);
+                    console.log(resp.fiscal_credit);*/
+                    $('#amount').val(resp.total);
+                }
+                else if(resp.status == 'error') {
+                    swal({
+                        title: '¡Oh No!',
+                        text: resp.message,
+                        icon: 'error',
+                        button: {
+                            text: 'Entendido',
+                            className: 'blue-gradient'
+                        }
+                    });
+                    $('#fiscal_credit').val(0);
+                }
+                else if(resp.status == 'void'){
+                    $('#fiscal_credit').val(0);
+                }
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+            },
+            error: function (err) {
+                console.log(err);
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        })
+    });
+
     $('#general-next').click(function () {
         if ($('#property_id').val() === '') {
             swal({
@@ -151,7 +214,8 @@ $(document).ready(function() {
         else {
             var id = $('#property_id').val();
             var status = $('#status').val();
-            console.log(id, status);
+            var fiscal_period = $('#fiscal_period').val();
+            console.log(id, status, fiscal_period);
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
@@ -159,7 +223,7 @@ $(document).ready(function() {
                     id: id,
                     status: status
                 },
-                url: url + 'properties/ticket-office/taxes/' + id + '/' + status,
+                url: url + 'properties/ticket-office/taxes/' + id + '/' + status + '/' + fiscal_period,
                 beforeSend: function() {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -170,8 +234,8 @@ $(document).ready(function() {
                         var property = resp.property[0];
                         var owner_id = resp.owner_od;
                         var owner = resp.owner;
-                        var alicuota = resp.declaration['porcentaje'];
-                        var discount = resp.declaration['discount'];
+                        var alicuota = resp.alicuota;
+                        var discount = resp.discount;
                         var interest = resp.interest;
                         var recharge = resp.recharge;
                         var status = resp.status;
@@ -213,7 +277,7 @@ $(document).ready(function() {
     });
 
     $('#generate-payroll').submit(function(e) {
-        e.preventDefault();
+        // e.preventDefault();
         var property_id = $('#property_id').val();
         var owner_id = $('#owner_id').val();
         var base_imponible = $('#base_imponible').val();
@@ -381,146 +445,6 @@ $(document).ready(function() {
         }
     });
 
-//    Caja
-    $('#open-cashier').click(function () {
-        if (localStorage.getItem('bank') == null) {
-            swal({
-                title: "PUNTO DE VENTA 1/2",
-                text: "Introduzca el numero de lote del punto de venta:",
-                icon: "info",
-                content: {
-                    element: "input",
-                    attributes: {
-                        placeholder: "Escribe un numero",
-                        type: "number",
-                    },
-                },
-            }).then(function (name) {
-                if (name === null || isNaN(name) || name <= 0) {
-                    swal({
-                        title: "Información",
-                        text: "Acción cancelada,debe ingresar un numero de lote valido.",
-                        icon: 'info'
-                    });
-                } else {
-                    localStorage.setItem('lot', name);
-                    swal({
-                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2",
-                        icon: "info",
-                        buttons: {
-                            cancel: true,
-                            BANCO: {text: "100%BANCO", value: "33", className: "blue"},
-                            BOD: {text: "BOD", value: "44", className: "green width"},
-                        }
-                    }).then(function (bank) {
-                        if (bank === null) {
-                            swal({
-                                title: "Información",
-                                text: "Acción cancelada,debe ingresar un punto.",
-                                icon: 'info'
-                            });
-                        } else {
-                            localStorage.setItem('bank', bank);
-                            var hoy = new Date();
-                            var dd = hoy.getDate();
-                            localStorage.setItem('day',dd);
-                            swal({
-                                title: "Bien hecho",
-                                text: "Ya puedes empezar a registrar pagos valido.",
-                                icon: "success",
-                            });
-
-                            location.reload();
-                        }
-                    })
-                }
-            });
-
-        } else {
-            swal({
-                title: "Información",
-                text: "Acción cancelada, debe abrir caja.",
-                icon: 'info'
-            });
-        }
-    });
-
-    var hoy = new Date();
-    var dd = hoy.getDate();
-
-    if(localStorage.getItem('day')!=dd){
-        localStorage.removeItem('bank');
-        localStorage.removeItem('lot');
-        localStorage.removeItem('day');
-    }
-
-
-    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
-        swal({
-            title: "Información",
-            text: "Debe abrir caja, para empezar a registrar pagos.",
-            icon: "info",
-        });
-        $('.content').css('display', 'none');
-    } else {
-
-        var bank = localStorage.getItem('bank');
-        var lot = localStorage.getItem('lot');
-
-
-        if (bank === "44") {
-            $('#name_bank').val('BOD');
-        } else {
-            $('#name_bank').val("100%BANCO");
-        }
-
-        $('#bank').val(bank);
-        $('#lot').val(lot);
-
-        M.updateTextFields();
-
-        $('#content').css('display', 'block');
-    }
-
-    $('#close-cashier').click(function () {
-        if (localStorage.getItem('bank') !== null) {
-            swal({
-                title: "Información",
-                text: "¿Estas seguro?, Si cierras las caja, no podras revertir los cambios.",
-                icon: "warning",
-                buttons: {
-                    confirm: {
-                        text: "Si",
-                        value: true,
-                        visible: true,
-                        className: "green"
-
-                    },
-                    cancel: {
-                        text: "No",
-                        value: false,
-                        visible: true,
-                        className: "grey lighten-2"
-                    }
-                }
-            }).then(function (aceptar) {
-                if (aceptar) {
-                    localStorage.removeItem('bank');
-                    localStorage.removeItem('lot');
-                    location.href = url + 'ticket-office/payments';
-                }
-            });
-
-
-        } else {
-            swal({
-                title: "Información",
-                text: "Acción cancelada, debe abrir la caja para poder cerrarla.",
-                icon: 'info'
-            });
-
-        }
-    });
 
     $('#select-next').click(function () {
         var acum = '';

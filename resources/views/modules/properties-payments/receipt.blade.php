@@ -152,8 +152,8 @@ margin: 0 !important;
 
     @php $totalAmount = $propertyTaxes->base_imponible; @endphp
     <tr>
+        <td style="width: 10%;font-size: 10px !important;text-align: right">Alicuota</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">Alicuota</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
@@ -163,20 +163,20 @@ margin: 0 !important;
     </tr>
     @if($propertyTaxes->recharge != 0)
     <tr>
+        <td style="width: 10%;font-size: 10px !important;text-align: right">Recargos</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">Recargos</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->recharge,2) }}</td>
-        @php $totalAmount += ($propertyTaxes->base_imponible + $propertyTaxes->recharge); @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2) }}</td>
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->recharge,2,',','.') }}</td>
+        @php $totalAmount += $propertyTaxes->recharge; @endphp
+        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
     </tr>
     @endif
     @if($propertyTaxes->interest != 0)
     <tr>
+        <td style="width: 10%;font-size: 10px !important;text-align: right">Interés por Mora</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">Interés por Mora</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
@@ -187,8 +187,8 @@ margin: 0 !important;
     @endif
     @if($propertyTaxes->discount != 0)
     <tr>
+        <td style="width: 10%;font-size: 10px !important;text-align: right">Descuento: 20%</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">Descuento: 20%</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
@@ -199,8 +199,8 @@ margin: 0 !important;
     @endif
     @if($propertyTaxes->fiscal_credit != 0)
     <tr>
+        <td style="width: 10%;font-size: 10px !important;text-align: right">Créditos Fiscales</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">Créditos Fiscales</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
@@ -251,7 +251,7 @@ margin: 0 !important;
         </td>
         <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
         <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
+        <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2,',','.')}}</td>
     </tr>
 </table>
 
