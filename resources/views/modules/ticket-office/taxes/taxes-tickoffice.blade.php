@@ -20,7 +20,7 @@
             <div class="col s12">
                 <div class="card">
                     <ul class="tabs">
-                        <li class="tab col s6 " id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
+                        <li class="tab col s6 disabled" id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
                                 Planilla</a></li>
                         <li class="tab col s6 disabled" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i>
                                 Pagar</a>
@@ -509,6 +509,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
+    <script src="{{ asset('js/data/cashier.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 
 @endsection

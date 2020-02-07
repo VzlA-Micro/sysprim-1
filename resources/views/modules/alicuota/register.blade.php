@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.register') }}">Registrar Alicuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.register') }}">Registrar Alicuota de Inmubles </a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
