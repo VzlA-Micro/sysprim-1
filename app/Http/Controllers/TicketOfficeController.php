@@ -30,6 +30,10 @@ use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
 use App\Helpers\CheckCollectionDay;
+use App\Property;
+use App\UserProperty;
+use App\PropertyTaxes;
+
 
 
 
@@ -320,6 +324,7 @@ class TicketOfficeController extends Controller
         $number_vehicle=$company->companyVehicle()->orderBy('id','desc')->count();
         $number_property=$company->companyProperty()->orderBy('id','desc')->count();
 
+
         return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco,'number_property'=>$number_property,'number_vehicle'=>$number_vehicle]);
     }
 
@@ -489,7 +494,6 @@ class TicketOfficeController extends Controller
         $taxe->status = 'ticket-office';
         $taxe->save();
         $id = $taxe->id;
-
 
         for ($i = 0; $i < count($base); $i++) {
 
@@ -771,6 +775,7 @@ class TicketOfficeController extends Controller
             }
 
 
+
         if ($ciuTaxes[0]->taxes->type != 'definitive') {
             $pdf = \PDF::loadView('modules.ticket-office.receipt-ticketoffice',
                 [
@@ -844,6 +849,11 @@ class TicketOfficeController extends Controller
 
                 elseif($taxes_find->branch==='Pat.Veh'){
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
+                    $taxes_find->code = $code;
+                }
+
+                elseif($taxes_find->branch==='Inm.Urbanos'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "84");
                     $taxes_find->code = $code;
                 }
 
@@ -970,7 +980,34 @@ class TicketOfficeController extends Controller
             $user=User::find($rate[0]->pivot->user_id);;
             $email=$user->email;
             $band=true;
-        } elseif ($taxes->branch=='Pat.Veh'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+        } elseif ($taxes->branch=='Inm.Urbanos'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+
+
+            $owner = $taxes->properties()->get();
+            $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+            $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::find($taxes->id);
+
+            if (!is_null($userProperty->company_id)) {
+                $data = Company::find($userProperty->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userProperty->person_id);
+                $type = 'user';
+            }
+            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'property' => $property,
+                'propertyTaxes' => $propertyTaxes,
+                'firm'=>true
+            ]);
+
+            $user=User::find($userProperty->user_id);
+            $email=$user->email;
+            $band=true;
+        }
+        elseif ($taxes->branch=='Pat.Veh'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
 
             $vehicleTaxes=$taxes->vehicleTaxes()->get();
             $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
@@ -1351,6 +1388,26 @@ class TicketOfficeController extends Controller
                 'firm' => $firm
             ]);
 
+        }
+        elseif ($taxes->branch=='Inm.Urbanos') {
+            $owner = $taxes->properties()->get();
+            $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+            $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::find($taxes->id);
+
+            if (!is_null($userProperty->company_id)) {
+                $data = Company::find($userProperty->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userProperty->person_id);
+                $type = 'user';
+            }
+            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'property' => $property,
+                'propertyTaxes' => $propertyTaxes
+            ]);
         }
 
 

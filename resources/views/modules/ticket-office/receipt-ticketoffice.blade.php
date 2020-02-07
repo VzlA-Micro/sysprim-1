@@ -413,49 +413,41 @@ $date = '31/12/' . date('Y');
     <b></b><br>
     <b></b><br>
 
-
     <table style="width: 100%;margin-bottom:-30px;">
-        @if($taxes[0]->taxes->status!=='verified'&&$taxes[0]->taxes->status!=='verified-sysprim')
+        <tr>
 
-            <tr>
-
-
+            @if($taxes[0]->taxes->status=='verified'||$taxes[0]->taxes->status=='verified-sysprim')
+                <td style="width: 80%;text-align: center;margin-bottom: -48px!important;">
+                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:200px; height:200px;">
+                </td>
+            @else
                 <td style="width: 40%;text-align: center;">
                     __________________________________________
                 </td>
+            @endif
 
-
-            </tr>
-            <tr>
-                <td style="width:40%;text-align: center; font-size: 10px;">
-                    FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
-                    DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
-                    DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.<
-                </td>
-
-
-            </tr>
-
-
-        @else
-            <tr>
-                <td style="width: 40%;text-align: center;position: relative;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png"
-                         style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;"
-                         alt="">
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: center;font-size: 13px;position: relative;top: -5cm;"><b>
+        </tr>
+        <tr>
+            @if($taxes[0]->taxes->status=='verified'||$taxes[0]->taxes->status=='verified-sysprim')
+                <td style="width:40%;text-align: center; font-size: 13px;margin-bottom: -100px!important;"><b>
                         __________________________________________<br>
                         ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
                         Directora (E) de la Dirección de Hacienda y<br>
                         Gerenta General (E) del Servicio Municipal<br> de Administración Tributaria (SEMAT)<br>
                     </b>
                 </td>
-            </tr>
-        @endif
+            @else
+
+                <td style="width:40%;text-align: center; font-size: 13px;">
+                    FIRMA DEL CONTRIBUYENTE O REPRESENTANTE LEGAL<br> JURO QUE LOS DATOS EN ESTA
+                    DECLARACIÓN HAN SIDO<br> DETERMINADOS CON BASE A LA
+                    DISPOSICIONES<br> LEGALES CONTENIDAS EN LA O.I.A.E.
+                </td>
+
+            @endif
+        </tr>
     </table>
+
 
 
     <table style="width: 100%;">

@@ -78,7 +78,7 @@ class HomeController extends Controller
 
 
     public function test(){
-        $verify=CheckCollectionDay::verify('Pat.Veh');
+        $verify=CheckCollectionDay::verify('Pat.Veh','2018-01-01');
         dd($verify);
     }
 

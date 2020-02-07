@@ -12,9 +12,9 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticket-office.taxes.getTaxes') }}">Pagar Planillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.payments.taxes') }}">Pagar Planillas</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -31,12 +31,11 @@
                             <table class="centered highlight" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>Contribuyente</th>
-                                    <th>Licencia</th>
+                                    <th>Fecha</th>
                                     <th>Código</th>
-                                    <th>Periodo Fiscal</th>
-                                    <th>Planilla</th>
+                                    <th>Ramo</th>
                                     <th>Monto</th>
+                                    <th>Planilla</th>
                                     @can('Detalles Planilla')
                                         <th>Acción</th>
                                     @endcan
@@ -45,57 +44,36 @@
 
                                 <tbody id="receipt-body">
 
-
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
-
-                                            <td>{{$taxe->companies[0]->name}}</td>
-                                            <td>{{$taxe->companies[0]->license}}</td>
-                                            <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->fiscalPeriodFormat}}</td>
+                                            <td>{{ $taxe->created_at }}</td>
+                                            <td>{{ $taxe->code }}</td>
+                                            <td>{{ $taxe->branch }}</td>
+                                            <td>{{ number_format($taxe->amount,2) }}</td>
 
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"
-                                                           data-company="{{$taxe->companies[0]->id}}"
-                                                           data-taxes="{{$taxe->type}}"/>
+                                                           value="{{$taxe->id}}"/>
                                                     <span></span>
                                                 </label>
                                             </td>
-                                            <td>{{number_format($taxe->amount,2)}}</td>
                                             @can('Detalles Planilla')
-
-                                                @if($taxe->type!=='definitive')
-
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
-                                                           class="btn indigo waves-effect waves-light">
-                                                            <i class="icon-pageview left"></i>
-                                                            Detalles
-                                                        </a>
-                                                    </td>
-                                                @else
-
-                                                    <td>
-                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
-                                                           class="btn indigo waves-effect waves-light"><i
-                                                                    class="icon-pageview left"></i>Detalles</a>
-                                                    <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
-                                                    </td>
-
-                                                @endif
-
+                                                <td>
+                                                    <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->id]) }}"
+                                                       class="btn indigo waves-effect waves-light">
+                                                        <i class="icon-pageview left"></i>
+                                                        Detalles
+                                                    </a>
+                                                </td>
                                             @endcan
                                         </tr>
                                     @endforeach
                                 @else
-
                                     <tr>
                                         <td colspan="7">Todavia no se genera una planilla</td>
                                     </tr>
-
                                 @endif
                                 </tbody>
                             </table>
@@ -148,8 +126,8 @@
                                                             <div class="input-field col s12 m6 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="lot" id="lot" value=""
-                                                                       class="validate number-date"
-                                                                       required readonly maxlength="10">
+                                                                       class="validate"
+                                                                       required readonly>
                                                                 <label for="lot">LOTE</label>
                                                             </div>
                                                             <div class="input-field col s12 m6 ">
@@ -167,7 +145,7 @@
                                                             <div class="input-field col s12 m6 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref" value=""
-                                                                       class="validate number-date"
+                                                                       class="validate"
                                                                        required minlength="3" maxlength="10">
                                                                 <label for="ref">Ref o Código</label>
                                                             </div>
@@ -329,7 +307,7 @@
                                                                         <input type="text" name="amount"
                                                                                id="amount_total_tr" value=""
                                                                                class="validate money amount"
-                                                                               required readonly>
+                                                                               required>
                                                                         <label for="amount_total_tr">Total a
                                                                             Pagar</label>
                                                                     </div>
@@ -384,7 +362,7 @@
                                                             <div class="input-field col s12 m12 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref_depo" value=""
-                                                                       class="validate number-date"
+                                                                       class="validate"
                                                                        required minlength="3"  readonly>
                                                                 <label for="ref_depo">N DE CHEQUE</label>
                                                             </div>
@@ -438,7 +416,7 @@
                                                                 <input type="text" name="amount_total"
                                                                        id="amount_total_depo" value=""
                                                                        class="validate money amount"
-                                                                       required readonly>
+                                                                       required>
                                                                 <label for="amount_total_depo">Total a Pagar</label>
                                                             </div>
                                                             <div class="col s12 center-align">
@@ -508,7 +486,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
+    <script src="{{ asset('js/data/properties-ticket-office.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 
 @endsection

@@ -68,7 +68,9 @@ class Taxe extends Model implements Auditable {
 
     public function properties() {
         return $this->belongsToMany('App\Property','property_taxes')
-            ->withPivot('property_id', 'recharge', 'base_imponible');
+            ->withPivot('property_id', 'recharge',
+                                'base_imponible', 'alicuota',
+                                'interest', 'discount', 'fiscal_credit');
     }
 
 
