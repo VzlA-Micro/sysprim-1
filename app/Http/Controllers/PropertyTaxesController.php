@@ -304,7 +304,7 @@ class PropertyTaxesController extends Controller
         $owner = $taxe->properties()->get();
         $userProperty = UserProperty::find($owner[0]->pivot->property_id);
         $property = Property::find($userProperty->property_id);
-        $propertyTaxes = PropertyTaxes::find($taxe->id);
+        $propertyTaxes = PropertyTaxes::where('taxe_id',$taxe->id)->first();
 
         if (!is_null($userProperty->company_id)) {
             $data = Company::find($userProperty->company_id);
@@ -323,7 +323,7 @@ class PropertyTaxesController extends Controller
         if(isset($download)){
             return $pdf->stream('PLANILLA_TASAS.pdf');
         }else{
-            return $pdf->stream('PLANILLA_TASAS.pdf');
+            return $pdf->download('PLANILLA_TASAS.pdf');
         }
 //        return $pdf->stream('PLANILLA_INMUEBLE.pdf');
 //        return $pdf->download('PLANILLA_INMUEBLE.pdf');

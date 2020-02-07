@@ -398,6 +398,8 @@ Route::middleware(['auth'])->group(/**
             });
         });
 
+        // Mis inmuebles
+//        Route::group([]);
 
         Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
         Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
