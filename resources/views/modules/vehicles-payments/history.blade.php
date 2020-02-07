@@ -84,7 +84,7 @@
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/'.true)}}"
+                                                    <a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/true')}}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
                                                         planilla.</a></td>
@@ -97,10 +97,11 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                    <a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/true')}}"
+                                                       class="btn orange waves-effect waves-light"><i
+                                                                class="icon-description left"></i>Descargar
+                                                        planilla.</a></td>
+
                                                 </td>
 
                                             @elseif($taxe->status=='cancel')
@@ -109,6 +110,13 @@
                                                         <i class="icon-more_horiz left"></i>
                                                         CANCELADA.
                                                     </button>
+                                                </td>
+
+                                                <td>
+                                                    <a href="#"
+                                                       class="btn indigo waves-effect waves-light" disabled><i
+                                                                class="icon-pageview left"></i>Detalles</a>
+                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>
                                             @endif
                                         </tr>

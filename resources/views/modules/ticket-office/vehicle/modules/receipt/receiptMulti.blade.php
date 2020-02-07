@@ -50,6 +50,7 @@
                 @else
                     <span style="font-size: 10px !important;">{{$taxes[0]->code}}</span><br>
                 @endif
+
                 <span style="font-size: 10px !important;">{{$taxes[0]->created_at->format('d-m-Y')}}</span><br>
             </td>
         </tr><!--
@@ -275,6 +276,7 @@
 <table>
     @if(!$taxes[0]->payments->isEmpty()&&substr($taxes[0]->payments[0]->code,0,3)!='PPV')
         <tr>
+
             <td style="font-size: 12px !important; text-align: center;">Planilla</td>
             <td style="font-size: 12px !important; text-align: center;">Dígito</td>
             <td style="font-size: 12px !important; text-align: center;">Correlat</td>
@@ -286,12 +288,13 @@
         </tr>
 
         <tr>
-            <td style="font-size: 12px !important;text-align: center;">{{$$taxes[0]->payments[0]->code}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->code}}</td>
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->digit}}</td>
             <td style="font-size: 12px !important;text-align: center;">56</td>
             <td style="font-size: 12px !important;text-align: center;">{{$vehicle->license_plate}}</td>
            <td style="font-size: 12px !important;text-align: center;">56</td>
         </tr>
+
     @else
         <tr>
             <td style="font-size: 12px !important; text-align: center;">Planilla</td>
@@ -303,6 +306,7 @@
                 ENMENDADURA NO VALIDO COMO SOLVENCIA
             </td>
         </tr>
+
 
         <tr>
             <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->code}}</td>
@@ -320,7 +324,6 @@
 
     @endif
 </table>
-
 <table>
     <tr>
         <td colspan="3" style="font-size: 12px;">Nota: Una vez que se publiquen
@@ -354,7 +357,7 @@
     </tr>
     <tr>
         <td style="width: 100%;text-align: center; font-size: 14px;">
-            **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes->created_at))}}**
+            **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes[0]->created_at))}}**
         </td>
     </tr>
     @endif
@@ -425,7 +428,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->id))) !!} "
                          style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
                 </td>
         @else
@@ -436,13 +439,12 @@ $date = '31/12/' . date('Y');
                          style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
                 </td>
             </tr>
-
         @endif
 
         <tr>
             <td style="width: 20%;">
                 @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
-                    @if($taxes->bank!=null)
+                    @if($taxes[0]->bank!=null)
                         <img src="https://sysprim.com/images/pdf/{{$taxes[0]->bank.".png"}}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="">
                     @endif
