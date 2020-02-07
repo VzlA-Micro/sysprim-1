@@ -586,15 +586,15 @@ class PropertyTaxesController extends Controller
 
     public function findCode($code) {
         $property = Property::where('code_cadastral', $code)->with('users')->first();
-        $taxe = $property->propertyTaxes()->first();
-        $taxe_id = $taxe->id;
         if($property == null) {
             $response = [
                 'status' => 'error',
-                'message' => 'El inmueble con el código catastral "' . $code . '"" no se encuentra registrado. Por favor, ingrese un código valido.'
+                'message' => 'El inmueble con el código catastral no se encuentra registrado. Por favor, ingrese un código valido.'
             ];
         }
         else {
+            $taxe = $property->propertyTaxes()->first();
+            $taxe_id = $taxe->id;
             $response = [
                 'status' => 'success',
                 'property' => $property,
@@ -604,16 +604,17 @@ class PropertyTaxesController extends Controller
         return response()->json($response);
     }
 
-    public function taxesTicketOfficePayroll($id, $status) {
+    public function taxesTicketOfficePayroll($id, $status, $fiscal_period) {
         $actualDate = Carbon::now();
-        $declaration = Declaration::VerifyDeclaration($id, $status);
         $statusTax = '';
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
-        $period_fiscal = Carbon::now()->year;
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+        $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
+//        die();
+//        dd($declaration);
         $taxe_id = $taxes[0]->id;
         if(!empty($taxes)) {
             foreach ($taxes as $tax) {
@@ -678,7 +679,7 @@ class PropertyTaxesController extends Controller
             'declaration' => $declaration,
 //            'build' => $catasBuild,
             'userProperty' => $userProperty[0],
-            'period' => $period_fiscal,
+//            'period' => $period_fiscal,
 //            'property' => $property,
 //            'response'=>$response,
             'owner_type' => $owner_type,
@@ -694,7 +695,7 @@ class PropertyTaxesController extends Controller
             'statusTax' => $statusTax,
             'taxe_id' => $taxe_id
         ];
-//        dd($resp);
+//        dd($declaration);
         return response()->json($resp);
     }
 
@@ -806,7 +807,8 @@ class PropertyTaxesController extends Controller
             ->with('users')
             ->first();
         $userProperty = UserProperty::find($propertyTaxe->pivot->property_id);
-        $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status);
+        $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status,$propertyTaxe->fiscal_period);
+//        dd($taxes);
         if (!is_null($userProperty->company_id)) {
             $owner = Company::find($userProperty->company_id);
             $type = 'company';

@@ -151,7 +151,8 @@ $(document).ready(function() {
         else {
             var id = $('#property_id').val();
             var status = $('#status').val();
-            console.log(id, status);
+            var fiscal_period = $('#fiscal_period').val();
+            console.log(id, status, fiscal_period);
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
@@ -159,7 +160,7 @@ $(document).ready(function() {
                     id: id,
                     status: status
                 },
-                url: url + 'properties/ticket-office/taxes/' + id + '/' + status,
+                url: url + 'properties/ticket-office/taxes/' + id + '/' + status + '/' + fiscal_period,
                 beforeSend: function() {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');

@@ -78,7 +78,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="{{ number_format($amounts['baseImponible'],2,',','.') }}" readonly>
+                            <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="{{ number_format($propertyTaxe->pivot->base_imponible,2,',','.') }}" readonly>
                             <label for="base_imponible">Base Imponible Total</label>
                         </div>
                         <div class="col s12">
@@ -96,7 +96,7 @@
                                         <tr>
                                             <td>{{ $amounts['alicuota']->name }}</td>
                                             <td>{{ $amounts['alicuota']->value * 100 }}%</td>
-                                            <td>{{ number_format($amounts['porcentaje'],2,',','.') }}</td>
+                                            <td>{{ number_format($propertyTaxe->pivot->alicuota,2,',','.') }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -111,9 +111,9 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>PAGO COMPLETO (PRIMER TRIMESTRE)</td>
+                                                <td>PAGO COMPLETO (PRIMER MES DEL PRIMER TRIMESTRE)</td>
                                                 <td>20%</td>
-                                                <td>{{ number_format($amounts['discount'],2,',','.') }}</td>
+                                                <td>{{ number_format($propertyTaxe->pivot->discount,2,',','.') }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -132,28 +132,28 @@
                                     </div>--}}
                                 </div>
                                 <div class="col s12 m6">
-                                    <input type="hidden" name="alicuota" id="alicuota" value="{{ $amounts['porcentaje'] }}">
-                                    <input type="hidden" name="discount" id="discount" value="{{ $amounts['discount'] }}">
+                                    <input type="hidden" name="alicuota" id="alicuota" value="{{ $propertyTaxe->pivot->alicuota }}">
+                                    <input type="hidden" name="discount" id="discount" value="{{ $propertyTaxe->pivot->discount }}">
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="interest" id="interest" class="validate money" value="{{ number_format($amounts['interest'],2,',','.') }}" readonly>
+                                            <input type="text" name="interest" id="interest" class="validate money" value="{{ number_format($propertyTaxe->pivot->interest,2,',','.') }}" readonly>
                                             <label for="interest">Interés por Mora:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input type="text" name="recharge" id="recharge" class="validate money" value="{{ number_format($amounts['recharge'],2,',','.') }}" readonly>
+                                            <input type="text" name="recharge" id="recharge" class="validate money" value="{{ number_format($propertyTaxe->pivot->recharge,2,',','.') }}" readonly>
                                             <label for="recharge">Recargo Interes:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12">
                                             <i class="prefix">
                                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                             </i>
-                                            <input id="amount" type="text" name="amount" class="validate" value="{{ number_format($amounts['total'],2,',','.') }}" readonly>
+                                            <input id="amount" type="text" name="amount" class="validate" value="{{ number_format($taxes->amount,2,',','.') }}" readonly>
                                             <label for="amount">Total a Pagar:(Bs)</label>
                                         </div>
                                         <input type="hidden" id="bank" name="bank" value="0">
