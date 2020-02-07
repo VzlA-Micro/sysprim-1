@@ -356,9 +356,9 @@ class VehiclesTaxesController extends Controller
                 'firm' => true
             ]);
         if ($download === "true") {
-            return $pdf->download('PLANILLA_SOLVENCIA.pdf');
+            return $pdf->download('PLANILLA.pdf');
         } else {
-            return $pdf->stream('PLANILLA_SOLVENCIA.pdf');
+            return $pdf->stream('PLANILLA.pdf');
         }
     }
 

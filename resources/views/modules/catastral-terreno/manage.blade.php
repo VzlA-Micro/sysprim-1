@@ -14,25 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de  Terreno</a></li>
                 </ul>
             </div>
-
+            @can('Registrar Valor Terreno')
             <div class="col s12 m4 animated bounceIn">
-                        <a href="{{ route('catrastal.terreno.register') }}" class="btn-app white cyan-text">
-                            <i class="icon-create_new_folder"></i>
-                            <span class="truncate">Registrar Valor Catastral de Terreno</span>
-                        </a>
+                <a href="{{ route('catrastal.terreno.register') }}" class="btn-app white cyan-text">
+                    <i class="icon-create_new_folder"></i>
+                    <span class="truncate">Registrar Valor Catastral de Terreno</span>
+                </a>
             </div>
-
-
-
+            @endcan
+            @can('Consultar Valores Terreno')
             <div class="col s12 m4 animated bounceIn">
-                    <a href="{{ route('catrastal.terreno.read') }}" class="btn-app white amber-text">
-                        <i class="icon-format_list_bulleted"></i>
-                        <span class="truncate">Ver Valor de Contrucción Catastral de Terreno</span>
-                    </a>
+                <a href="{{ route('catrastal.terreno.read') }}" class="btn-app white amber-text">
+                    <i class="icon-format_list_bulleted"></i>
+                    <span class="truncate">Ver Valor de Contrucción Catastral de Terreno</span>
+                </a>
             </div>
-
-
-
+            @endcan
         </div>
     </div>
 @endsection

@@ -39,7 +39,7 @@
                             <label for="value">Valor de edificación (UT)</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m12">
                             <i class="icon-question_answer prefix"></i>
                             <select name="regimen_horizontal" id="regimen_horizontal" disabled>
                                 <option value="null" selected disabled>...</option>
@@ -48,11 +48,8 @@
                             </select>
                             <label for="regime_horizontal">Regimen Horizontal</label>
                         </div>
-
-
-
                     </div>
-
+                    @can('Actualizar Valor Construccion')
             		<div class="card-footer center-align">
             			<a id="modify-btn" class="btn btn-large btn-rounded blue waves-effect waves-light">
                             <i class="icon-update right"></i>
@@ -63,6 +60,7 @@
                             Actualizar
                         </button>
             		</div>
+                    @endcan
             	</form>
             </div>
         </div>

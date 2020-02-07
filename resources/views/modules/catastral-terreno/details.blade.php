@@ -79,7 +79,7 @@
 
                     </div>
 
-
+                    @can('Actualizar Valor Terreno'')
             		<div class="card-footer center-align">
             			<a id="modify-btn" class="btn btn-large btn-rounded blue waves-effect waves-light">
                             <i class="icon-update right"></i>
@@ -90,6 +90,7 @@
                             Actualizar
                         </button>
             		</div>
+                    @endcan
             	</form>
             </div>
         </div>

@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Valor</th>
-                                    @can('Detalles Recargo')
+                                    @can('Detalles Alicuota')
                                     <th>Detalles</th>
                                     @endcan
                                 </tr>
@@ -37,13 +37,13 @@
                                 <tr>
                                     <td>{{ $alicuota->name }}</td>
                                     <td>{{ $alicuota->value }}</td>
-
+                                    @can('Detalles Alicuota')
                                     <td>
                                         <a href="{{ route('alicuota.details', ['id' => $alicuota->id]) }}" class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
-
+                                    @endcan
                                 </tr>
                                 @endforeach
                             </tbody>

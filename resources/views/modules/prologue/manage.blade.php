@@ -14,13 +14,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('prologue.manage') }}">Gestionar Dias de Cobros</a></li>
                 </ul>
             </div>
-
+            @can('Consultar Dias de Cobro')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('prologue.index') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Días de Cobro</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection
