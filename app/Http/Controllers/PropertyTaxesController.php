@@ -655,7 +655,8 @@ class PropertyTaxesController extends Controller
             $baseImponible = number_format($declaration['baseImponible'],2,',','.');
             $totalGround = number_format($declaration['totalGround'],2,',','.');
             $totalBuild = number_format($declaration['totalBuild'],2,',','.');
-            $discount = number_format($declaration['porcentaje'],2,',','.');
+            $discount = number_format($declaration['discount'],2,',','.');
+            $alicuota = number_format($declaration['porcentaje'],2,',','.');
             $recharge = number_format($declaration['recharge'],2,',','.');
             $interest = number_format($declaration['interest'],2,',','.');
             $total = number_format($declaration['total'],2,',','.');
@@ -691,6 +692,7 @@ class PropertyTaxesController extends Controller
             'total' => $total,
             'recharge' => $recharge,
             'interest' => $interest,
+            'alicuota' => $alicuota,
             'status' => $status,
             'statusTax' => $statusTax,
             'taxe_id' => $taxe_id
