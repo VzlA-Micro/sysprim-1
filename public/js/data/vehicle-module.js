@@ -150,23 +150,23 @@ $(document).ready(function () {
     });
 
     function findDocument() {
-        var type_document=$('#type_document_full').val();
-        var document=$('#document_full').val();
+        var type_document = $('#type_document_full').val();
+        var document = $('#document_full').val();
         $('#surname_full').val('');
         $('#user_name_full').val('');
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
-        if(document!=='') {
+        if (document !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "property/find/" + type_document  + "/" + document+'/false', // Luego cambiar ruta
+                url: url + "property/find/" + type_document + "/" + document + '/false', // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status!=='error') {
+                    if (response.status !== 'error') {
                         if (response.type == 'not-user') {
 
                             swal({
@@ -198,7 +198,7 @@ $(document).ready(function () {
                         } else if (response.type == 'user') {
                             var user = response.user;
                             $('#name_full').val(user.name + ' ' + user.surname);
-                            $('#name_full').attr('readonly');
+                            $('#name_full').attr('readonly','');
                             $('#surname_full').val(user.surname);
                             $('#id').val(user.id);
                             $('#type').val('user');
@@ -206,12 +206,11 @@ $(document).ready(function () {
                             $('#address_full').attr('readonly', '');
 
 
-
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name_full').val(company.name);
                             $('#address_full').val(company.address);
-                            $('#name_full').attr('readonly');
+                            $('#name_full').attr('readonly','');
                             $('#address_full').attr('disabled');
                             $('#id').val(company.id);
                             $('#type').val('company');
@@ -220,7 +219,7 @@ $(document).ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    }else{
+                    } else {
                         swal({
                             title: "Información",
                             text: "La empresa no esta registrada, debe ingresar un RIF valido.",
@@ -293,7 +292,7 @@ $(document).ready(function () {
                             $('#surname').val(user.apellidos);
                             $('#user_name').val(user.nombres);
                             $('#type').val('user');
-
+                            $('#address').prop('readonly', false);
 
                         } else if (response.type == 'user') {
 
@@ -316,13 +315,10 @@ $(document).ready(function () {
                             $('#type').val('company');
                             $('#address').attr('readonly', '');
 
-
                         } else {
                             $('#type').val('company');
                         }
                     } else {
-
-
                         $('#document').val('');
                     }
                     M.updateTextFields();
@@ -352,7 +348,7 @@ $(document).ready(function () {
             status = 'propietario';
         }
 
-console.log(status);
+        console.log(status);
         if ((status == null || status == '')) {
             swal({
                 title: "Información",
@@ -385,8 +381,8 @@ console.log(status);
                     band = false;
                 }
             });
-            if($('#person_id').val()!==''){
-                band=false;
+            if ($('#person_id').val() !== '') {
+                band = false;
             }
 
             if (band) {

@@ -24,7 +24,7 @@
                                 Vehículos</a></li>
                         <li class="breadcrumb-item"><a href="{{route('vehicles.details',['id'=>$vehicle[0]->id])}}">Detalles
                                 De Vehículos</a></li>
-                        <li class="breadcrumb-item"><a href="">Mis Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
                     @endif
                 </ul>
             </div>
