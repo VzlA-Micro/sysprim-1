@@ -19,7 +19,7 @@ $(document).ready(function() {
                         var property = response.property;
                         var user = response.property.users[0];
                         var id = property.id;
-                        console.log(response.taxe_id);
+                        // console.log(response.taxe_id);
                         $('#property_id').val(property.id);
                         // console.log($('#property_id').val());
                         $('#area_ground').val(property.area_ground).attr('disabled',true);
@@ -36,7 +36,7 @@ $(document).ready(function() {
                         $('#parish_id').attr('disabled',true);
                         $('#fiscal_period').attr('disabled',false);
                         $('#status').attr('disabled',false);
-                        $('#taxe_id').val(response.taxe_id);
+                        // $('#taxe_id').val(response.taxe_id);
                         $('select').formSelect();
                         // $('#status').attr('disabled',false);
                         M.updateTextFields();
