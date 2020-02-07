@@ -108,6 +108,7 @@
                     <span class="truncate">Alicuota Inmueble</span>
                 </a>
             </div>
+            @endcan
             @can('Gestionar Catastral Construccion')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('catrastal.construction.manage')}}" class="btn-app white purple-text ">

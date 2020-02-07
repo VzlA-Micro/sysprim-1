@@ -398,16 +398,26 @@ Route::middleware(['auth'])->group(/**
             });
         });
 
-        // Mis inmuebles
-//        Route::group([]);
+        // Mis Inmuebles
+        Route::group(['middleware' => ['permission:Mis Inmuebles']], function() {
+            Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
+            Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
+            Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
 
-        Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
-        Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
-        Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
-        Route::get('/properties/register/{company_id?}', 'PropertyController@create')->name('properties.register');
-        Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-        Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
-        Route::get('/properties/details/{id}', 'PropertyController@details')->name('properties.details');
+            # Nivel 1 - Registrar y Consultar
+            Route::group(['middleware' => ['permission:Registrar Mis Inmuebles|Consultar Mis Inmuebles']], function() {
+                Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
+                Route::get('/properties/register/{company_id?}', 'PropertyController@create')->name('properties.register');
+                Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
+
+                Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function() {
+                    Route::get('/properties/details/{id}', 'PropertyController@details')->name('properties.details');
+
+                });
+            });
+        });
+
+
         Route::get('/properties/payments/manage/{id}', 'PropertyTaxesController@manage')->name('properties.payments.manage');
 
         Route::get('/properties/payments/create/{id}', 'PropertyTaxesController@create')->name('properties.payments.create');
