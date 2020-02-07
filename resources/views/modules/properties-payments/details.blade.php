@@ -127,7 +127,7 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>PAGO COMPLETO (PRIMER TRIMESTRE)</td>
+                                                <td>PAGO COMPLETO (PRIMER MES DEL PRIMER TRIMESTRE)</td>
                                                 <td>20%</td>
                                                 <td>{{ number_format($response['declaration']['discount'],2,',','.') }}</td>
                                             </tr>

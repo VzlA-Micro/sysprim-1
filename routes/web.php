@@ -402,7 +402,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
         Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
         Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
-        Route::get('/properties/ticket-office/taxes/{id}/{status?}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
+        Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
         Route::post('/properties/ticket-office/taxes/store', 'PropertytaxesController@storeTicketOffice')->name('properties.ticket-office.taxes.store');
         Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
         Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
