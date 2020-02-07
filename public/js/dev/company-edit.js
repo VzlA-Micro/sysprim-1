@@ -104,7 +104,6 @@ $('document').ready(function () {
             $('#phone').removeAttr('disabled');
             updateCompany=true;
             $('#update-company').text('Guardar');
-
             swal({
                 title: "Información",
                 text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
@@ -183,6 +182,22 @@ $('document').ready(function () {
 
                 },
                 error: function (e) {
+
+                    if(e.status===500){
+                            location.reload();
+                    }else{
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    }
+
+
 
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -646,7 +661,6 @@ $('document').ready(function () {
         }
         else {
             $('.Dciiu').each(function () {
-                console.log('dentro del check');
                 check = $('.ciiuCheck').val();
                 //$('.ciiuCheck').each(function () {
                   //  check = $(this).val();

@@ -137,23 +137,23 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-
+                                            @foreach($response['taxes']->payments as $taxe)
                                                 <tr>
-                                                    <td>{{$response['taxes']->created_at->format('d-m-Y')}}</td>
-                                                    <td>{{$response['taxes']->code}}</td>
-                                                    <td>{{$response['taxes']->type_payment}}</td>
-                                                    <td>{{$response['taxes']->statusName}}</td>
-                                                    <td>{{$response['taxes']->ref}}</td>
-                                                    <td>{{number_format($response['taxes']->amount,2)." Bs"}}</td>
+                                                    <td>{{$taxe->created_at->format('d-m-Y')}}</td>
+                                                    <td>{{$taxe->code}}</td>
+                                                    <td>{{$taxe->type_payment}}</td>
+                                                    <td>{{$taxe->statusName}}</td>
+                                                    <td>{{$taxe->ref}}</td>
+                                                    <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                                     <td>
-                                                        @if($response['taxes']->status==='cancel')
+                                                        @if($taxe->status==='cancel')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light  col s12 red"
                                                                         value="">
                                                                     <i class="icon-do_not_disturb_alt"></i></button>
                                                             </div>
-                                                        @elseif($response['taxes']->status=='verified')
+                                                        @elseif($taxe->status=='verified'||$taxe->status=='verified-sysprim')
                                                             <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="btn waves-effect waves-light green col s12"
@@ -164,13 +164,13 @@
                                                             <div class="input-field col s12 m6">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light green col s12"
-                                                                        value="{{$response['taxes']->id}}" data-status="verified">
+                                                                        value="{{$taxe->id}}" data-status="verified">
                                                                     <i class="icon-check"></i></button>
                                                             </div>
                                                             <div class="input-field col s12 m6">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light red col s12"
-                                                                        value="{{$response['taxes']->id}}" data-status="cancel">
+                                                                        value="{{$taxe->id}}" data-status="cancel">
                                                                     <i class="icon-cancel"></i></button>
                                                             </div>
                                                         @endif
@@ -178,7 +178,7 @@
                                                     </td>
 
                                                 </tr>
-
+                                        @endforeach
                                             </tbody>
                                         </table>
                                         @endif

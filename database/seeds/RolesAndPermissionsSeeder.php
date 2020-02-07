@@ -129,6 +129,34 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Actualizar Tasa']);
         // Permission::create(['name' => 'Eliminar Tasa']);
 
+        // -- Dias de Cobro
+        Permission::create(['name' => 'Gestionar Dias de Cobro']);
+//        Permission::create(['name' => 'Registrar Dia de Cobro']);
+        Permission::create(['name' => 'Consultar Dias de Cobro']);
+        Permission::create(['name' => 'Detalles Dia de Cobro']);
+        Permission::create(['name' => 'Actualizar Dia de Cobro']);
+
+        // -- Alicuota de Inmueble
+        Permission::create(['name' => 'Gestionar Alicuotas']);
+//        Permission::create(['name' => 'Registrar Alicuota']);
+        Permission::create(['name' => 'Consultar Alicuotas']);
+        Permission::create(['name' => 'Detalles Alicuota']);
+        Permission::create(['name' => 'Actualizar Alicuota']);
+
+        // -- Valores Catastrales - Construccion
+        Permission::create(['name' => 'Gestionar Catastral Construccion']);
+        Permission::create(['name' => 'Registrar Valor Construccion']);
+        Permission::create(['name' => 'Consultar Valores Construccion']);
+        Permission::create(['name' => 'Detalles Valor Construccion']);
+        Permission::create(['name' => 'Actualizar Valor Construccion']);
+
+        // -- Valores Catastrales - Terreno
+        Permission::create(['name' => 'Gestionar Catastral Terreno']);
+        Permission::create(['name' => 'Registrar Valor Terreno']);
+        Permission::create(['name' => 'Consultar Valores Terreno']);
+        Permission::create(['name' => 'Detalles Valor Terreno']);
+        Permission::create(['name' => 'Actualizar Valor Terreno']);
+
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);

@@ -286,24 +286,28 @@ Route::middleware(['auth'])->group(/**
                     Route::post('rate/save', 'RateController@store')->name('rate.save');
                     Route::get('rate', 'RateController@index')->name('rate.index');
                     # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Registrar Tasa|Consultar Tasas']], function () {
+                    Route::group(['middleware' => ['permission:Detalles Tasa']], function () {
                         Route::get('rate/details/{id}', 'RateController@details')->name('rate.details');
                         Route::post('rate/update', 'RateController@update');
                     });
                 });
             });
 
+            // GEstion de Alicuotas
+            Route::group(['middleware' => ['permission:Gestionar Alicuotas']], function(){
+                Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Consultar Alicuotas']], function(){
+                    Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Alicuota']], function(){
+                        Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
+                        Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
+                    });
+                });
+            });
 
-            Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
-            Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
-            Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
-            Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
 
-
-            Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
-            Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
-            Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
-            Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
 
             Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
             Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
@@ -407,6 +411,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
         Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
         Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
+        Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
+
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
             // Nivel 1: Consultar y Registrar
@@ -1040,6 +1046,9 @@ Route::middleware(['auth'])->group(/**
         Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
 
 
+
+
+        Route::get('test/{code}/{date_limit}','VerifyPaymentsBankImportController@verifyPaymentsTaxes');
 
 
 

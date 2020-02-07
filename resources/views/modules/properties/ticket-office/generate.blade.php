@@ -36,7 +36,7 @@
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-map prefix"></i>
-                                <select name="value_cadastral_ground_id" id="value_cadastral_ground_id" required>
+                                <select name="value_cadastral_ground_id" id="value_cadastral_ground_id" required disabled>
                                     <option value="null" disabled selected>Seleccionar ubicacion Catastral</option>
                                     @foreach($catastralTerreno as $terreno):
                                     <option value="{{ $terreno->id }}">{{ $terreno->name}}</option>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
-                                <select name="value_cadastral_build_id" id="value_cadastral_build_id" required>
+                                <select name="value_cadastral_build_id" id="value_cadastral_build_id" required disabled>
                                     <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
                                     @foreach($catastralConstruccion as $construccion):
                                     <option value="{{ $construccion->id }}">{{ $construccion->name}}</option>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
-                                <select name="type_inmueble_id" id="type_inmueble_id" required>
+                                <select name="type_inmueble_id" id="type_inmueble_id" required disabled>
                                     <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
                                     @foreach($alicuota as $value):
                                     <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -81,7 +81,7 @@
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
-                                <select name="parish_id" id="parish_id" required>
+                                <select name="parish_id" id="parish_id" required disabled>
                                     <option value="null" disabled selected>Seleccionar una Parroquia</option>
                                     @foreach($parish as $parish):
                                     <option value="{{ $parish->id }}">{{ $parish->name }}</option>
@@ -104,8 +104,8 @@
                             @endphp
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <select id="fiscal_period" disabled>
-                                    <option value="null">Seleccione</option>
+                                <select id="fiscal_period" disabled >
+                                    <option value="null" disabled selected>Seleccione</option>
                                     @while($cont >= 2010)
                                         <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
                                         @php $cont--; @endphp
@@ -158,7 +158,7 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup">
+                                <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" maxlength="13">
                                 <label for="fiscal_credit">Crédito Fiscal</label>
                             </div>
                             <div class="input-field col s12 m6">
