@@ -98,11 +98,7 @@ Route::middleware(['auth'])->group(/**
             });
 
 
-            //Gestionar dias de cobro
-            Route::get('/prologue/manage', 'PrologueController@manage')->name('prologue.manage');
-            Route::get('/prologue/index', 'PrologueController@index')->name('prologue.index');
-            Route::get('/prologue/details/{id}', 'PrologueController@details')->name('prologue.details');
-            Route::post('/prologue/update', 'PrologueController@update')->name('prologue.update');
+
 
 
             Route::group(['middleware' => ['permission:Registrar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
@@ -308,25 +304,51 @@ Route::middleware(['auth'])->group(/**
             });
 
 
+            // Gestionar Valor Catastral - Construccion
+            Route::group(['middleware' => ['permission:Gestionar Catastral Construccion']], function() {
+                Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
+                # Nivel 1 - Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Valor Construccion|Consultar Valores Construccion']], function() {
+                    Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
+                    Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
+                    Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
+                    # Nivel 2 - Detalles
+                    Route::group(['middleware' => ['permission:Detalles Valor Construccion']], function() {
+                        Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
+                        Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
+                    });
+                });
+            });
 
-            Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
-            Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
-            Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
-            Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
-            Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
-            Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
+            // Gestionar Valor Catastral - Terreno
+            Route::group(['middleware' => ['permission:Gestionar Catastral Terreno']], function() {
+                Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
+                #Nivel 1 - Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Valor Terreno|Consultar Valores Terreno']], function() {
+                    Route::get('/catastral-terreno/register', 'CatastralTerrenoController@create')->name('catrastal.terreno.register');
+                    Route::post('/catastral-terreno/save', 'CatastralTerrenoController@store')->name('catrastal.terreno.save');
+                    Route::get('/catastral-terreno/read', 'CatastralTerrenoController@show')->name('catrastal.terreno.read');
+                    # Nivel 2 - Detalles
+                    Route::group(['middleware' => ['permission:Detalles Valor Terreno']], function() {
+                        Route::get('/catastral-terreno/details/{id}', 'CatastralTerrenoController@details')->name('catrastal.terreno.details');
+                        Route::post('/catastral-terreno/update', 'CatastralTerrenoController@update')->name('catrastal.terreno.update');
+                    });
+                });
+            });
 
-
-
-            Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
-            Route::get('/catastral-terreno/register', 'CatastralTerrenoController@create')->name('catrastal.terreno.register');
-            Route::post('/catastral-terreno/save', 'CatastralTerrenoController@store')->name('catrastal.terreno.save');
-            Route::get('/catastral-terreno/read', 'CatastralTerrenoController@show')->name('catrastal.terreno.read');
-            Route::get('/catastral-terreno/details/{id}', 'CatastralTerrenoController@details')->name('catrastal.terreno.details');
-            Route::post('/catastral-terreno/update', 'CatastralTerrenoController@update')->name('catrastal.terreno.update');
-
-
-
+            // Gestionar Dias de Cobro
+            Route::group(['middleware' => ['permission:Gestionar Dias de Cobro']], function() {
+                Route::get('/prologue/manage', 'PrologueController@manage')->name('prologue.manage');
+                #Nivel 1 - Registrar y Consultar
+                Route::group(['middleware' => ['permission:Consultar Dias de Cobro']], function() {
+                    Route::get('/prologue/index', 'PrologueController@index')->name('prologue.index');
+                    # Nivel 2 - Detalles
+                    Route::group(['middleware' => ['permission:Detalles Dia de Cobro']], function() {
+                        Route::get('/prologue/details/{id}', 'PrologueController@details')->name('prologue.details');
+                        Route::post('/prologue/update', 'PrologueController@update')->name('prologue.update');
+                    });
+                });
+            });
 
         });
         // GeoSysPRIM
@@ -375,8 +397,6 @@ Route::middleware(['auth'])->group(/**
                 });
             });
         });
-
-        Route::get('/inmueble/mi-inmueble', 'PropertyController@details')->name('inmueble.my-propertys');
 
 
         Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');

@@ -27,7 +27,9 @@
 		            				<th>Nombre</th>
                                     <th>Valor de terreno en construcción</th>
                                     <th>Valor de terreno vacio</th>
+                                    @can('Detalles Valor Terreno')
 		            				<th>Detalles</th>
+                                    @endcan
 		            			</tr>
 		            		</thead>
 		            		<tbody>
@@ -36,16 +38,15 @@
                                     <td>{{ $cat->name }}</td>
                                     <td>{{ $cat->value_terreno_construccion}} UT</td>
                                     <td>{{ $cat->value_terreno_vacio}} UT</td>
-
+                                    @can('Detalles Valor Terreno')
                                     <td>
                                         <a href="{{ route('catrastal.terreno.details', ['id' => $cat->id]) }}"
                                             class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
-
+                                    @endcan
                                 </tr>
-
                             @endforeach
 		            		</tbody>
 		            	</table>

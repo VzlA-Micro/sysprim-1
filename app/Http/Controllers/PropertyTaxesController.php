@@ -354,7 +354,7 @@ class PropertyTaxesController extends Controller
             $data = User::find($userProperty->person_id);
             $type = 'user';
         }
-        $propertyTaxes = PropertyTaxes::find($id_taxes);
+        $propertyTaxes = PropertyTaxes::where('taxe_id',$id_taxes)->first();
         if ($type_payment != 'PPV') {
 
             if ($type_payment == 'PPE') {
@@ -371,7 +371,7 @@ class PropertyTaxesController extends Controller
         $taxes->status = "process";
         $taxes->update();
 
-
+//        dd($propertyTaxes);
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
@@ -593,12 +593,9 @@ class PropertyTaxesController extends Controller
             ];
         }
         else {
-            /*$taxe = $property->propertyTaxes()->first();
-            $taxe_id = $taxe->id;*/
             $response = [
                 'status' => 'success',
                 'property' => $property,
-//                'taxe_id' => $taxe_id
             ];
         }
         return response()->json($response);
@@ -609,32 +606,7 @@ class PropertyTaxesController extends Controller
         $statusTax = '';
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
-//        $propertyTaxes = PropertyTaxes::find('company_id', $id);
-//        $propertyTaxes = Property::find($id);
-//        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
         $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
-//        die();
-//        dd($declaration);
-        /*$taxe_id = $taxes[0]->id;
-        if(!empty($taxes)) {
-            foreach ($taxes as $tax) {
-                if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
-                    $statusTax = 'verified';
-                }else if($tax->status === 'temporal'){
-//                $tax->delete();
-                    $statusTax = 'new';
-                }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
-                    $statusTax = 'process';
-                } else if($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')){
-                    $statusTax = 'process';
-                }else{
-                    $statusTax = 'new';
-                }
-            }
-        }
-        else {
-            $statusTax = 'new';
-        }*/
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
             $owner_id = $userProperty[0]->company_id;
@@ -678,11 +650,7 @@ class PropertyTaxesController extends Controller
             'message' => 'Por favor, verifique los montos antes de generar la planilla',
             'property' => $property,
             'declaration' => $declaration,
-//            'build' => $catasBuild,
             'userProperty' => $userProperty[0],
-//            'period' => $period_fiscal,
-//            'property' => $property,
-//            'response'=>$response,
             'owner_type' => $owner_type,
             'owner' => $owner,
             'baseImponible' => $baseImponible,
@@ -879,21 +847,6 @@ class PropertyTaxesController extends Controller
             $data = User::find($userProperty->person_id);
             $type = 'user';
         }
-//        $propertyTaxes = $taxes->properties()->get();
-        /*$type='';
-        $owner = $taxe->properties()->get();
-        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
-        $property = Property::find($userProperty->property_id);
-        $propertyTaxes = PropertyTaxes::find($taxe->id);*/
-
-        /*if (!is_null($userProperty->company_id)) {
-            $data = Company::find($userProperty->company_id);
-            $type = 'company';
-        } else {
-            $data = User::find($userProperty->person_id);
-            $type = 'user';
-        }*/
-//        dd($taxes[0]->properties[0]->valueBuild->name);
         $pdf = \PDF::loadView('modules.properties.ticket-office.receipt', [
             'taxes' => $taxes,
             'property' => $property,

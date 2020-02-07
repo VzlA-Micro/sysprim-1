@@ -35,7 +35,7 @@
                             <label for="value">Valor</label>
                         </div>
                     </div>
-                    @can('Actualizar Recargos')
+                    @can('Actualizar Alicuota')
                     <div class="card-footer center-align">
                         <a href="#!" class="btn btn-large blue btn-rounded waves-effect waves-light" id="btn-modify">
                             <i class="icon-update right"></i>

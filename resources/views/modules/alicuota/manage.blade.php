@@ -14,12 +14,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
                 </ul>
             </div>
+            @can('Consultar Alicuotas')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('alicuota.read') }}" class="btn-app white green-text accent-1">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Alicuota</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

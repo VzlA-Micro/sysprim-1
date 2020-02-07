@@ -27,8 +27,10 @@
 		            				<th>Nombre</th>
 		            				<th>Ramo</th>
 		            				<th>Fecha Limite</th>
+                                    @can('Detalles Dia de Cobro')
 		            				<th>Detalles</th>
-		            			</tr>
+		            			    @endcan
+                                </tr>
 		            		</thead>
 		            		<tbody>
 		            			@foreach($prologues as $prologue)
@@ -36,11 +38,13 @@
 		            				<td>{{ $prologue->name }}</td>
 		            				<td>{{ $prologue->branch }}</td>
 		            				<td>{{ $prologue->date_limit}}</td>
-		            				<td>
+                                    @can('Detalles Dia de Cobro')
+                                    <td>
 		            					<a href="{{ route('prologue.details', ['id' => $prologue->id]) }}" class="btn btn-floating blue waves-effect waves-light">
 		            						<i class="icon-pageview"></i>
 		            					</a>
 		            				</td>
+                                    @endcan
 		            			</tr>
 		            			@endforeach
 		            		</tbody>

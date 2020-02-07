@@ -26,24 +26,25 @@
 		            			<tr>
 		            				<th>Nombre</th>
                                     <th>Cantidad UT</th>
+                                    @can('Detalles Valor Construccion')
 		            				<th>Detalles</th>
-		            			</tr>
+                                    @endcan
+                                </tr>
 		            		</thead>
 		            		<tbody>
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
                                     <td>{{ $cat->value_edificacion }} UT</td>
-
+                                    @can('Detalles Valor Construccion')
                                     <td>
                                         <a href="{{ route('catrastal.construction.details', ['id' => $cat->id]) }}"
                                             class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
-
+                                    @endcan
                                 </tr>
-
                             @endforeach
 		            		</tbody>
 		            	</table>
