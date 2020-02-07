@@ -2033,9 +2033,12 @@ $('document').ready(function () {
         var document = $('#document').val();
         var id = $('#id').val();
 
-        console.log(document);
-        console.log(type);
-        console.log(id);
+        var nationality = $('#nationality').val();
+        var documentOld = $('#ci').val();
+
+
+
+
         if (document == '' || document.length < 7) {
             swal({
                 title: "Información",
@@ -2048,7 +2051,21 @@ $('document').ready(function () {
                     value: true
                 },
             })
-        } else {
+        }else if((type==nationality)&&(document==documentOld)){
+            swal({
+                title: "Información",
+                text: 'El documento que introdujo, es igual al del propietario',
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            });
+
+            $('#document').focus();
+        }
+        else {
             $.ajax({
                 type: "get",
                 url: url + "vehicle/change-user/" + type + "/" + document + "/" + id,
@@ -2144,6 +2161,8 @@ $('document').ready(function () {
     $('#saveUW').click(function () {
         var type = $('#typeDocument').val();
         var document = $('#Document').val();
+        var nationalitys=$('#nationalitys').val();
+        var documentOld=$('#ci').val();
         var id = $('#id').val();
 
         if (document == '' || document.length < 7) {
@@ -2158,7 +2177,20 @@ $('document').ready(function () {
                     value: true
                 },
             })
-        } else {
+        } else if((type==nationalitys)&&(document==documentOld)){
+            swal({
+                title: "Información",
+                text: 'El documento que introdujo, es igual al del usuario web',
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            });
+
+            $('#Document').focus();
+        }else {
 
             $.ajax({
                 type: "get",
