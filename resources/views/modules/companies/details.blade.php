@@ -91,7 +91,7 @@
                         <div class="col s12 m12">
                             <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
                                class="btn-app white amber-text">
-                                <i class="icon-redeem"></i>
+                                <i class="icon-picture_as_pdf"></i>
                                 <span class="truncate">Declaración / Tasas</span>
                             </a>
                         </div>

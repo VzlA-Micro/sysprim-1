@@ -18,10 +18,12 @@ use App\Helpers\TaxesMonth;
 use App\Http\Controllers\Controller;
 use App\Payments;
 use Carbon\Carbon;
-use App\Employees;
 use App\CiuTaxes;
 use App\CompanyTaxe;
-
+use App\Vehicle;
+use App\Property;
+use App\UserProperty;
+use App\PropertyTaxes;
 
 class VerifyPaymentsBankImportController extends Controller
 {
@@ -37,6 +39,7 @@ class VerifyPaymentsBankImportController extends Controller
         //$amountTotal=0;
 
         $file = $request->file;
+        $date_limit = $request->input('date_limit');
 
         $Archivo = \File::get($file);
         $mime = $file->getMimeType();
@@ -71,9 +74,7 @@ class VerifyPaymentsBankImportController extends Controller
                     $amountTotalThere = str_replace(',', '.', $amountTotal);
 
                     $band = false;
-                }
-
-                if ($codeBank == '00116' && $band == false) {
+                } elseif ($codeBank == '00116' && $band == false) {
                     $typeRegisterBank = substr($otra, 0, 1);
                     $document = substr($otra, 1, 10);
                     $reference = substr($otra, 11, 16);
@@ -100,7 +101,7 @@ class VerifyPaymentsBankImportController extends Controller
                     //echo $amountThere.'<br>';
                     //echo $viaPayments . '<br>';
 
-                } else {
+                } elseif(!$band) {
 
                     $typeRegisterBank = substr($otra, 0, 1);
                     $document = substr($otra, 1, 10);
@@ -122,26 +123,39 @@ class VerifyPaymentsBankImportController extends Controller
 
                     $carbon = Carbon::now();
 
-                    $taxes = Taxe::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+
+                    $taxes = Taxe::whereDate('created_at', '=', $date_limit)->get();
                     foreach ($taxes as $taxe) {
                         $code = substr($taxe->code, 3, 10);
 
+
                         //&& $amountThere == $taxe->amount
                         if ($document == $code && $taxe->status == 'process') {
+
                             $pCode = substr($taxe->code, 0, 3);
+
+                           // $taxes_find=Taxe::find($taxe->id);
+
+
+
                             if ($pCode == 'PPC') {
+
+
                             } else {
 
                                 if ($pCode == 'PPT' || $pCode == 'PPE') {
-                                    echo "soy jhon";
+
                                     if ($taxe->branch == 'Act.Eco') {
 
-                                        $companyTaxes = CompanyTaxe::where('taxe_id', $taxe->id)->get();
+                                        $companyTaxes = CompanyTaxe::where('taxe_id',  $taxe->id)->get();
 
                                         $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
                                         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
                                         $company = Company::find($companyTaxes[0]->company_id);
                                         $userCompany = $company->users()->get();
+                                        $taxe->status = 'verified-sysprim';
+                                        $taxe->update();
+
 
                                         foreach ($ciuTaxes as $ciu) {
 
@@ -155,21 +169,75 @@ class VerifyPaymentsBankImportController extends Controller
                                             ]);
 
                                             $userCompany = $company->users()->get();
-                                            $taxe->status = 'verified-sysprim';
-                                            $taxe->update();;
-
-                                            $subject = "Planilla Verificada";
                                             $for = $userCompany[0]->email;
 
-                                            Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
-
-                                                $msj->from("grabieldiaz63@gmail.com", "SEMAT");
-                                                $msj->subject($subject);
-                                                $msj->to($for);
-                                                $msj->attachData($pdf->output(), time() . 'Planilla_Verificada.pdf');
-                                            });
                                         }
+                                    }elseif($taxe->branch == 'Pat.Veh'){
+
+                                        $vehicleTaxes=$taxe->vehicleTaxes()->get();
+                                        $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+                                        $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+                                        $user = $vehicleFind->users()->get();
+
+                                        $taxe->status = 'verified-sysprim';
+                                        $taxe->update();
+
+                                        $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                                            'taxes' => $taxe,
+                                            'vehicleTaxes'=>$vehicleTaxes,
+                                            'vehicle'=>$vehicleFind,
+                                            'user'=>$user,
+                                            'diffYear'=>$diffYear,
+                                            'firm' => true
+                                        ]);
+                                        ;
+
+                                        $for=$user[0]->email;
+                                    }elseif($taxe->branch=='Inm.Urbanos'){
+
+                                        $owner = $taxe->properties()->get();
+                                        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+                                        $property = Property::find($userProperty->property_id);
+                                        $propertyTaxes = PropertyTaxes::find($taxe->id);
+
+
+                                        if (!is_null($userProperty->company_id)) {
+                                            $data = Company::find($userProperty->company_id);
+                                            $type = 'company';
+                                        } else {
+                                            $data = User::find($userProperty->person_id);
+                                            $type = 'user';
+                                        }
+
+                                        $taxe->status = 'verified-sysprim';
+                                        $taxe->update();
+
+
+                                        $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+                                            'taxes' => $taxe,
+                                            'data' => $data,
+                                            'property' => $property,
+                                            'propertyTaxes' => $propertyTaxes,
+                                            'firm'=>true
+                                        ]);
+
+
+                                        $user=User::find($userProperty->user_id);
+                                        $for=$user->email;
+
+
+
                                     }
+
+                                        //Enviando Planilla verificada.
+                                        $subject = "PLANILLA VERIFICADA";
+                                        Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
+
+                                            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                                            $msj->subject($subject);
+                                            $msj->to($for);
+                                            $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
+                                        });
                                 }
                             }
                         }

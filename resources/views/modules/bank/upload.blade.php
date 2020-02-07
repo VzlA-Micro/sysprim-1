@@ -27,6 +27,13 @@
                               <input class="file-path validate" type="text" placeholder="Buscar archivo...">
                             </div>
                         </div>
+                        <div class="input-field col s12 m12">
+                            <i class="icon-date_range  prefix"></i>
+                            <input type="text" name="date_limit" class="datepicker" id="date_limit">
+                            <label for="date_limit">Fecha de los pagos</label>
+                        </div>
+
+
                     </div>
                     <div class="card-action center">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-light">Cargar</button>
@@ -35,4 +42,6 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
 @endsection
