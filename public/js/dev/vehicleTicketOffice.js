@@ -9,151 +9,140 @@ $('document').ready(function () {
 
     $('#update-vehicle').on('click', function () {
         var model = $('#model').val();
-        if (updateType) {
-            $('#status').prop("disabled", false);
-            $('select').formSelect();
-            $('#license_plate').removeAttr('disabled');
-            $('#type').prop("disabled", false);
-            $('select').formSelect();
-            $('#bodySerial').removeAttr('disabled');
-            $('#color').removeAttr('disabled');
-            $('#serialEngine').removeAttr('disabled');
-            $('#year').removeAttr('disabled');
-            $('#brand').prop("disabled", false);
-            $('select').formSelect();
-            $('#model').prop("disabled", false);
-            $('select').formSelect();
 
-            var brand = $('#brand').val();
+        $('#status').prop("disabled", false);
+        $('select').formSelect();
+        $('#license_plate').removeAttr('disabled');
+        $('#type').prop("disabled", false);
+        $('select').formSelect();
+        $('#bodySerial').removeAttr('disabled');
+        $('#color').removeAttr('disabled');
+        $('#serialEngine').removeAttr('disabled');
+        $('#year').removeAttr('disabled');
+        $('#brand').prop("disabled", false);
+        $('select').formSelect();
+        $('#model').prop("disabled", false);
+        $('select').formSelect();
 
-            $.ajax({
-                type: "POST",
-                url: url + "vehicles/searchBrand",
-                data: {
-                    brand: brand,
-                },
+        var brand = $('#brand').val();
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (data) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    console.log(data);
-                    if (data) {
-                        $('#model').prop('disabled', false);
-                        $('select').formSelect();
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/searchBrand",
+            data: {
+                brand: brand,
+            },
 
-                        $('select').formSelect();
-                        $('#model').html('');
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
+                if (data) {
+                    $('#model').prop('disabled', false);
+                    $('select').formSelect();
 
-                        var i = 0;
-                        for (i; i < data[1]; i++) {
-                            if (data[0][i]['id'] == model) {
-                                var template = `<option value="${data[0][i]['id']}" selected>${data[0][i]['name']}</option>`;
-                            } else {
-                                var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
-                            }
-                            //var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
+                    $('select').formSelect();
+                    $('#model').html('');
 
-                            $('select').formSelect();
-                            $('#model').append(template);
+                    var i = 0;
+                    for (i; i < data[1]; i++) {
+                        if (data[0][i]['id'] == model) {
+                            var template = `<option value="${data[0][i]['id']}" selected>${data[0][i]['name']}</option>`;
+                        } else {
+                            var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
                         }
+                        //var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
+
+                        $('select').formSelect();
+                        $('#model').append(template);
                     }
-
-                },
-                error: function (e) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
                 }
-            });
 
-            updateType = false;
-        } else {
-            var id = $('#id').val();
-            var status = $('#status').val();
-            var licensePlate = $('#license_plate').val();
-            var type = $('#type').val();
-            var bodySerial = $('#bodySerial').val();
-            var color = $('#color').val();
-            var serialEngine = $('#serialEngine').val();
-            var year = $('#year').val();
-            var model = $('#model').val();
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
 
-            console.log(id);
-            $.ajax({
-                type: "POST",
-                url: url + "/ticketOffice/vehicle/update",
-                data: {
-                    id: id,
-                    status: status,
-                    license: licensePlate,
-                    type: type,
-                    bodySerial: bodySerial,
-                    color: color,
-                    serialEngine: serialEngine,
-                    year: year,
-                    model: model
-                },
-                dataType: 'json',
+        $(this).hide();
+        $('#update-vehicle-save').removeClass('hide');
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                    $(this).prop('disabled', true);
-                },
-                success: function () {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Has Actualizado Los datos del vehiculo Con Exito",
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        $('#status').prop("disabled", true);
-                        $('select').formSelect();
-                        $('#license_plate').prop("disabled", true);
-                        $('#type').prop("disabled", true);
-                        $('select').formSelect();
-                        $('#bodySerial').prop("disabled", true);
-                        $('#color').prop("disabled", true);
-                        $('#serialEngine').prop("disabled", true);
-                        $('#year').prop("disabled", true);
-                        $('#brand').prop("disabled", true);
-                        $('select').formSelect();
-                        $('#model').prop("disabled", true);
-                        $('select').formSelect();
-                    });
-                    updateType = true;
-                },
-                error: function (e) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
-                }
-            });
 
-        }
+    });
+    $('#update-vehicle-save').on('click', function () {
+        var id = $('#id').val();
+        var status = $('#status').val();
+        var licensePlate = $('#license_plate').val();
+        var type = $('#type').val();
+        var bodySerial = $('#bodySerial').val();
+        var color = $('#color').val();
+        var serialEngine = $('#serialEngine').val();
+        var year = $('#year').val();
+        var model = $('#model').val();
 
+        console.log(id);
+        $.ajax({
+            type: "POST",
+            url: url + "/ticketOffice/vehicle/update",
+            data: {
+                id: id,
+                status: status,
+                license: licensePlate,
+                type: type,
+                bodySerial: bodySerial,
+                color: color,
+                serialEngine: serialEngine,
+                year: year,
+                model: model
+            },
+            dataType: 'json',
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+                $(this).prop('disabled', true);
+            },
+            success: function () {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "Has Actualizado Los datos del vehiculo Con Exito",
+                    icon: "success",
+                    button: "Ok",
+                }).then(function (accept) {
+                    location.reload();
+                });
+
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
     });
 
     $('#brand').change(function () {
@@ -186,18 +175,11 @@ $('document').ready(function () {
                     var i = 0;
                     console.log(model);
                     for (i; i < data[1]; i++) {
-
-
-                        if (data[0][i]['id'] == model) {
-                            console.log('este es igual al id');
-                            var template = `<option value="${data[0][i]['id']}" selected>${data[0][i]['name']}</option>`;
-                        } else {
-                            var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
-                        }
+                        console.log(data[0][i]['name']);
+                        var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
+                        $('select').formSelect();
+                        $('#model').append(template);
                     }
-
-                    $('select').formSelect();
-                    $('#model').append(template);
 
                 }
 
@@ -1225,7 +1207,7 @@ $('document').ready(function () {
 
         $.ajax({
             type: "get",
-            url: url + "ticketOffice/vehicle/fiscal-period/"+id+"/"+fiscalPeriod,
+            url: url + "ticketOffice/vehicle/fiscal-period/" + id + "/" + fiscalPeriod,
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
@@ -1240,7 +1222,7 @@ $('document').ready(function () {
                         text: 'Ya tiene un pago declarado para este periodo fiscal',
                         icon: "info",
                     });
-                }else {
+                } else {
 
                 }
             },
@@ -1260,15 +1242,15 @@ $('document').ready(function () {
         });
     });
 
-    var companies_id='';
-    var type_taxes='';
+    var companies_id = '';
+    var type_taxes = '';
 
 
     $('.payroll').change(function () {
-        if(companies_id!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
-                companies_id=$(this).attr('data-company');
-            }else if ($(this).attr('data-company')!=companies_id){
+        if (companies_id !== '') {
+            if ($(this).is(":checked") && $(this).attr('data-company') == companies_id) {
+                companies_id = $(this).attr('data-company');
+            } else if ($(this).attr('data-company') != companies_id) {
                 swal({
                     title: "Información",
                     text: "Las planillas selecionadas no pertenecen a la misma empresa.",
@@ -1277,15 +1259,15 @@ $('document').ready(function () {
                 });
                 $(this).prop('checked', false);
             }
-        }else{
-            companies_id=$(this).attr('data-company');
+        } else {
+            companies_id = $(this).attr('data-company');
         }
 
 
-        if(type_taxes!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
-                type_taxes=$(this).attr('data-taxes');
-            }else if ($(this).attr('data-taxes')!=type_taxes){
+        if (type_taxes !== '') {
+            if ($(this).is(":checked") && $(this).attr('data-company') == type_taxes) {
+                type_taxes = $(this).attr('data-taxes');
+            } else if ($(this).attr('data-taxes') != type_taxes) {
                 swal({
                     title: "Información",
                     text: "Las planillas selecionadas deben ser del mismo tipo.",
@@ -1299,13 +1281,11 @@ $('document').ready(function () {
 
                 $(this).prop('checked', false);
             }
-        }else{
-            type_taxes=$(this).attr('data-taxes');
+        } else {
+            type_taxes = $(this).attr('data-taxes');
         }
 
     });
-
-
 
 
     /*$('#select-next').click(function () {
@@ -1395,7 +1375,6 @@ $('document').ready(function () {
     });
 
 */
-
 
 
     $('#select-next').click(function () {
@@ -2032,13 +2011,16 @@ $('document').ready(function () {
         </div>
         <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                 <i class="icon-person prefix"></i>
-                <input id="Document" type="text" name="Document" class="validate" pattern="[0-9]+"
+                <input id="document" type="text" name="document" class="validate number-date" pattern="[0-9]+"
                     title="Solo puede escribir números." required
                     value="">
-                <label for="Document">Documento</label>
+                <label for="document">Documento</label>
         </div>`;
 
         $('#change').html(template);
+        $('.validate.number-date').keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
         $('select').formSelect();
         $('#Document').focus();
         $(this).hide();
@@ -2048,72 +2030,86 @@ $('document').ready(function () {
 
     $('#save-change').click(function () {
         var type = $('#typeDocument').val();
-        var document = $('#Document').val();
+        var document = $('#document').val();
         var id = $('#id').val();
 
         console.log(document);
         console.log(type);
         console.log(id);
+        if (document == '' || document.length < 7) {
+            swal({
+                title: "Información",
+                text: "Verifica los datos en campo de cedula," +
+                "para poder procesar tu solicitud",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            })
+        } else {
+            $.ajax({
+                type: "get",
+                url: url + "vehicle/change-user/" + type + "/" + document + "/" + id,
 
-        $.ajax({
-            type: "get",
-            url: url + "vehicle/change-user/" + type + "/" + document + "/" + id,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                console.log(data);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+                    if (data['status'] === "success") {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Ha sido exitoso',
+                            icon: "success",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
 
-                if (data['status'] === "success") {
+                        }).then(function (options) {
+                            if (options) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Usuario no encontrado, Verifica los datos por favor',
+                            icon: "info",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
+
+                        })
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "Cambio de Usuario",
-                        text: 'Ha sido exitoso',
-                        icon: "success",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
                         button: {
                             text: "Entendido",
-                            className: "blue-gradient",
-                            value: true
+                            className: "red-gradient"
                         },
-
-                    }).then(function (options) {
-                        if (options) {
-                            location.reload();
-                        }
                     });
-                } else {
-                    swal({
-                        title: "Cambio de Usuario",
-                        text: 'Usuario no encontrado, Verifica los datos por favor',
-                        icon: "info",
-                        button: {
-                            text: "Entendido",
-                            className: "blue-gradient",
-                            value: true
-                        },
-
-                    })
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
 
-        });
+            });
+
+        }
     });
 
     $('#changeUW').click(function () {
@@ -2129,13 +2125,16 @@ $('document').ready(function () {
         </div>
         <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                 <i class="icon-person prefix"></i>
-                <input id="Document" type="text" name="Document" class="validate" pattern="[0-9]+"
+                <input id="Document" type="text" name="Document" class="validate number-date" pattern="[0-9]+"
                     title="Solo puede escribir números." required
                     value="">
                 <label for="Document">Documento</label>
         </div>`;
 
         $('#changeUserWeb').html(template);
+        $('.validate.number-date').keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
         $('select').formSelect();
         $('#Document').focus();
         $(this).hide();
@@ -2147,68 +2146,79 @@ $('document').ready(function () {
         var document = $('#Document').val();
         var id = $('#id').val();
 
-        console.log(document);
-        console.log(type);
-        console.log(id);
+        if (document == '' || document.length < 7) {
+            swal({
+                title: "Información",
+                text: "Verifica los datos en campo de cedula," +
+                "para poder procesar tu solicitud",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            })
+        } else {
 
-        $.ajax({
-            type: "get",
-            url: url + "vehicle/change-user-web/" + type + "/" + document + "/" + id,
+            $.ajax({
+                type: "get",
+                url: url + "vehicle/change-user-web/" + type + "/" + document + "/" + id,
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                console.log(data);
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-                if (data['status'] === "success") {
+                    if (data['status'] === "success") {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Ha sido exitoso',
+                            icon: "success",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
+
+                        }).then(function (options) {
+                            if (options) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Usuario no encontrado, Verifica los datos por favor',
+                            icon: "info",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
+
+                        })
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "Cambio de Usuario",
-                        text: 'Ha sido exitoso',
-                        icon: "success",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
                         button: {
                             text: "Entendido",
-                            className: "blue-gradient",
-                            value: true
+                            className: "red-gradient"
                         },
-
-                    }).then(function (options) {
-                        if (options) {
-                            location.reload();
-                        }
                     });
-                } else {
-                    swal({
-                        title: "Cambio de Usuario",
-                        text: 'Usuario no encontrado, Verifica los datos por favor',
-                        icon: "info",
-                        button: {
-                            text: "Entendido",
-                            className: "blue-gradient",
-                            value: true
-                        },
-
-                    })
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
     });
 
 

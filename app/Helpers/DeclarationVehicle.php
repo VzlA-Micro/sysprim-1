@@ -50,8 +50,9 @@ class DeclarationVehicle
         $rate = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
 
         if (is_null($rate)){
-            $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
+            $rate = Tributo::orderBy('id', 'desc')->first();
         }
+
 
         $moreThereYear = null;
         $bank = BankRate::select('value_rate')->latest()->first();
@@ -82,11 +83,11 @@ class DeclarationVehicle
 
         if ($diffYear < 3) {
             $rateYear = $vehicle[0]->type->rate;
-            $taxes = $rateYear * $rate[0]->value;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = false;
         } else {
             $rateYear = $vehicle[0]->type->rate_UT;
-            $taxes = $rateYear * $rate[0]->value;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = true;
         }
 

@@ -126,7 +126,7 @@
                                 <div class="input-field col s6">
                                     <i class="icon-local_shipping prefix"></i>
                                     <select name="model" id="model" required>
-                                        <option value="null" disabled selected>Selecciona el módelo</option>
+                                        <option value="" disabled selected>Selecciona el módelo</option>
                                     </select>
                                     <label for="model">Módelo</label>
                                 </div>
