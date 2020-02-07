@@ -911,7 +911,7 @@ class TicketOfficeVehicleController extends Controller
         }
 
 
-        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment);
+        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment,$year);
 
         $type = null;
 
@@ -1369,9 +1369,11 @@ class TicketOfficeVehicleController extends Controller
                 $statusTax = true;
             } else if ($tax->status === 'cancel') {
                 $statusTax = false;
+            } else if ($tax->status === null){
+                $statusTax = false;
             }
-
-            return Response()->json($statusTax);
         }
+
+        return Response()->json($statusTax);
     }
 }

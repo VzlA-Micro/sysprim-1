@@ -150,23 +150,23 @@ $(document).ready(function () {
     });
 
     function findDocument() {
-        var type_document=$('#type_document_full').val();
-        var document=$('#document_full').val();
+        var type_document = $('#type_document_full').val();
+        var document = $('#document_full').val();
         $('#surname_full').val('');
         $('#user_name_full').val('');
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
-        if(document!=='') {
+        if (document !== '') {
             $.ajax({
                 method: "GET",
-                url: url + "property/find/" + type_document  + "/" + document+'/false', // Luego cambiar ruta
+                url: url + "property/find/" + type_document + "/" + document + '/false', // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status!=='error') {
+                    if (response.status !== 'error') {
                         if (response.type == 'not-user') {
 
                             swal({
@@ -198,7 +198,7 @@ $(document).ready(function () {
                         } else if (response.type == 'user') {
                             var user = response.user;
                             $('#name_full').val(user.name + ' ' + user.surname);
-                            $('#name_full').attr('readonly');
+                            $('#name_full').attr('readonly', '');
                             $('#surname_full').val(user.surname);
                             $('#id').val(user.id);
                             $('#type').val('user');
@@ -206,12 +206,11 @@ $(document).ready(function () {
                             $('#address_full').attr('readonly', '');
 
 
-
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name_full').val(company.name);
                             $('#address_full').val(company.address);
-                            $('#name_full').attr('readonly');
+                            $('#name_full').attr('readonly', '');
                             $('#address_full').attr('disabled');
                             $('#id').val(company.id);
                             $('#type').val('company');
@@ -220,7 +219,7 @@ $(document).ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    }else{
+                    } else {
                         swal({
                             title: "Información",
                             text: "La empresa no esta registrada, debe ingresar un RIF valido.",
@@ -289,17 +288,17 @@ $(document).ready(function () {
 
                             var user = response.user.response;
                             $('#name').val(user.nombres + ' ' + user.apellidos);
-                            $('#name').attr('readonly');
+                            $('#name').attr('readonly', '');
                             $('#surname').val(user.apellidos);
                             $('#user_name').val(user.nombres);
                             $('#type').val('user');
-
+                            $('#address').prop('readonly', false);
 
                         } else if (response.type == 'user') {
 
                             var user = response.user;
                             $('#name').val(user.name + ' ' + user.surname);
-                            $('#name').attr('readonly');
+                            $('#name').attr('readonly', '');
                             $('#surname').val(user.surname);
                             $('#person_id').val(user.id);
                             $('#type').val('user');
@@ -316,13 +315,10 @@ $(document).ready(function () {
                             $('#type').val('company');
                             $('#address').attr('readonly', '');
 
-
                         } else {
                             $('#type').val('company');
                         }
                     } else {
-
-
                         $('#document').val('');
                     }
                     M.updateTextFields();
@@ -347,12 +343,10 @@ $(document).ready(function () {
     $('#data-next').click(function () {
         var status = $('#status').val();
 
-
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
 
-console.log(status);
         if ((status == null || status == '')) {
             swal({
                 title: "Información",
@@ -369,7 +363,6 @@ console.log(status);
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "vehicle-tab");
         } else {
-
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {
@@ -385,8 +378,8 @@ console.log(status);
                     band = false;
                 }
             });
-            if($('#person_id').val()!==''){
-                band=false;
+            if ($('#person_id').val() !== '') {
+                band = false;
             }
 
             if (band) {
@@ -459,52 +452,61 @@ console.log(status);
         var type = $('#type').val();
         var id = $('#id').val();
         e.preventDefault();
-        $.ajax({
-            url: url + "property/ticket-office/save-property",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: new FormData(this),
-            method: "POST",
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
+        if ($('#brand').val() == '') {
+            swal({
+                title: "Información",
+                text: "Debe seleccionar una marca de vehículo para poder continuar",
+                icon: "success",
+                button: "Ok",
+            });
+        } else {
+            $.ajax({
+                url: url + "property/ticket-office/save-property",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
 
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: response.message,
-                    icon: "success",
-                    button: "Ok",
-                }).then(function (accept) {
-                    if (type == 'company') {
-                        window.location.href = url + "properties/company/my-properties/" + id;
-                    }
-                    else {
-                        window.location.href = url + "properties/my-properties";
-                    }
-                });
-                ;
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
 
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: response.message,
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        if (type == 'company') {
+                            window.location.href = url + "properties/company/my-properties/" + id;
+                        }
+                        else {
+                            window.location.href = url + "properties/my-properties";
+                        }
+                    });
+                    ;
 
-            },
-            error: function (err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: "Ok",
-                });
-            }
-        });
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
     });
 
     $('#license_plates').change(function () {
@@ -762,35 +764,57 @@ console.log(status);
 
     $('#vehicle-register-ticket').submit(function (e) {
         e.preventDefault();
-
+        console.log($('#brand').val());
         //$('#button-company').attr('disabled', 'disabled');
+        if ($('#brand').val() == null) {
+            swal({
+                title: "Información",
+                text: "Debe seleccionar una marca de vehículo para poder continuar",
+                icon: "warning",
+                button: "Ok",
+            });
+        } else {
+            $.ajax({
+                url: url + "ticketOffice/vehicle/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
 
-        $.ajax({
-            url: url + "ticketOffice/vehicle/save",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: new FormData(this),
-            method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    if (data['status'] == 'success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Vehículo registrado con exito!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            window.location.href = url + "ticketOffice/vehicle/read";
+                        });
+                    } else {
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                console.log(data);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                if (data['status'] == 'success') {
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Vehículo registrado con exito!",
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        window.location.href = url + "ticketOffice/vehicle/read";
-                    });
-                } else {
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -801,22 +825,7 @@ console.log(status);
                         },
                     });
                 }
-            },
-            error: function (err) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
-
+            });
+        }
     });
 });

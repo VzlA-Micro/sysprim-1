@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}"> - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}"> Registrar- Inmuebles Urbanos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -28,7 +28,7 @@
                             <h5>Datos Generales</h5>
                         </div>
                         <div class="card-content row">
-                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
+                            <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico<br>G: Gobierno">
                                 <i class="icon-public prefix"></i>
                                 <select name="type_document" id="type_document_full" required>
                                     <option value="null" selected disabled>...</option>
@@ -48,7 +48,7 @@
                                 <i class="icon-person prefix"></i>
                                 <input id="name_full" type="text" name="name_full" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." required>
+                                       title="Solo puede agregar letras (con acentos)." required readonly>
                                 <label for="name_full">Nombre</label>
                             </div>
                             <div class="input-field col s12 m12">
@@ -179,16 +179,15 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
-                                <input type="text" name="area_ground" id="area_ground" class="validate number-only" pattern="[0-9.]+"
+                                <input type="text" name="area_ground" id="area_ground" class="validate number-only only-number-positive" pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                        required maxlength="8">
                                 <label for="area_ground">Area de Terreno</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-location_city prefix"></i>
-                                <input type="text" name="area_build" id="area_build" maxlength="8" class="validate number-only" pattern="[0-9.]+"
-                                       data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
-                                       required>
+                                <input type="text" name="area_build" id="area_build" maxlength="8" class="validate number-only only-number-positive" pattern="[0-9.]+"
+                                       data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47" required >
                                 <label for="area_build">Area de Construcción</label>
                             </div>
 

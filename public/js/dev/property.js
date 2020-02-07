@@ -131,7 +131,7 @@ $('document').ready(function () {
                  <i class="icon-person prefix"></i>
                  <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
                                    pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                   title="Solo puede agregar letras (con acentos)." required>
+                                   title="Solo puede agregar letras (con acentos)." required readonly>
                  <label for="name">Nombre</label>
             </div>
             <div class="input-field col s12 m12">
@@ -223,52 +223,115 @@ $('document').ready(function () {
     $('#property').on('submit', function (e) {
         var type = $('#type').val();
         var id = $('#id').val(); // Id de la compañia
+
+
         e.preventDefault();
-        $.ajax({
-            url: url + "properties/save",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: new FormData(this),
-            method: "POST",
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (response) {
 
+        if($('#location_cadastral').val()!=null&&$('#type_const').val()!=null&&$('#type_inmueble_id').val()!=null&&$('#parish').val()!=null&&$('#lat').val() !== ""){
+
+
+
+            $.ajax({
+                url: url + "properties/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: new FormData(this),
+                method: "POST",
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: response.message,
+                        icon: "success",
+                        button: "Ok",
+                    }).then(function (accept) {
+                        if(type == 'company') {
+                            window.location.href = url + "properties/company/my-properties/" + id;
+                        }
+                        else {
+                            window.location.href = url + "properties/my-properties";
+                        }
+                    });
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+
+
+        }else{
+            if ($('#location_cadastral').val() == null) {
                 swal({
-                    title: "¡Bien Hecho!",
-                    text: response.message,
-                    icon: "success",
-                    button: "Ok",
-                }).then(function (accept) {
-                    if(type == 'company') {
-                        window.location.href = url + "properties/company/my-properties/" + id;
-                    }
-                    else {
-                        window.location.href = url + "properties/my-properties";
+                    title: "Información",
+                    text: "Seleciona la ubicación castrastral para completar el registro.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            } else if($('#type_const').val()==null) {
+                swal({
+                    title: "Información",
+                    text: "Seleciona el tipo  de construcción para completar el registro.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
                     }
                 });
-                ;
-
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-
-            },
-            error: function (err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+            }else if($('#type_inmueble_id').val()==null){
                 swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: "Ok",
+                    title: "Información",
+                    text: "Seleciona el tipo  de inmueble para completar el registro.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    }
+                });
+            }else if($('#parish').val()==null){
+                swal({
+                    title: "Información",
+                    text: "Seleciona la parroquia  para completar el registro.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    }
+                });
+            }else if($('#lat').val()== ""){
+                swal({
+                    title: "Información",
+                    text: "Debe ubicar su empresa en el mapa, para poder completar el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
                 });
             }
-        });
+        }
     });
 
     function findDocument() {
@@ -279,7 +342,8 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
-        if(document!=='') {
+        console.log(document);
+        if(document!==''&&document.length>=7) {
             $.ajax({
                 method: "GET",
                 url: url + "rate/taxpayers/find/" + type_document  + "/" + document, // Luego cambiar ruta
@@ -288,6 +352,7 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+
                     if(response.status!=='error') {
                         if (response.type == 'not-user') {
                             var user = response.user.response;
@@ -297,6 +362,7 @@ $('document').ready(function () {
                             $('#user_name').val(user.nombres);
                             $('#type').val('user');
                             $('#id').val(user.id);
+                            $('#address').removeAttr('readonly', '');
                         } else if (response.type == 'user') {
                             var user = response.user;
                             $('#name').val(user.name + ' ' + user.surname);
@@ -319,6 +385,7 @@ $('document').ready(function () {
 
                         } else {
                             $('#type').val('company');
+
                         }
                     }else{
                         swal({

@@ -19,7 +19,7 @@
                     <ul class="tabs">
                         <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i>Datos Generales</a>
                         </li>
-                        <li class="tab col s6 disabled" id="two"><a href="#rate-tab"><i class="icon-filter_2"></i> Datos
+                        <li class="tab col s6 disabled" id="two"><a href="#vehicle-tab"><i class="icon-filter_2"></i> Datos
                                 del Vehículo</a></li>
                     </ul>
 
@@ -48,7 +48,7 @@
                             </a>
                         </div>
                     </div>
-                    <div id="rate-tab">
+                    <div id="vehicle-tab">
                         <div class="card-header center-align">
                             <h4>Datos del Vehículo</h4>
                         </div>
@@ -104,7 +104,7 @@
 
                                 <div class="btn purple btn-rounded waves-light">
                                     <span><i class="icon-photo_size_select_actual right"></i>Imagen</span>
-                                    <input type="file" name="image" id="image">
+                                    <input type="file" accept="image/jpg"  name="image" id="image">
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text"
@@ -126,7 +126,7 @@
                                 <div class="input-field col s6">
                                     <i class="icon-local_shipping prefix"></i>
                                     <select name="model" id="model" required>
-                                        <option value="null" disabled selected>Selecciona el módelo</option>
+                                        <option value="" disabled selected>Selecciona el módelo</option>
                                     </select>
                                     <label for="model">Módelo</label>
                                 </div>

@@ -331,7 +331,7 @@ class VehiclesTaxesController extends Controller
         if (isset($vehicle[0]->company[0])) {
             return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(), 'vehicle' => $vehicle[0]]);
         } else {
-            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get()]);
+            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(),'vehicle' => $vehicle[0]]);
 
         }
     }

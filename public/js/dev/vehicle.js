@@ -1,4 +1,3 @@
-
 var url = localStorage.getItem('url');
 
 
@@ -11,8 +10,9 @@ $('document').ready(function () {
 
     $('#data-next').click(function () {
         var status = $('#status').val();
+        var document = $('#document').val();
         console.log(status);
-        if(status == null || status == '') {
+        if (status == null || status == '') {
             swal({
                 title: "Información",
                 text: "Debe seleccionar una condicion social para continuar con el registro.",
@@ -23,16 +23,32 @@ $('document').ready(function () {
                 },
             });
         }
-        else if(status == 'propietario') {
+        else if (status == 'propietario') {
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
-            $('ul.tabs').tabs("select", "rate-tab");
-        }
-        else {
-            band=true;
+            $('ul.tabs').tabs("select", "vehicle-tab");
+        }else if(document < 7){
+            $('#document').val('');
+
+            swal({
+                title: "Información",
+                text: "Debe introducir una cedula valída para continuar con el registro.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            }).then(response=>function () {
+                $('#document').focus();
+            });
+
+        }else {
+
+
+            band = true;
             console.log('responsable');
             $('.rate').each(function () {
-                if($(this).val()===''||$(this).val()===null) {
+                if ($(this).val() === '' || $(this).val() === null) {
                     swal({
                         title: "Información",
                         text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
@@ -45,7 +61,7 @@ $('document').ready(function () {
                     band = false;
                 }
             });
-            if(band) {
+            if (band) {
                 if ($('#id').val() == '') {
                     var type = $('#type').val();
                     var name;
@@ -70,7 +86,7 @@ $('document').ready(function () {
                             document: document,
                             address: address,
                             type: type,
-                            user:user
+                            user: user
                         },
                         url: url + 'properties/taxpayers/company-user/register',
 
@@ -109,13 +125,13 @@ $('document').ready(function () {
                 } else {
                     $('#two').removeClass('disabled');
                     $('#one').addClass('disabled');
-                    $('ul.tabs').tabs("select", "property-tab");
+                    $('ul.tabs').tabs("select", "vehicle-tab");
                 }
             }
         }
     });
 
-    $('#status').change(function() {
+    $('#status').change(function () {
         var status = $(this).val();
         var content = `
             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
@@ -135,7 +151,7 @@ $('document').ready(function () {
                  <i class="icon-person prefix"></i>
                  <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
                                    pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                   title="Solo puede agregar letras (con acentos)." required>
+                                   title="Solo puede agregar letras (con acentos)." required readonly>
                  <label for="name">Nombre</label>
             </div>
             <div class="input-field col s12 m12">
@@ -146,17 +162,23 @@ $('document').ready(function () {
             <input id="surname" type="hidden" name="surname" class="validate" value="">
             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
        `;
-        if(status == 'responsable') {
+        if (status == 'responsable') {
+
+
             $('#content').append(content);
+            $('.validate.number-only').keyup(function (){
+                this.value = (this.value + '').replace(/[^.,0-9]/g, '');
+            });
+
             $('select').formSelect();
             M.textareaAutoResize($('#address'));
             $('#document').keyup(function () {
-                if($('#type_document').val()===null){
+                if ($('#type_document').val() === null) {
                     swal({
                         title: "Información",
                         text: "Debes seleccionar el tipo de documento, antes de ingresar el número de documento.",
                         icon: "info",
-                        button:{
+                        button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
@@ -180,23 +202,23 @@ $('document').ready(function () {
     });
 
     function findDocument() {
-        var type_document=$('#type_document').val();
-        var document=$('#document').val();
+        var type_document = $('#type_document').val();
+        var document = $('#document').val();
         $('#surname').val('');
         $('#user_name').val('');
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
-        if(document!=='') {
+        if (document !== '' && document >= 7) {
             $.ajax({
                 method: "GET",
-                url: url + "rate/taxpayers/find/" + type_document  + "/" + document, // Luego cambiar ruta
+                url: url + "rate/taxpayers/find/" + type_document + "/" + document, // Luego cambiar ruta
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-                    if(response.status!=='error') {
+                    if (response.status !== 'error') {
                         if (response.type == 'not-user') {
                             var user = response.user.response;
                             $('#name').val(user.nombres + ' ' + user.apellidos);
@@ -228,12 +250,12 @@ $('document').ready(function () {
                         } else {
                             $('#type').val('company');
                         }
-                    }else{
+                    } else {
                         swal({
                             title: "Información",
                             text: response.message,
                             icon: "info",
-                            button:{
+                            button: {
                                 text: "Esta bien",
                                 className: "blue-gradient"
                             },
@@ -261,21 +283,7 @@ $('document').ready(function () {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$('#model').prop('disabled', true);
+    $('#model').prop('disabled', true);
     $('select').formSelect();
 
     $('#brand').change(function () {
@@ -332,68 +340,13 @@ $('#model').prop('disabled', true);
 
     $('#license_plate').change(function () {
         var license = $(this).val();
-        var id=$('#id').val();
-            $.ajax({
-                type: "POST",
-                url: url + "vehicles/verifyLicense",
-                data: {
-                    license: license,
-                    id: id
-                },
-
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (data) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-
-                    if (data['status'] == "error") {
-                        swal({
-                            title: "¡Placa Registrada!",
-                            text: data['message'],
-                            icon: "info",
-                            button: "Ok",
-                        });
-                        $(this).text('');
-                        $('#button-vehicle').prop('disabled', true);
-                    } else {
-                        swal({
-                            title: data['message'],
-                            icon: "success",
-                            button: "Ok",
-                        });
-                        $('#button-vehicle').prop('disabled', false);
-                    }
-                },
-                error: function (e) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
-                }
-            });
-
-    });
-
-    $('#bodySerial').change(function () {
-        var bodySerial = $(this).val();
-        var id=$('#id').val();
+        var id = $('#id').val();
         $.ajax({
             type: "POST",
-            url: url + "vehicles/verifyBodySerial",
+            url: url + "vehicles/verifyLicense",
             data: {
-                bodySerial: bodySerial,
-                id:id
+                license: license,
+                id: id
             },
 
             beforeSend: function () {
@@ -403,7 +356,62 @@ $('#model').prop('disabled', true);
             success: function (data) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
-                if (data['status']=="error") {
+
+
+                if (data['status'] == "error") {
+                    swal({
+                        title: "¡Placa Registrada!",
+                        text: data['message'],
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).text('');
+                    $('#button-vehicle').prop('disabled', true);
+                } else {
+                    swal({
+                        title: data['message'],
+                        icon: "success",
+                        button: "Ok",
+                    });
+                    $('#button-vehicle').prop('disabled', false);
+                }
+            },
+            error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+
+    });
+
+    $('#bodySerial').change(function () {
+        var bodySerial = $(this).val();
+        var id = $('#id').val();
+        $.ajax({
+            type: "POST",
+            url: url + "vehicles/verifyBodySerial",
+            data: {
+                bodySerial: bodySerial,
+                id: id
+            },
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                if (data['status'] == "error") {
                     swal({
                         title: "¡Serial de Carroceria Registrado!",
                         text: data['message'],
@@ -439,13 +447,13 @@ $('#model').prop('disabled', true);
 
     $('#serialEngine').change(function () {
         var serialEngine = $(this).val();
-        var id=$('#id').val();
+        var id = $('#id').val();
         $.ajax({
             type: "POST",
             url: url + "vehicles/verifySerialEngine",
             data: {
                 serialEngine: serialEngine,
-                id:id
+                id: id
             },
 
             beforeSend: function () {
@@ -456,7 +464,7 @@ $('#model').prop('disabled', true);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 console.log(data);
-                if (data['status']=="error") {
+                if (data['status'] == "error") {
                     swal({
                         title: "¡Serial del Motor Registrado!",
                         text: data['message'],
@@ -492,8 +500,8 @@ $('#model').prop('disabled', true);
 
     $('#vehicle').on('submit', function (e) {
         e.preventDefault();
-        var brand=$('#brand').val();
-        if (brand===null){
+        var brand = $('#brand').val();
+        if (brand === null) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar un marca de vehículo para poder completar el registro",
@@ -504,7 +512,7 @@ $('#model').prop('disabled', true);
                 },
             });
             $('#brand').focus();
-        }else {
+        } else {
             $.ajax({
                 type: "POST",
                 url: url + "vehicles/save",
@@ -713,46 +721,46 @@ $('#model').prop('disabled', true);
 
     });
 
-/*
-    $('#company-next').click(function () {
-        var band = true;
+    /*
+        $('#company-next').click(function () {
+            var band = true;
 
-        $('.company-validate').each(function () {
-            if ($(this).val() === '' || $(this).val() === null) {
-                swal({
-                    title: "Información",
-                    text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
-                    icon: "info",
-                    button: {
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                });
+            $('.company-validate').each(function () {
+                if ($(this).val() === '' || $(this).val() === null) {
+                    swal({
+                        title: "Información",
+                        text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
 
-                band = false;
-            } else if ($('#ciu').val() === undefined) {
-                swal({
-                    title: "Información",
-                    text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
-                    icon: "info",
-                    button: {
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                });
-                band = false;
+                    band = false;
+                } else if ($('#ciu').val() === undefined) {
+                    swal({
+                        title: "Información",
+                        text: "Debe agregar al menos un CIIU valido para registrar la empresa.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+                    band = false;
+                }
+
+            });
+
+            if (band) {
+                $('#map-tab-three').removeClass('disabled');
+                $('ul.tabs').tabs();
+                $('ul.tabs').tabs("select", "map-tab");
             }
 
         });
-
-        if (band) {
-            $('#map-tab-three').removeClass('disabled');
-            $('ul.tabs').tabs();
-            $('ul.tabs').tabs("select", "map-tab");
-        }
-
-    });
-*/
+    */
 
     $('#vehicle-register-ticket').submit(function (e) {
         e.preventDefault();
@@ -812,6 +820,28 @@ $('#model').prop('disabled', true);
             }
         });
 
+    });
+
+    $('#image').change(function() {
+        var file = this.files[0];
+        var mimetype = file.type;
+        var match = ["image/jpeg", "image/png", "image/jpg"];
+        if(!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))){
+            swal({
+                title:"Informacion",
+                text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
+                icon: "warning",
+                button: {
+                    text: "Aceptar",
+                    visible: true,
+                    value: true,
+                    className: "green",
+                    closeModal: true
+                }
+            });
+            $(this).val('');
+            return false;
+        }
     });
 });
 

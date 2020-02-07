@@ -258,11 +258,11 @@
                             <div class="row">
                                 @can('Actualizar Empresas')
                                     <div class="col s12 m3">
-                                        <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
+                                        <button type="button"  class="btn btn-large waves-effect waves-light green col s12 "
                                            id="update-company">
                                             Actualizar
                                             <i class="icon-refresh right"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 @endcan
                                 @can('Añadir CIIU Empresas')

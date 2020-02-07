@@ -46,7 +46,7 @@
 
                             <div class="input-field col s6 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                                <input id="ci" type="text" name="ci" class="validate number-data" maxlength="10" pattern="[0-9]+"
                                        title="Solo puede escribir números." required
                                        value="{{$vehicle->company[0]->document }}"
                                        readonly disabled>
@@ -192,27 +192,27 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input type="text" name="bodySerial" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
+                            <input type="text" name="bodySerial" minlength="15" maxlength="17" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
                                    title="Solo puede escribir letras y numeros." value="{{$vehicle->body_serial}}"
                                    disabled required>
                             <label for="bodySerial">Serial de carroceria</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-opacity prefix"></i>
-                            <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z]+"
+                            <input type="text" name="color" maxlength="20" id="color" class="validate" pattern="[A-Za-z]+"
                                    title="Solo puede escribir letras." value="{{$vehicle->color}}" disabled required>
                             <label for="color">Color</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-select_all prefix"></i>
-                            <input type="text" name="serialEngine" id="serialEngine" class="validate"
-                                   pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros." disabled
+                            <input type="text" name="serialEngine" id="serialEngine" class="validate "
+                                   pattern="[A-Za-z0-9]+" minlength="15" maxlength="17" title="Solo puede escribir letras y numeros." disabled
                                    value="{{$vehicle->serial_engine}}" required>
                             <label for="serialEngine">Serial del motor</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-event_note prefix"></i>
-                            <input type="text" name="year" id="year" class="validate" pattern="[0-9]+" minlength="4"
+                            <input type="text" name="year" id="year" class="validate number-date" pattern="[0-9]+" minlength="4"
                                    maxlength="4"
                                    title="Solo puede escribir numeros." disabled value="{{$vehicle->year}}" required>
                             <label for="year">Año</label>
@@ -290,6 +290,11 @@
                                         Actualizar
                                         <i class="icon-mode_edit right"></i>
                                     </a>
+                                    <a href="#" class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
+                                       id="update-vehicle-save">
+                                     Guardar Cambios
+                                        <i class="icon-mode_edit right"></i>
+                                    </a>
                                 </div>
                             @endcan
 
@@ -350,7 +355,7 @@
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
                             <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
-                                   title="Solo puede escribir números." required
+                                   minlength="7" maxlength="8" title="Solo puede escribir números." required
                                    value="{{$vehicle->users[0]->document }}"
                                    readonly>
                             <label for="ci">Cedula</label>

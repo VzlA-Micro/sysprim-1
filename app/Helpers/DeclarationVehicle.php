@@ -25,7 +25,7 @@ use App\BankRate;
 
 class DeclarationVehicle
 {
-    public static function Declaration($id, $optionPayment)
+    public static function Declaration($id, $optionPayment,$year=null)
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
@@ -46,29 +46,21 @@ class DeclarationVehicle
         $previousDebt = 0;
         $valueDiscount = 0;
         $valueDayMora = 0;
-        $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $fiscal_period_format=Carbon::parse($year);
+        $rate = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+
+        if (is_null($rate)){
+            $rate = Tributo::orderBy('id', 'desc')->first();
+        }
+
+
         $moreThereYear = null;
         $bank = BankRate::select('value_rate')->latest()->first();
-        $rateBank = $bank->value_rate * 360;
-        $day = DeclarationVehicle::dayMora();
+        $rateBank = $bank->value_rate;
+
 
         $recharges = Recharge::where('branch', 'Pat.Vehiculo')->latest()->first();
         $helperTrimester = Trimester::verifyTrimester();
-
-        if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
-
-            if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
-                $dayMora = 31;
-
-                $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
-            } else {
-                $dayMora = 0;
-                $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
-            }
-        } else {
-            $dayMora = 0;
-            $valueDayMora = ($rateBank / 100 / 360) * ($dayMora + intval($day));
-        }
 
         /*if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
@@ -91,15 +83,40 @@ class DeclarationVehicle
 
         if ($diffYear < 3) {
             $rateYear = $vehicle[0]->type->rate;
-            $taxes = $rateYear * $rate[0]->value;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = false;
         } else {
             $rateYear = $vehicle[0]->type->rate_UT;
-            $taxes = $rateYear * $rate[0]->value;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = true;
         }
 
-        //--------------option of payments-------------------------
+        $recharge = ($taxes * $recharges->value) / 100;
+
+        if ($year==$yearCurrent){
+
+            $day= CheckCollectionDay::verify();
+
+            if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
+
+                if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
+                    $dayMora = 31;
+                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+
+                } else {
+                    $dayMora = 0;
+                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+                }
+            } else {
+                $dayMora = 0;
+                $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+            }
+        }else{
+            $day = DeclarationVehicle::dayMora($year);
+            $valueDayMora = ($rateBank / 100 / 360)*$day['diffDayMora']*($taxes+$recharge);
+        }
+
+        //--------------option of payments-------------------------|||||||||||||||||||||||||||||||||
         if ($optionPayment) {
             //indica que el pago es anual
 
@@ -109,7 +126,7 @@ class DeclarationVehicle
 
             } else {
                 //$valueDiscount = ($taxes * 20) / 100;
-                $recharge = ($taxes * $recharges->value) / 100;
+
                 $total = ($taxes - $valueDiscount) + $valueDayMora+$recharge;
 
             }
@@ -239,9 +256,9 @@ class DeclarationVehicle
         }
     }
 
-    public static function dayMora()
+    public static function dayMora($year)
     {
-        $varDayForMora = CheckCollectionDay::verify('Pat.Veh');
+        $varDayForMora = CheckCollectionDay::verify('Pat.Veh',$year);
         return $varDayForMora;
     }
 }

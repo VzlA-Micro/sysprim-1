@@ -786,13 +786,24 @@ class PropertyTaxesController extends Controller
             $owner = User::find($userProperty->person_id);
             $type = 'user';
         }
+
+
+
         $verified = true;
 
-        if ($taxes->status != 'verified') {
+        if (!$taxes->payments->isEmpty()) {
+            foreach ($taxes->payments as $payment) {
+                if ($payment->status != 'verified') {
+                    $verified = false;
+                }
+            }
+        } else {
             $verified = false;
-        }/*else{
-            $verified = false;
-        }*/
+        }
+
+
+
+
 //        dd($taxes);
         return view('modules.properties.ticket-office.details', [
             'taxes' => $taxes,
