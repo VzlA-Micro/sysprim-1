@@ -218,10 +218,18 @@
                                <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
                                 @foreach ($company as $compa)
                                     <li class="collection-item">
-                                        <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
-                                        <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
-                                        <a href="">Detalles...</a>
-                                        <!-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> -->
+                                        <div class="row">
+                                            <div class="col s12 m7">
+                                                    <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
+                                                    <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
+                                            </div>
+                                            <div class="col s12 m5">
+                                                    <a href="{{route('tickOffice.companies.details', ['id'=>$compa->companies[0]->id])}}" class="btn waves-effect waves-light red">
+                                                        <i class="icon-control_point right"></i>
+                                                        Detalles 
+                                                    </a>                   
+                                            </div>
+                                        </div>                                     
                                     </li>
         
                                 @endforeach
