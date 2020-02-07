@@ -593,12 +593,12 @@ class PropertyTaxesController extends Controller
             ];
         }
         else {
-            $taxe = $property->propertyTaxes()->first();
-            $taxe_id = $taxe->id;
+            /*$taxe = $property->propertyTaxes()->first();
+            $taxe_id = $taxe->id;*/
             $response = [
                 'status' => 'success',
                 'property' => $property,
-                'taxe_id' => $taxe_id
+//                'taxe_id' => $taxe_id
             ];
         }
         return response()->json($response);
@@ -610,12 +610,12 @@ class PropertyTaxesController extends Controller
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
-        $propertyTaxes = Property::find($id);
-        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+//        $propertyTaxes = Property::find($id);
+//        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
         $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
 //        die();
 //        dd($declaration);
-        $taxe_id = $taxes[0]->id;
+        /*$taxe_id = $taxes[0]->id;
         if(!empty($taxes)) {
             foreach ($taxes as $tax) {
                 if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
@@ -634,7 +634,7 @@ class PropertyTaxesController extends Controller
         }
         else {
             $statusTax = 'new';
-        }
+        }*/
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
             $owner_id = $userProperty[0]->company_id;
@@ -695,7 +695,7 @@ class PropertyTaxesController extends Controller
             'alicuota' => $alicuota,
             'status' => $status,
             'statusTax' => $statusTax,
-            'taxe_id' => $taxe_id
+//            'taxe_id' => $taxe_id
         ];
 //        dd($declaration);
         return response()->json($resp);
@@ -862,5 +862,45 @@ class PropertyTaxesController extends Controller
 
             return Response()->json($statusTax);
         }
+    }
+
+    public function generateReceipt($taxes_data) {
+        //$taxes_data = substr($taxes_data, 0, -1);
+        $taxes_explode = explode('-', $taxes_data);
+
+        $taxes = Taxe::whereIn('id', $taxes_explode)->with('properties')->get();
+        $property = Property::find($taxes[0]->properties[0]->id);
+        $userProperty = UserProperty::find($taxes[0]->properties[0]->id);
+//        dd($userProperty);
+        if (!is_null($userProperty->company_id)) {
+            $data = Company::find($userProperty->company_id);
+            $type = 'company';
+        } else {
+            $data = User::find($userProperty->person_id);
+            $type = 'user';
+        }
+//        $propertyTaxes = $taxes->properties()->get();
+        /*$type='';
+        $owner = $taxe->properties()->get();
+        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+        $property = Property::find($userProperty->property_id);
+        $propertyTaxes = PropertyTaxes::find($taxe->id);*/
+
+        /*if (!is_null($userProperty->company_id)) {
+            $data = Company::find($userProperty->company_id);
+            $type = 'company';
+        } else {
+            $data = User::find($userProperty->person_id);
+            $type = 'user';
+        }*/
+//        dd($taxes[0]->properties[0]->valueBuild->name);
+        $pdf = \PDF::loadView('modules.properties.ticket-office.receipt', [
+            'taxes' => $taxes,
+            'property' => $property,
+            'data' => $data,
+            'type' => $type
+        ]);
+
+        return $pdf->stream();
     }
 }

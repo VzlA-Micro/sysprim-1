@@ -19,7 +19,7 @@ $(document).ready(function() {
                         var property = response.property;
                         var user = response.property.users[0];
                         var id = property.id;
-                        console.log(response.taxe_id);
+                        // console.log(response.taxe_id);
                         $('#property_id').val(property.id);
                         // console.log($('#property_id').val());
                         $('#area_ground').val(property.area_ground).attr('disabled',true);
@@ -36,7 +36,7 @@ $(document).ready(function() {
                         $('#parish_id').attr('disabled',true);
                         $('#fiscal_period').attr('disabled',false);
                         $('#status').attr('disabled',false);
-                        $('#taxe_id').val(response.taxe_id);
+                        // $('#taxe_id').val(response.taxe_id);
                         $('select').formSelect();
                         // $('#status').attr('disabled',false);
                         M.updateTextFields();
@@ -624,7 +624,7 @@ $(document).ready(function() {
 
     function generateReceipt() {
         var taxes_id=$('.taxes_id').val();
-        window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/true', "RECIBO DE PAGO", "width=500, height=600");
+        window.open(url + 'properties/ticket-office/receipt/' + taxes_id + '/true', "RECIBO DE PAGO", "width=500, height=600");
     }
 
     $('#register-payment-depo').submit(function (e) {
@@ -652,7 +652,7 @@ $(document).ready(function() {
                     }).then(function (accept) {
                         $('#amount_total_tr').val('');
                         if ($('#company_id').val() !== '') {
-                            window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
+                            generateReceipt();
                             location.reload();
                         }
 
