@@ -407,6 +407,8 @@ Route::middleware(['auth'])->group(/**
         Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
         Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
         Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
+        Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
+
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
             // Nivel 1: Consultar y Registrar

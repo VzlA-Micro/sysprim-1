@@ -863,4 +863,44 @@ class PropertyTaxesController extends Controller
             return Response()->json($statusTax);
         }
     }
+
+    public function generateReceipt($taxes_data) {
+        //$taxes_data = substr($taxes_data, 0, -1);
+        $taxes_explode = explode('-', $taxes_data);
+
+        $taxes = Taxe::whereIn('id', $taxes_explode)->with('properties')->get();
+        $property = Property::find($taxes[0]->properties[0]->id);
+        $userProperty = UserProperty::find($taxes[0]->properties[0]->id);
+//        dd($userProperty);
+        if (!is_null($userProperty->company_id)) {
+            $data = Company::find($userProperty->company_id);
+            $type = 'company';
+        } else {
+            $data = User::find($userProperty->person_id);
+            $type = 'user';
+        }
+//        $propertyTaxes = $taxes->properties()->get();
+        /*$type='';
+        $owner = $taxe->properties()->get();
+        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+        $property = Property::find($userProperty->property_id);
+        $propertyTaxes = PropertyTaxes::find($taxe->id);*/
+
+        /*if (!is_null($userProperty->company_id)) {
+            $data = Company::find($userProperty->company_id);
+            $type = 'company';
+        } else {
+            $data = User::find($userProperty->person_id);
+            $type = 'user';
+        }*/
+//        dd($taxes[0]->properties[0]->valueBuild->name);
+        $pdf = \PDF::loadView('modules.properties.ticket-office.receipt', [
+            'taxes' => $taxes,
+            'property' => $property,
+            'data' => $data,
+            'type' => $type
+        ]);
+
+        return $pdf->stream();
+    }
 }

@@ -624,7 +624,7 @@ $(document).ready(function() {
 
     function generateReceipt() {
         var taxes_id=$('.taxes_id').val();
-        window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/true', "RECIBO DE PAGO", "width=500, height=600");
+        window.open(url + 'properties/ticket-office/receipt/' + taxes_id + '/true', "RECIBO DE PAGO", "width=500, height=600");
     }
 
     $('#register-payment-depo').submit(function (e) {
@@ -652,7 +652,7 @@ $(document).ready(function() {
                     }).then(function (accept) {
                         $('#amount_total_tr').val('');
                         if ($('#company_id').val() !== '') {
-                            window.open(url + 'properties/taxpayer/pdf/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
+                            generateReceipt();
                             location.reload();
                         }
 
