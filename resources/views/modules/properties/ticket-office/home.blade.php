@@ -20,7 +20,7 @@
 
 
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('properties.ticket-office.manage') }}" class="btn-app white blue-text text-darken-2">
+                <a href="{{ route('properties.ticket-office.manage') }}" class="btn-app white red-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
                 </a>
