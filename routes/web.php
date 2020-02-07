@@ -768,7 +768,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ticketOffice/vehicle/payments/', function () {
             return view('modules.ticket-office.vehicle.modules.payment.home');
         })->name('ticketOffice.vehicle.payments');
-
+        Route::get('/ticketOffice/vehicle/generate-receipt/{taxes}', 'TicketOfficeVehicleController@generateReceipt');
 
         Route::get('/ticketOffice/vehicle/payments/create', function () {
             return view('modules.ticket-office.vehicle.modules.payment.create');
