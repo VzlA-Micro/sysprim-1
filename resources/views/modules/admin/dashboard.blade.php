@@ -14,20 +14,12 @@
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Estadísticas</a></li>
                 </ul>
             </div>
-            <div class="col s12" data-aos="zoom-in">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon green white-text">
-                        <i class="i-bss"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title">Recaudación Total en Bolivares</span>
-                        <span class="widget-stats-number">
-                            <span id="recaudacion" class="timer"></span> Bs.
-                        </span>
-                    </div>
-                </div>
-            </div>
+           
             @can('Estadisticas - SuperUsuario')
+            <div class="col s12 m12">
+                    <h4>Registros de SysPRIM</h4>
+            </div>
+
             <div class="col s12 m6">
                 <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon white-text blue-gradient">
@@ -86,6 +78,36 @@
                    </div>
                </div>
            </div> -->
+           <div class="col s12 m12">
+               <h4>Bancos</h4>
+           </div>
+           <div class="col s12 m6">
+                <div class="widget bootstrap-widget stats">
+                    <div class="widget-stats-icon white-text bod-green">
+                        <i class="i-bod"></i>
+                    </div>
+                    <div class="widget-stats-content">
+                        <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
+                        <span class="widget-stats-number">
+                            <span class="" id="bod"></span> Bs.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="widget bootstrap-widget stats">
+                    <div class="widget-stats-icon white-text bnc-blue">
+                        <i class="i-bnc"></i>
+                    </div>
+                    <div class="widget-stats-content">
+                        <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
+                        <span class="widget-stats-number">
+                            <span class="" id="bnc"></span> Bs.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div class="col s12 m6 l4">
                 <div class="widget bootstrap-widget stats">
                     <div class="widget-stats-icon white-text banesco-green">
@@ -127,32 +149,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text bod-green">
-                        <i class="i-bod"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bod"></span> Bs.
-                        </span>
+
+            <div class="col s12 m12">
+                <h4>Recaudaciones</h4>
+            </div>
+
+            <div class="col s12" data-aos="zoom-in">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon green white-text">
+                            <i class="i-bss"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title">Recaudación Total en Bolivares</span>
+                            <span class="widget-stats-number">
+                                <span id="recaudacion" class="timer"></span> Bs.
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text bnc-blue">
-                        <i class="i-bnc"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bnc"></span> Bs.
-                        </span>
-                    </div>
-                </div>
-            </div>
+           
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
@@ -175,6 +190,11 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col s12 m12">
+                        <h4>Pagos</h4>
+                </div>
+
                 <div class="col s12 m6">
                     <ul class="collection with-header">
                        <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
@@ -228,6 +248,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="col s12 m6">
+                        <div class="card">
+                            <div class="card-content">
+                                <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
+                            </div>
+                        </div>
+                </div>
+                
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
@@ -280,13 +308,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6">
-                    <div class="card">
-                        <div class="card-content">
-                            <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col s12">
                     <div id="map" style="width: 100%; height: 400px"></div>
                 </div>

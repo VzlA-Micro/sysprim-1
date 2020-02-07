@@ -187,8 +187,15 @@
 
 
                         <div class="col s12">
-                            <div class="row">
-                                <div class="col s6 offset-s4">
+                            <div class="row">                  
+                                <div class="col s12 m6">
+                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
+                                        <i class="icon-account_circle right"></i>    
+                                             Cambiar Propietario
+                                    </button>
+                                </div>
+
+                                <div class="col s12 m5 offset-m1" >
                                         <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
                                             <i class="icon-mode_edit right"></i>
                                             Editar Inmueble
@@ -198,23 +205,16 @@
                                             <i class="icon-save right"></i>
                                         </button>                                  
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s6">
-                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
-                                        <i class="icon-account_circle right"></i>    
-                                             Cambiar Propietario
-                                    </button>
-                                </div>
                                
-                                <div class="col s6">
+                                <div class="col s12 m6" style="margin-top:20px;">
                                     <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
                                         <i class="icon-map right"></i>
                                             Cambiar Ubicación     
                                     </button>
-                                </div>                
-                            </div>      
+                                </div> 
+
+                                
+                             </div>                
                         </div>
                     </div>
                 </form>
@@ -317,9 +317,10 @@
 
 
 
-                        <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">Cambiar Usuario
+                        <div class="input-field col s12 m12">
+                            <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">
                                 <i class="icon-refresh right"></i>
+                                Cambiar Usuario 
                             </a>
                         </div>
                     </div>

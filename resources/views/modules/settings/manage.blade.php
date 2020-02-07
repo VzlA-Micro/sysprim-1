@@ -78,13 +78,13 @@
             </div>
             @endcan
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('bank.rate.manage') }}" class="btn-app white brown-text text-darken-4">
+                <a href="{{ route('bank.rate.manage') }}" class="btn-app white purple-text">
                     <i class="icon-business_center"></i>
                     <span class="truncate">Gestionar Tasa del Banco</span>
                 </a>
             </div>
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.manager')}}" class="btn-app white  green-text text-accent-3">
+                <a href="{{route('rate.manager')}}" class="btn-app white deep-purple-text">
                     <i class="icon-library_books"></i>
                     <span class="truncate">Gestionar Tasas</span>
                 </a>
@@ -92,14 +92,14 @@
 
 
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('prologue.manage')}}" class="btn-app white light-green-text text-accent-3 ">
+                <a href="{{route('prologue.manage')}}" class="btn-app white green-text text-accent-3 ">
                     <i class="icon-date_range"></i>
                     <span class="truncate">Días de Cobro</span>
                 </a>
             </div>
 
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('alicuota.manage')}}" class="btn-app white  purple-text">
+                <a href="{{route('alicuota.manage')}}" class="btn-app white light-green-text text-darken-4">
                     <i class="icon-format_list_numbered"></i>
                     <span class="truncate">Alicuota Inmueble</span>
                 </a>
@@ -108,7 +108,7 @@
 
 
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white  deep-purple-text">
+                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white teal-text">
                     <i class="icon-build"></i>
                     <span class="truncate">Valores Catastrales de Construcción</span>
                 </a>
@@ -118,7 +118,7 @@
 
 
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white teal-text">
+                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-nature_people"></i>
                     <span class="truncate">Valores Catastrales de Terreno</span>
                 </a>
