@@ -188,7 +188,7 @@ $(document).ready(function() {
                     className: "blue-gradient"
                 },
             });
-        } else if ($('#fiscal_period').val() === '') {
+        } else if ($('#fiscal_period').val() == null) {
             swal({
                 title: "Información",
                 text: 'Debe seleccionar un periodo fiscal, para continuar con el registro.',

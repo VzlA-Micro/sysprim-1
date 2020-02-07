@@ -203,6 +203,7 @@ class TicketOfficeController extends Controller
             for ($i = 0; $i < count($taxes_explode); $i++) {
                 $taxes_find = Taxe::findOrFail($taxes_explode[$i]);
                 if ($bank_destinations !== null) {
+                    $code = substr($taxes_find->code, 3, 12);
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = $payments_type. $code;
                     $taxes_find->status = 'process';
