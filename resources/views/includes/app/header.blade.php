@@ -219,7 +219,7 @@
                     <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
                     @endcan
                     @can('Generar Tasas')
-                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="icon-redeem left"></i>Gestión de Tasas</a></li>
+                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="icon-picture_as_pdf left"></i>Gestión de Tasas</a></li>
                     @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">

@@ -1,5 +1,5 @@
 (function () {
-	var url = "https://sysprim.com/";
+    var url = localStorage.getItem('url');
 
   var uploader = document.createElement('input'),
 	  image = document.getElementById('img-result');

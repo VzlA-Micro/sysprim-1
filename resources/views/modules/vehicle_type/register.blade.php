@@ -32,13 +32,13 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-swap_vert prefix"></i>
-                            <input type="text" name="rate" id="rate" class="validate number-only-float" pattern="[A-Za-z0-9,.]+"
-                                   title="Solo puede escribir letras y numeros."  maxlength="2" required>
+                            <input type="text" name="rate" id="rate" class="validate number-only-positve number-date" pattern="[A-Za-z0-9,.]+"
+                                   title="Solo puede escribir letras y numeros."  maxlength="5" required>
                             <label for="rate">Tarifa menor a 3 años(U.T).</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-swap_vert prefix"></i>
-                            <input type="text" name="rate_ut" id="rate_ut" class="validate  only-number-positive" pattern="[A-Za-z0-9,.]+"
+                            <input type="text" name="rate_ut" id="rate_ut" class="validate  only-number-positive number-date" pattern="[A-Za-z0-9,.]+"
                                    title="Solo puede escribir letras." required maxlength="5">
                             <label for="rate_ut">Tarifa mayor a 3 años(U.T)</label>
                         </div>

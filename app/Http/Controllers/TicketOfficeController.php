@@ -913,6 +913,7 @@ class TicketOfficeController extends Controller
         $pdf='';
         $email='';
 
+
         if($taxes->branch==='Act.Eco') {
 
 
@@ -939,7 +940,8 @@ class TicketOfficeController extends Controller
                 $band = true;
                 $email=$user[0]->email;
 
-            } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified'||$taxes->status == 'verified-sysprim') {
+            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')) {
+
                 $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -960,7 +962,8 @@ class TicketOfficeController extends Controller
 
 
             $email=$user[0]->email;
-        }elseif($taxes->branch==='Tasas y Cert'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+        }elseif($taxes->branch=='Tasas y Cert'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+
             $rate=$taxes->rateTaxes()->get();
             $type='';
             if(!is_null($rate[0]->pivot->company_id)){
@@ -980,7 +983,7 @@ class TicketOfficeController extends Controller
             $user=User::find($rate[0]->pivot->user_id);;
             $email=$user->email;
             $band=true;
-        } elseif ($taxes->branch=='Inm.Urbanos'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+        } elseif ($taxes->branch=='Inm.Urbanos'&&($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
 
 
             $owner = $taxes->properties()->get();
@@ -1007,7 +1010,7 @@ class TicketOfficeController extends Controller
             $email=$user->email;
             $band=true;
         }
-        elseif ($taxes->branch=='Pat.Veh'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+        elseif ($taxes->branch=='Pat.Veh'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
 
             $vehicleTaxes=$taxes->vehicleTaxes()->get();
             $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);

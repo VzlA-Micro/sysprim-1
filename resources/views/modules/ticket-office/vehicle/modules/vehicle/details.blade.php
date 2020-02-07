@@ -15,7 +15,7 @@
                             Vehículo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.read') }}">Ver Vehículos</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#">Detalles Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detalles</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8">
@@ -271,24 +271,24 @@
                         <div class="row">
 
                             <div class="col s12 m6">
-                                <a href="#" class="btn btn-large waves-effect waves-light blue col s12 "
+                                <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
                                     Cambiar Propietario
                                     <i class="icon-refresh right"></i>
                                 </a>
-                                <a href="#" class=" hide btn btn-large waves-effect waves-light blue col s12"
+                                <a href="#" class=" hide btn btn-large btn-rounded waves-effect waves-light blue col s12"
                                    id="save-change">
                                     Guardar Cambios
-                                    <i class="icon-refresh right"></i>
+                                    <i class="icon-save right"></i>
                                 </a>
                             </div>
 
                             @can('Actualizar Vehiculos')
-                                <div class="col s12 m6">
-                                    <a href="#" class="btn btn-large waves-effect waves-light green col s12 "
+                                <div class="col s12 m6" style="margin-top:10px">
+                                    <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle">
                                         Actualizar
-                                        <i class="icon-refresh right"></i>
+                                        <i class="icon-mode_edit right"></i>
                                     </a>
                                 </div>
                             @endcan
@@ -422,11 +422,11 @@
 
                         @endcan
                         <div class="input-field col s12 m12 ">
-                            <a id="changeUW" href="#" class="center btn btn-large waves-effect waves-light green col s12 btn-rounded ">Cambiar Usuario Web
-                                <i class="icon-refresh right"></i>
+                            <a id="changeUW" href="#" class="center btn btn-large waves-effect waves-light peach col s12 btn-rounded ">Cambiar Usuario Web
+                                <i class="icon-mode_edit right"></i>
                             </a>
-                            <a id="saveUW" href="#" class="hide btn btn-large waves-effect waves-light green col s12 btn-rounded ">Guardar Cambios
-                                <i class="icon-refresh right"></i>
+                            <a id="saveUW" href="#" class="hide btn btn-large waves-effect waves-light blue col s12 btn-rounded ">Guardar Cambios
+                                <i class="icon-save right"></i>
                             </a>
                         </div>
                     </div>

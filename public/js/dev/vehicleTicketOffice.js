@@ -1260,25 +1260,142 @@ $('document').ready(function () {
         });
     });
 
+    var companies_id='';
+    var type_taxes='';
+
+
     $('.payroll').change(function () {
+        if(companies_id!==''){
+            if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
+                companies_id=$(this).attr('data-company');
+            }else if ($(this).attr('data-company')!=companies_id){
+                swal({
+                    title: "Información",
+                    text: "Las planillas selecionadas no pertenecen a la misma empresa.",
+                    icon: "info",
+                    button: "Ok",
+                });
+                $(this).prop('checked', false);
+            }
+        }else{
+            companies_id=$(this).attr('data-company');
+        }
 
-        var c = 0;
 
-        $("input[type=checkbox]:checked").each(function (index, check) {
-            c++;
+        if(type_taxes!==''){
+            if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
+                type_taxes=$(this).attr('data-taxes');
+            }else if ($(this).attr('data-taxes')!=type_taxes){
+                swal({
+                    title: "Información",
+                    text: "Las planillas selecionadas deben ser del mismo tipo.",
+                    icon: "info",
+                    button: "Ok",
+                }).then(function () {
+
+                    location.reload();
+                });
+
+
+                $(this).prop('checked', false);
+            }
+        }else{
+            type_taxes=$(this).attr('data-taxes');
+        }
+
+    });
+
+
+
+
+    /*$('#select-next').click(function () {
+        var acum = '';
+        var band=false;
+
+
+        $('input.payroll:checked').each(function () {
+            band=true;
+            acum += $(this).val() + '-';
         });
 
-        if (c > 1) {
+        if(band){
+            $('#two').removeClass('disabled');
+            $('ul.tabs').tabs("select", "payment-tab");
+            $.ajax({
+                method: "GET",
+                url: url + "ticket-office/taxes/calculate/" + acum,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+
+
+
+                    if(response.status==='success'){
+                        $('.taxes_id').each(function () {
+                            $(this).val(acum);
+                        });
+
+                        $('.amount').each(function(){
+                            $(this).val(response.amount);
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                        $('#amount_total_depo').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        $('#amount_total').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+                        $('#amount_total_tr').val(function (index, value) {
+                            return number_format(value, 2);
+                        });
+
+                        M.updateTextFields();
+
+                    }else{
+                        swal({
+                            title: "!Bien Hecho",
+                            text: "La planilla ingresada se ha verificada con éxito, ya que el dinero a pagar es igual a 0.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.open(url + 'ticket-office/generate-receipt/' +acum, "RECIBO DE PAGO", "width=500, height=600");
+
+                            location.reload();
+                        });
+                    }
+                },
+
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }else{
             swal({
                 title: "Información",
-                text: "Solo se puede selecionar una planilla para realiazar el pago. ",
+                text: "Debes selecionar una planilla válida.",
                 icon: "info",
                 button: "Ok",
             });
-            $(this).prop('checked', false);
-
         }
+
     });
+
+*/
+
 
 
     $('#select-next').click(function () {
@@ -1334,7 +1451,7 @@ $('document').ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function () {
-                            window.open(url + 'ticket-office/generate-receipt/' + acum, "RECIBO DE PAGO", "width=500, height=600");
+                            window.open(url + '/ticketOffice/vehicle/generate-receipt/' + acum, "RECIBO DE PAGO", "width=500, height=600");
 
                             location.reload();
                         });
@@ -1692,7 +1809,7 @@ $('document').ready(function () {
 
     function generateReceipt() {
         var taxes_id = $('.taxes_id').val();
-        window.open(url + 'vehicle/payments/taxes/download/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
+        window.open(url + '/ticketOffice/vehicle/generate-receipt/' + taxes_id, "RECIBO DE PAGO", "width=500, height=600");
     }
 
 
@@ -1831,7 +1948,7 @@ $('document').ready(function () {
                     }).then(function (accept) {
                         $('#amount_total_tr').val('');
                         if ($('#company_id').val() !== '') {
-                            window.open(url + 'vehicle/payments/taxes/download/' + taxes_id + '/false', "RECIBO DE PAGO", "width=500, height=600");
+                            window.open(url + '/ticketOffice/vehicle/generate-receipt/' + taxes_id, "RECIBO DE PAGO", "width=500, height=600");
                             location.reload();
                         }
 
