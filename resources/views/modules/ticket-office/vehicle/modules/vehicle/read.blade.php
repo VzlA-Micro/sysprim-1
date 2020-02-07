@@ -24,7 +24,7 @@
                         <h5>Vehículos Registrados</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped responsive-table" id="vehicle">
+                        <table class="highlight centered" id="vehicle" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Licencia</th>

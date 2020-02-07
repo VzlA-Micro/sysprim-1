@@ -21,7 +21,7 @@
 
 
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{route('property.ticket-office.read-property')}}" class="btn-app white grey-text text-darken-2">
+                <a href="{{route('property.ticket-office.read-property')}}" class="btn-app white green-text text-darken-2">
                     <i class="icon-list"></i>
                     <span class="truncate">Consultar Inmuebles Urbanos</span>
                 </a>

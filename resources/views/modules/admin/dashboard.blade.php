@@ -19,33 +19,40 @@
             <div class="col s12 m12">
                     <h4>Registros de SysPRIM</h4>
             </div>
-
-            <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text blue-gradient">
-                        <i class="fas fa-user-tag"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title">Usuarios Registrados</span>
-                        <span class="widget-stats-number">{{ $users }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats ">
-                    <div class="widget-stats-icon red-gradient white-text">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title">Empresas Registradas</span>
-                        <span class="widget-stats-number">{{ $companies }}</span>
-                    </div>
-                </div>
-            </div>
+            <div class="row">
+                    <div class="col s12 m6">
+                            <div class="widget bootstrap-widget stats">
+                                <div class="widget-stats-icon blue-gradient">
+                                    <a href="{{ route('users.read') }}" class="white-text">
+                                        <i class="fas fa-user-tag"></i>
+                                    </a>
+                                </div>
+                                <div class="widget-stats-content">
+                                    <span class="widget-stats-title">Usuarios Registrados</span>
+                                    <span class="widget-stats-number">{{ $users }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m6">
+                            <div class="widget bootstrap-widget stats ">
+                                <div class="widget-stats-icon red-gradient">
+                                    <a href="{{ route('companies.read') }}" class="white-text">
+                                        <i class="fas fa-building"></i>
+                                    </a>
+                                </div>
+                                <div class="widget-stats-content">
+                                    <span class="widget-stats-title">Empresas Registradas</span>
+                                    <span class="widget-stats-number">{{ $companies }}</span>
+                                </div>
+                            </div>
+                        </div>
+ 
                 <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
-                        <div class="widget-stats-icon white-text orange-gradient">
-                            <i class="fas fa-car-alt"></i>
+                        <div class="widget-stats-icon orange-gradient">
+                            <a href="{{ route('ticketOffice.vehicle.read') }}" class="white-text">
+                                <i class="fas fa-car-alt"></i>
+                            </a>                          
                         </div>
                         <div class="widget-stats-content">
                             <span class="widget-stats-title">Vehículos Registrados</span>
@@ -55,8 +62,10 @@
                 </div>
                 <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
-                        <div class="widget-stats-icon white-text green-gradient">
-                            <i class="fas fa-city"></i>
+                        <div class="widget-stats-icon green-gradient">
+                            <a href="{{ route('property.ticket-office.read-property') }}" class="white-text">
+                                <i class="fas fa-city"></i>
+                            </a>    
                         </div>
                         <div class="widget-stats-content">
                             <span class="widget-stats-title">Inmuebles Registrados</span>
@@ -64,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             @endcan
            <!--  <div class="col s12 m6">
                <div class="widget bootstrap-widget stats">
@@ -78,96 +88,103 @@
                    </div>
                </div>
            </div> -->
-           <div class="col s12 m12">
-               <h4>Bancos</h4>
-           </div>
-           <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text bod-green">
-                        <i class="i-bod"></i>
+           <div class="row">
+                <div class="col s12 m12">
+                        <h4>Bancos</h4>
                     </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bod"></span> Bs.
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text bnc-blue">
-                        <i class="i-bnc"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bnc"></span> Bs.
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12 m6 l4">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text banesco-green">
-                        <i class="i-banesco"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>Banesco</b></span>
-                        <span class="widget-stats-number">
-                            <span id="banesco" class=""></span> Bs.
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col s12 m6 l4">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text x100-banco-yellow">
-                        <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>100% Banco</b></span>
-                        <span class="widget-stats-number">
-                            <span class="" id="banco100"></span> Bs.
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col s12 m6 l4">
-                <div class="widget bootstrap-widget stats">
-                    <div class="widget-stats-icon white-text red-gradient">
-                        <i class="i-bicentenario" style="font-size: 30px"></i>
-                    </div>
-                    <div class="widget-stats-content">
-                        <span class="widget-stats-title"><b>Banco Bicentenario</b></span>
-                        <span class="widget-stats-number">
-                            <span class="" id="bicentenario"></span> Bs.
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12 m12">
-                <h4>Recaudaciones</h4>
-            </div>
-
-            <div class="col s12" data-aos="zoom-in">
-                    <div class="widget bootstrap-widget stats">
-                        <div class="widget-stats-icon green white-text">
-                            <i class="i-bss"></i>
-                        </div>
-                        <div class="widget-stats-content">
-                            <span class="widget-stats-title">Recaudación Total en Bolivares</span>
-                            <span class="widget-stats-number">
-                                <span id="recaudacion" class="timer"></span> Bs.
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                    <div class="col s12 m6">
+                         <div class="widget bootstrap-widget stats">
+                             <div class="widget-stats-icon white-text bod-green">
+                                 <i class="i-bod"></i>
+                             </div>
+                             <div class="widget-stats-content">
+                                 <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
+                                 <span class="widget-stats-number">
+                                     <span class="" id="bod"></span> Bs.
+                                 </span>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col s12 m6">
+                         <div class="widget bootstrap-widget stats">
+                             <div class="widget-stats-icon white-text bnc-blue">
+                                 <i class="i-bnc"></i>
+                             </div>
+                             <div class="widget-stats-content">
+                                 <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
+                                 <span class="widget-stats-number">
+                                     <span class="" id="bnc"></span> Bs.
+                                 </span>
+                             </div>
+                         </div>
+                     </div>
+              </div>
            
+              <div class="row">
+                    <div class="col s12 m6 l4">
+                            <div class="widget bootstrap-widget stats">
+                                <div class="widget-stats-icon white-text banesco-green">
+                                    <i class="i-banesco"></i>
+                                </div>
+                                <div class="widget-stats-content">
+                                    <span class="widget-stats-title"><b>Banesco</b></span>
+                                    <span class="widget-stats-number">
+                                        <span id="banesco" class=""></span> Bs.
+                                    </span>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="col s12 m6 l4">
+                            <div class="widget bootstrap-widget stats">
+                                <div class="widget-stats-icon white-text x100-banco-yellow">
+                                    <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
+                                </div>
+                                <div class="widget-stats-content">
+                                    <span class="widget-stats-title"><b>100% Banco</b></span>
+                                    <span class="widget-stats-number">
+                                        <span class="" id="banco100"></span> Bs.
+                                    </span>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="col s12 m6 l4">
+                            <div class="widget bootstrap-widget stats">
+                                <div class="widget-stats-icon white-text red-gradient">
+                                    <i class="i-bicentenario" style="font-size: 30px"></i>
+                                </div>
+                                <div class="widget-stats-content">
+                                    <span class="widget-stats-title"><b>Banco Bicentenario</b></span>
+                                    <span class="widget-stats-number">
+                                        <span class="" id="bicentenario"></span> Bs.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+              </div>
+            
+              <div class="row">
+                <div class="col s12 m12">
+                    <h4>Recaudaciones</h4>
+                </div>
+            
+                <div class="col s12" data-aos="zoom-in">
+                        <div class="widget bootstrap-widget stats">
+                            <div class="widget-stats-icon green white-text">
+                                <i class="i-bss"></i>
+                            </div>
+                            <div class="widget-stats-content">
+                                <span class="widget-stats-title">Recaudación Total en Bolivares</span>
+                                <span class="widget-stats-number">
+                                    <span id="recaudacion" class="timer"></span> Bs.
+                                 </span>
+                            </div>
+                         </div>
+                    </div>     
+              </div>
+            
+           <div class="row">
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
@@ -190,75 +207,84 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col s12 m12">
-                        <h4>Pagos</h4>
-                </div>
-
-                <div class="col s12 m6">
-                    <ul class="collection with-header">
-                       <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
-                        @foreach ($company as $compa)
-                            <li class="collection-item">
-                                <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
-                                <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
-                                <a href="">Detalles...</a>
-                                <!-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> -->
-                            </li>
-
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="col s12 m6">
-                    <ul class="collection with-header">
-                        <li class="collection-header"><h5>Formas de Pago</h5></li>
-                        {{----}}<li class="collection-item">
-                            <div>
-                                <!--<i class="icon-message circle"></i> -->
-                                <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
-                                <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
-                            </div>
-                        </li>
-                        <li class="collection-item">
-                            <div>
-                                <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
-                                <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                            </div>
-                        </li>
-                        <li class="collection-item">
-                            <div>
-                                <!-- <i class="icon-message circle"></i> -->
-                                <span class="title"><b>Cheque: {{$ppc}} </b></span><br>
-                                <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
-                            </div>
-                        </li>
-                        <li class="collection-item">
-                            <div>
-                                <span class="title"><b>Efectivo: </b>{{$ppe}}</span><br>
-                                <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
-                            </div>
-                        </li>{{----}}
-                    </ul>
-                </div>
-                <div class="col s12 m6">
-                    <div class="card">
-                        <div class="card-content">
-                            <h5 class="center">Formas de Pago</h5>
-                            <canvas id="donus" style="/* position: relative; height:120vh; width:160vw */"></canvas>
-                        </div>
+            <div class="row">
+                    <div class="col s12 m12">
+                            <h4>Pagos</h4>
                     </div>
-                </div>
+                    <div class="col s12 m6">
+                            <ul class="collection with-header">
+                               <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
+                                @foreach ($company as $compa)
+                                    <li class="collection-item">
+                                        <span class="title"><b>Empresa:</b>{{$compa->companies[0]->name}}</span><br>
+                                        <span class=""><b>Monto: </b> {{$compa->amount}}</span><br>
+                                        <a href="">Detalles...</a>
+                                        <!-- <a href="!#" class="secondary-content right"><i class="icon-find_in_page"></i></a> -->
+                                    </li>
+        
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="col s12 m6">
+                            <ul class="collection with-header">
+                                <li class="collection-header"><a href="{{route('ticket-office.type.payments')}}" class="black-text"><h5>Formas de Pago</h5></a></li>
+                                {{----}}<li class="collection-item">
+                                    <div>
+                                        <!--<i class="icon-message circle"></i> -->
+                                        <span class="title"><b>Transferencia: {{$ptb}} </b></span><br>
+                                        <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
+                                    </div>
+                                </li>
+                                <li class="collection-item">
+                                    <div>
+                                        <span class="title"><b>Punto De Venta: </b>{{$ppv}}</span><br>
+                                        <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
+                                    </div>
+                                </li>
+                                <li class="collection-item">
+                                    <div>
+                                        <!-- <i class="icon-message circle"></i> -->
+                                        <span class="title"><b>Cheque: {{$ppc}} </b></span><br>
+                                        <!-- <a href="#!" class="secondary-content" style="font-size:28px"><i class="icon-find_in_page"></i></a> -->
+                                    </div>
+                                </li>
+                                <li class="collection-item">
+                                    <div>
+                                        <span class="title"><b>Efectivo: </b>{{$ppe}}</span><br>
+                                        <!-- <a href="#!" class="secondary-content"><i class="icon-find_in_page"></i></a> -->
+                                    </div>
+                                </li>{{----}}
+                            </ul>
+                        </div>
+            </div>
+                
+
+            <div class="row">
                 <div class="col s12 m6">
                         <div class="card">
                             <div class="card-content">
-                                <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
+                                <h5 class="center">Formas de Pago</h5>
+                                <canvas id="donus" style="/* position: relative; height:120vh; width:160vw */"></canvas>
                             </div>
                         </div>
+                    </div>
+                    <div class="col s12 m6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
+                                </div>
+                            </div>
+                    </div>
                 </div>
+                
                 
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
+                            <span class="card-title">Resumen</span>
+                            <div class="divider"></div>
                             <table class="centered highlight" id="dear-table" style="width: 100%;">
                                 <thead>
                                 <tr>
