@@ -385,7 +385,7 @@ class PropertyTaxesController extends Controller
         ]);
 
         return $pdf->stream();
-        die();
+//        die();
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Inmuebles Urbanos'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
