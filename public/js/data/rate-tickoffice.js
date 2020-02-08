@@ -257,8 +257,11 @@ $('document').ready(function () {
                         $('#type').val('user');
                         $('#id').val(user.id);
 
-                        $('#address').attr('readonly','');
-                        $('#email').attr('readonly','');
+                        $('#address').removeAttr('readonly','');
+                        $('#email').removeAttr('readonly','');
+                        $('#address').val('');
+                        $('#email').val('');
+
 
                     }else if(response.type=='user'){
 
@@ -273,7 +276,6 @@ $('document').ready(function () {
 
 
                         $('#type').val('user');
-
 
                         $('#address').attr('readonly','');
                         $('#email').attr('readonly','');
@@ -958,7 +960,7 @@ $('document').ready(function () {
 
 
 
-    $('#email').blur(function () {
+    $('#email').change(function () {
 
 
         if ($('#email').val() !== '') {

@@ -112,7 +112,6 @@ class CompaniesController extends Controller
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
         $company->phone = $country_code.$phone;
-        $company->created_at='2019-09-14';
         $company->save();
         $id = $company->id;
 

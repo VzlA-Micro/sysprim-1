@@ -59,15 +59,23 @@
                                 <label for="name">Nombre</label>
                             </div>
 
+
+
                             <input id="surname" type="hidden" name="surname" class="validate" value="">
+
                             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
 
 
-                            <div class="input-field col s12 m12">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion"
                                           class="materialize-textarea rate" required maxlength="200"></textarea>
                                 <label for="address">Dirección</label>
+                            </div>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                                <label for="email">Correo</label>
                             </div>
 
 
