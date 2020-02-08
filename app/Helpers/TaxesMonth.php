@@ -16,7 +16,8 @@ class TaxesMonth{
         $date = null;
         $company = Company::find($id);
         $now_pay = Carbon::now();//fecha de pago
-        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orWhereMonth('fiscal_period','=',12)->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
+
+        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orWhereMonth('fiscal_period','=',12)->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
 
         $mount_pay=null;
 

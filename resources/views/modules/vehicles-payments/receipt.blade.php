@@ -7,7 +7,7 @@
     <title>Planilla</title>
     {{-- <link rel="stylesheet" href="http://sysprim.com.devel/css/materialize.min.css">
     <link rel="stylesheet" href="http://sysprim.com.devel/css/material-componente.css"> --}}
-    <link rel="stylesheet" href="http://sysprim.com.devel/css/pdf.css">
+    <link rel="stylesheet" href="https://sysprim.com/css/pdf.css">
     <style>
         body {
 
@@ -29,7 +29,7 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
-                <img src="http://sysprim.com.devel/images/alcaldia_logo.png" style="width:180px; height:80px"
+                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px"
                      alt=""><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
@@ -43,7 +43,7 @@
 					</span>
             </td>
             <td style="width: 25%;" rowspan="2">
-                <img src="http://sysprim.com.devel/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
+                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
                 <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
                 <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
 
