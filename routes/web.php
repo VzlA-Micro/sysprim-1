@@ -410,6 +410,9 @@ Route::middleware(['auth'])->group(/**
         ######################### RUTAS QUE DEBEN SER GLOBALES
         ##### TASAS
         Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
+        Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
+        Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
+
         ##### VEHICULOS
         Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
         Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
@@ -521,7 +524,6 @@ Route::middleware(['auth'])->group(/**
         Route::group(['middleware' => ['permission:Generar Tasas']], function() {
             Route::get('rate/taxpayers/company/register/{id}', 'RateController@createRegisterCompany')->name('rate.taxpayers.company.create');
             Route::get('rate/taxpayers/menu', 'RateController@menuTaxPayers')->name('rate.taxpayers.menu');
-            Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
             Route::get('rate/taxpayers/calculate/{id}', 'RateController@calculateTaxPayers')->name('rate.taxpayers.calculate');
             Route::get('rate/taxpayers/details/{id}', 'RateController@detailsTaxPayers')->name('rate.taxpayers.details');
             Route::get('rate/taxpayers/payments/{id}', 'RateController@typePaymentTaxPayers')->name('rate.taxpayers.typePayment');
@@ -790,7 +792,6 @@ Route::middleware(['auth'])->group(/**
             ########### TAQUILLA --- TASAS
             Route::group(['middleware' => ['permission:Taquilla - Tasas']], function(){
                 Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
-                Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
                 # Nivel 1: Generar Tasa y Ver los pagos de tasas
                 Route::group(['middleware' => ['permission:Tasas - Generar Planilla|Tasas - Pagar Planillas']], function() {
                     Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
@@ -818,7 +819,7 @@ Route::middleware(['auth'])->group(/**
 
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
-                Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
+                Route::get('/properties/ticket-office/geneate', 'PropertyTaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
                 Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
                 Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
                 Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
