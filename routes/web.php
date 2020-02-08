@@ -429,7 +429,7 @@ Route::middleware(['auth'])->group(/**
         Route::post('company/update/map', 'CompaniesController@updatedMap');
         Route::get('/company/verify/{id}', 'CompaniesController@verifyTaxes');
         Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
-        Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
+        Route::post('/company/addCiiu', 'CompaniesController@addCiiu')->name('companies.addCiiu');
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
         Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
