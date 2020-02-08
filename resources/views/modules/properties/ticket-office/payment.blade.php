@@ -31,6 +31,7 @@
                             <table class="centered highlight" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
+                                    <th>Código Catastral</th>
                                     <th>Fecha</th>
                                     <th>Código</th>
                                     <th>Ramo</th>
@@ -47,6 +48,7 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
+                                            <td>{{substr($taxe->properties[0]->code_cadastral,-12)}}</td>
                                             <td>{{ $taxe->created_at }}</td>
                                             <td>{{ $taxe->code }}</td>
                                             <td>{{ $taxe->branch }}</td>
@@ -55,7 +57,9 @@
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"/>
+                                                           value="{{$taxe->id}}"
+                                                    data-property="{{$taxe->properties[0]->id}}"
+                                                    />
                                                     <span></span>
                                                 </label>
                                             </td>

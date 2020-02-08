@@ -1403,9 +1403,9 @@ class TicketOfficeController extends Controller
         elseif ($taxes->branch=='Inm.Urbanos') {
             $owner = $taxes->properties()->get();
             $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
-            $property = Property::find($userProperty->property_id);
-            $propertyTaxes = PropertyTaxes::find($taxes->id);
 
+            $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
 
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
@@ -1414,6 +1414,7 @@ class TicketOfficeController extends Controller
                 $data = User::find($userProperty->person_id);
                 $type = 'user';
             }
+
             $pdf = \PDF::loadView('modules.properties-payments.receipt', [
                 'taxes' => $taxes,
                 'data' => $data,

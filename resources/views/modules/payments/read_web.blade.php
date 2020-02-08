@@ -77,14 +77,14 @@
 
                                             </td>
 
-                                            @elseif($taxe->branch==='Pat.Veh')
+                                        @elseif($taxe->branch==='Pat.Veh')
 
-                                                <td>
-                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
-                                                                class="icon-pageview"></i></a>
+                                            <td>
+                                                <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
 
-                                                </td>
+                                            </td>
                                         @elseif($taxe->branch==='Inm.Urbanos')
                                             <td>
                                                 <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->id])  }}"
@@ -92,7 +92,7 @@
                                                             class="icon-pageview"></i></a>
 
                                             </td>
-                                            @endif
+                                        @endif
 
                                     @endcan
                                 </tr>
@@ -190,16 +190,6 @@
                         columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
-
-
                 {
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',

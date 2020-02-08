@@ -512,53 +512,77 @@ $(document).ready(function () {
     $('#license_plates').change(function () {
         var license = $(this).val();
         console.log(license);
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifyLicense",
-            data: {
-                license: license
-            },
+        if (license == '') {
+            swal({
+                title: "Información",
+                text: "Introduzca una placa",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+        } else if (license.length < 7) {
+            swal({
+                title: "Información",
+                text: "Introduzca una placa valida",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+        } else {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifyLicense",
+                data: {
+                    license: license
+                },
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
 
-                if (data['status'] == "error") {
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Placa Registrada!",
+                            text: data['message'],
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        swal({
+                            title: data['message'],
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Placa Registrada!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    $('#button-vehicle').prop('disabled', false);
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
+
+
     });
 
     $('#bodySerials').change(function () {
