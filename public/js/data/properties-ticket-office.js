@@ -911,9 +911,9 @@ $(document).ready(function() {
         return amount_parts.join(',');
     }
 
-    $('#scan').change(function () {
-        if ($('#scan').val() !== '') {
-            var search = $('#scan').val();
+    $('#search').change(function () {
+        if ($('#search').val() !== '') {
+            var search = $('#search').val();
             $.ajax({
                 method: "GET",
                 url: url + "ticketOffice/property/cashier/" + search,
@@ -932,7 +932,7 @@ $(document).ready(function() {
                         });
 
 
-                        $('#scan').val('');
+                        $('#search').val('');
                     } else if (response.status === 'verified') {
                         swal({
                             title: "Información",
@@ -940,7 +940,7 @@ $(document).ready(function() {
                             icon: "info",
                             button: "Ok",
                         });
-                        $('#scan').val('');
+                        $('#search').val('');
 
                     } else if (response.status === 'cancel') {
                         swal({
@@ -949,7 +949,7 @@ $(document).ready(function() {
                             icon: "warning",
                             button: "Ok",
                         });
-                        $('#scan').val('');
+                        $('#search').val('');
                     } else if (response.status === 'old') {
                         swal({
                             title: "Información",
@@ -959,13 +959,13 @@ $(document).ready(function() {
                         }).then(response=>function () {
                             location.reload();
                         });
-                        $('#scan').val('');
+                        $('#search').val('');
 
                     } else {
 
                         var taxe = response.taxe[0];
-                        var property = response.taxe[0]['property_taxes'][0].license_plate;
-                        var propertyId = response.taxe[0]['property_taxes'][0].id;
+                        var property = response.taxe[0]['properties'][0].code_cadastral;
+                        var propertyId = response.taxe[0]['properties'][0].id;
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
@@ -981,7 +981,7 @@ $(document).ready(function() {
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
-                                '<td>' + vehicle + '</td>' +
+                                '<td>' + property.substr(14,12) + '</td>' +
                                 '<td><i class="icon-check text-green"></i>' + taxe.created_at + '</td>' +
                                 '<td>' + taxe.code + '</td>' +
                                 '<td>' + taxe.branch + '</td>' +
@@ -990,7 +990,7 @@ $(document).ready(function() {
                                 '  <label>\n' +
                                 '           <input type="checkbox" name="payroll" class="payroll"\n' +
                                 '                       value="' + taxe.id + '"' +
-                                'data-vehicle="' + vehicleId +
+                                'data-vehicle="' + propertyId +
                                 '"/>\n' +
                                 '                         <span></span>\n' +
                                 '                                  </label>\n' +

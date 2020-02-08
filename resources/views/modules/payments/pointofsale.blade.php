@@ -76,7 +76,7 @@
                                         @endcan
                                         @can('Detalles Pagos')
                                             @if($taxe->taxes[0]->branch==='Act.Eco')
-@php die()@endphp
+
                                                 @if($taxe->taxes[0]->type!='definitive')
 
                                                     <td>
@@ -222,18 +222,7 @@
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     }
-                },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
-
-
-                {
+                },{
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',
                     className: 'btn orange waves-effect waves-light',

@@ -48,7 +48,7 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
-                                            <td>{{substr($taxe->properties[0]->code_cadastral,-9)}}</td>
+                                            <td>{{substr($taxe->properties[0]->code_cadastral,-12)}}</td>
                                             <td>{{ $taxe->created_at }}</td>
                                             <td>{{ $taxe->code }}</td>
                                             <td>{{ $taxe->branch }}</td>
