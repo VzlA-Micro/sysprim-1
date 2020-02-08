@@ -93,6 +93,31 @@
             <td style="width:20%;font-size: 12px !important;"><b></b></td>
             <td style="width:30%;font-size: 11px !important;"></td>
         </tr>
+    @elseif(isset($person))
+        <tr style="">
+            <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$person->name." ".$person->surname}}</td>
+            <td style="width:15%;font-size: 12px !important; "><b>Placa:</b></td>
+            <td style="width:15%;font-size: 11px !important;">{{$vehicleTaxes[0]->license_plate}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$person->ci}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important"><b>Dirección:</b></td>
+            <td style="width:35%;font-size: 11px !important">{{$person->address}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Telfono:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$person->phone}}</td>
+        </tr>
+        <tr>
+            <td style="width:15%;font-size: 12px !important;"><b>Usuario Web:</b></td>
+            <td style="width:35%;font-size: 11px !important;">{{$user[0]->email}}</td>
+            <td style="width:20%;font-size: 12px !important;"><b></b></td>
+            <td style="width:30%;font-size: 11px !important;"></td>
+        </tr>
     @else
         <tr style="">
             <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>

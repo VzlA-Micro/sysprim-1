@@ -61,8 +61,12 @@ $('document').ready(function () {
                     band = false;
                 }
             });
+
+            console.log(band);
             if (band) {
-                if ($('#id').val() == '') {
+                console.log($('#idUser').val());
+                if ($('#idUser').val() == '') {
+                    console.log(band);
                     var type = $('#type').val();
                     var name;
                     if (type == 'user') {
@@ -99,7 +103,7 @@ $('document').ready(function () {
                             $('#idUser').val(response.id);
                             $('#two').removeClass('disabled');
                             $('#one').addClass('disabled');
-                            $('ul.tabs').tabs("select", "rate-tab");
+                            $('ul.tabs').tabs("select", "vehicle-tab");
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
                         },
@@ -502,7 +506,9 @@ $('document').ready(function () {
     $('#vehicle').on('submit', function (e) {
         e.preventDefault();
         var brand = $('#brand').val();
-        if (brand === null) {
+        var brandN = $('#brand-n').val();
+        var modelN = $('#model-n').val();
+        if (brand == null && brandN==undefined) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar un marca de vehículo para poder completar el registro",
@@ -513,7 +519,18 @@ $('document').ready(function () {
                 },
             });
             $('#brand').focus();
-        } else {
+        } else if (brandN == '' || modelN == '') {
+            swal({
+                title: "Información",
+                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+            $('#brand-n').focus();
+        } else if((brand!=null)||(brandN!=null && modelN!=null)) {
             $.ajax({
                 type: "POST",
                 url: url + "vehicles/save",
