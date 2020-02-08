@@ -1006,6 +1006,7 @@ class TicketOfficeController extends Controller
                 'data' => $data,
                 'property' => $property,
                 'propertyTaxes' => $propertyTaxes,
+                'type' => $type,
                 'firm'=>true
             ]);
 
@@ -1414,12 +1415,12 @@ class TicketOfficeController extends Controller
                 $data = User::find($userProperty->person_id);
                 $type = 'user';
             }
-
             $pdf = \PDF::loadView('modules.properties-payments.receipt', [
                 'taxes' => $taxes,
                 'data' => $data,
                 'property' => $property,
-                'propertyTaxes' => $propertyTaxes
+                'propertyTaxes' => $propertyTaxes,
+                'type' => $type
             ]);
         }
 

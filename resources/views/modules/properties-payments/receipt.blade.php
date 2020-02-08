@@ -250,7 +250,11 @@ margin: 0 !important;
             @endif
         </td>
         <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+        @if($type == 'user')
+            <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
+        @else
+            <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+        @endif
         <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2,',','.')}}</td>
     </tr>
 </table>

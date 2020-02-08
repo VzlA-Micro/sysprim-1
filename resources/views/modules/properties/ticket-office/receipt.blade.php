@@ -261,10 +261,10 @@
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->code}}</td>
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->digit}}</td>
             <td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->payments[0]->code,3,13)}}</td>
-            @if($type == 'company')
-                <td style="font-size: 12px !important;text-align: center;">{{ $data->license }}</td>
+            @if($type == 'user')
+                <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
             @else
-            <td style="font-size: 12px !important;text-align: center;">{{ $data->ci }}</td>
+                <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
             @endif
             <td style="font-size: 12px !important;text-align: center;">{{number_format($totalAcum,2,',','.')}}</td>
         </tr>
