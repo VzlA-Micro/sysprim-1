@@ -990,7 +990,7 @@ class TicketOfficeController extends Controller
 
 
             $owner = $taxes->properties()->get();
-            $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+            $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
             $property = Property::find($userProperty->property_id);
             $propertyTaxes = PropertyTaxes::find($taxes->id);
 
