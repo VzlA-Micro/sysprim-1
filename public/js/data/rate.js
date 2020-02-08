@@ -15,7 +15,7 @@ $('document').ready(function () {
                     className: "blue-gradient"
                 },
             });
-            $('#document').val('')
+            $('#document').val('');
         }
 
     });
@@ -88,7 +88,7 @@ $('document').ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-
+                        $('#id').val(response.id);
 
                         $('#two').removeClass('disabled');
                         $('#one').addClass('disabled');

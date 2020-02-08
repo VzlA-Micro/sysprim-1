@@ -50,16 +50,6 @@
                 @endif
                 <span style="font-size: 10px !important;">{{$taxes[0]->taxes->created_at->format('d-m-Y')}}</span><br>
             </td>
-            <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
-
-                @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)!=='PPV')
-                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->payments[0]->code}}</span><br>
-                @else
-                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->code}}</span><br>
-                @endif
-                <span style="font-size: 10px !important;">{{$taxes[0]->taxes->created_at->format('d-m-Y')}}</span><br>
-            </td>
         </tr><!--
 	        <tr>
 	            <td style="width: 30%; border: solid 1px #FF0000;">AAA</td>

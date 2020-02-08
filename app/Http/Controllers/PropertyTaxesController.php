@@ -302,7 +302,7 @@ class PropertyTaxesController extends Controller
         $type='';
 //        dd($download);
         $owner = $taxe->properties()->get();
-        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+        $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
         $property = Property::find($userProperty->property_id);
         $propertyTaxes = PropertyTaxes::where('taxe_id',$taxe->id)->first();
 
@@ -344,7 +344,9 @@ class PropertyTaxesController extends Controller
 
         $type = '';
         $owner = $taxes->properties()->get();
-        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+        $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+
+
         $property = Property::find($userProperty->property_id);
 
         if (!is_null($userProperty->company_id)) {
@@ -776,7 +778,8 @@ class PropertyTaxesController extends Controller
             ->with('valueBuild')
             ->with('users')
             ->first();
-        $userProperty = UserProperty::find($propertyTaxe->pivot->property_id);
+
+        $userProperty = UserProperty::where('property_id',$propertyTaxe->pivot->property_id)->first();
         $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status,$propertyTaxe->fiscal_period);
 //        dd($taxes);
         if (!is_null($userProperty->company_id)) {
@@ -849,7 +852,7 @@ class PropertyTaxesController extends Controller
 
         $taxes = Taxe::whereIn('id', $taxes_explode)->with('properties')->get();
         $property = Property::find($taxes[0]->properties[0]->id);
-        $userProperty = UserProperty::find($taxes[0]->properties[0]->id);
+        $userProperty = UserProperty::where('property_id',$taxes[0]->properties[0]->id)->first();
 //        dd($userProperty);
         if (!is_null($userProperty->company_id)) {
             $data = Company::find($userProperty->company_id);

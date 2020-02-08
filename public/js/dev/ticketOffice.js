@@ -368,7 +368,7 @@ $(document).ready(function () {
                         if (response.status === 'verified') {
                             swal({
                                 title: "Información",
-                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declración definitiva de este anio.',
+                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declaración definitiva de este año.',
                                 icon: "info",
                                 button: {
                                     text: "Esta bien",

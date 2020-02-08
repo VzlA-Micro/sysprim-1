@@ -14,21 +14,13 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Verificación de Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('bank.read') }}">Ver Pagos Verificados del Dia.</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('bank.read') }}">Ver Pagos Verificados</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
                 <div class="card">
-
-                    @if(session("message") )
-                        <div class="alert alert-success center-align">
-                            <strong>{{session("message")}}</strong>
-                        </div>
-                    @endif
-
-
                     <div class="card-header center-align">
-                        <h5>Pagos Verificados del Dia.</h5>
+                        <h5>Pagos Verificados</h5>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered responsive-table" id="payments" style="width: 100%">
@@ -37,6 +29,7 @@
                                     <th>Codigo</th>
                                     <th>Ramo</th>
                                     <th>Monto</th>
+                                    <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +38,55 @@
                                     <td>{{$taxe->code}}</td>
                                     <td>{{$taxe->branch}}</td>
                                     <td>{{$taxe->amountFormat}}</td>
+                                    @can('Detalles Planilla')
+                                        @if($taxe->branch==='Act.Eco')
+
+                                            @if($taxe->type!='definitive')
+
+                                                <td>
+                                                    <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+                                                </td>
+
+
+                                            @else
+                                                <td>
+                                                    <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+                                            @endif
+
+                                        @elseif($taxe->branch==='Tasas y Cert')
+
+                                            <td>
+                                                <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+
+                                            </td>
+                                        @elseif($taxe->branch==='Pat.Veh')
+
+                                            <td>
+                                                <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->id)  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+
+                                            </td>
+                                        @elseif($taxe->branch==='Inm.Urbanos')
+                                            <td>
+                                                <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->id])  }}"
+                                                   class="btn btn-floating orange waves-effect waves-light"><i
+                                                            class="icon-pageview"></i></a>
+
+                                            </td>
+                                        @endif
+
+                                    @endcan
+
+
                                 </tr>
                                 @endforeach
                             </tbody>

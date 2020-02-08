@@ -6,48 +6,55 @@ $('document').ready(function () {
     var type_taxes='';
 
 
-    $('.payroll').change(function () {
-        if(companies_id!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
-                 companies_id=$(this).attr('data-company');
-            }else if ($(this).attr('data-company')!=companies_id){
-                swal({
-                    title: "Información",
-                    text: "Las planillas selecionadas no pertenecen a la misma empresa.",
-                    icon: "info",
-                    button: "Ok",
-                });
-                $(this).prop('checked', false);
+
+
+
+    function verifyPlanilla() {
+        $('.payroll').change(function () {
+            if(companies_id!==''){
+                if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
+                    companies_id=$(this).attr('data-company');
+                    console.log(companies_id);
+                }else if ($(this).attr('data-company')!=companies_id){
+                    swal({
+                        title: "Información",
+                        text: "Las planillas selecionadas no pertenecen a la misma empresa.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                    $(this).prop('checked', false);
+                }
+            }else{
+                companies_id=$(this).attr('data-company');
             }
-        }else{
-            companies_id=$(this).attr('data-company');
-        }
 
 
-        if(type_taxes!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
-                type_taxes=$(this).attr('data-taxes');
-            }else if ($(this).attr('data-taxes')!=type_taxes){
-                swal({
-                    title: "Información",
-                    text: "Las planillas selecionadas deben ser del mismo tipo.",
-                    icon: "info",
-                    button: "Ok",
-                }).then(function () {
+            if(type_taxes!==''){
+                if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
+                    type_taxes=$(this).attr('data-taxes');
+                }else if ($(this).attr('data-taxes')!=type_taxes){
+                    swal({
+                        title: "Información",
+                        text: "Las planillas selecionadas deben ser del mismo tipo.",
+                        icon: "info",
+                        button: "Ok",
+                    }).then(function () {
 
-                    location.reload();
+                        location.reload();
                     });
 
 
-                $(this).prop('checked', false);
+                    $(this).prop('checked', false);
+                }
+            }else{
+                type_taxes=$(this).attr('data-taxes');
             }
-        }else{
-            type_taxes=$(this).attr('data-taxes');
-        }
 
-    });
+        });
+    }
 
 
+    verifyPlanilla();
 
 
     $('#select-next').click(function () {
@@ -235,8 +242,6 @@ $('document').ready(function () {
 
 
 
-
-
            if (parseInt(amount_pay) > parseInt(amount)) {
             swal({
                 title: "Error",
@@ -412,7 +417,6 @@ $('document').ready(function () {
 
 
 
-
                             $('#receipt-body').append('' +
                                 '<tr>' +
                                     '<td><i class="icon-check text-green"></i>'+company.name+'</td>'+
@@ -422,7 +426,9 @@ $('document').ready(function () {
                                     '<td>' +'<p>' +
                                         '  <label>\n' +
                                         '           <input type="checkbox" name="payroll" class="payroll"\n' +
-                                        '                       value="'+taxe.id+'"/>\n' +
+                                        '                       value="'+taxe.id+'"'+
+                                        '                       data-company="'+taxe.companies[0].id+'"'+
+                                        '                       data-taxes="'+taxe.type+'"/>\n' +
                                         '                         <span></span>\n' +
                                         '                                  </label>\n' +
                                         '</p>'+
@@ -430,10 +436,12 @@ $('document').ready(function () {
                                      '<td>' +taxe.amountFormat+'</td>'+
                                      '<td>'+link+'</td>'+
                                 '</tr>');
-
-                            $(this).val();
                             M.updateTextFields();
+
+
+                            verifyPlanilla();
                         });
+
 
 
                     }
