@@ -243,9 +243,9 @@ class VehiclesTaxesController extends Controller
 
         $taxes->update();
         if (isset($vehicle)) {
-            return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id, 'vehicle' => $vehicle]);
+            return view('modules.taxes.paymentsVehicle', ['taxes_id' => $id, 'vehicle' => $vehicle]);
         } else {
-            return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+            return view('modules.taxes.paymentsVehicle', ['taxes_id' => $id]);
         }
 
 
