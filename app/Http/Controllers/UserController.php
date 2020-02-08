@@ -87,7 +87,7 @@ class UserController extends Controller{
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
         $user=User::where('ci', $nacionality . $ci)->where('status_account','=','waiting')->first();
-
+        $address =$request->input('address');
 
 
         if(!is_null($user)){
@@ -99,6 +99,7 @@ class UserController extends Controller{
             $user->email = $email;
             $user->password = $password;
             $user->status_account='authorized';
+            $user->address=$address;
             $user->update();
         }else {
             $user = new User();
@@ -111,6 +112,7 @@ class UserController extends Controller{
             $user->syncRoles($role);
             $user->email = $email;
             $user->password = $password;
+            $user->address=$address;
             $user->save();
         }
     }
@@ -166,11 +168,14 @@ class UserController extends Controller{
         $phone= $request->input('country_code').$request->input('phone');
         $role= $request->input('role');
         $email= $request->input('email');
+        $address =$request->input('address');
         $user=User::find($id);
         $user->phone=$phone;
         $user->role_id=$role;
         $user->syncRoles($role);
         $user->email=$email;
+        $user->address=$address;
+
         $user->update();
     }
 
@@ -236,29 +241,62 @@ class UserController extends Controller{
         $country_code= $request->input('country_code');
         $role= $request->input('role');
         $email= $request->input('email');
+        $address =$request->input('address');
         $fullCi = $nacionality.$ci;
         $password=Hash::make($fullCi);
 
-        $user=new User();
-        $user->ci=$nacionality.$ci;
-        $user->name=$name;
-        $user->surname=$surname;
-        $user->phone=$country_code.$phone;
-        $user->confirmed=1;
-        $user->role_id=$role;
-        $user->syncRoles($role);
-        $user->email=$email;
-        $user->password=$password;
-        $user->save();
+
+        $user=User::where('ci', $nacionality . $ci)->where('status_account','=','waiting')->first();
+
+
+
+        if(!is_null($user)) {
+            $user=User::find($user->id);
+            $user->ci=$nacionality.$ci;
+            $user->name=$name;
+            $user->surname=$surname;
+            $user->phone=$country_code.$phone;
+            $user->confirmed=1;
+            $user->status_account='authorized';
+            $user->role_id=$role;
+            $user->syncRoles($role);
+            $user->email=$email;
+            $user->password=$password;
+            $user->address=$address;
+            $user->update();
+
+        }else{
+            $user=new User();
+            $user->ci=$nacionality.$ci;
+            $user->name=$name;
+            $user->surname=$surname;
+            $user->phone=$country_code.$phone;
+            $user->confirmed=1;
+            $user->role_id=$role;
+            $user->syncRoles($role);
+            $user->email=$email;
+            $user->password=$password;
+            $user->address=$address;
+            $user->save();
+        }
+
+
+
     }
 
     public function updateTaxpayer(Request $request) {
         $id= $request->input('id');
         $phone= $request->input('phone');
+        $country_code= $request->input('country_code');
         $email= $request->input('email');
+        $address= $request->input('address');
+
         $user=User::find($id);
-        $user->phone=$phone;
+        $user->phone=$country_code.$phone;
         $user->email=$email;
+        $user->address=  $address;
+
+
         $user->update();
     }
 

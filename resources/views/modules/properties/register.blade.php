@@ -150,14 +150,14 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
-                                <input type="text" name="area_ground" id="area_ground" class="validate number-only only-number-positive" maxlength="5" pattern="[0-9.]+"
+                                <input type="text" name="area_ground" id="area_ground" class="validate number-only only-number-positive" maxlength="6" pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                        required>
                                 <label for="area_ground">Area de Terreno</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-location_city prefix"></i>
-                                <input type="text" name="area_build" id="area_build" class="validate number-only only-number-positiv "   maxlength="3"  pattern="[0-9.]+"
+                                <input type="text" name="area_build" id="area_build" class="validate number-only only-number-positiv "   maxlength="6"  pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                        required>
                                 <label for="area_build">Area de Construcción</label>

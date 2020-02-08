@@ -21,8 +21,11 @@ $('document').ready(function () {
                         text: "Las planillas selecionadas no pertenecen a la misma empresa.",
                         icon: "info",
                         button: "Ok",
+                    }).then(function () {
+                        $(this).prop('checked', false);
+                        location.reload();
                     });
-                    $(this).prop('checked', false);
+
                 }
             }else{
                 companies_id=$(this).attr('data-company');

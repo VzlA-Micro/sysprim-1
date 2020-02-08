@@ -67,6 +67,17 @@
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
+
+
+
+                        <div class="input-field col s12 m12">
+                            <i class="icon-directions prefix"></i>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required></textarea>
+                            <label for="address">Dirección</label>
+                        </div>
+
+
+
                         <input type="hidden" name="role" id="role" value="3">
             		</div>
             		<div class="card-footer center">

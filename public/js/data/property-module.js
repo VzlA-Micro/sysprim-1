@@ -474,15 +474,24 @@ $(document).ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+                    if(response.status==='success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: response.message,
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            window.location.href = url + "property/ticket-office/read-property";
+                        });
 
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: response.message,
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        window.location.href = url + "property/ticket-office/read-property";
-                    });
+                    }else if(response.status==='error') {
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button: "Ok",
+                        });
+                    }
 
 
                     $("#preloader").fadeOut('fast');

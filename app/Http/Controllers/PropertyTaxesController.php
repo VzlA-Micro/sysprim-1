@@ -321,12 +321,10 @@ class PropertyTaxesController extends Controller
         ]);
 
         if(isset($download)){
-            return $pdf->stream('PLANILLA_TASAS.pdf');
+            return $pdf->stream('PLANILLA_INMUEBLE.pdf');
         }else{
-            return $pdf->download('PLANILLA_TASAS.pdf');
+            return $pdf->download('PLANILLA_INMUEBLE.pdf');
         }
-//        return $pdf->stream('PLANILLA_INMUEBLE.pdf');
-//        return $pdf->download('PLANILLA_INMUEBLE.pdf');
     }
 
     public function paymentStore(Request $request) {

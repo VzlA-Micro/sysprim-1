@@ -190,7 +190,7 @@
             @endif
         </td>
         <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+        <td style="font-size: 12px !important;text-align: center;">{{$data->ci .''. $data->license}}</td>
         <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2)}}</td>
     </tr>
 </table>

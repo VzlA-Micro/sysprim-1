@@ -42,13 +42,9 @@
             </td>
             <td style="width: 25%;" rowspan="2">
                 <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
-
-                @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)!=='PPV')
-                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->payments[0]->code}}</span><br>
-                @else
-                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->code}}</span><br>
-                @endif
-                <span style="font-size: 10px !important;">{{$taxes[0]->taxes->created_at->format('d-m-Y')}}</span><br>
+                @php $i=count($taxes[0]->taxes->payments); @endphp
+                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->payments[$i-1]->code}}</span><br>
+                    <span style="font-size: 10px !important;">{{$taxes[0]->taxes->created_at->format('d-m-Y')}}</span><br>
             </td>
         </tr><!--
 	        <tr>
@@ -299,17 +295,11 @@
         </tr>
 
         <tr>
-            <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->code}}</td>
-            <td style="font-size: 12px !important; text-align: center;">
-            @if($taxes[0]->taxes->digit)
-                    {{$taxes[0]->taxes->digit}}
-            @else
-                {{"000"}}
-            @endif
-           </td>
-            <td style="font-size: 12px !important; text-align: center;">{{substr($taxes[0]->taxes->code,3,13)}}</td>
-            <td style="font-size: 12px !important; text-align: center;">{{$taxes[0]->taxes->companies[0]->license}}</td>
-            <td style="font-size: 12px !important; text-align: center;">{{number_format($amount_total,2)}}</td>
+            <td style="font-size: 12px !important; text-align: center;"></td>
+            <td style="font-size: 12px !important; text-align: center;"></td>
+            <td style="font-size: 12px !important; text-align: center;"></td>
+            <td style="font-size: 12px !important; text-align: center;"></td>
+            <td style="font-size: 12px !important; text-align: center;"></td>
         </tr>
 
     @endif

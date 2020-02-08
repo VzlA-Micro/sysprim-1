@@ -90,6 +90,15 @@ class PropertyController extends Controller
             '-' . $request->input('C7') .
             '-' . $request->input('C8');
 
+
+
+        $property=Property::where('code_cadastral',$code_cadastral)->first();
+        if(is_object($property)){
+            return response()->json(['status'=>'error','message'=>'Ya existe un inmueble asociado a este código catastral, por favor ingrese un código valido']);
+        }
+
+
+
         $location_cadastral = $request->input('location_cadastral');
         $area_build = $request->input('area_build');
         $area_ground = $request->input('area_ground');
@@ -256,6 +265,13 @@ class PropertyController extends Controller
         return response()->json([$property]);
     }
 
+
+
+
+
+
+
+
     public function findTaxpayersCompany($type_document,$document){
         if($type_document=='V'||$type_document=='E'){
             $user = User::where('ci', $type_document.$document)->get();
@@ -416,6 +432,16 @@ class PropertyController extends Controller
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
             '-' . $request->input('C8');
+
+
+        $property=Property::where('code_cadastral',$code_cadastral)->first();
+        if(is_object($property)){
+            return response()->json(['status'=>'error','message'=>'Ya existe un inmueble asociado a este código catastral, por favor ingrese un código valido']);
+        }
+
+
+
+
 
         $location_cadastral = $request->input('location_cadastral');
         $area_build = $request->input('area_build');

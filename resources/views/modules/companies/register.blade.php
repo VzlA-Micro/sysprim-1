@@ -124,6 +124,7 @@
                             <label for="phone">Teléfono</label>
                             <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
+
                         <div class="input-field col s12 m12">
                             <i class="icon-directions prefix"></i>
                             <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required></textarea>

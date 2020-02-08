@@ -238,7 +238,7 @@ $('document').ready(function () {
         $('#name').val('');
 
 
-        if(document!=='') {
+        if(document!==''&&document.length>=7) {
             $.ajax({
                 method: "GET",
                 url: url + "rate/taxpayers/find/" + type_document  +"/"+document,
@@ -256,6 +256,9 @@ $('document').ready(function () {
                         $('#user_name').val(user.nombres);
                         $('#type').val('user');
                         $('#id').val(user.id);
+
+                        $('#address').attr('readonly','');
+                        $('#email').attr('readonly','');
 
                     }else if(response.type=='user'){
 

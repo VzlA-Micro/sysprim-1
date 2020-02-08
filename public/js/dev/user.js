@@ -433,7 +433,13 @@ $(document).ready(function () {
 
             $('#phone_user').removeAttr('readonly');
             $('#email_edit').removeAttr('readonly','');
+
+            $('#phone').removeAttr('readonly');
+            $('#country_code').removeAttr('disabled','');
+
+            $('select').formSelect();
             $('#rol').attr('readonly', 'disabled');
+            $('#address').removeAttr('disabled', ' ');
             $('#actualizar').text('Guardar');
             statusBoton = true;
         }

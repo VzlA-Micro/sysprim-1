@@ -331,7 +331,7 @@ class RateController extends Controller{
         $bank_payment = $request->input('bank_payment');
 
         $taxes = Taxe::findOrFail($id_taxes);
-        $code = TaxesNumber::generateNumberTaxes($type_payment . "81");
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "88");
         $taxes->code = $code;
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
