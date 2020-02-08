@@ -43,7 +43,13 @@
                                     <td>{{$property->valueGround->name}}</td>
                                     <td>{{$property->parish->name}}</td>
                                     <td>{{$property->address}}</td>
-                                    <td><a href="{{route('property.ticket-office.details-property',['id'=>$property->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
+                                    @can('Detalles Inmuebles')
+                                    <td>
+                                        <a href="{{route('property.ticket-office.details-property',['id'=>$property->id])}}" class="btn btn-floating red">
+                                            <i class="icon-pageview"></i>
+                                        </a>
+                                    </td>
+                                    @endcan
                                 </tr>
 
 
