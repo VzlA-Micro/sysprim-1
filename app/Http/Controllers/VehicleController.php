@@ -93,21 +93,28 @@ class VehicleController extends Controller
         $vehicle->type_vehicle_id = $request->input('typeV');
         $vehicle->status = 'enabled';
 
-
         $idCompany = $request->input('idCompany');
 
-        if (!empty($request->input('brand-n') && $request->input('model-n'))) {
+        if (!empty($request->input('brand-n') && !empty($request->input('model-n')))) {
 
             $brandVehicles = new Brand();
             $modelsVehicle = new ModelsVehicle();
 
             $models = strtoupper($request->input('model-n'));
             $brand = strtoupper($request->input('brand-n'));
-            $otherBrand = Brand::where('name', $brand)->exists();
+            $otherBrand = Brand::where('name', $brand)->first();
 
-            if ($otherBrand) {
+            if (is_object($otherBrand)) {
+                $modelsVehicle->name=$models;
+                $modelsVehicle->brand_id=$otherBrand->id;
+                $modelsVehicle->save();
+
+                $vehicle->model_id = $modelsVehicle->id;
 
             } else {
+                var_dump($request->input());
+                die();
+
                 $brandVehicles->name = $brand;
                 $brandVehicles->save();
 
@@ -120,8 +127,8 @@ class VehicleController extends Controller
 
         } else {
             $vehicle->model_id = $request->input('model');
-
         }
+
 
         //$vehicle->model_id = $request->input('model');
         $vehicle->year = $request->input('year');
@@ -140,6 +147,7 @@ class VehicleController extends Controller
         $vehicle->save();
 
         $owner_id = $request->input('idUser');
+
 
         $status = $request->input('status');
         $userVehicle = new UserVehicle();
@@ -379,12 +387,11 @@ class VehicleController extends Controller
         if ($request->input('id') != null) {
             $id = $request->input('id');
         }
-        $licencia=strtoupper($request->input('license'));
+        $licencia = strtoupper($request->input('license'));
 
         if (is_null($id)) {
-            $license = Vehicle::where('license_plate',$licencia )->get();
-        }
-        else {
+            $license = Vehicle::where('license_plate', $licencia)->get();
+        } else {
             $license = Vehicle::where('license_plate', $licencia)
                 ->where('id', '!=', $id)->get();
 
@@ -547,22 +554,23 @@ class VehicleController extends Controller
         ));
     }
 
-    public function findTaxpayersCompany($type_document,$document){
-        if($type_document=='V'||$type_document=='E'){
-            $user = User::where('ci', $type_document.$document)->get();
-            if($user->isEmpty()){
-                $user = CedulaVE::get($type_document,$document,false);
-                $data=['status'=>'success','type'=>'not-user','user'=>$user];
-            }else{
-                $data=['status'=>'success','type'=>'user','user'=>$user[0]];
+    public function findTaxpayersCompany($type_document, $document)
+    {
+        if ($type_document == 'V' || $type_document == 'E') {
+            $user = User::where('ci', $type_document . $document)->get();
+            if ($user->isEmpty()) {
+                $user = CedulaVE::get($type_document, $document, false);
+                $data = ['status' => 'success', 'type' => 'not-user', 'user' => $user];
+            } else {
+                $data = ['status' => 'success', 'type' => 'user', 'user' => $user[0]];
             }
-        }else{
-            $company=Company::where('RIF', $type_document.$document)->get();
+        } else {
+            $company = Company::where('RIF', $type_document . $document)->get();
 
-            if($company->isEmpty()){
-                $data=['status'=>'error','type'=>'not-company','company'=>null];
-            }else{
-                $data=['status'=>'success','type'=>'company','company'=>$company[0]];
+            if ($company->isEmpty()) {
+                $data = ['status' => 'error', 'type' => 'not-company', 'company' => null];
+            } else {
+                $data = ['status' => 'success', 'type' => 'company', 'company' => $company[0]];
             }
         }
         return response()->json($data);
