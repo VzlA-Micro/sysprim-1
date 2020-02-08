@@ -730,7 +730,9 @@ class TicketOfficeController extends Controller
     public function detailsTaxesAteco($id)
     {
         $taxes = Taxe::findOrFail($id);
+
         $companyTaxe = $taxes->companies()->get();
+
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
         $company_find = Company::find($companyTaxe[0]->id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);

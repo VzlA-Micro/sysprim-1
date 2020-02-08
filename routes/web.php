@@ -698,6 +698,9 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
 
 
+
+
+
                 // Nivel 1: Cargar Archivo
                 Route::group(['middleware' => ['permission:Cargar Archivo Pagos']], function () {
                     Route::get('/fileBank-register', function () {
@@ -705,9 +708,13 @@ Route::middleware(['auth'])->group(/**
                     })->name('bank.upload');
                     Route::post('/bank-veryfy/save', 'VerifyPaymentsBankImportController@importFile')->name('bank.verify');
                 });
+
+
+
                 // Nivel 2: Ver Pagos Verificados
                 Route::group(['middleware' => ['permission:Ver Pagos verificados']], function () {
-                    Route::get('/bank/verified-payments', 'VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
+                    Route::get('/bank/verified-today', 'VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
+                    Route::get('/bank/verified-payments/full', 'VerifyPaymentsBankImportController@readPaymentsVerify')->name('bank.read.full');
 
                 });
             });

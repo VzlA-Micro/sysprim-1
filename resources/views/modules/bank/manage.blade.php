@@ -23,12 +23,18 @@
             </div>
             @endcan
             @can('Ver Pagos verificados')
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('bank.read') }}" class="btn-app white indigo-text">
-                    <i class="icon-assignment_ind"></i>
-                    <span class="truncate">Ver Pagos Verificados</span>
-                </a>
-            </div>
+                <div class="col s12 m4 animated bounceIn">
+                    <a href="{{ route('bank.read') }}" class="btn-app white indigo-text">
+                        <i class="icon-assignment_ind"></i>
+                        <span class="truncate">Ver Pagos Verificados del Día</span>
+                    </a>
+                </div>
+                <div class="col s12 m4 animated bounceIn">
+                    <a href="{{ route('bank.read.full') }}" class="btn-app white indigo-text">
+                        <i class="icon-list"></i>
+                        <span class="truncate">Ver Pagos Verificados Totales</span>
+                    </a>
+                </div>
             @endcan
         </div>
     </div>
