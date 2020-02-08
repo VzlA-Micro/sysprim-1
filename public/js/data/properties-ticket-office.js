@@ -404,6 +404,64 @@ $(document).ready(function() {
         });
     });*/
 
+    var property_id = '';
+    var type_taxes = '';
+
+
+    $('.payroll').change(function () {
+
+
+        if (property_id !== '') {
+            console.log('if');
+
+            if ($(this).is(":checked") && $(this).attr('data-property') == property_id) {
+                console.log('lleno');
+                //vehicle_id = $(this).attr('data-vehicle');
+            } else if ($(this).attr('data-property') != property_id) {
+                swal({
+                    title: "Información",
+                    text: "La planilla selecionada no pertenece al mismo inmueble .",
+                    icon: "info",
+                    button: "Ok",
+                }).then(function () {
+                    location.reload();
+                });
+                $(this).prop('checked', false);
+                console.log('no coincide');
+            }
+            else if (!$(this).is(":checked")) {
+                console.log('limpio');
+                property_id = '';
+            }
+        } else {
+            console.log('else');
+            property_id = $(this).attr('data-property');
+        }
+
+
+        /*if (type_taxes !== '') {
+            if ($(this).is(":checked") && $(this).attr('data-company') == type_taxes) {
+                type_taxes = $(this).attr('data-taxes');
+            } else if ($(this).attr('data-taxes') != type_taxes) {
+                swal({
+                    title: "Información",
+                    text: "Las planillas selecionadas deben ser del mismo tipo.",
+                    icon: "info",
+                    button: "Ok",
+                }).then(function () {
+
+                    location.reload();
+                });
+
+
+                $(this).prop('checked', false);
+            }
+        } else {
+            type_taxes = $(this).attr('data-taxes');
+        }*/
+
+    });
+
     var date = new Date();
 
     $('.fiscal_period').datepicker({
@@ -852,4 +910,178 @@ $(document).ready(function() {
 
         return amount_parts.join(',');
     }
+
+    $('#search').change(function () {
+        if ($('#search').val() !== '') {
+            var search = $('#search').val();
+            $.ajax({
+                method: "GET",
+                url: url + "ticketOffice/property/cashier/" + search,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Error",
+                            text: "El código de planilla ingresado no es validado, por favor ingrese  una planilla valida.",
+                            icon: "error",
+                            button: "Ok",
+                        });
+
+
+                        $('#search').val('');
+                    } else if (response.status === 'verified') {
+                        swal({
+                            title: "Información",
+                            text: "La planilla ingresada ya fue conciliada, por favor ingrese un código de  planilla valido.",
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $('#search').val('');
+
+                    } else if (response.status === 'cancel') {
+                        swal({
+                            title: "Información",
+                            text: "La planilla ingresada esta cancelada, por favor ingrese un código de  planilla valido.",
+                            icon: "warning",
+                            button: "Ok",
+                        });
+                        $('#search').val('');
+                    } else if (response.status === 'old') {
+                        swal({
+                            title: "Información",
+                            text: "La planilla ingresada ya expiró, por favor ingrese un código de  planilla valido.",
+                            icon: "warning",
+                            button: "Ok",
+                        }).then(response=>function () {
+                            location.reload();
+                        });
+                        $('#search').val('');
+
+                    } else {
+
+                        var taxe = response.taxe[0];
+                        var property = response.taxe[0]['properties'][0].code_cadastral;
+                        var propertyId = response.taxe[0]['properties'][0].id;
+                        swal({
+                            title: "¡Bien hecho!",
+                            text: "Escaneo de QR realizado correctamente.",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            var link;
+
+                            link = '<a href=' + url + 'rate/ticket-office/details/' + taxe.id + '"' +
+                                '\nclass="btn indigo waves-effect waves-light"><i\n' +
+                                'class="icon-pageview left"></i>Detalles</a>';
+
+
+                            $('#receipt-body').append('' +
+                                '<tr>' +
+                                '<td>' + property.substr(14,12) + '</td>' +
+                                '<td><i class="icon-check text-green"></i>' + taxe.created_at + '</td>' +
+                                '<td>' + taxe.code + '</td>' +
+                                '<td>' + taxe.branch + '</td>' +
+                                '<td>' + taxe.amountFormat + '</td>' +
+                                '<td>' + '<p>' +
+                                '  <label>\n' +
+                                '           <input type="checkbox" name="payroll" class="payroll"\n' +
+                                '                       value="' + taxe.id + '"' +
+                                'data-vehicle="' + propertyId +
+                                '"/>\n' +
+                                '                         <span></span>\n' +
+                                '                                  </label>\n' +
+                                '</p>' +
+                                '</td>' +
+                                '<td>' + link + '</td>' +
+                                '</tr>'
+                            );
+                            var property_id = '';
+                            var type_taxes = '';
+
+
+                            $('.payroll').change(function () {
+
+
+                                if (property_id !== '') {
+                                    console.log('if');
+
+                                    if ($(this).is(":checked") && $(this).attr('data-property') == property_id) {
+                                        console.log('lleno');
+                                        //vehicle_id = $(this).attr('data-vehicle');
+                                    } else if ($(this).attr('data-property') != property_id) {
+                                        swal({
+                                            title: "Información",
+                                            text: "La planilla selecionada no pertenece al mismo inmueble .",
+                                            icon: "info",
+                                            button: "Ok",
+                                        }).then(function () {
+                                            location.reload();
+                                        });
+                                        $(this).prop('checked', false);
+                                        console.log('no coincide');
+                                    }
+                                    else if (!$(this).is(":checked")) {
+                                        console.log('limpio');
+                                        property_id = '';
+                                    }
+                                } else {
+                                    console.log('else');
+                                    property_id = $(this).attr('data-property');
+                                }
+
+
+                                /*if (type_taxes !== '') {
+                                    if ($(this).is(":checked") && $(this).attr('data-company') == type_taxes) {
+                                        type_taxes = $(this).attr('data-taxes');
+                                    } else if ($(this).attr('data-taxes') != type_taxes) {
+                                        swal({
+                                            title: "Información",
+                                            text: "Las planillas selecionadas deben ser del mismo tipo.",
+                                            icon: "info",
+                                            button: "Ok",
+                                        }).then(function () {
+
+                                            location.reload();
+                                        });
+
+
+                                        $(this).prop('checked', false);
+                                    }
+                                } else {
+                                    type_taxes = $(this).attr('data-taxes');
+                                }*/
+
+                            });
+                            $(this).val();
+                            M.updateTextFields();
+                        });
+
+
+                    }
+                    formatMoney();
+                    M.updateTextFields();
+                    $('#search').val('');
+
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                }, error: function (err) {
+                    $('#license').val('');
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: "Ok",
+                    });
+                }
+            });
+        }
+    });
 });

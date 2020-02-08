@@ -139,7 +139,7 @@
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable": "Ningún dato disponible en esta tabla.",
                 "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -200,16 +200,6 @@
                     columns: [0, 1, 2, 3, 4, 5, 6, 7]
                 }
                 },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
-
-
                 {
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',

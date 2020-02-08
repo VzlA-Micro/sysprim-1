@@ -27,7 +27,7 @@
                         <table class="highlight centered" style="width: 100%" id="vehicle" >
                             <thead>
                             <tr>
-                                <th>Licencia</th>
+                                <th>Placa</th>
                                 <th>Color</th>
                                 <th>Marca</th>
                                 <th>Módelo</th>

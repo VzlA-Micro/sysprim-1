@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Taxe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Alert;
 use App\Helpers\TaxesMonth;
 use App\Helpers\TaxesNumber;
@@ -750,7 +752,7 @@ class PropertyTaxesController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Inm.Urbanos')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Inm.Urbanos')->whereIn('id', $id_taxes)->with('properties')->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -759,6 +761,8 @@ class PropertyTaxesController extends Controller
             $amount_taxes = null;
             $taxes = null;
         }
+
+        //dd($taxes[0]->properties[0]->code_cadastral);
 
         /*foreach ($taxes as $index => $taxe) {
             dd($taxe->properties[$index]->code_cadastral);
@@ -866,5 +870,50 @@ class PropertyTaxesController extends Controller
         ]);
 
         return $pdf->stream();
+    }
+
+    public function QrTaxes($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+
+            $taxe = Taxe::with('properties')->where('id', $id)->get();
+
+            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+            } elseif ($taxe[0]->status === 'cancel') {
+                return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+            } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
+                $taxe_find = Taxe::find($taxe[0]->id);
+                $taxe_find->status = 'cancel';
+                $taxe_find->update();
+                return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+
+            } else {
+                $calculateTaxes = Calculate::calculateTaxes($id);
+                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes]);
+            }
+
+        } catch (DecryptException $e) {
+            $code=strtoupper($id);
+            $taxe = Taxe::with('properties')->where('code', $code)->get();
+            if (!$taxe->isEmpty()) {
+                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
+                } elseif ($taxe[0]->status === 'cancel') {
+                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
+                } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
+                    $taxe_find = Taxe::find($taxe[0]->id);
+                    $taxe_find->status = 'cancel';
+                    $taxe_find->update();
+                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null]);
+
+                } else {
+                    return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => 'null']);
+                }
+            } else {
+                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null]);
+            }
+        }
     }
 }

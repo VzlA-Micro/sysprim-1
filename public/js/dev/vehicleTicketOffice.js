@@ -649,6 +649,20 @@ $('document').ready(function () {
 
     $('#licensePlate').change(function () {
         var license = $(this).val();
+        if (license == '') {
+
+        }else if(license.length < 7){
+            swal({
+                title: "Información",
+                text: "Ingrese una placa válida.",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+        }
+        else{
         $.ajax({
             type: "get",
             url: url + "/ticketOffice/vehicle/search-license/" + license,
@@ -673,7 +687,8 @@ $('document').ready(function () {
                     $('#personTo').prop('disabled', true);
                     $('#fiscal_period').prop('disabled', true);
 
-                } else {
+                }
+                else {
 
 
                     $('#vehicle_id').val(data['vehicle'][0].id);
@@ -768,6 +783,8 @@ $('document').ready(function () {
                 });
             }
         });
+
+        }
     });
 
 
@@ -1264,9 +1281,9 @@ $('document').ready(function () {
         if (vehicle_id !== '') {
             console.log('if');
 
-             if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
+            if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
                 console.log('lleno');
-                 //vehicle_id = $(this).attr('data-vehicle');
+                //vehicle_id = $(this).attr('data-vehicle');
             } else if ($(this).attr('data-vehicle') != vehicle_id) {
                 swal({
                     title: "Información",
@@ -1280,7 +1297,7 @@ $('document').ready(function () {
                 console.log('no coincide');
             }
             else if (!$(this).is(":checked")) {
-                 console.log('limpio');
+                console.log('limpio');
                 vehicle_id = '';
             }
         } else {
@@ -1720,7 +1737,7 @@ $('document').ready(function () {
                             text: "La planilla ingresada ya expiró, por favor ingrese un código de  planilla valido.",
                             icon: "warning",
                             button: "Ok",
-                        }).then(response=>function () {
+                        }).then(response => function () {
                             location.reload();
                         });
                         $('#search').val('');
