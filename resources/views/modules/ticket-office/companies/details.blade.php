@@ -21,7 +21,9 @@
             <div class="col s12 m8 l8">
                 <form action="#" method="POST" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>{{$company->name}}</h5>
+                        <h5>
+                            <span class="truncate">{{$company->name}}</span>    
+                        </h5>
                     </div>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -33,7 +35,7 @@
 
                         <div class="input-field col s6 m3">
                             <i class="icon-perm_contact_calendar prefix tooltipped" data-position="bottom"
-                               data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extrangero"></i>
+                               data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero"></i>
                             <select name="document_type" id="document_type" disabled>
                                 <option value="null" selected disabled>...</option>
                                 <option value="J" @if ($company->typeDocument=='J'){{"selected"}}@endif>J</option>
@@ -258,7 +260,7 @@
                             <div class="row">
                                 @can('Actualizar Empresas')
                                     <div class="col s12 m3">
-                                        <button type="button"  class="btn btn-large waves-effect waves-light green col s12 "
+                                        <button type="button"  class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                            id="update-company">
                                             Actualizar
                                             <i class="icon-refresh right"></i>
@@ -267,7 +269,7 @@
                                 @endcan
                                 @can('Añadir CIIU Empresas')
                                     <div class="col s12 m3">
-                                        <a href="#" class="btn btn-large waves-effect waves-light blue col s12 "
+                                        <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                            id="add-ciiu">
                                             Añadir CIIU
                                             <i class="icon-add right"></i>
@@ -278,7 +280,7 @@
                                 @if($company->status===null||$company->status==='enabled')
                                     <div class="col s12 m3">
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light red col s12 "
+                                                class="btn btn-large btn-rounded waves-effect waves-light red col s12 "
                                                 id="company-status" value="disabled">
                                             Deshabilitar Empresa
                                             <i class="icon-sync_disabled right"></i>
@@ -287,7 +289,7 @@
                                 @else
                                     <div class="col s12 m3">
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                class="btn btn-large btn-rounded waves-effect waves-light green col s12 "
                                                 id="company-status" value="enabled">
                                             Activar Empresa
                                             <i class="icon-check right"></i>
@@ -299,7 +301,7 @@
                                 @can('Cambiar Ubicacion - Empresa')
                                     <div class="col s12 m3">
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                class="btn btn-large btn-rounded waves-effect waves-light purple col s12 "
                                                 id="change-maps">
                                             Cambiar Ubicación
                                             <i class="icon-map right"></i>
