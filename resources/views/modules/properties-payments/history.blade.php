@@ -44,7 +44,7 @@
                                     <th class="tooltipped" data-position="right"
                                         data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
                                     </th>
-                                    @can('Descargar Planilla|Detalles Planilla')
+                                    @can('Descargar Mi Planilla|Detalles Mi Planilla')
                                     <th>Acción</th>
                                     @endcan
                                 </tr>
@@ -64,7 +64,7 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                @can('Descargar Planilla')
+                                                @can('Descargar Mi Planilla')
                                                 <td><a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
@@ -79,7 +79,7 @@
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
-                                                @can('Descargar Planilla')
+                                                @can('Descargar Mi Planilla')
                                                 <td>
                                                     <a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}" class="btn orange waves-effect waves-light"><i class="icon-description left">
                                                         </i>Descargar Planilla.</a>
@@ -92,7 +92,7 @@
                                                         CANCELADA.
                                                     </button>
                                                 </td>
-                                                @can('Detalles Planilla')
+                                                @can('Detalles Mi Planilla')
                                                 <td>
                                                     <a href="#" class="btn indigo waves-effect waves-light" disabled>
                                                         <i class="icon-pageview left"></i>
