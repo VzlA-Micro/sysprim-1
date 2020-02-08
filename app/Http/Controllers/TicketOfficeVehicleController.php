@@ -718,10 +718,16 @@ class TicketOfficeVehicleController extends Controller
         $taxes =Taxe::whereIn('id', $taxes_explode)->with('vehicleTaxes')->get();
         $vehicleFind=Vehicle::find($taxes[0]->vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
+        if (isset($vehicleFind->person[0]->pivot->person_id)){
+            $person=User::find($vehicleFind->person[0]->pivot->person_id);
+        }else{
+            $person='';
+        }
 
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receiptMulti', [
             'taxes' => $taxes,
             'vehicle' => $vehicleFind,
+            'person'=>$person,
             'user'=>$user
         ]);
 

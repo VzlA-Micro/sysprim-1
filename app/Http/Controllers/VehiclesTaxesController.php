@@ -350,20 +350,30 @@ class VehiclesTaxesController extends Controller
         $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
 
+        if (isset($vehicleFind->person[0]->pivot->person_id)){
+            $person=User::find($vehicleFind->person[0]->pivot->person_id);
+        }else{
+            $person='';
+        }
+
+
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt',
             [
                 'taxes' => $taxes,
                 'vehicleTaxes' => $vehicleTaxes,
                 'vehicle' => $vehicleFind,
                 'user' => $user,
+                'person'=>$person,
                 'diffYear' => $diffYear,
                 'firm' => true
             ]);
         if ($download === "true") {
-            return $pdf->download('PLANILLA.pdf');
+            return $pdf->stream('PLANILLA.pdf');
         } else {
             return $pdf->stream('PLANILLA.pdf');
         }
+
+
     }
 
     public
