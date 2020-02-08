@@ -57,12 +57,14 @@
                         </a>
                     </div>
                     @else--}}
+                    @can('Mis Pagos - Inmuebles')
                     <div class="col s12">
                         <a href="{{ route('properties.payments.manage', ['id' => $property[0]->id]) }}" class="btn-app white green-text">
                             <i class="icon-payment"></i>
                             <span class="truncate">Mis Declaraciones</span>
                         </a>
                     </div>
+                    @endcan
                     {{--@endif--}}
                     {{--<div class="col s12">
                        <a href="" class="btn-app white orange-text">

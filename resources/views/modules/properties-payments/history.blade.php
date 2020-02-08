@@ -44,7 +44,9 @@
                                     <th class="tooltipped" data-position="right"
                                         data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
                                     </th>
+                                    @can('Descargar Planilla|Detalles Planilla')
                                     <th>Acción</th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,20 +58,20 @@
                                             <td>{{ $taxe->code }}</td>
                                             <td>{{$taxe->branch}}</td>
                                             @if($taxe->status==='process')
-
                                                 <td>
-
                                                     <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
+                                                @can('Descargar Planilla')
                                                 <td><a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}"
                                                        class="btn orange waves-effect waves-light"><i
                                                                 class="icon-description left"></i>Descargar
-                                                        planilla.</a></td>
-
-
+                                                        planilla
+                                                    </a>
+                                                </td>
+                                                @endcan
                                             @elseif($taxe->status==='verified' || $taxe->status=='verified-sysprim' )
                                                 <td>
                                                     <button class="btn green">
@@ -77,16 +79,12 @@
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
-
-
-
+                                                @can('Descargar Planilla')
                                                 <td>
                                                     <a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}" class="btn orange waves-effect waves-light"><i class="icon-description left">
                                                         </i>Descargar Planilla.</a>
                                                 </td>
-
-
-
+                                                @endcan
                                             @elseif($taxe->status=='cancel')
                                                 <td>
                                                     <button class="btn" disabled>
@@ -94,14 +92,15 @@
                                                         CANCELADA.
                                                     </button>
                                                 </td>
-
+                                                @can('Detalles Planilla')
                                                 <td>
-                                                    <a href="#"
-                                                       class="btn indigo waves-effect waves-light" disabled><i
-                                                                class="icon-pageview left"></i>Detalles</a>
+                                                    <a href="#" class="btn indigo waves-effect waves-light" disabled>
+                                                        <i class="icon-pageview left"></i>
+                                                        Detalles
+                                                    </a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>
-
+                                                @endcan
                                             @endif
                                         </tr>
                                     @endif

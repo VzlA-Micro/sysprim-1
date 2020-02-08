@@ -403,36 +403,47 @@ Route::middleware(['auth'])->group(/**
             Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
             Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
             Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
+            Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
+            Route::post('/properties/discount', 'PropertyTaxesController@discount');
+            Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
+            Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
+
 
             # Nivel 1 - Registrar y Consultar
             Route::group(['middleware' => ['permission:Registrar Mis Inmuebles|Consultar Mis Inmuebles']], function() {
                 Route::get('/properties/my-properties', 'PropertyController@index')->name('properties.my-properties');
                 Route::get('/properties/register/{company_id?}', 'PropertyController@create')->name('properties.register');
                 Route::post('/properties/save', 'PropertyController@store')->name('properties.save');
-
+                # Nivel 2 - Detalles
                 Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function() {
                     Route::get('/properties/details/{id}', 'PropertyController@details')->name('properties.details');
+                    # Nivel 3 - Declarar Inmueble
+                    Route::group(['middleware' => ['permission:Mis Pagos - Inmuebles']], function() {
+                        Route::get('/properties/payments/manage/{id}', 'PropertyTaxesController@manage')->name('properties.payments.manage');
+                        # Nivel 4 - Declarar Inmueble & Historial de Pagos
+                        Route::group(['middleware' => ['permission:Declarar Inmuebles|Historial de Pagos - Inmuebles']], function() {
+                            Route::get('/properties/payments/create/{id}', 'PropertyTaxesController@create')->name('properties.payments.create');
+                            Route::get('/properties/taxes/create/{id}/{status?}', 'PropertyTaxesController@create')->name('properties.taxes.create');
+                            Route::post('/properties/taxes/store', 'PropertyTaxesController@store')->name('properties.taxes.store');
+                            Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
 
+                            # ------
+                            Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
+                            # ------
+
+                            # Nivel 5 - Pagar Inmueble
+                            Route::group(['middleware' => ['permission:Pagar Inmueble']], function(){
+                                Route::post('/properties/payments/store', 'PropertyTaxesController@paymentStore')->name('properties.payments.store');
+                                Route::get('/properties/taxpayer/pdf/{id}/{download?}', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
+                            });
+                        });
+                    });
                 });
             });
         });
 
+//        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
 
-        Route::get('/properties/payments/manage/{id}', 'PropertyTaxesController@manage')->name('properties.payments.manage');
-
-        Route::get('/properties/payments/create/{id}', 'PropertyTaxesController@create')->name('properties.payments.create');
-        Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
-        Route::post('/properties/discount', 'PropertyTaxesController@discount');
-
-        Route::get('/properties/taxes/create/{id}/{status?}', 'PropertyTaxesController@create')->name('properties.taxes.create');
-        Route::post('/properties/taxes/store', 'PropertyTaxesController@store')->name('properties.taxes.store');
-        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
-        Route::post('/properties/payments/store', 'PropertyTaxesController@paymentStore')->name('properties.payments.store');
-        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
-        Route::get('/properties/payments/history/{id}', 'PropertyTaxesController@paymentHistoryTaxPayers')->name('properties.payments.history');
-        Route::get('/properties/taxpayer/pdf/{id}/{download?}', 'PropertyTaxesController@pdfTaxpayer')->name('properties.taxpayers.pdf');
-        Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
-        Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
 
         # ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
         Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');

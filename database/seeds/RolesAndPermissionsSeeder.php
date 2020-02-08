@@ -300,6 +300,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Mis Pagos - Inmuebles']);
         Permission::create(['name' => 'Declarar Inmuebles']);
         Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
+        Permission::create(['name' => 'Pagar Inmueble']);
+//        Permission::create(['name' => 'Detalles de Pago - Inmueble']);
+
 
 
         Permission::create(['name' => 'Mis Pagos - Vehiculos']);
@@ -314,6 +317,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Mis Pagos - Tasas']);
         Permission::create(['name' => 'Declarar Tasas']);
         Permission::create(['name' => 'Historial de Pagos - Tasas']);
+
+        Permission::create(['name' => 'Detalles Planilla']);
+        Permission::create(['name' => 'Descargar Planilla']);
+        Permission::create(['name' => 'Obtener Planilla']);
+
 
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
@@ -521,28 +529,39 @@ class RolesAndPermissionsSeeder extends Seeder
         // Contribuyente
         $roleTaxpayer = Role::create(['name' => 'Contribuyente']);
         $roleTaxpayer->givePermissionTo([
+            # ------ Módulo de Mis Empresas
             'Mis Empresas',
             'Registrar Mis Empresas',
             'Consultar Mis Empresas',
             'Detalles Mis Empresas',
             // 'Actualizar Mis Empresas',
-             'Mis Inmuebles',
-             'Registrar Mis Inmuebles',
-             'Consultar Mis Inmuebles',
-             'Detalles Mis Inmuebles',
-             'Actualizar Mis Inmuebles',
+
+            # ------- Módulo de Mis Inmuebles
+            'Mis Inmuebles',
+            'Registrar Mis Inmuebles',
+            'Consultar Mis Inmuebles',
+            'Detalles Mis Inmuebles',
+//            'Actualizar Mis Inmuebles',
+            'Mis Pagos - Inmuebles',
+            'Declarar Inmuebles',
+            'Historial de Pagos - Inmuebles',
+            'Pagar Inmueble',
+
+            # -------- Módulo de Mis Vehiculos
             'Mis Vehiculos',
             'Registrar Mis Vehiculos',
             'Consultar Mis Vehiculos',
             'Detalles Mis Vehiculos',
 
             // 'Actualizar Mis Vehiculos',
+
+            # --------- Módulo de Mis Publicidades
             //'Mis Publicidades',
             //'Registrar Mis Publicidades',
             //'Consultar Mis Publicidades',
             //'Detalles Mis Publicidades',
 
-
+            # --------- Módulo de Mis Tasas
             'Generar Tasas',
             'Mis Pagos - Tasas',
             'Declarar Tasas',
@@ -562,6 +581,11 @@ class RolesAndPermissionsSeeder extends Seeder
              'Mis Pagos - Vehiculos',
              'Declarar Vehiculos',
             // 'Ver Declaraciones - Vehiculos',
+
+            # ------- GENERAL PARA EL USUARIO WEB
+            'Detalles Planilla',
+            'Descargar Planilla',
+            'Obtener Planilla',
             'Mi Perfil'
         ]);
 
