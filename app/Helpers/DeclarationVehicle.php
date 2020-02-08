@@ -116,6 +116,8 @@ class DeclarationVehicle
                     //$valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
                 }
             } else {
+                $recharge = ($taxes * $recharges->value) / 100;
+
                 $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora'])*($taxes+$recharge);
             }
         }else{
