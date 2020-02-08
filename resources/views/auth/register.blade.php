@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col s12 m8 offest-m2 l6 offset-l3 animated bounceInDown">
+            <div class="col s12 m8 offset-m2 l6 offset-l3 animated bounceInDown">
                 @foreach ($errors->all() as $error)
                     <div class="alert alert-danger" style="margin-top: 1rem;">{{ $error }}</div>
                 @endforeach
