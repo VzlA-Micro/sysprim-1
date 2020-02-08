@@ -639,7 +639,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Mis Pagos - Actividad Económica',
             'Declarar Actividad Económica',
             'Declaración Anticipada - Actividad Económica',
-            //'Declaración Definitiva - Actividad Económica',
+            'Declaración Definitiva - Actividad Económica',
             'Historial de Pagos - Actividad Económica',
 
             # ------- Módulo de Mis Inmuebles
