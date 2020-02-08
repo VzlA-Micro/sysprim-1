@@ -14,10 +14,10 @@ class TaxesMonth{
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $date = null;
+
         $company = Company::find($id);
         $now_pay = Carbon::now();//fecha de pago
-
-        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orWhereMonth('fiscal_period','=',12)->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
+        $companyTaxes = $company->taxesCompanies()->where('type','actuated')->where('branch','Act.Eco')->whereYear('created_at',$now_pay->format('Y'))->orderByDesc('id')->get();//busco el ultimo pago realizado por la empresa
 
         $mount_pay=null;
 
