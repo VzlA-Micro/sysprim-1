@@ -235,6 +235,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Cambiar Ubicacion - Inmuebles']);
         Permission::create(['name' => 'Cambiar Propietario - Inmueble']);
         Permission::create(['name' => 'Cambiar Usuario - Inmueble']);
+        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
 //        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
 
         // Permission::create(['name' => 'Eliminar Inmuebles']);
@@ -493,7 +494,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Cambiar Ubicacion - Inmuebles',
             'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
-            # ----------------------------- #
+            'Historial de Pago - Inmuebles',
+        # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',
@@ -557,11 +559,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
-            'Actualizar Empresas',
-            'Añadir CIIU Empresas',
-            'Eliminar CIIU Empresas',
-            'Habilitar/Deshabilitar CIIU Empresas',
-            'Habilitar/Deshabilitar Empresas',
+//            'Actualizar Empresas',
+//            'Añadir CIIU Empresas',
+//            'Eliminar CIIU Empresas',
+//            'Habilitar/Deshabilitar CIIU Empresas',
+//            'Habilitar/Deshabilitar Empresas',
             'Cambiar Ubicacion - Empresa',
             'Cambiar Usuario - Empresa',
             'Historial de Pago - Empresas',
@@ -574,9 +576,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Vehiculos',
             'Detalles Vehiculos',
             'Gestionar Pagos - Vehiculos',
-            'Cambiar Propietario - Vehiculo',
+//            'Cambiar Propietario - Vehiculo',
             'Cambiar Usuario - Vehiculo',
-            'Habilitar/Deshabilitar Vehiculo',
+//            'Habilitar/Deshabilitar Vehiculo',
             'Historial de Pago - Vehiculos',
             # ----------------------------- #
             ##### TAQUILLA DE TASAS #####
@@ -591,15 +593,16 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Inmueble',
             'Consultar Inmuebles',
             'Detalles Inmuebles',
-            'Actualizar Inmuebles',
+//            'Actualizar Inmuebles',
             'Gestionar Pagos - Inmuebles',
             'Cambiar Ubicacion - Inmuebles',
-            'Cambiar Propietario - Inmueble',
+//            'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
+            'Historial de Pago - Inmuebles',
             # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
-            'Registrar Pago - Transferencias',
+//            'Registrar Pago - Transferencias',
             'Registrar Pago - Punto de Venta',
             'Registrar Pago - Depositos',
             'Detalles Pagos',
@@ -612,16 +615,16 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Planilla',
             'Pagar Planilla',
             'Ver Pagos',
-            'Ver Pagos - Transferencias',
-            'Ver Pagos - Punto de Venta',
-            'Ver Pagos - Depositos',
+//            'Ver Pagos - Transferencias',
+//            'Ver Pagos - Punto de Venta',
+//            'Ver Pagos - Depositos',
             'Mi Taquilla - Punto de Venta',
             'Mi Taquilla - Deposito',
             'Ver Planillas - Taquilla',
             'Escanear QR',
             'Taquilla - Caja',
             'Abrir/Cerrar Caja',
-            'Ver Planillas',
+//            'Ver Planillas',
             'Ver Planilla PDF',
             'Mi Perfil'
         ]);
