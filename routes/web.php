@@ -416,6 +416,8 @@ Route::middleware(['auth'])->group(/**
         Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
         Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
         Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
+        Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
+
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
         ##### EMPRESAS
@@ -676,7 +678,6 @@ Route::middleware(['auth'])->group(/**
 
             Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
 
-            Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
 
 
             ###################### CAMBIAR STATUS DE PAGOS
