@@ -346,7 +346,6 @@ class PropertyTaxesController extends Controller
         $owner = $taxes->properties()->get();
         $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
 
-
         $property = Property::find($userProperty->property_id);
 
         if (!is_null($userProperty->company_id)) {
@@ -386,7 +385,7 @@ class PropertyTaxesController extends Controller
             'property' => $property
         ]);
 
-        return $pdf->stream();
+//        return $pdf->stream();
 //        die();
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Inmuebles Urbanos'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");

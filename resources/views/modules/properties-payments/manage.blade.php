@@ -19,27 +19,31 @@
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.manage', ['id' => $property->id]) }}">Mis Declaraciones</a></li>
                 </ul>
             </div>
-            @if(\Carbon\Carbon::now()->format('m') >= '01' || \Carbon\Carbon::now()->format('m') <= '03')
-                <div class="col s12 m4">
-                    <a href="#mode" class="btn-app white red-text modal-trigger">
-                        <i class="icon-report"></i>
-                        <span class="truncate">Declarar Inmueble</span>
-                    </a>
-                </div>
-            @else
+            {{--@if(\Carbon\Carbon::now()->format('m') >= '01' || \Carbon\Carbon::now()->format('m') <= '03')--}}
+            @can('Declarar Inmuebles')
+            <div class="col s12 m4">
+                <a href="#mode" class="btn-app white red-text modal-trigger">
+                    <i class="icon-report"></i>
+                    <span class="truncate">Declarar Inmueble</span>
+                </a>
+            </div>
+            @endcan
+            {{--@else
                 <div class="col s12 m4">
                     <a href="{{ route('properties.payments.manage', ['id' => $property->id]) }}" class="btn-app white green-text">
                         <i class="icon-payment"></i>
                         <span class="truncate">Declarar Inmueble</span>
                     </a>
                 </div>
-            @endif
+            @endif--}}
+            @can('Historial de Pagos - Inmuebles')
             <div class="col s12 m4">
                 <a href="{{ route('properties.payments.history', ['id' => $property->id]) }}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
+            @endcan
             <div id="mode" class="modal modal-sm">
                 <div class="">
                     <div class="modal-content">
