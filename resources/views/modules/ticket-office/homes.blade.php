@@ -35,7 +35,7 @@
             @endcan
             @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('property.ticket-office.home')}}" class="btn-app white yellow-text text-darken-2">
+                <a href="{{route('property.ticket-office.home')}}" class="btn-app white brown-text">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Inmuebles Urbanos</span>
                 </a>

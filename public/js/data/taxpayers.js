@@ -269,8 +269,11 @@ $(document).ready(function () {
 
     $('#btn-edit').click(function () {
         $(this).hide();
-        $('#phone').removeAttr('disabled');
+        $('#phone').removeAttr('readonly');
+        $('#country_code').removeAttr('disabled','');
+        $('select').formSelect();
         $('#email_edit').removeAttr('disabled');
+        $('#address').removeAttr('disabled','');
         $('#btn-update').show();
     });
 
@@ -375,9 +378,9 @@ $(document).ready(function () {
                             icon: "success",
                             button: "Ok",
                         }).then(function (accept) {
-                            window.location.href = url + "taxpayers/manage";
+                            window.location.href = url + "taxpayers/details/"+$('#id').val();
                         });
-                        ;
+
 
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');

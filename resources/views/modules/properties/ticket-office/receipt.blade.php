@@ -43,8 +43,12 @@
             </td>
             <td style="width: 25%;" rowspan="2">
                 <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
-                <span style="font-size: 10px !important;">{{$taxes[0]->code}}</span><br>
-                <span style="font-size: 10px !important;">{{$taxes[0]->created_at->format('d-m-Y')}}</span><br>
+
+
+                @php $i=count($taxes[0]->payments); @endphp
+                    <span style="font-size: 10px !important;">{{$taxes[0]->payments[$i-1]->code}}</span><br>
+
+                    <span style="font-size: 10px !important;">{{$taxes[0]->created_at->format('d-m-Y')}}</span><br>
 
             </td>
         </tr><!--
@@ -237,6 +241,30 @@
     </tr>
 </table>
 <table>
+
+    @if(!$taxes[0]->payments->isEmpty()&&substr($taxes[0]->payments[0]->code,0,3)!='PPV')
+        <tr>
+
+            <td style="font-size: 12px !important; text-align: center;">Planilla</td>
+            <td style="font-size: 12px !important; text-align: center;">Dígito</td>
+            <td style="font-size: 12px !important; text-align: center;">Correlat</td>
+            <td style="font-size: 12px !important; text-align: center;">Contrib</td>
+            <td style="font-size: 12px !important; text-align: center;">Monto</td>
+            <td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI
+                ENMENDADURA NO VALIDO COMO SOLVENCIA
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->code}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->digit}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->payments[0]->code,3,13)}}</td>
+            <td style="font-size: 12px !important;text-align: center;"></td>
+            <td style="font-size: 12px !important;text-align: center;">{{number_format($totalAcum,2,',','.')}}</td>
+        </tr>
+
+    @else
+
     <tr>
         <td style="font-size: 12px !important; text-align: center;">Planilla</td>
         <td style="font-size: 12px !important; text-align: center;">Dígito</td>
@@ -249,20 +277,14 @@
     </tr>
 
     <tr>
-        <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->code}}</td>
+        <td style="font-size: 12px !important;text-align: center;"></td>
         <td style="font-size: 12px !important;text-align: center;">
-            @if($taxes[0]->digit)
-
-                {{$taxes[0]->digit}}
-
-            @else
-                {{"000"}}
-            @endif
         </td>
-        <td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->code,3,13)}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{number_format($totalAcum,2,',','.')}}</td>
+        <td style="font-size: 12px !important;text-align: center;"></td>
+        <td style="font-size: 12px !important;text-align: center;"></td>
+        <td style="font-size: 12px !important;text-align: center;"></td>
     </tr>
+    @endif
 </table>
 
 <table>

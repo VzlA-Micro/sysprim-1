@@ -113,6 +113,9 @@ $('document').ready(function () {
     $('#status').change(function() {
        var status = $(this).val();
        var content = `
+             <div class="s12 m12">
+                <h5 class="center-align">Datos del Propietario</h5>
+            </div>
             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
                 <i class="icon-public prefix"></i>
                 <select name="type_document" id="type_document" required>
@@ -174,6 +177,8 @@ $('document').ready(function () {
            $('#content').html('');
        }
     });
+
+
 
     $('#verification').on('submit', function (e) {
         e.preventDefault();
@@ -246,19 +251,37 @@ $('document').ready(function () {
                 },
                 success: function (response) {
 
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: response.message,
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        if(type == 'company') {
-                            window.location.href = url + "properties/company/my-properties/" + id;
-                        }
-                        else {
-                            window.location.href = url + "properties/my-properties";
-                        }
-                    });
+
+
+                    if(response.status==='success'){
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: response.message,
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function (accept) {
+                            if(type == 'company') {
+                                window.location.href = url + "properties/company/my-properties/" + id;
+                            }
+                            else {
+                                window.location.href = url + "properties/my-properties";
+                            }
+                        });
+
+                    }else if(response.status==='error'){
+
+
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button: "Ok",
+                        });
+
+
+
+
+                    }
 
 
                     $("#preloader").fadeOut('fast');

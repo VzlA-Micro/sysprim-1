@@ -107,7 +107,7 @@
 
                             <div class="input-field col s12 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="10" data-validate="licencia">
+                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" data-validate="licencia">
                                 <label for="license">Licencia</label>
                             </div>
 

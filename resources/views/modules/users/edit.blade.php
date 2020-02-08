@@ -55,7 +55,7 @@
                         </div>
                         <div class="input-field col s6 m3">
                             <i class="icon-phone_android prefix tooltipped" data-position="bottom" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet"></i>
-                            <select name="country_code" id="country_code_company" required>
+                            <select name="country_code" id="country_code" required disabled>
                                 <option value="null" selected disabled>...</option>
                                 <option value="+58412" @if ($user->operator=='+58412'){{"selected"}}@endif >(412)</option>
                                 <option value="+58414" @if ($user->operator=='+58414'){{"selected"}}@endif>(414)</option>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required value="{{$user->NumberPhone}}" >
+                            <input id="phone_user" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7"  readonly required value="{{$user->NumberPhone}}" >
                         </div>
 
                         <div class="input-field col s12">
@@ -77,6 +77,12 @@
                             <label for="email_edit">E-mail</label>
                         </div>
 
+
+                        <div class="input-field col s12 m12">
+                            <i class="icon-directions prefix"></i>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required disabled>{{$user->address}}</textarea>
+                            <label for="address">Dirección</label>
+                        </div>
 
                         <div class="input-field col s6">
                             <i class="icon-verified_user prefix"></i>

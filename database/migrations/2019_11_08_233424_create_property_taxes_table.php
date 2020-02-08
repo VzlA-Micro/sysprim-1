@@ -19,12 +19,12 @@ class CreatePropertyTaxesTable extends Migration
 
             $table->integer('taxe_id')->unsigned();
             $table->string('status',15);
-            $table->float('recharge',10,2)->nullable();;
-            $table->float('base_imponible',10,2)->nullable();
-            $table->float('alicuota',10,2)->nullable();
-            $table->float('interest',10,2)->nullable();
-            $table->float('discount',10,2)->nullable();
-            $table->float('fiscal_credit',10,2)->nullable();
+            $table->float('recharge',13,2)->nullable();;
+            $table->float('base_imponible',13,2)->nullable();
+            $table->float('alicuota',13,2)->nullable();
+            $table->float('interest',13,2)->nullable();
+            $table->float('discount',13,2)->nullable();
+            $table->float('fiscal_credit',13,2)->nullable();
             $table->foreign('property_id')->references('id')->on('property')->onDelete('cascade');
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade');
             $table->timestamps();

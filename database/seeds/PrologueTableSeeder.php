@@ -28,7 +28,7 @@ class PrologueTableSeeder extends Seeder
         DB::table('prologue')->insert([
             'name'=>'ACTIVIDAD ÉCONOMICA-DEFINITIVA',
             'branch'=>'Act.Eco.Defi',
-            'date_limit'=>'2020-01-31',
+            'date_limit'=>'2020-02-29',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
@@ -37,7 +37,7 @@ class PrologueTableSeeder extends Seeder
         DB::table('prologue')->insert([
             'name'=>'VEHICULO',
             'branch'=>'Pat.Veh',
-            'date_limit'=>'2020-01-31',
+            'date_limit'=>'2020-02-29',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
