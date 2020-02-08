@@ -12,7 +12,7 @@
             </div>
             @can('Gestionar Vehiculos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.vehicle.manage') }}" class="btn-app white light-green-text">
+                <a href="{{ route('ticketOffice.vehicle.manage') }}" class="btn-app white red-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Gestionar Vehículos</span>
                 </a>
@@ -20,7 +20,7 @@
             @endcan
             @can('Gestionar Pagos - Vehiculos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.vehicle.payments') }}" class="btn-app white grey-text text-darken-2">
+                <a href="{{ route('ticketOffice.vehicle.payments') }}" class="btn-app white blue-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
                 </a>
