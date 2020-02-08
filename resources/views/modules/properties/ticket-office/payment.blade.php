@@ -147,9 +147,9 @@
                                                                    required>
 
                                                             <div class="input-field col s12 m6 ">
-                                                                <i class="icon-confirmation_number prefix "></i>
+                                                                <i class="icon-confirmation_number prefix"></i>
                                                                 <input type="text" name="ref" id="ref" value=""
-                                                                       class="validate"
+                                                                       class="validate number-date"
                                                                        required minlength="3" maxlength="10">
                                                                 <label for="ref">Ref o Código</label>
                                                             </div>
@@ -244,7 +244,7 @@
                                                                     <div class="input-field col s12 m6 ">
                                                                         <i class="icon-confirmation_number prefix "></i>
                                                                         <input type="text" name="ref" id="ref_tr"
-                                                                               value="" class="validate"
+                                                                               value="" class="validate number-only"
                                                                                required minlength="3" maxlength="10">
                                                                         <label for="ref">Referencia</label>
                                                                     </div>

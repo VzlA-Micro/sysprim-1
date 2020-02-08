@@ -85,7 +85,7 @@ margin: 0 !important;
     <tr>
         <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
         <td style="width:35%;font-size: 11px !important;">{{$data->ci .''. $data->RIF}}</td>
-    @if($data->license)
+        @if($data->license)
             <td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
             <td style="width:30%;font-size: 11px !important">{{$data->license}}</td>
             {{--@else
@@ -250,7 +250,11 @@ margin: 0 !important;
             @endif
         </td>
         <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-        <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+        @if($type == 'user')
+            <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
+        @else
+            <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+        @endif
         <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2,',','.')}}</td>
     </tr>
 </table>
