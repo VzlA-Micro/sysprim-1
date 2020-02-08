@@ -269,7 +269,7 @@
 
 
                         <div class="row">
-
+                            @can('Cambiar Propietario - Vehiculo')
                             <div class="col s12 m6">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
@@ -282,7 +282,7 @@
                                     <i class="icon-save right"></i>
                                 </a>
                             </div>
-
+                            @endcan
                             @can('Actualizar Vehiculos')
                                 <div class="col s12 m6" style="margin-top:10px">
                                     <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
@@ -424,16 +424,15 @@
 
                         </div>
                         @can('Cambiar Usuario - Vehiculo')
-
+                            <div class="input-field col s12 m12 ">
+                                <a id="changeUW" href="#" class="center btn btn-large waves-effect waves-light peach col s12 btn-rounded ">Cambiar Usuario Web
+                                    <i class="icon-mode_edit right"></i>
+                                </a>
+                                <a id="saveUW" href="#" class="hide btn btn-large waves-effect waves-light blue col s12 btn-rounded ">Guardar Cambios
+                                    <i class="icon-save right"></i>
+                                </a>
+                            </div>
                         @endcan
-                        <div class="input-field col s12 m12 ">
-                            <a id="changeUW" href="#" class="center btn btn-large waves-effect waves-light peach col s12 btn-rounded ">Cambiar Usuario Web
-                                <i class="icon-mode_edit right"></i>
-                            </a>
-                            <a id="saveUW" href="#" class="hide btn btn-large waves-effect waves-light blue col s12 btn-rounded ">Guardar Cambios
-                                <i class="icon-save right"></i>
-                            </a>
-                        </div>
                     </div>
                 </form>
             </div>

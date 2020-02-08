@@ -49,7 +49,6 @@
                     </a>
                 </div>
             @endcan
-
             @can('Ver Planillas')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{route('ticket-office.pay.web')}}" class="btn-app white pink-text text-darken-2">
@@ -59,7 +58,6 @@
                 </div>
             @endcan
 
-
             @can('Ver Pagos')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('ticket-office.type.payments') }}" class="btn-app white teal-text">
@@ -68,18 +66,6 @@
                     </a>
                 </div>
             @endcan
-
-            
-
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal modal-sm">
-                <div class="modal-content">
-                    <h4 class="center-align">Taquillas</h4>
-                    <div class="row content">
-                    </div>
-                </div>
-            </div>
-
 
 
         </div>
