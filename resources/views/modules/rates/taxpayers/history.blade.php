@@ -58,11 +58,14 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
+                                                @can('Descargar Mi Planilla')
                                                 <td><a href="{{url('rate/taxpayers/pdf/'.$taxe->id.'/true')}}"
-                                                       class="btn orange waves-effect waves-light"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a></td>
-
+                                                       class="btn orange waves-effect waves-light">
+                                                        <i class="icon-description left"></i>
+                                                        Descargar planilla
+                                                    </a>
+                                                </td>
+                                                @endcan
 
                                             @elseif($taxe->status==='verified' || $taxe->status=='verified-sysprim' )
                                                 <td>
@@ -71,16 +74,14 @@
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
-
-
-
-                                                    <td>
-                                                        <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
-                                                         </i>Descargar Planilla.</a>
-                                                    </td>
-
-
-
+                                                @can('Descargar Mi Planilla')
+                                                <td>
+                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
+                                                        <i class="icon-description left"></i>
+                                                        Descargar Planilla
+                                                    </a>
+                                                </td>
+                                                @endcan
                                             @elseif($taxe->status=='cancel')
                                                 <td>
                                                     <button class="btn" disabled>
@@ -88,14 +89,15 @@
                                                         CANCELADA.
                                                     </button>
                                                 </td>
-
+                                                @can('Detalles Mi Planilla')
                                                 <td>
-                                                    <a href="#"
-                                                       class="btn indigo waves-effect waves-light" disabled><i
-                                                                class="icon-pageview left"></i>Detalles</a>
+                                                    <a href="#" class="btn indigo waves-effect waves-light" disabled>
+                                                        <i class="icon-pageview left"></i>
+                                                        Detalles
+                                                    </a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>
-
+                                                @endcan
                                             @endif
                                         </tr>
                                     @endif

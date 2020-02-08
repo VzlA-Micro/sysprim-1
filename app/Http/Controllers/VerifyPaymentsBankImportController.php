@@ -42,6 +42,13 @@ class VerifyPaymentsBankImportController extends Controller
         $file = $request->file;
         $date_limit = $request->input('date_limit');
 
+        $verify_taxes=0;
+        $verify_total=0;
+        $verify_payment=0;
+
+
+
+
         $Archivo = \File::get($file);
         $mime = $file->getMimeType();
 
@@ -291,15 +298,20 @@ class VerifyPaymentsBankImportController extends Controller
                                             $msj->to($for);
                                             $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                                         });
+
+
+                                        $verify_taxes++;
                                 }
                             }
                         }else{
-                             $this->verifyPaymentsTaxes($document,$date_limit);
+                             $verify_payment=$this->verifyPaymentsTaxes($document,$date_limit);
                         }
                     }
                 }
             }
             fclose($arch);
+            $verify_total=$verify_taxes+$verify_payment;
+            return redirect('bank/verified-today')->with(['message'=>'Verificación realizada con éxito, fueron verificado un total de:'.$verify_total.' planillas.']);
         }
     }
 
@@ -316,6 +328,7 @@ class VerifyPaymentsBankImportController extends Controller
 
         $payments=Payment::whereDate('created_at','=',$date_limit)->get();
 
+        $verify=0;
 
         if(!$payments->isEmpty()) {
             foreach ($payments as $payment) {
@@ -472,6 +485,8 @@ class VerifyPaymentsBankImportController extends Controller
                                     $msj->to($for);
                                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                                 });
+
+                                $verify++;
                             }
 
 
@@ -488,9 +503,11 @@ class VerifyPaymentsBankImportController extends Controller
 
 
         }
-
-
-
+        return $verify;
+    }
+    public function readPaymentsVerify(){
+        $taxes=Taxe::where('status','verified-sysprim')->get();
+        return view('modules.bank.read-verify', ['taxes' => $taxes]);
     }
 
 

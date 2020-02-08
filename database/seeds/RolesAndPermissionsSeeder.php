@@ -226,7 +226,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Inmuebles']);
         Permission::create(['name' => 'Actualizar Inmuebles']);
         // Permission::create(['name' => 'Eliminar Inmuebles']);
-        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
+//        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
 
 
         // -- Gestionar Vehiculos
@@ -255,6 +255,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Ver Notificaciones']);
 
         // Mis Gestiones ------------------------------------------------------------------
+
+
         // Mis Empresas
         Permission::create(['name' => 'Mis Empresas']);
         Permission::create(['name' => 'Registrar Mis Empresas']);
@@ -262,8 +264,15 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Mis Empresas']);
         Permission::create(['name' => 'Actualizar Mis Empresas']);
         // Permission::create(['name' => 'Eliminar Mis Empresas']);
+        Permission::create(['name' => 'Mis Pagos - Actividad Económica']);
+        Permission::create(['name' => 'Declarar Actividad Económica']);
+        Permission::create(['name' => 'Declaración Anticipada - Actividad Económica']);
+        Permission::create(['name' => 'Declaración Definitiva - Actividad Económica']);
+        Permission::create(['name' => 'Historial de Pagos - Actividad Económica']);
+        Permission::create(['name' => 'Pagar Actividad Económica']);
 
 
+        # -----------------------------------------------------------------------
         // Mis Inmuebles
         Permission::create(['name' => 'Mis Inmuebles']);
         Permission::create(['name' => 'Registrar Mis Inmuebles']);
@@ -271,6 +280,14 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Mis Inmuebles']);
         Permission::create(['name' => 'Actualizar Mis Inmuebles']);
         // Permission::create(['name' => 'Eliminar Mis Inmuebles']);
+        Permission::create(['name' => 'Mis Pagos - Inmuebles']);
+        Permission::create(['name' => 'Declarar Inmuebles']);
+        Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
+        
+        Permission::create(['name' => 'Pagar Inmueble']);
+//        Permission::create(['name' => 'Detalles de Pago - Inmueble']);
+
+       # --------------------------------------------------------------------------
 
         // Mis vehiculos
         Permission::create(['name' => 'Mis Vehiculos']);
@@ -279,7 +296,22 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Mis Vehiculos']);
         Permission::create(['name' => 'Actualizar Mis Vehiculos']);
         // Permission::create(['name' => 'Eliminar Mis Vehiculos']);
+        Permission::create(['name' => 'Mis Pagos - Vehiculos']);
+        Permission::create(['name' => 'Declarar Vehiculos']);
+        Permission::create(['name' => 'Historial de Pagos - Vehiculos']);
+        Permission::create(['name' => 'Pagar Vehiculo']);
 
+
+        # -------------------------------------------------------------------------
+        // Mis Tasas
+        Permission::create(['name' => 'Generar Tasas']);
+        Permission::create(['name' => 'Declarar Tasas']);
+        Permission::create(['name' => 'Mis Pagos - Tasas']);
+        Permission::create(['name' => 'Historial de Pagos - Tasas']);
+        Permission::create(['name' => 'Pagar Tasas']);
+
+
+        # -------------------------------------------------------------------------
 
         // Mis Publicidades
         Permission::create(['name' => 'Mis Publicidades']);
@@ -291,29 +323,20 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Mis Pagos - Empresas
         // Mis Empresas
-        Permission::create(['name' => 'Mis Pagos - Actividad Económica']);
-        Permission::create(['name' => 'Declarar Actividad Económica']);
-        Permission::create(['name' => 'Declaración Anticipada - Actividad Económica']);
-        Permission::create(['name' => 'Declaración Definitiva - Actividad Económica']);
-        Permission::create(['name' => 'Historial de Pagos - Actividad Económica']);
 
-        Permission::create(['name' => 'Mis Pagos - Inmuebles']);
-        Permission::create(['name' => 'Declarar Inmuebles']);
-        Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
+        # --------------------------------------------------------------------------
 
 
-        Permission::create(['name' => 'Mis Pagos - Vehiculos']);
-        Permission::create(['name' => 'Declarar Vehiculos']);
-        Permission::create(['name' => 'Historial de Pagos - Vehiculos']);
 
         Permission::create(['name' => 'Mis Pagos - Publicidad']);
         Permission::create(['name' => 'Declarar Publicidades']);
         Permission::create(['name' => 'Historial de Pagos - Publicidades']);
 
-        Permission::create(['name' => 'Generar Tasas']);
-        Permission::create(['name' => 'Mis Pagos - Tasas']);
-        Permission::create(['name' => 'Declarar Tasas']);
-        Permission::create(['name' => 'Historial de Pagos - Tasas']);
+
+        Permission::create(['name' => 'Detalles Mi Planilla']);
+        Permission::create(['name' => 'Descargar Mi Planilla']);
+        Permission::create(['name' => 'Obtener Mi Planilla']);
+
 
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
@@ -521,47 +544,63 @@ class RolesAndPermissionsSeeder extends Seeder
         // Contribuyente
         $roleTaxpayer = Role::create(['name' => 'Contribuyente']);
         $roleTaxpayer->givePermissionTo([
+            # ------ Módulo de Mis Empresas
             'Mis Empresas',
             'Registrar Mis Empresas',
             'Consultar Mis Empresas',
             'Detalles Mis Empresas',
             // 'Actualizar Mis Empresas',
-             'Mis Inmuebles',
-             'Registrar Mis Inmuebles',
-             'Consultar Mis Inmuebles',
-             'Detalles Mis Inmuebles',
-             'Actualizar Mis Inmuebles',
+
+            'Mis Pagos - Actividad Económica',
+            'Declarar Actividad Económica',
+            'Declaración Anticipada - Actividad Económica',
+            //'Declaración Definitiva - Actividad Económica',
+            'Historial de Pagos - Actividad Económica',
+
+            # ------- Módulo de Mis Inmuebles
+            'Mis Inmuebles',
+            'Registrar Mis Inmuebles',
+            'Consultar Mis Inmuebles',
+            'Detalles Mis Inmuebles',
+//            'Actualizar Mis Inmuebles',
+            // 'Eliminar Mis Inmuebles',
+            'Mis Pagos - Inmuebles',
+            'Declarar Inmuebles',
+            'Historial de Pagos - Inmuebles',
+            'Pagar Inmueble',
+
+            # -------- Módulo de Mis Vehiculos
             'Mis Vehiculos',
             'Registrar Mis Vehiculos',
             'Consultar Mis Vehiculos',
             'Detalles Mis Vehiculos',
+            'Actualizar Mis Vehiculos',
+            // 'Eliminar Mis Vehiculos',
+            'Mis Pagos - Vehiculos',
+            'Declarar Vehiculos',
+            'Historial de Pagos - Vehiculos',
+            'Pagar Vehiculo',
 
-            // 'Actualizar Mis Vehiculos',
+            # --------- Módulo de Mis Publicidades
             //'Mis Publicidades',
             //'Registrar Mis Publicidades',
             //'Consultar Mis Publicidades',
             //'Detalles Mis Publicidades',
 
-
+            # --------- Módulo de Mis Tasas
             'Generar Tasas',
-            'Mis Pagos - Tasas',
             'Declarar Tasas',
+            'Mis Pagos - Tasas',
             'Historial de Pagos - Tasas',
-            //'Actualizar Mis Publicidades',
-            'Mis Pagos - Actividad Económica',
-            'Declarar Actividad Económica',
-            'Declaración Anticipada - Actividad Económica',
-            //'Declaración Definitiva - Actividad Económica',
-             'Historial de Pagos - Actividad Económica',
+            'Pagar Tasas',
 
-            //'Mis Pagos - Inmuebles',
-             //'Declarar Inmuebles',
-             ///'Ver Declaraciones - Inmuebles',
+            #  ---------------------------------------
 
 
-             'Mis Pagos - Vehiculos',
-             'Declarar Vehiculos',
-            // 'Ver Declaraciones - Vehiculos',
+            # ------- GENERAL PARA EL USUARIO WEB
+            'Detalles Mi Planilla',
+            'Descargar Mi Planilla',
+            'Obtener Mi Planilla',
             'Mi Perfil'
         ]);
 
@@ -579,19 +618,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
-            'Historial de Pago - Empresas',
+//            'Historial de Pago - Empresas',
             'Gestionar Inmuebles',
             'Registrar Inmueble',
             'Consultar Inmuebles',
             'Detalles Inmuebles',
             'Actualizar Inmuebles',
-            'Historial de Pago - Inmuebles',
+//            'Historial de Pago - Inmuebles',
             'Gestionar Vehiculos',
             'Registrar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
             'Actualizar Vehiculos',
-            'Historial de Pago - Vehiculos',
+//            'Historial de Pago - Vehiculos',
             'Mi Perfil'
         ]);
 
@@ -738,7 +777,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Inmuebles',
             'Detalles Inmuebles',
             'Actualizar Inmuebles',
-            'Historial de Pago - Inmuebles',
+//            'Historial de Pago - Inmuebles',
             'Gestionar Vehiculos',
             'Registrar Vehiculo',
             'Consultar Vehiculos',
@@ -813,7 +852,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Inmuebles',
             'Detalles Inmuebles',
             'Actualizar Inmuebles',
-            'Historial de Pago - Inmuebles',
+//            'Historial de Pago - Inmuebles',
             'Gestionar Vehiculos',
             'Registrar Vehiculo',
             'Consultar Vehiculos',

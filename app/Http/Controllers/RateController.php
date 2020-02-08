@@ -261,6 +261,7 @@ class RateController extends Controller{
 
         $type='';
 
+
         if(!is_null($rate[0]->pivot->company_id)){
             $data=Company::find($rate[0]->pivot->company_id);
             $type='company';
@@ -268,6 +269,7 @@ class RateController extends Controller{
             $data=User::find($rate[0]->pivot->person_id);
             $type='user';
         }
+
 
 
         return view('modules.rates.taxpayers.details',['taxes'=>$taxe,'data'=>$data,'type'=>$type]);

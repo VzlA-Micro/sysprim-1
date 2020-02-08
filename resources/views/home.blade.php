@@ -49,6 +49,14 @@
                     </div>
                 </div>
             @endcan
+            @can('Generar Tasas')
+                <div class="col s6 m3 animated bounceIn">
+                    <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white amber-text accent-4">
+                        <i class="icon-picture_as_pdf"></i>
+                        <span class="truncate">Gestión de  Tasas</span>
+                    </a>
+                </div>
+            @endcan
             @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('users.manage') }}" class="btn-app white indigo-text text-darken-4">
@@ -113,14 +121,7 @@
                     </a>
                 </div>
             @endcan
-            @can('Generar Tasas')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white amber-text accent-4">
-                    <i class="icon-picture_as_pdf"></i>
-                    <span class="truncate">Gestión de  Tasas</span>
-                </a>
-            </div>
-            @endcan
+
         {{-- @can('Notificaciones')
         <div class="col s6 m3 animated bounceIn">
             <a href="{{ route('notifications.manage') }}" class="btn-app white red-text">

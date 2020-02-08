@@ -28,32 +28,36 @@
                     @endif
                 </ul>
             </div>
+            @can('Declarar Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('taxes.vehicle',['id'=>$id."-".'true'])}}" class="btn-app white green-text">
                     <i class="icon-payment"></i>
                     <span class="truncate">Mis Declaraciones</span>
                 </a>
             </div>
-            {{--<div class="col s12 m4 animated bounceIn">
-                @if(Carbon\Carbon::now()->format('m')==='01')
-                    <a href="#mode" class="modal-trigger btn-app white green-text">
-                        <i class="icon-payment"></i>
-                        <span class="truncate">Mis Declaraciones</span>
-                    </a>
-                @else
-                    <a href="{{url('/taxes/vehicles/'.$id."-false")}}"
-                       class="btn-app white green-text">
-                        <i class="icon-payment"></i>
-                        <span class="truncate">Mis Declaraciones</span>
-                    </a>
-                @endif
-            </div>--}}
+            @endcan
+            @can('Historial de Pagos - Vehiculos')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ url('/vehicle/payments/history/'.$id)}}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>
                 </a>
             </div>
+            @endcan
+        {{--<div class="col s12 m4 animated bounceIn">
+            @if(Carbon\Carbon::now()->format('m')==='01')
+                <a href="#mode" class="modal-trigger btn-app white green-text">
+                    <i class="icon-payment"></i>
+                    <span class="truncate">Mis Declaraciones</span>
+                </a>
+            @else
+                <a href="{{url('/taxes/vehicles/'.$id."-false")}}"
+                   class="btn-app white green-text">
+                    <i class="icon-payment"></i>
+                    <span class="truncate">Mis Declaraciones</span>
+                </a>
+            @endif
+        </div>--}}
 
 
         {{-- "{{route('taxes.vehicle',['id'=>$vehicle->id])}}" Modal Trigger  --}}

@@ -123,12 +123,14 @@
                                 <h4 class="center-align">Obtener Planilla:</h4>
                             </div>
                             <div class="row">
+                                @can('Obtener Mi Planilla')
                                 <div class="col s12 m6 offset-m3 center-align" id="div-send"  >
                                     <a href="#" class="btn-app green" >
                                         <i class="far fa-file-pdf"></i>
                                         <span class="truncate">Obtener Planilla</span>
                                     </a>
                                 </div>
+                                @endcan
                             </div>
                             <div class="row">
                                 <div class="col s6 left-align">
