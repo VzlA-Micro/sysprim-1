@@ -25,7 +25,7 @@ class GeoSysprimController extends Controller{
         $date_now=Carbon::now();
 
         $mounth=$date_now->format('m');
-        $taxes=Taxe::where('status','verified')->whereMonth('created_at','=',$mounth)->get();
+        $taxes=Taxe::where('status','verified')->whereMonth('created_at','=',$mounth)->where('branch','Act.Eco')->get();
 
         if(!$taxes->isEmpty()){
             foreach ($taxes as $taxe){
@@ -41,7 +41,7 @@ class GeoSysprimController extends Controller{
 
 
     public function findCompanyProcess(){
-        $taxes=Taxe::where('status','process')->whereDate('created_at','=',Carbon::now()->format('Y-m-d'))->get();
+        $taxes=Taxe::where('status','process')->where('branch','Act.Eco')->whereDate('created_at','=',Carbon::now()->format('Y-m-d'))->get();
 
 
         if(!$taxes->isEmpty()){
@@ -61,7 +61,7 @@ class GeoSysprimController extends Controller{
 
 
         $mounth=$date_now->format('m');
-        $taxes_process=Taxe::where('status','process')->whereDate('created_at','=',Carbon::now()->format('Y-m-d'))->get();
+        $taxes_process=Taxe::where('status','process')->where('branch','Act.Eco')->whereDate('created_at','=',Carbon::now()->format('Y-m-d'))->get();
 
 
         if(!$taxes_process->isEmpty()){
@@ -73,7 +73,7 @@ class GeoSysprimController extends Controller{
         }
 
 
-        $taxes=Taxe::where('status','verified')->whereMonth('created_at','=',$mounth)->get();
+        $taxes=Taxe::where('status','verified')->where('branch','Act.Eco')->whereMonth('created_at','=',$mounth)->get();
 
 
         if(!$taxes->isEmpty()){
