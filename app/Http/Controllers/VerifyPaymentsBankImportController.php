@@ -257,6 +257,7 @@ class VerifyPaymentsBankImportController extends Controller
                                             'data' => $data,
                                             'property' => $property,
                                             'propertyTaxes' => $propertyTaxes,
+                                            'type' => $type,
                                             'firm'=>true
                                         ]);
 
@@ -443,6 +444,7 @@ class VerifyPaymentsBankImportController extends Controller
                                     'data' => $data,
                                     'property' => $property,
                                     'propertyTaxes' => $propertyTaxes,
+                                    'type' => $type,
                                     'firm' => true
                                 ]);
 

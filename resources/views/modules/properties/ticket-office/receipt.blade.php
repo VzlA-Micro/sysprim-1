@@ -73,11 +73,13 @@
 <table style="width: 100%; border-collapse: collapse;">
     <tr style="">
         <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+        @if($type == 'user')
+            <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
+        @elseif($type == 'company')
+            <td style="width:35%;font-size: 11px !important;">{{ $data->name }}</td>
+        @endif
 
-        <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
-
-
-        {{--        @if($property->code_catastal)--}}
+            {{--        @if($property->code_catastal)--}}
         <td style="width:20%;font-size: 12px !important;"><b>Codigo Catastral:</b></td>
         <td style="width:30%;font-size: 11px !important;">{{$taxes[0]->properties[0]->code_cadastral}}</td>
 
@@ -259,7 +261,11 @@
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->code}}</td>
             <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->digit}}</td>
             <td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->payments[0]->code,3,13)}}</td>
-            <td style="font-size: 12px !important;text-align: center;"></td>
+            @if($type == 'user')
+                <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
+            @else
+                <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
+            @endif
             <td style="font-size: 12px !important;text-align: center;">{{number_format($totalAcum,2,',','.')}}</td>
         </tr>
 

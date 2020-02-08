@@ -319,7 +319,8 @@ class PropertyTaxesController extends Controller
             'taxes' => $taxe,
             'data' => $data,
             'property' => $property,
-            'propertyTaxes' => $propertyTaxes
+            'propertyTaxes' => $propertyTaxes,
+            'type' => $type
         ]);
 
         if(isset($download)){
