@@ -41,9 +41,9 @@ class TicketOfficeVehicleController extends Controller
         try {
             $id = Crypt::decrypt($id);
 
-            $taxe = Taxe::with('companies')->where('id', $id)->get();
+            $taxe = Taxe::with('VehicleTaxes')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified') {
+            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -55,30 +55,28 @@ class TicketOfficeVehicleController extends Controller
 
             } else {
                 $calculateTaxes = Calculate::calculateTaxes($id);
-                $ciuTaxes = CiuTaxes::with('ciu')->where('taxe_id', $id)->get();
-                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes, 'ciu' => $ciuTaxes]);
+                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes]);
             }
 
         } catch (DecryptException $e) {
-            $taxe = Taxe::with('companies')->where('code', $id)->get();
-
-
+            $code=strtoupper($id);
+            $taxe = Taxe::with('VehicleTaxes')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified') {
-                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
-                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
                     $taxe_find = Taxe::find($taxe[0]->id);
                     $taxe_find->status = 'cancel';
                     $taxe_find->update();
-                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null]);
 
                 } else {
                     return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => 'null']);
                 }
             } else {
-                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null]);
             }
         }
     }
@@ -376,7 +374,7 @@ class TicketOfficeVehicleController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=', 'Pat.Veh')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=', 'Pat.Veh')->whereIn('id', $id_taxes)->with('vehicleTaxes')->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -385,6 +383,8 @@ class TicketOfficeVehicleController extends Controller
             $amount_taxes = null;
             $taxes = null;
         }
+
+
 
         return view('modules.ticket-office.vehicle.modules.taxes.taxes-tickoffice', ['taxes' => $taxes]);
     }
@@ -896,6 +896,7 @@ class TicketOfficeVehicleController extends Controller
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
+                    DeclarationVehicle::verify($tax->id);
 //                  $tax->delete();
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
@@ -1355,6 +1356,7 @@ class TicketOfficeVehicleController extends Controller
         $date = Carbon::now();
         $vehicleTaxe = Vehicle::find($id);
         $tax = $vehicleTaxe->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        $statusTax=false;
         if (is_null($tax)) {
             $statusTax = false;
         } else {

@@ -1002,10 +1002,22 @@ $('document').ready(function () {
 
     $('#general-next').click(function () {
 
+        var fiscalP = $('#fiscal_period').val();
+        console.log(fiscalP);
         if ($('#vehicle_id').val() === '') {
             swal({
                 title: "Información",
                 text: 'Debe ingresar una placa de vehículo,  para continuar con el registro.',
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        } else if (fiscalP == 'null') {
+            swal({
+                title: "Información",
+                text: 'Debe seleccionar un periodo fiscal,  para poder continuar.',
                 icon: "info",
                 button: {
                     text: "Esta bien",
@@ -1242,29 +1254,38 @@ $('document').ready(function () {
         });
     });
 
-    var companies_id = '';
+    var vehicle_id = '';
     var type_taxes = '';
 
 
     $('.payroll').change(function () {
-        if (companies_id !== '') {
-            if ($(this).is(":checked") && $(this).attr('data-company') == companies_id) {
-                companies_id = $(this).attr('data-company');
-            } else if ($(this).attr('data-company') != companies_id) {
+
+
+        if (vehicle_id !== '') {
+            console.log('if');
+            if (!$(this).is(":checked")) {
+                vehicle_id = '';
+            }
+            else if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
+                vehicle_id = $(this).attr('data-vehicle');
+            } else if ($(this).attr('data-vehicle') != vehicle_id) {
                 swal({
                     title: "Información",
-                    text: "Las planillas selecionadas no pertenecen a la misma empresa.",
+                    text: "La planilla selecionada no pertenece al mismo vehículo .",
                     icon: "info",
                     button: "Ok",
                 });
                 $(this).prop('checked', false);
+            } else if (!$(this).is(":checked")) {
+                vehicle_id = '';
             }
         } else {
-            companies_id = $(this).attr('data-company');
+            console.log('else');
+            vehicle_id = $(this).attr('data-vehicle');
         }
 
 
-        if (type_taxes !== '') {
+        /*if (type_taxes !== '') {
             if ($(this).is(":checked") && $(this).attr('data-company') == type_taxes) {
                 type_taxes = $(this).attr('data-taxes');
             } else if ($(this).attr('data-taxes') != type_taxes) {
@@ -1283,7 +1304,7 @@ $('document').ready(function () {
             }
         } else {
             type_taxes = $(this).attr('data-taxes');
-        }
+        }*/
 
     });
 
@@ -1655,12 +1676,13 @@ $('document').ready(function () {
             var search = $('#search').val();
             $.ajax({
                 method: "GET",
-                url: url + "ticket-office/cashier/" + search,
+                url: url + "ticketOffice/vehicle/cashier/" + search,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
+                    console.log(response);
                     if (response.status === 'error') {
                         swal({
                             title: "Error",
@@ -1700,7 +1722,8 @@ $('document').ready(function () {
                     } else {
 
                         var taxe = response.taxe[0];
-
+                        var vehicle = response.taxe[0]['vehicle_taxes'][0].license_plate;
+                        var vehicleId = response.taxe[0]['vehicle_taxes'][0].id;
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
@@ -1716,6 +1739,7 @@ $('document').ready(function () {
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
+                                '<td>' + vehicle + '</td>' +
                                 '<td><i class="icon-check text-green"></i>' + taxe.created_at + '</td>' +
                                 '<td>' + taxe.code + '</td>' +
                                 '<td>' + taxe.branch + '</td>' +
@@ -1723,13 +1747,64 @@ $('document').ready(function () {
                                 '<td>' + '<p>' +
                                 '  <label>\n' +
                                 '           <input type="checkbox" name="payroll" class="payroll"\n' +
-                                '                       value="' + taxe.id + '"/>\n' +
+                                '                       value="' + taxe.id + '"' +
+                                'data-vehicle="' + vehicleId +
+                                '"/>\n' +
                                 '                         <span></span>\n' +
                                 '                                  </label>\n' +
                                 '</p>' +
                                 '</td>' +
                                 '<td>' + link + '</td>' +
-                                '</tr>');
+                                '</tr>'
+                            );
+                            var vehicle_id = '';
+                            $('.payroll').change(function () {
+                                if (vehicle_id !== '') {
+                                    if (!$(this).is(":checked")) {
+                                        vehicle_id = '';
+                                    }
+                                    else if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
+                                        vehicle_id = $(this).attr('data-vehicle');
+                                    } else if ($(this).attr('data-vehicle') != vehicle_id) {
+                                        swal({
+                                            title: "Información",
+                                            text: "La planilla selecionada no pertenece al mismo vehículo .",
+                                            icon: "info",
+                                            button: "Ok",
+                                        });
+                                        $(this).prop('checked', false);
+                                    } else if (!$(this).is(":checked")) {
+                                        vehicle_id = '';
+                                    }
+                                } else {
+                                    console.log(vehicle_id);
+                                    console.log('else');
+                                    vehicle_id = $(this).attr('data-vehicle');
+                                }
+
+
+                                /*if (type_taxes !== '') {
+                                    if ($(this).is(":checked") && $(this).attr('data-company') == type_taxes) {
+                                        type_taxes = $(this).attr('data-taxes');
+                                    } else if ($(this).attr('data-taxes') != type_taxes) {
+                                        swal({
+                                            title: "Información",
+                                            text: "Las planillas selecionadas deben ser del mismo tipo.",
+                                            icon: "info",
+                                            button: "Ok",
+                                        }).then(function () {
+
+                                            location.reload();
+                                        });
+
+
+                                        $(this).prop('checked', false);
+                                    }
+                                } else {
+                                    type_taxes = $(this).attr('data-taxes');
+                                }*/
+
+                            });
 
                             $(this).val();
                             M.updateTextFields();
@@ -2037,8 +2112,6 @@ $('document').ready(function () {
         var documentOld = $('#ci').val();
 
 
-
-
         if (document == '' || document.length < 7) {
             swal({
                 title: "Información",
@@ -2051,7 +2124,7 @@ $('document').ready(function () {
                     value: true
                 },
             })
-        }else if((type==nationality)&&(document==documentOld)){
+        } else if ((type == nationality) && (document == documentOld)) {
             swal({
                 title: "Información",
                 text: 'El documento que introdujo, es igual al del propietario',
@@ -2161,8 +2234,8 @@ $('document').ready(function () {
     $('#saveUW').click(function () {
         var type = $('#typeDocument').val();
         var document = $('#Document').val();
-        var nationalitys=$('#nationalitys').val();
-        var documentOld=$('#ci').val();
+        var nationalitys = $('#nationalitys').val();
+        var documentOld = $('#ci').val();
         var id = $('#id').val();
 
         if (document == '' || document.length < 7) {
@@ -2177,7 +2250,7 @@ $('document').ready(function () {
                     value: true
                 },
             })
-        } else if((type==nationalitys)&&(document==documentOld)){
+        } else if ((type == nationalitys) && (document == documentOld)) {
             swal({
                 title: "Información",
                 text: 'El documento que introdujo, es igual al del usuario web',
@@ -2190,7 +2263,7 @@ $('document').ready(function () {
             });
 
             $('#Document').focus();
-        }else {
+        } else {
 
             $.ajax({
                 type: "get",

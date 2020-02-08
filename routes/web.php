@@ -529,6 +529,7 @@ Route::middleware(['auth'])->group(/**
 
                 Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 
+                Route::get('ticketOffice/vehicle/cashier/{id}', 'TicketOfficeVehicleController@QrTaxes');
 
                 // Nivel 2:
                 // ---- Generar Planilla -> Registrar
