@@ -187,14 +187,16 @@
 
 
                         <div class="col s12">
-                            <div class="row">                  
+                            <div class="row">
+                                @can('Cambiar Propietario - Inmueble')
                                 <div class="col s12 m6">
                                     <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
                                         <i class="icon-account_circle right"></i>    
                                              Cambiar Propietario
                                     </button>
                                 </div>
-
+                                @endcan
+                                @can('Actualizar Mis Inmuebles')
                                 <div class="col s12 m5 offset-m1" >
                                         <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
                                             <i class="icon-mode_edit right"></i>
@@ -205,14 +207,15 @@
                                             <i class="icon-save right"></i>
                                         </button>                                  
                                 </div>
-                               
+                                @endcan
+                                @can('Cambiar Ubicacion - Inmuebles')
                                 <div class="col s12 m6" style="margin-top:20px;">
                                     <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
                                         <i class="icon-map right"></i>
                                             Cambiar Ubicación     
                                     </button>
                                 </div> 
-
+                                @endcan
                                 
                              </div>                
                         </div>
@@ -316,13 +319,14 @@
                         </div>
 
 
-
+                        @can('Cambiar Usuario - Inmueble')
                         <div class="input-field col s12 m12">
                             <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">
                                 <i class="icon-refresh right"></i>
                                 Cambiar Usuario 
                             </a>
                         </div>
+                        @endcan
                     </div>
 
                 </form>

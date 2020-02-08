@@ -618,6 +618,8 @@ Route::middleware(['auth'])->group(/**
                 Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
                 Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
                 Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+                Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
                 Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');

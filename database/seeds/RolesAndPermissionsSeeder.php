@@ -231,6 +231,10 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Inmuebles']);
         Permission::create(['name' => 'Actualizar Inmuebles']);
         Permission::create(['name' => 'Gestionar Pagos - Inmuebles']);
+        Permission::create(['name' => 'Cambiar Ubicacion - Inmuebles']);
+        Permission::create(['name' => 'Cambiar Propietario - Inmueble']);
+        Permission::create(['name' => 'Cambiar Usuario - Inmueble']);
+//        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
 
         // Permission::create(['name' => 'Eliminar Inmuebles']);
 //        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
@@ -297,6 +301,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Mis Pagos - Inmuebles']);
         Permission::create(['name' => 'Declarar Inmuebles']);
         Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
+
 
         Permission::create(['name' => 'Pagar Inmueble']);
 //        Permission::create(['name' => 'Detalles de Pago - Inmueble']);
@@ -465,6 +470,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Inmuebles',
             'Actualizar Inmuebles',
             'Gestionar Pagos - Inmuebles',
+            'Cambiar Ubicacion - Inmuebles',
+            'Cambiar Propietario - Inmueble',
+            'Cambiar Usuario - Inmueble',
             # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
@@ -562,6 +570,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Inmuebles',
             'Actualizar Inmuebles',
             'Gestionar Pagos - Inmuebles',
+            'Cambiar Ubicacion - Inmuebles',
+            'Cambiar Propietario - Inmueble',
+            'Cambiar Usuario - Inmueble',
             # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
