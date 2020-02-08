@@ -343,14 +343,14 @@
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="V: Venezolano; E: Extrangero">
                             <i class="icon-public prefix"></i>
-                            <select name="nationality" id="nationality" required disabled>
+                            <select name="nationalitys" id="nationalitys" required disabled>
                                 <option value="null">...</option>
                                 <option value="V" @if ($vehicle->users[0]->typeDocument=='V'){{"selected"}}@endif>V
                                 </option>
                                 <option value="E" @if ($vehicle->users[0]->typeDocument=='E'){{"selected"}}@endif>E
                             </option>
                             </select>
-                            <label for="nationality">Nacionalidad</label>
+                            <label for="nationalitys">Nacionalidad</label>
                         </div>
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
