@@ -48,11 +48,15 @@ class VehiclesTaxesController extends Controller
         $date = Carbon::now();
 
         $vehicleTaxe = Vehicle::find($idVehicle);
-        if ($vehicleTaxe->pivot === null) {
+        if ($vehicleTaxe->taxesVehicle->isEmpty()) {
             $taxes = '';
         } else {
-            $taxes = Taxe::where('id', $vehicleTaxe->pivot->taxe_id)->get();
+            $taxes = Taxe::whereIn('id', $vehicleTaxe->taxesVehicle)->get();
+
         }
+
+
+
 
         if (!empty($taxes)) {
             foreach ($taxes as $tax) {
