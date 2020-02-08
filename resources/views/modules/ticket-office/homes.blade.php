@@ -17,32 +17,30 @@
                 </a>
             </div>
             @endcan
-            {{--@can('')--}}
+            @can('Taquilla - Vehiculos')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('ticketOffice.vehicle.home')}}" class="btn-app white orange-text text-darken-3">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Vehículos</span>
                 </a>
             </div>
-            {{--@endcan--}}
-            {{--@can('')--}}
+            @endcan
+            @can('Taquilla - Tasas')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.menu')}}" class="btn-app white  blue-text accent-3">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Tasas y Certificaciones</span>
                 </a>
             </div>
-            {{--@endcan--}}
-
-
-
+            @endcan
+            @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('property.ticket-office.home')}}" class="btn-app white brown-text">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Inmuebles Urbanos</span>
                 </a>
             </div>
-
+            @endcan
             @can('Verificar Pagos - Archivo')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('payments.verify.manage') }}" class="btn-app white green-text text-darken-4">

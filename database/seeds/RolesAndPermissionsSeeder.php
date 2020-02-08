@@ -18,14 +18,14 @@ class RolesAndPermissionsSeeder extends Seeder
         //Restablecer roles y permisos en caché
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Seguridad
+        #########################################################################################################
+        # !!!!!!!!!!!!!!!!!!!  ------>                SUPERUSUARIO               <-------   !!!!!!!!!!!!!!!!!!! #
+        #########################################################################################################
+        # +++++++++++  SEGURIDAD
         Permission::create(['name' => 'Seguridad']);
-
-        // -- Bitacora
+        # +++++++++++  BITACORA
         Permission::create(['name' => 'Bitacora']);
-
-
-        // Roles y Permisos
+        # +++++++++++  ROLES Y PERMISOS
         Permission::create(['name' => 'Gestionar Roles y Permisos']);
         Permission::create(['name' => 'Crear Rol']);
         Permission::create(['name' => 'Ver Roles']);
@@ -33,7 +33,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Roles']);
         // Permission::create(['name' => 'Eliminar Roles']);
 
-        // -- Gestionar Usuarios
+        # +++++++++++  GESTIONAR USUARIOS
         Permission::create(['name' => 'Gestionar Usuarios']);
         Permission::create(['name' => 'Registrar Usuario']);
         Permission::create(['name' => 'Consultar Usuarios']);
@@ -44,19 +44,21 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Resetear Usuarios']);
         Permission::create(['name' => 'Mi Perfil']);
 
-        // -------------------- CONFIGURACIÓN --------------------- //
+        ###########################################################################
+        /*                            CONFIGURACION                              */
+        ###########################################################################
         Permission::create(['name' => 'Configuración']);
 
-        // -- Gestionar Unidad Trubutaria
+        /* ------- GESTIONAR UNIDAD TRIBUTARIA ------ */
         Permission::create(['name' => 'Gestionar Unidad Tribuaria']);
         Permission::create(['name' => 'Registrar Unidad Tribuaria']);
         Permission::create(['name' => 'Consultar Unidades Tribuarias']);
 
-        // -- Gestionar CIIU
+        /* ------- GESTIONAR CIIU ------ */
         Permission::create(['name' => 'Gestionar CIIU']);
         Permission::create(['name' => 'Registrar Grupo CIIU']);
         Permission::create(['name' => 'Consultar Grupos CIIU']);
-        // --  -- Gestionar Ramo CIIU
+        /* ------- GESTIONAR RAMOS CIIU ------ */
         Permission::create(['name' => 'Gestionar Ramos CIIU']);
         Permission::create(['name' => 'Registrar Ramo CIIU']);
         Permission::create(['name' => 'Consultar Ramos CIIU']);
@@ -162,9 +164,12 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
         Permission::create(['name' => 'Taquilla - Vehiculos']);
         Permission::create(['name' => 'Taquilla - Tasas']);
+        Permission::create(['name' => 'Taquilla - Inmuebles']);
+//        Permission::create(['name' => 'Taquilla - Tasas']);
 
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
         // Permission::create(['name' => 'Taquilla - Publicidad']);
+
 
         // -- Gestionar Contribuyente
         Permission::create(['name' => 'Gestionar Contribuyentes']);
@@ -225,8 +230,18 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Consultar Inmuebles']);
         Permission::create(['name' => 'Detalles Inmuebles']);
         Permission::create(['name' => 'Actualizar Inmuebles']);
+        Permission::create(['name' => 'Gestionar Pagos - Inmuebles']);
+
         // Permission::create(['name' => 'Eliminar Inmuebles']);
 //        Permission::create(['name' => 'Historial de Pago - Inmuebles']);
+
+
+        Permission::create(['name' => 'Tasas - Generar Planilla']);
+        Permission::create(['name' => 'Tasas - Pagar Planillas']);
+        Permission::create(['name' => 'Tasas - Detalles Planilla']);
+
+
+
 
 
         // -- Gestionar Vehiculos
@@ -254,10 +269,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Consultar Notificaciones']);
         Permission::create(['name' => 'Ver Notificaciones']);
 
-        // Mis Gestiones ------------------------------------------------------------------
+        #######################################################################################################
+        ############ -----------------------    GESTION DE USUARIO WEB    ------------------------ ############
+        #######################################################################################################
 
-
-        // Mis Empresas
+        # >>>>>>>>> ACTIVIDAD ECONOMICA
         Permission::create(['name' => 'Mis Empresas']);
         Permission::create(['name' => 'Registrar Mis Empresas']);
         Permission::create(['name' => 'Consultar Mis Empresas']);
@@ -271,9 +287,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Historial de Pagos - Actividad Económica']);
         Permission::create(['name' => 'Pagar Actividad Económica']);
 
-
-        # -----------------------------------------------------------------------
-        // Mis Inmuebles
+        # >>>>>>>>> INMUEBLES
         Permission::create(['name' => 'Mis Inmuebles']);
         Permission::create(['name' => 'Registrar Mis Inmuebles']);
         Permission::create(['name' => 'Consultar Mis Inmuebles']);
@@ -283,13 +297,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Mis Pagos - Inmuebles']);
         Permission::create(['name' => 'Declarar Inmuebles']);
         Permission::create(['name' => 'Historial de Pagos - Inmuebles']);
-        
+
         Permission::create(['name' => 'Pagar Inmueble']);
 //        Permission::create(['name' => 'Detalles de Pago - Inmueble']);
 
-       # --------------------------------------------------------------------------
-
-        // Mis vehiculos
+        # >>>>>>>>> VEHICULOS
         Permission::create(['name' => 'Mis Vehiculos']);
         Permission::create(['name' => 'Registrar Mis Vehiculos']);
         Permission::create(['name' => 'Consultar Mis Vehiculos']);
@@ -302,8 +314,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Pagar Vehiculo']);
 
 
-        # -------------------------------------------------------------------------
-        // Mis Tasas
+        # >>>>>>>>> TASAS
         Permission::create(['name' => 'Generar Tasas']);
         Permission::create(['name' => 'Declarar Tasas']);
         Permission::create(['name' => 'Mis Pagos - Tasas']);
@@ -311,32 +322,24 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Pagar Tasas']);
 
 
-        # -------------------------------------------------------------------------
-
-        // Mis Publicidades
+        # >>>>>>>>> PUBLICIDAD
         Permission::create(['name' => 'Mis Publicidades']);
         Permission::create(['name' => 'Registrar Mis Publicidades']);
         Permission::create(['name' => 'Consultar Mis Publicidades']);
         Permission::create(['name' => 'Detalles Mis Publicidades']);
         Permission::create(['name' => 'Actualizar Mis Publicidades']);
         // Permission::create(['name' => 'Eliminar Mis Publicidades']);
-
-        // Mis Pagos - Empresas
-        // Mis Empresas
-
-        # --------------------------------------------------------------------------
-
-
-
         Permission::create(['name' => 'Mis Pagos - Publicidad']);
         Permission::create(['name' => 'Declarar Publicidades']);
         Permission::create(['name' => 'Historial de Pagos - Publicidades']);
 
 
+        # >>>>>>>>> GENERAL USUARIO WEB
         Permission::create(['name' => 'Detalles Mi Planilla']);
         Permission::create(['name' => 'Descargar Mi Planilla']);
         Permission::create(['name' => 'Obtener Mi Planilla']);
 
+        #######################################################################################################
 
         //Creamos el Rol del superUsuario
         $roleSuperUser = Role::create(['name' => 'SuperUsuario']);
@@ -427,13 +430,42 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Valor Terreno',
             'Actualizar Valor Terreno',
             'Taquillas',
-            'Taquilla - Actividad Económica',
+            ##### GESTIONAR CONTRIBUYENTE #####
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
             'Resetear Contribuyentes',
+            ##### TAQUILLA DE ACTIVIDAD ECONOMICA #####
+            'Taquilla - Actividad Económica',
+            'Gestionar Empresas',
+            'Registrar Empresa',
+            'Consultar Empresas',
+            'Detalles Empresas',
+            # --------------------------------------- #
+            ##### PLANILLA DE VEHICULOS #####
+            'Taquilla - Vehiculos',
+            'Gestionar Vehiculos',
+            'Registrar Vehiculo',
+            'Consultar Vehiculos',
+            'Detalles Vehiculos',
+            # ----------------------------- #
+            ##### TAQUILLA DE TASAS #####
+            'Taquilla - Tasas',
+            'Tasas - Generar Planilla',
+            'Tasas - Pagar Planillas',
+            'Tasas - Detalles Planilla',
+            # ------------------------- #
+            ##### TAQUILLA DE INMUEBLES #####
+            'Taquilla - Inmuebles',
+            'Gestionar Inmuebles',
+            'Registrar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            'Actualizar Inmuebles',
+            'Gestionar Pagos - Inmuebles',
+            # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',
@@ -495,23 +527,42 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleTicketOfficer = Role::create(['name' => 'Operador']);
         $roleTicketOfficer->givePermissionTo([
             'Taquillas',
+            ##### GESTIONAR CONTRIBUYENTE #####
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
             'Actualizar Contribuyentes',
             'Resetear Contribuyentes',
+            ##### TAQUILLA DE ACTIVIDAD ECONOMICA #####
             'Taquilla - Actividad Económica',
             'Gestionar Empresas',
             'Registrar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
+            # --------------------------------------- #
+            ##### PLANILLA DE VEHICULOS #####
             'Taquilla - Vehiculos',
             'Gestionar Vehiculos',
             'Registrar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
+            # ----------------------------- #
+            ##### TAQUILLA DE TASAS #####
             'Taquilla - Tasas',
+            'Tasas - Generar Planilla',
+            'Tasas - Pagar Planillas',
+            'Tasas - Detalles Planilla',
+            # ------------------------- #
+            ##### TAQUILLA DE INMUEBLES #####
+            'Taquilla - Inmuebles',
+            'Gestionar Inmuebles',
+            'Registrar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            'Actualizar Inmuebles',
+            'Gestionar Pagos - Inmuebles',
+            # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',

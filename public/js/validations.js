@@ -7,7 +7,6 @@ $(document).ready(function(){
         this.value = (this.value + '').replace(/[^A-Z0-9]/g, '');
       });
 
-
     $('.validate.number-only-float').keyup(function (){
         this.value = (this.value + '').replace(/[^0-9.]/g, '');
     });
@@ -15,11 +14,6 @@ $(document).ready(function(){
     $('.validate.number-date').keyup(function (){
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
-
-
-
-
-
 
     $('.only-number-positive').change(function () {
          if($(this).val()<1) {
@@ -36,8 +30,7 @@ $(document).ready(function(){
         }
     });
 
-
-
-
-
+    $('.validate.text-validate').keyup(function (){
+        this.value = (this.value + '').replace(/[^a-zA-Z ]/g, '');
+    });
 });

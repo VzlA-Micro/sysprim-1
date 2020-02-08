@@ -27,7 +27,7 @@ $('document').ready(function () {
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "vehicle-tab");
-        }else if(document < 7){
+        } else if (document < 7) {
             $('#document').val('');
 
             swal({
@@ -38,11 +38,11 @@ $('document').ready(function () {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
-            }).then(response=>function () {
+            }).then(response => function () {
                 $('#document').focus();
             });
 
-        }else {
+        } else {
 
 
             band = true;
@@ -134,6 +134,7 @@ $('document').ready(function () {
     $('#status').change(function () {
         var status = $(this).val();
         var content = `
+            <h5 class="center">Datos del propietario</h5>
             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero<br>J: Juridico">
                 <i class="icon-public prefix"></i>
                 <select name="type_document" id="type_document" required>
@@ -166,7 +167,7 @@ $('document').ready(function () {
 
 
             $('#content').append(content);
-            $('.validate.number-only').keyup(function (){
+            $('.validate.number-only').keyup(function () {
                 this.value = (this.value + '').replace(/[^.,0-9]/g, '');
             });
 
@@ -822,13 +823,13 @@ $('document').ready(function () {
 
     });
 
-    $('#image').change(function() {
+    $('#image').change(function () {
         var file = this.files[0];
         var mimetype = file.type;
         var match = ["image/jpeg", "image/png", "image/jpg"];
-        if(!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))){
+        if (!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))) {
             swal({
-                title:"Informacion",
+                title: "Informacion",
                 text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
                 icon: "warning",
                 button: {

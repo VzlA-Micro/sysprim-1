@@ -59,7 +59,7 @@ class VehiclesTaxesController extends Controller
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
-//                $tax->delete();
+                    DeclarationVehicle::verify($tax->id);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
                     $statusTax = 'process';
@@ -331,7 +331,7 @@ class VehiclesTaxesController extends Controller
         if (isset($vehicle[0]->company[0])) {
             return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(), 'vehicle' => $vehicle[0]]);
         } else {
-            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(),'vehicle' => $vehicle[0]]);
+            return view('modules.vehicles-payments.history', ['taxes' => $vehicles->taxesVehicle()->get(), 'vehicle' => $vehicle[0]]);
 
         }
     }
