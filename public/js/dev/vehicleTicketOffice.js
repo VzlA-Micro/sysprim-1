@@ -1263,20 +1263,24 @@ $('document').ready(function () {
 
         if (vehicle_id !== '') {
             console.log('if');
-            if (!$(this).is(":checked")) {
-                vehicle_id = '';
-            }
-            else if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
-                vehicle_id = $(this).attr('data-vehicle');
+
+             if ($(this).is(":checked") && $(this).attr('data-vehicle') == vehicle_id) {
+                console.log('lleno');
+                 //vehicle_id = $(this).attr('data-vehicle');
             } else if ($(this).attr('data-vehicle') != vehicle_id) {
                 swal({
                     title: "Información",
                     text: "La planilla selecionada no pertenece al mismo vehículo .",
                     icon: "info",
                     button: "Ok",
+                }).then(function () {
+                    location.reload();
                 });
                 $(this).prop('checked', false);
-            } else if (!$(this).is(":checked")) {
+                console.log('no coincide');
+            }
+            else if (!$(this).is(":checked")) {
+                 console.log('limpio');
                 vehicle_id = '';
             }
         } else {
@@ -1716,6 +1720,8 @@ $('document').ready(function () {
                             text: "La planilla ingresada ya expiró, por favor ingrese un código de  planilla valido.",
                             icon: "warning",
                             button: "Ok",
+                        }).then(response=>function () {
+                            location.reload();
                         });
                         $('#search').val('');
 
@@ -1771,6 +1777,8 @@ $('document').ready(function () {
                                             text: "La planilla selecionada no pertenece al mismo vehículo .",
                                             icon: "info",
                                             button: "Ok",
+                                        }).then(function () {
+                                            location.reload();
                                         });
                                         $(this).prop('checked', false);
                                     } else if (!$(this).is(":checked")) {
