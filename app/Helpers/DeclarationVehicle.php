@@ -22,6 +22,7 @@ use App\Taxe;
 use App\Recharge;
 use App\Helpers\Trimester;
 use App\BankRate;
+use App\Prologue;
 
 class DeclarationVehicle
 {
@@ -29,16 +30,15 @@ class DeclarationVehicle
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
+        if (is_null($year)){
+            $year=Carbon::now();
+        }
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
         $monthJanuary = Carbon::create(2020, 01, 01, 12, 00, 00);
-        $january = 01;
-        $april = 04;
         $total = 0;
         $fractionalPayments = 0;
-        $july = 07;
-        $october = 10;
         $mes = 1;
         $taxes = 0;
         $rateYear = 0;
@@ -46,9 +46,13 @@ class DeclarationVehicle
         $previousDebt = 0;
         $valueDiscount = 0;
         $valueDayMora = 0;
+        $recharge=0;
+        $prologue= Prologue::where('branch','Pat.Veh')->first();
+
         $fiscal_period_format=Carbon::parse($year);
         $rate = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
 
+        $date=Carbon::parse($prologue->date_limit);
         if (is_null($rate)){
             $rate = Tributo::orderBy('id', 'desc')->first();
         }
@@ -91,29 +95,34 @@ class DeclarationVehicle
             $moreThereYear = true;
         }
 
-        $recharge = ($taxes * $recharges->value) / 100;
 
-        if ($year==$yearCurrent){
 
-            $day= CheckCollectionDay::verify();
+        if ($fiscal_period_format->year==$yearCurrent){
 
-            if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
+            $day= CheckCollectionDay::verify('Pat.Veh');
 
-                if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
+            if ($dateCurrent->month <= $date->month) {
+
+                if ($dateCurrent->day >= $date->day) {
+
+                    $recharge = ($taxes * $recharges->value) / 100;
+
                     $dayMora = 31;
                     $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
 
                 } else {
                     $dayMora = 0;
-                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+                    $valueDayMora=0;
+                    //$valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
                 }
             } else {
-                $dayMora = 0;
-                $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+                $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora'])*($taxes+$recharge);
             }
         }else{
+            $recharge = ($taxes * $recharges->value) / 100;
+            $dayMora = 31;
             $day = DeclarationVehicle::dayMora($year);
-            $valueDayMora = ($rateBank / 100 / 360)*$day['diffDayMora']*($taxes+$recharge);
+            $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
         }
 
         //--------------option of payments-------------------------|||||||||||||||||||||||||||||||||
