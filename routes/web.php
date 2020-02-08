@@ -71,6 +71,15 @@ Route::middleware(['auth'])->group(/**
         Route::post('/profile/update', 'UserController@updateProfile')->name('profile.update');
         Route::post('/profile/setPassword', 'UserController@resetUserPassword')->name('profile.setPassword');
 
+        ########## MODULO DE AYUDAS ############
+        Route::get('/help', function () {
+            return view('modules.helps.manage');
+        })->name('helps.manage');
+        Route::get('/help/register-company', function () {
+            return view('modules.helps.register-company');
+        })->name('help.register-company');
+        ########################################
+
 
         // Configuración
         Route::group(['middleware' => ['permission:Configuración']], function () {
@@ -407,12 +416,30 @@ Route::middleware(['auth'])->group(/**
         Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
         Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
         Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
+        ##### INMUEBLES
+        Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
+        ##### EMPRESAS
+        Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
+        Route::post('company/update/map', 'CompaniesController@updatedMap');
+        Route::get('/company/verify/{id}', 'CompaniesController@verifyTaxes');
+        Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
+        Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
+        Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
+        Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
+        Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
 
+        /* !NOTA!: HAY RUTAS QUE DEBEN IDENTIFICARSE PARA SABER A QUIEN PERTENECE, SI ES DE USUARIO WEB O DE TAQUILLA */
 
         ########################## -------------- USUARIO WEB -------------- #############################
 
         // --------------- ACTIVIDAD ECONOMICA ------------------------------------>
         Route::group(['middleware' => ['permission:Mis Empresas|Consultar Mis Empresas']], function () {
+            Route::get('/payments/create/{company}/{type?}', 'CompanyTaxesController@create')->name('payments.create');
+            Route::get('/payments/taxes/{id}', 'CompanyTaxesController@show');
+            Route::get('/payments/calculate/{id}', 'CompanyTaxesController@calculate')->name('taxes.calculate');
+            Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
+
+
             // Nivel 1: Mis Empresas
             Route::get('/companies/my-business', 'CompaniesController@index')->name('companies.my-business');
             Route::get('/companies/details/{id}', 'CompaniesController@details')->name('companies.details');
@@ -426,8 +453,24 @@ Route::middleware(['auth'])->group(/**
             // Nivel 3: Actualizar
             Route::group(['middleware' => ['permission:Detalles Mis Empresas']], function () {
                 Route::get('/companies/edit/{id}', 'CompaniesController@edit')->name('companies.edit');
-            });
+                ############################################################
+                #### NOTA .................................................#
+                ############################################################
+                /* Arreglar Rutas Para declaracion de compañias */
 
+            });
+            Route::post('/payments/taxes', 'CompanyTaxesController@store')->name('taxes.save');
+            Route::post('/payments/download/calculate', 'CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
+            Route::get('/payments/history/{company}', 'CompanyTaxesController@history')->name('payments.history');
+            Route::post('/payments/register', 'CompanyTaxesController@payments')->name('payments.store');
+            Route::post('/payments/taxes/save', 'CompanyTaxesController@taxesSave')->name('company.taxes.save');
+
+            Route::post('/taxes/definitive/store', 'CompanyTaxesController@storeDefinitive')->name('taxes.save.definitive');//registro
+            Route::get('/taxes/definitive/{id}', 'CompanyTaxesController@detailsDefinitive')->name('taxes.details.definitive');//detalles
+            Route::get('/taxes/definitive/again/{id}', 'CompanyTaxesController@againDefinitive')->name('taxes.again.definitive');//Calcular de nuevo
+            Route::get('/taxes/definitive/payment/{id}', 'CompanyTaxesController@typePaymentDefinitive')->name('taxes.payment.definitive');//forma de pago de taxes
+            Route::post('/taxes/definitive/payment/store', 'CompanyTaxesController@paymentDefinitiveStore')->name('taxes.payment.definitive.store');//forma de pago de taxes
+            Route::get('taxes/definitive/pdf/{id}', 'CompanyTaxesController@definitivePDF')->name('taxes.definitive.pdf');
         });
 
 
@@ -438,7 +481,6 @@ Route::middleware(['auth'])->group(/**
             Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
             Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
             Route::post('/properties/discount', 'PropertyTaxesController@discount');
-            Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
             Route::get('/properties/company/my-properties/{company_id}', 'PropertyController@readCompanyProperties')->name('properties.company.my-properties');
 
             # Nivel 1 - Registrar y Consultar
@@ -533,25 +575,6 @@ Route::middleware(['auth'])->group(/**
         });
 
 
-//        Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
-//        Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
-        /*Ticket-office
-
-        /**/
-       /* Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
-        Route::post('rate/ticket-office/register', 'RateController@saveRateTicketOffice')->name('rate.ticketoffice.save');
-        Route::get('rate/ticket-office/generate-rate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
-        Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
-        Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
-
-        Route::get('test/home', 'HomeController@test');
-
-
-        ##########################################################################################################
-        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');*/
-
-
-
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
             // Nivel 1: Consultar y Registrar
@@ -570,23 +593,47 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
                 Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
             });
+
+            // Declaraciones de Publicidad
+            Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
+            Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
         });
 
 
 
+        ############ CONTRIBUYENTE #######################
+        Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
+            Route::get('/taxpayers/manage', function () {
+                return view('modules.taxpayers.manage');
+            })->name('taxpayers.manage');
+
+            // Nivel 2: Registrar Y Consultar
+            Route::group(['middleware' => ['permission:Registrar Contribuyente|Consultar Contribuyentes']], function () {
+                Route::get('/taxpayers/register', function () {
+                    return view('modules.taxpayers.register');
+                })->name('taxpayers.register');
+                Route::post('/taxpayers/save', 'UserController@storeTaxpayer')->name('taxpayers.save');
+                Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
+
+                // Nivel 3: Detalles
+                Route::group(['middleware' => ['permission:Detalles Contribuyentes']], function () {
+                    Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
+                    Route::get('/taxpayers/details/company/{id}', 'UserController@detailsCompanyTaxPayers')->name('taxpayers.details.company');
+                    Route::get('/taxpayers/details/rates/{id}', 'UserController@detailsRatesTaxPayers')->name('taxpayers.details.rates');
+                    Route::get('/taxpayers/details/vehicle/{id}', 'UserController@detailsVehicleTaxPayers')->name('taxpayers.details.vehicle');
+                    Route::get('/taxpayers/details/property/{id}', 'UserController@detailsPropertyTaxPayers')->name('taxpayers.details.property');
+
+                    // Nivel 4: Actualizar, Resetear, Habilitar
+                    Route::group(['middleware' => ['permission:Actualizar Contribuyentes|Habilitar/Deshabilitar Contribuyentes|Resetar Contribuyentes']], function () {
+                        Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
+                        Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
+                    });
+                });
+            });
+        });
+
+
         ##################### ---------------- TAQUILLAS -------------------- ############################
-
-        /*  Taquillas Property*/
-
-        /*Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
-        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
-        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
-        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
-
-        Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');*/
-
-
-# ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
 
 
         //___________________________________VEHICLE TICKET OFFICE ______________________________________________________________
@@ -613,11 +660,13 @@ Route::middleware(['auth'])->group(/**
         /*Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
         Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
         Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');*/
-        Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
         //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
 
 
         Route::group(['middleware' => ['permission:Taquillas']], function() {
+            Route::get('/ticketOffice/home', function () {
+                return view('modules.ticket-office.homes');
+            })->name('ticketOffice.home');
             ############# GLOBAL PARA TODAS LAS TAQUILLAS
             Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
             Route::get('/ticket-office/payments', 'TicketOfficeController@cashier')->name('ticket-office.payments');
@@ -627,6 +676,21 @@ Route::middleware(['auth'])->group(/**
 
             Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
 
+            Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
+
+
+            ###################### CAMBIAR STATUS DE PAGOS
+            Route::get('/payments/change-status/{id}/{status}', 'TicketOfficeController@changeStatusPayment');
+            Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
+            Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
+            Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
+            Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
+            Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
+            Route::get('/ticket-office/generate-receipt/{taxes}', 'TicketOfficeController@generateReceipt');
+            Route::get('/ticket-office/taxes/calculate/{taxes_data}', 'TicketOfficeController@calculatePayments');
+            Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
+            ##############################################
+
 
             ########### TAQUILLA --- ACTIVIDAD ECONOMICA
             Route::group(['middleware' => ['permission:Taquilla - Actividad Económica']], function() {
@@ -634,6 +698,10 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.ticket-office.home');
                 })->name('home.ticket-office');
 
+                ############### DIFINITIVE TICKET OFFICE ####################
+                Route::get('tick-office/taxes/definitive/verify/{id}', 'TicketOfficeController@verifyDefinitive');
+                Route::post('ticket-office/taxes/definitive/save', 'TicketOfficeController@registerTaxeDefinitive');
+                Route::get('ticket-office/taxes/definitive/{id}', 'TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
 
                 # Nivel 1: Gestionar Empresa
                 Route::group(['middleware' => ['permission:Gestionar Empresas']], function(){
@@ -657,7 +725,14 @@ Route::middleware(['auth'])->group(/**
                 });
                 # Nivel 1: Gestionar Pagos
                 Route::group(['middleware' => ['permission:Gestionar Pagos - Actividad Económica']], function(){
+                    Route::get('/ticket-office/taxes/', 'TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
+                    Route::get('/ticket-office/taxes/ateco/details/{id}', 'TicketOfficeController@detailsTaxesAteco')->name('ticket-office.detailsTaxesAteco');
+                    Route::get('/ticket-office/taxes/ateco/send-email/{id}', 'TicketOfficeController@sendEmailVerified');
+                    Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 
+                    Route::get('/ticket-office/type-payment', function () {
+                        return view('modules.payments.type_payment');
+                    })->name('ticket-office.type.payments');
                 });
             });
 
@@ -672,6 +747,7 @@ Route::middleware(['auth'])->group(/**
                 Route::get('ticketOffice/vehicle/fiscal-period/{id}/{year}', 'TicketOfficeVehicleController@fiscalPeriod')->name('ticketOffice.vehicle.fiscalPeriod');
                 Route::get('/ticketOffice/vehicle/search-license/{license}', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
                 Route::get('/ticketOffice/vehicle/period-fiscal/{period}', 'VehicleController@periodoFiscal')->name('ticketOffice.vehicle.periodFiscal');
+                Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
 
 
                 # Nivel 1: Gestionar Vehiculos
@@ -773,118 +849,11 @@ Route::middleware(['auth'])->group(/**
             });
 
             ########### VERIFICACION DE PAGOS
-            Route::group(['middleware' => ['permission:Gestionar Pagos - Inmuebles']], function() {
-
-            });
-
-            ########## LISTA DE PLANILLAS
-
-
-            ########## VER PAGOS
-
-        });
-
-
-
-
-        // Route::get('/dashboard',array(
-        //     'as'=>'dashboard',
-        //     'uses'=>'DashboardController@dashboard'
-        // ));
-        Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
-
-        // Nivel 1: Gestionar Contrubuyente, Pagos y Empresas
-        Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
-            Route::get('/taxpayers/manage', function () {
-                return view('modules.taxpayers.manage');
-            })->name('taxpayers.manage');
-
-            // Nivel 2: Registrar Y Consultar
-            Route::group(['middleware' => ['permission:Registrar Contribuyente|Consultar Contribuyentes']], function () {
-                Route::get('/taxpayers/register', function () {
-                    return view('modules.taxpayers.register');
-                })->name('taxpayers.register');
-                Route::post('/taxpayers/save', 'UserController@storeTaxpayer')->name('taxpayers.save');
-                Route::get('/taxpayers/read', 'UserController@showTaxpayer')->name('taxpayers.read');
-
-                // Nivel 3: Detalles
-                Route::group(['middleware' => ['permission:Detalles Contribuyentes']], function () {
-                    Route::get('/taxpayers/details/{id}', 'UserController@detailsTaxpayer')->name('taxpayers.details');
-                    Route::get('/taxpayers/details/company/{id}', 'UserController@detailsCompanyTaxPayers')->name('taxpayers.details.company');
-                    Route::get('/taxpayers/details/rates/{id}', 'UserController@detailsRatesTaxPayers')->name('taxpayers.details.rates');
-                    Route::get('/taxpayers/details/vehicle/{id}', 'UserController@detailsVehicleTaxPayers')->name('taxpayers.details.vehicle');
-                    Route::get('/taxpayers/details/property/{id}', 'UserController@detailsPropertyTaxPayers')->name('taxpayers.details.property');
-
-
-                    // Nivel 4: Actualizar, Resetear, Habilitar
-                    Route::group(['middleware' => ['permission:Actualizar Contribuyentes|Habilitar/Deshabilitar Contribuyentes|Resetar Contribuyentes']], function () {
-                        Route::post('/taxpayers/update/', 'UserController@updateTaxpayer')->name('taxpayers.update');
-                        Route::post('/taxpayers/reset-password/', 'UserController@resetTaxpayerPassword')->name('taxpayers.reset-password');
-                    });
-                });
-            });
-        });
-
-        // Taquilla
-        Route::group(['middleware' => ['permission:Taquillas']], function () {
-
-
-
-
-
-            // Gestionar Pagos
-            Route::group(['middleware' => ['permission:Gestionar Pagos']], function () {
-                // Nivel 1: Generar planilla, pagar planilla, Ver pagos y ver planillas
-                Route::get('/ticket-office/taxes/', 'TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
-                Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
-                Route::get('/ticket-office/taxes/ateco/details/{id}', 'TicketOfficeController@detailsTaxesAteco')->name('ticket-office.detailsTaxesAteco');
-                Route::get('/ticket-office/taxes/ateco/send-email/{id}', 'TicketOfficeController@sendEmailVerified');
-
-
-
-
-                Route::get('/ticket-office/type-payment', function () {
-                    return view('modules.payments.type_payment');
-                })->name('ticket-office.type.payments');
-
-
-                Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
-
-
-
-
-                // ---- Ver Pagos
-                Route::group(['middleware' => ['permission:Ver Pagos']], function () {
-                    Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
-                    Route::get('/ticket-office/payments/checks', function () {
-                        return view('modules.payments.checks');
-                    })->name('ticket-office.payment.type.checks');
-                    // Nivel 3: Detalles de planilla
-                    Route::group(['middleware' => ['permission:Detalles Pagos']], function () {
-                        Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
-                        Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
-                    });
-                });
-
-            });
-
-
-
-            Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
-
-            Route::post('company/update/map', 'CompaniesController@updatedMap');
-
-
-            // Verificacion de Pagos
             Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function () {
                 Route::get('/payments/verify/manage', function () {
                     return view('modules.bank.manage');
                 })->name('payments.verify.manage');
                 Route::get('/ticket-office/cashier', 'TicketOfficeController@cashier')->name('cashier');
-
-
-
-
 
                 // Nivel 1: Cargar Archivo
                 Route::group(['middleware' => ['permission:Cargar Archivo Pagos']], function () {
@@ -893,9 +862,6 @@ Route::middleware(['auth'])->group(/**
                     })->name('bank.upload');
                     Route::post('/bank-veryfy/save', 'VerifyPaymentsBankImportController@importFile')->name('bank.verify');
                 });
-
-
-
                 // Nivel 2: Ver Pagos Verificados
                 Route::group(['middleware' => ['permission:Ver Pagos verificados']], function () {
                     Route::get('/bank/verified-today', 'VerifyPaymentsBankImportController@verifyPayments')->name('bank.read');
@@ -904,21 +870,29 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+
+            ########## LISTA DE PLANILLAS
+            Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
+
+            ########## VER PAGOS
+            Route::group(['middleware' => ['permission:Ver Pagos']], function () {
+                Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
+                Route::get('/ticket-office/payments/checks', function () {
+                    return view('modules.payments.checks');
+                })->name('ticket-office.payment.type.checks');
+                // Nivel 3: Detalles de planilla
+                Route::group(['middleware' => ['permission:Detalles Pagos']], function () {
+                    Route::get('/ticket-office/payments/details/{id}', 'TicketOfficeController@paymentsDetails')->name('ticket-office.payment.details');
+                    Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
+                });
+            });
         });
 
-        /*-----------Cambiar Status de pagos--------------*/
-
-        Route::get('/payments/change-status/{id}/{status}', 'TicketOfficeController@changeStatusPayment');
-
-        Route::get('/ticket-office/my-payments/{type}', 'TicketOfficeController@myPaymentsTickOffice')->name('ticket-office.payment');
-        Route::get('/ticket-office/find/code/{code}', 'TicketOfficeController@findCode');
-        Route::get('/ticket-office/find/fiscal-period/{fiscal_period}/{company_id}', 'TicketOfficeController@verifyTaxes');
-        Route::get('/ticket-office/find/user/{ci}', 'TicketOfficeController@findUser');
-        Route::get('/ticket-office/pdf/taxes/{id}', 'TicketOfficeController@pdfTaxes');
-        Route::get('/ticket-office/generate-receipt/{taxes}', 'TicketOfficeController@generateReceipt');
-        Route::get('/ticket-office/taxes/calculate/{taxes_data}', 'TicketOfficeController@calculatePayments');
-        Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
-
+        ########################################################################################################
+        # NOTA: LAS SIGUIENTES RUTAS DESDE ESTE PUNTO SON DE MODULOS QUE ESTAN INCONPLETOS, QUE NO SE SABEN A
+        # QUE MODULO PERTENECE O PARA QUE SIRVEN, SE QUEDAN PARA QUE EN NINGUN PUNTO DEL SISTEMA VAYA A REVENTAR.
+        # SE CORREGIRAN CUANDO SE SEPA QUE HACEN, SE COMPLETE EL MODULO
+        ########################################################################################################
 
         // Notificaciones
         Route::group(['middleware' => ['permission:Notificaciones']], function () {
@@ -938,81 +912,14 @@ Route::middleware(['auth'])->group(/**
         Route::get('/notifications/details', function () {
             return view('modules.notifications.details');
         })->name('notifications.details');
-        // Declaraciones de Publicidad
-        Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
-        Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
-
-
-        Route::get('/company/verify/{id}', 'CompaniesController@verifyTaxes');
-
-        Route::post('/company/update', 'CompaniesController@update')->name('companies.update');
-
-
-        // Nivel 3: Detalles
-        Route::group(['middleware' => ['permission:Detalles Mis Inmuebles']], function () {
-
-
-        });
-        Route::post('/company/addCiiu', 'Companiescontroller@addCiiu')->name('companies.addCiiu');
-        Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
-        //Cambiar de usuario
-        Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
-
-
-
 
 
         // Payments module routes
-        Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
 
         Route::get('/payments/my-payments', function () {
             return view('modules.payments.menu');
         })->name('payments.my-payments');
 
-
-
-//___________________________________________________________________________________________________________________________
-
-        //_______________________________________TICKET OFFICE______________________________________________________________________
-
-        Route::get('/ticketOffice/home', function () {
-            return view('modules.ticket-office.homes');
-        })->name('ticketOffice.home');
-
-
-        //__________________________________________________________________________________________________________________________
-
-
-
-        Route::get('/payments/create/{company}/{type?}', 'CompanyTaxesController@create')->name('payments.create');
-
-        Route::post('/payments/taxes', 'CompanyTaxesController@store')->name('taxes.save');
-        Route::get('/payments/taxes/{id}', 'CompanyTaxesController@show');
-        Route::get('/payments/calculate/{id}', 'CompanyTaxesController@calculate')->name('taxes.calculate');
-        Route::post('/payments/download/calculate', 'CompanyTaxesController@downloadCalculate')->name('taxes.calculate.download');
-        Route::get('/payments/history/{company}', 'CompanyTaxesController@history')->name('payments.history');
-        Route::post('/payments/register', 'CompanyTaxesController@payments')->name('payments.store');
-        Route::post('/payments/taxes/save', 'CompanyTaxesController@taxesSave')->name('company.taxes.save');
-        Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
-
-
-        //_________________________________DEFINITIVE COMPANY TAXES _______________________________________________________________
-        Route::post('/taxes/definitive/store', 'CompanyTaxesController@storeDefinitive')->name('taxes.save.definitive');//registro
-
-        Route::get('/taxes/definitive/{id}', 'CompanyTaxesController@detailsDefinitive')->name('taxes.details.definitive');//detalles
-
-        Route::get('/taxes/definitive/again/{id}', 'CompanyTaxesController@againDefinitive')->name('taxes.again.definitive');//Calcular de nuevo
-
-        Route::get('/taxes/definitive/payment/{id}', 'CompanyTaxesController@typePaymentDefinitive')->name('taxes.payment.definitive');//forma de pago de taxes
-
-        Route::post('/taxes/definitive/payment/store', 'CompanyTaxesController@paymentDefinitiveStore')->name('taxes.payment.definitive.store');//forma de pago de taxes
-
-        Route::get('taxes/definitive/pdf/{id}', 'CompanyTaxesController@definitivePDF')->name('taxes.definitive.pdf');
-
-        //_______________________________________TICKOFFICE DEFINITIVE_____________________________________________________
-        Route::get('tick-office/taxes/definitive/verify/{id}', 'TicketOfficeController@verifyDefinitive');
-        Route::post('ticket-office/taxes/definitive/save', 'TicketOfficeController@registerTaxeDefinitive');
-        Route::get('ticket-office/taxes/definitive/{id}', 'TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
 
 
         Route::get('/payments/reconcile', function () {
@@ -1142,16 +1049,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ciu/find/{ciu} ', 'CiuController@findCiu');
 
 
-        Route::get('/help', function () {
-            return view('modules.helps.manage');
-        })->name('helps.manage');
-        Route::get('/help/register-company', function () {
-            return view('modules.helps.register-company');
-        })->name('help.register-company');
 
-        Route::get('/taxes/payments', function () {
-            return view('modules.taxes.payments');
-        })->name('taxes.payments');
 
         Route::get('/pdfMultas', 'CompanyTaxesController@pdfMultas');
         Route::get('/taxes/payments', function () {
