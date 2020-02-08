@@ -44,9 +44,9 @@
                                     <th class="tooltipped" data-position="right"
                                         data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
                                     </th>
-                                    @can('Descargar Mi Planilla|Detalles Mi Planilla')
+                                    {{--@can('Descargar Mi Planilla|Detalles Mi Planilla')--}}
                                     <th>Acción</th>
-                                    @endcan
+                                    {{--@endcan--}}
                                 </tr>
                                 </thead>
                                 <tbody>
