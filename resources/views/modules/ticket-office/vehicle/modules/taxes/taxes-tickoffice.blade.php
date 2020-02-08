@@ -12,8 +12,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar Vehículo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.payments') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar
+                            Vehículo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.payments') }}">Gestionar
+                            Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.taxes.getTaxes') }}">Pagar
                             Planillas</a></li>
                 </ul>
@@ -21,7 +23,8 @@
             <div class="col s12">
                 <div class="card">
                     <ul class="tabs">
-                        <li class="tab col s6 disabled" id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
+                        <li class="tab col s6 disabled" id="one"><a href="#select-tab"><i class="icon-filter_1"></i>
+                                Elegir
                                 Planilla</a></li>
                         <li class="tab col s6 disabled" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i>
                                 Pagar</a>
@@ -32,6 +35,7 @@
                             <table class="centered highlight" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
+                                    <th>Placa</th>
                                     <th>Fecha</th>
                                     <th>Código</th>
                                     <th>Ramo</th>
@@ -47,6 +51,7 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
+                                            <td>{{$taxe->vehicleTaxes[0]->license_plate}}</td>
 
                                             <td>{{$taxe->created_at}}</td>
                                             <td>{{$taxe->code}}</td>
@@ -56,7 +61,9 @@
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"
-                                                           value="{{$taxe->id}}"/>
+                                                           value="{{$taxe->id}}"
+                                                           data-vehicle="{{$taxe->vehicleTaxes[0]->id}}"
+                                                    />
                                                     <span></span>
                                                 </label>
                                             </td>
@@ -149,7 +156,7 @@
                                                             <div class="input-field col s12 m6 ">
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref" value=""
-                                                                       class="validate"
+                                                                       class="validate number-date"
                                                                        required minlength="3" maxlength="10">
                                                                 <label for="ref">Ref o Código</label>
                                                             </div>
@@ -244,7 +251,7 @@
                                                                     <div class="input-field col s12 m6 ">
                                                                         <i class="icon-confirmation_number prefix "></i>
                                                                         <input type="text" name="ref" id="ref_tr"
-                                                                               value="" class="validate"
+                                                                               value="" class="validate number-date"
                                                                                required minlength="3" maxlength="10">
                                                                         <label for="ref">Referencia</label>
                                                                     </div>
@@ -253,10 +260,9 @@
                                                                         <i class="icon-person  prefix "></i>
                                                                         <input type="text" name="person" id="person"
                                                                                value=""
-                                                                               class="validate" required>
+                                                                               class="validate text-validate" required>
                                                                         <label for="person">Nombre</label>
                                                                     </div>
-
 
                                                                     <div class="input-field col s4 m2">
                                                                         <i class="icon-phone prefix tooltipped"
@@ -280,7 +286,7 @@
                                                                          data-tooltip="Solo puede escribir números">
                                                                         <label for="phone_user">Teléfono</label>
                                                                         <input id="phone_user" type="tel" name="phone"
-                                                                               class="validate number-only"
+                                                                               class="validate number-date"
                                                                                pattern="[0-9]+"
                                                                                title="Solo puede escribir números."
                                                                                placeholder="Ej. 1234567" maxlength="7"
@@ -367,7 +373,7 @@
                                                                 <i class="icon-confirmation_number prefix "></i>
                                                                 <input type="text" name="ref" id="ref_depo" value=""
                                                                        class="validate"
-                                                                       required minlength="3"  readonly>
+                                                                       required minlength="3" readonly>
                                                                 <label for="ref_depo">N DE CHEQUE</label>
                                                             </div>
 
@@ -457,7 +463,9 @@
                         <label for="search">CÓDIGO</label>
                     </div>
                     <div class="input-field col s12 center-align">
-                        <button type="button" class="modal-close btn btn-large btn-rounded peach waves-effect waves-light">BUSCAR<i class="icon-search right"></i>
+                        <button type="button"
+                                class="modal-close btn btn-large btn-rounded peach waves-effect waves-light">BUSCAR<i
+                                    class="icon-search right"></i>
                         </button>
                     </div>
                 </div>
@@ -478,7 +486,8 @@
                            data-tooltip="Abrir caja"><i class="fas fa-sign-in-alt"></i></a></li>
                     <li><a class="btn-floating light-blue darken-2 tooltipped" id="close-cashier" data-position="left"
                            data-tooltip="Cerrar caja"><i class="icon-close"></i></a></li>
-                    <li><a href="{{url('ticket-office/type-payment')}}" class="btn-floating light-blue darken-3 tooltipped" data-position="left"
+                    <li><a href="{{url('ticket-office/type-payment')}}"
+                           class="btn-floating light-blue darken-3 tooltipped" data-position="left"
                            data-tooltip="Ver pagos"><i class="fas fa-money-check"></i></a></li>
                 @endcan
             </ul>
