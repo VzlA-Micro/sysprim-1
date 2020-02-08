@@ -318,9 +318,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Declarar Tasas']);
         Permission::create(['name' => 'Historial de Pagos - Tasas']);
 
-        Permission::create(['name' => 'Detalles Planilla']);
-        Permission::create(['name' => 'Descargar Planilla']);
-        Permission::create(['name' => 'Obtener Planilla']);
+        Permission::create(['name' => 'Detalles Mi Planilla']);
+        Permission::create(['name' => 'Descargar Mi Planilla']);
+        Permission::create(['name' => 'Obtener Mi Planilla']);
 
 
         //Creamos el Rol del superUsuario
@@ -583,9 +583,9 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Ver Declaraciones - Vehiculos',
 
             # ------- GENERAL PARA EL USUARIO WEB
-            'Detalles Planilla',
-            'Descargar Planilla',
-            'Obtener Planilla',
+            'Detalles Mi Planilla',
+            'Descargar Mi Planilla',
+            'Obtener Mi Planilla',
             'Mi Perfil'
         ]);
 
