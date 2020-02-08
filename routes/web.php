@@ -817,7 +817,7 @@ Route::middleware(['auth'])->group(/**
 
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
-                Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
+                Route::get('/properties/ticket-office/geneate', 'PropertyTaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
                 Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
                 Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
                 Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
