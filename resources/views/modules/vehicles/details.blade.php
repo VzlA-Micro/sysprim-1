@@ -54,6 +54,7 @@
             <div class="col s12 m4" style="margin-top: -7px">
 
                 <div class="row">
+                    @can('Mis Pagos - Vehiculos')
                     @if($status=="company")
                     <div class="col s12">
                         <a href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}" class="btn-app white blue-text">
@@ -69,6 +70,7 @@
                             </a>
                         </div>
                     @endif
+                    @endcan
                     <!-- <div class="col s12">
                         <a href="" class="btn-app white orange-text">
                             <i class="icon-warning"></i>
