@@ -60,7 +60,7 @@
                                                 </label>
                                             </td>
 
-                                            @can('Detalles Planilla')
+                                            @can('Tasas - Detalles Planilla')
                                                     <td>
                                                         <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
                                                            class="btn indigo waves-effect waves-light">

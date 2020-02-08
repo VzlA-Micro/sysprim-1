@@ -398,6 +398,9 @@ Route::middleware(['auth'])->group(/**
             });
         });
 
+        ######################### RUTAS QUE DEBEN SER GLOBALES
+        Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
+
 
         ########################## -------------- USUARIO WEB -------------- #############################
 
@@ -464,8 +467,8 @@ Route::middleware(['auth'])->group(/**
 
         // ----------------- MIS TASAS ---------------------------------------------------------------->
         Route::group(['middleware' => ['permission:Generar Tasas']], function() {
+            Route::get('rate/taxpayers/company/register/{id}', 'RateController@createRegisterCompany')->name('rate.taxpayers.company.create');
             Route::get('rate/taxpayers/menu', 'RateController@menuTaxPayers')->name('rate.taxpayers.menu');
-            Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
             Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
             Route::get('rate/taxpayers/calculate/{id}', 'RateController@calculateTaxPayers')->name('rate.taxpayers.calculate');
             Route::get('rate/taxpayers/details/{id}', 'RateController@detailsTaxPayers')->name('rate.taxpayers.details');
@@ -527,20 +530,25 @@ Route::middleware(['auth'])->group(/**
 
         });
 
+
+//        Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
+//        Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
+        /*Ticket-office
+
+        /**/
+       /* Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+        Route::post('rate/ticket-office/register', 'RateController@saveRateTicketOffice')->name('rate.ticketoffice.save');
+        Route::get('rate/ticket-office/generate-rate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+        Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
+        Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
+
+        Route::get('test/home', 'HomeController@test');
+
+
         ##########################################################################################################
-//        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');
+        Route::get('/properties/taxes/payments/{id}', 'PropertyTaxesController@typePayment')->name('properties.taxes.payments');*/
 
 
-        # ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
-        Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
-        Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
-        Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
-        Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
-        Route::post('/properties/ticket-office/taxes/store', 'PropertytaxesController@storeTicketOffice')->name('properties.ticket-office.taxes.store');
-        Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
-        Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
-        Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
-        Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
 
         //Mi Publicidad
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
@@ -564,6 +572,95 @@ Route::middleware(['auth'])->group(/**
 
         ##################### ---------------- TAQUILLAS -------------------- ############################
 
+        /*  Taquillas Property*/
+
+        /*Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
+        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
+        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
+
+        Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');*/
+
+
+# ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
+
+
+
+        Route::group(['middleware' => ['permission:Taquillas']], function() {
+            ########### TAQUILLA --- ACTIVIDAD ECONOMICA
+
+            ########### TAQUILLA --- VEHICULOS
+
+            ########### TAQUILLA --- TASAS
+            Route::group(['middleware' => ['permission:Taquilla - Tasas']], function(){
+                Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
+                Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
+                # Nivel 1: Generar Tasa y Ver los pagos de tasas
+                Route::group(['middleware' => ['permission:Tasas - Generar Planilla|Tasas - Pagar Planillas']], function() {
+                    Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+                    Route::post('rate/ticket-office/register', 'RateController@saveRateTicketOffice')->name('rate.ticketoffice.save');
+                    Route::get('rate/ticket-office/generate-rate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
+                    Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
+                    # Nivel 2: Detalles de la Tasa
+                    Route::group(['middleware' => ['permission:Tasas - Detalles Planilla']], function() {
+                        Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
+                    });
+                });
+
+            });
+
+
+
+            ########### TAQUILLA --- INMUEBLES
+            Route::group(['middleware' => ['permission:Taquilla - Inmuebles']], function() {
+                Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
+                Route::get('property/ticket-office/change-user/{property_id}/{ci}','PropertyController@changeUserPropertyTicketOffice');
+                Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
+                Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
+                Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+                // ---------
+                Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
+                Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
+                Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
+                Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
+                Route::get('/properties/verify/fiscal-period/{id}/{year}', 'PropertytaxesController@verifyFiscalPeriod')->name('properties.verify.fiscal-period');
+
+                # Nivel 1: Gestionar Inmueble - Taquilla
+                Route::group(['middleware' => ['permission:Gestionar Inmuebles']], function() {
+                    Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
+                    # Nivel 2: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Inmueble|Consultar Inmuebles']], function() {
+                        Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
+                        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
+                        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Inmuebles']], function() {
+                            Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
+                            Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+                        });
+                    });
+                });
+                # Nivel 1: Gestionar Pagos de Inmuebles
+                Route::group(['middleware' => ['permission:Gestionar Pagos - Inmuebles']], function() {
+                    Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
+                    Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
+                    Route::post('/properties/ticket-office/taxes/store', 'PropertytaxesController@storeTicketOffice')->name('properties.ticket-office.taxes.store');
+                    Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
+                    Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
+                    Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
+
+                });
+            });
+
+            ########### VERIFICACION DE PAGOS
+
+
+            ########## LISTA DE PLANILLAS
+
+
+            ########## VER PAGOS
+
+        });
 
 
         // Route::get('/dashboard',array(
@@ -1074,43 +1171,11 @@ Route::middleware(['auth'])->group(/**
 
         /*taxpayers company*/
 
-        Route::get('rate/taxpayers/company/register/{id}', 'RateController@createRegisterCompany')->name('rate.taxpayers.company.create');
-
-
-        /*Ticket-office*/
-        Route::get('rate/ticket-office/menu', 'RateController@menuTicketOffice')->name('rate.ticketoffice.menu');
-
-        Route::post('rate/ticket-office/register', 'RateController@saveRateTicketOffice')->name('rate.ticketoffice.save');
-
-        Route::get('rate/ticket-office/generate-rate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
-
-        Route::get('rate/ticket-office/generate', 'RateController@generateRateTicketOffice')->name('rate.ticketoffice.generate');
-
-        Route::get('rate/ticket-office/payments', 'RateController@getTaxesRateTicketOffice')->name('rate.ticketoffice.payments');
-
-        Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
-
-        Route::get('test/home', 'HomeController@test');
-
-        Route::get('rate/ticket-office/details/{id}', 'RateController@detailsTicketOffice')->name('rate.ticketoffice.taxes.details');
 
 
 
-        /*  Taquillas Property*/
 
-        Route::get('property/ticket-office/home','PropertyController@homeTicketOffice')->name('property.ticket-office.home');
-        Route::get('property/ticket-office/manager-property','PropertyController@managerPropertyTicketOffice')->name('property.ticket-office.manager-property');
-        Route::get('property/ticket-office/create-property','PropertyController@createPropertyTicketOffice')->name('property.ticket-office.create-property');
-        Route::post('property/ticket-office/save-property','PropertyController@savePropertyTicketOffice')->name('property.ticket-office.save-property');
-        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
-        Route::get('property/ticket-office/read-property','PropertyController@readPropertyTicketOffice')->name('property.ticket-office.read-property');
 
-        Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
-
-        Route::get('property/ticket-office/change-user/{property_id}/{ci}','PropertyController@changeUserPropertyTicketOffice');
-        Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
-        Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
-        Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
 
 
 
