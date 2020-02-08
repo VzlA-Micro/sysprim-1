@@ -74,8 +74,8 @@
                                                 </td>
                                                 <td><a href="{{url('payments/taxes/download/'.$taxe->id)}}"
                                                        class="btn orange waves-effect waves-light"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a></td>
+                                                                class="icon-description left"></i> <span class="truncate">Descargar
+                                                            planilla. </span></a></td>
 
                                                 @else
 
@@ -86,10 +86,10 @@
                                                             SIN CONCILIAR AÚN
                                                         </button>
                                                     </td>
-                                                    <td><a href="{{url('taxes.definitive.pdf',['id'=>$taxe->id])}}"
+                                                    <td><a href="{{route('taxes.definitive.pdf',['id'=>$taxe->id])}}"
                                                            class="btn orange waves-effect waves-light"><i
-                                                                    class="icon-description left"></i>Descargar
-                                                            planilla.</a></td>
+                                                                    class="icon-description left"></i> <span class="truncate">Descargar
+                                                            planilla. </span></a></td>
 
 
                                                 @endif
@@ -108,8 +108,9 @@
                                                <a href="{{url('payments/taxes/download/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>
                                                 @else
                                                     <td>
-                                                        <a href="{{url('taxes/definitive/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light"><i class="icon-description left">
-                                                         </i>Descargar.</a>
+                                                        <a href="{{url('taxes/definitive/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
+                                                            <i class="icon-description left">
+                                                         </i> <span class="truncate">Descargar.</span></a>
                                                     </td>
 
                                                 @endif

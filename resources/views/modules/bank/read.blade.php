@@ -14,13 +14,21 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Verificación de Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('bank.read') }}">Ver Pagos Verificados</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('bank.read') }}">Ver Pagos Verificados del Dia.</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
                 <div class="card">
+
+                    @if(session("message") )
+                        <div class="alert alert-success center-align">
+                            <strong>{{session("message")}}</strong>
+                        </div>
+                    @endif
+
+
                     <div class="card-header center-align">
-                        <h5>Pagos Verificados</h5>
+                        <h5>Pagos Verificados del Dia.</h5>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered responsive-table" id="payments" style="width: 100%">
@@ -68,7 +76,7 @@
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable": "Ningún dato disponible en esta tabla.",
                 "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -127,14 +135,6 @@
                     exportOptions: {
                         columns: [0, 1, 2]
                     }
-                },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
                 },
 
 

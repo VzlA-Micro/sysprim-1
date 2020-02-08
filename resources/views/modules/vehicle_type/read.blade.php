@@ -10,10 +10,10 @@
             <div class="col s12">
                 <div class="col s12">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" class="breadcrumb">Gestionar Tipos De Vehiculos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}" class="breadcrumb">Ver Tipos De Vehiculos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" >Gestionar Tipos De Vehiculos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}" >Ver Tipos De Vehiculos</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,6 +63,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

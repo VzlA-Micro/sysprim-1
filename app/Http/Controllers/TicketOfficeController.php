@@ -6,7 +6,9 @@ use App\CompanyTaxe;
 use App\FindCompany;
 use App\Helpers\Calculate;
 use App\Payment;
+use App\Prologue;
 use App\Taxe;
+use App\Vehicle;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\CiuTaxes;
@@ -27,6 +29,12 @@ use Illuminate\Support\Facades\Mail;
 use App\FineCompany;
 use App\Recharge;
 use App\BankRate;
+use App\Helpers\CheckCollectionDay;
+use App\Property;
+use App\UserProperty;
+use App\PropertyTaxes;
+
+
 
 
 class TicketOfficeController extends Controller
@@ -195,11 +203,10 @@ class TicketOfficeController extends Controller
             for ($i = 0; $i < count($taxes_explode); $i++) {
                 $taxes_find = Taxe::findOrFail($taxes_explode[$i]);
                 if ($bank_destinations !== null) {
+                    $code = substr($taxes_find->code, 3, 12);
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = $payments_type. $code;
                     $taxes_find->status = 'process';
-
-
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
@@ -207,9 +214,6 @@ class TicketOfficeController extends Controller
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
-
-
-
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
@@ -305,6 +309,7 @@ class TicketOfficeController extends Controller
     public function allCompanies()
     {
         $companies = Company::all();
+
         return view('modules.ticket-office.companies.read', ['companies' => $companies]);
     }
 
@@ -317,10 +322,11 @@ class TicketOfficeController extends Controller
         $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
         $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
 
+        $number_vehicle=$company->companyVehicle()->orderBy('id','desc')->count();
+        $number_property=$company->companyProperty()->orderBy('id','desc')->count();
 
 
-
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco]);
+        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco,'number_property'=>$number_property,'number_vehicle'=>$number_vehicle]);
     }
 
 
@@ -333,7 +339,6 @@ class TicketOfficeController extends Controller
         }elseif($type=='Tasas y Cert'){
             $companyTaxes=$company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
         }
-
         return view('modules.ticket-office.companies.all-taxes',['taxesCompanies'=>$companyTaxes,'id'=>$id]);
     }
 
@@ -410,7 +415,8 @@ class TicketOfficeController extends Controller
         $base = $datos['base'];
         $fiscal_credits = $datos['fiscal_credits'];
 
-
+        $amount_recharge = 0;
+        $interest = 0;
 
 
         $fiscal_period_format = Carbon::parse($fiscal_period);
@@ -444,7 +450,7 @@ class TicketOfficeController extends Controller
 
         for ($i = 0; $i < count($base); $i++) {
 
-            //damos formato a la base
+             //damos formato a la base
             $base_format_verify = str_replace('.', '', $base[$i]);
             $base_format_verify = str_replace(',', '.', $base_format_verify);
 
@@ -490,7 +496,6 @@ class TicketOfficeController extends Controller
         $taxe->save();
         $id = $taxe->id;
 
-
         for ($i = 0; $i < count($base); $i++) {
 
             //damos formato a la base
@@ -514,26 +519,22 @@ class TicketOfficeController extends Controller
                 $base_amount_sub = $min_amount;
             }
 
+
+
             if ($date['mora']) {//si tiene mora
-                //Obtengo recargo
-                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
-                if (is_null($recharge)) {
-                    $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
-                }
+                    //Obtengo recargo
+                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+                    if (is_null($recharge)) {
+                        $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+                    }
 
+                    //Obtengo Intereset del banco
+                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                //Obtengo Intereset del banco
-                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+                    $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
-                $amount_recharge = $base_amount_sub * $recharge->value / 100;
-                $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
-
-
-            } else {
-                $amount_recharge = 0;
-                $interest = 0;
             }
-
             $taxe->taxesCiu()->attach(['taxe_id' => $id],
                 ['ciu_id' => $ciu_id[$i],
                     'base' => $base_format,
@@ -682,8 +683,6 @@ class TicketOfficeController extends Controller
 
 
 
-
-
                 foreach ($taxes as $taxe) {
                     $amount_taxes += $taxe->amount;
                 }
@@ -731,7 +730,9 @@ class TicketOfficeController extends Controller
     public function detailsTaxesAteco($id)
     {
         $taxes = Taxe::findOrFail($id);
+
         $companyTaxe = $taxes->companies()->get();
+
         $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
         $company_find = Company::find($companyTaxe[0]->id);
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
@@ -775,6 +776,7 @@ class TicketOfficeController extends Controller
              $amount=Calculate::calculateTaxes($taxes_explode[$i]);
              $amount_total+=$amount['amountTotal'];
             }
+
 
 
         if ($ciuTaxes[0]->taxes->type != 'definitive') {
@@ -838,16 +840,25 @@ class TicketOfficeController extends Controller
                 if($taxes_find->type==='definitive'){
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "89");
                     $taxes_find->code=$code;
-
                 }elseif($taxes_find->type==='actuated') {
 
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "81");
                     $taxes_find->code = $code;
-                }elseif($taxes_find->type==='Tasas y Cert'){
+
+                }elseif($taxes_find->branch==='Tasas y Cert'){
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "88");
                     $taxes_find->code = $code;
                 }
 
+                elseif($taxes_find->branch==='Pat.Veh'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
+                    $taxes_find->code = $code;
+                }
+
+                elseif($taxes_find->branch==='Inm.Urbanos'){
+                    $code = TaxesNumber::generateNumberTaxes('PSP' . "84");
+                    $taxes_find->code = $code;
+                }
 
                 $taxes_find->update();
             }
@@ -905,6 +916,7 @@ class TicketOfficeController extends Controller
         $pdf='';
         $email='';
 
+
         if($taxes->branch==='Act.Eco') {
 
 
@@ -931,7 +943,8 @@ class TicketOfficeController extends Controller
                 $band = true;
                 $email=$user[0]->email;
 
-            } elseif ($taxes->type == 'definitive' && $taxes->status == 'verified'||$taxes->status == 'verified-sysprim') {
+            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')) {
+
                 $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -943,7 +956,6 @@ class TicketOfficeController extends Controller
                     'firm' => true
                 ]);
 
-
                 $band = true;
             } else {
 
@@ -953,7 +965,8 @@ class TicketOfficeController extends Controller
 
 
             $email=$user[0]->email;
-        }elseif($taxes->branch==='Tasas y Cert'&& $taxes->status == 'verified'||$taxes->status == 'verified-sysprim'){
+        }elseif($taxes->branch=='Tasas y Cert'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+
             $rate=$taxes->rateTaxes()->get();
             $type='';
             if(!is_null($rate[0]->pivot->company_id)){
@@ -972,6 +985,54 @@ class TicketOfficeController extends Controller
 
             $user=User::find($rate[0]->pivot->user_id);;
             $email=$user->email;
+            $band=true;
+        } elseif ($taxes->branch=='Inm.Urbanos'&&($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+
+
+            $owner = $taxes->properties()->get();
+            $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+            $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::find($taxes->id);
+
+            if (!is_null($userProperty->company_id)) {
+                $data = Company::find($userProperty->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userProperty->person_id);
+                $type = 'user';
+            }
+            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'property' => $property,
+                'propertyTaxes' => $propertyTaxes,
+                'firm'=>true
+            ]);
+
+            $user=User::find($userProperty->user_id);
+            $email=$user->email;
+            $band=true;
+        }
+        elseif ($taxes->branch=='Pat.Veh'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => true
+            ]);
+
+
+
+            $email=$user[0]->email;
             $band=true;
         }
         if($band){
@@ -1038,6 +1099,8 @@ class TicketOfficeController extends Controller
 
 
     public function registerTaxeDefinitive(Request $request){
+        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Defi');
+
         $datos = $request->all();
 
         $fiscal_period = $datos['fiscal_period'];
@@ -1068,7 +1131,9 @@ class TicketOfficeController extends Controller
         $amount_recharge=0;
         $interest=0;
 
-
+        $amount_total=0;
+        $interest_total=0;
+        $recharge_total=0;
 
 
         $fiscal_period_format = Carbon::parse($fiscal_period);
@@ -1112,9 +1177,6 @@ class TicketOfficeController extends Controller
             $base_amount_sub = $ciu->alicuota * $base_format_verify;
 
 
-
-
-
             if ($min_amount > $base_amount_sub) {
                 $total_base = $total_base + $min_amount-$anticipated_format_verify ;
             } else {
@@ -1140,6 +1202,7 @@ class TicketOfficeController extends Controller
 
         for ($i = 0; $i < count($base); $i++) {
             //format a base
+
 
             $base_format = str_replace('.', '', $base[$i]);
             $base_format = str_replace(',', '.', $base_format);
@@ -1171,9 +1234,32 @@ class TicketOfficeController extends Controller
 
 
 
+
+            if ($verify_prologue['mora']) {//si tiene mora
+
+
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+                if (is_null($recharge)) {
+                    $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
+                }
+
+
+
+                //Obtengo Intereset del banco
+                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                $amount_recharge = ($base_amount_sub - $anticipated_format)* $recharge->value / 100;
+
+                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
+
+            } else {
+                $amount_recharge = 0;
+                $interest = 0;
+            }
+
+
             $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                [
-                    'ciu_id'=>$ciu_id[$i],
+                ['ciu_id'=>$ciu_id[$i],
                     'base'=>$base_format,
                     'recharge'=>$amount_recharge,
                     'tax_unit'=>$tributo->value,
@@ -1182,27 +1268,11 @@ class TicketOfficeController extends Controller
                     'taxable_minimum'=>$min_amount
                 ]);
 
+            $interest_total+=$interest;
+            $recharge_total+=$amount_recharge;
 
-            /*if ($date['mora']) {//si tiene mora
-                $extra = Extras::orderBy('id', 'desc')->take(1)->get();
-                if ($company_find->typeCompany === 'R') {
-                    $tax_rate = $taxes + (float)$withholding_format - (float)$deductions_format - (float)$fiscal_credits_format;
-                } else {
-                    $tax_rate = $taxes - $withholding_format - (float)-(float)$deductions_format - (float)$fiscal_credits_format;
-                }
-
-                $tax_rate = $tax_rate * $extra[0]->tax_rate / 100;
-                $interest = (0.42648 / 360) * $date['diffDayMora'] * ($tax_rate + $taxes);
-                $mora = 0;
-            } else {
-                $mora = 0;
-                $tax_rate = 0;
-                $interest = 0;
-            }*/
         }
-
-        $day_mora=0;
-
+        $day_mora=$verify_prologue['diffDayMora'];
 
         $taxe->companies()->attach(['taxe_id'=>$id], [
             'company_id'=>$company_find->id,
@@ -1212,16 +1282,12 @@ class TicketOfficeController extends Controller
             'day_mora'=>$day_mora
         ]);
 
-
-
         $taxe=Taxe::find($taxe->id);
-        $taxe->amount=$taxes_amount-$fiscal_credits_format;
+        $taxe->amount=($taxes_amount-$fiscal_credits_format)+$recharge_total+$interest_total;
         $taxe->update();
 
 
         return response()->json(['status'=>'success','message'=>'']);
-
-
     }
 
 
@@ -1317,23 +1383,52 @@ class TicketOfficeController extends Controller
                 ]);
 
         }
+        elseif ($taxes->branch=='Pat.Veh'){
+
+            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
+            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $user = $vehicleFind->users()->get();
+
+            $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
+                'taxes' => $taxes,
+                'vehicleTaxes'=>$vehicleTaxes,
+                'vehicle'=>$vehicleFind,
+                'user'=>$user,
+                'diffYear'=>$diffYear,
+                'firm' => $firm
+            ]);
+
+        }
+        elseif ($taxes->branch=='Inm.Urbanos') {
+            $owner = $taxes->properties()->get();
+            $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+
+            $property = Property::find($userProperty->property_id);
+            $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
+
+            if (!is_null($userProperty->company_id)) {
+                $data = Company::find($userProperty->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userProperty->person_id);
+                $type = 'user';
+            }
+
+            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'property' => $property,
+                'propertyTaxes' => $propertyTaxes
+            ]);
+        }
+
+
+
 
 
         return $pdf->stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

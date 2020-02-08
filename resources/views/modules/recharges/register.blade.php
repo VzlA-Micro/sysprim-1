@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" class="breadcrumb">Gestionar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" class="breadcrumb">Registrar Recargo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}">Gestionar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}">Registrar Recargo</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
@@ -25,26 +25,28 @@
                     <div class="card-content row">
                         <div class="input-field col s12 m6">
                             <i class="icon-perm_contact_calendar prefix"></i>
-                            <input type="text" name="since" id="since" class="datepicker">
+                            <input type="text" name="since" id="since" class="datepicker" required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-perm_contact_calendar prefix"></i>
-                            <input type="text" name="to" id="to" class="datepicker">
+                            <i class="icon-date_range prefix"></i>
+                            <input type="text" name="to" id="to" class="datepicker" required>
                             <label for="to">Hasta</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-time_to_leave prefix"></i>
-                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
+                            <i class="icon-text_fields prefix"></i>
+                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" minlength="5" maxlength="30" required>
                             <label for="name"> Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-time_to_leave prefix"></i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only" required>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="2"  required>
                             <label for="value">Valor</label>
                         </div>
                         <div class="input-field col s12">
-                            <i class="icon-perm_contact_calendar prefix"></i>
+                            <i class="icon-nature  prefix"></i>
                             <select name="branch" id="branch">
                                 <option value="null" selected disabled>Elija un ramo</option>
                                 <option value="Act.Eco">Actividad Economica</option>

@@ -1,7 +1,7 @@
 $('document').ready(function () {
-    var url = "http://172.19.50.253/";
-
-
+    var url = localStorage.getItem('url');
+    //var url = "https://sysprim.com/";
+   // var url = "https://sysprim.com/";
 
     $('#groupCiiu').on('submit',function (e) {
         e.preventDefault();
@@ -18,18 +18,17 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (response) {
-                console.log(response);
 
                 swal({
                     title: "¡Bien Hecho!",
-                    text: "CIIU registrado con exito",
+                    text: "CIIU registrado con éxito",
                     icon: "success",
                     button:{
                         text: "Esta bien",        
                         className: "green-gradient"
                     },
                 }).then(function (accept) {
-                    window.location.href=url+"ciu-branch/read";
+                    window.location.href=url+"ciu-group/read";
                 });
 
                 $("#preloader").fadeOut('fast');
@@ -52,4 +51,55 @@ $('document').ready(function () {
             }
         });
     });
+
+
+
+    $('#code').change(function () {
+        var code=$(this).val();
+        if(code!=''){
+            $.ajax({
+                method: "GET",
+                url: url + "ciu-group/verify-code/" + code,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "Información",
+                            text: response.message,
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+
+                        $('#code').val('');
+                    }
+
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient"
+                        },
+                    });
+                }
+            });
+        }
+    });
+
+
+
 });

@@ -4,7 +4,9 @@ $(window).on("load", function () {
     $("#preloader-overlay").fadeOut("fast");
 });
 $(document).ready(function() {
-
+    if( localStorage.getItem('url')===null){
+        localStorage.setItem('url','http://sysprim.com.devel/');
+    }
 
 
     $(".dropdown-trigger").dropdown({
@@ -58,4 +60,9 @@ $(document).ready(function() {
         fullWidth: true,
         indicators: true
     });
+
+    $('.preview-view').click(function () {
+        window.history.back();
+    });
+
 });

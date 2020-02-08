@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var url = "http://172.19.50.253/";
+    var url = "http://sysprim.com.devel/";
 
 	// Registrar
 	$('#register').submit(function(e) {
@@ -22,14 +22,14 @@ $(document).ready(function() {
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha registrado la tasa exitosamente, desde ahora la tasa para sera:",
+                    text: "Se ha registrado la tasa del banco exitosamente, desde ahora la tasa sera:"+$('#value').val() ,
                     icon: "success",
                     button: {
                     	text: "Esta bien",
                     	className: "green-gradient"
                     }
                 }).then(function (accept) {
-                    window.location.href = url + "bank-rate/manage";
+                    window.location.href = url + "bank-rate/read";
                 });
             },
             error: function(err) {

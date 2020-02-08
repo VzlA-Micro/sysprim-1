@@ -34,7 +34,7 @@
                             <input id="name" type="text" name="name" required minlength="3" maxlength="100">
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="type" id="type">
                                 <option value="null" selected disabled>Elija un Ramo</option>
@@ -46,8 +46,10 @@
                             <label for="type">Ramo</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <i class="icon-format_list_numbered prefix"></i>
-                            <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only" required>
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                            </i>
+                            <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only only-number-positive" maxlength="5" required>
                             <label for="cant_tax_unit">Cantidad de Unidad Tributarias</label>
                         </div>
 

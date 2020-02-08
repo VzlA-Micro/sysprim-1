@@ -8,13 +8,13 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ $company->name }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.edit', ['id' => $company->id]) }}">Editar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.edit', ['id' => $company->id]) }}">Detalles</a></li>
                 </ul>
             </div>
             <div class="col s12 m12 l10 offset-l1">
                 <form action="{{ route('companies.update') }}" method="post" class="card" enctype="multipart/form-data">
                     <div class="card-header center-align">
-                        <h5>Editar datos de mi empresa</h5>
+                        <h5>Detalles de mi empresa.</h5>
                     </div>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -100,9 +100,10 @@
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-satellite prefix"></i>
+
                             <select  name="parish" required disabled>
                                 <option value="null" disabled selected>Seleccionar una parroquia</option>
-                                @foreach($parish as $parish):
+                                @foreach($parish as $parish)
                                 @if($parish->id===$company->parish_id)
                                     <option value="{{ $parish->id }}" selected>{{ $parish->name }}</option>
                                 @else
@@ -110,6 +111,8 @@
                                 @endif
                                 @endforeach
                             </select>
+
+
                             <label>Parroquia</label>
                         </div>
                         @if($company->opening_date)
@@ -170,8 +173,8 @@
                     </div>
                     <div class="card-action center-align">
                         <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light peach">
-                            <i class="icon-navigate_before right"></i>
-                            Atras
+                            <i class="icon-navigate_before left"></i>
+                            Atrás
                         </button>
                     </div>
                 </form>

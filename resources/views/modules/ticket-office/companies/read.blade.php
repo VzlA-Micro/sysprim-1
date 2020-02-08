@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="preview-view">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla.",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",

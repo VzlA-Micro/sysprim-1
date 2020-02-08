@@ -25,4 +25,14 @@ class Vehicle extends Model
         return $this->belongsToMany('App\Taxe','vehicles_taxes')
             ->withPivot('taxe_id');
     }
+
+    public function company(){
+        return $this->belongsToMany('App\Company','user_vehicle')
+            ->withPivot('company_id');
+    }
+
+    public function person(){
+        return $this->belongsToMany('App\User','user_vehicle')
+            ->withPivot('person_id');
+    }
 }

@@ -1,5 +1,5 @@
 $('document').ready(function () {
-    var url = "http://sysprim.com.devel/";
+    var url = localStorage.getItem('url');
     var user=$('#user').val();
 
 
@@ -15,7 +15,7 @@ $('document').ready(function () {
                     className: "blue-gradient"
                 },
             });
-            $('#document').val('')
+            $('#document').val('');
         }
 
     });
@@ -132,6 +132,8 @@ $('document').ready(function () {
         var type=$('#type').val();
         var id=$('#id').val();
 
+
+        $('#rates').DataTable().destroy();
 
         $("input[type=checkbox]:checked").each(function(){
             rate_id.push($(this).val());
@@ -267,13 +269,17 @@ $('document').ready(function () {
 
                             console.log(user);
                             $('#name').val(user.nombres + ' ' + user.apellidos);
-                            $('#name').attr('readonly');
+
+                            $('#name').attr('readonly','');
+
                             $('#surname').val(user.apellidos);
+
                             $('#user_name').val(user.nombres);
+
                             $('#type').val('user');
                             $('#id').val(user.id);
 
-
+                            $('#address').removeAttr('readonly', '');
                         } else if (response.type == 'user') {
 
                             var user = response.user;

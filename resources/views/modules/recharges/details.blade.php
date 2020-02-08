@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" class="breadcrumb">Gestionar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" class="breadcrumb">Consultar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.details',['id' => $recharge->id]) }}" class="breadcrumb">Detalles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" >Gestionar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" >Consultar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.details',['id' => $recharge->id]) }}">Detalles</a></li>
 
                 </ul>
             </div>
@@ -45,7 +45,7 @@
                             <i class="icon-perm_contact_calendar prefix"></i>
                             <select name="branch" id="branch" disabled>
                                 <option value="null" selected disabled>Elija un ramo</option>
-                                <option value="Act.Eco" @if($recharge->branch =='Act.Economica'){{"selected"}}@endif>Actividad Economica</option>
+                                <option value="Act.Eco" @if($recharge->branch =='Act.Eco'){{"selected"}}@endif>Actividad Economica</option>
                                 <option value="Pat.Vehiculo" @if($recharge->branch =='Pat.Vehiculo'){{"selected"}}@endif>Patente De Vehículo</option>
                                 <option value="Inmueble.Urb" @if($recharge->branch =='Inmueble.Urb'){{"selected"}}@endif>Inmuebles Urbanos</option>
                                 <option value="Publicidad" @if($recharge->branch =='Publicidad'){{"selected"}}@endif>Publicidad</option>

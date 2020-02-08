@@ -13,6 +13,16 @@ const mix = require('laravel-mix');
 
 // mix.js('resources/js/app.js', 'public/js')
 //     .sass('resources/sass/app.scss', 'public/css');
-mix.scripts(
-    ['resources/js/test.js'],'public/js/test.js'
+mix.styles(
+    [
+        'resources/css/material-components.css',
+        'resources/css/material-gradient.css',
+        'resources/css/owner.css',
+        'resources/css/style.css',
+        'resources/css/countdown-timer.css',
+        'resources/css/receipt.css',
+        'resources/css/subtle-slideshow.css',
+    ], 'public/css/owner.css'
 );
+
+mix.minify('public/css/owner.css');

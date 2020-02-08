@@ -17,8 +17,8 @@ class CreateValCatConstInmuTable extends Migration
             $table->increments('id');
             $table->integer('value_catas_const_id')->unsigned();
             $table->integer('property_id')->unsigned();
-            $table->foreign('value_catas_const_id')->references('id')->on('value_catastral_construccion');
-            $table->foreign('property_id')->references('id')->on('property');
+            $table->foreign('value_catas_const_id')->references('id')->on('value_catastral_construccion')->onDelete('cascade');
+            $table->foreign('property_id')->references('id')->on('property')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateValCatConstInmuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('val_cat_const_inmu');
     }
 }

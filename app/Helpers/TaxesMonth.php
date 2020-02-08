@@ -6,7 +6,7 @@ use App\Company;
 use App\Notification;
 use Illuminate\Support\Carbon;
 use App\Payments;
-
+use App\Prologue;
 
 class TaxesMonth{
     static public $mounths=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
@@ -20,13 +20,10 @@ class TaxesMonth{
 
         $mount_pay=null;
 
-
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
                 if($tax->status!=='cancel'){
                     if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')||$tax->status=='verified'||$tax->status=='verified-sysprim'){
-
-
 
                         $mount_pay[$tax->fiscal_period]=$tax->statusName;
                     }
@@ -192,7 +189,7 @@ class TaxesMonth{
         $range_mount=null;
         $status='';
 
-        $companyTaxes = $company->taxesCompanies()->where('type','definitive')->where('branch','Act.Eco')->first();
+        $companyTaxes = $company->taxesCompanies()->where('type','definitive')->where('branch','Act.Eco')->orderBy('id','desc')->first();
 
         if(is_object($companyTaxes)){
             if($companyTaxes->status==='verified'||$companyTaxes->status==='verified-sysprim'){
@@ -232,7 +229,13 @@ class TaxesMonth{
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dayMoraEspecial=5;//el dia de cobro para lo que tienen mora y son agente de retencion
+
+        $prologue=Prologue::where('branch', '')->first();
+
         $dayMoraNormal=14;//el dia de cobro para lo que no son agente de retención
+
+
+
         $diffDayMora=0;
         $fiscal_period=Carbon::parse($fiscal_period);
         $now_pay = Carbon::now();//fecha de pago

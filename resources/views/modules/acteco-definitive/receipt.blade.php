@@ -148,17 +148,17 @@
                 <td></td>
                 <td></td>
                 <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu,2)}}</td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->tax_rate,2)}}</td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
+                <td style="font-size: 10px !important;">{{number_format($ciu->recharge,2)}}</td>
+                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge,2)}}</td>
             </tr>
             <tr>
                 <td></td>
                 <td style="font-size: 10px !important;">Interés por mora</td>
                 <td></td>
                 <td></td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate,2)}}</td>
+                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->recharge,2)}}</td>
                 <td style="font-size: 10px !important;">{{number_format($ciu->interest,2)}}</td>
-                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->tax_rate+$ciu->interest,2)}}</td>
+                <td style="font-size: 10px !important;">{{number_format($ciu->totalCiiu+$ciu->interest+$ciu->recharge,2)}}</td>
             </tr>
 
         @endif
@@ -199,7 +199,7 @@
 
     <hr>
     <tr>
-        <td colspan="7">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
+        <td colspan="10">{{strtoupper(NumerosEnLetras::convertir(number_format($taxes->amount,2)))."."}}</td>
     </tr>
 </table>
 <table>

@@ -9,11 +9,36 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.details',['id'=>session('vehicle')])}}">Mis Declaraciones</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
-                    de Pagos</a></li>
+                    @if(isset($vehicle->company[0]))
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.details',['id'=>$vehicle->company[0]->id]) }}">{{$vehicle->company[0]->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle->id.'-'.true)}}">Detalles
+                                De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{url('vehicles/manage/'.$vehicle->id."-".$vehicle->company[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="">Historial
+                                de Pagos</a></li>
+
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{url('/vehicles/details/'.$vehicle->id.'-'.false)}}">Detalles De Vehículos</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{url('vehicles/manage/'.$vehicle->id)}}">Mis Declaraciones</a>
+                        </li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
+                                de Pagos</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -58,10 +83,15 @@
                                                         SIN CONCILIAR AÚN
                                                     </button>
                                                 </td>
-                                                <td><a href="{{route('vehicle.taxes.download',['id'=>session()->get('vehicle').'-'.$taxe->id])}}"
-                                                       class="btn orange waves-effect waves-light"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a></td>
+                                                @can('Descargar Mi Planilla')
+                                                <td>
+                                                    <a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/true')}}"
+                                                       class="btn orange waves-effect waves-light">
+                                                        <i class="icon-description left"></i>
+                                                        Descargar Planilla
+                                                    </a>
+                                                </td>
+                                                @endcan
                                             @elseif($taxe->status==='verified' ||$taxe->status=='verified-sysprim')
                                                 <td>
                                                     <button class="btn green">
@@ -69,14 +99,14 @@
                                                         VERIFICADA.
                                                     </button>
                                                 </td>
-
+                                                @can('Descargar Mi Planilla')
                                                 <td>
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                    <a href="{{url('/vehicle/payments/taxes/download/'.$taxe->id.'/true')}}" class="btn orange waves-effect waves-light">
+                                                        <i class="icon-description left"></i>
+                                                        Descargar Planilla
+                                                    </a>
                                                 </td>
-
+                                                @endcan
                                             @elseif($taxe->status=='cancel')
                                                 <td>
                                                     <button class="btn green">
@@ -84,6 +114,15 @@
                                                         CANCELADA.
                                                     </button>
                                                 </td>
+                                                @can('Detalles Mi Planilla')
+                                                <td>
+                                                    <a href="#" class="btn indigo waves-effect waves-light" disabled>
+                                                        <i class="icon-pageview left"></i>
+                                                        Detalles
+                                                    </a>
+                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
+                                                </td>
+                                                @endcan
                                             @endif
                                         </tr>
                                     @endif
@@ -119,9 +158,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "<i class='icon-first_page'>",
-                    "sLast":     "<i class='icon-last_page'></i>",
-                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sFirst": "<i class='icon-first_page'>",
+                    "sLast": "<i class='icon-last_page'></i>",
+                    "sNext": "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {

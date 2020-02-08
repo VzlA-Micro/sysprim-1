@@ -26,7 +26,7 @@
                         <div class="input-field col s6 m3">
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required>
-                                <option value="null">...</option>
+                                <option value="null" disabled selected>...</option>
                                 <option value="V">V</option>
                                 <option value="E">E</option>
                             </select>
@@ -38,12 +38,12 @@
                             </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
-                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="name" type="text" name="name" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." readonly  required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-person prefix tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos)."></i>
-                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                            <input id="surname" type="text" name="surname" class="validate" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." readonly required>
                             <label for="surname">Apellido</label>
                         </div>
                         <div class="input-field col s6 m3">
@@ -60,13 +60,24 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone_user" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
+
+
+
+                        <div class="input-field col s12 m12">
+                            <i class="icon-directions prefix"></i>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required></textarea>
+                            <label for="address">Dirección</label>
+                        </div>
+
+
+
                         <input type="hidden" name="role" id="role" value="3">
             		</div>
             		<div class="card-footer center">

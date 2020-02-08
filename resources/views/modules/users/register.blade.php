@@ -25,14 +25,14 @@
                         <div class="input-field col s6 m3">
                             <i class="icon-public prefix tooltipped" data-position="bottom" data-tooltip="V: Venezolano<br>E: Extranjero"></i>
                             <select name="nationality" id="nationality" required>
-                                <option value="null">...</option>
+                                <option value="null" disabled selected>...</option>
                                 <option value="V">V</option>
                                 <option value="E">E</option>
                             </select>
                             <label for="nationality">Nacionalidad</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <input id="ci" type="text" name="ci" class="validate number-only" pattern="[0-9]+" maxlength="8" title="Solo puede escribir números." required>
+                                <input type="text"  id="ci" name="ci" class="validate number-only" pattern="[0-9]+" maxlength="8" minlength="7" title="Solo puede escribir números." required>
                                 <label for="ci">Cedula</label>
                             </div>
                         <div class="input-field col s12 m6">
@@ -59,13 +59,20 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone_user">Teléfono</label>
-                            <input id="phone_user" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone_user" type="tel" name="phone" class="validate invalid" pattern="[0-9]+"   minlength="7"  title="Solo puede escribir números." placeholder="Ej. 1234567"  maxlength="7" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-mail_outline prefix tooltipped" data-position="bottom" data-tooltip="Ej: correo@mail.com"></i>
                             <input id="email" type="email" name="email" class="validate" value="{{ old('email') }}" required>
                             <label for="email">E-mail</label>
                         </div>
+                        <div class="input-field col s12 m12">
+                            <i class="icon-directions prefix"></i>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required></textarea>
+                            <label for="address">Dirección</label>
+                        </div>
+
+
                         <div class="input-field col s12">
                             <i class="icon-lock prefix tooltipped" data-position="bottom" data-tooltip="Ej: Venezuela1234"></i>
                             <input id="password" type="password" name="password" class="validate" pattern='[A-Za-z0-9]+{5,20}' minlength="8" title="La contraseña debe tener una logitud mínima de 8 caracteres y contener al menos un letra en mayuscula y un número." required>

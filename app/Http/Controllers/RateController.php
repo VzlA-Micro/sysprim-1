@@ -261,6 +261,7 @@ class RateController extends Controller{
 
         $type='';
 
+
         if(!is_null($rate[0]->pivot->company_id)){
             $data=Company::find($rate[0]->pivot->company_id);
             $type='company';
@@ -311,10 +312,10 @@ class RateController extends Controller{
             'data' => $data,
         ]);
 
-        if($download==='true'){
+        if(!isset($download)){
             return $pdf->stream('PLANILLA_TASAS.pdf');
         }else{
-            return $pdf->stream('PLANILLA_TASAS.pdf');
+            return $pdf->download('PLANILLA_TASAS.pdf');
         }
 
     }
@@ -330,7 +331,7 @@ class RateController extends Controller{
         $bank_payment = $request->input('bank_payment');
 
         $taxes = Taxe::findOrFail($id_taxes);
-        $code = TaxesNumber::generateNumberTaxes($type_payment . "81");
+        $code = TaxesNumber::generateNumberTaxes($type_payment . "88");
         $taxes->code = $code;
         $code = substr($code, 3, 12);
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
@@ -551,5 +552,11 @@ class RateController extends Controller{
         }
         return response()->json($response);
     }
+
+
+
+
+
+
 
 }

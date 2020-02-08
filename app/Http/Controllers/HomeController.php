@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\TaxesNumber;
+use App\Prologue;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,6 +16,12 @@ use App\Helpers\TaxesMonth;
 use App\Helpers\CedulaVE;
 use Psy\Util\Json;
 use  App\Helpers\Rif;
+use App\Helpers\CheckCollectionDay;
+
+
+
+
+
 class HomeController extends Controller
 {
     /**
@@ -67,6 +74,12 @@ class HomeController extends Controller
         // dd($file);
         // return Storage::download($file, $pdf, $headers);
         return response()->download($file, $pdf, $headers);
+    }
+
+
+    public function test(){
+        $verify=CheckCollectionDay::verify('Pat.Veh','2018-01-01');
+        dd($verify);
     }
 
 }

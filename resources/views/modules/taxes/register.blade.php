@@ -8,7 +8,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $company->id]) }}">{{ session('company') }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company')]) }}">Pagar Impuestos</a></li>
                 </ul>
@@ -39,6 +39,11 @@
                                 <i class="icon-date_range prefix"></i>
                                 <select name="fiscal_period" id="fiscal_period">
                                     <option value="null" disabled selected>Seleciona un Periodo Fiscal</option>
+                                    @if(!isset($mount_pay['2019-12-01']))
+                                        <option value="{{"2019-12-01"}}">{{"DICIEMBRE 2019 "}}</option>
+                                    @else
+                                        <option value="{{"2019-12-01"}}" disabled >{{"DICIEMBRE 2019|".$mount_pay['2019-12-01']}}</option>
+                                    @endif
 
                                     @foreach($mounths as $key=>$value)
                                         @php
@@ -65,12 +70,6 @@
                                                      <option value="{{date('Y').'-'.$value.'-'.'01'}}" disabled>{{$key." ".date('Y')."|".$status}}</option>
                                                 @endif
                                     @endforeach
-
-                                    @if(!isset($mount_pay['2019-12-01']))
-                                        <option value="{{"2019-12-01"}}">{{"2019-DICIEMBRE"}}</option>
-                                    @else
-                                        <option value="{{"2019-12-01"}}" disabled >{{"2019-DICIEMBRE|".$mount_pay['2019-12-01']}}</option>
-                                    @endif
 
                                 </select>
                                 <label>Perido Fiscal</label>
@@ -113,7 +112,7 @@
                                     </div>
 
                                     <div class="input-field col s12 m4">
-                                        <i class="icon-info prefix amber-text tooltipped" data-position="bottom" data-tooltip="Es el monto constituido por los ingresos brutos efectivamente percibidos en el período impositivo correspondiente, por las actividades económicas u operaciones cumplidas en la jurisdicción del Municipio Iribarren o que deban reputarse como ocurridas en esta jurisdicción de acuerdo con los criterios previstos en la ley nacional, en esta ordenanza o en los acuerdos o convenios celebrados a tales efectos (Ord. AE Art. 7)."></i>
+                                        <i class="icon-info prefix orange-text tooltipped" data-position="bottom" data-tooltip="Es el monto constituido por los ingresos brutos efectivamente percibidos en el período impositivo correspondiente, por las actividades económicas u operaciones cumplidas en la jurisdicción del Municipio Iribarren o que deban reputarse como ocurridas en esta jurisdicción de acuerdo con los criterios previstos en la ley nacional, en esta ordenanza o en los acuerdos o convenios celebrados a tales efectos (Ord. AE Art. 7)."></i>
                                         <input type="text"  name="base[]" id="base_{{$ciu->code}}" class="validate money_keyup base" maxlength="18" required>
                                         <label for="base_{{$ciu->code}}">Base Imponible</label>
                                     </div>
@@ -128,17 +127,17 @@
                             @endforeach
 
                             <div class="input-field col s12 m4">
-                                <i class="icon-info prefix amber-text  tooltipped" data-position="bottom" data-tooltip="Cuando se trate de un contribuyente industrial que venda los bienes producidos en otros  municipios distintos al de la ubicación de la industria, el impuesto pagado por el ejercicio de actividades económicas en el Municipio sede de la industria, podrá deducirse del impuesto a pagar en el Municipio en que se realiza la actividad comercial. En caso que la venta se realice en más de un Municipio sólo podrá deducirse el impuesto pagado por el ejercicio de la actividad industrial proporcional a los bienes vendidos en  cada Municipio. En ningún caso la cantidad a deducir podrá exceder de la cantidad de impuesto que corresponda pagar en la jurisdicción del establecimiento  comercial (Ord. AE Art. 7, Parágrafo Quinto N° 3)."></i>
+                                <i class="icon-info prefix orange-text  tooltipped" data-position="bottom" data-tooltip="Cuando se trate de un contribuyente industrial que venda los bienes producidos en otros  municipios distintos al de la ubicación de la industria, el impuesto pagado por el ejercicio de actividades económicas en el Municipio sede de la industria, podrá deducirse del impuesto a pagar en el Municipio en que se realiza la actividad comercial. En caso que la venta se realice en más de un Municipio sólo podrá deducirse el impuesto pagado por el ejercicio de la actividad industrial proporcional a los bienes vendidos en  cada Municipio. En ningún caso la cantidad a deducir podrá exceder de la cantidad de impuesto que corresponda pagar en la jurisdicción del establecimiento  comercial (Ord. AE Art. 7, Parágrafo Quinto N° 3)."></i>
                                 <input type="text"  name="deductions" id="deductions" class="validate money_keyup deductions"  required>
                                 <label for="deductions">Deducciones(SEDE INDUSTRIA)</label>
                             </div>
                             <div class="input-field col s12 m4">
-                                <i class="icon-info prefix amber-text tooltipped" data-position="bottom" data-tooltip="El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord.AE Art. 112), para que la retención pueda ser aplicada a su declaración debe pasar previamente por la Gerencia de Recaudación, presentar el soporte para ser validada, se aceptaran solo retenciones emitidas en el Municipio Iribarren."></i>
+                                <i class="icon-info prefix orange-text tooltipped" data-position="bottom" data-tooltip="El agente es responsable ante el contribuyente por las retenciones efectuadas sin normas legales o reglamentarias que lo autoricen. Si el agente enteró al Fisco Municipal lo retenido, el contribuyente podrá solicitar la correspondiente compensación (Ord.AE Art. 112), para que la retención pueda ser aplicada a su declaración debe pasar previamente por la Gerencia de Recaudación, presentar el soporte para ser validada, se aceptaran solo retenciones emitidas en el Municipio Iribarren."></i>
                                 <input type="text"  name="withholding" id="withholdings" class="validate money_keyup withholding"   required>
                                 <label for="withholdings">Retenciones</label>
                             </div>
                             <div class="input-field col s12 m4">
-                                <i class="icon-info prefix amber-text tooltipped" data-position="bottom" data-tooltip="En caso que en un período impositivo determinado, por la aplicación del mínimo tributable en algunos de los anticipos mensuales, surja una diferencia o crédito a favor del sujeto pasivo, la misma le será reconocida mediante acto administrativo como un crédito fiscal, el cual deberá ser descontado del monto del impuesto que le corresponda pagar en posteriores periodos impositivos o del impuesto determinado luego de un procedimiento de determinación tributaria, de ser el caso (Ord. AE Art 44, Parágrafo Único)."></i>
+                                <i class="icon-info prefix orange-text tooltipped" data-position="bottom" data-tooltip="En caso que en un período impositivo determinado, por la aplicación del mínimo tributable en algunos de los anticipos mensuales, surja una diferencia o crédito a favor del sujeto pasivo, la misma le será reconocida mediante acto administrativo como un crédito fiscal, el cual deberá ser descontado del monto del impuesto que le corresponda pagar en posteriores periodos impositivos o del impuesto determinado luego de un procedimiento de determinación tributaria, de ser el caso (Ord. AE Art 44, Parágrafo Único)."></i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits" class="validate money_keyup credits_fiscal"   required>
                                 <label for="fiscal_credits">Creditos Fiscales</label>
                             </div>
@@ -153,8 +152,8 @@
                         </div>
                         <div class="card-action center-align">
                             <button onclick="window.history.back();" type="button" class="btn btn-rounded btn-large waves-effect waves-light grey">
-                                <i class="icon-navigate_before right"></i>
-                                Atras
+                                <i class="icon-navigate_before left"></i>
+                                Atrás
                             </button>
 
 

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Helpers\Calculate;
 use App\Payment;
 use App\Taxe;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -26,6 +28,8 @@ use App\VehicleType;
 use App\VehiclesTaxe;
 use App\Helpers\DeclarationVehicle;
 use App\Helpers\Trimester;
+use App\Exceptions\Handler;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 
 class TicketOfficeVehicleController extends Controller
@@ -37,9 +41,9 @@ class TicketOfficeVehicleController extends Controller
         try {
             $id = Crypt::decrypt($id);
 
-            $taxe = Taxe::with('companies')->where('id', $id)->get();
+            $taxe = Taxe::with('VehicleTaxes')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified') {
+            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -51,30 +55,28 @@ class TicketOfficeVehicleController extends Controller
 
             } else {
                 $calculateTaxes = Calculate::calculateTaxes($id);
-                $ciuTaxes = CiuTaxes::with('ciu')->where('taxe_id', $id)->get();
-                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes, 'ciu' => $ciuTaxes]);
+                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes]);
             }
 
         } catch (DecryptException $e) {
-            $taxe = Taxe::with('companies')->where('code', $id)->get();
-
-
+            $code=strtoupper($id);
+            $taxe = Taxe::with('VehicleTaxes')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified') {
-                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
-                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
                     $taxe_find = Taxe::find($taxe[0]->id);
                     $taxe_find->status = 'cancel';
                     $taxe_find->update();
-                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null]);
 
                 } else {
                     return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => 'null']);
                 }
             } else {
-                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null]);
             }
         }
     }
@@ -208,16 +210,34 @@ class TicketOfficeVehicleController extends Controller
         return response()->json($data);
     }
 
-    public function storeVehicle(Request $request)
+    public function storeVehicle(Request $request, Exception $e)
     {
         $vehicle = new Vehicle();
+        $type = $request->input('type');
 
-        $licensePlate = $request->input('license_plate');
+        $person_id = null;
+        $company_id = null;
+
+        $licensePlate = strtoupper($request->input('license_plates'));
         $color = $request->input('color');
-        $body_serial = $request->input('bodySerial');
-        $serial_engine = $request->input('serialEngine');
-        $type_vehicle_id = $request->input('type');
+        $body_serial = strtoupper($request->input('bodySerials'));
+        $serial_engine = strtoupper($request->input('serialEngines'));
+        $type_vehicle_id = $request->input('typeV');
         $year = $request->input('year');
+        $status_view = $request->input('status_view');
+        $status = $request->input('status');
+        $owner_id = $request->input('id');
+        $person_id = $request->input('person_id');
+
+        if ($type == 'company') {
+            $company = Company::find($owner_id);
+            $user = $company->users()->get();
+            $user_id = $user[0]->id;
+            $company_id = $owner_id;
+        } else {
+            $user_id = $owner_id;
+        }
+
 
         if (!empty($request->input('brand-n') && $request->input('model-n'))) {
             $brandVehicles = new Brand();
@@ -241,8 +261,6 @@ class TicketOfficeVehicleController extends Controller
             }
 
         } else {
-            $models = $request->input('models');
-            $brand = $request->input('brand');
             $vehicle->model_id = $request->input('model');
         }
 
@@ -252,18 +270,29 @@ class TicketOfficeVehicleController extends Controller
         $vehicle->serial_engine = $serial_engine;
         $vehicle->type_vehicle_id = $type_vehicle_id;
         $vehicle->year = $year;
+        $vehicle->status = 'enabled';
 
         $vehicle->save();
-        $id_user = $request->input('user_id');
-
-        var_dump($vehicle->id);
 
         $userVehicle = new UserVehicle();
-        $userVehicle->user_id = $id_user;
+
+        $userVehicle->user_id = $user_id;
         $userVehicle->vehicle_id = $vehicle->id;
-        $userVehicle->status_user_vehicle = $request->input('status');
+        $userVehicle->person_id = $person_id;
+        $userVehicle->company_id = $company_id;
+        $userVehicle->status_user_vehicle = $status;
+
         $userVehicle->save();
+
+        if ($vehicle->save() && $userVehicle->save()) {
+            $response = ['status' => 'success'];
+        } else {
+            $response = ['status' => 'fail'];
+        }
+
+        return response()->json($response);
     }
+
 
     public function statusVehicle(Request $request)
     {
@@ -285,22 +314,29 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-
     public function detailsVehicle($id)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
+        if (isset($vehicle->person[0]->pivot->person_id)) {
+            $person = User::find($vehicle->person[0]->pivot->person_id);
+        } else {
+            $person = '';
+        }
+
+
         return view('modules.ticket-office.vehicle.modules.vehicle.details', [
             'vehicle' => $vehicle,
             'brand' => $brands,
             'model' => $models,
-            'type' => $type
+            'type' => $type,
+            'person' => $person
         ]);
     }
 
-    //find-license
+//find-license
 
     public function findCode($code)
     {
@@ -338,7 +374,7 @@ class TicketOfficeVehicleController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=', 'Pat.Veh')->whereIn('id', $id_taxes)->with('vehicleTaxes')->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -349,7 +385,8 @@ class TicketOfficeVehicleController extends Controller
         }
 
 
-        return view('modules.ticket-office.taxes.taxes-tickoffice', ['taxes' => $taxes]);
+
+        return view('modules.ticket-office.vehicle.modules.taxes.taxes-tickoffice', ['taxes' => $taxes]);
     }
 
     public function registerTaxes(Request $request)
@@ -672,27 +709,22 @@ class TicketOfficeVehicleController extends Controller
     */
 
 
-
     public function generateReceipt($taxes_data)
     {
-        $taxes_data = substr($taxes_data, 0, -1);
+        //$taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode = explode('-', $taxes_data);
-        $ciuTaxes = CiuTaxes::whereIn('taxe_id', $taxes_explode)->with('ciu')->with('taxes')->get();
-        $companyTaxes = CompanyTaxe::whereIn('taxe_id', $taxes_explode)->get();
 
 
-        if ($ciuTaxes[0]->taxes->type != 'definitive') {
+        $taxes =Taxe::whereIn('id', $taxes_explode)->with('vehicleTaxes')->get();
+        $vehicleFind=Vehicle::find($taxes[0]->vehicleTaxes[0]->id);
+        $user = $vehicleFind->users()->get();
 
-            $pdf = \PDF::loadView('modules.ticket-office.receipt-ticketoffice', ['taxes' => $ciuTaxes, 'companyTaxes' => $companyTaxes]);
-        } else {
-            $taxes = Taxe::find($ciuTaxes[0]->taxes->id);
-            $ciuTaxes = CiuTaxes::where('taxe_id', $ciuTaxes[0]->taxes->id)->get();
-            $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
-                'taxes' => $taxes,
-                'ciuTaxes' => $ciuTaxes,
-                'firm' => true
-            ]);
-        }
+        $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receiptMulti', [
+            'taxes' => $taxes,
+            'vehicle' => $vehicleFind,
+            'user'=>$user
+        ]);
+
         return $pdf->stream();
     }
 
@@ -792,49 +824,6 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-    public function sendEmailVerified($id)
-    {
-        $taxes = Taxe::findOrFail($id);;
-        if ($taxes->type == 'actuated' && $taxes->status == 'verified') {
-            $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
-            $companyTaxe = $taxes->companies()->get();
-            $company_find = Company::find($companyTaxe[0]->id);
-
-            $user = $company_find->users()->get();
-
-            $ciuTaxes = CiuTaxes::where('taxe_id', $id)->get();
-            $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
-            $amount = Calculate::calculateTaxes($id);
-
-
-            $pdf = \PDF::loadView('modules.taxes.receipt',
-                ['taxes' => $taxes,
-                    'fiscal_period' => $fiscal_period,
-                    'ciuTaxes' => $ciuTaxes,
-                    'amount' => $amount,
-                    'firm' => true
-                ]);
-
-
-            $subject = "PLANILLA VERIFICADA";
-            $for = $user[0]->email;
-
-            try {
-                Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
-                    $msj->from("grabieldiaz63@gmail.com", "SEMAT");
-                    $msj->subject($subject);
-                    $msj->to($for);
-                    $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
-                });
-            } catch (\Exception $e) {
-                return response()->json(['status' => 'error', 'message' => 'Ocurrio un error de conección durante el envio de correo,recargue e intentelo mas tarde.']);
-            }
-        } elseif ($taxes->type != 'verified') {
-            return response()->json(['status' => 'error', 'message' => 'El que correo no se envio, debido a que la planilla debe estar verificada.']);
-        }
-        return response()->json(['status' => 'success', 'message' => 'Correo enviado con éxito.']);
-    }
-
 
     public function changeStatusPayment($id, $status)
     {
@@ -864,7 +853,7 @@ class TicketOfficeVehicleController extends Controller
         return response()->json(['status' => $message]);
     }
 
-    //*________DEFINITIVE_________*
+//*________DEFINITIVE_________*
 
     public function verifyDefinitive($company_id)
     {
@@ -872,101 +861,151 @@ class TicketOfficeVehicleController extends Controller
         return response()->json(['status' => $status]);
     }
 
-    //declarar y generar la planilla
-    public function create($value)
+//declarar y generar la planilla
+    public function create($id, $year)
     {
-        $array = explode('-', $value);
-        $id = $array[0];
-        $vehicleTaxe = VehiclesTaxe::where('vehicle_id', $id)
-            ->where('status', 'process')->get();
-
-        $vehicleTaxesTem = VehiclesTaxe::where('vehicle_id', $id)
-            ->where('status', 'process')->get();
-
-
-        if (!Empty($vehicleTaxe[0])) {
-            //return view('modules.taxes.detailsVehicle', array('vehicleTaxes' => true));
-        } else {
-
-            if (!Empty($vehicleTaxesTem[0])) {
-                DeclarationVehicle::verify($id, $temporal = true);
-            }
-            $declaration = DeclarationVehicle::Declaration($value);
-
-            $vehicle = Vehicle::where('id', $id)->get();
-
-            $grossTaxes = 0;
-            $total = number_format($declaration['total'], 2, ',', '.');
-            $totalAux = $declaration['total'];
-            $paymentFractional = 0;
-            $valueDiscount = 0;
-            if ($declaration['valueMora'] == 0) {
-                $valueMora = 0;
-            } else {
-                $valueMora = number_format($declaration['dayMora'], 2, ',', '.');
-            }
-
-            if ($declaration['optionPayment']) {
-                $total = number_format($declaration['total'], 2, ',', '.');
-                $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
-                $rateYear = $declaration['rateYear'];
-                $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
-                $previousDebt = $declaration['previousDebt'];
-                $recharge = 0;
-            } else {
-                $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
-                $grossTaxes = $paymentFractional;
-                $rateYear = $declaration['rateYear'];
-                if (isset($declaration['recharge'])) {
-                    $recharge = number_format($declaration['recharge'], 2, ',', '.');
+        $array = explode('-', $id);
+        $idVehicle = $array[0];
+        $optionPayment = null;
+        if (isset($array[1])) {
+            if ($array[1] == 'false' || $array[1] == 'true') {
+                if ($array[1] == 'false') {
+                    $optionPayment = false;
                 } else {
-                    $recharge = 0;
-                }
-                if (isset($declaration['previousDebt'])) {
-                    if ($declaration['previousDebt'] !== 0) {
-                        $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
-                    }
-                } else {
-                    $previousDebt = 0;
+                    $optionPayment = true;
                 }
             }
-
-            $taxes = new Taxe();
-            $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
-            $taxes->fiscal_period = Carbon::now()->format('Y-m-d');
-            $taxes->save();
-
-            $taxesId = $taxes->id;
-
-            $vehicleTaxes = new VehiclesTaxe();
-            $vehicleTaxes->vehicle_id = $vehicle[0]->id;
-            $vehicleTaxes->taxe_id = $taxesId;
-            $vehicleTaxes->status = 'Temporal';
-            $vehicleTaxes->fiscal_credits = 0;
-            $vehicleTaxes->save();
-
-            //$trimester = Trimester::verifyTrimester();
-            //$period_fiscal = Carbon::now()->format('m-Y') . ' / ' . $trimester['trimesterEnd'];
-
-            return response()->json(array(
-                    'vehicle' => $vehicle,
-                    'taxes' => $taxes,
-                    'grossTaxes' => $grossTaxes,
-                    'paymentFractional' => $paymentFractional,
-                    'valueDiscount' => $valueDiscount,
-                    'rateYear' => $rateYear,
-                    'recharge' => $recharge,
-                    'previousDebt' => $previousDebt,
-                    'total' => $total,
-                    'vehicleTaxes' => false,
-                    'valueMora' => $valueMora,
-                    'totalAux' => $totalAux
-                )
-            );
         }
+
+
+        $years = Trimester::yearPayment($year);
+
+        $trimester = Trimester::verifyTrimester();
+
+        $date = Carbon::now();
+
+        $vehicleTaxe = Vehicle::find($idVehicle);
+        if ($vehicleTaxe->pivot === null) {
+            $taxes = '';
+        } else {
+            $taxes = Taxe::where('id', $vehicleTaxe->pivot->taxe_id)->get();
+        }
+
+        if (!empty($taxes)) {
+            foreach ($taxes as $tax) {
+                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                    $statusTax = 'verified';
+                } else if ($tax->status === 'temporal') {
+                    DeclarationVehicle::verify($tax->id);
+//                  $tax->delete();
+                    $statusTax = 'new';
+                } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                    $statusTax = 'process';
+                } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                    $statusTax = 'process';
+                } else {
+                    $statusTax = 'new';
+                }
+            }
+        } else {
+            $statusTax = 'new';
+        }
+
+
+        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment,$year);
+
+        $type = null;
+
+        $vehicle = Vehicle::where('id', $idVehicle)->get();
+
+        $grossTaxes = 0;
+        $total = number_format($declaration['total'], 2, ',', '.');
+        $totalAux = $declaration['total'];
+        $paymentFractional = 0;
+        $valueDiscount = 0;
+        if ($declaration['valueMora'] == 0) {
+            $valueMora = 0;
+        } else {
+            $valueMora = number_format($declaration['valueMora'], 2, ',', '.');
+        }
+
+        if ($declaration['optionPayment']) {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . '12/' . $trimester['monthEnd']->format('Y');
+            $total = number_format($declaration['total'], 2, ',', '.');
+            $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
+            $rateYear = $declaration['rateYear'];
+            $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+            $previousDebt = $declaration['previousDebt'];
+            $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            $period_fiscal_begin = $years['periodInit']->format('Y-m-d');
+            $period_fiscal_end = $years['periodFinal']->format('Y-m-d');
+            $type = "Anual";
+        }
+        /*else {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . $trimester['monthEnd']->format('m-Y');
+            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            $grossTaxes = $paymentFractional;
+            $rateYear = $declaration['rateYear'];
+            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+            $period_fiscal_end = $trimester['monthEnd']->format('Y-m-d');
+            $type = "Trimestral";
+            if (isset($declaration['recharge'])) {
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            } else {
+                $recharge = 0;
+            }
+            if (isset($declaration['previousDebt'])) {
+                if ($declaration['previousDebt'] !== 0) {
+
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                }
+            } else {
+                $previousDebt = 0;
+            }
+        }*/
+
+        $taxes = new Taxe();
+        $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxes->fiscal_period = $period_fiscal_begin;
+        $taxes->fiscal_period_end = $period_fiscal_end;
+        $taxes->type = $type;
+        $taxes->save();
+
+        $taxesId = $taxes->id;
+
+        $vehicleTaxes = new VehiclesTaxe();
+        $vehicleTaxes->vehicle_id = $vehicle[0]->id;
+        $vehicleTaxes->taxe_id = $taxesId;
+        $vehicleTaxes->status = 'Temporal';
+        $vehicleTaxes->type_payments = $declaration['optionPayment'];
+        $vehicleTaxes->fiscal_credits = 0;
+        $vehicleTaxes->save();
+
+
+        return response()->json(array(
+                'process' => false,
+                'vehicle' => $vehicle,
+                'taxes' => $taxes,
+                'grossTaxes' => $grossTaxes,
+                'paymentFractional' => $paymentFractional,
+                'valueDiscount' => $valueDiscount,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'previousDebt' => $previousDebt,
+                'total' => $total,
+                'totalAux' => $declaration['total'],
+                'vehicleTaxes' => false,
+                'valueMora' => $valueMora,
+                'totalAux' => $totalAux,
+                'taxeId' => $taxesId,
+                'statusTax' => $statusTax
+            )
+        );
+
     }
 
-    //::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
+
+//::::::::::::::::::::::::::::temporal:::::::::::::::::::::::::::::::::::::::::
     public function saveRateTicketOffice(Request $request)
     {
         $type = $request->input('type');
@@ -1022,24 +1061,44 @@ class TicketOfficeVehicleController extends Controller
         return response()->json(['status' => 'success', 'taxe_id' => $id]);
     }
 
-    //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     public function taxesSave(Request $request)
     {
-        $id = $request->input('taxes_id');
+        $id = $request->input('taxeId');
         $amount = $request->input('total');
-        $fiscalCredits = $request->input('fiscal_credits');
+        $fiscalCredits = $request->input('fiscalCredits');
         $recharge = $request->input('recharge');
         $recharge_mora = $request->input('rechargeMora');
+        $previousDebt = $request->input('previous');
+        $discount = $request->input('discount');
+        $base = $request->input('base');
 
         $amount_format = str_replace('.', '', $amount);
         $amount_format = str_replace(',', '.', $amount_format);
+
+        $base_format = str_replace('.', '', $base);
+        $base_format = str_replace(',', '.', $base_format);
 
         if ($fiscalCredits !== 0) {
             $fiscalCredits_format = str_replace('.', '', $fiscalCredits);
             $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
         } else {
             $fiscalCredits_format = 0;
+        }
+
+        if ($previousDebt !== 0) {
+            $previousDebt_format = str_replace('.', '', $previousDebt);
+            $previousDebt_format = str_replace(',', '.', $previousDebt_format);
+        } else {
+            $previousDebt_format = (float)0;
+        }
+
+        if ($discount !== 0) {
+            $discount_format = str_replace('.', '', $discount);
+            $discount_format = str_replace(',', '.', $discount_format);
+        } else {
+            $discount_format = 0;
         }
 
         if ($recharge !== 0 && $recharge_mora !== 0) {
@@ -1056,23 +1115,33 @@ class TicketOfficeVehicleController extends Controller
         $taxes = Taxe::findOrFail($id);
         $taxes->amount = $amount_format;
         $taxes->status = 'ticket-office';
-        $taxes->branch = 'Vehículo';
+        $taxes->branch = 'Pat.Veh';
+        $taxes->code = TaxesNumber::generateNumberTaxes('PTS' . '85');
+
+        $taxes->update();
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
 
-        $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
+        $vehicleTaxes = VehiclesTaxe::findOrFail($idVehicleTaxes[0]->id);
+
         $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
         $vehicleTaxes->recharge = $recharge_format;
         $vehicleTaxes->recharge_mora = $rechargeMora_format;
+        $vehicleTaxes->base_imponible = $base_format;
+
+        $vehicleTaxes->previous_debt = $previousDebt_format;
+
+        $vehicleTaxes->discount = $discount_format;
+
         $vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
         // $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank, $code);
 
-        $taxes->update();
 
-        return view('modules.taxes.paymentsvehicle', ['taxes_id' => $id]);
+        return response()->json(['status' => 'success']);
+
     }
 
     /* public function payments(Request $request)
@@ -1106,9 +1175,10 @@ class TicketOfficeVehicleController extends Controller
 
     public function viewDetails($id)
     {
-        $taxes=Taxe::findOrFail('id',$id)->get();
-        $vehicleTaxes=VehiclesTaxe::where('taxe_id',$id)->get();
-        $vehicle=Vehicle::where('id',$vehicleTaxes[0]->vehicle_id)->get();
+        $taxes = Taxe::findOrFail($id);
+
+        $vehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+        $vehicle = Vehicle::where('id', $vehicleTaxes[0]->vehicle_id)->get();
 
         $verified = true;
 
@@ -1121,18 +1191,191 @@ class TicketOfficeVehicleController extends Controller
         } else {
             $verified = false;
         }
-        $response= array(
-            'taxes'=>$taxes,
-            'vehicleTaxes'=>$vehicleTaxes,
-            'vehicle'=>$vehicle,
-            'model'=>$vehicle[0]->model,
-            'verified'=>$verified
+        $response = array(
+            'taxes' => $taxes,
+            'vehicleTaxes' => $vehicleTaxes,
+            'vehicle' => $vehicle,
+            'model' => $vehicle[0]->model,
+            'verified' => $verified
         );
-
-
-        return view('modules.ticket-office.vehicle.modules.payroll.details',array('response'=>$response));
+        return view('modules.ticket-office.vehicle.modules.payroll.details', array('response' => $response));
     }
 
+    public function paymentsDeclaration($id, $optionPayment)
+    {
+        $trimester = Trimester::verifyTrimester();
 
+        $declaration = DeclarationVehicle::Declaration($id, $optionPayment);
+
+        $type = null;
+
+        $vehicle = Vehicle::where('id', $id)->get();
+
+        $grossTaxes = 0;
+        $total = number_format($declaration['total'], 2, ',', '.');
+        $totalAux = $declaration['total'];
+        $paymentFractional = 0;
+        $valueDiscount = 0;
+        if ($declaration['valueMora'] == 0) {
+            $valueMora = 0;
+        } else {
+            $valueMora = number_format($declaration['valueMora'], 2, ',', '.');
+        }
+
+        if ($declaration['optionPayment']) {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . '12/' . $trimester['monthEnd']->format('Y');
+            $total = number_format($declaration['total'], 2, ',', '.');
+            $valueDiscount = number_format($declaration['valueDiscount'], 2, ',', '.');
+            $rateYear = $declaration['rateYear'];
+            $grossTaxes = number_format($declaration['grossTaxes'], 2, ',', '.');
+            $previousDebt = $declaration['previousDebt'];
+            $recharge = 0;
+            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+            $period_fiscal_end = $trimester['monthEnd']->format('Y') . '-12-01';
+            $type = "Anual";
+
+        } else {
+            $period_fiscal = $trimester['monthBegin']->format('m-Y') . ' / ' . $trimester['monthEnd']->format('m-Y');
+            $paymentFractional = number_format($declaration['fractionalPayments'], 2, ',', '.');
+            $grossTaxes = $paymentFractional;
+            $rateYear = $declaration['rateYear'];
+            $period_fiscal_begin = $trimester['monthBegin']->format('Y-m-d');
+            $period_fiscal_end = $trimester['monthEnd']->format('Y-m-d');
+            $type = "Trimestral";
+            if (isset($declaration['recharge'])) {
+                $recharge = number_format($declaration['recharge'], 2, ',', '.');
+            } else {
+                $recharge = 0;
+            }
+            if (isset($declaration['previousDebt'])) {
+                if ($declaration['previousDebt'] !== 0) {
+
+                    $previousDebt = number_format($declaration['previousDebt'], 2, ',', '.');
+                }
+            } else {
+                $previousDebt = 0;
+            }
+        }
+
+        $taxes = new Taxe();
+        $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxes->fiscal_period = $period_fiscal_begin;
+        $taxes->fiscal_period_end = $period_fiscal_end;
+        $taxes->type = $type;
+        $taxes->save();
+
+        $taxesId = $taxes->id;
+        $vehicleTaxes = new VehiclesTaxe();
+        $vehicleTaxes->vehicle_id = $vehicle[0]->id;
+        $vehicleTaxes->taxe_id = $taxesId;
+        $vehicleTaxes->status = 'Temporal';
+        $vehicleTaxes->type_payments = $declaration['optionPayment'];
+        $vehicleTaxes->fiscal_credits = 0;
+        $vehicleTaxes->save();
+
+        return response()->json(array(
+                'process' => false,
+                'vehicle' => $vehicle,
+                'taxes' => $taxes,
+                'grossTaxes' => $grossTaxes,
+                'paymentFractional' => $paymentFractional,
+                'valueDiscount' => $valueDiscount,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'previousDebt' => $previousDebt,
+                'total' => $total,
+                'totalAux' => $declaration['total'],
+                'vehicleTaxes' => false,
+                'valueMora' => $valueMora,
+                'totalAux' => $totalAux,
+                'taxeId' => $taxesId
+            )
+        );
+    }
+
+    public function changeUser($type, $document, $id)
+    {
+        $vehicle = UserVehicle::where('vehicle_id', $id)->get();
+        $vehicleUser = UserVehicle::find($vehicle[0]->id);
+
+        if ($type == "J" || $type == "G") {
+            $company = Company::where('RIF', $type . $document)->get();
+
+            if (!$company->isEmpty()) {
+
+                $vehicleUser->user_id = $company[0]->users[0]->id;
+                $vehicleUser->company_id = $company[0]->id;
+                $vehicleUser->person_id = null;
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
+            }
+        } elseif ($type == "E" || $type == "V") {
+            var_dump($type);
+            $user = User::where('ci', $type . $document)->get();
+            if (!$user->isEmpty()) {
+                $vehicleUser->company_id = null;
+                $vehicleUser->person_id = $user[0]->id;
+
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
+            }
+
+        }
+
+        $vehicleUser->update();
+
+        return Response()->json($response);
+    }
+
+    public function changeUserWeb($type, $document, $id)
+    {
+        $vehicle = UserVehicle::where('vehicle_id', $id)->get();
+        $vehicleUser = UserVehicle::find($vehicle[0]->id);
+
+        if ($type == "E" || $type == "V") {
+            $user = User::where('ci', $type . $document)->get();
+            if (!$user->isEmpty()) {
+                $vehicleUser->user_id = $user[0]->id;
+                $vehicleUser->company_id = null;
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
+            }
+
+        }
+
+        $vehicleUser->update();
+
+        return Response()->json($response);
+    }
+
+    public function fiscalPeriod($id, $year)
+    {
+        $date = Carbon::now();
+        $vehicleTaxe = Vehicle::find($id);
+        $tax = $vehicleTaxe->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        $statusTax=false;
+        if (is_null($tax)) {
+            $statusTax = false;
+        } else {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                $statusTax = true;
+            } else if ($tax->status === 'temporal') {
+//                      $tax->delete();
+                $statusTax = false;
+            } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'cancel') {
+                $statusTax = false;
+            } else if ($tax->status === null){
+                $statusTax = false;
+            }
+        }
+
+        return Response()->json($statusTax);
+    }
 }
-

@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="breadcrumb">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" class="breadcrumb">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}" class="breadcrumb">Gestionar Tipos De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}" class="breadcrumb">Ver Tipos De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('typeVehicle.details') }}" class="breadcrumb">Detalles De Tipo De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}">Ver Tipos De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('typeVehicle.details') }}">Detalles De Tipo De Vehiculos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -26,23 +26,32 @@
 
                         <div class="input-field col s12">
                             <i class="icon-check prefix"></i>
-                            <input id="name" type="text" name="name" readonly value="{{ $type->name }}">
+                            <input id="name" type="text" name="name" readonly value="{{ $type->name }}" minlength="" maxlength="100" required>
                             <label for="name">Tipo de vehiculo</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>
-                            <input id="rate" type="text" name="rate" readonly value="{{ $type->rate }}">
+                            <input id="rate" type="text" name="rate" readonly value="{{ $type->rate }}" maxlength="5" class="validate number-date only-number-positive" required>
                             <label for="name">Tarifa U.T menor a 3 años</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="rate_ut" type="text" name="rate_ut" readonly value="{{ $type->rate_UT}}">
+                            <input id="rate_ut" type="text" name="rate_ut" readonly maxlength="5"  class="validate  number-date  only-number-positive" value="{{ $type->rate_UT}}"  required>
                             <label for="rate_ut">Tarifa U.T mayor a 3 años</label>
                         </div>
                     </div>
                     <div class="card-action center">
                         @can('Actualizar Tipos de Vehiculos')
-                        <button type="submit"  class="btn btn-rounded green waves-effect waves-light">Actualizar</button>
+
+                            <a id="btn-modify" class="btn btn-large btn-rounded blue waves-effect waves-light">
+                                <i class="icon-update right"></i>
+                                Modificar
+                            </a>
+                            <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light hide" id="btn-update">
+                                <i class="icon-save right"></i>
+                                Guardar
+                            </button>
+
                         @endcan
                         {{--<a href="#" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>--}}
                     </div>

@@ -1,4 +1,4 @@
-var url = "http://172.19.50.253/";
+var url = localStorage.getItem('url');
 $(document).ready(function() {
 	$('#register').submit(function(e) {
         var  name = $('#name').val();
@@ -51,6 +51,7 @@ $(document).ready(function() {
 
 	$('#update').submit(function(e) {
 		e.preventDefault();
+        $('#rates').DataTable().destroy();
         var  name = $('#name').val();
         $('#rates').DataTable().destroy();
 		var formData = new FormData(this);
@@ -62,9 +63,12 @@ $(document).ready(function() {
             processData: false,
             url: url + 'roles/update',
             beforeSend: function() {
-            	$("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
+
+			    $("#preloader").fadeIn('fast');
+            	$("#preloader-overlay").fadeIn('fast');
+
             },
+
             success: function(resp) {
             	swal({
                     title: "¡Bien Hecho!",

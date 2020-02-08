@@ -57,6 +57,19 @@ class Company extends Model implements Auditable {
         }
     }
 
+    public function companyVehicle(){
+        return $this->belongsToMany('App\Vehicle','user_vehicle')
+            ->withPivot('company_id');
+    }
+
+
+    public function companyProperty(){
+        return $this->belongsToMany('App\Property','user_property')
+            ->withPivot('property_id');
+    }
+
+
+
     public function getTypeCompanyAttribute(){
         return $this->typeCompany=substr($this->license,0,1);
     }
@@ -77,5 +90,14 @@ class Company extends Model implements Auditable {
     public function getNumberPhoneAttribute(){
         return $this->phone=substr($this->phone,6,11);
     }
+
+    public function vehicles(){
+        return $this->belongsToMany('App\Vehicle','user_vehicle')
+            ->withPivot('vehicle_id',
+                'user_id'
+            );
+    }
+
+
 
 }

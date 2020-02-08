@@ -1,7 +1,5 @@
 $(document).ready(function () {
-
-    var url = "http://172.19.50.253/";
-
+    var url = localStorage.getItem('url');
 
     function reset() {
         $('#details').text('');
@@ -125,7 +123,7 @@ $(document).ready(function () {
 
         var type=$('#type').val();
 
-        url='http://172.19.50.253/';
+        url=localStorage.getItem('url');
 
 
 
@@ -201,7 +199,7 @@ $(document).ready(function () {
                         if (aceptar) {
                            location.reload();
                         } else {
-                             url='http://172.19.50.253/';
+                            url=localStorage.getItem('url');
                             window.location.href = url + 'ticket-office/taxes';
                         }
                     });
@@ -370,7 +368,7 @@ $(document).ready(function () {
                         if (response.status === 'verified') {
                             swal({
                                 title: "Información",
-                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declración definitiva de este anio.',
+                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declaración definitiva de este año.',
                                 icon: "info",
                                 button: {
                                     text: "Esta bien",
@@ -833,7 +831,7 @@ $(document).ready(function () {
                     if (response.status === 'error') {
                         swal({
                             title: "Información",
-                            text: "El Contribuyente no esta registrado, debe registrar el contribuyente antes para poder registrar una empresa.",
+                            text: "El usuario no esta registrado, debe ingresar un valido.",
                             icon: "info",
                             buttons: {
                                 confirm: {
@@ -950,7 +948,7 @@ $(document).ready(function () {
                                     <i class="prefix">
                                         <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
                                     </i>   
-                                    <input type="text" name="base[]" id="base_${ciu[i].code}" class="validate money money_keyup base " value="">
+                                    <input type="text" name="base[]" id="base_${ciu[i].code}" class="validate money money_keyup base " value="" maxlength="18">
                                     <label for="base_${ciu[i].code}">Base Imponible</label>
                                 </div>
                              <input type="hidden" value="actuated" name="typeTaxes">
@@ -970,7 +968,7 @@ $(document).ready(function () {
             <i class="prefix">
             <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
             </i>   
-            <input type="text" name="withholding" id="withholdings" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+            <input type="text" name="withholding" id="withholdings" class="validate money money_keyup withholding" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value=""  maxlength="18">
             <label for="withholdings">Retenciones</label>
          </div>                               
 
@@ -979,7 +977,7 @@ $(document).ready(function () {
             <i class="prefix">
             <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
             </i>   
-            <input type="text" name="deductions" id="deductions" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+            <input type="text" name="deductions" id="deductions" class="validate money  money_keyup deductions" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value=""  maxlength="18">
             <label for="deductions">Deducciones</label>
           </div>
 
@@ -987,7 +985,7 @@ $(document).ready(function () {
             <i class="prefix">
             <img src="${url}images/isologo-BsS.png" style="width: 2rem" alt="">
             </i>   
-            <input type="text" name="fiscal_credits" id="fiscal_credits" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="">
+            <input type="text" name="fiscal_credits" id="fiscal_credits" class="validate money money_keyup credits_fiscal" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value=""  maxlength="18">
             <label for="fiscal_credits">Creditos Fiscales</label>
            </div>
            
@@ -1059,6 +1057,10 @@ $(document).ready(function () {
 
         M.updateTextFields();
     }
+
+    $('#details-next').on('click',function () {
+
+    });
 
 
 });

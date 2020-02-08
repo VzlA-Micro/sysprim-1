@@ -25,14 +25,14 @@ use App\BankRate;
 
 class DeclarationVehicle
 {
-    public static function Declaration($id)
+    public static function Declaration($id, $optionPayment,$year=null)
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
         $monthCurrent = Carbon::now()->format('m');
-        $monthJanuary = Carbon::create(2018, 1, 30, 12, 00, 00)->format('m');
+        $monthJanuary = Carbon::create(2020, 01, 01, 12, 00, 00);
         $january = 01;
         $april = 04;
         $total = 0;
@@ -46,33 +46,23 @@ class DeclarationVehicle
         $previousDebt = 0;
         $valueDiscount = 0;
         $valueDayMora = 0;
-        $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $fiscal_period_format=Carbon::parse($year);
+        $rate = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+
+        if (is_null($rate)){
+            $rate = Tributo::orderBy('id', 'desc')->first();
+        }
+
+
         $moreThereYear = null;
         $bank = BankRate::select('value_rate')->latest()->first();
-        $rateBank = $bank->value_rate * 360;
+        $rateBank = $bank->value_rate;
+
 
         $recharges = Recharge::where('branch', 'Pat.Vehiculo')->latest()->first();
         $helperTrimester = Trimester::verifyTrimester();
 
-        if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
-            if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
-                $diffDayMora = $dateCurrent->diffInDays($helperTrimester['monthIntermediate']);
-                $valueDayMora = $diffDayMora * $rateBank;
-            } else {
-                $diffDayMora = 0;
-                $valueDayMora = $diffDayMora * $rateBank;
-            }
-        } else {
-            $diffDayMora = 0;
-            $valueDayMora = $diffDayMora * $rateBank;
-        }
-
-        //$day = Carbon::now()->format('d');
-        $array = explode('-', $id);
-        $idVehicle = $array[0];
-
-
-        if ($monthCurrent >= 1 and $monthCurrent <= 3) {
+        /*if ($monthCurrent >= 1 and $monthCurrent <= 3) {
             $trimesterCurrent = 1;
         }
         if ($monthCurrent >= 4 and $monthCurrent <= 6) {
@@ -83,71 +73,85 @@ class DeclarationVehicle
         }
         if ($monthCurrent >= 10 and $monthCurrent <= 12) {
             $trimesterCurrent = 4;
-        }
-
-        session_start();
-        if (isset($array[1])) {
-            $optionPayment = intval($array[1]);
-
-            if ($optionPayment === 1) {
-                $optionPayment = false;
-            }
-            if ($optionPayment === 0) {
-                $optionPayment = true;
-            }
-
-            $_SESSION['optionPayment'] = $optionPayment;
-        } else {
-            $optionPayment = $_SESSION['optionPayment'];
-        }
+        }*/
 
         $vehicle = Vehicle::where('id', $id)->get();
+
         $yearVehicle = $vehicle[0]->year;
 
         $diffYear = $yearCurrent - intval($yearVehicle);
 
         if ($diffYear < 3) {
             $rateYear = $vehicle[0]->type->rate;
-            $taxes = $rateYear * $rate[0]->value;
-            //$valueDiscount = ($taxes * 20) / 100;
-            //$discount = $taxes - $valueDiscount;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = false;
         } else {
             $rateYear = $vehicle[0]->type->rate_UT;
-            $taxes = $rateYear * $rate[0]->value;
-            //$valueDiscount = ($taxes * 20) / 100;
-            //$discount = $taxes - $valueDiscount;
+            $taxes = $rateYear * $rate->value;
             $moreThereYear = true;
         }
 
-        //--------------option of payments-------------------------
+        $recharge = ($taxes * $recharges->value) / 100;
+
+        if ($year==$yearCurrent){
+
+            $day= CheckCollectionDay::verify();
+
+            if ($dateCurrent->month == $helperTrimester['monthIntermediate']->month || $dateCurrent->month == $helperTrimester['monthEnd']->month) {
+
+                if ($dateCurrent->day >= $helperTrimester['monthIntermediate']->day) {
+                    $dayMora = 31;
+                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+
+                } else {
+                    $dayMora = 0;
+                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+                }
+            } else {
+                $dayMora = 0;
+                $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+            }
+        }else{
+            $day = DeclarationVehicle::dayMora($year);
+            $valueDayMora = ($rateBank / 100 / 360)*$day['diffDayMora']*($taxes+$recharge);
+        }
+
+        //--------------option of payments-------------------------|||||||||||||||||||||||||||||||||
         if ($optionPayment) {
             //indica que el pago es anual
 
             if (($monthCurrent == $mes)) {
                 $valueDiscount = ($taxes * 20) / 100;
-                $total = $taxes - $valueDiscount;
+                $total = ($taxes - $valueDiscount) + $valueDayMora;
 
-                $amounts = array(
-                    'grossTaxes' => $taxes,
-                    'fractionalPayments' => $fractionalPayments,
-                    'valueDiscount' => $valueDiscount,
-                    'total' => $total,
-                    'rateYear' => $rateYear,
-                    'moreThereYear' => $moreThereYear,
-                    'optionPayment' => $optionPayment,
-                    'previousDebt' => $previousDebt,
-                    'valueMora' => $valueDayMora
-                );
-                return $amounts;
+            } else {
+                //$valueDiscount = ($taxes * 20) / 100;
+
+                $total = ($taxes - $valueDiscount) + $valueDayMora+$recharge;
+
             }
+            $amounts = array(
+                'grossTaxes' => $taxes,
+                'fractionalPayments' => $fractionalPayments,
+                'valueDiscount' => $valueDiscount,
+                'total' => $total,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'moreThereYear' => $moreThereYear,
+                'optionPayment' => $optionPayment,
+                'previousDebt' => $previousDebt,
+                'valueMora' => $valueDayMora
+            );
+            return $amounts;
+        }
 
-        } else {
+
+        /*  }else {
             //INDICA QUE EL PAGO ES TRIMESTRAL, PERO SE DAN 2 CASOS
             // 1- ES PAGO TRIMESTRAL PERO ESTA DENTRO DEL PRIMER MES DE CADA TRIMESTRE POR LO TANTO NO TENDRA, NI RECARGOS, NI MULTAS
             $fractionalPayments = $taxes / 4;
             if (($monthCurrent == $january) || ($monthCurrent == $april) || ($monthCurrent == $july) || ($monthCurrent == $october)) {
-                $total = $fractionalPayments;
+                $total = $fractionalPayments*$valueDayMora;
                 $amounts = array(
                     'taxes' => $taxes,
                     'fractionalPayments' => $fractionalPayments,
@@ -176,11 +180,12 @@ class DeclarationVehicle
                     if ($diffMonths > 3 and $diffMonths < 3.5) {
                         $diffMonths = 4;
                     }
-                    $recharge = (($fractionalPayments * $diffMonths) * $recharges) / 100;
+
+                    $recharge = (($fractionalPayments * $diffMonths) * $recharges->value) / 100;
 
                     $previousDebt = ($fractionalPayments * ($diffMonths - 1));
 
-                    $total = $fractionalPayments + $recharge + $previousDebt;
+                    $total = $fractionalPayments + $recharge + $previousDebt + $valueDayMora;
 
                     // 2 - ESTE CASO ES SI, HAY ALGUN REGISTRO CORESPONBDIENTE A ESTE VEHICULO
                 } else {
@@ -202,11 +207,10 @@ class DeclarationVehicle
 
                     $diffTrimester = $trimesterCurrent - $trimester;
 
-                    $recharge = (($fractionalPayments * $diffTrimester) * $recharges) / 100;
+                    $recharge = (($fractionalPayments * $diffTrimester) * $recharges->value) / 100;
                     $previousDebt = ($fractionalPayments * $diffTrimester);
 
-                    $total = $fractionalPayments + $recharge + $previousDebt;
-
+                    $total = ($fractionalPayments + $recharge + $previousDebt + $valueDayMora)*$valueDayMora;
                 }
                 $amounts = array(
                     'taxes' => $taxes,
@@ -222,7 +226,7 @@ class DeclarationVehicle
 
                 return $amounts;
             }
-        }
+        }*/
     }
 
 
@@ -236,16 +240,25 @@ class DeclarationVehicle
         $mount_pay = null;
 
         if ($temporal) {
-            $vehicleTaxes = $vehicle->taxesVehicle()->where('status', '=', 'temporal')->get();//busco el ultimo pago realizado por la empresa
+            $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle->id)
+                ->where('status', '=', 'Temporal')
+                ->get();
 
             if (!$vehicleTaxes->isEmpty()) {
                 foreach ($vehicleTaxes as $tax) {
+
                     if ($tax->status !== 'cancel') {
-                        $tax = Taxe::find($tax->id);
-                        $tax->delete();
+                        $taxe = Taxe::find($tax->taxe_id);
+                        $taxe->delete();
                     }
                 }
             }
         }
+    }
+
+    public static function dayMora($year)
+    {
+        $varDayForMora = CheckCollectionDay::verify('Pat.Veh',$year);
+        return $varDayForMora;
     }
 }

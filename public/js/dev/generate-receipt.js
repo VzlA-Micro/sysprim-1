@@ -1,53 +1,63 @@
 $('document').ready(function () {
 
-    var url = "http://172.19.50.253/";
+    var url = localStorage.getItem('url');
 
     var companies_id='';
     var type_taxes='';
 
 
-    $('.payroll').change(function () {
-        if(companies_id!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
-                 companies_id=$(this).attr('data-company');
-            }else if ($(this).attr('data-company')!=companies_id){
-                swal({
-                    title: "Información",
-                    text: "Las planillas selecionadas no pertenecen a la misma empresa.",
-                    icon: "info",
-                    button: "Ok",
-                });
-                $(this).prop('checked', false);
+
+
+
+    function verifyPlanilla() {
+        $('.payroll').change(function () {
+            if(companies_id!==''){
+                if($(this).is(":checked")&&$(this).attr('data-company')==companies_id) {
+                    companies_id=$(this).attr('data-company');
+                    console.log(companies_id);
+                }else if ($(this).attr('data-company')!=companies_id){
+                    swal({
+                        title: "Información",
+                        text: "Las planillas selecionadas no pertenecen a la misma empresa.",
+                        icon: "info",
+                        button: "Ok",
+                    }).then(function () {
+                        $(this).prop('checked', false);
+                        location.reload();
+                    });
+
+                }
+            }else{
+                companies_id=$(this).attr('data-company');
             }
-        }else{
-            companies_id=$(this).attr('data-company');
-        }
 
 
-        if(type_taxes!==''){
-            if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
-                type_taxes=$(this).attr('data-taxes');
-            }else if ($(this).attr('data-taxes')!=type_taxes){
-                swal({
-                    title: "Información",
-                    text: "Las planillas selecionadas deben ser del mismo tipo.",
-                    icon: "info",
-                    button: "Ok",
-                }).then(function () {
+            if(type_taxes!==''){
+                if($(this).is(":checked")&&$(this).attr('data-company')==type_taxes) {
+                    type_taxes=$(this).attr('data-taxes');
+                }else if ($(this).attr('data-taxes')!=type_taxes){
+                    swal({
+                        title: "Información",
+                        text: "Las planillas selecionadas deben ser del mismo tipo.",
+                        icon: "info",
+                        button: "Ok",
+                    }).then(function () {
 
-                    location.reload();
+                        location.reload();
                     });
 
 
-                $(this).prop('checked', false);
+                    $(this).prop('checked', false);
+                }
+            }else{
+                type_taxes=$(this).attr('data-taxes');
             }
-        }else{
-            type_taxes=$(this).attr('data-taxes');
-        }
 
-    });
+        });
+    }
 
 
+    verifyPlanilla();
 
 
     $('#select-next').click(function () {
@@ -218,150 +228,6 @@ $('document').ready(function () {
     }
 
 
-    $('#open-cashier').click(function () {
-        if (localStorage.getItem('bank') == null) {
-            swal({
-                title: "PUNTO DE VENTA 1/2",
-                text: "Introduzca el numero de lote del punto de venta:",
-                icon: "info",
-                content: {
-                    element: "input",
-                    attributes: {
-                        placeholder: "Escribe un numero",
-                        type: "number",
-                    },
-                },
-            }).then(function (name) {
-                if (name === null || isNaN(name) || name <= 0) {
-                    swal({
-                        title: "Información",
-                        text: "Acción cancelada,debe ingresar un numero de lote valido.",
-                        icon: 'info'
-                    });
-                } else {
-                    localStorage.setItem('lot', name);
-                    swal({
-                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2",
-                        icon: "info",
-                        buttons: {
-                            cancel: true,
-                            BANCO: {text: "100%BANCO", value: "33", className: "blue"},
-                            BOD: {text: "BOD", value: "44", className: "green width"},
-                        }
-                    }).then(function (bank) {
-                        if (bank === null) {
-                            swal({
-                                title: "Información",
-                                text: "Acción cancelada,debe ingresar un punto.",
-                                icon: 'info'
-                            });
-                        } else {
-                            localStorage.setItem('bank', bank);
-                            var hoy = new Date();
-                            var dd = hoy.getDate();
-                            localStorage.setItem('day',dd);
-                            swal({
-                                title: "Bien hecho",
-                                text: "Ya puedes empezar a registrar pagos valido.",
-                                icon: "success",
-                            });
-
-                            location.reload();
-                        }
-                    })
-                }
-            });
-
-        } else {
-            swal({
-                title: "Información",
-                text: "Acción cancelada,debe abrir caja.",
-                icon: 'info'
-            });
-        }
-    });
-    var hoy = new Date();
-    var dd = hoy.getDate();
-
-    if(localStorage.getItem('day')!=dd){
-        localStorage.removeItem('bank');
-        localStorage.removeItem('lot');
-        localStorage.removeItem('day');
-    }
-
-
-
-
-
-    if (localStorage.getItem('bank') === null && localStorage.getItem('lot') === null&&$('.content').val()!==undefined) {
-        swal({
-            title: "Información",
-            text: "Debe abrir caja, para empezar a registrar pagos.",
-            icon: "info",
-        });
-        $('.content').css('display', 'none');
-    } else {
-
-        var bank = localStorage.getItem('bank');
-        var lot = localStorage.getItem('lot');
-
-
-        if (bank === "44") {
-            $('#name_bank').val('BOD');
-        } else {
-            $('#name_bank').val("100%BANCO");
-        }
-
-        $('#bank').val(bank);
-        $('#lot').val(lot);
-
-        M.updateTextFields();
-
-        $('#content').css('display', 'block');
-    }
-
-
-
-
-    $('#close-cashier').click(function () {
-        if (localStorage.getItem('bank') !== null) {
-            swal({
-                title: "Información",
-                text: "¿Estas seguro?, Si cierras las caja, no podras revertir los cambios.",
-                icon: "warning",
-                buttons: {
-                    confirm: {
-                        text: "Si",
-                        value: true,
-                        visible: true,
-                        className: "green"
-
-                    },
-                    cancel: {
-                        text: "No",
-                        value: false,
-                        visible: true,
-                        className: "grey lighten-2"
-                    }
-                }
-            }).then(function (aceptar) {
-                if (aceptar) {
-                    localStorage.removeItem('bank');
-                    localStorage.removeItem('lot');
-                    location.href = url + 'ticket-office/payments';
-                }
-            });
-
-
-        } else {
-            swal({
-                title: "Información",
-                text: "Acción cancelada,debe abrir la caja para poder cerrarla.",
-                icon: 'info'
-            });
-
-        }
-    });
 
 
 
@@ -376,8 +242,6 @@ $('document').ready(function () {
 
             amount=amount.replace(/,/g, "");
             amount_pay=amount_pay.replace(/,/g, "");
-
-
 
 
 
@@ -556,7 +420,6 @@ $('document').ready(function () {
 
 
 
-
                             $('#receipt-body').append('' +
                                 '<tr>' +
                                     '<td><i class="icon-check text-green"></i>'+company.name+'</td>'+
@@ -566,7 +429,9 @@ $('document').ready(function () {
                                     '<td>' +'<p>' +
                                         '  <label>\n' +
                                         '           <input type="checkbox" name="payroll" class="payroll"\n' +
-                                        '                       value="'+taxe.id+'"/>\n' +
+                                        '                       value="'+taxe.id+'"'+
+                                        '                       data-company="'+taxe.companies[0].id+'"'+
+                                        '                       data-taxes="'+taxe.type+'"/>\n' +
                                         '                         <span></span>\n' +
                                         '                                  </label>\n' +
                                         '</p>'+
@@ -574,10 +439,12 @@ $('document').ready(function () {
                                      '<td>' +taxe.amountFormat+'</td>'+
                                      '<td>'+link+'</td>'+
                                 '</tr>');
-
-                            $(this).val();
                             M.updateTextFields();
+
+
+                            verifyPlanilla();
                         });
+
 
 
                     }

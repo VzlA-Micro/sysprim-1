@@ -28,13 +28,13 @@
                             <label for="document_type">Documento</label>
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
-                            <input type="text" name="RIF" id="RIF" class="validate number-only" pattern="[0-9]+" maxlength="10" minlength="6" title="Solo puede escribir números." required>
+                            <input type="text" name="RIF" id="RIF" class="validate number-date" pattern="[0-9]+" maxlength="10" minlength="7" title="Solo puede escribir números." required>
                             <label for="RIF">RIF</label>
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa."></i>                            
-                            <input type="text" name="name" id="name" class="validate"   required>
+                            <i class="icon-work prefix tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa." ></i>
+                            <input type="text" name="name" id="name" class="validate"  maxlength="100" required>
                             <label for="name">Razón Social</label>
                         </div>
 
@@ -70,7 +70,7 @@
                         </div>-->
                         <div class="input-field col s12 m6">
                             <i class="icon-supervisor_account prefix tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87)."></i>                                                        
-                            <input type="number" name="number_employees" id="number_employees" class="validate" pattern="[0-9]+" title="Solo puede usar números" required>
+                            <input type="text" name="number_employees" id="number_employees" class="validate number-date only-number-positive " pattern="[0-9]+" title="Solo puede usar números" required maxlength="5">
                             <label for="number_employees">Numero de Empleados</label>
                         </div>
 
@@ -122,11 +122,12 @@
                         </div>
                         <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
                             <label for="phone">Teléfono</label>
-                            <input id="phone" type="tel" name="phone" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
+                            <input id="phone" type="tel" name="phone" class="validate" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                         </div>
+
                         <div class="input-field col s12 m12">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required></textarea>
+                            <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" maxlength="150" required></textarea>
                             <label for="address">Dirección</label>
                         </div>
 
@@ -136,7 +137,7 @@
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                            <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 " id="search-ciu">
                                Buscar
                                 <i class="icon-search right"></i>
                             </a>
@@ -174,7 +175,7 @@
                     </div>
                     <div class="card-action center-align">
                         <!-- Modal Trigger -->
-                          <a class="waves-effect waves-light btn btn-large peach modal-trigger" href="#modal1">
+                          <a class="waves-effect btn-rounded waves-light btn btn-large peach modal-trigger" href="#modal1">
                               <i class="icon-send right"></i>
                               Registrar
                           </a>

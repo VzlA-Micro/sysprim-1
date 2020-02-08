@@ -5,21 +5,51 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="">Detalles De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="#">Mis Declaraciones</a></li>
+                    @if(isset($vehicle[0]->company[0]->id))
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.details',['id'=>$vehicle[0]->company[0]->id]) }}">{{$vehicle[0]->company[0]->name}}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('company.vehicle.read', ['idCompany' => $vehicle[0]->company[0]->id])}}">Vehículos</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id.'-'.true)}}">Detalles
+                                De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{url('vehicles/manage/'.$vehicle[0]->id."-".$vehicle[0]->company[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Detalles De Declaracion</a></li>
+
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.my-vehicles')}}">Mis Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/vehicles/details/'.$vehicle[0]->id)}}">Detalles De
+                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('vehicles/manage/'.$vehicle[0]->id)}}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pagar Mis Impuesto</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
-                @if($vehicleTaxes==true)
+                @if( $statusTax=== 'process')
                     <div class="row">
                         <div class="col s12 center card">
                             <h5>Pago Declarado</h5>
-                            <h1><i class="icon-check green-text"></i></h1>
+                            <h1><i class="icon-restore orange-text"></i></h1>
                             <p>Ya has declarado tu pago, actualmete se encuentra en proceso</p>
                         </div>
 
+                    </div>
+                @elseif($statusTax==='verified')
+                    <div class="row">
+                        <div class="col s12 center card">
+                            <h5>Pago Verificado</h5>
+                            <h1><i class="icon-check green-text"></i></h1>
+                            <p>Tu pago ha sido Verificado, Actualmete no puede declarar su impuesto</p>
+                        </div>
                     </div>
                 @else
                     <div class="card">
@@ -31,6 +61,7 @@
                                 <ul>
                                     <li><b>Periodo Fiscal: </b>{{ $period }}</li>
                                     <li><b>Fecha: </b>{{$taxes->created_at}}</li>
+                                    <li><b>U.T (Unidad Tributaria): </b>{{$rateYear}}</li>
                                 </ul>
                             </div>
                             <div class="col m6">
@@ -40,6 +71,7 @@
                                     <li><b>Marca: </b>{{ $vehicle[0]->model->brand->name}}</li>
                                     <li><b>Modelo: </b>{{ $vehicle[0]->model->name}}</li>
                                     --}}
+                                    <li><b>Tipo De Vehículo: </b>{{$vehicle[0]->type->name}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -51,7 +83,11 @@
                         <form method="post" action="{{route('vehicles.taxes.save')}}" id='register-taxes'
                               class="card-content row">
                             @csrf
-
+                            @if(isset($vehicle[0]->company[0]->id))
+                                <input type="hidden" name="companyId" id="companyId"
+                                       value="{{$vehicle[0]->company[0]->id}}">
+                            @endif
+                            <input type="hidden" id="vehicleId" name="vehicleId" value="{{$vehicle[0]->id}}">
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="type" id="type" class="code"
@@ -79,7 +115,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                                 </i>
-                                <input type="text" name="previous_debt" id="previous_debt" class="validate recargo money"
+                                <input type="text" name="previous_debt" id="previous_debt"
+                                       class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
                                        value="{{$previousDebt}}" readonly>
                                 <label for="previous_debt">Deuda Anterior<b> (Bs)</b></label>
@@ -122,7 +159,7 @@
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
                                        class="validate number-only" pattern="[0-9.,]+"
-                                       value="0"
+                                       value="0" maxlength="15"
                                 >
                                 <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
                             </div>
@@ -142,19 +179,6 @@
                                     <table class="centered responsive-table" style="font-size: 10px;!important;">
                                         <thead>
                                         <tr>
-                                            <th>TIPO DE VEHICULO</th>
-                                            <th>TARIFA (U.T)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{{$vehicle[0]->type->name}}</td>
-                                            <td>{{$rateYear}}</td>
-                                        </tr>
-                                        </tbody>
-
-                                        <thead>
-                                        <tr>
                                             <th>RECARGO</th>
                                             <th>VALOR</th>
                                         </tr>
@@ -168,11 +192,17 @@
                                     </table>
                                 </div>
                                 <div class="col l6 s12">
-                                    <div class="col s12 m12 ">
+                                    {{--<div class="col s12 m12 ">
                                         <input type="text" name="interest" class="validate money"
                                                value="{{$grossTaxes}}"
                                                readonly>
                                         <label for="interest">Impuesto Bruto:(Bs)</label>
+                                    </div>
+                                    <div class="col s12 m12 ">
+                                        <input type="text" name="previousDebt" class="validate money"
+                                               value="{{$previousDebt}}"
+                                               readonly>
+                                        <label for="previousDebt">Deuda Anterior:(Bs)</label>
                                     </div>
                                     <div class="col s12 m12 ">
                                         @if(isset($valueDiscount))
@@ -182,9 +212,9 @@
                                             <input type="text" name="recargo" class="validate money" value="0" readonly>
                                         @endif
                                         <label for="recargo">Descuento:(Bs)</label>
-                                    </div>
+                                    </div>--}}
                                     <div class="col s12 m12">
-                                        <input type="text" name="total" id="total" class="validate money"
+                                        <input type="text" name="total" id="total" class="validate money left-align"
                                                value="{{$total}}"
                                                readonly>
                                         <label for="total_pagar">Total a Pagar:(Bs)</label>
@@ -199,22 +229,20 @@
                             <div class="row">
                                 <div class="input-field col s12">
 
-                                    {{-- Modal trigger --}}
-                                    <a href="{{ route('taxes.calculate',['id'=>$taxes->id]) }}"
+                                    <a href=""
                                        class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger">
                                         Calcular de nuevo
-                                        <i class="icon-refresh right"></i></a>
+                                        <i class="icon-refresh right"></i>
+                                    </a>
 
-                                    <!-- <a href="#" id="download-calculate"  class="btn btn-rounded col s4 peach waves-effect waves-light modal-trigger">
-                                         Descargar Calculo.
-                                         <i class="icon-cloud_download right"></i>
-                                     </a>-->
                                     <button type="submit"
                                             class="btn btn-rounded col s6 peach waves-effect waves-light modal-trigger"
                                             id="continue">
                                         Continuar
                                         <i class="icon-more_horiz right"></i>
                                     </button>
+
+
                                     {{-- Modal structure --}}
                                     <div id="modal1" class="modal modal-fixed-footer">
                                         <div class="modal-content">

@@ -25,7 +25,7 @@
                         <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Codigó</th>
+                                <th>Código</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
                                 <th>Ref</th>
@@ -117,6 +117,20 @@
                                                                 class="icon-pageview"></i></a>
 
 
+                                            @elseif($taxe->taxes[0]->branch==='Pat.Veh')
+                                                <td>
+                                                    <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light">
+                                                        <i class="icon-pageview left"></i>
+                                                    </a>
+                                            @elseif($taxe->taxes[0]->branch==='Inm.Urbanos')
+                                                <td>
+                                                    <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->taxes[0]->id])  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+
                                             @endif
                                                 <a href="#"
                                                    class="btn btn-floating blue waves-effect waves-light details-payment"
@@ -166,7 +180,7 @@
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable": "Ningún dato disponible en esta tabla.",
                 "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -184,10 +198,6 @@
                 "oAria": {
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                },
-                "buttons": {
-                    "copy": "Copiar",
-                    "colvis": "Visibilidad"
                 }
             },
             buttons: [
@@ -224,16 +234,6 @@
                         columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
-
-
                 {
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',

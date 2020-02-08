@@ -10,14 +10,15 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad Económica</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
+                            Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.manage') }}">Gestionar Empresas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.read') }}">Ver Empresas</a></li>
                     <li class="breadcrumb-item"><a
                                 href="{{ route('tickOffice.companies.details',['id'=>$id]) }}">Detalles</a>
                     </li>
                     <li class="breadcrumb-item"><a
-                                href="#">Registro  de Pago</a>
+                                href="#">Registro de Pago</a>
                     </li>
                 </ul>
             </div>
@@ -84,15 +85,41 @@
                                             </td>
                                         @endif
 
-
                                         @can('Detalles Planilla')
-                                            <td>
-                                                <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
-                                                   class="btn indigo waves-effect waves-light">
-                                                    <i class="icon-pageview left"></i>
-                                                    Detalles
-                                                </a>
-                                            </td>
+
+
+                                            @if($taxe->branch==='Act.Eco')
+                                                @if($taxe->type!='definitive')
+
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+                                                    </td>
+
+
+
+                                                @else
+                                                    <td>
+                                                        <a href="{{url('ticket-office/taxes/definitive/'.$taxe->id)  }}"
+                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                                    class="icon-pageview"></i></a>
+
+                                                    </td>
+                                                @endif
+
+
+                                            @elseif($taxe->branch==='Tasas y Cert')
+
+                                                <td>
+                                                    <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
+
+                                            @endif
+
                                         @endcan
 
                                     </tr>
@@ -131,9 +158,9 @@
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
-                    "sFirst":    "<i class='icon-first_page'>",
-                    "sLast":     "<i class='icon-last_page'></i>",
-                    "sNext":     "<i class='icon-navigate_next'></i>",
+                    "sFirst": "<i class='icon-first_page'>",
+                    "sLast": "<i class='icon-last_page'></i>",
+                    "sNext": "<i class='icon-navigate_next'></i>",
                     "sPrevious": "<i class='icon-navigate_before'></i>"
                 },
                 "oAria": {

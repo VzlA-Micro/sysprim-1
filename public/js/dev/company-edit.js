@@ -1,5 +1,5 @@
 
-var url = "http://172.19.50.253/";
+var url = "http://sysprim.com.devel/";
 
 var addCiiu = false;
 var disabledCiiu = false;
@@ -104,10 +104,6 @@ $('document').ready(function () {
             $('#phone').removeAttr('disabled');
             updateCompany=true;
             $('#update-company').text('Guardar');
-
-
-
-
             swal({
                 title: "Información",
                 text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
@@ -153,8 +149,6 @@ $('document').ready(function () {
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
-
-
                     $('#document_type').prop("disabled", true);
                     $('select').formSelect();
                     $('#RIF').attr('readonly','readonly');
@@ -188,6 +182,22 @@ $('document').ready(function () {
 
                 },
                 error: function (e) {
+
+                    if(e.status===500){
+                            location.reload();
+                    }else{
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                    }
+
+
 
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
@@ -455,7 +465,7 @@ $('document').ready(function () {
     $('#change-users').click(function () {
         swal({
             title: "Información",
-            text: "Desea cambiar el usuario que administra esta empresa?, recuerda que los cambios son  permanentes.",
+            text: "¿Desea cambiar el usuario que administrará esta empresa?.Recuerda que los cambios son  permanentes.",
             icon: "info",
             buttons: {
                 confirm: {
@@ -650,9 +660,7 @@ $('document').ready(function () {
             disabledCiiu = true;
         }
         else {
-            console.log('else');
             $('.Dciiu').each(function () {
-                console.log('dentro del check');
                 check = $('.ciiuCheck').val();
                 //$('.ciiuCheck').each(function () {
                   //  check = $(this).val();
@@ -673,7 +681,7 @@ $('document').ready(function () {
     $('#change-maps').click(function () {
         swal({
             title: "Información",
-            text: "Marca la nueva ubicación dentro del map",
+            text: "Marca la nueva ubicación dentro del mapa.",
             icon: "info",
             button:{
                 text: "Esta bien",
@@ -815,7 +823,7 @@ function addMark(myLatLng, map,image,marcadores,remove) {
 
         swal({
             title: "Información",
-            text: "Desea guardar la ubicación del mapa seleccionada?",
+            text: "¿Deseas guardar la ubicación del mapa seleccionada?",
             icon: "info",
             buttons: {
                 confirm: {

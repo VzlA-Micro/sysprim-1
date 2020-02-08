@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var url = "http://172.19.50.253/";
+    var url = localStorage.getItem('url');
 
     $('#ci').blur(function () {
         if($('#ci').val()!==''&&$('#nationality').val()!==null&&$('#company-tab').val()===undefined){

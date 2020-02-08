@@ -45,27 +45,27 @@
                     @endif
                     <div class="card-content">
                         <ul>
-                            <li><b>RIF: </b>{{ $company->RIF }}</li>
-                            <li><b>Licencia: </b>{{ $company->license }}</li>
-                            <li><b>Dirección: </b>{{ $company->address }}</li>
+                            <li><b class="truncate">RIF: </b>{{ $company->RIF }}</li>
+                            <li><b class="truncate">Licencia: </b>{{ $company->license }}</li>
+                            <li><b class="truncate">Dirección: </b>{{ $company->address }}</li>
                             <li><b></b></li>
                         </ul>
                     </div>
                     <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
-                            <div class="col s12 m6 center-align">
+                            <div class="col s12 m4 offset-m4 right-align">
                                 <a href="{{ route('companies.edit', ['id' => $company->id]) }}"
                                    class="btn blue btn-rounded waves-light">
-                                    Más Detalles
+                                   Información
                                     <i class="icon-more_horiz right"></i>
                                 </a>
                             </div>
 
-                            <div class="col s12 m6 center-align">
+                            <div class="col s12 m4 right-align">
                                 <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
-                                   class="btn green btn-rounded waves-light col s12">
+                                   class="btn red btn-rounded waves-light">
                                     Descargar Carnet
-                                    <i class="icon-perm_contact_calendar right"></i>
+                                    <i class="icon-get_app right"></i>
                                 </a>
                             </div>
                         </div>
@@ -79,23 +79,36 @@
                 <div class="col s12 m3" style="margin-top: -7px">
                     <div class="row">
                         @can('Declarar Actividad Económica')
-                            <div class="col s12">
+                            <div class="col s12 m12">
 
                                 <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
-                                   class="btn-app white green-text">
+                                   class="btn-app white cyan-text">
                                     <i class="icon-payment"></i>
                                     <span class="truncate">Declaración/Act-Ecónomica</span>
                                 </a>
                             </div>
                         @endcan
-                        <div class="col s12">
+                        <div class="col s12 m12">
                             <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
-                               class="btn-app white green-text">
+                               class="btn-app white amber-text">
                                 <i class="icon-picture_as_pdf"></i>
-                                <span class="truncate">Declaración/Tasas</span>
+                                <span class="truncate">Declaración / Tasas</span>
                             </a>
                         </div>
-
+                        <div class="col s12 m12">
+                            <a href="{{ route('company.vehicle.read', ['idCompany' => $company->id]) }}"
+                               class="btn-app white purple-text">
+                                <i class="icon-directions_car"></i>
+                                <span class="truncate">Vehículos</span>
+                            </a>
+                        </div>
+                        <div class="col s12 m12">
+                            <a href="{{ route('properties.company.my-properties', ['company_id' => $company->id]) }}"
+                                   class="btn-app white green-text text-darken-2">
+                                 <i class="icon-location_city"></i>
+                                 <span class="truncate">Inmuebles</span>
+                            </a>
+                        </div>
 
                         <!-- <div class="col s12">
                             <a href="" class="btn-app white orange-text">

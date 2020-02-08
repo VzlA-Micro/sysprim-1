@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var url = "http://172.19.50.253/";
+    var url = localStorage.getItem('url');
 
     $("#user_form").hide();
     $("#btn-edit").click(function(e) {
@@ -182,8 +182,8 @@ $(document).ready(function() {
     						}
     						else {
     							swal({
-                                    title: "!Oh no!",
-                                    text: "Ocurrio un error inesperado, por favor refresque la pagina e intentelo de nuevo.",
+                                    title: "Error",
+                                    text: "La contraseñas ingresas no coinciden.",
                                     icon: "error",
                                     buttons: {
                                         confirm:{

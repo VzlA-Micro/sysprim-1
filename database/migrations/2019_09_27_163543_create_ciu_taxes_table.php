@@ -15,9 +15,9 @@ class CreateCiuTaxesTable extends Migration
     {
         Schema::create('ciu_taxes', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('base',12,2);//base imponible
-            $table->decimal('base_anticipated',12,2)->nullable()->default(0);//impuesto anticipado
-            $table->decimal('recharge',12,2)->nullable();//Recargo
+            $table->decimal('base',15,2);//base imponible
+            $table->decimal('base_anticipated',15,2)->nullable()->default(0);//impuesto anticipado
+            $table->decimal('recharge',15,2)->nullable();//Recargo
             $table->decimal('tax_unit',12,2)->nullable();//Valor de unidad tributaria
             $table->decimal('interest',12,2)->nullable();//intereset por numeros de dias
             $table->decimal('taxable_minimum',12,2)->nullable()->default(0);//Minimo tributable en caso de tener 0
@@ -25,7 +25,7 @@ class CreateCiuTaxesTable extends Migration
             $table->integer('ciu_id')->unsigned();
             $table->foreign('taxe_id')->references('id')->on('taxes')->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreign('ciu_id')->references('id')->on('ciu');
+            $table->foreign('ciu_id')->references('id')->on('ciu')->onDelete('cascade');
         });
     }
 

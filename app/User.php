@@ -60,7 +60,7 @@ class User extends Authenticatable  implements Auditable
 
     public function property()
     {
-        return $this->belongsToMany('App\Inmueble', 'user_property')
+        return $this->belongsToMany('App\Property', 'user_property')
             ->withPivot('property_id');
     }
 
@@ -81,6 +81,10 @@ class User extends Authenticatable  implements Auditable
             ->withPivot('taxe_id');
     }
 
+    /*public function taxesProperty(){
+        return $this->belongsToMany('App\Taxe', 'property_taxes')
+            ->withPivot('taxe_id','user_id');
+    }*/
 
     public function sendPasswordResetNotification($token)
     {

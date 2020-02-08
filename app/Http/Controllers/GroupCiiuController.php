@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GroupCiu;
 use Illuminate\Http\Request;
 use App\GroupCiiu;
 
@@ -93,5 +94,18 @@ class GroupCiiuController extends Controller
     {
         $ciu=ciu::destroy($id);
         return redirect()->route('readCiu');
+    }
+
+
+
+    public function verifyGroupCiu($code){
+        $ciu_find = GroupCiu::where('code',$code)->get();
+        if(!$ciu_find->isEmpty()){
+            $response=array('status'=>'error','message'=>'El codigo de grupo de CIIU ingresado ya se encuentra registrado.');
+        }else{
+            $response=array('status'=>'success','message'=>'No encontrado');
+        }
+
+        return response()->json($response);
     }
 }

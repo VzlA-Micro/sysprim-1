@@ -10,7 +10,7 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('rate.manager') }}">Gestionar Tasas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('rate.index') }}">Consultar Tasas</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
@@ -41,7 +41,7 @@
                                 <input id="name" type="text" name="name" required minlength="3" maxlength="100" value="{{$rate->name}}" readonly>
                                 <label for="name">Nombre</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <select name="type" id="type"  disabled>
                                     <option value="null" selected disabled>Elija un Ramo</option>
@@ -53,8 +53,10 @@
                                 <label for="type">Ramo</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <i class="icon-format_list_numbered prefix"></i>
-                                <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only" required   value="{{$rate->cant_tax_unit}}" readonly>
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                </i>
+                                <input id="cant_tax_unit" type="text" name="cant_tax_unit" class="validate number-only only-number-positive" maxlength="5"  value="{{$rate->cant_tax_unit}}" required readonly>
                                 <label for="cant_tax_unit">Cantidad de Unidad Tributarias</label>
                             </div>
 
@@ -90,6 +92,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/data/accessories.js') }}"></script>
     <script src="{{ asset('js/data/rate-module.js') }}"></script>
 @endsection

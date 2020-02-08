@@ -12,28 +12,28 @@
             </div>
             @can('Gestionar Vehiculos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.vehicle.manage') }}" class="btn-app white light-green-text">
+                <a href="{{ route('ticketOffice.vehicle.manage') }}" class="btn-app white red-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Gestionar Vehículos</span>
                 </a>
             </div>
             @endcan
-            @can('Gestionar Pagos')
+            @can('Gestionar Pagos - Vehiculos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.vehicle.payments') }}" class="btn-app white grey-text text-darken-2">
+                <a href="{{ route('ticketOffice.vehicle.payments') }}" class="btn-app white blue-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
                 </a>
             </div>
             @endcan
-            @can('Verificar Pagos - Archivo')
+           {{--@can('Verificar Pagos - Archivo')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('payments.verify.manage') }}" class="btn-app white orange-text text-darken-4">
                     <i class="icon-file_upload"></i>
                     <span class="truncate">Verificación de Pagos</span>
                 </a>
             </div>
-            @endcan
+            @endcan--}}
         </div>
     </div>
 @endsection

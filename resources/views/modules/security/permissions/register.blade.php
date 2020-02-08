@@ -23,12 +23,12 @@
             		<div class="card-content row">
             			<div class="input-field col s12 m6">
                             <i class="icon-assignment prefix"></i>
-                            <input type="text" name="name" id="name" class="validate"   required>
+                            <input type="text" name="name" id="name" class="validate"  maxlength="15" minlength="3" required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-directions prefix"></i>
-                            <textarea name="description" id="description" cols="30" rows="10" class="materialize-textarea" required></textarea>
+                            <textarea name="description" id="description" cols="30" rows="10" class="materialize-textarea" required maxlength="200"></textarea>
                             <label for="description">Descripción</label>
                         </div>
             		</div>

@@ -1,5 +1,5 @@
 (function () {
-	var url = "http://172.19.50.253/";
+    var url = localStorage.getItem('url');
 
   var uploader = document.createElement('input'),
 	  image = document.getElementById('img-result');

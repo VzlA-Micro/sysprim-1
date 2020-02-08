@@ -11,10 +11,12 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla - Actividad
-                            Económica</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Generar Planilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla
+                            Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.vehicle.payments')}}">Gestionar Pagos</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Generar Planilla</a></li>
                 </ul>
             </div>
 
@@ -36,40 +38,47 @@
                         <div class="card-content row">
 
                             <input type="hidden" id="tributo" value="">
-                            <div class="input-field col s12">
+                            <div class="input-field col s4">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="licensePlate" id="licensePlate" minlength="7" maxlength="7"
                                        pattern="[0-9A-Za-z]+">
                                 <label for="licensePlate">Placa del Vehículo</label>
                             </div>
                             <input type="text" id="vehicle_id" value="" name="vehicle_id" class="hide">
-                            <div class="input-field col s12 m3">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-person prefix"></i>
-                                <input type="text" name="brandTo" id="brandTo" readonly>
+                                <input type="text" name="brandTo" id="brandTo" disabled>
                                 <label for="brandTo">Marca</label>
                             </div>
-                            <div class="input-field col s12 m3">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <input type="text" name="modelTo" id="modelTo" class="validate number-only" required
-                                       readonly>
+                                       disabled>
                                 <label for="modelTo">Modelo</label>
                             </div>
-                            <div class="input-field col s12 m3">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-directions prefix"></i>
-                                <input type="text" name="colorTo" id="colorTo" readonly>
+                                <input type="text" name="colorTo" id="colorTo" disabled>
                                 <label for="colorTo">Color</label>
                             </div>
-                            <div class="input-field col s12 m3 ">
+                            <div class="input-field col s12 m4 ">
                                 <i class="icon-supervisor_account prefix"></i>
-                                <input type="text" name="personTo" id="personTo" readonly>
+                                <input type="text" name="personTo" id="personTo" disabled>
                                 <label for="personTo">Usuario Web</label>
                             </div>
-
-                            <div class="input-field col s12 m6">
+                            @php
+                            $cont=(int)date('Y');
+                            @endphp
+                            <div class="input-field col s12 m4">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_periodTo" id="fiscal_periodTo" class="fiscal_period"
-                                       readonly>
-                                <label for="fiscal_periodTo">Periodo Fiscal</label>
+                                <select id="fiscal_period" name="fiscal_period" disabled>
+                                    <option value="null">Seleccione</option>
+                                    @while($cont >= 2010)
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                        @php $cont--; @endphp
+                                    @endwhile
+                                </select>
+                                <label>Periodo Fiscal</label>
                             </div>
 
 
@@ -168,7 +177,8 @@
                                        value=""
                                        readonly>
                                 <label for="total">Total<b> (Bs)</b></label>
-
+                                <input type="hidden" id="totalAux" name="totalAux" value="">
+                                <input type="hidden" id="taxesId" name="taxesId" value="">
                             </div>
 
                         </div>
@@ -221,8 +231,9 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>
+    <script src="{{asset('js/validations.js') }}"></script>
+    <script src="{{asset('js/dev/vehicleTaxes.js')}}"></script>
+    <script src="{{asset('js/dev/vehicleTicketOffice.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#bank-point').formSelect();

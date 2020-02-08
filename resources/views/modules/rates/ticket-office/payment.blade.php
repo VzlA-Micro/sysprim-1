@@ -19,7 +19,7 @@
             <div class="col s12">
                 <div class="card">
                     <ul class="tabs">
-                        <li class="tab col s6 " id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
+                        <li class="tab col s6 disabled" id="one"><a href="#select-tab"><i class="icon-filter_1"></i> Elegir
                                 Planilla</a></li>
                         <li class="tab col s6 disabled" id="two"><a href="#payment-tab"><i class="icon-filter_2"></i>
                                 Pagar</a>
@@ -27,7 +27,7 @@
                     </ul>
                     <div id="select-tab" class="content">
                         <div class="card-content row">
-                            <table class="centered highlight" id="receipt" style="width: 100%">
+                            <table class="centered highlight responsive-table" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
                                     <th>Fecha</th>
@@ -60,7 +60,7 @@
                                                 </label>
                                             </td>
 
-                                            @can('Detalles Planilla')
+                                            @can('Tasas - Detalles Planilla')
                                                     <td>
                                                         <a href="{{url('rate/ticket-office/details/'.$taxe->id)  }}"
                                                            class="btn indigo waves-effect waves-light">
@@ -490,6 +490,8 @@
 
 @section('scripts')
     <script src="{{ asset('js/data/rate-tickoffice.js') }}"></script>
-    <script src="{{ asset('js/validations.js') }}"></script>
 
+    <script src="{{ asset('js/data/cashier.js') }}"></script>
+
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection

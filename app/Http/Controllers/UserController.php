@@ -87,7 +87,7 @@ class UserController extends Controller{
         $email= $request->input('email');
         $password=Hash::make($request->input('password'));
         $user=User::where('ci', $nacionality . $ci)->where('status_account','=','waiting')->first();
-
+        $address =$request->input('address');
 
 
         if(!is_null($user)){
@@ -99,6 +99,7 @@ class UserController extends Controller{
             $user->email = $email;
             $user->password = $password;
             $user->status_account='authorized';
+            $user->address=$address;
             $user->update();
         }else {
             $user = new User();
@@ -111,6 +112,7 @@ class UserController extends Controller{
             $user->syncRoles($role);
             $user->email = $email;
             $user->password = $password;
+            $user->address=$address;
             $user->save();
         }
     }
@@ -123,6 +125,9 @@ class UserController extends Controller{
         else{
             $user= User::where('status_account','!=','waiting')->get();
         }
+
+
+
         return view('modules.users.read',array(
             'showUser' => $user
         ));
@@ -163,11 +168,14 @@ class UserController extends Controller{
         $phone= $request->input('country_code').$request->input('phone');
         $role= $request->input('role');
         $email= $request->input('email');
+        $address =$request->input('address');
         $user=User::find($id);
         $user->phone=$phone;
         $user->role_id=$role;
         $user->syncRoles($role);
         $user->email=$email;
+        $user->address=$address;
+
         $user->update();
     }
 
@@ -195,17 +203,33 @@ class UserController extends Controller{
 
     public function showTaxpayer() {
         $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->get();
+
         return view('modules.taxpayers.read', array(
             'users' => $users
         ));
+
+
+
+
     }
 
     public function detailsTaxpayer($id) {
         $user = User::find($id);
+        $number_company=$user->companies()->count();
+        $number_rate=$user->taxesRate()->count();
+
+        $number_vehicle=$user->vehicles()->count();
+        $number_property=$user->property()->count();
+
 
         return view('modules.taxpayers.details', array(
-            'user' => $user
+            'user' => $user,
+            'number_company'=>$number_company,
+            'number_rate'=>$number_rate,
+            'number_vehicle'=>$number_vehicle,
+            'number_property'=>$number_property
         ));
+
     }
 
     public function storeTaxpayer(Request $request) {
@@ -217,29 +241,62 @@ class UserController extends Controller{
         $country_code= $request->input('country_code');
         $role= $request->input('role');
         $email= $request->input('email');
+        $address =$request->input('address');
         $fullCi = $nacionality.$ci;
         $password=Hash::make($fullCi);
 
-        $user=new User();
-        $user->ci=$nacionality.$ci;
-        $user->name=$name;
-        $user->surname=$surname;
-        $user->phone=$country_code.$phone;
-        $user->confirmed=1;
-        $user->role_id=$role;
-        $user->syncRoles($role);
-        $user->email=$email;
-        $user->password=$password;
-        $user->save();
+
+        $user=User::where('ci', $nacionality . $ci)->where('status_account','=','waiting')->first();
+
+
+
+        if(!is_null($user)) {
+            $user=User::find($user->id);
+            $user->ci=$nacionality.$ci;
+            $user->name=$name;
+            $user->surname=$surname;
+            $user->phone=$country_code.$phone;
+            $user->confirmed=1;
+            $user->status_account='authorized';
+            $user->role_id=$role;
+            $user->syncRoles($role);
+            $user->email=$email;
+            $user->password=$password;
+            $user->address=$address;
+            $user->update();
+
+        }else{
+            $user=new User();
+            $user->ci=$nacionality.$ci;
+            $user->name=$name;
+            $user->surname=$surname;
+            $user->phone=$country_code.$phone;
+            $user->confirmed=1;
+            $user->role_id=$role;
+            $user->syncRoles($role);
+            $user->email=$email;
+            $user->password=$password;
+            $user->address=$address;
+            $user->save();
+        }
+
+
+
     }
 
     public function updateTaxpayer(Request $request) {
         $id= $request->input('id');
         $phone= $request->input('phone');
+        $country_code= $request->input('country_code');
         $email= $request->input('email');
+        $address= $request->input('address');
+
         $user=User::find($id);
-        $user->phone=$phone;
+        $user->phone=$country_code.$phone;
         $user->email=$email;
+        $user->address=  $address;
+
+
         $user->update();
     }
 
@@ -292,5 +349,39 @@ class UserController extends Controller{
 
         $user->update();
         return response()->json(['status',$status]);
+    }
+
+
+
+    //Muestra lo vehiculos de este contribuyente
+    public function detailsCompanyTaxPayers($id){
+        $user = User::find($id);
+        $companies=$user->companies()->get();
+        return view('modules.ticket-office.companies.read', ['companies' => $companies]);
+    }
+
+    //Muestra los detalles de tasas
+
+    public function detailsRatesTaxPayers($id){
+        $user = User::find($id);
+        $rates=$user->taxesRate()->get();
+        return view('modules.rates.ticket-office.all-taxes',['taxes'=>$rates,'id'=>$id]);
+    }
+
+    //Muestra los de vehiculos de este contribuyente
+    public function detailsVehicleTaxPayers($id){
+        $user = User::find($id);
+        $vehicle=$user->vehicles()->get();
+        return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
+            'show' => $vehicle
+        ));
+    }
+
+
+    //Muestra los inmuebles de este contribuyente
+    public function detailsPropertyTaxPayers($id){
+        $user = User::find($id);
+        $properties=$user->property()->get();
+        return view('modules.properties.module.read', ['properties'=>$properties]);
     }
 }

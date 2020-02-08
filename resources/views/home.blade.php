@@ -49,17 +49,25 @@
                     </div>
                 </div>
             @endcan
+            @can('Generar Tasas')
+                <div class="col s6 m3 animated bounceIn">
+                    <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white amber-text accent-4">
+                        <i class="icon-picture_as_pdf"></i>
+                        <span class="truncate">Gestión de  Tasas</span>
+                    </a>
+                </div>
+            @endcan
             @can('Gestionar Usuarios')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('users.manage') }}" class="btn-app white cyan-text">
-                        <i class="icon-people_outline"></i>
+                    <a href="{{ route('users.manage') }}" class="btn-app white indigo-text text-darken-4">
+                        <i class="icon-account_box"></i>
                         <span class="truncate">Gestionar Usuarios</span>
                     </a>
                 </div>
             @endcan
             @can('Gestionar Contribuyentes')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('taxpayers.manage') }}" class="btn-app white pink-text text-darken-2">
+                    <a href="{{ route('taxpayers.manage') }}" class="btn-app white blue-text text-darken-2">
                         <i class="icon-record_voice_over"></i>
                         <span class="truncate">Gestionar Usuarios Web</span>
                     </a>
@@ -67,7 +75,7 @@
             @endcan
             @can('Configuración')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('settings.manage') }}" class="btn-app white deep-orange-text">
+                    <a href="{{ route('settings.manage') }}" class="btn-app white green-text text-darken-2">
                         <i class="icon-settings"></i>
                         <span class="truncate">Configuración</span>
                     </a>
@@ -83,7 +91,7 @@
             @endcan
             @can('Estadisticas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('dashboard') }}" class="btn-app white blue-text text-darken-4">
+                    <a href="{{ route('dashboard') }}" class="btn-app white yellow-text text-darken-4">
                         <i class="icon-multiline_chart"></i>
                         <span class="truncate">Estadísticas</span>
                     </a>
@@ -99,7 +107,7 @@
             @endcan--}}
             @can('Taquillas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('ticketOffice.home') }}" class="btn-app white pink-text text-darken-4">
+                    <a href="{{ route('ticketOffice.home') }}" class="btn-app white amber-text text-darken-1">
                         <i class="icon-personal_video"></i>
                         <span class="truncate">Taquillas</span>
                     </a>
@@ -107,19 +115,11 @@
             @endcan
             @can('Seguridad')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{ route('security.manage') }}" class="btn-app white green-text text-darken-4">
+                    <a href="{{ route('security.manage') }}" class="btn-app white grey-text text-darken-2">
                         <i class="icon-security"></i>
                         <span class="truncate">Seguridad</span>
                     </a>
                 </div>
-            @endcan
-            @can('Generar Tasas')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white green-text accent-3">
-                    <i class="icon-class"></i>
-                    <span class="truncate">Gestión de  Tasas</span>
-                </a>
-            </div>
             @endcan
 
         {{-- @can('Notificaciones')

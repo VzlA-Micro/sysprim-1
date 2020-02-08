@@ -13,9 +13,9 @@
             @can('Consultar Mis Empresas')
             @foreach($companies as $company)
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="btn-app white purple-text">
-                    <i class="icon-work"></i>
-                    <span class="truncate">{{ $company->name }}</span>
+                <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="btn-app white">
+                    <i class="icon-work grey-text"></i>
+                    <span class="truncate black-text">{{ $company->name }}</span>
                 </a>
             </div>
             @endforeach

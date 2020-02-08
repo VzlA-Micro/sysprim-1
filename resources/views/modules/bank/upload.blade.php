@@ -24,9 +24,16 @@
                               <input type="file" name="file" id="file">
                             </div>
                             <div class="file-path-wrapper">
-                              <input class="file-path validate" type="text" placeholder="Buscar archivo...">
+                              <input class="file-path validate" type="text" placeholder="Buscar archivo..." required>
                             </div>
                         </div>
+                        <div class="input-field col s12 m12">
+                            <i class="icon-date_range  prefix"></i>
+                            <input type="text" name="date_limit" class="datepicker" id="date_limit" required>
+                            <label for="date_limit">Fecha de los pagos</label>
+                        </div>
+
+
                     </div>
                     <div class="card-action center">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-light">Cargar</button>
@@ -35,4 +42,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+
+        $('#verifyPaymentsBank').submit(function () {
+            $("#preloader").fadeIn('fast');
+            $("#preloader-overlay").fadeIn('fast');
+        });
+    </script>
 @endsection
