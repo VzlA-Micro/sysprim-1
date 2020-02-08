@@ -216,6 +216,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Empresas']);
         Permission::create(['name' => 'Actualizar Empresas']);
         // Permission::create(['name' => 'Eliminar Empresas']);
+        Permission::create(['name' => 'Gestionar Pagos - Actividad Económica']);
         Permission::create(['name' => 'Añadir CIIU Empresas']);
         Permission::create(['name' => 'Eliminar CIIU Empresas']);
         Permission::create(['name' => 'Habilitar/Deshabilitar CIIU Empresas']);
@@ -255,6 +256,10 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Vehiculos']);
         Permission::create(['name' => 'Actualizar Vehiculos']);
         // Permission::create(['name' => 'Eliminar Vehiculos']);
+        Permission::create(['name' => 'Gestionar Pagos - Vehiculos']);
+        Permission::create(['name' => 'Cambiar Ubicacion - Vehiculos']);
+        Permission::create(['name' => 'Cambiar Propietario - Vehiculo']);
+        Permission::create(['name' => 'Cambiar Usuario - Vehiculo']);
         Permission::create(['name' => 'Habilitar/Deshabilitar Vehiculo']);
         Permission::create(['name' => 'Historial de Pago - Vehiculos']);
 
@@ -455,6 +460,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
+            'Gestionar Pagos - Vehiculos',
+            'Cambiar Ubicacion - Vehiculos',
+            'Cambiar Propietario - Vehiculo',
+            'Cambiar Usuario - Vehiculo',
+            'Habilitar/Deshabilitar Vehiculo',
+            'Historial de Pago - Vehiculos',
             # ----------------------------- #
             ##### TAQUILLA DE TASAS #####
             'Taquilla - Tasas',
@@ -555,6 +566,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
+            'Gestionar Pagos - Vehiculos',
+            'Cambiar Propietario - Vehiculo',
+            'Cambiar Usuario - Vehiculo',
+            'Habilitar/Deshabilitar Vehiculo',
+            'Historial de Pago - Vehiculos',
             # ----------------------------- #
             ##### TAQUILLA DE TASAS #####
             'Taquilla - Tasas',

@@ -32,9 +32,9 @@
                                 <th>Marca</th>
                                 <th>Módelo</th>
                                 <th>Año</th>
-
+                                @can('Detalles Vehiculos')
                                 <th>Detalles</th>
-
+                                @endcan
                             </tr>
                             </thead>
 
@@ -47,11 +47,13 @@
                                         <td>{{$vehicle->model->brand->name}}</td>
                                         <td>{{$vehicle->model->name}}</td>
                                         <td>{{$vehicle->year}}</td>
+                                        @can('Detalles Vehiculos')
                                         <td>
-                                            <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}"
-                                               class="btn btn-floating orange waves-light"><i
-                                                        class="icon-pageview"></i></a>
+                                            <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light">
+                                                <i class="icon-pageview"></i>
+                                            </a>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             @else

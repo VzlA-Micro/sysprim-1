@@ -399,7 +399,14 @@ Route::middleware(['auth'])->group(/**
         });
 
         ######################### RUTAS QUE DEBEN SER GLOBALES
+        ##### TASAS
         Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
+        ##### VEHICULOS
+        Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
+        Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
+        Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
+        Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
+        Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
 
 
         ########################## -------------- USUARIO WEB -------------- #############################
@@ -489,12 +496,8 @@ Route::middleware(['auth'])->group(/**
         Route::group(['middleware' => ['permission:Mis Vehiculos']], function () {
             Route::get('/thumb/{filename}', 'VehicleController@getImage')->name('vehicles.image');
             Route::get('vehicle/findDocument/{typeDocument}/{document}', 'VehicleController@findTaxpayersCompany')->name('vehicle.documentFind');
-            Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
-            Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
-            Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
-            Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
+
             Route::post('/vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-            Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
 
 
             // Nivel 1: Registrar y Consultar
@@ -502,7 +505,6 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
                 Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
                 Route::get('/vehicles/register', 'VehicleController@create')->name('vehicles.register');
-                Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
                 Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
 //                Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
 
@@ -570,6 +572,8 @@ Route::middleware(['auth'])->group(/**
             });
         });
 
+
+
         ##################### ---------------- TAQUILLAS -------------------- ############################
 
         /*  Taquillas Property*/
@@ -585,11 +589,125 @@ Route::middleware(['auth'])->group(/**
 # ------------------------------ Pagos de Planilla - Taquilla Inmuebles ---------------------
 
 
+        //___________________________________VEHICLE TICKET OFFICE ______________________________________________________________
+
+
+
+        /*Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
+        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');*/
+//        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
+
+
+
+
+
+
+        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
+        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
+        //_______________________________________________________________________________________________________________________
+
+
+
+
+
+        /*Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
+        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
+        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');*/
+        Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
+        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
+
 
         Route::group(['middleware' => ['permission:Taquillas']], function() {
+            ############# GLOBAL PARA TODAS LAS TAQUILLAS
+            Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
+            Route::get('/ticket-office/payments', 'TicketOfficeController@cashier')->name('ticket-office.payments');
+            Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
+            Route::get('ticketOffice/vehicle/cashier/{id}', 'TicketOfficeVehicleController@QrTaxes');
+            Route::get('ticketOffice/property/cashier/{id}', 'PropertyTaxesController@QrTaxes');
+
+            Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
+
+
             ########### TAQUILLA --- ACTIVIDAD ECONOMICA
+            Route::group(['middleware' => ['permission:Taquilla - Actividad Económica']], function() {
+                Route::get('/home/ticketOffice', function () {
+                    return view('modules.ticket-office.home');
+                })->name('home.ticket-office');
+
+
+                # Nivel 1: Gestionar Empresa
+                Route::group(['middleware' => ['permission:Gestionar Empresas']], function(){
+                    Route::get('/companies/manage', function () {
+                        return view('modules.companies.manage');
+                    })->name('companies.manage');
+
+                    // Nivel 2: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Empresa|Consultar Empresas']], function () {
+                        Route::get('ticketOffice/company/register', 'TicketOfficeController@registerCompany')->name('tickOffice.companies.register');
+                        Route::post('ticketOffice/company/save', 'TicketOfficeController@storeCompany');
+                        Route::get('ticketOffice/companies/all', 'TicketOfficeController@allCompanies')->name('companies.read');
+                        // Nivel 3: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Empresas']], function () {
+                            Route::get('ticketOffice/companies/details/{id}', 'TicketOfficeController@detailsCompany')->name('tickOffice.companies.details');
+                            Route::get('ticketOffice/companies/details-taxes/{id}/{type}', 'TicketOfficeController@detailsCompanyTaxes')->name('tickOffice.companies.details-taxes');
+
+                        });
+                    });
+
+                });
+                # Nivel 1: Gestionar Pagos
+                Route::group(['middleware' => ['permission:Gestionar Pagos - Actividad Económica']], function(){
+
+                });
+            });
 
             ########### TAQUILLA --- VEHICULOS
+            Route::group(['middleware' => ['permission:Taquilla - Vehiculos']], function() {
+                Route::get('/ticketOffice/vehicle/home', function () {
+                    return view('modules.ticket-office.vehicle.modules.home');
+                })->name('ticketOffice.vehicle.home');
+                Route::get('vehicle/change-user-web/{type}/{document}/{id}','TicketOfficeVehicleController@changeUserWeb')->name('vehicle.changeUserWeb');
+                Route::get('vehicle/change-user/{type}/{document}/{id}','TicketOfficeVehicleController@changeUser')->name('vehicle.changeUser');
+                Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
+                Route::get('ticketOffice/vehicle/fiscal-period/{id}/{year}', 'TicketOfficeVehicleController@fiscalPeriod')->name('ticketOffice.vehicle.fiscalPeriod');
+                Route::get('/ticketOffice/vehicle/search-license/{license}', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
+                Route::get('/ticketOffice/vehicle/period-fiscal/{period}', 'VehicleController@periodoFiscal')->name('ticketOffice.vehicle.periodFiscal');
+
+
+                # Nivel 1: Gestionar Vehiculos
+                Route::group(['middleware' => ['permission:Gestionar Vehiculos']], function() {
+                    Route::get('/ticketOffice/vehicle/manage', function () {
+                        return view('modules.ticket-office.vehicle.modules.vehicle.home');
+                    })->name('ticketOffice.vehicle.manage');
+
+                    # Nivel 2: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Vehiculo|Consultar Vehiculos']], function() {
+                        Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
+                        Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
+                        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
+                        # Nivel 3: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Vehiculos']], function() {
+                            Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
+                            Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
+                        });
+                    });
+                });
+                # Nivel 1: Gestionar Pagos
+                Route::group(['middleware' => ['permission:Gestionar Pagos - Vehiculos']], function() {
+                    Route::get('ticketOffice/vehicle/generatedPlanilla/{value}/{year}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
+                    Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
+                    Route::get('/ticketOffice/vehicle/generate-receipt/{taxes}', 'TicketOfficeVehicleController@generateReceipt');
+                    Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
+                    Route::get('/ticketOffice/vehicle/taxes/', 'TicketOfficeVehicleController@getTaxes')->name('ticketOffice.vehicle.taxes.getTaxes');
+                    Route::get('/ticketOffice/vehicle/payments/', function () {
+                        return view('modules.ticket-office.vehicle.modules.payment.home');
+                    })->name('ticketOffice.vehicle.payments');
+                    Route::get('/ticketOffice/vehicle/payments/create', function () {
+                        return view('modules.ticket-office.vehicle.modules.payment.create');
+                    })->name('ticketOffice.vehicle.payments.create');
+                });
+            });
+
 
             ########### TAQUILLA --- TASAS
             Route::group(['middleware' => ['permission:Taquilla - Tasas']], function(){
@@ -655,7 +773,9 @@ Route::middleware(['auth'])->group(/**
             });
 
             ########### VERIFICACION DE PAGOS
+            Route::group(['middleware' => ['permission:Gestionar Pagos - Inmuebles']], function() {
 
+            });
 
             ########## LISTA DE PLANILLAS
 
@@ -663,6 +783,8 @@ Route::middleware(['auth'])->group(/**
             ########## VER PAGOS
 
         });
+
+
 
 
         // Route::get('/dashboard',array(
@@ -705,41 +827,32 @@ Route::middleware(['auth'])->group(/**
 
         // Taquilla
         Route::group(['middleware' => ['permission:Taquillas']], function () {
-            Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
 
 
-            Route::get('/home/ticketOffice', function () {
-                return view('modules.ticket-office.home');
-            })->name('home.ticket-office');
+
 
 
             // Gestionar Pagos
             Route::group(['middleware' => ['permission:Gestionar Pagos']], function () {
                 // Nivel 1: Generar planilla, pagar planilla, Ver pagos y ver planillas
-                Route::get('/ticket-office/payments', 'TicketOfficeController@cashier')->name('ticket-office.payments');
                 Route::get('/ticket-office/taxes/', 'TicketOfficeController@getTaxes')->name('ticket-office.taxes.getTaxes');
                 Route::get('/ticket-office/payment/web', 'TicketOfficeController@paymentsWeb')->name('ticket-office.pay.web');
                 Route::get('/ticket-office/taxes/ateco/details/{id}', 'TicketOfficeController@detailsTaxesAteco')->name('ticket-office.detailsTaxesAteco');
                 Route::get('/ticket-office/taxes/ateco/send-email/{id}', 'TicketOfficeController@sendEmailVerified');
 
 
+
+
                 Route::get('/ticket-office/type-payment', function () {
                     return view('modules.payments.type_payment');
                 })->name('ticket-office.type.payments');
 
-                Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
 
-                Route::get('ticketOffice/vehicle/cashier/{id}', 'TicketOfficeVehicleController@QrTaxes');
+                Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 
-                // Nivel 2:
-                // ---- Generar Planilla -> Registrar
-                Route::group(['middleware' => ['permission:Generar Planilla']], function () {
-                    Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
-                });
-                // ---- Pagar Planilla -> Registrar
-                Route::group(['middleware' => ['permission:Pagar Planilla']], function () {
-                    Route::post('/ticket-office/payment/save', 'TicketOfficeController@paymentTaxes');
-                });
+
+
+
                 // ---- Ver Pagos
                 Route::group(['middleware' => ['permission:Ver Pagos']], function () {
                     Route::get('/ticket-office/payments/{type}', 'TicketOfficeController@payments')->name('ticket-office.payment.type');
@@ -755,34 +868,6 @@ Route::middleware(['auth'])->group(/**
 
             });
 
-
-            // Gestionar Empresas
-            Route::group(['middleware' => ['permission:Gestionar Empresas']], function () {
-                // Nivel 1: Gestionar Empresas
-                Route::get('/companies/manage', function () {
-                    return view('modules.companies.manage');
-                })->name('companies.manage');
-
-
-                // Nivel 2: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Empresa|Consultar Empresas']], function () {
-                    Route::get('ticketOffice/company/register', 'TicketOfficeController@registerCompany')->name('tickOffice.companies.register');
-                    Route::post('ticketOffice/company/save', 'TicketOfficeController@storeCompany');
-                    Route::get('ticketOffice/companies/all', 'TicketOfficeController@allCompanies')->name('companies.read');
-                    // Nivel 3: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Empresas']], function () {
-                        Route::get('ticketOffice/companies/details/{id}', 'TicketOfficeController@detailsCompany')->name('tickOffice.companies.details');
-
-                        Route::get('ticketOffice/companies/details-taxes/{id}/{type}', 'TicketOfficeController@detailsCompanyTaxes')->name('tickOffice.companies.details-taxes');
-
-
-                        // Nivel 4: Actualizar
-                        Route::group(['middleware' => ['permission:Actualizar Empresas']], function () {
-                            // Poner rutas de edicion aqui
-                        });
-                    });
-                });
-            });
 
 
             Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
@@ -853,57 +938,9 @@ Route::middleware(['auth'])->group(/**
         Route::get('/notifications/details', function () {
             return view('modules.notifications.details');
         })->name('notifications.details');
-
-        /* //Mi Publicidad
-         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
-             // Nivel 1: Consultar y Registrar
-             Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
-             Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
-             // Nivel 2: Registrar
-             Route::group(['middleware' => ['permission:Registrar Mis Publicidades']], function () {
-                 Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
-                 Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
-                 Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
-                 Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
-             });
-             // Nivel 3: Detalles
-             Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {
-                 Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
-                 Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
-                 Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
-             });
-         });*/
-
         // Declaraciones de Publicidad
         Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
         Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
-
-
-
-
-        // Mis Vehiculos
-        //Route::group(['middleware' => ['permission:Mis Vehiculos|Consultar Mis Vehiculos']], function () {
-        // Nivel 1: Mis Vehiculos
-
-        //});
-//__________________________________Vehicles Type module routes_______________________________________________________
-        /*   Route::get('/vehicles/type-vehicles', function () {
-               return view('modules.vehicle_type.manage');
-           })->name('vehicles.type.vehicles');
-
-           Route::get('/vehicles/register-type', function () {
-               return view('modules.vehicle_type.register');
-           })->name('vehicles.type.register');
-
-           Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
-
-           Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
-
-           Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-
-           Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');*/
-
-// ______________________________________________________________________________________________________
 
 
         Route::get('/company/verify/{id}', 'CompaniesController@verifyTaxes');
@@ -944,55 +981,7 @@ Route::middleware(['auth'])->group(/**
 
 
         //__________________________________________________________________________________________________________________________
-        //___________________________________VEHICLE TICKET OFFICE ______________________________________________________________
 
-        Route::get('/ticketOffice/vehicle/home', function () {
-            return view('modules.ticket-office.vehicle.modules.home');
-        })->name('ticketOffice.vehicle.home');
-
-        Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
-        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
-        Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
-        Route::post('/ticketOffice/vehicle/status/', 'TicketOfficeVehicleController@statusVehicle')->name('ticketOffice.vehicle.status');
-        Route::get('ticketOffice/vehicle/generatedPlanilla/{value}/{year}', 'TicketOfficeVehicleController@create')->name('ticketOffice.vehicle.generatedPlanilla');
-        Route::get('ticketOffice/vehicle/fiscal-period/{id}/{year}', 'TicketOfficeVehicleController@fiscalPeriod')->name('ticketOffice.vehicle.fiscalPeriod');
-
-        Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
-        Route::get('vehicle/change-user-web/{type}/{document}/{id}','TicketOfficeVehicleController@changeUserWeb')->name('vehicle.changeUserWeb');
-        Route::get('vehicle/change-user/{type}/{document}/{id}','TicketOfficeVehicleController@changeUser')->name('vehicle.changeUser');
-        Route::get('/ticketOffice/vehicle/payments/', function () {
-            return view('modules.ticket-office.vehicle.modules.payment.home');
-        })->name('ticketOffice.vehicle.payments');
-        Route::get('/ticketOffice/vehicle/generate-receipt/{taxes}', 'TicketOfficeVehicleController@generateReceipt');
-
-        Route::get('/ticketOffice/vehicle/payments/create', function () {
-            return view('modules.ticket-office.vehicle.modules.payment.create');
-        })->name('ticketOffice.vehicle.payments.create');
-
-
-            Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-            Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
-            Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
-            Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
-            Route::post('ticketOffice/vehicle/save-payroll', 'TicketOfficeVehicleController@taxesSave')->name('ticketOffice.vehicle.save-payroll');
-            //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
-        Route::get('/ticketOffice/vehicle/search-license/{license}', 'VehicleController@searchLicensePlate')->name('ticketOffice.vehicle.searchLicense');
-        Route::get('/ticketOffice/vehicle/period-fiscal/{period}', 'VehicleController@periodoFiscal')->name('ticketOffice.vehicle.periodFiscal');
-        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
-        //_______________________________________________________________________________________________________________________
-
-
-        Route::get('/ticketOffice/vehicle/manage', function () {
-            return view('modules.ticket-office.vehicle.modules.vehicle.home');
-        })->name('ticketOffice.vehicle.manage');
-
-        Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
-        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
-        Route::get('ticketOffice/vehicle/viewDetails/{id}', 'TicketOfficeVehicleController@viewDetails')->name('ticketOffice.vehicle.viewDetails');
-        Route::get('/ticketOffice/vehicle/taxes/', 'TicketOfficeVehicleController@getTaxes')->name('ticketOffice.vehicle.taxes.getTaxes');
-        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
 
 
         Route::get('/payments/create/{company}/{type?}', 'CompanyTaxesController@create')->name('payments.create');
