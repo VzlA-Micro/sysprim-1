@@ -76,7 +76,7 @@
                                         @endcan
                                         @can('Detalles Pagos')
                                             @if($taxe->taxes[0]->branch==='Act.Eco')
-
+@php die()@endphp
                                                 @if($taxe->taxes[0]->type!='definitive')
 
                                                     <td>

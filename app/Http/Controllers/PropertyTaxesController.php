@@ -752,7 +752,7 @@ class PropertyTaxesController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Inm.Urbanos')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Inm.Urbanos')->whereIn('id', $id_taxes)->with('properties')->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -761,6 +761,8 @@ class PropertyTaxesController extends Controller
             $amount_taxes = null;
             $taxes = null;
         }
+
+        //dd($taxes[0]->properties[0]->code_cadastral);
 
         /*foreach ($taxes as $index => $taxe) {
             dd($taxe->properties[$index]->code_cadastral);

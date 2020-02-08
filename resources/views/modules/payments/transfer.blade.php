@@ -25,7 +25,7 @@
                         <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Codigó</th>
+                                <th>Código</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
                                 <th>Ref</th>
@@ -238,16 +238,6 @@
                         columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
-
-
-                {
-                    extend: 'copyHtml5',
-                    title: 'REGISTROS DE PAGO',
-                    className: 'btn orange waves-effect waves-light',
-
-                },
-
-
                 {
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',
