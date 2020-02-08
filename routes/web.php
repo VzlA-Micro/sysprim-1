@@ -440,10 +440,11 @@ Route::middleware(['auth'])->group(/**
             Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
 
 
+
             // Nivel 1: Mis Empresas
             Route::get('/companies/my-business', 'CompaniesController@index')->name('companies.my-business');
             Route::get('/companies/details/{id}', 'CompaniesController@details')->name('companies.details');
-            Route::get('/thumb/{filename}', 'CompaniesController@getImage')->name('companies.image');
+            Route::get('/thumb-image/{filename}', 'CompaniesController@getImage')->name('companies.image');
             Route::get('/companies/carnet/{id}', 'CompaniesController@getCarnet')->name('companies.carnet');
             // Nivel 2: Registrar y Ver Detalles
             Route::group(['middleware' => ['permission:Registrar Mis Empresas']], function () {
