@@ -412,6 +412,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
         Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
         Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
+        Route::get('rate/taxpayers/pdf/{id}/{download}', 'RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
 
         ##### VEHICULOS
         Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');
@@ -527,7 +528,6 @@ Route::middleware(['auth'])->group(/**
             Route::get('rate/taxpayers/calculate/{id}', 'RateController@calculateTaxPayers')->name('rate.taxpayers.calculate');
             Route::get('rate/taxpayers/details/{id}', 'RateController@detailsTaxPayers')->name('rate.taxpayers.details');
             Route::get('rate/taxpayers/payments/{id}', 'RateController@typePaymentTaxPayers')->name('rate.taxpayers.typePayment');
-            Route::get('rate/taxpayers/pdf/{id}/{download}', 'RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
 
             # Nivel 1 - Registrar y Consultar
             Route::group(['middleware' => ['permission:Declarar Tasas|Historial de Pagos - Tasas']], function() {
@@ -819,6 +819,7 @@ Route::middleware(['auth'])->group(/**
 
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
+//                Route::get('/properties/ticket-office/geneate', 'PropertyTaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
                 Route::get('/properties/ticket-office/geneate', 'PropertyTaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
                 Route::get('/properties/ticket-office/find/code/{code}', 'PropertytaxesController@findCode')->name('properties.ticket-office.find');
                 Route::get('/properties/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertytaxesController@taxesTicketOfficePayroll')->name('properties.ticket-office.store');
@@ -842,7 +843,6 @@ Route::middleware(['auth'])->group(/**
                 # Nivel 1: Gestionar Pagos de Inmuebles
                 Route::group(['middleware' => ['permission:Gestionar Pagos - Inmuebles']], function() {
                     Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
-                    Route::get('/properties/ticket-office/geneate', 'PropertytaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
                     Route::post('/properties/ticket-office/taxes/store', 'PropertytaxesController@storeTicketOffice')->name('properties.ticket-office.taxes.store');
                     Route::get('/properties/ticket-office/payments/taxes', 'PropertytaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
                     Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertytaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');

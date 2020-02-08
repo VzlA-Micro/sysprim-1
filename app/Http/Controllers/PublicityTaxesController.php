@@ -78,6 +78,8 @@ class PublicityTaxesController extends Controller
         }
 //        $total = number_format($base, 2, ',', '.');
 
+
+        dd($base);
     	return view('modules.publicity-payments.register', [
     		'advertisingTypes' => $advertisingTypes,
     		'publicity' => $publicity,
