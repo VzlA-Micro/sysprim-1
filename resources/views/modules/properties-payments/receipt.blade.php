@@ -85,7 +85,7 @@ margin: 0 !important;
     <tr>
         <td style="width:15%;font-size: 12px !important;"><b>Cedula o RIF:</b></td>
         <td style="width:35%;font-size: 11px !important;">{{$data->ci .''. $data->RIF}}</td>
-    @if($data->license)
+        @if($data->license)
             <td style="width:20%;font-size: 12px !important;"><b>Cód. Licencia:</b></td>
             <td style="width:30%;font-size: 11px !important">{{$data->license}}</td>
             {{--@else
