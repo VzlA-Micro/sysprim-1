@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
-                        <h5> Periodo Fiscal:<span></span></h5>
+                        <h5> Periodo Fiscal:<span>{{$response['taxes']->fiscal_period." - ".$response['taxes']->fisacl_period_end}}</span></h5>
                         <h5> Código:<b> {{$response['taxes']->code}}</b></h5>
                     </div>
                     <div class="row padding-2 left-align">

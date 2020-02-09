@@ -245,9 +245,14 @@ class TicketOfficeVehicleController extends Controller
 
             $models = strtoupper($request->input('model-n'));
             $brand = strtoupper($request->input('brand-n'));
-            $otherBrand = Brand::where('name', $brand)->exists();
+            $otherBrand = Brand::where('name', $brand)->first();
 
-            if ($otherBrand) {
+            if (is_object($otherBrand)) {
+                $modelsVehicle->name=$models;
+                $modelsVehicle->brand_id=$otherBrand->id;
+                $modelsVehicle->save();
+
+                $vehicle->model_id = $modelsVehicle->id;
 
             } else {
                 $brandVehicles->name = $brand;

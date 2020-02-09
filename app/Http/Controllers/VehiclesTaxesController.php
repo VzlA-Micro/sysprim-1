@@ -368,7 +368,7 @@ class VehiclesTaxesController extends Controller
                 'firm' => true
             ]);
         if ($download === "true") {
-            return $pdf->stream('PLANILLA.pdf');
+            return $pdf->download('PLANILLA.pdf');
         } else {
             return $pdf->stream('PLANILLA.pdf');
         }
