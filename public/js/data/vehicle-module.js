@@ -790,15 +790,33 @@ $(document).ready(function () {
         e.preventDefault();
         console.log($('#brand').val());
         //$('#button-company').attr('disabled', 'disabled');
-        if ($('#brand').val() == null) {
+        var brand = $('#brand').val();
+        var brandN = $('#brand-n').val();
+        var modelN = $('#model-n').val();
+        if (brand == null && brandN==undefined) {
             swal({
                 title: "Información",
-                text: "Debe seleccionar una marca de vehículo para poder continuar",
-                icon: "warning",
-                button: "Ok",
+                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
             });
-        } else {
-            $.ajax({
+            $('#brand').focus();
+        } else if (brandN == '' || modelN == '') {
+            swal({
+                title: "Información",
+                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "red-gradient"
+                },
+            });
+            $('#brand-n').focus();
+        }else if((brand!=null)||(brandN!=null && modelN!=null)) {
+        $.ajax({
                 url: url + "ticketOffice/vehicle/save",
                 cache: false,
                 contentType: false,

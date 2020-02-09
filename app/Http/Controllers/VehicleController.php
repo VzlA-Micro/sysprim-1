@@ -112,9 +112,6 @@ class VehicleController extends Controller
                 $vehicle->model_id = $modelsVehicle->id;
 
             } else {
-                var_dump($request->input());
-                die();
-
                 $brandVehicles->name = $brand;
                 $brandVehicles->save();
 
