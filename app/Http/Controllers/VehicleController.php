@@ -35,17 +35,16 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($register = 0)
+    public function create($register=null)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
         $type = VehicleType::all();
 
-
         $vehicleCompa = explode('-', $register);
 
 
-        if ($vehicleCompa[0] == "COMPANY") {
+        if ($vehicleCompa[0] === "COMPANY") {
             return view('modules.vehicles.register', array(
                 'brand' => $brands,
                 'model' => $models,
@@ -112,9 +111,6 @@ class VehicleController extends Controller
                 $vehicle->model_id = $modelsVehicle->id;
 
             } else {
-                var_dump($request->input());
-                die();
-
                 $brandVehicles->name = $brand;
                 $brandVehicles->save();
 
