@@ -550,7 +550,7 @@ Route::middleware(['auth'])->group(/**
             Route::group(['middleware' => ['permission:Registrar Mis Vehiculos|Consultar Mis Vehiculos']], function () {
                 Route::get('/vehicles/my-vehicles', 'VehicleController@show')->name('vehicles.my-vehicles');
                 Route::get('/vehicles/read', 'VehicleController@show')->name('vehicles.read');
-                Route::get('/vehicles/register/{register}', 'VehicleController@create')->name('vehicles.register');
+//                Route::get('/vehicles/register/{register}', 'VehicleController@create')->name('vehicles.register');
                 Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
 //                Route::post('/vehicles/save', 'VehicleController@store')->name('Vehicles.save');
 
