@@ -5,7 +5,7 @@ $(window).on("load", function () {
 });
 $(document).ready(function() {
     if( localStorage.getItem('url')===null){
-        localStorage.setItem('url','https://sysprim.com/');
+        localStorage.setItem('url','http://sematiribarren.website/');
     }
 
 
