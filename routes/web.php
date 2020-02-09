@@ -422,6 +422,8 @@ Route::middleware(['auth'])->group(/**
         Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
         Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
         Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
+        Route::get('/vehicles/register/{register}', 'VehicleController@create')->name('vehicles.register');
+
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
         ##### EMPRESAS
