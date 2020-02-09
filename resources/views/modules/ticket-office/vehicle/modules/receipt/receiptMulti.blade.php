@@ -29,7 +29,7 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
-                <img src="http://sysprim.com.devel/images/alcaldia_logo.png" style="width:180px; height:80px"
+                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px"
                      alt=""><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
