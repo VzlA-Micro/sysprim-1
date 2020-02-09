@@ -32,7 +32,7 @@
                     </ul>
                     <div id="select-tab" class="content">
                         <div class="card-content row">
-                            <table class="centered highlight" id="receipt" style="width: 100%">
+                            <table class="centered highlight responsive-table" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
                                     <th>Placa</th>

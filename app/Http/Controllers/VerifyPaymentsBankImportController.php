@@ -235,9 +235,9 @@ class VerifyPaymentsBankImportController extends Controller
                                     }elseif($taxe->branch=='Inm.Urbanos'){
 
                                         $owner = $taxe->properties()->get();
-                                        $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+                                        $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
                                         $property = Property::find($userProperty->property_id);
-                                        $propertyTaxes = PropertyTaxes::find($taxe->id);
+                                        $propertyTaxes =   $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
 
 
                                         if (!is_null($userProperty->company_id)) {
@@ -422,9 +422,9 @@ class VerifyPaymentsBankImportController extends Controller
                             } elseif ($tax->branch === 'Inm.Urbanos' && $tax->status == 'process') {
 
                                 $owner = $tax->properties()->get();
-                                $userProperty = UserProperty::find($owner[0]->pivot->property_id);
+                                $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
                                 $property = Property::find($userProperty->property_id);
-                                $propertyTaxes = PropertyTaxes::find($tax->id);
+                                $propertyTaxes = PropertyTaxes::where('taxe_id',$tax->id)->first();
 
 
                                 if (!is_null($userProperty->company_id)) {
