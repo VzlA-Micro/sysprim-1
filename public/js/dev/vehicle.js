@@ -508,7 +508,7 @@ $('document').ready(function () {
         var brand = $('#brand').val();
         var brandN = $('#brand-n').val();
         var modelN = $('#model-n').val();
-        if (brand == null && brandN==undefined) {
+        if (brand == null && brandN == undefined) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar un marca de vehículo para poder completar el registro",
@@ -530,7 +530,7 @@ $('document').ready(function () {
                 },
             });
             $('#brand-n').focus();
-        } else if((brand!=null)||(brandN!=null && modelN!=null)) {
+        } else if ((brand != null) || (brandN != null && modelN != null)) {
             $.ajax({
                 type: "POST",
                 url: url + "vehicles/save",
@@ -554,8 +554,13 @@ $('document').ready(function () {
                             text: "Vehículo registrado con exito!",
                             icon: "success",
                             button: "Ok",
-                        }).then(function (accept) {
-                            window.location.href = url + "vehicles/read";
+                        }).then(function () {
+                            if ($('#Vcompany').val()) {
+                                var idCompany = $('#idCompany').val();
+                                window.location.href = url + "company/vehicles/" + idCompany;
+                            } else {
+                                window.location.href = url + "vehicles/read";
+                            }
                         });
                     } else {
                         swal({

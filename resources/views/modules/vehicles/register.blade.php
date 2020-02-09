@@ -31,7 +31,7 @@
                     <div class="card-content row">
                         <input type="hidden" value="propietario" id="status" name="status">
                         <input type="hidden" value="{{$idCompany}}" id="idCompany" name="idCompany">
-
+                        <input type="hidden" name="Vcompany" value="true">
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: L1S2M3">
                             <i class="icon-crop_16_9 prefix"></i>
                             <input type="text" name="license_plate" id="license_plate" minlength="7" maxlength="7"
@@ -125,7 +125,8 @@
                         <div class="input-field col s12 center-align">
                             <a href="#" id="button-brand" class="btn btn-rounded green waves-effect">Registrar Marca<i
                                         class="icon-file_upload right"></i></a>
-                            <button id="button-vehicle" type="submit" class="btn btn-rounded btn-large peach waves-effect">
+                            <button id="button-vehicle" type="submit"
+                                    class="btn btn-rounded btn-large peach waves-effect">
                                 Registrar<i class="icon-send right"></i></button>
                         </div>
                     </div>
