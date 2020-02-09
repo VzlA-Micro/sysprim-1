@@ -421,7 +421,7 @@ Route::middleware(['auth'])->group(/**
         Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
         Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
         Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
-
+        Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
         ##### EMPRESAS
@@ -678,6 +678,8 @@ Route::middleware(['auth'])->group(/**
             Route::get('ticketOffice/vehicle/cashier/{id}', 'TicketOfficeVehicleController@QrTaxes');
             Route::get('ticketOffice/property/cashier/{id}', 'PropertyTaxesController@QrTaxes');
 
+
+
             Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
 
 
@@ -761,7 +763,6 @@ Route::middleware(['auth'])->group(/**
 
                     # Nivel 2: Registrar y Consultar
                     Route::group(['middleware' => ['permission:Registrar Vehiculo|Consultar Vehiculos']], function() {
-                        Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
                         Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
                         Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
                         # Nivel 3: Detalles
