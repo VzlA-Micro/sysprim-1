@@ -743,6 +743,7 @@ class PropertyTaxesController extends Controller
     }
 
     public function getTaxesTicketOffice() {
+        session()->forget('property');
         $taxes = Audit::where('user_id', \Auth::user()->id)
             ->where('event', 'created')
             ->where('auditable_type', 'App\Taxe')
@@ -781,6 +782,8 @@ class PropertyTaxesController extends Controller
             ->with('users')
             ->first();
 
+
+        $property = Property::find($propertyTaxe->pivot->property_id);
         $userProperty = UserProperty::where('property_id',$propertyTaxe->pivot->property_id)->first();
         $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status,$propertyTaxe->fiscal_period);
 //        dd($taxes);
@@ -817,7 +820,8 @@ class PropertyTaxesController extends Controller
             'propertyTaxe' => $propertyTaxe,
             'status' => $status,
             'owner' => $owner,
-            'type' => $type
+            'type' => $type,
+            'property' => $property
         ]);
     }
 

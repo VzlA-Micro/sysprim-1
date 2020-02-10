@@ -839,6 +839,7 @@ Route::middleware(['auth'])->group(/**
                         Route::group(['middleware' => ['permission:Detalles Inmuebles']], function() {
                             Route::get('property/ticket-office/details-property/{id}','PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
                             Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+                            Route::get('/properties/ticket-office/property-taxes/{id}', 'PropertyController@allTaxes')->name('properties.ticket-office.property-taxes');
                         });
                     });
                 });
@@ -849,7 +850,6 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/properties/ticket-office/payments/taxes', 'PropertyTaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
                     Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertyTaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
                     Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
-
                 });
             });
 

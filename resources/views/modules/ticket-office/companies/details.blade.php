@@ -297,7 +297,7 @@
                                     </div>
                                 @endif
                                 @endcan
-                                
+
                                 @can('Cambiar Ubicacion - Empresa')
                                     <div class="col s12 m3">
                                         <button type="button"
