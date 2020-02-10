@@ -77,7 +77,7 @@
                                             <div class="col s12 m3 center-align">
                                                 <a href="" class="btn btn-large white dropdown-trigger col s12" data-target="bdv">
                                                     <i class="icon-logo">
-                                                        <img src="{{ asset('images/bdv_logo.png') }}" style="width: 130px;" alt="" srcset="">
+                                                        <img src="{{ asset('images/bdv_logo.png') }}" style="width: 130px;" alt="Image" width="100%" height="100%" srcset="">
                                                     </i>
                                                 </a>
                                                 {{-- Dropdown content --}}
@@ -89,7 +89,7 @@
                                             <div class="col s12 m3 center-align">
                                                 <a href="" class="btn btn-large dropdown-trigger col s12 white" data-target="banesco">
                                                     <i>
-                                                        <img src="{{ asset('images/banesco_logo.png') }}" style="width: 60px;" alt="" srcset="">                                                
+                                                        <img src="{{ asset('images/banesco_logo.png') }}" style="width: 60px;" alt="Image" width="100%" height="100%" srcset="">                                                
                                                     </i>
                                                 </a>
                                                 {{-- Dropdown content --}}
@@ -101,7 +101,7 @@
                                             <div class="col s12 m3 center-align">
                                                 <a href="" class="btn btn-large dropdown-trigger col s12 white" data-target="bod">
                                                     <i>
-                                                        <img src="{{ asset('images/bod_logo.png') }}" style="width: 60px;margin-top:5px" alt="" srcset="">                                                
+                                                        <img src="{{ asset('images/bod_logo.png') }}" style="width: 60px;margin-top:5px" alt="Image" width="100%" height="100%" srcset="">                                                
                                                     </i>
                                                 </a>
                                                 {{-- Dropdown content --}}
@@ -113,7 +113,7 @@
                                             <div class="col s12 m3 center-align">
                                                 <a href="" class="btn btn-large white dropdown-trigger col s12" data-target="bicentenario">
                                                     <i>
-                                                        <img src="{{ asset('images/bicentenario_logo.png') }}" style="width: 110px;" alt="" srcset="">                                                
+                                                        <img src="{{ asset('images/bicentenario_logo.png') }}" style="width: 110px;" alt="Image" width="100%" height="100%" srcset="">                                                
                                                     </i>
                                                 </a>
                                                 {{-- Dropdown content --}}

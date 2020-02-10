@@ -97,11 +97,11 @@
             <table border="0" cellpadding="0" cellspacing="0" width="600" >
                 <tr>
                     <td align="center" bgcolor="#ffffff" style="Margin:0;padding-bottom:5px;padding-left:30px;padding-right:30px;padding-top:35px;border-top-left-radius: 4px;">
-                        <img src="https://sysprim.com/images/alcaldia_logo.png" style="width: 110px; height: 50px;" alt="">
+                        <img src="https://sysprim.com/images/alcaldia_logo.png" style="width: 110px; height: 50px;" alt="Logo" width="100%" height="100%">
                       </td> 
                     <td align="center" bgcolor="#ffffff" style="Margin:0;padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:35px;"><h1 style="Margin:0;line-height:58px;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;font-size:24px;font-style:normal;font-weight:normal;color:#111111;">Multa</h1></td> 
                     <td align="center"  bgcolor="#ffffff" style="Margin:0;padding-bottom:5px;padding-left:30px;padding-right:30px;padding-top:35px; border-top-right-radius: 4px;">
-                        <img src="https://sysprim.com/images/semat_logo.png" style="width: 110px; height: 50px;" alt="">
+                        <img src="https://sysprim.com/images/semat_logo.png" style="width: 110px; height: 50px;" alt="Logo" width="100%" height="100%">
                     </td> 
                 </tr>
             </table>
@@ -117,7 +117,7 @@
                   <p style="margin: 0;">Sr(a). <b><?php echo $name; ?></b>, se le notifica que se le generó una multa por pago extemporaneo, para cada período declarado fuera del lapso establecido debe cancelar previamente la declaración de impuesto de Actividad Económica anticipada y seguidamente la multa generada. Acudir al SEMAT para pagar la multa.</p>
                   <p>Recuerda que: <b>¡No deber, es tu Deber!</b> </p>
                   <p style="text-align: center;">
-                    <img src="https://sysprim.com/images/jonas_logo.jpg" style="width: 120px; height: 90px;" alt="">
+                    <img src="https://sysprim.com/images/jonas_logo.jpg" style="width: 120px; height: 90px;" width="100%" height="100%" alt="Logo">
                   </p>
                   <p>El equipo de SEMAT - Iribarren</p>
                 </td>

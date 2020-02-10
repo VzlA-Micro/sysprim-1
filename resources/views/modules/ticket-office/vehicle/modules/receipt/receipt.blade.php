@@ -30,7 +30,7 @@
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
                 <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px"
-                     alt=""><br>
+                alt="Image" width="100%" height="100%"><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
             </td>
@@ -43,7 +43,7 @@
 					</span>
             </td>
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
+                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
                 <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
                 <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
 

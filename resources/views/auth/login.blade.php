@@ -62,7 +62,7 @@
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>
-                            <img src="{{ asset('images/semat.webp') }}" class="responsive-img" alt="" srcset="">
+                            <img src="{{ asset('images/semat.webp') }}" class="responsive-img" alt="Logo semat" width="100%" height="100%" srcset="">
                             
                         </h5>
                     </div>

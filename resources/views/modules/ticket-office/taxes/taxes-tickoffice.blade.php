@@ -177,7 +177,7 @@
                                                                 <i class="prefix">
                                                                     <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                          style="width: 2rem"
-                                                                         alt="">
+                                                                         alt="Image" width="100%" height="100%">
                                                                 </i>
                                                                 <input type="text" name="amount_total" id="amount"
                                                                        value=""
@@ -191,7 +191,7 @@
                                                                 <i class="prefix">
                                                                     <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                          style="width: 2rem"
-                                                                         alt="">
+                                                                         alt="Image" width="100%" height="100%">
                                                                 </i>
                                                                 <input type="text" name="amount" id="amount_total"
                                                                        value=""
@@ -310,7 +310,7 @@
                                                                         <i class="prefix">
                                                                             <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                                  style="width: 2rem"
-                                                                                 alt="">
+                                                                                 alt="Image" width="100%" height="100%">
                                                                         </i>
                                                                         <input type="text" name="amount_total"
                                                                                id="amount_tr" value=""
@@ -324,7 +324,7 @@
                                                                         <i class="prefix">
                                                                             <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                                  style="width: 2rem"
-                                                                                 alt="">
+                                                                                 alt="Image" width="100%" height="100%">
                                                                         </i>
                                                                         <input type="text" name="amount"
                                                                                id="amount_total_tr" value=""
@@ -433,7 +433,7 @@
                                                                 <i class="prefix">
                                                                     <img src="{{ asset('images/isologo-BsS.png') }}"
                                                                          style="width: 2rem"
-                                                                         alt="">
+                                                                         alt="Image" width="100%" height="100%">
                                                                 </i>
                                                                 <input type="text" name="amount_total"
                                                                        id="amount_total_depo" value=""
@@ -467,7 +467,7 @@
                 <h4 class="center-align">Escanear QR O Ingresar Código</h4>
                 <div class="col l12">
                     <div class="col s12 center-align">
-                        <img src="{{asset('images/scan.gif')}}" class="img-responsive">
+                        <img src="{{asset('images/scan.gif')}}" class="img-responsive" alt="Image" width="100%" height="100%">
                     </div>
                     <div class="input-field col s8">
                         <i class="icon-search prefix"></i>

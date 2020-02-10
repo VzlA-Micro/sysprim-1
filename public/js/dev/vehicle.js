@@ -508,6 +508,9 @@ $('document').ready(function () {
         var brand = $('#brand').val();
         var brandN = $('#brand-n').val();
         var modelN = $('#model-n').val();
+        var idCompany = $('#idCompany').val();
+
+        console.log(idCompany);
         if (brand == null && brandN == undefined) {
             swal({
                 title: "Información",
@@ -548,21 +551,26 @@ $('document').ready(function () {
                     console.log(data);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    if (data['status'] == 'success') {
+                    if (data.status == 'success' && data.isCompany ==false) {
                         swal({
                             title: "¡Bien Hecho!",
                             text: "Vehículo registrado con exito!",
                             icon: "success",
                             button: "Ok",
                         }).then(function () {
-                            if ($('#Vcompany').val()) {
-                                var idCompany = $('#idCompany').val();
-                                window.location.href = url + "company/vehicles/" + idCompany;
-                            } else {
-                                window.location.href = url + "vehicles/read";
-                            }
+                            window.location.href = url + "vehicles/read";
                         });
-                    } else {
+                    } else if (data.isCompany == true && data.status=== 'success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Vehículo registrado con exito!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.location.href = url + "company/vehicles/" + idCompany;
+                        });
+                    }
+                    else {
                         swal({
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -679,13 +687,13 @@ $('document').ready(function () {
             if (controlButtonBrand) {
                 $('#group-MB').hide();
                 var html =
-                    `<div class="input-field col s6">
+                    `<div class="input-field col s12 m6">
                         <i class="icon-directions_car prefix"></i>
                         <input type="text" name="brand-n" id="brand-n" minlength="1" maxlength="20"
                         >
                          <label for="brand-n">Marca</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <i class="icon-local_shipping prefix"></i>
                         <input type="text" name="model-n" id="model-n" minlength="1" maxlength="20">
                         <label for="model-n">Módelo</label>

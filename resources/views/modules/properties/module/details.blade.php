@@ -230,10 +230,10 @@
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
                         @if (Storage::disk('users')->has($property->users[0]->image))
-                            <img src="{{ route('users.getImage', ['filename' => $property->users[0]->image]) }}" alt=""
+                            <img src="{{ route('users.getImage', ['filename' => $property->users[0]->image]) }}" alt="Image" width="100%" height="100%"
                                  class="circle responsive-img">
                         @else
-                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                            <img src="{{ asset('images/user.png') }}" alt="Image" width="100%" height="100%" class="circle responsive-img">
                         @endif
                     </div>
                     <div class="card-content row">

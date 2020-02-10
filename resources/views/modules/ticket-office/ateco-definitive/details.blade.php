@@ -74,7 +74,7 @@
 
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="base[]" id="base_{{$ciu->ciu->code}}" class="validate money" value="{{ $ciu->base }}" readonly>
                             <label for="base_{{$ciu->ciu->code}}">Base Imponible</label>
@@ -82,7 +82,7 @@
 
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="  base_anticipated[]" id="base_anticipated_{{$ciu->ciu->code}}" class="validate money" value="{{ $ciu->base_anticipated }}" readonly>
                                 <label for="base_anticipated_{{$ciu->ciu->code}}">Impuesto Anticipado</label>
@@ -130,7 +130,7 @@
                           --}}
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
 
 
@@ -142,14 +142,14 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
                             <label for="tasa_{{$ciu->ciu->code}}">Recargo (12%)<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="interest[]" id="interest_{{$ciu->ciu->code}}" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
                             <label for="interest_{{$ciu->ciu->code}}">Interes por mora<b> (Bs)</b></label>
@@ -229,7 +229,7 @@
                                 @endif
                                 @if(!$taxes->payments->isEmpty())
                                     <h4 class="center-align">Registro de Pago:</h4>
-                                    <table class="centered highlight" id="payments" style="width: 100%">
+                                    <table class="centered highlight responsive-table" id="payments">
                                         <thead>
                                         <tr>
                                             <th>Fecha</th>
