@@ -232,12 +232,12 @@
                             <label for="lng">Logintud</label>
                         </div>
 
-                        <div class="input-field col s10 m4">
+                        <div class="input-field col s6 m4">
                             <h5 class="right">Estado:</h5>
 
                         </div>
                         @if($company->status===null||$company->status==='enabled')
-                            <div class="input-field col s10 m6">
+                            <div class="input-field col s6 m6">
                                 <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
                                 >Habilitada
                                     <i class="icon-check right"></i>
@@ -246,7 +246,7 @@
 
 
                         @else
-                            <div class="input-field col s10 m6">
+                            <div class="input-field col s6 m6">
                                 <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
                                 >Deshabilitada
                                     <i class="icon-refresh right"></i>
@@ -259,7 +259,7 @@
                         <div class="col l12">
                             <div class="row">
                                 @can('Actualizar Empresas')
-                                    <div class="col s12 m3">
+                                    <div class="col s12 m3" style="margin-top:20px;">
                                         <button type="button"  class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                            id="update-company">
                                             Actualizar
@@ -268,7 +268,7 @@
                                     </div>
                                 @endcan
                                 @can('Añadir CIIU Empresas')
-                                    <div class="col s12 m3">
+                                    <div class="col s12 m3" style="margin-top:20px;">
                                         <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                            id="add-ciiu">
                                             Añadir CIIU
@@ -278,7 +278,7 @@
                                 @endcan
                                 @can('Habilitar/Deshabilitar Empresas')
                                 @if($company->status===null||$company->status==='enabled')
-                                    <div class="col s12 m3">
+                                    <div class="col s12 m3" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light red col s12 "
                                                 id="company-status" value="disabled">
@@ -287,7 +287,7 @@
                                         </button>
                                     </div>
                                 @else
-                                    <div class="col s12 m3">
+                                    <div class="col s12 m3" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light green col s12 "
                                                 id="company-status" value="enabled">
@@ -299,7 +299,7 @@
                                 @endcan
                                 
                                 @can('Cambiar Ubicacion - Empresa')
-                                    <div class="col s12 m3">
+                                    <div class="col s12 m3" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light purple col s12 "
                                                 id="change-maps">
@@ -410,8 +410,8 @@
                             <label for="email">E-mail</label>
                         </div>
                         @can('Cambiar Usuario - Empresa')
-                        <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">Cambiar Usuario
+                        <div class="input-field col s12 m12">
+                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 btn-rounded " id="change-users">Cambiar Usuario
                                 <i class="icon-refresh right"></i>
                             </a>
                         </div>
