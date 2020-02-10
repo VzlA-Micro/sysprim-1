@@ -687,13 +687,13 @@ $('document').ready(function () {
             if (controlButtonBrand) {
                 $('#group-MB').hide();
                 var html =
-                    `<div class="input-field col s6">
+                    `<div class="input-field col s12 m6">
                         <i class="icon-directions_car prefix"></i>
                         <input type="text" name="brand-n" id="brand-n" minlength="1" maxlength="20"
                         >
                          <label for="brand-n">Marca</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <i class="icon-local_shipping prefix"></i>
                         <input type="text" name="model-n" id="model-n" minlength="1" maxlength="20">
                         <label for="model-n">Módelo</label>

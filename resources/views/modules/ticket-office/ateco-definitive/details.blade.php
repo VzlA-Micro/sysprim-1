@@ -229,7 +229,7 @@
                                 @endif
                                 @if(!$taxes->payments->isEmpty())
                                     <h4 class="center-align">Registro de Pago:</h4>
-                                    <table class="centered highlight" id="payments" style="width: 100%">
+                                    <table class="centered highlight responsive-table" id="payments">
                                         <thead>
                                         <tr>
                                             <th>Fecha</th>
