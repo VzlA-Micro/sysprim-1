@@ -61,7 +61,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
-                            <input type="text" name="base" id="base" value="{{ $base }}" readonly>
+                            <input type="text" name="base" id="base" value="{{ $baseImponible }}" readonly>
                             <label for="base">Base Imponible<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -69,7 +69,7 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
                             </i>
                             <input type="text" name="tasa[]" id="tasa" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
-                            <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
+                            <label for="tasa">Interés por Mora<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12">
                             <div class="divider"></div>

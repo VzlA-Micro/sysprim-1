@@ -14,51 +14,51 @@
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Editar</a></li>
-                </ul>            
+                </ul>
             </div>
             <div class="col s12 m10 offset-m1">
-            	<form method="post" action="{{ route('publicity.save') }}" class="card" enctype="multipart/form-data" id="update">
-            		<div class="card-header center-align">
-            			<h4>Editar Publicidad</h4>
-            		</div>
-            		<div class="card-content row">
-            			@csrf
+                <form method="post" action="{{ route('publicity.save') }}" class="card" enctype="multipart/form-data" id="update">
+                    <div class="card-header center-align">
+                        <h4>Editar Publicidad</h4>
+                    </div>
+                    <div class="card-content row">
+                        @csrf
                         <input type="hidden" name="id" id="id" value="{{ $publicity->id }}">
-            			<div class="input-field col s12">
+                        <div class="input-field col s12">
                             <select name="advertising_type_id" id="advertising_type_id" disabled>
                                 <option value="null" disabled selected>Elija un tipo</option>
                                 @foreach($advertisingTypes as $type)
-                                <option value="{{ $type->id }}" @if($publicity->advertising_type_id == $type->id){{ "selected" }} @endif>{{ $type->name }}</option>
+                                    <option value="{{ $type->id }}" @if($publicity->advertising_type_id == $type->id){{ "selected" }} @endif>{{ $type->name }}</option>
                                 @endforeach
                             </select>
                             <label>Tipo de Publicidad</label>
                         </div>
-            			<div class="input-field col s12">
-            				<input type="text" name="name" id="name" value="{{ $publicity->name }}" disabled>
-            				<label for="name">Nombre</label>
-            			</div>
-            			@if (Storage::disk('publicities')->has($publicity->image))
-                        <div class="col s12">
-                            {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
+                        <div class="input-field col s12">
+                            <input type="text" name="name" id="name" value="{{ $publicity->name }}" disabled>
+                            <label for="name">Nombre</label>
+                        </div>
+                        @if (Storage::disk('publicities')->has($publicity->image))
+                            <div class="col s12">
+                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
 
-                            <div class="preview image img-wrapper center-align valing-wrapper" style="background-image: url({{ route('publicity.image', ['filename' => $publicity->image]) }}); background-size: contain;background-repeat: no-repeat;background-position: 50% 50%;">
-                                <i class="icon-add_a_photo medium"></i>
+                                <div class="preview image img-wrapper center-align valing-wrapper" style="background-image: url({{ route('publicity.image', ['filename' => $publicity->image]) }}); background-size: contain;background-repeat: no-repeat;background-position: 50% 50%;">
+                                    <i class="icon-add_a_photo medium"></i>
+                                </div>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" value="{{ $publicity->image }}">
+                                    <input type="text" placeholder="Subir imagen" class="file-upload-text" value="{{ $publicity->image }}">
+                                </div>
                             </div>
-                            <div class="file-upload-wrapper">
-                                <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" value="{{ $publicity->image }}">
-                                <input type="text" placeholder="Subir imagen" class="file-upload-text" value="{{ $publicity->image }}">
-                            </div>
-                        </div>
                         @else
-                        <div class="col s12">
-                            <div class="preview img-wrapper center-align valing-wrapper">
-                                <i class="icon-add_a_photo medium"></i>
+                            <div class="col s12">
+                                <div class="preview img-wrapper center-align valing-wrapper">
+                                    <i class="icon-add_a_photo medium"></i>
+                                </div>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" name="image" id="image" class="file-upload-native" accept="image/*">
+                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text">
+                                </div>
                             </div>
-                            <div class="file-upload-wrapper">
-                                <input type="file" name="image" id="image" class="file-upload-native" accept="image/*">
-                                <input type="text" disabled placeholder="Subir imagen" class="file-upload-text">
-                            </div>
-                        </div>
                         @endif
                         <div class="input-field col s12 m6">
                             <input type="text" name="date_start" id="date_start" class="datepicker date_start" value="{{ $publicity->date_start }}" disabled>
@@ -80,9 +80,13 @@
                             <input type="number" name="quantity" id="quantity" value="{{ $publicity->quantity }}" disabled>
                             <label for="quantity">Ejemplares</label>
                         </div>
-            		</div>
-            		<div class="card-footer center-align">
-            			<a href="#!" class="btn btn-large btn-rounded blue waves-effect waves-light" id="btn-modify">
+                        <div class="input-field col s12">
+                            <input type="text" name="point" id="point" class="validate number-only" value="{{ $publicity->point }}" disabled>
+                            <label for="point">Cantidad de Lugares</label>
+                        </div>
+                    </div>
+                    <div class="card-footer center-align">
+                        <a href="#!" class="btn btn-large btn-rounded blue waves-effect waves-light" id="btn-modify">
                             <i class="icon-update right"></i>
                             Modificar
                         </a>
@@ -90,8 +94,8 @@
                             <i class="icon-update right"></i>
                             Actualizar
                         </button>
-            		</div>
-            	</form>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -119,7 +123,7 @@
                     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
                 }
-            }); 
+            });
             $('#date_end').datepicker({
                 maxDate:  null,
                 format: 'yyyy-mm-dd', // Configure the date format
@@ -135,7 +139,7 @@
                     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
                 }
-            }); 
+            });
             $(".js-range-slider").ionRangeSlider({
                 skin: "modern",
                 max: 50,
