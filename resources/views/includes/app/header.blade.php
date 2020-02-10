@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="Logo Semat" width="100%" height="100%" class="brand-logo responsive-img"></a>
             {{-- <a href="" class="brand-logo waves-efect waves-light"  margin: 0; padding: 0;"> --}}
             {{-- </a> --}}
             {{-- Sidenav Trigger --}}
@@ -52,9 +52,9 @@
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
                         <i class="icon-more_vert right"></i>
                         @if (Storage::disk('users')->has(Auth::user()->image))
-                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar circle" style="background-size: contain; background-position:center;">
+                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="Avatar Usuario" width="100%" height="100%" class="avatar circle" style="background-size: contain; background-position:center;">
                         @else 
-                        <img src="{{ asset('images/user.png') }}" alt="" class="avatar circle">
+                        <img src="{{ asset('images/user.png') }}" alt="Avatar" width="100%" height="100%" class="avatar circle">
                         @endif
                     </a>
                 </li>
@@ -81,7 +81,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/semat.webp') }}" alt="" srcset="">
+                    <img src="{{ asset('images/semat.webp') }}" alt="semat" width="100%" height="100%" srcset="">
                 </a>
             </li>
             @guest
@@ -98,7 +98,7 @@
                     <li>
                         <div class="user-view">
                           <div class="background">
-                            <img src="{{ asset('images/bg-user.webp') }}" class="responsive-img">
+                            <img src="{{ asset('images/bg-user.webp') }}" alt="Usuario" width="100%" height="100%" class="responsive-img">
                           </div>
                           @if (Storage::disk('users')->has(Auth::user()->image))
                           <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>

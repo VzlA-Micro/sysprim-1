@@ -131,7 +131,7 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}"
                                          style="width: 2rem"
-                                         alt="">
+                                         alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="amount_total" id="amount_total" value="{{number_format($payments->amount,2,',','.')}}"
                                        class="validate money"

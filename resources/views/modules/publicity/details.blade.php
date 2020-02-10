@@ -21,7 +21,7 @@
             		</div>
             			@if (Storage::disk('publicities')->has($publicity->image))
                         <div class="card-image">
-                            <img src="{{ route('publicity.image', ['filename' => $publicity->image]) }}">
+                            <img src="{{ route('publicity.image', ['filename' => $publicity->image]) }}" alt="Image" width="100%" height="100%">
                             {{-- <span class="card-title grey-text"><b>Dirección:</b> {{ $company->address }}</span> --}}
                         </div>
                     	@endif

@@ -11,7 +11,7 @@
         <div class="row valign-wrapper">
             <div class="col s12 m3 left-align">
                 {{-- <span>Powered by:</span> --}}
-                <img src="{{ asset('images/sysprim/sysprim_logo_horizontal_blanco.png') }}" alt="" class="responsive-img">
+                <img src="{{ asset('images/sysprim/sysprim_logo_horizontal_blanco.png') }}" alt="logo" width="100%" height="100%" class="responsive-img">
             </div>
             <div class="col s12 m3 center-align social">
                 <a href="https://www.facebook.com/SematBolivariano" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -26,7 +26,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container center-align">
-            © Copyright - SysPRIM 2019
+            © Copyright - SysPRIM {{date('Y')}}
         </div>
     </div>
 </footer>

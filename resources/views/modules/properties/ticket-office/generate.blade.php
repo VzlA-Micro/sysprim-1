@@ -142,28 +142,28 @@
                             <input type="hidden" name="status" id="statusTax" value="">
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="totalGround">Total por Terreno</label>
                                 <input type="text" name="totalGround" id="totalGround" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="totalBuild">Total por Construcción</label>
                                 <input type="text" name="totalBuild" id="totalBuild" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" maxlength="13">
                                 <label for="fiscal_credit">Crédito Fiscal</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="base_imponible">Base Imponible Total</label>
                                 <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="" readonly>
@@ -172,21 +172,21 @@
                             <input type="hidden" name="discount" id="discount" value="">
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="interest">Interés por Mora:(Bs)</label>
                                 <input type="text" name="interest" id="interest" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="recharge">Recargo Interes:(Bs)</label>
                                 <input type="text" name="recharge" id="recharge" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <label for="amount">Total a Pagar:(Bs)</label>
                                 <input id="amount" type="text" name="amount" class="validate" value="" readonly>

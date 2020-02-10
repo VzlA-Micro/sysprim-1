@@ -73,7 +73,7 @@
                             <h4>Datos de la Empresa</h4>
                         </div>
                         <div class="card-content row">
-                            <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
+                            <div class="input-field col s5 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <select name="document_type" id="document_type">
                                     <option value="null" selected disabled>...</option>
@@ -84,7 +84,7 @@
                                 </select>
                                 <label for="document_type">Documento</label>
                             </div>
-                            <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <div class="input-field col s7 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                                 <input type="text" name="RIF" id="RIF" class="validate company-validate number-date" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
                                 <label for="RIF">RIF</label>
                             </div>

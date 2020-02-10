@@ -70,7 +70,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="cant_tax_unit[]" id="cant_tax_unit_{{$rate->code}}" class="validate"
                                        value="{{ $rate->cant_tax_unit }}" readonly>
@@ -79,7 +79,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="total_ciu[]" id="total{{$rate->code}}" class="validate total_ciu money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$rate->totalRate}}" readonly>
@@ -109,7 +109,7 @@
 
                                 <div class=" input-field col s12 m12 ">
                                     <i class=" prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                     </i>
                                     <input type="text" name="total" class="validate total money"
                                            value="{{$taxes->amount}}" readonly>

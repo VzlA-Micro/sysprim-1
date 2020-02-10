@@ -51,7 +51,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="base[]" id="base" class="validate money" value="{{ $ciu->base }}" readonly>
                             <label for="base">Base Imponible</label>
@@ -61,7 +61,7 @@
                         @if($taxes->companies->typeCompany=='R')
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu+$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
@@ -69,7 +69,7 @@
                         @else
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="total_ciu[]" id="total_ciu" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu-$ciu->withholding-$ciu->deductions-$ciu->fiscal_credits}}" readonly>
                             <label for="fiscal_credits">Monto a Pagar por CIU<b> (Bs)</b></label>
@@ -77,14 +77,14 @@
                         @endif
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="tasa[]" id="tasa" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->tax_rate}}" readonly>
                             <label for="tasa">Recargo (12%)<b> (Bs)</b></label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input type="text" name="interest[]" id="interest" class="validate money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
                             <label for="interest">Interes por mora<b> (Bs)</b></label>
@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 m4 center-align">
-                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/001-point-of-service.png') }}" class="responsive-img circle" alt="Punto" width="100%" height="100%">
                                                 <a href="#" data-target='ppv' class="btn btn-large yellow darken-4 waves-effect waves-light tick payments" data-payments="PPV">
                                                     Taquilla
                                                     <i class="icon-payment right"></i>
@@ -164,7 +164,7 @@
                                             </div>
                                             <div class="col s12 m4 center-align">
                                                 <div class="img"></div>
-                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/009-smartphone-1.png') }}" class="responsive-img circle" alt="Smartphone Image" width="100%" height="100%">
                                                 <a href="#"   data-target='ptb' class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments" data-payments="PTB">
                                                     Transferencia
                                                     <i class="icon-compare_arrows right"></i>
@@ -176,7 +176,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col s12 m4 center-align">
-                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle">
+                                                <img src="{{ asset('images/png/030-bank.png') }}" class="responsive-img circle" alt="Bank Image" width="100%" height="100%">
                                                 <a href="#"  data-target='ppb' class="btn btn-large red waves-effect waves-light dropdown-trigger payments" data-payments="PPB" >
                                                     Deposito
                                                     <i class="icon-account_balance right"></i>

@@ -172,7 +172,7 @@
                             <label for="code">CIIU</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu"
+                            <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 " id="search-ciu"
                                disabled>
                                 Buscar
                                 <i class="icon-search right"></i>
@@ -322,10 +322,10 @@
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
                         @if (Storage::disk('users')->has($company->users[0]->image))
-                            <img src="{{ route('users.getImage', ['filename' => $company->users[0]->image]) }}" alt=""
+                            <img src="{{ route('users.getImage', ['filename' => $company->users[0]->image]) }}" alt="User Image" width="100%" height="100%"
                                  class="circle responsive-img">
                         @else
-                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                            <img src="{{ asset('images/user.png') }}" alt="User Image" width="100%" height="100%" class="circle responsive-img">
                         @endif
                     </div>
                     <div class="card-content row">
