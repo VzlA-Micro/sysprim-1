@@ -5,7 +5,7 @@ $(window).on("load", function () {
 });
 $(document).ready(function() {
     if( localStorage.getItem('url')===null){
-        localStorage.setItem('url','http://sematiribarren.website/');
+        localStorage.setItem('url','http://172.19.50.253/');
     }
 
 

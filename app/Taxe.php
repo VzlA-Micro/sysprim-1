@@ -113,8 +113,9 @@ class Taxe extends Model implements Auditable {
             return $this->statusName='TAQUILLA/SIN PAGO ASOCIADO AÚN.';
         }else if($this->status=='verified-sysprim'){
             return $this->statusName="VERIFICADA/SYSPRIM";
+        }else if($this->status=='temporal'){
+            return $this->statusName="WEB/TEMPORAL";
         }
-
     }
 
     public function getTypePaymentAttribute()
