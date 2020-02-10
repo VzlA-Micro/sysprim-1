@@ -508,6 +508,9 @@ $('document').ready(function () {
         var brand = $('#brand').val();
         var brandN = $('#brand-n').val();
         var modelN = $('#model-n').val();
+        var idCompany = $('#idCompany').val();
+
+        console.log(idCompany);
         if (brand == null && brandN == undefined) {
             swal({
                 title: "Información",
@@ -548,21 +551,26 @@ $('document').ready(function () {
                     console.log(data);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    if (data['status'] == 'success') {
+                    if (data.status == 'success' && data.isCompany ==false) {
                         swal({
                             title: "¡Bien Hecho!",
                             text: "Vehículo registrado con exito!",
                             icon: "success",
                             button: "Ok",
                         }).then(function () {
-                            if ($('#Vcompany').val()) {
-                                var idCompany = $('#idCompany').val();
-                                window.location.href = url + "company/vehicles/" + idCompany;
-                            } else {
-                                window.location.href = url + "vehicles/read";
-                            }
+                            window.location.href = url + "vehicles/read";
                         });
-                    } else {
+                    } else if (data.isCompany == true && data.status=== 'success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Vehículo registrado con exito!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            window.location.href = url + "company/vehicles/" + idCompany;
+                        });
+                    }
+                    else {
                         swal({
                             title: "¡Oh no!",
                             text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",

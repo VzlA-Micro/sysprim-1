@@ -35,7 +35,7 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($register=null)
+    public function create($register = null)
     {
         $models = ModelsVehicle::all();
         $brands = Brand::all();
@@ -45,11 +45,13 @@ class VehicleController extends Controller
 
 
         if ($vehicleCompa[0] === "COMPANY") {
+            $company = Company::find($vehicleCompa[1]);
             return view('modules.vehicles.register', array(
                 'brand' => $brands,
                 'model' => $models,
                 'type' => $type,
-                'idCompany' => $vehicleCompa[1]
+                'idCompany' => $vehicleCompa[1],
+                'company' => $company->name
             ));
         }
 
@@ -94,6 +96,7 @@ class VehicleController extends Controller
 
         $idCompany = $request->input('idCompany');
 
+
         if (!empty($request->input('brand-n') && !empty($request->input('model-n')))) {
 
             $brandVehicles = new Brand();
@@ -104,8 +107,8 @@ class VehicleController extends Controller
             $otherBrand = Brand::where('name', $brand)->first();
 
             if (is_object($otherBrand)) {
-                $modelsVehicle->name=$models;
-                $modelsVehicle->brand_id=$otherBrand->id;
+                $modelsVehicle->name = $models;
+                $modelsVehicle->brand_id = $otherBrand->id;
                 $modelsVehicle->save();
 
                 $vehicle->model_id = $modelsVehicle->id;
@@ -173,9 +176,10 @@ class VehicleController extends Controller
         }
 
         $userVehicle->save();
-
-        if ($vehicle->save() && $userVehicle->save()) {
-            $response = ['status' => 'success'];
+        if ($vehicle->save() && $userVehicle->save() && isset($idCompany)) {
+            $response = ['status' => 'success', 'isCompany' => true];
+        } else if ($vehicle->save() && $userVehicle->save()) {
+            $response = ['status' => 'success', 'isCompany' => false];
         } else {
             $response = ['status' => 'fail'];
         }

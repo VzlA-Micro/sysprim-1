@@ -98,7 +98,7 @@
                                  data-tooltip="Ej: L1S2M3">
                                 <i class="icon-crop_16_9 prefix"></i>
                                 <input type="text" name="license_plates" id="license_plates" minlength="7" maxlength="7"
-                                       pattern="[0-9A-Za-z]+"
+                                       pattern="[0-9A-Za-z]+" autocomplete="off"
                                        title="Solo puede escribir números y letra en mayúsculas." class="validate"
                                        required>
                                 <label for="license_plates">Placa</label>
@@ -117,7 +117,7 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="bodySerials" id="bodySerials" class="validate"
-                                       pattern="[A-Za-z0-9]+"
+                                       pattern="[A-Za-z0-9]+" autocomplete="off"
                                        title="Solo puede escribir letras y numeros." minlength="12" maxlength="17"
                                        required>
                                 <label for="bodySerials">Serial de carroceria</label>
@@ -132,7 +132,7 @@
                                 <i class="icon-select_all prefix"></i>
                                 <input type="text" name="serialEngines" id="serialEngines" class="validate"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
-                                       minlength="12" maxlength="20" required>
+                                       minlength="12" maxlength="20" autocomplete="off" required>
                                 <label for="serialEngines">Serial del motor</label>
                             </div>
                             <div class="input-field col s12 m6">
