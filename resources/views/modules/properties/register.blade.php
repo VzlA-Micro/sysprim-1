@@ -117,14 +117,14 @@
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C7" id="C7" class="validate number-only" pattern="[0-9]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números."
-                                       required>
+                                       >
                                 <label for="C7">Manzana</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C8" id="C8" class="validate number-only" pattern="[0-9a-zA-Z]+"
                                        maxlength="8" minlength="3" title="."
-                                       required>
+                                       >
                                 <label for="C8">Terreno</label>
                             </div>
                             <div class="input-field col m6 s12">

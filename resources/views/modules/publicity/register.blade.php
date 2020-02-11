@@ -24,6 +24,7 @@
             		<div class="card-content row">
             			@csrf
             			<div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
             				<select name="advertising_type_id[]" id="advertising_type_id" multiple>
       							<option value="null" disabled selected>Elija un tipo</option>
       							@foreach($advertisingTypes as $type)
@@ -33,6 +34,7 @@
     						<label>Tipo de Publicidad</label>
             			</div>
             			<div class="input-field col s12">
+                            <i class="icon-linked_camera prefix"></i>
             				<input type="text" name="name" id="name">
             				<label for="name">Nombre</label>
             			</div>

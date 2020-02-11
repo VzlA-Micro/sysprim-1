@@ -20,7 +20,7 @@
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="register">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Registrar Alicuota de Inmubles</h4>
+                        <h4>Registrar Alicuota de Inmuebles</h4>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6">

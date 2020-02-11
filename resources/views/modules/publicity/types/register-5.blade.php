@@ -12,7 +12,6 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register') }}">Registrar</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar por Tipo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Art. 83, 86 (Vallas Publicitarias)</a></li>
                 </ul>
@@ -25,6 +24,7 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id">
                                 <option value="null" disabled selected>Elija un tipo</option>
                                 @foreach($advertisingTypes as $type)
@@ -34,6 +34,7 @@
                             <label>Tipo de Publicidad</label>
                         </div>
                         <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                             <input type="text" name="name" id="name">
                             <label for="name">Nombre</label>
                         </div>
@@ -48,14 +49,17 @@
                             </div>
                         </div>
                         <div class="input-field col s12 m6">
+							<i class="icon-date_range prefix"></i>
                             <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                             <label for="date_start">Fecha de Inicio</label>
                         </div>
                         <div class="input-field col s12 m6">
+							<i class="icon-date_range prefix"></i>
                             <input type="text" name="date_end" id="date_end" class="datepicker">
                             <label for="date_end">Fecha de Fin</label>
                         </div>
                         <div class="col s12 input-field">
+								<i class="icon-straighten prefix"></i>
                             <select name="unit" id="unit">
                                 <option value="null" disabled>Elige la unidad</option>
                                 <option value="mts" selected>Metro</option>
@@ -76,10 +80,12 @@
                             {{--<label for="quantity">Cantidad de Lugares</label>--}}
                         {{--</div>--}}
                         <div class="input-field col s12">
+                            <i class="icon-exposure_plus_1 prefix"></i>
                             <input type="text" name="side" id="side">
                             <label for="side">Cantidad de Caras</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-filter_1 prefix"></i>
                             <input type="text" name="floor" id="floor">
                             <label for="floor">Pisos</label>
                         </div>
