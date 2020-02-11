@@ -95,7 +95,7 @@ class PropertyTaxesController extends Controller
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
-        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+        $taxes = $propertyTaxes->propertyTaxes()->where('branch','Prop. y Publicidad')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
         if(!empty($taxes)) {
             foreach ($taxes as $tax) {
                 if($tax->status === 'verified'||$tax->status==='verified-sysprim'){

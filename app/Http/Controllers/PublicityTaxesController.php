@@ -65,6 +65,10 @@ class PublicityTaxesController extends Controller
             $owner = User::find($owner_id);
         }*/
         $baseImponible = number_format($declaration['baseImponible'],2,',','.');
+        $interest = number_format($declaration['interest'],2,',','.');
+        $total = number_format($declaration['total'],2,',','.');
+
+
 
 //        dd($baseImponible);
     	return view('modules.publicity-payments.register', [
@@ -72,7 +76,9 @@ class PublicityTaxesController extends Controller
     		'publicity' => $publicity,
             'base' => $base,
             'baseImponible' => $baseImponible,
-
+            'interest' => $interest,
+            'total' => $total
+//            'interest' => $interest
 //            'total' => $total
     	]);
     }

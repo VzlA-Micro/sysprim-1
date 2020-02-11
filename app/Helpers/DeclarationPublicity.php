@@ -28,6 +28,9 @@ class DeclarationPublicity
         $bankRate = BankRate::select('value_rate')->latest()->first();
 
 //        $advertisingTypes = AdvertisingType::all();
+//        $interest = 0;
+        $baseImponible = 0;
+        $verifyPrologue = CheckCollectionDay::verify('Prop. y Publicidad');
         $daysDiff = 0;
         $publicity = Publicity::find($id);
         $type = $publicity->advertising_type_id;
@@ -97,13 +100,26 @@ class DeclarationPublicity
 //            dd($baseImponible);
 
         }
-
+        if ($verifyPrologue['mora']) { // Verifica si hay dias de mora
+//            $recargo = Recharge::where('branch', 'Prop. y Publicidad')->whereDate('to', '>=', $currentFiscalPeriodStart)->whereDate('since', '<=', $currentFiscalPeriodEnd)->first();
+//                dd($recargo);
+            $bankInterest = BankRate::orderBy('id', 'desc')->take(1)->first();
+//            $recharge = ($recargo->value * $baseImponible) / 100;
+            $interestCalc = (($bankInterest->value_rate / 100) / 360) * $verifyPrologue['diffDayMora'] * ($baseImponible);
+            $interest = round($interestCalc, 2);
+        } else {
+//            $recharge = 0;
+            $interest = 0;
+        }
+        $total = $baseImponible + $interest;
 
 
         // Retornar datos
         $amounts = array(
             'baseImponible' => $baseImponible,
-            'daysDiff' => $daysDiff
+            'daysDiff' => $daysDiff,
+            'interest' => $interest,
+            'total' => $total
         );
         return $amounts;
     }

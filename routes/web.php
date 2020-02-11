@@ -435,6 +435,10 @@ Route::middleware(['auth'])->group(/**
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
         Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
+        ##### PUBLICIDAD
+        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+
+
 
         /* !NOTA!: HAY RUTAS QUE DEBEN IDENTIFICARSE PARA SABER A QUIEN PERTENECE, SI ES DE USUARIO WEB O DE TAQUILLA */
 
@@ -817,7 +821,6 @@ Route::middleware(['auth'])->group(/**
                 Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}','PropertyController@changePropietarioPropertyTicketOffice');
                 Route::post('property/ticket-office/update-map','PropertyController@updatedMapPropertyTicketOffice');
                 Route::post('property/ticket-office/update-property','PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
-                Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
 
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
