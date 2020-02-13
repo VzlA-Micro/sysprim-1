@@ -12,7 +12,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('advertising-type.manage') }}">Gestionar Accesorios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('advertising-type.manage') }}">Gestionar Tipo de Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('advertising-type.register') }}">Registrar</a></li>
                 </ul>
             </div>

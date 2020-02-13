@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdvertisingTypeTable extends Migration
+class CreateGroupPublicityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateAdvertisingTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('advertising_type', function (Blueprint $table) {
+        Schema::create('group_publicity', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->float('value');
-            $table->integer('group_publicity_id')->unsigned();
-            $table->foreign('group_publicity_id')->references('id')->on('group_publicity')->onDelete('cascade');
+            $table->string('name',40);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAdvertisingTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('advertising_type');
+        Schema::dropIfExists('group_publicity');
     }
 }
