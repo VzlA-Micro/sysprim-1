@@ -56,6 +56,11 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Usuarios']], function () {
                     Route::get('/users/details/{id}', 'UserController@edit')->name('users.details');
+                    Route::get('/users/security/{id}','UserController@detailsSecurity')->name('users.security');
+
+
+
+
                     Route::group(['middleware' => ['permission:Actualizar Usuarios|Habilitar/Deshabilitar Usuarios|Resetar Usuarios']], function () {
                         Route::post('/users/update/', 'UserController@update')->name('users.update');
                         Route::get('/users/account/{id}/{status}', 'UserController@enableDisableAccount');
@@ -429,7 +434,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/taxpayers/find/{type_document}/{document}', 'RateController@findTaxPayers');
         Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
         Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
-        Route::get('rate/taxpayers/pdf/{id}/{download}', 'RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
+        Route::get('rate/taxpayers/pdf/{id}/{download?}', 'RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
 
         ##### VEHICULOS
         Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');

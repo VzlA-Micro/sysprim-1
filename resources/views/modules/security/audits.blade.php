@@ -25,7 +25,6 @@
 		            		<thead>
 		            			<tr>
 		            				<th>Usuario</th>
-		            				<th>Rol</th>
 		            				<th>Evento</th>
 		            				<th>Tipo</th>
 		            				<th>Valores Viejos</th>
@@ -37,15 +36,13 @@
 		            		<tbody>
 		            			@foreach ($audits as $audit)
 		            			<tr>
-		            				<td>{{ $audit->user_id }}</td>
-		            				<td>{{ $audit->user_type }}</td>
+		            				<td><a href="{{route('users.details', ['id' => $audit->user_id ]) }}"> {{$audit->user_id  }}</a></td>
 		            				<td>{{ $audit->event }}</td>
 		            				<td>{{ $audit->auditable_type }}</td>
 		            				<td>{{ serialize($audit->old_values) }}</td>
 		            				<td>{{ serialize($audit->new_values) }}</td>
 		            				<td>{{ $audit->url }}</td>
 		            				<td>{{ $audit->ip_address }}</td>
-
 		            			</tr>
 		            			@endforeach
 		            		</tbody>
@@ -64,11 +61,12 @@
 	        responsive: true,
 	        "scrollX": true,
 	        "pageLength": 10,
+            "aaSorting": [],
 	        language: {
 	            "sProcessing":     "Procesando...",
 	            "sLengthMenu":     "Mostrar _MENU_ registros",
 	            "sZeroRecords":    "No se encontraron resultados",
-	            "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+	            "sEmptyTable":     "Ningún dato disponible en esta tabla.",
 	            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 	            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 	            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
