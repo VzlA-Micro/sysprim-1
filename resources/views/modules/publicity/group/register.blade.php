@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Gestionar Grupo de Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('group-publicity.manage') }}">Gestionar Grupo de Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="#!">Registrar</a></li>
                 </ul>
             </div>
@@ -24,10 +24,10 @@
                         <h5>Registrar Grupo de Publicidad</h5>
                     </div>
                     <div class="card-content row">
-                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Tiempo">
+                        <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej:Publicidad por Tiempo">
                             <i class="icon-format_size prefix"></i>
                             <input type="text" name="groupName" id="groupName" pattern="[a-zA-Z0-9 ]+"
-                                   title="Solo puede escribir números y letra en mayúsculas." class="validate" maxlength="40" minlength="10" required>
+                                   title="Solo puede escribir números y letra en mayúsculas." class="validate" maxlength="40" minlength="5" required>
                             <label for="groupName">Nombre del Grupo</label>
                         </div>
                         <div class="input-field col s12 center-align">

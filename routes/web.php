@@ -265,6 +265,23 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+            // Gestionar Grupos de publicidad
+           
+                Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
+                # Nivel 1: Registrar y Consultar
+                
+                    Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
+                    Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
+                    Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
+                    Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
+                    # Nivel 2: Detalles
+                    
+                        Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
+                        Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
+                   
+                
+            
+            
             // Gestionar Tasas del Banco
             Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
                 Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
