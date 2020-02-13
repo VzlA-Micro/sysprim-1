@@ -68,6 +68,11 @@ class Company extends Model implements Auditable {
             ->withPivot('property_id');
     }
 
+    public function companyPublicity() {
+        return $this->belongsToMany('App\Publicity','users_publicity')
+            ->withPivot('publicity_id');
+    }
+
 
 
     public function getTypeCompanyAttribute(){

@@ -17,8 +17,13 @@ class CreateUsersPublicityTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('publicity_id')->unsigned();
+            $table->integer('person_id')->nullable()->unsigned();
+            $table->integer('company_id')->nullable()->unsigned();
+            $table->string('status',14)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('publicity_id')->references('id')->on('publicity')->onDelete('cascade');
+            $table->foreign('person_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->timestamps();
         });
     }

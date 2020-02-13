@@ -80,10 +80,10 @@
                             <input type="number" name="quantity" id="quantity" value="{{ $publicity->quantity }}" disabled>
                             <label for="quantity">Ejemplares</label>
                         </div>
-                        <div class="input-field col s12">
-                            <input type="text" name="point" id="point" class="validate number-only" value="{{ $publicity->point }}" disabled>
-                            <label for="point">Cantidad de Lugares</label>
-                        </div>
+                        {{--<div class="input-field col s12">--}}
+                            {{--<input type="text" name="point" id="point" class="validate number-only" value="{{ $publicity->point }}" disabled>--}}
+                            {{--<label for="point">Cantidad de Lugares</label>--}}
+                        {{--</div>--}}
                     </div>
                     <div class="card-footer center-align">
                         <a href="#!" class="btn btn-large btn-rounded blue waves-effect waves-light" id="btn-modify">
