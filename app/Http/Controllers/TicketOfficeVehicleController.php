@@ -43,7 +43,7 @@ class TicketOfficeVehicleController extends Controller
 
             $taxe = Taxe::with('VehicleTaxes')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -59,10 +59,10 @@ class TicketOfficeVehicleController extends Controller
             }
 
         } catch (DecryptException $e) {
-            $code=strtoupper($id);
+            $code = strtoupper($id);
             $taxe = Taxe::with('VehicleTaxes')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
@@ -248,8 +248,8 @@ class TicketOfficeVehicleController extends Controller
             $otherBrand = Brand::where('name', $brand)->first();
 
             if (is_object($otherBrand)) {
-                $modelsVehicle->name=$models;
-                $modelsVehicle->brand_id=$otherBrand->id;
+                $modelsVehicle->name = $models;
+                $modelsVehicle->brand_id = $otherBrand->id;
                 $modelsVehicle->save();
 
                 $vehicle->model_id = $modelsVehicle->id;
@@ -388,7 +388,6 @@ class TicketOfficeVehicleController extends Controller
             $amount_taxes = null;
             $taxes = null;
         }
-
 
 
         return view('modules.ticket-office.vehicle.modules.taxes.taxes-tickoffice', ['taxes' => $taxes]);
@@ -720,20 +719,20 @@ class TicketOfficeVehicleController extends Controller
         $taxes_explode = explode('-', $taxes_data);
 
 
-        $taxes =Taxe::whereIn('id', $taxes_explode)->with('vehicleTaxes')->get();
-        $vehicleFind=Vehicle::find($taxes[0]->vehicleTaxes[0]->id);
+        $taxes = Taxe::whereIn('id', $taxes_explode)->with('vehicleTaxes')->get();
+        $vehicleFind = Vehicle::find($taxes[0]->vehicleTaxes[0]->id);
         $user = $vehicleFind->users()->get();
-        if (isset($vehicleFind->person[0]->pivot->person_id)){
-            $person=User::find($vehicleFind->person[0]->pivot->person_id);
-        }else{
-            $person='';
+        if (isset($vehicleFind->person[0]->pivot->person_id)) {
+            $person = User::find($vehicleFind->person[0]->pivot->person_id);
+        } else {
+            $person = '';
         }
 
         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receiptMulti', [
             'taxes' => $taxes,
             'vehicle' => $vehicleFind,
-            'person'=>$person,
-            'user'=>$user
+            'person' => $person,
+            'user' => $user
         ]);
 
         return $pdf->stream();
@@ -835,7 +834,6 @@ class TicketOfficeVehicleController extends Controller
     }
 
 
-
     public function changeStatusPayment($id, $status)
     {
         $payments = Payment::find($id);
@@ -923,7 +921,7 @@ class TicketOfficeVehicleController extends Controller
         }
 
 
-        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment,$year);
+        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment, $year);
 
         $type = null;
 
@@ -1367,7 +1365,7 @@ class TicketOfficeVehicleController extends Controller
         $date = Carbon::now();
         $vehicleTaxe = Vehicle::find($id);
         $tax = $vehicleTaxe->taxesVehicle()->whereDate('fiscal_period', $year)->first();
-        $statusTax=false;
+        $statusTax = false;
         if (is_null($tax)) {
             $statusTax = false;
         } else {
@@ -1382,11 +1380,23 @@ class TicketOfficeVehicleController extends Controller
                 $statusTax = true;
             } else if ($tax->status === 'cancel') {
                 $statusTax = false;
-            } else if ($tax->status === null){
+            } else if ($tax->status === null) {
                 $statusTax = false;
             }
         }
 
         return Response()->json($statusTax);
     }
+
+    public function historyPayments($id)
+    {
+        $vehicle = Vehicle::find($id);
+
+        return view('modules.ticket-office.vehicle.modules.vehicle.historyPayments', [
+            'vehicle' => $vehicle
+        ]);
+    }
+
 }
+
+

@@ -67,6 +67,13 @@
                 </div>
             @endcan
 
+            <div class="col s16 m3 animated bounceIn">
+                <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
+                    <i class="icon-folder_special"></i>
+                    <span class="truncate">Taquilla - Publicidad</span>
+                </a>
+            </div>
+
 
         </div>
     </div>

@@ -435,115 +435,31 @@
                 </form>
             </div>
         </div>
+        @can('Historial de Pago - Empresas')
 
 
-        {{--
-                @can('Historial de Pago - Empresas')
-                    <div class="col s12 m12">
-                        <div class="card">
-                            <div class="card-header center-align">
-                                <h5>Historial de Pagos</h5>
+            <div class="row">
+                <div class="row">
+
+                    <h4 class="center-align">Registro de Pagos:</h4>
+
+                </div>
+                <a href="{{route('ticketOffice.vehicle.history',['id'=>$vehicle->id])}}">
+                    <div class="col s12 m6">
+                        <div class="widget bootstrap-widget stats white-text">
+                            <div class="widget-stats-icon green-gradient white-text">
+                                <i class="fas fa-car"></i>
                             </div>
-                            <div class="card-content">
-                                <table class="centered highlight" id="history" style="width: 100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Código</th>
-                                        <th>Periodo Fiscal</th>
-                                        <th>Tipo de Declaración</th>
-                                        <th>Ramo</th>
-                                        <th class="tooltipped" data-position="right"
-                                            data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
-                                        </th>
-                                        <th>Acción</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($company->taxesCompanies as $taxe)
-
-
-
-                                        <tr>
-
-                                            <td>{{$taxe->created_at->format('d-m-Y H:i')}}</td>
-                                            <td>{{ $taxe->code }}</td>
-                                            @if($taxe->type==='definitive')
-                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period).'--'.\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
-                                            @else
-                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
-                                            @endif
-
-                                            <td>{{$taxe->typeTaxes}}</td>
-                                            <td>{{$taxe->branch}}</td>
-
-
-                                            @if($taxe->status==='process')
-                                                <td>
-
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        SIN CONCILIAR AÚN
-                                                    </button>
-                                                </td>
-
-                                            @elseif($taxe->status==='verified')
-                                                <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        VERIFICADA.
-                                                    </button>
-                                                </td>
-
-
-
-                                            @elseif($taxe->status=='cancel')
-                                                <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        CANCELADA.
-                                                    </button>
-                                                </td>
-                                            @endif
-
-
-                                            @if($taxe->type!='definitive')
-                                                <td><a href="{{route('taxes.download',[$taxe->id])}}"
-                                                       class="btn orange waves-effect waves-light col l6"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a>
-
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light col l6"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                </td>
-
-
-
-                                            @else
-                                                <td>
-                                                    <a href="{{route('taxes.definitive.pdf',[$taxe->id])}}"
-                                                       class="btn orange waves-effect waves-light col l6"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a>
-
-                                                    <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light col l6"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
-                                                </td>
-
-                                            @endif
-                                        </tr>
-
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                            <div class="widget-stats-content">
+                                <span class="widget-stats-title black-text">Vehiculos</span>
+                                <span class="widget-stats-number black-text">{{$vehicle->taxesVehicle()->count()}}</span>
                             </div>
                         </div>
                     </div>
-                @endcan
-        --}}
+                </a>
+
+            </div>
+        @endcan
 
     </div>
 
