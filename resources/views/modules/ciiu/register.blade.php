@@ -46,7 +46,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input id="alicuota" type="text" name="alicuota" class="validate  number-only-float" required maxlength="2">
                             <label for="alicuota">Alicuota</label>
@@ -56,7 +56,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>   
                             <input id="mTM" type="text" name="mTM"  class="validate number-only"  maxlength="5" required>
                             <label for="mTM">Minimo de Tributo Mensual</label>

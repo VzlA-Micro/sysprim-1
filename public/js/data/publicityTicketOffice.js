@@ -1,5 +1,4 @@
 var url = localStorage.getItem('url');
-
 var updateType = false;
 
 $('document').ready(function () {
@@ -13,10 +12,12 @@ $('document').ready(function () {
             $('#condition').addClass('hide');
             $('#status').val('propietario');
             $('#type').val('company');
+        } else {
+            $('#condition').removeClass('hide');
+            $('#type').val('');
+            $('#status').val('')
         }
-
     });
-
 
     $('#document_full').keyup(function () {
         if ($('#type_document_full').val() === null) {
@@ -33,24 +34,20 @@ $('document').ready(function () {
         }
     });
 
-
     $('#document_full').change(function () {
         if ($('#type_document_full').val() !== null) {
             findDocument();
         }
     });
 
-
     $('#type_document_full').change(function () {
         findDocument();
     });
-
 
     $('#status_view').click(function () {
 
 
     });
-
 
     $('#status_view').change(function () {
 
@@ -262,7 +259,7 @@ $('document').ready(function () {
         }
     }
 
-    /*function findDocumentResponsable() {
+    function findDocumentResponsable() {
         var type_document = $('#type_document').val();
         var document = $('#document').val();
         $('#surname').val('');
@@ -334,14 +331,14 @@ $('document').ready(function () {
                 }
             });
         }
-    }*/
+    }
 
     $('#data-next').click(function () {
         var status = $('#status').val();
 
-       // if ($('#type').val() == 'company' ) {
+        if ($('#type').val() == 'company') {
             status = 'propietario';
-       // }
+        }
 
         if ((status == null || status == '')) {
             swal({
@@ -453,9 +450,9 @@ $('document').ready(function () {
             $('button#f1 > i').removeClass('icon-add_circle');
             $('button#f1 > i').addClass('icon-check');
 
-            checkType=false;
+            checkType = false;
         } else {
-            valType ='';
+            valType = '';
             $('button#f1 > i').removeClass('icon-check');
             $('button#f1 > i').addClass('icon-add_circle');
             checkType = true;
@@ -468,7 +465,7 @@ $('document').ready(function () {
             valType = $(this).val();
             $('button#f2 > i').removeClass('icon-add_circle');
             $('button#f2 > i').addClass('icon-check');
-            checkType=false;
+            checkType = false;
         } else {
             valType = '';
             $('button#f2 > i').removeClass('icon-check');
@@ -482,7 +479,7 @@ $('document').ready(function () {
             valType = $(this).val();
             $('button#f3 > i').removeClass('icon-add_circle');
             $('button#f3 > i').addClass('icon-check');
-            checkType=false;
+            checkType = false;
         } else {
             valType = '';
             $('button#f3 > i').removeClass('icon-check');
@@ -496,14 +493,13 @@ $('document').ready(function () {
             valType = $(this).val();
             $('button#f4 > i').removeClass('icon-add_circle');
             $('button#f4 > i').addClass('icon-check');
-            checkType=false;
+            checkType = false;
         } else {
             valType = '';
             $('button#f4 > i').removeClass('icon-check');
             $('button#f4 > i').addClass('icon-add_circle');
             checkType = true;
         }
-
     });
 
     $('#f5').click(function () {
@@ -511,7 +507,7 @@ $('document').ready(function () {
             valType = $(this).val();
             $('button#f5 > i').removeClass('icon-add_circle');
             $('button#f5 > i').addClass('icon-check');
-            checkType=false;
+            checkType = false;
         } else {
             valType = '';
             $('button#f5 > i').removeClass('icon-check');
@@ -521,295 +517,113 @@ $('document').ready(function () {
 
     });
 
-
     $('#data1-next').click(function () {
-        console.log(valType);
-    });
-
-    $('#property').on('submit', function (e) {
-        var type = $('#type').val();
-        var id = $('#id').val();
-        e.preventDefault();
-
-        if ($('#brand').val() == '') {
-            swal({
-                title: "Información",
-                text: "Debe seleccionar una marca de vehículo para poder continuar",
-                icon: "success",
-                button: "Ok",
-            });
-        } else {
-            $.ajax({
-                url: url + "property/ticket-office/save-property",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: new FormData(this),
-                method: "POST",
-
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
-
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: response.message,
-                        icon: "success",
-                        button: "Ok",
-                    }).then(function (accept) {
-                        if (type == 'company') {
-                            window.location.href = url + "properties/company/my-properties/" + id;
-                        }
-                        else {
-                            window.location.href = url + "properties/my-properties";
-                        }
-                    });
-                    ;
-
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-                },
-                error: function (err) {
-                    console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: "Ok",
-                    });
-                }
-            });
-        }
-    });
-
-    $('#license_plates').change(function () {
-        var license = $(this).val();
-        console.log(license);
-        if (license == '') {
-            swal({
-                title: "Información",
-                text: "Introduzca una placa",
-                icon: "info",
-                button: {
-                    text: "Entendido",
-                    className: "red-gradient"
-                },
-            });
-        } else if (license.length < 7) {
-            swal({
-                title: "Información",
-                text: "Introduzca una placa valida",
-                icon: "info",
-                button: {
-                    text: "Entendido",
-                    className: "red-gradient"
-                },
-            });
-        } else {
-            $.ajax({
-                type: "POST",
-                url: url + "vehicles/verifyLicense",
-                data: {
-                    license: license
-                },
-
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (data) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-                    if (data['status'] == "error") {
-                        swal({
-                            title: "¡Placa Registrada!",
-                            text: data['message'],
-                            icon: "info",
-                            button: "Ok",
-                        });
-                        $(this).text('');
-                        $('#button-vehicle').prop('disabled', true);
-                    } else {
-                        swal({
-                            title: data['message'],
-                            icon: "success",
-                            button: "Ok",
-                        });
-                        $('#button-vehicle').prop('disabled', false);
-                    }
-                },
-                error: function (e) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
-                }
-            });
-        }
-
-
-    });
-
-    $('#bodySerials').change(function () {
-        var bodySerial = $(this).val();
-        console.log(bodySerial);
         $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifyBodySerial",
-            data: {
-                bodySerial: bodySerial
-            },
-
+            method: 'get',
+            url: url + "/ticketOffice/publicity/getTypeGroup/" + valType,
             beforeSend: function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
+
             },
             success: function (data) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "error") {
-                    swal({
-                        title: "¡Serial de Carroceria Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
-                    });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    $('#button-vehicle').prop('disabled', false);
-                }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
-    });
+                var i = 0;
 
-    $('#serialEngines').change(function () {
-        var serialEngine = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifySerialEngine",
-            data: {
-                serialEngine: serialEngine
-            },
+                $('#there').removeClass('disabled');
+                $('#two').addClass('disabled');
+                $('#user-tab-one').addClass('disabled');
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "error") {
-                    swal({
-                        title: "¡Serial del Motor Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
-                    });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    $('#button-vehicle').prop('disabled', false);
-                }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
-    });
-
-    $('#brand').change(function () {
-        var brand = $(this).val();
-        console.log(brand);
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/searchBrand",
-            data: {
-                brand: brand,
-            },
-
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-
-                if (data) {
-                    $('#model').prop('disabled', false);
-                    $('select').formSelect();
-
-                    $('select').formSelect();
-                    $('#model').html('');
+                var template = '';
 
 
-                    var i = 0;
-                    for (i; i < data[1]; i++) {
-                        console.log(data[0][i]['name']);
-                        var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
+                if (valType == 1) {
+                    //PUBLICIDAD POR TIEMPO
+                    $('#form-3').removeClass('hide');
+                    for (i; i < data.length; i++) {
+                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+                        $('#type_id-3').html(template);
                         $('select').formSelect();
-                        $('#model').append(template);
+                    }
+                } else if (valType == 2) {
+                    $('#form-4').removeClass('hide');
+                    for (i; i < data.length; i++) {
+                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+                        $('#type_id-4').html(template);
+                        $('select').formSelect();
+                    }
+                } else if (valType == 3) {
+                    $('#form-2').removeClass('hide');
+                    for (i; i < data.length; i++) {
+                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+                        $('#type_id-3').html(template);
+                        $('select').formSelect();
+                    }
+                } else if (valType == 4) {
+                    $('#form-1').removeClass('hide');
+                    for (i; i < data.length; i++) {
+                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+                        $('#type_id-1').html(template);
+                        $('select').formSelect();
+                    }
+                } else if (valType == 5) {
+                    $('#form-5').removeClass('hide');
+                    for (i; i < data.length; i++) {
+                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+                        $('#type_id-5').html(template);
+                        $('select').formSelect();
                     }
                 }
 
+                $('ul.tabs').tabs("select", "publicity-tab");
+
             },
             error: function (e) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+            }
+        });
+    });
+
+    $('#register').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        // var image = $('#image')[0].files[0]; // Getting file input data
+        // formData.append('image',image);
+        $.ajax({
+            url: url + "publicity/save",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            method: "POST",
+            beforeSend: function() {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function(resp) {
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "Se ha registrado la publicidad exitosamente.",
+                    icon: "success",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function (accept) {
+                    window.location.href = url + "publicity/my-publicity";
+                });
+            },
+            error: function(err) {
+                console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: {
+                    button:{
                         text: "Entendido",
                         className: "red-gradient"
                     },
@@ -817,139 +631,6 @@ $('document').ready(function () {
             }
         });
     });
-
-    $('#button-brand').on('click', function (e) {
-        e.preventDefault();
-        if (buttonBrand) {
-            if (controlButtonBrand) {
-                $('#group-MB').hide();
-                var html =
-                    `<div class="input-field col s6">
-                        <i class="icon-directions_car prefix"></i>
-                        <input type="text" name="brand-n" id="brand-n" minlength="1" maxlength="20"
-                        >
-                         <label for="brand-n">Marca</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <i class="icon-local_shipping prefix"></i>
-                        <input type="text" name="model-n" id="model-n" minlength="1" maxlength="20">
-                        <label for="model-n">Módelo</label>
-                    </div>`;
-                $('#group-new-MB').html(html);
-                $('#brand-n').focus();
-                console.log(buttonBrand);
-                buttonBrand = false;
-                controlButtonBrand = false;
-            } else {
-                $('#group-MB').hide();
-                $('#group-new-MB').show();
-                $('#brand-n').focus();
-            }
-
-        } else {
-            $('#group-new-MB').hide();
-            $('#group-MB').show();
-            buttonBrand = true;
-            swal({
-                title: "¡Oh no!",
-                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                icon: "error",
-                button: {
-                    text: "Entendido",
-                    className: "red-gradient"
-                },
-            });
-        }
-
-
-    });
-
-    $('#vehicle-register-ticket').submit(function (e) {
-        e.preventDefault();
-        console.log($('#brand').val());
-        //$('#button-company').attr('disabled', 'disabled');
-        var brand = $('#brand').val();
-        var brandN = $('#brand-n').val();
-        var modelN = $('#model-n').val();
-        if (brand == null && brandN == undefined) {
-            swal({
-                title: "Información",
-                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
-                icon: "info",
-                button: {
-                    text: "Entendido",
-                    className: "red-gradient"
-                },
-            });
-            $('#brand').focus();
-        } else if (brandN == '' || modelN == '') {
-            swal({
-                title: "Información",
-                text: "Debe seleccionar un marca de vehículo para poder completar el registro",
-                icon: "info",
-                button: {
-                    text: "Entendido",
-                    className: "red-gradient"
-                },
-            });
-            $('#brand-n').focus();
-        } else if ((brand != null) || (brandN != null && modelN != null)) {
-            $.ajax({
-                url: url + "ticketOffice/vehicle/save",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: new FormData(this),
-                method: "POST",
-
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (data) {
-                    console.log(data);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    if (data['status'] == 'success') {
-                        swal({
-                            title: "¡Bien Hecho!",
-                            text: "Vehículo registrado con exito!",
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function (accept) {
-                            window.location.href = url + "ticketOffice/vehicle/read";
-                        });
-                    } else {
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                            icon: "error",
-                            button: {
-                                text: "Entendido",
-                                className: "red-gradient"
-                            },
-                        });
-                    }
-                },
-                error: function (err) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
-                }
-            });
-        }
-    });
-
-
 });
 
 

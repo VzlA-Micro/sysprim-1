@@ -11,8 +11,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register') }}">Registrar</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar por Tipo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar por Tipo Publicidad</a></li>
 
                 </ul>
             </div>

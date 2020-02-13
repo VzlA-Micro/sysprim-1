@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim/sysprim_logo.png') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim/sysprim_logo.png') }}" style="max-width: 220px; max-height: 64px" alt="Logo Sysprim" width="100%" height="100%" class="brand-logo responsive-img"></a>
             {{-- Sidenav Trigger --}}
             <a href="#" data-target="sidenav-menu" class="sidenav-trigger"><i class="icon-menu"></i></a>
             {{-- Authenticacion links --}}
@@ -33,7 +33,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/semat.png') }}" alt="" srcset="">                    
+                    <img src="{{ asset('images/semat.png') }}" alt="semat" srcset="">                    
                 </a>
             </li>
             @php 

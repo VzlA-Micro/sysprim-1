@@ -432,6 +432,9 @@ Route::middleware(['auth'])->group(/**
         Route::get('/company/change-status/{id}/{status}', 'CompaniesController@changeStatus');
         Route::get('/company/change-users/{company_id}/{ci}', 'CompaniesController@changeUser');
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
+        ##### PUBLICIDAD
+        Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
+
 
         /* !NOTA!: HAY RUTAS QUE DEBEN IDENTIFICARSE PARA SABER A QUIEN PERTENECE, SI ES DE USUARIO WEB O DE TAQUILLA */
 
@@ -603,17 +606,19 @@ Route::middleware(['auth'])->group(/**
         });
 
 //PUBLICIDAD TICKET OFFICE
-Route::get('/ticketOffice/publicity/home',function (){
-   return view('modules.publicity.ticket-office.home');
-})->name('ticketOffice.publicity.home');
+        Route::get('/ticketOffice/publicity/home', function () {
+            return view('modules.publicity.ticket-office.home');
+        })->name('ticketOffice.publicity.home');
 
-        Route::get('/ticketOffice/publicity/manage-publicity',function (){
+        Route::get('/ticketOffice/publicity/manage-publicity', function () {
             return view('modules.publicity.ticket-office.menu');
         })->name('ticketOffice.publicity.managePublicity');
 
-       Route::get('/ticketOffice/publicity/register',function (){
-          return view('modules.publicity.ticket-office.register');
-       })->name('ticketOffice.publicity.register');
+        Route::get('/ticketOffice/publicity/register', function () {
+            return view('modules.publicity.ticket-office.register');
+        })->name('ticketOffice.publicity.register');
+
+        Route::get('/ticketOffice/publicity/getTypeGroup/{group}','PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
         /////
 
         ############ CONTRIBUYENTE #######################
@@ -816,8 +821,6 @@ Route::get('/ticketOffice/publicity/home',function (){
                 Route::get('property/ticket-office/change-propietario/{type}/{document}/{property_id}', 'PropertyController@changePropietarioPropertyTicketOffice');
                 Route::post('property/ticket-office/update-map', 'PropertyController@updatedMapPropertyTicketOffice');
                 Route::post('property/ticket-office/update-property', 'PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
-                Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
-
                 // ---------
                 Route::get('/properties/ticket-office/manage', 'PropertyTaxesController@manageTicketOffice')->name('properties.ticket-office.manage');
 //                Route::get('/properties/ticket-office/geneate', 'PropertyTaxesController@generateTicketOfficePayroll')->name('properties.ticket-office.generate');
@@ -838,6 +841,7 @@ Route::get('/ticketOffice/publicity/home',function (){
                         Route::group(['middleware' => ['permission:Detalles Inmuebles']], function () {
                             Route::get('property/ticket-office/details-property/{id}', 'PropertyController@detailsPropertyTicketOffice')->name('property.ticket-office.details-property');
                             Route::post('property/ticket-office/update-property', 'PropertyController@updatePropertyTicketOffice')->name('property.ticket-office.update-property');
+                            Route::get('/properties/ticket-office/property-taxes/{id}', 'PropertyController@allTaxes')->name('properties.ticket-office.property-taxes');
                         });
                     });
                 });
@@ -848,7 +852,6 @@ Route::get('/ticketOffice/publicity/home',function (){
                     Route::get('/properties/ticket-office/payments/taxes', 'PropertyTaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
                     Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertyTaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
                     Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
-
                 });
             });
 

@@ -38,8 +38,8 @@
                     @if (Storage::disk('companies')->has($company->image))
                         <div class="card-image">
                             <img src="{{ route('companies.image', ['filename' => $company->image]) }}"
-                                 class="materialboxed" data-caption="{{ $company->address }}" alt="" srcset=""
-                                 style="max-height:350px;">
+                                 class="materialboxed" data-caption="{{ $company->address }}" srcset=""
+                                 style="max-height:350px;" alt="Company" width="100%" height="100%">
                             {{-- <span class="card-title grey-text"><b>Dirección:</b> {{ $company->address }}</span> --}}
                         </div>
                     @endif

@@ -381,8 +381,8 @@ class PropertyController extends Controller
 
         $type='';
 
-
-
+        $payments = $property->propertyTaxes()->orderBy('id', 'desc')->count();
+//        dd($payments);
 
         if(!is_null($property->users[0]->pivot->person_id)){
             $type='users';
@@ -402,8 +402,19 @@ class PropertyController extends Controller
             'alicuota'=>$alicuota,
             'property'=>$property,
             'type'=>$type,
-            'data'=>$data
+            'data'=>$data,
+            'payments' => $payments
         ]);
+    }
+
+    public function allTaxes($id) {
+        $property = Property::findOrFail($id);
+        $propertyTaxes = $property->propertyTaxes()->orderBy('id', 'desc')->get();
+        session(['property' => $property]);
+        return view('modules.properties.module.taxes', [
+                'propertyTaxes' => $propertyTaxes,
+                'property' => $property
+            ]);
     }
 
     public function readPropertyTicketOffice(){

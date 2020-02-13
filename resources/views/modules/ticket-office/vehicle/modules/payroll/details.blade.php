@@ -47,7 +47,7 @@
                         <input type="hidden" name="taxe_id" id="taxes_id" value="{{$response['taxes']->id}}">
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="base" id="base" class="validate money"
                                    value="{{$response['vehicleTaxes'][0]->base_imponible}}"
@@ -57,7 +57,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="previous_debt" id="previous_debt" class="validate recargo money"
                                    pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
@@ -66,7 +66,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="discount" id="discount" class="validate money"
                                    value="{{$response['vehicleTaxes'][0]->discount}}"
@@ -76,7 +76,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="recharge" id="recharge" class="validate money"
                                    pattern="[0-9.,]+"
@@ -87,7 +87,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="rechargeMora" id="rechargeMora" class="validate money"
                                    pattern="[0-9.,]+"
@@ -98,7 +98,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="fiscal_credits" id="fiscal_credits"
                                    class="validate number-only" readonly pattern="[0-9.,]+"
@@ -109,7 +109,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="total" id="total"
                                    class="validate number-only" pattern="[0-9.,]+"

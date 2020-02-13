@@ -11,7 +11,7 @@
         <tbody>
             <tr>
                 <td style="width: 25%; text-align: left;">
-                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 130px; height: 60px;" alt="">
+                    <img src="{{ asset('images/semat_logo.png') }}" style="width: 130px; height: 60px;" alt="Logo Semat" width="100%" height="100%">
                 </td>
                 <td style="width: 50%; text-align: center;">
                     <span style="font-size: 12px !important;">
@@ -21,7 +21,7 @@
 					</span>
                 </td>
                 <td style="width: 25%; text-align: right;">
-                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 130px; height: 60px;" alt="">
+                    <img src="{{ asset('images/alcaldia_logo.png') }}" style="width: 130px; height: 60px;" alt="Logo Semat" width="100%" height="100%">
                 </td>
             </tr>
             <tr>
@@ -46,7 +46,7 @@
                     <span>{{ $company->name }}</span>
                 </td>
                 <td style="width:20%;" rowspan="5">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->license.'-'.$company->created_at)) !!} " style="width: 150px; height: 150px; margin: auto;" ><br>
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(250)->generate($company->license.'-'.$company->created_at)) !!} " style="width: 150px; height: 150px; margin: auto;" alt="Imagen V" width="100%" height="100%" ><br>
                 </td>
             </tr>
             <tr>
@@ -75,10 +75,10 @@
             </tr>
             <tr>
                 <td style="width:15%;">
-                    <img src="{{ asset('images/logo.png') }}" style="width: 160px; height: 120px;" alt="">
+                    <img src="{{ asset('images/logo.png') }}" style="width: 160px; height: 120px;" alt="logo" width="100%" height="100%">
                 </td>
                 <td style="width:60%;font-size: 10px;text-align: center;">
-                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: relative; left: 270px !important; top: 180px; margin-bottom:-13px;" alt=""><br>
+                    <img src="{{ asset('images/pdf/firma-director.png') }}" style="width: 150px; height: 120px;position: relative; left: 270px !important; top: 180px; margin-bottom:-13px;" alt="Firma" width="100%" height="100%"><br>
                     __________________________________________<br>
                     ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
                     Directora (E) de la Dirección de Hacienda y<br>

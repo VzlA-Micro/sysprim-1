@@ -82,7 +82,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="base[]" id="base_{{$ciu->ciu->code}}" class="validate money"
                                        value="{{ $ciu->base }}" readonly>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}"
                                        class="validate recargo money"
@@ -100,7 +100,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="interest[]" id="interest_{{$ciu->ciu->code}}"
                                        class="validate money"
@@ -109,7 +109,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="total_ciu[]" id="total_ciu_{{$ciu->ciu->code}}"
                                        class="validate total_ciu money"
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <i class="prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                     </i>
 
                                     <input type="text" name="deductions[]" id="deductions" class="validate money"
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <i class="prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                     </i>
                                     <input type="text" name="withholding[]" id="withholdings" class="validate money"
                                            pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <i class="prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                     </i>
                                     <input type="text" name="fiscal_credits[]" id="fiscal_credits"
                                            class="validate money"
@@ -208,7 +208,7 @@
                                 </div>
                                 <div class=" input-field col s12 m12 ">
                                     <i class=" prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                     </i>
                                     <input type="text" name="total" class="validate total money"
                                            value="{{$amount['amountTotal']}}" readonly>

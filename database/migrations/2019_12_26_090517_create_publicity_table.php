@@ -24,9 +24,10 @@ class CreatePublicityTable extends Migration
             $table->float('height')->unsigned()->nullable();
             $table->integer('side')->unsigned()->nullable();
             $table->integer('floor')->unsigned()->nullable();
+            $table->integer('point')->unsigned()->nullable();
             $table->string('image')->nullable();
             $table->integer('advertising_type_id')->unsigned();
-            $table->foreign('advertising_type_id')->references('id')->on('advertising_type')->onDelete('cascade');
+            $table->foreign('advertising_type_id')->references('id')->on('advertising_type');
             $table->timestamps();
         });
     }

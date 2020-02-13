@@ -72,7 +72,7 @@
             @can('Gestionar Tipos de Publicidad')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('advertising-type.manage') }}" class="btn-app white teal-text">
-                    <i class="icon-folder_special"></i>
+                    <i class="icon-movie_filter"></i>
                     <span class="truncate">Gestionar Tipos de Publicidad</span>
                 </a>
             </div>
@@ -88,7 +88,7 @@
             @can('Gestionar Tasas')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('rate.manager')}}" class="btn-app white indigo-text">
-                    <i class="icon-library_books"></i>
+                    <i class="fas fa-clipboard"></i>
                     <span class="truncate">Gestionar Tasas</span>
                 </a>
             </div>

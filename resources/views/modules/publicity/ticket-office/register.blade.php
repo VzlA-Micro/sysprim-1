@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-
+    <link rel="stylesheet" href="{{ asset('css/imagePreview.css') }}">
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" class="card" id="vehicle-register-ticket">
+                <form action="#" class="card" id="register">
                     <ul class="tabs">
                         <li class="tab col s4" id="user-tab-one">
                             <a href="#user-tab">
@@ -119,7 +119,7 @@
 
                             <div class="col s12 m6 animated bounceIn">
                                 <button type="button" id="f1" name="f1" style="border: none"
-                                        class="btn-app white blue-text" value="1">
+                                        class="btn-app white blue-text" value="4">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad eventual u ocacional</span>
                                 </button>
@@ -127,7 +127,7 @@
 
                             <div class="col s12 m6 animated bounceIn">
                                 <button type="button" id="f2" name="f2" style="border: none"
-                                        class="btn-app white blue-text" value="2">
+                                        class="btn-app white blue-text" value="1">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tiempo</span>
                                 </button>
@@ -135,14 +135,14 @@
 
                             <div class="col s12 m4 animated bounceIn">
                                 <button type="button" id="f3" name="f3" style="border: none"
-                                        class="btn-app white blue-text" value="3">
+                                        class="btn-app white blue-text" value="2">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tamaño</span>
                                 </button>
                             </div>
                             <div class="col s12 m4 animated bounceIn">
                                 <button type="button" id="f4" name="f4" style="border: none"
-                                        class="btn-app white blue-text" value="4">
+                                        class="btn-app white blue-text" value="3">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por cantidad</span>
                                 </button>
@@ -157,13 +157,13 @@
 
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous"
-                                   class="btn btn-rounded peach waves-effect waves light">
+                                   class="btn peach waves-effect waves light">
                                     Anterior
                                     <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6  right-align">
-                                <a href="#" id='data1-next' class="btn peach waves-effect btn-rounded waves-light">
+                                <a href="#" id='data1-next' class="btn peach waves-effect waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>
@@ -173,16 +173,12 @@
                     <div id="publicity-tab">
 
                         <div class="card-header center-align">
-                            <h4>Datos del Vehículo</h4>
+                            <h4>Datos de la publicidad</h4>
                         </div>
-
                         <div class="card-content hide row" id="form-1">
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="type_id-1">
                                     <option value="null" disabled selected>Elija un tipo</option>
-                                    {{--@foreach($advertisingTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach--}}
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
@@ -229,15 +225,28 @@
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
                             </div>
+
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="publicity-previous"
+                                   class="btn   peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves-light"
+                                        id="button-publicity">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
+
                         </div>
                         <div class="card-content hide row" id="form-2">
 
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="type_id-2">
                                     <option value="null" disabled selected>Elija un tipo</option>
-                                    {{--@foreach($advertisingTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach--}}
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
@@ -276,14 +285,27 @@
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Ejemplares</label>
                             </div>
+
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="publicity-previous"
+                                   class="btn   peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves-light"
+                                        id="button-publicity">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
+
                         </div>
                         <div class="card-content hide row" id="form-3">
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="type_id-3">
                                     <option value="null" disabled selected>Elija un tipo</option>
-                                    {{--@foreach($advertisingTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach--}}
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
@@ -310,14 +332,27 @@
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
+
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="publicity-previous"
+                                   class="btn   peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves-light"
+                                        id="button-publicity">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
+
                         </div>
                         <div class="card-content hide row" id="form-4">
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="type_id-4">
                                     <option value="null" disabled selected>Elija un tipo</option>
-                                    {{-- @foreach($advertisingTypes as $type)
-                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                     @endforeach--}}
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
@@ -360,14 +395,27 @@
                                 <label for="height">Alto</label>
                                 <input type="text" class="js-range-slider height" name="height" id="height" value="">
                             </div>
+
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="publicity-previous"
+                                   class="btn   peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves-light"
+                                        id="button-publicity">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
+
                         </div>
                         <div class="card-content hide row" id="form-5">
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="type_id-5">
                                     <option value="null" disabled selected>Elija un tipo</option>
-                                    {{--@foreach($advertisingTypes as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach--}}
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
@@ -422,21 +470,23 @@
                                 <input type="text" name="floor" id="floor">
                                 <label for="floor">Pisos</label>
                             </div>
-                        </div>
 
-                        <div class="input-field col s6 left-align">
-                            <a href="#" id="company-previous"
-                               class="btn btn-large btn-rounded peach waves-effect waves light">
-                                Anterior
-                                <i class="icon-navigate_before left"></i>
-                            </a>
-                        </div>
-                        <div class="input-field col s6 right-align">
-                            <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light"
-                                    id="button-company">
-                                <i class="icon-send right"></i>
-                                Registrar
-                            </button>
+                            <div class="input-field col s6 left-align">
+                                <a href="#" id="publicity-previous"
+                                   class="btn   peach waves-effect waves light">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves-light"
+                                        id="button-publicity">
+                                    <i class="icon-send right"></i>
+                                    Registrar
+                                </button>
+                            </div>
+
+
                         </div>
                     </div>
                 </form>
@@ -447,6 +497,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/imagePreview.js') }}"></script>
     <script src="{{ asset('js/data/publicityTicketOffice.js') }}"></script>
     {{--<script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>--}}
     <script src="{{ asset('js/validations.js') }}"></script>

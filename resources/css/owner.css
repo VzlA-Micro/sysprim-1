@@ -338,6 +338,7 @@ nav ul a.dropdown-trigger.avatar-trigger {
 
 .dropdown-trigger img.avatar {
   width: 45px;
+  height: 45px;
   margin-top: 0.5rem;
 }
 
