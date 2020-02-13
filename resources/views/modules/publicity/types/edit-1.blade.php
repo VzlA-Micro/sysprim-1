@@ -25,6 +25,7 @@
 						@csrf
 						<input type="hidden" name="id" id="id" value="{{ $publicity->id }}">
 						<div class="input-field col s12">
+								<i class="icon-linked_camera prefix"></i>
 							<select name="advertising_type_id" id="advertising_type_id" disabled>
 								<option value="null" disabled selected>Elija un tipo</option>
 								@foreach($advertisingTypes as $type)
@@ -34,6 +35,7 @@
 							<label>Tipo de Publicidad</label>
 						</div>
 						<div class="input-field col s12">
+								<i class="icon-format_size prefix"></i>
 							<input type="text" name="name" id="name" value="{{ $publicity->name }}" disabled>
 							<label for="name">Nombre</label>
 						</div>
@@ -61,14 +63,17 @@
 							</div>
 						@endif
 						<div class="input-field col s12 m6">
+							<i class="icon-date_range prefix"></i>
 							<input type="text" name="date_start" id="date_start" class="datepicker date_start" value="{{ $publicity->date_start }}" disabled>
 							<label for="date_start">Fecha de Inicio</label>
 						</div>
 						<div class="input-field col s12 m6">
+							<i class="icon-date_range prefix"></i>
 							<input type="text" name="date_end" id="date_end" class="datepicker" value="{{ $publicity->date_end }}" disabled>
 							<label for="date_end">Fecha de Fin</label>
 						</div>
 						<div class="col s12 input-field">
+							<i class="icon-straighten prefix"></i>
 							<select name="unit" id="unit" disabled>
 								<option value="null" disabled>Elige la unidad</option>
 								<option value="mts" @if($publicity->unit != 'mts') {{ "disabled" }} @endif>Metro</option>
@@ -85,8 +90,14 @@
 							<input type="text" class="js-range-slider height" name="height" id="height" value="{{ $publicity->height }}" disabled>
 						</div>
 						<div class="input-field col s12">
+<<<<<<< HEAD
 							<input type="number" name="quantity" id="quantity" class="validate number-only" value="{{ $publicity->point }}" disabled>
 							<label for="quantity">Cantidad de Lugares</label>
+=======
+							<i class="icon-exposure_plus_1 prefix"></i>
+							<input type="text" name="point" id="point" class="validate number-only" value="{{ $publicity->point }}" disabled>
+							<label for="point">Cantidad de Lugares</label>
+>>>>>>> 062a1c0f28d9d02ea8a4c1e1eea03ae819f588b8
 						</div>
 					</div>
 					<div class="card-footer center-align">

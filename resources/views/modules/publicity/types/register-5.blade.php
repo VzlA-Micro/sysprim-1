@@ -74,7 +74,7 @@
                         @endif
                         <div class="card-content row">
                             <div class="input-field col s12">
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="advertising_type_id" required>
                                     <option value="null" disabled selected>Elija un tipo</option>
                                     @foreach($advertisingTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -83,7 +83,7 @@
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" required>
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -97,11 +97,11 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
+                                <input type="text" name="date_start" id="date_start" class="datepicker date_start" required>
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
@@ -114,11 +114,11 @@
                             </div>
                             <div class="col s12">
                                 <label for="width">Ancho</label>
-                                <input type="text" class="js-range-slider" name="width" id="width" value="">
+                                <input type="text" class="js-range-slider" name="width" id="width" value="" required>
                             </div>
                             <div class="col s12">
-                                <label for="height">Alto</label>
-                                <input type="text" class="js-range-slider" name="height" id="height" value="">
+                                <label for="height">Alto o Pisos</label>
+                                <input type="text" class="js-range-slider" name="height" id="height" value="" required>
                             </div>
                             {{--<div class="input-field col s12">--}}
                             {{--<input type="number" name="quantity" id="quantity">--}}
@@ -128,10 +128,10 @@
                                 <input type="number" name="side" id="side">
                                 <label for="side">Cantidad de Caras</label>
                             </div>
-                            <div class="input-field col s12">
+                            {{-- <div class="input-field col s12">
                                 <input type="number" name="floor" id="floor">
                                 <label for="floor">Pisos</label>
-                            </div>
+                            </div> --}}
                             <div id="content"></div>
                         </div>
                         <div class="card-action center-align">

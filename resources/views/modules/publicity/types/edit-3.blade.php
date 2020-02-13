@@ -25,6 +25,7 @@
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $publicity->id }}">
                         <div class="input-field col s12">
+                            <i class="icon-linked_camera prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id" disabled>
                                 <option value="null" disabled selected>Elija un tipo</option>
                                 @foreach($advertisingTypes as $type)
@@ -34,6 +35,7 @@
                             <label>Tipo de Publicidad</label>
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-format_size prefix"></i>
                             <input type="text" name="name" id="name" value="{{ $publicity->name }}" disabled>
                             <label for="name">Nombre</label>
                         </div>
@@ -61,10 +63,12 @@
                             </div>
                         @endif
                         <div class="input-field col s12 m6">
+                            <i class="icon-date_range prefix"></i>
                             <input type="text" name="date_start" id="date_start" class="datepicker" value="{{ $publicity->date_start }}" disabled>
                             <label for="date_start">Fecha de Inicio</label>
                         </div>
                         <div class="input-field col s12 m6">
+                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="date_end" id="date_end" class="datepicker" value="{{ $publicity->date_end }}" disabled>
                             <label for="date_end">Fecha de Fin</label>
                         </div>

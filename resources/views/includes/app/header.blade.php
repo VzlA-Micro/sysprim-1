@@ -216,10 +216,10 @@
                     <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-directions_car left"></i>Mis Vehiculos</a></li>
                     @endcan
                     @can('Mis Publicidades')
-                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
+                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-movie_filter left"></i>Mis Publicidades</a></li>
                     @endcan
                     @can('Generar Tasas')
-                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="icon-picture_as_pdf left"></i>Gestión de Tasas</a></li>
+                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="fas fa-clipboard"></i>Gestión de Tasas</a></li>
                     @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">

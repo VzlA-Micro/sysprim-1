@@ -9,43 +9,39 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}">Consultar Alicuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}">Gestionar
+                            Grupo de Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
+                            Grupo de Publicidad</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h4>Consultar Alicuota Inmuebles</h4>
+                        <h5>Grupos de Publicidad</h5>
                     </div>
                     <div class="card-content">
-                        <table class="highlight centered" id="recharges-table" style="width: 100%">
+                        <table class="centered striped" id="typeVehicle" style="width: 100%">
                             <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Valor</th>
-                                    @can('Detalles Alicuota')
-                                    <th>Detalles</th>
-                                    @endcan
-                                </tr>
+                            <tr>
+                                <th>Nombre del Grupo</th>   
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($alicuotas as $alicuota)
+                            {{-- @foreach($showBrand as $brand)
                                 <tr>
-                                    <td>{{ $alicuota->name }}</td>
-                                    <td>{{ $alicuota->value }}</td>
-                                    @can('Detalles Alicuota')
+                                    <td>{{$brand->name}}</td>
+                                    @can('Detalles Marca de Vehiculos')
                                     <td>
-                                        <a href="{{ route('alicuota.details', ['id' => $alicuota->id]) }}" class="btn btn-floating blue waves-effect waves-light">
-                                            <i class="icon-pageview"></i>
-                                        </a>
+                                        <a href="{{route('vehicles.brand.details',['id'=>$brand->id])}}" class="btn btn-floating orange waves-light"><i
+                                                    class="icon-pageview"></i></a>
                                     </td>
                                     @endcan
                                 </tr>
-                                @endforeach
+                            @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -57,10 +53,11 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#recharges-table').DataTable({
+        $('#typeVehicle').DataTable({
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",

@@ -8,19 +8,19 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}" >Gestionar
-                            Marcas De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
-                            Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="#" >Gestionar
+                            Grupo de Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="#" >Ver
+                            Grupos</a></li>
 
-                    <li class="breadcrumb-item"><a href="#">Detalles De
-                            Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detalles
+                            </a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 <form id="updateBrand" method="" class="card">
                     <div class="card-header center-align">
-                        <h5>Detalles De Marca De Vehiculo</h5>
+                        <h5>Detalles De Grupo de Publicidad</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
@@ -29,11 +29,11 @@
                         <div class="input-field col s12">
                             <i class="icon-time_to_leave prefix"></i>
                             <input id="name" type="text" name="name" readonly value="{{ $brand->name }}" maxlength="40" minlength="10" required>
-                            <label for="name">Marca</label>
+                            <label for="name">Grupo</label>
                         </div>
                     </div>
                     <div class="card-action center">
-                        @can('Actualizar Marcas de Vehiculos')
+                        @can('')
                             <a id="btn-modify" class="btn btn-large btn-rounded blue waves-effect waves-light">
                                 <i class="icon-update right"></i>
                                 Modificar
@@ -55,6 +55,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/dev/brandVehicle.js') }}"></script>
-    <script src="{{ asset('js/validations.js') }}"></script>
+<script src="{{ asset('js/dev/groupPublicity.js') }}"></script>
+<script src="{{ asset('js/validations.js') }}"></script>
 @endsection
