@@ -454,6 +454,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
         ##### PUBLICIDAD
         Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        // Mover esta ruta a la taquilla
 
 
 
@@ -606,12 +607,13 @@ Route::middleware(['auth'])->group(/**
         Route::group(['middleware' => ['permission:Mis Publicidades|Consultar Mis Publicidades']], function () {
             // Nivel 1: Consultar y Registrar
             Route::get('/publicity/my-publicity', 'PublicityController@show')->name('publicity.my-publicity');
+            Route::get('/publicity/company/my-publicity/{company_id}', 'PublicityController@readCompanyPublicities')->name('publicity.company.my-publicity');
             Route::get('/publicity/image/{filename}', 'PublicityController@getImage')->name('publicity.image');
             // Nivel 2: Registrar
             Route::group(['middleware' => ['permission:Registrar Mis Publicidades']], function () {
                 Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
-                Route::get('/publicity/register/types', 'PublicityController@chooseType')->name('publicity.register.types');
-                Route::get('/publicity/register/create/{id}', 'PublicityController@createByType')->name('publicity.register.create');
+                Route::get('/publicity/register/types/{company_id?}', 'PublicityController@chooseType')->name('publicity.register.types');
+                Route::get('/publicity/register/create/{id}/{company_id?}', 'PublicityController@createByType')->name('publicity.register.create');
                 Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
             });
             // Nivel 3: Detalles
@@ -624,6 +626,13 @@ Route::middleware(['auth'])->group(/**
             // Declaraciones de Publicidad
             Route::get('/publicity/payments/manage/{id}', 'PublicityTaxesController@index')->name('publicity.payments.manage');
             Route::get('/publicity/payments/create/{id}', 'PublicityTaxesController@create')->name('publicity.payments.create');
+            Route::post('/publicity/taxes/store', 'PublicityTaxesController@store')->name('publicity.taxes.store');
+            Route::get('/publicity/payments/taxes/{id}', 'PublicityTaxesController@typePayment')->name('publicity.payments.taxes');
+            Route::post('/publicity/payments/taxes/store', 'PublicityTaxesController@paymentStore')->name('publicity.payments.taxes.store');
+            Route::get('/publicity/payments/history/{id}', 'PublicityTaxesController@paymentHistoryTaxPayers')->name('publicity.payments.history');
+            Route::get('/publicity/taxpayer/pdf/{id}/{download?}', 'PublicityTaxesController@pdfTaxpayer')->name('publicity.taxpayers.pdf');
+
+
         });
 
 

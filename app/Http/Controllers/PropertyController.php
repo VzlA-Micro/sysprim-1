@@ -109,8 +109,8 @@ class PropertyController extends Controller
         $typeConst = $request->input('type_const');
         $type_inmueble_id = $request->input('type_inmueble_id');
         $status = $request->input('status');
-//        $type = $request->input('type');
         $owner_id = $request->input('id');
+//        $type = $request->input('type');
 
         $property = new Property();
         $property->parish_id = $parish;

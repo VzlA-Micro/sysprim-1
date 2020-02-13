@@ -90,9 +90,14 @@
 							<input type="text" class="js-range-slider height" name="height" id="height" value="{{ $publicity->height }}" disabled>
 						</div>
 						<div class="input-field col s12">
+<<<<<<< HEAD
+							<input type="number" name="quantity" id="quantity" class="validate number-only" value="{{ $publicity->point }}" disabled>
+							<label for="quantity">Cantidad de Lugares</label>
+=======
 							<i class="icon-exposure_plus_1 prefix"></i>
 							<input type="text" name="point" id="point" class="validate number-only" value="{{ $publicity->point }}" disabled>
 							<label for="point">Cantidad de Lugares</label>
+>>>>>>> 062a1c0f28d9d02ea8a4c1e1eea03ae819f588b8
 						</div>
 					</div>
 					<div class="card-footer center-align">
