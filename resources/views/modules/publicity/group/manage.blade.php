@@ -10,26 +10,26 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="#" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="#">Gestionar Grupos de Publicidad</a></li>
                 </ul>
             </div>
-            @can('')
+            {{-- @can('') --}}
             <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white purple-text">
+             <a href="{{route('group-publicity.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Grupo de Publicidad</span>
                 </a>
             </div>
-            @endcan
-            @can('')
+            {{-- @endcan --}}
+            {{-- @can('') --}}
             <div class="col s12 m4 animated bounceIn">
-                <a href="#" class="btn-app white blue-text">
-                    <i class="icon-icon-list"></i>
+                <a href="{{ route('group-publicity.read') }}" class="btn-app white blue-text">
+                    <i class="icon-list"></i>
                     <span class="truncate">Ver Grupo de Publicidad</span>
                 </a>
             </div>
-            @endcan
+            {{-- @endcan --}}
         </div>
     </div>
 @endsection

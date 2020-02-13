@@ -10,11 +10,9 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}">Gestionar
-                            Grupo de Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
+                    <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('group-publicity.manage') }}">Gestionar Grupo de Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="#" >Ver
                             Grupo de Publicidad</a></li>
                 </ul>
             </div>
@@ -24,24 +22,25 @@
                         <h5>Grupos de Publicidad</h5>
                     </div>
                     <div class="card-content">
-                        <table class="centered striped" id="typeVehicle" style="width: 100%">
+                        <table class="centered striped" id="groupPublicity" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Nombre del Grupo</th>   
+                                <th>Detalles</th> 
                             </tr>
                             </thead>
                             <tbody>
-                            {{-- @foreach($showBrand as $brand)
+                            @foreach($showGroups as $showGroup)
                                 <tr>
-                                    <td>{{$brand->name}}</td>
-                                    @can('Detalles Marca de Vehiculos')
+                                    <td>{{$showGroup->name}}</td>
+                                    {{-- @can('Detalles Marca de Vehiculos') --}}
                                     <td>
-                                        <a href="{{route('vehicles.brand.details',['id'=>$brand->id])}}" class="btn btn-floating orange waves-light"><i
+                                        <a href="{{route('group-publicity.details',['id'=>$showGroup->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
-                                    @endcan
+                                    {{-- @endcan --}}
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -53,7 +52,7 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#typeVehicle').DataTable({
+        $('#groupPublicity').DataTable({
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
@@ -62,7 +61,7 @@
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla.",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
