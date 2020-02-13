@@ -105,7 +105,7 @@
                             </div>
 
 
-                            <div class="input-field col s12 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
+                            <div class="input-field col s12 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                                 <i class="icon-chrome_reader_mode prefix"></i>
                                 <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" data-validate="licencia">
                                 <label for="license">Licencia</label>
@@ -113,17 +113,18 @@
 
 
 
-                            <div class="input-field col s12 m4">
+                           <!-- <div class="input-field col s12 m4">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="opening_date" id="opening_date" class="datepicker company-validate" required data-validate="Fecha de apertura">
                                 <label for="opening_date">Fecha de Apertura</label>
-                            </div>
+                            </div>-->
 
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
+                            <!--<div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="number_employees" id="number_employees" class="validate company-validate number-date only-number-positive" maxlength="5" pattern="[0-9]+" title="Solo puede usar números" data-validate="Número de empleados " required>
                                 <label for="number_employees">Número de Empleados</label>
                             </div>
+                          -->
 
 
                             <div class="input-field col m6 s12">
@@ -157,12 +158,11 @@
                             </div>
 
 
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
+                        <!--<div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                                 <i class="icon-offline_pin prefix"></i>
                                 <input type="text" name="code_catastral" id="code_catastral" class="validate question_license_validate" data-validate="Código Catastral" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas."  required>
                                 <label for="code_catastral">Código Catastral</label>
-                            </div>
-
+                            </div>-->
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
                                 <i class="icon-phone_android prefix"></i>
                                 <select name="country_code_company" id="country_code_company" required>

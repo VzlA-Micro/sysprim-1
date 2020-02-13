@@ -511,8 +511,6 @@ $(document).ready(function () {
 
 
 
-
-
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
 
                 $('#button-company').attr('disabled','disabled');
@@ -820,12 +818,12 @@ $(document).ready(function () {
 
             if (questions_license == 'true') {
 
-                swal({
+                /*swal({
                     title: "Información",
                     text: "Ingrese el numero de licencia otorgado y su código catastral.",
                     icon: "info",
                     button: "Ok",
-                });
+                });*/
                 $('#license').removeAttr('disabled', '');
                 $('#code_catastral').removeAttr('disabled', '');
                 $('#code').removeAttr('disabled', '');

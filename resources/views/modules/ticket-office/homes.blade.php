@@ -66,12 +66,26 @@
                     </a>
                 </div>
             @endcan
+        </div>
+        <div id="mode" class="modal modal-sm">
+            <div class="">
+                <div class="modal-content">
+                    <h5 class="center-align">Taquillas</h5>
+                </div>
+                <div class="modal-footer">
+                    <div class="content row">
 
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    @include('includes.lateral-bar')
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/validations.js') }}"></script>
+    <script0 src="{{ asset('js/validations.js') }}"></script0>
+    <script src="{{ asset('js/data/sysq.js') }}"></script>
 @endsection
