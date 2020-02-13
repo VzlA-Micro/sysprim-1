@@ -152,7 +152,7 @@
                 <h4 class="center-align">Escanear QR O Ingresar Código</h4>
                 <div class="col l12">
                     <div class="col s12 center-align">
-                        <img src="{{asset('images/scan.gif')}}" class="img-responsive">
+                        <img src="{{asset('images/scan.gif')}}" class="img-responsive" alt="Image" width="100%" height="100%">
                     </div>
                     <div class="input-field col s10">
                         <i class="icon-search prefix"></i>

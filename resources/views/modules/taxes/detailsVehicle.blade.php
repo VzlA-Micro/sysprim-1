@@ -103,7 +103,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="base" id="base" class="validate money"
                                        value="{{$grossTaxes}}"
@@ -113,7 +113,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="previous_debt" id="previous_debt"
                                        class="validate recargo money"
@@ -123,7 +123,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="discount" id="discount" class="validate money"
                                        value="{{$valueDiscount}}"
@@ -133,7 +133,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="recharge" id="recharge" class="validate money"
                                        pattern="[0-9.,]+"
@@ -144,7 +144,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="rechargeMora" id="rechargeMora" class="validate money"
                                        pattern="[0-9.,]+"
@@ -155,7 +155,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
                                        class="validate number-only" pattern="[0-9.,]+"
@@ -255,7 +255,7 @@
                                             <div class="row">
                                                 <div class="col s12 m4 center-align">
                                                     <img src="{{ asset('images/png/001-point-of-service.png') }}"
-                                                         class="responsive-img circle">
+                                                         class="responsive-img circle" alt="Payment Image" width="100%" height="100%">
                                                     <a href="#" data-target='ppv'
                                                        class="btn btn-large yellow darken-4 waves-effect waves-light tick payments"
                                                        data-payments="PPV">
@@ -266,7 +266,7 @@
                                                 <div class="col s12 m4 center-align">
                                                     <div class="img"></div>
                                                     <img src="{{ asset('images/png/009-smartphone-1.png') }}"
-                                                         class="responsive-img circle">
+                                                         class="responsive-img circle" alt="Payment Image" width="100%" height="100%">
                                                     <a href="#" data-target='ptb'
                                                        class="btn btn-large blue waves-effect waves-light  dropdown-trigger payments"
                                                        data-payments="PTB">
@@ -281,7 +281,7 @@
                                                 </div>
                                                 <div class="col s12 m4 center-align">
                                                     <img src="{{ asset('images/png/030-bank.png') }}"
-                                                         class="responsive-img circle">
+                                                         class="responsive-img circle" alt="Payment Image" width="100%" height="100%">
                                                     <a href="#" data-target='ppb'
                                                        class="btn btn-large red waves-effect waves-light dropdown-trigger payments"
                                                        data-payments="PPB">

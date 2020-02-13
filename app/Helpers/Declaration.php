@@ -10,7 +10,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
 use App\Notification;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use App\Payments;
 use App\Inmueble;
 use App\CatastralConstruccion;

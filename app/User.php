@@ -64,6 +64,11 @@ class User extends Authenticatable  implements Auditable
             ->withPivot('property_id');
     }
 
+    public function publicities() {
+        return $this->belongsToMany('App\Publicity', 'users_publicity')
+            ->withPivot('publicity_id');
+    }
+
     public function vehicles()
     {
         return $this->belongsToMany('App\Vehicle', 'user_vehicle')

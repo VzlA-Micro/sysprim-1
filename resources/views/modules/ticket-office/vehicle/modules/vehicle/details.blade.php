@@ -247,9 +247,11 @@
                                 <label for="model">Módelo</label>
                             </div>
                         </div>
-
+                            <div class="col s12 m6 center-align">
+                                <h4>Estado:</h4>
+                            </div>
                             @if($vehicle->status===null||$vehicle->status==='enabled')
-                                <div class="input-field col s12 m6" id="estado">
+                                <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                     <a href="#"
                                        class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
                                     >Habilitado
@@ -258,7 +260,7 @@
                                 </div>
 
                             @else
-                                <div class="input-field col s12 m6" id="estado">
+                                <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                     <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
                                     >Deshabilitado
                                         <i class="icon-refresh right"></i>
@@ -266,11 +268,8 @@
                                 </div>
 
                             @endif
-
-
-                        <div class="row">
                             @can('Cambiar Propietario - Vehiculo')
-                            <div class="col s12 m6">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
                                     Cambiar Propietario
@@ -284,7 +283,7 @@
                             </div>
                             @endcan
                             @can('Actualizar Vehiculos')
-                                <div class="col s12 m6" style="margin-top:10px">
+                                <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                     <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle">
                                         Actualizar
@@ -298,29 +297,28 @@
                                 </div>
                             @endcan
 
-
-
                             @can('Habilitar/Deshabilitar Vehiculo')
-                                @if($vehicle->status===null||$vehicle->status==='enabled')
-                                    <div class="col s12 m6" id="button-status">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                                @if($vehicle->status===null||$vehicle->status==='enabled')                                  
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light red col s12 "
+                                                class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
                                                 id="vehicle-status" value="disabled">
                                             Deshabilitar Vehículo
                                             <i class="icon-sync_disabled right"></i>
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="col s12 m6" id="button-status">
+                                        </button>                                 
+                                @else                                    
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                class="btn btn-rounded btn-large waves-effect waves-light green col s12 "
                                                 id="vehicle-status" value="enabled">
                                             Activar Vehículo
                                             <i class="icon-check right"></i>
                                         </button>
-                                    </div>
                                 @endif
+                              </div>
                             @endcan
+
+                    <div class="row">
+                            
                         </div>
                     </div>
                 </form>
@@ -333,10 +331,10 @@
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
                         @if (Storage::disk('users')->has($vehicle->users[0]->image))
-                            <img src="{{ route('users.getImage', ['filename' => $vehicle->users[0]->image]) }}" alt=""
+                            <img src="{{ route('users.getImage', ['filename' => $vehicle->users[0]->image]) }}" alt="Image" width="100%" height="100%"
                                  class="circle responsive-img">
                         @else
-                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img" alt="Image" width="100%" height="100%">
                         @endif
                     </div>
                     <div class="card-content row">

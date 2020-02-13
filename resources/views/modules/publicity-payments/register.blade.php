@@ -12,11 +12,14 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.payments.create', ['id' => $publicity->id]) }}">Declarar Publicidad</a></li>
-
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -28,20 +31,33 @@
                     <div class="card-content row">
                         <div class="col s12 m6">
                             <ul>
+                                @if($owner_type == 'user')
+                                    <li><b>Propietario: </b>{{ $owner->name . ' ' . $owner->surname }}</li>
+                                    <li><b>Cédula: </b>{{ $owner->ci }}</li>
+                                @elseif($owner_type == 'company')
+                                    <li><b>Propietario: </b>{{ $owner->name }}</li>
+                                    <li><b>RIF: </b>{{ $owner->RIF }}</li>
+                                @endif
                                 {{-- <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li> --}}
                                 <li><b>Nombre: </b>{{ $publicity->name }}</li>
-                                <li><b>Fecha de Inicio: </b>{{ $publicity->date_start }}</li>
-                                <li><b>Fecha de Fin: </b>{{ $publicity->date_end }}</li>
+
                             </ul>
                         </div>
-                        <div class="col s12 m6"></div>
+                        <div class="col s12 m6">
+                            <ul>
+                                <li><b>Fecha de Inicio: </b>{{ $publicity->date_start }}</li>
+                                <li><b>Fecha de Fin: </b>{{ $publicity->date_end }}</li>
+                                {{--<li><b>Direccion: </b>{{ $property[0]->address }}</li>--}}
+                                {{--<li><b>Periodo Fiscal: {{ $response['period'] }} </b></li>--}}
+                            </ul>
+                        </div>
                     </div>
             		<div class="card-header center-align">
                         <h4>Detalles del Impuesto</h4>
             		</div>
             		<div class="card-content row">
             			@csrf
-                        <input type="hidden" name="id" id="id" value="{{ $publicity->id }}">
+                        <input type="hidden" name="publicity_id" id="publicity_id" value="{{ $publicity->id }}">
             			<div class="input-field col s8 m9">
                             <i class="icon-confirmation_number prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id" disabled>
@@ -59,17 +75,24 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
-                            <input type="text" name="base" id="base" value="{{ $base }}" readonly>
-                            <label for="base">Base Imponible<b> (Bs)</b></label>
+                            <input type="text" name="base_imponible" id="base_imponible" value="{{ $baseImponible }}" readonly>
+                            <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                         </div>
+                        {{--<div class="input-field col s12 m4">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                            </i>
+                            <input type="text" name="interest" id="interest" class="validate money" value="{{ $interest }}" readonly>
+                            <label for="interest">Interés por Mora:(Bs)</label>
+                        </div>--}}
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="tasa[]" id="tasa" class="validate" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="" readonly>
-                            <label for="tasa">Deuda Anterior<b> (Bs)</b></label>
+                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup">
+                            <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12">
                             <div class="divider"></div>
@@ -82,12 +105,18 @@
                                             <tr>
                                                 <th>TIPO DE PUBLICIDAD</th>
                                                 <th>TARIFA (U.T)</th>
+                                                @if($publicity->advertisingType->id == 1)
+                                                    <th>DÍAS DE EXHIBICIÓN</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>{{ $publicity->advertisingType->name }}</td>
                                                 <td>{{ $publicity->advertisingType->value }}</td>
+                                                @if($publicity->advertisingType->id == 1)
+                                                    <td>{{ $daysDiff }}</td>
+                                                @endif
                                             </tr>
                                         </tbody>
 
@@ -108,8 +137,8 @@
                                 <div class="col s12 m6">
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <input type="text" name="total" class="validate" value="" readonly>
-                                            <label for="total_pagar">Total a Pagar:(Bs)</label>
+                                            <input type="text" name="amount" id="amount" class="validate" value="{{ $amount }}" readonly>
+                                            <label for="amount">Total a Pagar:(Bs)</label>
                                         </div>
                                         <div class="col s12"></div>
                                     </div>

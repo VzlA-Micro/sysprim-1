@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('recharges.manage') }}" >Gestionar Recargos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.register') }}" >Consultar Recargos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}" >Consultar Recargos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('recharges.details',['id' => $recharge->id]) }}">Detalles</a></li>
 
                 </ul>

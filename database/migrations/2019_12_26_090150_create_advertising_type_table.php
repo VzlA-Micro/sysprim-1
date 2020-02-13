@@ -17,6 +17,8 @@ class CreateAdvertisingTypeTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->float('value');
+            $table->integer('group_publicity_id')->unsigned();
+            $table->foreign('group_publicity_id')->references('id')->on('group_publicity')->onDelete('cascade');
             $table->timestamps();
         });
     }

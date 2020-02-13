@@ -76,6 +76,7 @@
         $('#vehicle').DataTable({
             responsive: true,
             "pageLength": 10,
+            "scrollX": true,
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

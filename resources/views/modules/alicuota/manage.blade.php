@@ -18,7 +18,7 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('alicuota.read') }}" class="btn-app white green-text accent-1">
                     <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Ver Alicuota</span>
+                    <span class="truncate">Ver Alicuota Inmueble</span>
                 </a>
             </div>
             @endcan

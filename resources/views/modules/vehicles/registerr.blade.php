@@ -61,7 +61,7 @@
                                 <i class="icon-crop_16_9 prefix"></i>
                                 <input type="text" name="license_plate" id="license_plate" minlength="7" maxlength="7"
                                        pattern="[0-9A-Za-z]+"
-                                       title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
+                                       title="Solo puede escribir números y letra en mayúsculas."  autocomplete="off" class="validate" required>
                                 <label for="license_plate">Placa</label>
                             </div>
 
@@ -78,7 +78,7 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="bodySerial" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
-                                       title="Solo puede escribir letras y numeros." minlength="15" maxlength="17" required>
+                                       title="Solo puede escribir letras y numeros." autocomplete="off" minlength="15" maxlength="17" required>
                                 <label for="bodySerial">Serial de carroceria</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -90,7 +90,7 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-select_all prefix"></i>
                                 <input type="text" name="serialEngine" id="serialEngine" class="validate"
-                                       pattern="[A-Za-z0-9]+" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros." required>
+                                       pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros." required>
                                 <label for="serialEngine">Serial del motor</label>
                             </div>
                             <div class="input-field col s12 m6">

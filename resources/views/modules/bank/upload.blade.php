@@ -6,7 +6,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquilla</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('payments.verify.manage') }}">Verificación de Pagos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('bank.upload') }}">Cargar Pagos</a></li>
                 </ul>

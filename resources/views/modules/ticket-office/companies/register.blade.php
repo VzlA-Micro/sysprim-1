@@ -73,7 +73,7 @@
                             <h4>Datos de la Empresa</h4>
                         </div>
                         <div class="card-content row">
-                            <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
+                            <div class="input-field col s5 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <select name="document_type" id="document_type">
                                     <option value="null" selected disabled>...</option>
@@ -84,17 +84,17 @@
                                 </select>
                                 <label for="document_type">Documento</label>
                             </div>
-                            <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <div class="input-field col s7 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                                 <input type="text" name="RIF" id="RIF" class="validate company-validate number-date" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
                                 <label for="RIF">RIF</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
                                 <i class="icon-work prefix"></i>
-                                <input type="text" name="name_company" id="name_company" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required data-validate="Razon social">
+                                <input type="text" name="name_company" id="name_company" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -"  minlength="3" maxlength="200" required data-validate="Razon social">
                                 <label for="name_company" >Razón Social</label>
                             </div>
 
-                            <div class="input-field col s6 m4">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-question_answer prefix tooltipped" data-position="bottom" data-tooltip="LICENCIA DE FUNCIONAMIENTO PARA EL EJERCICIO DE ACTIVIDADES ECONÓMICAS"></i>
                                 <select name="question_license" id="question_license">
                                     <option value="null" selected disabled>...</option>
@@ -107,7 +107,7 @@
 
                             <div class="input-field col s12 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" data-validate="licencia">
+                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" maxlength="15" data-validate="licencia">
                                 <label for="license">Licencia</label>
                             </div>
 
@@ -152,7 +152,7 @@
                                  <option value="INDUSII">ZONA INDUSTRIAL II</option>
                                  <option value="INDUSIII">ZONA INDUSTRIAL III</option>
                                     -->
-                             </select>
+                                </select>
 
                                 <label for="sector">Ubicación Geográfica </label>
                             </div>
@@ -196,7 +196,7 @@
                             </div>
 
                             <div class="input-field col s12 m6">
-                                <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                                <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 " id="search-ciu">
                                     Buscar
                                     <i class="icon-search right"></i>
                                 </a>

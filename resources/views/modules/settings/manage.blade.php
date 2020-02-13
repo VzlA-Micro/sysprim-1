@@ -72,14 +72,14 @@
             @can('Gestionar Tipos de Publicidad')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('advertising-type.manage') }}" class="btn-app white teal-text">
-                    <i class="icon-folder_special"></i>
+                    <i class="icon-movie_filter"></i>
                     <span class="truncate">Gestionar Tipos de Publicidad</span>
                 </a>
             </div>
             @endcan
             @can('Gestionar Tasas del Banco')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('bank.rate.manage') }}" class="btn-app white blue-text">
+                <a href="{{ route('bank.rate.manage') }}" class="btn-app white indigo-text">
                     <i class="icon-business_center"></i>
                     <span class="truncate">Gestionar Tasa del Banco</span>
                 </a>
@@ -87,8 +87,8 @@
             @endcan
             @can('Gestionar Tasas')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.manager')}}" class="btn-app white indigo-text">
-                    <i class="icon-library_books"></i>
+                <a href="{{route('rate.manager')}}" class="btn-app white blue-text">
+                    <i class="fas fa-clipboard"></i>
                     <span class="truncate">Gestionar Tasas</span>
                 </a>
             </div>
@@ -111,7 +111,7 @@
             @endcan
             @can('Gestionar Catastral Construccion')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white purple-text ">
+                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white red-text text-accent-3 ">
                     <i class="icon-build"></i>
                     <span class="truncate">Valores Catastrales de Construcción</span>
                 </a>
@@ -119,12 +119,20 @@
             @endcan
             @can('Gestionar Catastral Terreno')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white deep-purple-text">
+                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white purple-text ">
                     <i class="icon-nature_people"></i>
                     <span class="truncate">Valores Catastrales de Terreno</span>
                 </a>
             </div>
             @endcan
+            {{-- @can('Gestionar Catastral Terreno') --}}
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('group-publicity.manage')}}" class="btn-app white deep-purple-text">
+                    <i class="icon-burst_mode"></i>
+                    <span class="truncate">Grupos de Publicidad</span>
+                </a>
+            </div>
+            {{-- @endcan --}}
         </div>
     </div>
 @endsection

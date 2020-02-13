@@ -10,23 +10,31 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}">Mis Declaraciones</a></li>
                 </ul>
             </div>
+            @can('Declarar Publicidades')
             <div class="col s12 m4">
                 <a href="{{ route('publicity.payments.create',['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Declarar Mis Publicidades</span>
                 </a>
             </div>
+            @endcan
+            @can('Historial de Pagos - Publicidades')
             <div class="col s12 m4">
-                <a href="" class="btn-app white green-text text-darken-2">
+                <a href="{{ route('publicity.payments.history',['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Historial de Declaraciones</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection
