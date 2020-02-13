@@ -154,11 +154,12 @@ class AdvertisingTypeTableSeeder extends Seeder
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
-        DB::table('advertising_type')->insert([
-            'name' => 'Publicidad para cigarrillos o bebidas alcoholicas',
-            'value' => 5000,
-            'created_at'=>Carbon::now(),
-            'updated_at'=>Carbon::now()
-        ]);
+        // DB::table('advertising_type')->insert([
+        //     'name' => 'Publicidad para cigarrillos o bebidas alcoholicas',
+        //     'value' => 5000,
+        //     'group_publicity_id'=>5,
+        //     'created_at'=>Carbon::now(),
+        //     'updated_at'=>Carbon::now()
+        // ]);
     }
 }
