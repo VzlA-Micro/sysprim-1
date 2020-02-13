@@ -437,6 +437,9 @@ Route::middleware(['auth'])->group(/**
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
         ##### PUBLICIDAD
         Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+
+        // -------------------------------------------------------------
         // Mover esta ruta a la taquilla
 
 
@@ -597,7 +600,6 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/publicity/register', 'PublicityController@create')->name('publicity.register');
                 Route::get('/publicity/register/types/{company_id?}', 'PublicityController@chooseType')->name('publicity.register.types');
                 Route::get('/publicity/register/create/{id}/{company_id?}', 'PublicityController@createByType')->name('publicity.register.create');
-                Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
             });
             // Nivel 3: Detalles
             Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {

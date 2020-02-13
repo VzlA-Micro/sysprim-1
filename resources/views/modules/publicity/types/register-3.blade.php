@@ -74,6 +74,7 @@
                         @endif
                         <div class="card-content row">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="advertising_type_id" required>
                                     <option value="null" disabled selected>Elija un tipo</option>
                                     @foreach($advertisingTypes as $type)
@@ -83,6 +84,7 @@
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name" required>
                                 <label for="name">Nombre</label>
                             </div>
