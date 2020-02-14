@@ -454,6 +454,7 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
         Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
+        Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
 
         // -------------------------------------------------------------
         // Mover esta ruta a la taquilla
@@ -620,7 +621,6 @@ Route::middleware(['auth'])->group(/**
             Route::group(['middleware' => ['permission:Detalles Mis Publicidades']], function () {
                 Route::get('/publicity/details/{id}', 'PublicityController@details')->name('publicity.details');
                 Route::get('/publicity/details/edit/{id}', 'PublicityController@edit')->name('publicity.edit');
-                Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
             });
 
             // Declaraciones de Publicidad
@@ -659,7 +659,12 @@ Route::middleware(['auth'])->group(/**
         Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
         Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
         Route::get('/publicity/ticket-office/verify/fiscal-period/{id}/{year}', 'PublicityTaxesController@verifyFiscalPeriod')->name('publicity.ticket-office.verify.fiscal-period');
-        Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertyTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
+        Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PublicityTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
+        Route::post('/publicity/ticket-office/taxes/store', 'PublicityTaxesController@storeTicketOffice')->name('publicity.ticket-office.taxes.store');
+        Route::get('/publicity/ticket-office/payments/taxes', 'PublicityTaxesController@getTaxesTicketOffice')->name('publicity.ticket-office.payments.taxes');
+        Route::get('/publicity/ticket-office/receipt/{id}/{download?}', 'PublicityTaxesController@generateReceipt')->name('publicity.ticket-office.receipt');
+        Route::get('ticketOffice/publicity/cashier/{id}', 'PublicityTaxesController@QrTaxes');
+        Route::get('/publicity/ticket-office/payments/details/{id}/{status?}', 'PublicityTaxesController@detailsTicketOffice')->name('publicity.ticket-office.payments.details');
 
 
         ############ CONTRIBUYENTE #######################

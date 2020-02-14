@@ -241,7 +241,8 @@ class TaxesNumber{
 
 
     public static function generatePublicityCode() {
-        $publicity = DB::table('publicity')->select('code')->where('code', "%"."PUB"."%")->orderByDesc('id')->take(1)->get();
+        $publicity = DB::table('publicity')->select('code') //->where('code', "%"."PUB"."%")
+            ->orderByDesc('id')->take(1)->get();
         if($publicity->isEmpty()) {
             $number_generated=strtoupper(str_pad(1, 8, '0', STR_PAD_LEFT));
             return "PUB".$number_generated;
