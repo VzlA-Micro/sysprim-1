@@ -617,7 +617,7 @@ $('document').ready(function () {
         });
     });
 
-    $('#register').submit(function(e) {
+    $('#register').submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
         // var image = $('#image')[0].files[0]; // Getting file input data
@@ -629,11 +629,11 @@ $('document').ready(function () {
             processData: false,
             data: formData,
             method: "POST",
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
             },
-            success: function(resp) {
+            success: function (resp) {
                 console.log(resp);
                 swal({
                     title: "¡Bien Hecho!",
@@ -647,7 +647,7 @@ $('document').ready(function () {
                     //window.location.href = url + "publicity/my-publicity";
                 });
             },
-            error: function(err) {
+            error: function (err) {
                 console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
@@ -655,7 +655,7 @@ $('document').ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button:{
+                    button: {
                         text: "Entendido",
                         className: "red-gradient"
                     },
@@ -663,6 +663,77 @@ $('document').ready(function () {
             }
         });
     });
+
+    //::::::::UPDATE FOR TICKET OFFICE::::::::::::::::::
+
+    $('#update-publicity').click(function () {
+        var typePublicity = $('#advertising_type_id2').val();
+        if (typePublicity == 1) {
+            $('#date-begin').hide();
+            $('#date-end').hide();
+            $('#U-date-begin').removeClass('hide');
+            $('#U-date-end').removeClass('hide');
+
+            $(this).hide();
+            $('#update-publicity-save').removeClass('hide');
+        }else if(typePublicity == 2){
+
+        }else if(typePublicity == 3){
+
+        }else if(typePublicity == 4){
+
+        }else if(typePublicity == 5){
+
+        }
+    });
+
+    $('#update-register').submit(function(e){
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: url + "publicity/update",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            method: "POST",
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (resp) {
+                console.log(resp);
+                swal({
+                    title: "¡Bien Hecho!",
+                    text: "Se ha actulizado los datos de la publicidad exitosamente.",
+                    icon: "success",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function (accept) {
+                    location.reload();
+                    //window.location.href = url + "publicity/my-publicity";
+                });
+            },
+            error: function (err) {
+                console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+            }
+        });
+    });
+
+
 });
 
 
