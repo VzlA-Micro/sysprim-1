@@ -15,6 +15,8 @@ use App\Helpers\TaxesNumber;
 use App\User;
 use App\Company;
 use OwenIt\Auditing\Models\Audit;
+use Illuminate\Support\Facades\Mail;
+
 
 
 
