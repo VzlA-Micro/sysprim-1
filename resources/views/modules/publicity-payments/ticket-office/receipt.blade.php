@@ -29,7 +29,7 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="Logo Semat" width="100%" height="100%"><br>
+                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
             </td>
@@ -42,9 +42,13 @@
 					</span>
             </td>
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="Logo Semat" width="100%" height="100%"><br>
-                <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
-                <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
+                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
+
+
+                @php $i=count($taxes[0]->payments); @endphp
+                <span style="font-size: 10px !important;">{{$taxes[0]->payments[$i-1]->code}}</span><br>
+
+                <span style="font-size: 10px !important;">{{$taxes[0]->created_at->format('d-m-Y')}}</span><br>
 
             </td>
         </tr><!--
@@ -61,24 +65,27 @@
     </table>
 </div>
 
-@if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
-    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (PROPAGANDA Y PUBLICIDAD COMERCIAL)</h4>
+@if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
+    <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (INMUEBLES URBANOS)</h4>
 @else
-    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(PROPAGANDA Y PUBLICIDAD COMERCIAL)</h4>
+    <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(INMUEBLES URBANOS)</h4>
 @endif
 <table style="width: 100%; border-collapse: collapse;">
     <tr style="">
         <td style="width:15%;font-size: 12px !important; "><b>Contribuyente:</b></td>
+        @if($type == 'user')
+            <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
+        @elseif($type == 'company')
+            <td style="width:35%;font-size: 11px !important;">{{ $data->name }}</td>
+        @endif
 
-        <td style="width:35%;font-size: 11px !important;">{{ $data->name." ".$data->surname }}</td>
-
-
+        {{--        @if($property->code_catastal)--}}
         <td style="width:20%;font-size: 12px !important;"><b>Codigo de Publicidad:</b></td>
         <td style="width:30%;font-size: 11px !important;">{{$publicity->code}}</td>
 
         {{--@else--}}
-        <td style="width:20%;font-size: 12px !important;"><b></b></td>
-        <td style="width:30%;font-size: 11px !important;"></td>
+        {{--<td style="width:20%;font-size: 12px !important;"><b></b></td>--}}
+        {{--<td style="width:30%;font-size: 11px !important;"></td>--}}
         {{--@endif--}}
     </tr>
     <tr>
@@ -134,82 +141,57 @@
     {{--@php $total_taxes=0;@endphp--}}
     {{--    @foreach($taxes->rateTaxes as $rate)--}}
 
+    {{--@php dd($taxes); die(); @endphp--}}
 
-
-    <tr>
-        {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
-        <td style="width: 30%;font-size: 10px;!important;">{{ strtoupper($publicity->advertisingType->name) }}</td>
-        <td style="width: 10%;font-size: 10px !important;"></td>
-
-        <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
-        <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
-        {{--<td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2,',','.') }}</td>--}}
-        <td style="width: 15%;font-size: 10px;!important">{{ $publicity->advertisingType->value }}UT</td>
-
-        <td style="width: 15%;font-size: 10px;!important"></td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($publicityTaxes->base_imponible,2,',','.')}}</td>
-    </tr>
-    {{--@endforeach--}}
-
-    @php $totalAmount = $publicityTaxes->base_imponible; @endphp
-    {{--<tr>
-        <td style="width: 10%;font-size: 10px !important;text-align: right">Alicuota</td>
-        <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;"></td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->alicuota,2,',','.') }}</td>
-        @php $totalAmount += $propertyTaxes->alicuota @endphp
-        <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-    </tr>--}}
-    {{--@if($propertyTaxes->recharge != 0)
+    @php $totalAcum = 0; @endphp
+    @foreach($taxes as $taxe)
         <tr>
-            <td style="width: 10%;font-size: 10px !important;text-align: right">Recargos</td>
+            {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+            <td style="width: 30%;font-size: 10px;!important;">{{ strtoupper($taxe->publicities[0]->advertisingType->name) }}</td>
             <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->recharge,2,',','.') }}</td>
-            @php $totalAmount += $propertyTaxes->recharge; @endphp
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+            <td style="width: 10%;font-size: 10px;!important">{{ $taxe->branch }}</td>
+            <td style="width: 10%;font-size: 10px; !important;">{{Carbon\Carbon::parse($taxe->fiscal_period)->format('m-Y')."/".Carbon\Carbon::parse($taxe->fiscal_period_end)->format('m-Y')}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{ $taxe->publicities[0]->advertisingType->value }}</td>
+            <td style="width: 15%;font-size: 10px;!important"></td>
+            <td style="width: 10%;font-size: 10px;!important">{{number_format($taxe->publicities[0]->pivot->base_imponible,2,',','.')}}</td>
         </tr>
-    @endif--}}
-    @if($publicityTaxes->interest != 0)
+
+        @php $totalAmount = $taxe->publicities[0]->pivot->base_imponible; @endphp
+
+        {{--@if($taxe->properties[0]->pivot->interest != 0)
+            <tr>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;text-align: right">Interés por Mora</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->interest,2,',','.') }}</td>
+                @php $totalAmount += $taxe->properties[0]->pivot->interest; @endphp
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+            </tr>
+        @endif--}}
+        @if($taxe->publicities[0]->pivot->fiscal_credit != 0)
+            <tr>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;text-align: right">Créditos Fiscales</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+                <td style="width: 10%;font-size: 10px !important;">-{{ number_format($taxe->publicities[0]->pivot->fiscal_credit,2,',','.') }}</td>
+                @php $totalAmount -= $taxe->publicities[0]->pivot->fiscal_credit; @endphp
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+            </tr>
+        @endif
         <tr>
-            <td style="width: 10%;font-size: 10px !important;text-align: right">Interés por Mora</td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($publicityTaxes->interest,2,',','.') }}</td>
-            @php $totalAmount += $publicityTaxes->interest; @endphp
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+            <td style="width: 10%;font-size: 10px !important;" colspan="7">
+                _________________________________________________________________________________________________________________________________
+            </td>
         </tr>
-    @endif
-    {{--@if($propertyTaxes->discount != 0)
-        <tr>
-            <td style="width: 10%;font-size: 10px !important;text-align: right">Descuento: 20%</td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-            <td style="width: 10%;font-size: 10px !important;">-{{ number_format($propertyTaxes->discount,2,',','.') }}</td>
-            @php $totalAmount -= $propertyTaxes->discount; @endphp
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-        </tr>
-    @endif--}}
-    @if($publicityTaxes->fiscal_credit != 0)
-        <tr>
-            <td style="width: 10%;font-size: 10px !important;text-align: right">Créditos Fiscales</td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;"></td>
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-            <td style="width: 10%;font-size: 10px !important;">-{{ number_format($publicityTaxes->fiscal_credit,2,',','.') }}</td>
-            @php $totalAmount -= $publicityTaxes->fiscal_credit; @endphp
-            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-        </tr>
-    @endif
+        @php    $totalAcum += $totalAmount;
+                $totalAmount = 0;
+        @endphp
+    @endforeach
+
     <tr>
         <td></td>
         <td></td>
@@ -217,47 +199,65 @@
         <td></td>
         <td></td>
         <td>TOTAL</td>
-        <td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2,',','.')}}</td>
+        <td style="font-size: 14px !important; text-align: left">{{number_format($totalAcum,2,',','.')}}</td>
     </tr>
     </tbody>
 
 
     <hr>
     <tr>
-        <td colspan="7">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
+        <td colspan="7">{{strtoupper(NumerosEnLetras::convertir($totalAcum))."."}}</td>
     </tr>
 </table>
 <table>
-    <tr>
-        <td style="font-size: 12px !important; text-align: center;">Planilla</td>
-        <td style="font-size: 12px !important; text-align: center;">Dígito</td>
-        <td style="font-size: 12px !important; text-align: center;">Correlat</td>
-        <td style="font-size: 12px !important; text-align: center;">Contrib</td>
-        <td style="font-size: 12px !important; text-align: center;">Monto</td>
-        <td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI
-            ENMENDADURA NO VALIDO COMO SOLVENCIA
-        </td>
-    </tr>
 
-    <tr>
-        <td style="font-size: 12px !important;text-align: center;">{{$taxes->code}}</td>
-        <td style="font-size: 12px !important;text-align: center;">
-            @if($taxes->digit)
+    @if(!$taxes[0]->payments->isEmpty()&&substr($taxes[0]->payments[0]->code,0,3)!='PPV')
+        <tr>
 
-                {{$taxes->digit}}
+            <td style="font-size: 12px !important; text-align: center;">Planilla</td>
+            <td style="font-size: 12px !important; text-align: center;">Dígito</td>
+            <td style="font-size: 12px !important; text-align: center;">Correlat</td>
+            <td style="font-size: 12px !important; text-align: center;">Contrib</td>
+            <td style="font-size: 12px !important; text-align: center;">Monto</td>
+            <td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI
+                ENMENDADURA NO VALIDO COMO SOLVENCIA
+            </td>
+        </tr>
 
+        <tr>
+            <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->code}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{$taxes[0]->payments[0]->digit}}</td>
+            <td style="font-size: 12px !important;text-align: center;">{{substr($taxes[0]->payments[0]->code,3,13)}}</td>
+            @if($type == 'user')
+                <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
             @else
-                {{"000"}}
+                <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
             @endif
-        </td>
-        <td style="font-size: 12px !important;text-align: center;">{{substr($taxes->code,3,13)}}</td>
-        @if($type == 'user')
-            <td style="font-size: 12px !important;text-align: center;">{{$data->ci}}</td>
-        @else
-            <td style="font-size: 12px !important;text-align: center;">{{$data->license}}</td>
-        @endif
-        <td style="font-size: 12px !important;text-align: center;">{{number_format($taxes->amount,2,',','.')}}</td>
-    </tr>
+            <td style="font-size: 12px !important;text-align: center;">{{number_format($totalAcum,2,',','.')}}</td>
+        </tr>
+
+    @else
+
+        <tr>
+            <td style="font-size: 12px !important; text-align: center;">Planilla</td>
+            <td style="font-size: 12px !important; text-align: center;">Dígito</td>
+            <td style="font-size: 12px !important; text-align: center;">Correlat</td>
+            <td style="font-size: 12px !important; text-align: center;">Contrib</td>
+            <td style="font-size: 12px !important; text-align: center;">Monto</td>
+            <td style="font-size: 12px !important; text-align: center;" rowspan="2"> ESTE DOCUMENTO VA SIN TACHADURA NI
+                ENMENDADURA NO VALIDO COMO SOLVENCIA
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size: 12px !important;text-align: center;"></td>
+            <td style="font-size: 12px !important;text-align: center;">
+            </td>
+            <td style="font-size: 12px !important;text-align: center;"></td>
+            <td style="font-size: 12px !important;text-align: center;"></td>
+            <td style="font-size: 12px !important;text-align: center;"></td>
+        </tr>
+    @endif
 </table>
 
 <table>
@@ -273,17 +273,17 @@
     </tr>
 
     <tr>
-        @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+        @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
             <td style="width: 100%;text-align: center; font-size: 14px;">
-                @if($taxes->bank==44)
+                @if($taxes[0]->bank==44)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
-                @elseif($taxes->bank==77)
+                @elseif($taxes[0]->bank==77)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BICENTENARIO*****
-                @elseif($taxes->bank==99)
+                @elseif($taxes[0]->bank==99)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BNC*****
-                @elseif($taxes->bank==33)
+                @elseif($taxes[0]->bank==33)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE 100%BANCO*****
-                @elseif($taxes->bank==55)
+                @elseif($taxes[0]->bank==55)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BANESCO *****
                 @else
                     ***** PLANILLA VALIDA PARA EL PAGO POR PUNTO DE VENTA *****<br> EN TAQUILLA DEL SEMAT <br>Torre David Planta Baja Calle 26 entre Carreras 15 y 16
@@ -292,7 +292,7 @@
     </tr>
     <tr>
         <td style="width: 100%;text-align: center; font-size: 14px;">
-            **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes->created_at))}}**
+            **ESTA PLANILLA ES VÁLIDA SOLO POR EL DIA: {{date("d-m-Y", strtotime($taxes[0]->created_at))}}**
         </td>
     </tr>
     @endif
@@ -327,7 +327,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
                     <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image" width="100%" height="100%">
                 </td>
@@ -339,7 +339,7 @@ $date = '31/12/' . date('Y');
 
         </tr>
         <tr>
-            @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
                 <td style="width:40%;text-align: center; font-size: 10px;"><b>
                         __________________________________________<br>
                         ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
@@ -361,17 +361,17 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+            @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
-                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->id))) !!} "
+                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image" width="100%" height="100%">
                 </td>
         @else
 
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->fiscal_period.'-'.$taxes[0]->code.'-'.$taxes[0]->created_at)) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" width="100%" height="100%">
                 </td>
             </tr>
 
@@ -379,10 +379,10 @@ $date = '31/12/' . date('Y');
 
         <tr>
             <td style="width: 20%;">
-                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
-                    @if($taxes->bank!=null)
-                        <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
-                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image Pdf" width="100%" height="100%">
+                @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
+                    @if($taxes[0]!=null)
+                        <img src="https://sysprim.com/images/pdf/{{$taxes[0]->bank.".png"}}"
+                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image" width="100%" height="100%">
                     @endif
                 @endif
             </td>

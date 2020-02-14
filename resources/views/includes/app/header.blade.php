@@ -139,69 +139,10 @@
                     <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
                     @endcan
                     @can('Configuración')
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold">
-                                <a href="{{ route('settings.manage') }}" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración</a>
-                                {{-- <div class="collapsible-body">
-                                    <ul>
-                                        @can('Gestionar CIIU')
-                                        <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
-                                        @endcan
-                                        @can('Gestionar Unidad Tribuaria')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-attach_money"></i>Gestionar Unidad Tributaria</a></li>    
-                                        @endcan
-                                        @can('Gestionar Tipos de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.type.vehicles') }}"><i class="icon-directions_car"></i>Gestionar Tipos de Vehiculos</a></li>  
-                                        @endcan
-                                        @can('Gestionar Modelos de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.models.vehicles') }}"><i class="icon-airport_shuttle"></i>Gestionar Modelos de Vehiculos</a></li> 
-                                        @endcan   
-                                        @can('Gestionar Marcas de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.brand.manage') }}"><i class="icon-directions_car"></i>Gestionar Marcas de Vehiculos</a></li> 
-                                        @endcan
-                                        @can('Gestionar Recargos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('recharges.manage') }}"><i class="icon-trending_up"></i>Gestionar Recargos</a></li> 
-                                        @endcan
-                                        @can('Gestionar Accesorios')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('accessories.manage') }}"><i class="icon-filter_tilt_shift"></i>Gestionar Accesorios</a></li>  
-                                        @endcan
-                                        @can('Gestionar Tipos de Publicidad')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('advertising-type.manage') }}"><i class="icon-folder_special"></i>Gestionar Tipos de Publicidad</a></li>
-                                        @endcan
-                                    </ul>
-                                </div> --}}
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="waves-efect waves-light"><a href="{{ route('settings.manage') }}"><i class="icon-settings"></i>Configuración</a></li>
                     @endcan
                     @can('Taquillas')
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold">
-                                <a href="{{ route('ticketOffice.home') }}" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquillas</a>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        {{-- @can('Gestionar Empresas')
-                                        <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
-                                        @endcan
-                                        @can('Gestionar Pagos')
-                                        <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
-                                        @endcan
-                                        <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
-                                        @can('Verificar Pagos - Archivo')
-                                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                                        @endcan --}}
-                                        {{-- @can('Taquilla - Actividad Económica') --}}
-                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li> --}}
-                                        {{-- @endcan --}}
-                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li> --}}
-
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.home') }}"><i class="icon-personal_video"></i>Taquillas</a></li>
                     @endcan
                     @can('Seguridad')
                     <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>

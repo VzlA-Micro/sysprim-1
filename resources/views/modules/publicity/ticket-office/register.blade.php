@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas
                         </a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Registrar
                             Publicidad</a></li>
@@ -177,12 +177,14 @@
 
                         <div class="card-content row" id="form-1">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-1">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -198,14 +200,17 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
                                     <option value="mts" selected>Metro</option>
@@ -222,6 +227,7 @@
                                 <input type="text" class="js-range-slider height" name="height" id="height" value="">
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-exposure_plus_1 prefix"></i>
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
                             </div>
@@ -245,12 +251,14 @@
                         <div class="card-content row" id="form-2">
 
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-2">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -266,14 +274,17 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
                                     <option value="mts" disabled>Metro</option>
@@ -282,6 +293,7 @@
                                 <label>Unidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-chrome_reader_mode prefix"></i>
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Ejemplares</label>
                             </div>
@@ -304,12 +316,14 @@
                         </div>
                         <div class="card-content row" id="form-3">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-3">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -325,10 +339,12 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
@@ -351,12 +367,14 @@
                         </div>
                         <div class="card-content row" id="form-4">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-4">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -372,14 +390,17 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
                                     <option value="mts" selected>Metro</option>
@@ -414,12 +435,14 @@
                         </div>
                         <div class="card-content row" id="form-5">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-5">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -435,14 +458,17 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
                                     <option value="mts" selected>Metro</option>
@@ -455,21 +481,22 @@
                                 <input type="text" class="js-range-slider" name="width" id="width" value="">
                             </div>
                             <div class="col s12">
-                                <label for="height">Alto</label>
+                                <label for="height">Alto o Pisos</label>
                                 <input type="text" class="js-range-slider" name="height" id="height" value="">
                             </div>
-                            <div class="input-field col s12">
+                            {{-- <div class="input-field col s12">
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
-                            </div>
+                            </div> --}}
                             <div class="input-field col s12">
+                                <i class="icon-exposure_plus_1 prefix"></i>
                                 <input type="text" name="side" id="side">
                                 <label for="side">Cantidad de Caras</label>
                             </div>
-                            <div class="input-field col s12">
+                            {{-- <div class="input-field col s12">
                                 <input type="text" name="floor" id="floor">
                                 <label for="floor">Pisos</label>
-                            </div>
+                            </div> --}}
 
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous"

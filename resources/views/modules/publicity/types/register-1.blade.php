@@ -86,7 +86,7 @@
 							</div>
 							<div class="input-field col s12">
 								<i class="icon-format_size prefix"></i>
-								<input type="text" name="name" id="name" required>
+								<input type="text" name="name" id="name" min="5" max="256" required>
 								<label for="name">Nombre</label>
 							</div>
 							<div class="col s12">
@@ -128,7 +128,7 @@
 							</div>
 							<div class="input-field col s12">
 								<i class="icon-exposure_plus_1 prefix"></i>
-								<input type="number" name="quantity" id="quantity" required>
+								<input type="number" name="quantity" id="quantity" min="1" required>
 								<label for="quantity">Cantidad de Lugares</label>
 							</div>
 						</div>

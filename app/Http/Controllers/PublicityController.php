@@ -249,8 +249,8 @@ class PublicityController extends Controller
         $publicity->date_start = $request->input('date_start');
         $publicity->date_end = $request->input('date_end');
         $publicity->quantity = $request->input('quantity');
-        // $publicity->width = $request->input('width');
-        // $publicity->height = $request->input('height');
+        $publicity->width = $request->input('width');
+        $publicity->height = $request->input('height');
         $publicity->side = $request->input('side');
         $publicity->floor = $request->input('floor');
         $image = $request->file('image');
@@ -280,6 +280,28 @@ class PublicityController extends Controller
     {
         $type = AdvertisingType::where('group_publicity_id', $group)->get();
         return response()->json($type);
+    }
+
+    public function showTicketOffice()
+    {
+        $publicities = Publicity::all();
+        return view('modules.publicity.ticket-office.read', ['show' => $publicities]);
+    }
+
+    public function detailsPublicity($id)
+    {
+        //$type = AdvertisingType::all();
+        $publicity = Publicity::find($id);
+        if (isset($publicity->person[0]->pivot->person_id)) {
+            $person = User::find($publicity->person[0]->pivot->person_id);
+        } else {
+            $person = '';
+        }
+
+        return view('modules.publicity.ticket-office.details', [
+            'publicity' => $publicity,
+            'person' => $person
+        ]);
     }
 
 }
