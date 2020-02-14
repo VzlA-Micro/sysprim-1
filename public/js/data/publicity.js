@@ -195,13 +195,17 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function(resp) {
-            	swal({
+			    /*if(resp.status == 'success') {
+
+                }*/
+			    console.log(resp);
+                swal({
                     title: "¡Bien Hecho!",
-                    text: "Se ha registrado la publicidad exitosamente.",
+                    text: resp.message + resp.code,
                     icon: "success",
                     button: {
-                    	text: "Esta bien",
-                    	className: "green-gradient"
+                        text: "Esta bien",
+                        className: "green-gradient"
                     }
                 }).then(function (accept) {
                     window.location.href = url + "publicity/my-publicity";

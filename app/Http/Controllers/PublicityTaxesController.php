@@ -13,8 +13,8 @@ use App\Tributo;
 use App\Taxe;
 use App\Helpers\TaxesNumber;
 use App\User;
-
 use App\Company;
+use OwenIt\Auditing\Models\Audit;
 
 
 
@@ -258,5 +258,14 @@ class PublicityTaxesController extends Controller
         }else{
             return $pdf->download('PLANILLA_INMUEBLE.pdf');
         }
+    }
+
+    public function manageTicketOffice() {
+        return view('modules.publicity-payments.ticket-office.manage');
+    }
+
+    public function generateTicketOffice() {
+        $advertisingTypes = AdvertisingType::all();
+        return view('modules.publicity-payments.ticket-office.generate', ['advertisingTypes' => $advertisingTypes]);
     }
 }

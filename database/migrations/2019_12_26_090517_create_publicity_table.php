@@ -15,6 +15,7 @@ class CreatePublicityTable extends Migration
     {
         Schema::create('publicity', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->unique();
             $table->string('name');
             $table->date('date_start');
             $table->date('date_end');

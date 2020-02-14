@@ -653,7 +653,14 @@ Route::middleware(['auth'])->group(/**
         })->name('ticketOffice.publicity.register');
 
         Route::get('/ticketOffice/publicity/getTypeGroup/{group}','PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
-        /////
+
+        # ------------------------------------------------------------------- #
+        Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
+        Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
+
+
+
+
 
         ############ CONTRIBUYENTE #######################
         Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {

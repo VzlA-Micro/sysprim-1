@@ -31,8 +31,9 @@
                     	@endif
             		<div class="card-content">
             			<ul>
-            				{{-- @foreach($publicity->advertisingTypes as $type) --}}
-                            <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li>
+                            <li><b>Código: </b>{{ $publicity->code }}</li>
+                            {{-- @foreach($publicity->advertisingTypes as $type) --}}
+                            <li><b>Tipo de Publicidad: </b>{{ $publicity->advertisingType->name }}</li>
                             {{-- @endforeach --}}
                             <li><b>Nombre: </b>{{ $publicity->name }}</li>
                             <li><b>Fecha de Inicio: </b>{{ $publicity->date_start }}</li>

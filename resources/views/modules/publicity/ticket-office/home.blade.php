@@ -7,7 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquilla Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
                 </ul>
             </div>
             @can('Gestionar Vehiculos')
@@ -20,7 +20,7 @@
             @endcan
             @can('Gestionar Pagos - Vehiculos')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.vehicle.payments') }}" class="btn-app white blue-text text-darken-2">
+                <a href="{{ route('publicity.ticket-office.manage') }}" class="btn-app white blue-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
                 </a>

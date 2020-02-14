@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use App\Company;
 use App\User;
+use App\Helpers\TaxesNumber;
+use OwenIt\Auditing\Models\Audit;
 
 class PublicityController extends Controller
 {
@@ -100,12 +102,13 @@ class PublicityController extends Controller
     }
 
     public function store(Request $request) {
-        var_dump($request->all());
-        die();
+//        var_dump($request->all());
+//        die();
         $status = $request->input('status');
         $owner_id = $request->input('id');
         $type = $request->input('type');
         $publicity = new Publicity();
+        $publicity->code = TaxesNumber::generatePublicityCode();
     	$publicity->name = $request->input('name');
     	$publicity->date_start = $request->input('date_start');
     	$publicity->date_end = $request->input('date_end');
@@ -128,6 +131,7 @@ class PublicityController extends Controller
         // $advertisingTypes = $request->input('advertising_type_id');
         $publicity->save();
         $id = $publicity->id;
+        $code = $publicity->code;
 
         $person_id=null;
         $company_id=null;
@@ -156,7 +160,11 @@ class PublicityController extends Controller
         // foreach ($advertisingTypes as $type) {
         //     $publicity->advertisingTypes()->attach(['advertising_type_id' => $type]);
         // }
-
+        return response()->json([
+           'status' => 'success',
+           'message' => 'La publicidad se ha registrado con el código: ',
+           'code' => $code
+        ]);
     }
 
     public function show()
