@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas
                         </a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Registrar
                             Publicidad</a></li>
@@ -177,12 +177,14 @@
 
                         <div class="card-content row" id="form-1">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-1">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name">
                                 <label for="name">Nombre</label>
                             </div>
@@ -249,6 +251,7 @@
                         <div class="card-content row" id="form-2">
 
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-2">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
@@ -313,6 +316,7 @@
                         </div>
                         <div class="card-content row" id="form-3">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-3">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
@@ -363,6 +367,7 @@
                         </div>
                         <div class="card-content row" id="form-4">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-4">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
@@ -430,6 +435,7 @@
                         </div>
                         <div class="card-content row" id="form-5">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="type_id-5">
                                     <option value="null" disabled selected>Elija un tipo</option>
                                 </select>
