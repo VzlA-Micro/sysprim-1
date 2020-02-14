@@ -15,14 +15,14 @@ class AdvertisingTypeTableSeeder extends Seeder
     {
         DB::table('advertising_type')->insert([
         	'name' => 'Publicidad eventual u ocasional',
-            'value' => 45,
+            'value' => 300,
             'group_publicity_id'=>4,
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('advertising_type')->insert([
         	'name' => 'Publicidad de folletos, hojas impresas, afiches o similares',
-            'value' => 125,
+            'value' => 3500,
             'group_publicity_id'=>3,
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
@@ -34,6 +34,13 @@ class AdvertisingTypeTableSeeder extends Seeder
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
+        /*DB::table('advertising_type')->insert([
+            'name' => 'Publicidad otros medios impresos',
+            'value' => 1500,
+            'group_publicity_id'=>3,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);*/
         DB::table('advertising_type')->insert([
         	'name' => 'Afiches o similares',
             'value' => 1700,

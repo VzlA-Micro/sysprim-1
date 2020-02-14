@@ -7,9 +7,9 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.generate') }}">Generar Planilla</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.manage') }}">Gestionar Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.generate') }}">Generar Planilla</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -110,19 +110,27 @@
                             {{--<input type="hidden" name="owner_type" id="owner_type" value="{{ $owner_type }}">--}}
                             {{--<input type="hidden" name="status" id="status" value="{{ $status }}">--}}
                             <input type="hidden" name="status" id="statusTax" value="">
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
-                                </i>
-                                <label for="totalGround">Total por Terreno</label>
-                                <input type="text" name="totalGround" id="totalGround" class="validate money" value="" readonly>
+                            <div class="input-field col s8 m9">
+                                <i class="icon-confirmation_number prefix"></i>
+                                <select name="advertising_type_id" id="advertising_type_id" disabled>
+                                    <option value="null" disabled>Elija un tipo</option>
+                                    @foreach($advertisingTypes as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label>Tipo de Publicidad</label>
+                            </div>
+                            <div class="input-field col s4 m3">
+                                <i class="icon-assignment prefix"></i>
+                                <input type="text" name="value" id="value" value="" readonly>
+                                <label for="value">Valor U.T</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
-                                <label for="totalBuild">Total por Construcción</label>
-                                <input type="text" name="totalBuild" id="totalBuild" class="validate money" value="" readonly>
+                                <input type="text" name="base_imponible" id="base_imponible" value="" readonly>
+                                <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
@@ -131,38 +139,46 @@
                                 <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" maxlength="13">
                                 <label for="fiscal_credit">Crédito Fiscal</label>
                             </div>
-                            <div class="input-field col s12 m6">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
-                                </i>
-                                <label for="base_imponible">Base Imponible Total</label>
-                                <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="" readonly>
+                            <div class="input-field col s12">
+                                <div class="divider"></div>
                             </div>
-                            <input type="hidden" name="alicuota" id="alicuota" value="">
-                            <input type="hidden" name="discount" id="discount" value="">
-                            <div class="input-field col s12 m4">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
-                                </i>
-                                <label for="interest">Interés por Mora:(Bs)</label>
-                                <input type="text" name="interest" id="interest" class="validate money" value="" readonly>
-                            </div>
-                            <div class="input-field col s12 m4">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
-                                </i>
-                                <label for="recharge">Recargo Interes:(Bs)</label>
-                                <input type="text" name="recharge" id="recharge" class="validate money" value="" readonly>
-                            </div>
-                            <div class="input-field col s12 m4">
-                                <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
-                                </i>
-                                <label for="amount">Total a Pagar:(Bs)</label>
-                                <input id="amount" type="text" name="amount" class="validate" value="" readonly>
+                            <div class="col s12">
+                                <div class="row">
+                                    <div class="col s12 m6">
+                                        {{--<table class="centered responsive-table" style="font-size: 10px;!important;">
+                                            <thead>
+                                            <tr>
+                                                <th>TIPO DE PUBLICIDAD</th>
+                                                <th>TARIFA (U.T)</th>
+                                                @if($publicity->advertisingType->id == 1)
+                                                    <th>DÍAS DE EXHIBICIÓN</th>
+                                                @endif
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{ $publicity->advertisingType->name }}</td>
+                                                <td>{{ $publicity->advertisingType->value }}</td>
+                                                @if($publicity->advertisingType->id == 1)
+                                                    <td>{{ $daysDiff }}</td>
+                                                @endif
+                                            </tr>
+                                            </tbody>
+                                        </table>--}}
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input type="text" name="amount" id="amount" class="validate" value="" readonly>
+                                                <label for="amount">Total a Pagar:(Bs)</label>
+                                            </div>
+                                            <div class="col s12"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer center-align">
                             <button type="submit" href="#" class="btn btn-rounded peach waves-effect waves-light modal-trigger ">
                                 Continuar
                                 <i class="icon-more_horiz right"></i>
