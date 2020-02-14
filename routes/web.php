@@ -882,6 +882,10 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+            ############ CONFIGURACION DE TAQUILLA
+
+                Route::get('/ticket-office/config', 'TicketOfficeController@config')->name('ticket-office.config');
+
             ########### VERIFICACION DE PAGOS
             Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function () {
                 Route::get('/payments/verify/manage', function () {
