@@ -74,6 +74,7 @@
                         @endif
                         <div class="card-content row">
                             <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
                                 <select name="advertising_type_id" id="advertising_type_id" required>
                                     <option value="null" disabled selected>Elija un tipo</option>
                                     @foreach($advertisingTypes as $type)
@@ -83,6 +84,7 @@
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name" required>
                                 <label for="name">Nombre</label>
                             </div>
@@ -97,14 +99,17 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker date_start" required>
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
                                     <option value="mts" selected>Metro</option>
@@ -125,6 +130,7 @@
                             {{--<label for="quantity">Cantidad de Lugares</label>--}}
                             {{--</div>--}}
                             <div class="input-field col s12">
+                                <i class="icon-exposure_plus_1 prefix"></i>
                                 <input type="number" name="side" id="side">
                                 <label for="side">Cantidad de Caras</label>
                             </div>

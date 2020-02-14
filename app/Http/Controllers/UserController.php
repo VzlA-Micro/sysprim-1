@@ -11,6 +11,8 @@ use Illuminate\Http\UploadedFile;
 use App\User;
 use App\Helpers\CedulaVE;
 use App\Role;
+use OwenIt\Auditing\Models\Audit;
+
 
 class UserController extends Controller{
 
@@ -383,5 +385,12 @@ class UserController extends Controller{
         $user = User::find($id);
         $properties=$user->property()->get();
         return view('modules.properties.module.read', ['properties'=>$properties]);
+    }
+
+
+
+    public function detailsSecurity($id){
+        $audits = Audit::where('user_id',$id)->orderBy('id','desc')->get();
+        return view('modules.security.audits', ['audits' => $audits]);
     }
 }

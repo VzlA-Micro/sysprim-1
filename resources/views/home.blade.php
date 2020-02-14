@@ -134,3 +134,14 @@
     </div>
 @endsection
 
+@section('scripts')
+    <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#bank-point').formSelect();
+        })
+    </script>
+@endsection
+

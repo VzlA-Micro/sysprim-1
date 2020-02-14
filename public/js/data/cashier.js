@@ -130,7 +130,6 @@ $('document').ready(function () {
                     localStorage.removeItem('bank');
                     localStorage.removeItem('lot');
                     window.location.href = url + 'ticket-office/type-payment';
-                    console.log('epa');
                 }
 
             });

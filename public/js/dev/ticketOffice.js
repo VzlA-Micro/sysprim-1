@@ -854,6 +854,12 @@ $(document).ready(function () {
                             }
                         })
 
+                        $('#name_user').val('');
+                        $('#user_id').val('');
+                        $('#surname').val('');
+                        $('#email').val('');
+                        $('#ci').val('');
+                        $('#user_id').val('');
                     } else {
                         var user = response[0].user;
                         $('#name_user').val(user.name);

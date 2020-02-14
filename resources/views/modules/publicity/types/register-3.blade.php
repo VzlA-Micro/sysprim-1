@@ -99,10 +99,12 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_start" id="date_start" class="datepicker" required>
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-date_range prefix"></i>
                                 <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
