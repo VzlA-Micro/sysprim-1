@@ -109,7 +109,13 @@
                                  <span class="truncate">Inmuebles</span>
                             </a>
                         </div>
-
+                            <div class="col s12 m12">
+                                <a href="{{ route('publicity.company.my-publicity', ['company_id' => $company->id]) }}"
+                                   class="btn-app white red-text text-darken-2">
+                                    <i class="icon-movie_filter"></i>
+                                    <span class="truncate">Publicidades</span>
+                                </a>
+                            </div>
                         <!-- <div class="col s12">
                             <a href="" class="btn-app white orange-text">
                                 <i class="icon-warning"></i>

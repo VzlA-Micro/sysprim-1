@@ -10,6 +10,10 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                 </ul>
@@ -50,14 +54,17 @@
                             @endif
                         </ul>
             		</div>
+                    @can('Actualizar Mis Publicidades')
             		<div class="card-footer center-align">
                         <a href="{{ route('publicity.edit', ['id' => $publicity->id]) }}" class="btn btn-large peach btn-rounded waves-effect waves-light">
                             <i class="icon-send right"></i>
                             Editar
                         </a>      
                     </div>
+                    @endcan
             	</div>
             </div>
+            @can('Mis Pagos - Publicidad')
             <div class="col s12 m3" style="margin-top: -8px">
                 <div class="row">
                     <a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
@@ -66,6 +73,7 @@
                     </a>
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

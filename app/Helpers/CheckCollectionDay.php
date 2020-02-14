@@ -57,5 +57,4 @@ class CheckCollectionDay{
 
         return $verify;
     }
-
 }

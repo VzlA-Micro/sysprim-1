@@ -106,6 +106,13 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Actualizar Accesorios']);
         // Permission::create(['name' => 'Eliminar Accesorios']);
 
+        // -- Grupo de Publicidad
+        Permission::create(['name' => 'Gestionar Grupos de Publicidad']);
+        Permission::create(['name' => 'Registrar Grupo de Publicidad']);
+        Permission::create(['name' => 'Consultar Grupos de Publicidad']);
+        Permission::create(['name' => 'Detalles Grupo de Publicidad']);
+        Permission::create(['name' => 'Actualizar Grupo de Publicidad']);
+
         // -- Gestionar Tipos de Publicidad
         Permission::create(['name' => 'Gestionar Tipos de Publicidad']);
         Permission::create(['name' => 'Registrar Tipo de Publicidad']);
@@ -412,6 +419,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Tipos de Publicidad',
             'Detalles Tipo de Publicidad',
             'Actualizar Tipos de Publicidad',
+            'Gestionar Grupos de Publicidad',
+            'Registrar Grupo de Publicidad',
+            'Consultar Grupos de Publicidad',
+            'Detalles Grupo de Publicidad',
+            'Actualizar Grupo de Publicidad',
             'Gestionar Tasas del Banco',
             'Registrar Tasa de Banco',
             'Consultar Tasas del Banco',
@@ -674,6 +686,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Mis Publicidades',
             'Consultar Mis Publicidades',
             'Detalles Mis Publicidades',
+            // 'Actualizar Mis Publicidades',
+            // 'Eliminar Mis Publicidades',
+            'Mis Pagos - Publicidad',
+            'Declarar Publicidades',
+            'Historial de Pagos - Publicidades',
 
             # --------- Módulo de Mis Tasas
             'Generar Tasas',

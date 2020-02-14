@@ -603,6 +603,7 @@ $('document').ready(function () {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function(resp) {
+                console.log(resp);
                 swal({
                     title: "¡Bien Hecho!",
                     text: "Se ha registrado la publicidad exitosamente.",
@@ -612,7 +613,7 @@ $('document').ready(function () {
                         className: "green-gradient"
                     }
                 }).then(function (accept) {
-                    window.location.href = url + "publicity/my-publicity";
+                    //window.location.href = url + "publicity/my-publicity";
                 });
             },
             error: function(err) {

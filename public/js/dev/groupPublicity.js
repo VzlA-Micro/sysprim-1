@@ -8,18 +8,19 @@ $('document').ready(function () {
     $('#groupName').blur(function () {
 
         $.ajax({
-            url: url + "",
+            url: url + "group_publicity/verifyName",
             data: {group: $('#groupName').val()},
             dataType: 'json',
             method: "POST",
 
             beforeSend: function () {
-                //$("#preloader").fadeIn('fast');
-                //$("#preloader-overlay").fadeIn('fast');
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
                 if (data) {
-                    //$("#preloader").close();
+                    $("#preloader").hide();
+                    $("#preloader-overlay").hide();
                     swal({
                         title: "¡Grupo de Publicidad Registrado!",
                         text: "No puedes registrar este grupo.",
@@ -31,6 +32,8 @@ $('document').ready(function () {
                     });
                     $('#groupRegister').prop('disabled', true);
                 } else {
+                    $("#preloader").hide();
+                    $("#preloader-overlay").hide();
                     $('#groupRegister').prop('disabled', false);
                 }
 
@@ -47,16 +50,18 @@ $('document').ready(function () {
         e.preventDefault();
 
         $.ajax({
-            url: url + "",
+            url: url + "group_publicity/save",
             data: {name: $('#groupName').val()},
             dataType: 'json',
             method: "POST",
 
             beforeSend: function () {
-                //$("#preloader").fadeIn('fast');
-                //$("#preloader-overlay").fadeIn('fast');
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
+                $("#preloader").hide();
+                $("#preloader-overlay").hide();
                 if (data) {
                     swal({
                         title: "¡Bien Hecho!",
@@ -66,14 +71,15 @@ $('document').ready(function () {
                             text: "Aceptar",
                             className: "green-gradient"
                         },
+                    }).then(function () {
+                        location.reload();
                     });
-                    $('#groupRegister').prop('disabled', true);
-                } else {
-                    $('#groupRegister').prop('disabled', false);
                 }
 
             },
             error: function (e) {
+                $("#preloader").hide();
+                $("#preloader-overlay").hide();
 
                 swal({
                     title: "¡Oh no!",
@@ -84,6 +90,7 @@ $('document').ready(function () {
                         className: "red-gradient"
                     },
                 });
+
             }
         });
     });
@@ -103,14 +110,14 @@ $('document').ready(function () {
 
 
 
-    $('#updateBrand').on('submit', function (e) {
+    $('#updateGroup').on('submit', function (e) {
             e.preventDefault();
             $('#name').removeAttr('readonly');
 
 
             swal({
                 icon: "info",
-                title: "Actualizar Marca Del Vehiculo",
+                title: "Actualizar el grupo",
                 text: "¿Está seguro que desea modificar los datos?, Si lo hace, no podrá revertir los cambios.",
                 buttons: {
                     cancel: {
@@ -135,7 +142,7 @@ $('document').ready(function () {
                         cache: false,
                         contentType: false,
                         processData: false,
-                        url: url + "vehicles-brand/update",
+                        url: url + "group_publicity/update",
                         data: new FormData(this),
                         dataType: false,
 
@@ -146,7 +153,7 @@ $('document').ready(function () {
                             if (data['update'] == true) {
                                 swal({
                                     title: "¡Bien Hecho!",
-                                    text: "Has Actualizado Los datos de marca de vehiculos, Con Exito",
+                                    text: "Has Actualizado Los datos del grupo, Con Exito",
                                     icon: "success",
                                     button: "Ok",
                                 }).then(function () {
