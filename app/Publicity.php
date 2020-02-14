@@ -27,4 +27,9 @@ class Publicity extends Model
         return $this->belongsToMany('App\Taxe','publicity_taxes')
             ->withPivot('taxe_id');
     }
+
+    public function person(){
+        return $this->belongsToMany('App\User','users_publicity')
+            ->withPivot('person_id');
+    }
 }

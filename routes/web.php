@@ -56,9 +56,7 @@ Route::middleware(['auth'])->group(/**
                 // Nivel 3: Detalles
                 Route::group(['middleware' => ['permission:Detalles Usuarios']], function () {
                     Route::get('/users/details/{id}', 'UserController@edit')->name('users.details');
-                    Route::get('/users/security/{id}','UserController@detailsSecurity')->name('users.security');
-
-
+                    Route::get('/users/security/{id}', 'UserController@detailsSecurity')->name('users.security');
 
 
                     Route::group(['middleware' => ['permission:Actualizar Usuarios|Habilitar/Deshabilitar Usuarios|Resetar Usuarios']], function () {
@@ -268,22 +266,20 @@ Route::middleware(['auth'])->group(/**
             });
 
             // Gestionar Grupos de publicidad
-           
-                Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
-                # Nivel 1: Registrar y Consultar
-                
-                    Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
-                    Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
-                    Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
-                    Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
-                    # Nivel 2: Detalles
-                    
-                        Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
-                        Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
-                   
-                
-            
-            
+
+            Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
+            # Nivel 1: Registrar y Consultar
+
+            Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
+            Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
+            Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
+            Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
+            # Nivel 2: Detalles
+
+            Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
+            Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
+
+
             // Gestionar Tasas del Banco
             Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
                 Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
@@ -456,7 +452,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/companies/my-payments/{company}', 'PaymentsController@menuPayments')->name('companies.my-payments');
         ##### PUBLICIDAD
 
-        Route::get('property/find/{type_document}/{document}/{band}','PropertyController@findTaxPayers');
+        Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
         Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
 
         // -------------------------------------------------------------
@@ -652,10 +648,11 @@ Route::middleware(['auth'])->group(/**
             return view('modules.publicity.ticket-office.register');
         })->name('ticketOffice.publicity.register');
 
-        Route::get('/ticketOffice/publicity/getTypeGroup/{group}','PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
+        Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
 
-        Route::get('/ticketOffice/publicity/show-Ticket-office','PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
+        Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
 
+        Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
 
         # ------------------------------------------------------------------- #
         Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
@@ -663,10 +660,6 @@ Route::middleware(['auth'])->group(/**
         Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
         Route::get('/publicity/ticket-office/verify/fiscal-period/{id}/{year}', 'PublicityTaxesController@verifyFiscalPeriod')->name('publicity.ticket-office.verify.fiscal-period');
         Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertyTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
-
-
-
-
 
 
         ############ CONTRIBUYENTE #######################
@@ -905,7 +898,7 @@ Route::middleware(['auth'])->group(/**
 
             ############ CONFIGURACION DE TAQUILLA
 
-                Route::get('/ticket-office/config', 'TicketOfficeController@config')->name('ticket-office.config');
+            Route::get('/ticket-office/config', 'TicketOfficeController@config')->name('ticket-office.config');
 
             ########### VERIFICACION DE PAGOS
             Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function () {
