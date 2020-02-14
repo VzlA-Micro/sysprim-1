@@ -26,11 +26,9 @@
                         <table class="highlight centered" style="width: 100%" id="vehicle" >
                             <thead>
                             <tr>
-                                <th>Placa</th>
-                                <th>Color</th>
-                                <th>Marca</th>
-                                <th>Módelo</th>
-                                <th>Año</th>
+                                <th>Codigo</th>
+                                <th>Name</th>
+                                <th>Tipo</th>
                                 @can('Detalles Vehiculos')
                                 <th>Detalles</th>
                                 @endcan
@@ -39,16 +37,14 @@
 
                             <tbody>
                             @if(isset($show))
-                                @foreach($show as $vehicle)
+                                @foreach($show as $publicity)
                                     <tr>
-                                        <td>{{$vehicle->license_plate}}</td>
-                                        <td>{{$vehicle->color}}</td>
-                                        <td>{{$vehicle->model->brand->name}}</td>
-                                        <td>{{$vehicle->model->name}}</td>
-                                        <td>{{$vehicle->year}}</td>
+                                        <td>{{$publicity->code}}</td>
+                                        <td>{{$publicity->name}}</td>
+                                        <td>{{$publicity->advertisingType->name}}</td>
                                         @can('Detalles Vehiculos')
                                         <td>
-                                            <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light">
+                                            <a href="{{route('ticketOffice.vehicle.details',['id'=>$publicity->id])}}" class="btn btn-floating orange waves-light">
                                                 <i class="icon-pageview"></i>
                                             </a>
                                         </td>

@@ -282,4 +282,23 @@ class PublicityController extends Controller
         return response()->json($type);
     }
 
+    public function showTicketOffice()
+    {
+        $publicities = Publicity::all();
+        return view('modules.publicity.ticket-office.read', ['show' => $publicities]);
+    }
+
+    public function detailsPublicity($id)
+    {
+        $models = ModelsVehicle::all();
+        $brands = Brand::all();
+        $type = VehicleType::all();
+        $vehicle = Vehicle::find($id);
+        if (isset($vehicle->person[0]->pivot->person_id)) {
+            $person = User::find($vehicle->person[0]->pivot->person_id);
+        } else {
+            $person = '';
+        }
+    }
+
 }

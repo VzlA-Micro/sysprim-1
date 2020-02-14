@@ -654,6 +654,9 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('/ticketOffice/publicity/getTypeGroup/{group}','PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
 
+        Route::get('/ticketOffice/publicity/show-Ticket-office','PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
+
+
         # ------------------------------------------------------------------- #
         Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
         Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
