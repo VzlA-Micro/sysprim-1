@@ -104,6 +104,6 @@
 @endsection
 
 @section('scripts')
-    <script0 src="{{ asset('js/validations.js') }}"></script0>
+    <script src="{{ asset('js/validations.js') }}"></script>
     <script src="{{ asset('js/data/sysq.js') }}"></script>
 @endsection
