@@ -44,6 +44,16 @@ $('document').ready(function () {
         $('#cancelar').addClass('hide');
     }
 
+    var hoy = new Date();
+    var dd = hoy.getDate();
+
+    if(localStorage.getItem('day')!=dd){
+        localStorage.removeItem('bank');
+        localStorage.removeItem('lot');
+        localStorage.removeItem('day');
+    }
+
+
 
     $('#call').click(function () {
         $.ajax({
@@ -254,6 +264,8 @@ $('document').ready(function () {
 
                         $('.content').append(html);
 
+                        var dd = hoy.getDate();
+                        localStorage.setItem('day',dd);
 
                     }
 
@@ -856,7 +868,8 @@ $('document').ready(function () {
 
                     console.log(turn);
 
-                    if(localStorage.getItem('turn')!=null&&turn.status=='init'||turn.status=='call'){
+
+                    if(localStorage.getItem('turn')!=null&&(turn.status=='init'||turn.status=='call')){
                         swal({
                             title:'Error',
                             text: "tienes un cliente en proceso de atención, para poder dejar la taquillas debes atender el cliente en proceso, o marcar que no se presento.",
@@ -867,23 +880,8 @@ $('document').ready(function () {
                             }
                         });
                     }else{
-
-
                         changeStatus(localStorage.getItem('ticket-office'),'Activo');
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 }else {
                     swal({
@@ -905,10 +903,6 @@ $('document').ready(function () {
         }else{
 
 
-
-
-
-
             swal({
                 title: "Información",
                 text: "Debe tener una taquilla activa para poder salir de esta.",
@@ -918,7 +912,182 @@ $('document').ready(function () {
                     className: "red"
                 }
             });
+
         }
     });
+
+
+    $('#reset').click(function (e){
+
+        swal({
+            title: "¿Quieres cancelar todo los usuarios en colas?",
+            text: "Al realizar esta acción, todos los usuarios en cola serán cancelados.",
+            icon: "error",
+            buttons: {
+                confirm: {
+                    text: "Cancelar Colas",
+                    value: true,
+                    visible: true,
+                    className: "red"
+
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }}).then(function(value){
+
+            if(value == true){
+                $.ajax({
+                    method:'POST',
+                    url: url+"/Turn/Reset",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $('#preLoader').hide();
+                        swal({
+                            title: "¡Se cancelo con exito!",
+                            text: "No hay usuarios en cola ",
+                            icon: "success",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            },
+                            timer: 3000
+                        })
+                            .then(redirect => {
+                                window.location.href=url_semat+'ticketOffice/home';
+                            })
+                    },
+                    error: function(err) {
+
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            }
+                        });
+                    }
+                })}else {
+
+                swal({
+                    text: "No se ha cancelado las tareas",
+                    icon: "warning",
+                    button: {
+                        text: "Aceptar",
+                        className: "green"
+                    }
+                });
+            }
+        });
+
+    });
+
+
+
+    $('#reset-ticket').click(function (e){
+
+        swal({
+            title: "¿Deseas limpiar todas la taquillas?",
+            text: "Al realizar esta acción, todos las taquillas quedaran disponible.",
+            icon: "error",
+            buttons: {
+                confirm: {
+                    text: "Cancelar Taquillas",
+                    value: true,
+                    visible: true,
+                    className: "red"
+
+                },
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }}).then(function(value){
+
+            if(value == true){
+                $.ajax({
+                    method:'GET',
+                    url: url+"/Ticket/update/all",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                        swal({
+                            title: "¡Se liberaron todas la taquillas con éxito.!",
+                            text: "Ahora todas la taquillas estan disponible. ",
+                            icon: "success",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            },
+                            timer: 3000
+                        })
+                            .then(redirect => {
+                                window.location.href=url_semat+'ticketOffice/home';
+                            })
+                    },
+                    error: function(err) {
+
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            }
+                        });
+                    }
+                })}else {
+
+                swal({
+                    text: "No se ha cancelado las tareas",
+                    icon: "warning",
+                    button: {
+                        text: "Aceptar",
+                        className: "green"
+                    }
+                });
+            }
+        });
+
+    });
+
+
+    if(url_semat==='https://sysprim.com/'){
+        $('#lateral-bar').addClass('hide');
+    }
 
 });
