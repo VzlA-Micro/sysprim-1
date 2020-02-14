@@ -49,6 +49,14 @@
                 </a>
             </div>
             @endcan
+            {{-- @can('Taquilla - Inmuebles') --}}
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('ticket-office.config')}}" class="btn-app white red-text text-darken-2">
+                    <i class="icon-settings_applications"></i>
+                    <span class="truncate">Configuración Taquilla</span>
+                </a>
+            </div>
+            {{-- @endcan --}}
             @can('Verificar Pagos - Archivo')
                 <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('payments.verify.manage') }}" class="btn-app white green-text text-darken-4">

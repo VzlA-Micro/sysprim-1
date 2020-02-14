@@ -1429,6 +1429,10 @@ class TicketOfficeController extends Controller
         return $pdf->stream();
     }
 
+    public function config(){
+        return view('modules.ticket-office.config.manage');
+    }
+
 
 }
 
