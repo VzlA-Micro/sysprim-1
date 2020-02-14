@@ -189,6 +189,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\DeclarationPublicityServiceProvider::class,
         App\Providers\CheckCollectionDayServiceProvider::class,
+        App\Providers\VerificationProviderService::class
 
     ],
 
@@ -252,8 +253,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'DeclarationPublicity'=>App\Helpers\DeclarationPublicity::class,
-        'CheckCollectionDay'=>App\Helpers\DeclarationPublicity::class,
-
+        'CheckCollectionDay'=>App\Helpers\CheckCollectionDay::class,
+        'Verification'=>App\Helpers\Verification::class,
     ],
 
 ];

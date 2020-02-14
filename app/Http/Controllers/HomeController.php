@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\TaxesNumber;
+use App\Helpers\Verification;
 use App\Prologue;
 use App\User;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class HomeController extends Controller
 
 
     public function test(){
-        $verify=CheckCollectionDay::verify('Pat.Veh','2018-01-01');
+        $verify=Verification::verifyDeudaFospuca('J002711442');
         dd($verify);
     }
 
