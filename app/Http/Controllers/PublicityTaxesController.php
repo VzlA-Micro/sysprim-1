@@ -268,4 +268,49 @@ class PublicityTaxesController extends Controller
         $advertisingTypes = AdvertisingType::all();
         return view('modules.publicity-payments.ticket-office.generate', ['advertisingTypes' => $advertisingTypes]);
     }
+
+    public function findCode($code) {
+        $publicity = Publicity::where('code', $code)->with('users')->first();
+        if($publicity == null) {
+            $response = [
+                'status' => 'error',
+                'message' => 'La publicidad con el código '. $code .' no se encuentra registrado. Por favor, ingrese un código valido.'
+            ];
+        }
+        else {
+            $response = [
+                'status' => 'success',
+                'publicity' => $publicity,
+            ];
+        }
+        return response()->json($response);
+    }
+
+    public function verifyFiscalPeriod($id, $year) {
+        $date = Carbon::now();
+        $publicity = Publicity::find($id);
+        $taxe = $publicity->publicityTaxes()->whereDate('fiscal_period',$year)->first();
+//        dd($taxe);
+//        $propertyTaxe = $pr->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        if (is_null($taxe)) {
+            $statusTax = false;
+        } else {
+            if ($taxe->status === 'verified' || $taxe->status === 'verified-sysprim') {
+                $statusTax = true;
+            } else if ($taxe->status === 'temporal') {
+//                      $tax->delete();
+                $statusTax = false;
+            } else if ($taxe->status === 'ticket-office' && $taxe->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($taxe->status === 'process' && $taxe->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($taxe->status === 'cancel') {
+                $statusTax = false;
+            }
+
+            return response()->json($statusTax);
+        }
+    }
+
+
 }

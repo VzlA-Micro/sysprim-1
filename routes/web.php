@@ -657,6 +657,10 @@ Route::middleware(['auth'])->group(/**
         # ------------------------------------------------------------------- #
         Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
         Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
+        Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
+        Route::get('/publicity/ticket-office/verify/fiscal-period/{id}/{year}', 'PublicityTaxesController@verifyFiscalPeriod')->name('publicity.ticket-office.verify.fiscal-period');
+        Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PropertyTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
+
 
 
 
