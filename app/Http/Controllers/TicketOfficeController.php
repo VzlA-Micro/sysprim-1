@@ -265,10 +265,8 @@ class TicketOfficeController extends Controller
             'name_company' => 'required',
             'RIF' => 'required|min:8',
             'address' => 'required',
-            'opening_date' => 'required',
             'parish' => 'required|integer',
             'sector' => 'required',
-            'number_employees' => 'required',
         ]);
 
         if(!$license){

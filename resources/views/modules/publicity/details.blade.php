@@ -64,6 +64,7 @@
                     @endcan
             	</div>
             </div>
+            @can('Mis Pagos - Publicidad')
             <div class="col s12 m3" style="margin-top: -8px">
                 <div class="row">
                     <a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
@@ -72,6 +73,7 @@
                     </a>
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 @endsection
