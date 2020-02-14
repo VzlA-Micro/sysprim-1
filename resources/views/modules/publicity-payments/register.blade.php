@@ -38,7 +38,8 @@
                                     <li><b>Propietario: </b>{{ $owner->name }}</li>
                                     <li><b>RIF: </b>{{ $owner->RIF }}</li>
                                 @endif
-                                {{-- <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li> --}}
+                                <li><b>Código de Publicidad: </b>{{ $publicity->code }}</li>
+                                    {{-- <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li> --}}
                                 <li><b>Nombre: </b>{{ $publicity->name }}</li>
 
                             </ul>

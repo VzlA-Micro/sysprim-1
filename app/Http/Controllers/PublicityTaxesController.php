@@ -445,20 +445,18 @@ class PublicityTaxesController extends Controller
             ->first();
 //        dd($publicityTaxe);
 
+        $advertisingTypes = AdvertisingType::all();
         $publicity = Publicity::find($publicityTaxe->pivot->publicity_id);
         $userPublicity = UserPublicity::where('publicity_id',$publicityTaxe->pivot->publicity_id)->first();
-        $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status,$propertyTaxe->fiscal_period);
+        $declaration = DeclarationPublicity::Declarate($publicityTaxe->id);
 //        dd($taxes);
-        if (!is_null($userProperty->company_id)) {
-            $owner = Company::find($userProperty->company_id);
+        if (!is_null($userPublicity->company_id)) {
+            $owner = Company::find($userPublicity->company_id);
             $type = 'company';
         } else {
-            $owner = User::find($userProperty->person_id);
+            $owner = User::find($userPublicity->person_id);
             $type = 'user';
         }
-
-
-
         $verified = true;
 
         if (!$taxes->payments->isEmpty()) {
@@ -471,15 +469,16 @@ class PublicityTaxesController extends Controller
             $verified = false;
         }
 
-        return view('modules.properties.ticket-office.details', [
+        return view('modules.publicity-payments.ticket-office.details', [
             'taxes' => $taxes,
-            'amounts' => $amounts,
+            'declaration' => $declaration,
             'verified' => $verified,
-            'propertyTaxe' => $propertyTaxe,
+            'publicityTaxe' => $publicityTaxe,
             'status' => $status,
             'owner' => $owner,
             'type' => $type,
-            'property' => $property
+            'publicity' => $publicity,
+            'advertisingTypes' => $advertisingTypes
         ]);
     }
 
