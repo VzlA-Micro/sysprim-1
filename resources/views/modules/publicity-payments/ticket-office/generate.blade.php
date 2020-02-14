@@ -26,17 +26,17 @@
                             <h4>DATOS GENERALES</h4>
                         </div>
                         <div class="card-content row">
-                            <input type="hidden" name="property_id" id="property_id">
+                            <input type="hidden" name="publicity_id" id="publicity_id">
                             <input type="hidden" name="user_id" id="user_id">
                             <input type="hidden" name="taxe_id" id="taxe_id">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code" id="code" maxlength="35">
+                                <input type="text" name="code" id="code" maxlength="12">
                                 <label for="code">Código de Publicidad</label>
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="advertising_type_id">
+                                <select name="advertising_type_id" id="advertising_type_id" disabled>
                                     <option value="null" disabled selected>Elija un tipo</option>
                                     @foreach($advertisingTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -46,29 +46,29 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" required>
+                                <input type="text" name="name" id="name" disabled>
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start" required>
+                                <input type="text" name="date_start" id="date_start" class="datepicker date_start" disabled>
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                <input type="text" name="date_end" id="date_end" class="datepicker" disabled>
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="person" id="person" value="" readonly>
                                 <label for="person">Usuario Web</label>
                             </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-directions prefix"></i>
-                                <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required readonly></textarea>
-                                <label for="address">Dirección</label>
-                            </div>
+                            {{--<div class="input-field col s12 m6">--}}
+                                {{--<i class="icon-directions prefix"></i>--}}
+                                {{--<textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required readonly></textarea>--}}
+                                {{--<label for="address">Dirección</label>--}}
+                            {{--</div>--}}
                             @php
                                 $cont=(int)date('Y');
                             @endphp
@@ -177,5 +177,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/data/properties-ticket-office.js') }}"></script>
+    <script src="{{ asset('js/data/publicity-ticket-office-payments.js') }}"></script>
 @endsection
