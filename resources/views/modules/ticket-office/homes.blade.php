@@ -33,6 +33,14 @@
                 </a>
             </div>
             @endcan
+
+            <div class="col s16 m3 animated bounceIn">
+                <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla - Publicidad</span>
+                </a>
+            </div>
+
             @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('property.ticket-office.home')}}" class="btn-app white brown-text">
@@ -75,12 +83,7 @@
                 <div class="modal-footer">
                     <div class="content row">
 
-            <div class="col s16 m3 animated bounceIn">
-                <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
-                    <i class="icon-folder_special"></i>
-                    <span class="truncate">Taquilla - Publicidad</span>
-                </a>
-            </div>
+
 
 
                     </div>

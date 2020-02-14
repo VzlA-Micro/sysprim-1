@@ -100,8 +100,6 @@ class PublicityController extends Controller
     }
 
     public function store(Request $request) {
-        var_dump($request->all());
-        die();
         $status = $request->input('status');
         $owner_id = $request->input('id');
         $type = $request->input('type');

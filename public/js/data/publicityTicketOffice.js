@@ -2,6 +2,12 @@ var url = localStorage.getItem('url');
 var updateType = false;
 
 $('document').ready(function () {
+    $('#form-1').hide();
+    $('#form-2').hide();
+    $('#form-3').hide();
+    $('#form-4').hide();
+    $('#form-5').hide();
+
 
     $('#model').prop('disabled', true);
     $('select').formSelect();
@@ -540,35 +546,60 @@ $('document').ready(function () {
 
                 if (valType == 1) {
                     //PUBLICIDAD POR TIEMPO
-                    $('#form-3').removeClass('hide');
+                    //$('#form-3').removeClass('hide');
+                    $('#form-3').show();
+                    $('#form-1').remove();
+                    $('#form-2').remove();
+                    $('#form-4').remove();
+                    $('#form-5').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
                         $('#type_id-3').html(template);
                         $('select').formSelect();
                     }
                 } else if (valType == 2) {
-                    $('#form-4').removeClass('hide');
+                    //$('#form-4').removeClass('hide');
+                    $('#form-4').show();
+                    $('#form-1').remove();
+                    $('#form-2').remove();
+                    $('#form-3').remove();
+                    $('#form-5').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
                         $('#type_id-4').html(template);
                         $('select').formSelect();
                     }
                 } else if (valType == 3) {
-                    $('#form-2').removeClass('hide');
+                    //$('#form-2').removeClass('hide');
+                    $('#form-2').show();
+                    $('#form-1').remove();
+                    $('#form-4').remove();
+                    $('#form-3').remove();
+                    $('#form-5').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
                         $('#type_id-3').html(template);
                         $('select').formSelect();
                     }
                 } else if (valType == 4) {
-                    $('#form-1').removeClass('hide');
+                    //$('#form-1').removeClass('hide');
+                    $('#form-1').show();
+                    $('#form-2').remove();
+                    $('#form-4').remove();
+                    $('#form-3').remove();
+                    $('#form-5').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
                         $('#type_id-1').html(template);
                         $('select').formSelect();
                     }
                 } else if (valType == 5) {
-                    $('#form-5').removeClass('hide');
+                    //$('#form-5').removeClass('hide');
+                    $('#form-5').show();
+                    $('#form-1').remove();
+                    $('#form-4').remove();
+                    $('#form-3').remove();
+                    $('#form-2').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
                         $('#type_id-5').html(template);

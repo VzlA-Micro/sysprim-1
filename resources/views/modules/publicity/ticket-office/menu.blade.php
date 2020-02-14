@@ -7,13 +7,13 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.home') }}">Taquilla Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="#">Gestionar Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
                 </ul>
             </div>
             @can('Registrar Vehiculo')
             <div class="col s12 m3 animated bounceIn">
-                <a href="{{ route('vehicles.register',['register'=>true]) }}" class="btn-app white purple-text">
+                <a href="{{ route('ticketOffice.publicity.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Publicidad</span>
                 </a>
