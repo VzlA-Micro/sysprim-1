@@ -12,10 +12,9 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas
                         </a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquilla Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.vehicle.manage') }}">Gestionar
-                            Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="#">Registrar
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Registrar
                             Publicidad</a></li>
                 </ul>
             </div>
@@ -175,7 +174,8 @@
                         <div class="card-header center-align">
                             <h4>Datos de la publicidad</h4>
                         </div>
-                        <div class="card-content hide row" id="form-1">
+
+                        <div class="card-content row" id="form-1">
                             <div class="input-field col s12">
                                 <select name="advertising_type_id" id="type_id-1">
                                     <option value="null" disabled selected>Elija un tipo</option>
@@ -242,7 +242,7 @@
                             </div>
 
                         </div>
-                        <div class="card-content hide row" id="form-2">
+                        <div class="card-content row" id="form-2">
 
                             <div class="input-field col s12">
                                 <select name="advertising_type_id" id="type_id-2">
@@ -302,7 +302,7 @@
                             </div>
 
                         </div>
-                        <div class="card-content hide row" id="form-3">
+                        <div class="card-content row" id="form-3">
                             <div class="input-field col s12">
                                 <select name="advertising_type_id" id="type_id-3">
                                     <option value="null" disabled selected>Elija un tipo</option>
@@ -349,7 +349,7 @@
                             </div>
 
                         </div>
-                        <div class="card-content hide row" id="form-4">
+                        <div class="card-content row" id="form-4">
                             <div class="input-field col s12">
                                 <select name="advertising_type_id" id="type_id-4">
                                     <option value="null" disabled selected>Elija un tipo</option>
@@ -412,7 +412,7 @@
                             </div>
 
                         </div>
-                        <div class="card-content hide row" id="form-5">
+                        <div class="card-content row" id="form-5">
                             <div class="input-field col s12">
                                 <select name="advertising_type_id" id="type_id-5">
                                     <option value="null" disabled selected>Elija un tipo</option>
@@ -485,9 +485,8 @@
                                     Registrar
                                 </button>
                             </div>
-
-
                         </div>
+
                     </div>
                 </form>
             </div>
