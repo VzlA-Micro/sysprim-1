@@ -1058,11 +1058,11 @@ class TicketOfficeController extends Controller
                 'data' => $data,
                 'publicity' => $publicity,
                 'publicityTaxes' => $publicityTaxes,
-                'type' => $type
+                'type' => $type,
                 'firm'=>true
             ]);
 
-            $user=User::find($userProperty->user_id);
+            $user=User::find($userPublicity->user_id);
             $email=$user->email;
             $band=true;
         }
