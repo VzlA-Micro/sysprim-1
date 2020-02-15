@@ -175,11 +175,32 @@
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
+                                        <input type="text" name="name" id="name" minlength="5" maxlength="190" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
-                                    <div class="input-field col s12 m6" id="date-begin">
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-smoking_rooms prefix"></i>
+                                        <select name="licor" id="licor" disabled>
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->licor=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->licor=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-my_location prefix"></i>
+                                        <select name="state_location" id="state_location" disabled="">
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->state_location=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->state_location=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6" id="date-begin ">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_start" value="{{$publicity->date_start}}"
                                                id="date_start1"
@@ -194,13 +215,13 @@
                                     </div>
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                        <input type="text" name="date_start" id="date_start" value="{{$publicity->date_start}}" class="datepicker date_start"
                                                required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
                                     <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                        <input type="text" name="date_end" value="{{$publicity->date_end}}" id="date_end" class="datepicker date_end" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
                                     {{-- <div class="input-field col s12">
@@ -221,10 +242,31 @@
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
+                                        <input type="text" name="name" id="name" minlength="5" maxlength="190" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-smoking_rooms prefix"></i>
+                                        <select name="licor" id="licor" disabled>
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->licor=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->licor=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-my_location prefix"></i>
+                                        <select name="state_location" id="state_location" disabled="">
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->state_location=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->state_location=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                                    </div>
+
 
                                     <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
@@ -243,14 +285,14 @@
 
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}" id="date_start" class="datepicker date_start"
                                                required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
 
                                     <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                        <input type="text" name="date_end" value="{{$publicity->date_end}}" id="date_end" class="datepicker date_end" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
@@ -263,14 +305,14 @@
                                     <div class="input-field col s12 m6" >
                                         <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
-                                        <input type="text" class="js-range-slider width" name="width" id="width"
+                                        <input type="text" class="js-range-slider width" name="width" maxlength="5" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
                                     <div class="input-field col s12 m6">
                                         <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
-                                        <input type="text" class="js-range-slider height" name="height" id="height"
+                                        <input type="text" class="js-range-slider height" name="height" maxlength="5" id="height"
                                                value="{{$publicity->height}}" disabled required>
                                     </div>
 
@@ -291,9 +333,29 @@
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
+                                        <input type="text" name="name" id="name" minlength="5" maxlength="190" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-smoking_rooms prefix"></i>
+                                        <select name="licor" id="licor" disabled>
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->licor=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->licor=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-my_location prefix"></i>
+                                        <select name="state_location" id="state_location" disabled="">
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->state_location=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->state_location=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
                                     </div>
 
                                     <div class="input-field col s12 m6" id="date-begin">
@@ -313,14 +375,14 @@
 
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}" id="date_start" class="datepicker date_start"
                                                required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
 
                                     <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                        <input type="text" name="date_end" value="{{$publicity->date_end}}" id="date_end" class="datepicker date_end" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
@@ -332,7 +394,7 @@
 
                                     <div class="input-field col s12">
                                         <i class="icon-chrome_reader_mode prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" value="{{$publicity->quantity}}" disabled required>
+                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" disabled required>
                                         <label for="quantity">Ejemplares</label>
                                     </div>
                                     {{--<div class="input-field col s12">
@@ -352,9 +414,29 @@
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
+                                        <input type="text" name="name" id="name" minlength="5" maxlength="190" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-smoking_rooms prefix"></i>
+                                        <select name="licor" id="licor" disabled>
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->licor=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->licor=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-my_location prefix"></i>
+                                        <select name="state_location" id="state_location" disabled="">
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->state_location=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->state_location=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
                                     </div>
 
                                     <div class="input-field col s12 m6" id="date-begin">
@@ -374,14 +456,14 @@
 
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                        <input type="text" value="{{$publicity->date_start}}" name="date_start" id="date_start" class="datepicker date_start"
                                                required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
 
                                     <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                        <input type="text" name="date_end" id="date_end" value="{{$publicity->date_end}}" class="datepicker date_end" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
@@ -394,20 +476,20 @@
                                     <div class="input-field col s12 m6" >
                                         <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
-                                        <input type="text" class="js-range-slider width" name="width" id="width"
+                                        <input type="text" class="js-range-slider width" maxlength="5" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
                                     <div class="input-field col s12 m6">
                                         <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
-                                        <input type="text" class="js-range-slider height" name="height" id="height"
+                                        <input type="text" class="js-range-slider height" maxlength="5" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
                                     </div>
 
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" value="{{$publicity->quantity}}" disabled required>
+                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" disabled required>
                                         <label for="quantity">Cantidad de Lugares</label>
                                     </div>
                                 </div>
@@ -423,9 +505,29 @@
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
+                                        <input type="text" name="name" id="name" minlength="5" maxlength="190" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-smoking_rooms prefix"></i>
+                                        <select name="licor" id="licor" disabled>
+                                                <option value="null" selected disabled>...</option>
+                                                <option value="SI" @if ($publicity->licor=='SI'){{"selected"}}@endif>SI</option>
+                                                <option value="NO" @if ($publicity->licor=='NO'){{"selected"}}@endif>NO</option>
+                                            </select>
+                                        <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-my_location prefix"></i>
+                                        <select name="state_location" id="state_location" disabled="">
+                                            <option value="null" selected disabled>...</option>
+                                            <option value="SI" @if ($publicity->state_location=='SI'){{"selected"}}@endif>SI</option>
+                                            <option value="NO" @if ($publicity->state_location=='NO'){{"selected"}}@endif>NO</option>
+                                        </select>
+                                        <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
                                     </div>
 
                                     <div class="input-field col s12 m6" id="date-begin">
@@ -445,14 +547,14 @@
 
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}" id="date_start" class="datepicker date_start"
                                                required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
 
                                     <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end" class="datepicker" required>
+                                        <input type="text" name="date_end" id="date_end" value="{{$publicity->date_end}}" class="datepicker date_end" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
@@ -466,14 +568,14 @@
 
                                     <div class="input-field col s12 m6" >
                                         <i class="icon-panorama_horizontal prefix"></i>
-                                        <input type="text"  name="width" id="width"
+                                        <input type="text"  name="width" maxlength="5" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                         <label for="width">Ancho</label>
                                     </div>
 
                                     <div class="input-field col s12 m6">
                                         <i class="icon-panorama_vertical prefix"></i>                                        
-                                        <input type="text"  name="height" id="height"
+                                        <input type="text"  name="height" maxlength="5" id="height"
                                                value="{{$publicity->height}}" disabled required>
                                         <label for="height">Alto / Piso</label>
                                     </div>
@@ -484,7 +586,7 @@
                                     {{--</div>--}}
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="side" value="{{$publicity->side}}" disabled id="side">
+                                        <input type="text" name="side" value="{{$publicity->side}}" maxlength="5" disabled id="side">
                                         <label for="side">Cantidad de Caras</label>
                                     </div>
                                     {{-- <div class="input-field col s12">
