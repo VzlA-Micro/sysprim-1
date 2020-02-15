@@ -737,6 +737,8 @@ Route::middleware(['auth'])->group(/**
             Route::get('/ticket-office/cashier/{id}', 'TicketOfficeController@QrTaxes');
             Route::get('ticketOffice/vehicle/cashier/{id}', 'TicketOfficeVehicleController@QrTaxes');
             Route::get('ticketOffice/property/cashier/{id}', 'PropertyTaxesController@QrTaxes');
+            Route::get('ticketOffice/publicity/cashier/{id}', 'PublicityTaxesController@QrTaxes');
+
 
 
             Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');

@@ -151,8 +151,8 @@
             <td style="width: 10%;font-size: 10px !important;"></td>
             <td style="width: 10%;font-size: 10px;!important">{{ $taxe->branch }}</td>
             <td style="width: 10%;font-size: 10px; !important;">{{Carbon\Carbon::parse($taxe->fiscal_period)->format('m-Y')."/".Carbon\Carbon::parse($taxe->fiscal_period_end)->format('m-Y')}}</td>
-            <td style="width: 15%;font-size: 10px;!important">{{ $taxe->publicities[0]->advertisingType->value }}</td>
-            <td style="width: 15%;font-size: 10px;!important"></td>
+            <td style="width: 15%;font-size: 10px;!important">{{number_format($taxe->publicities[0]->pivot->base_imponible,2,',','.')}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{ $taxe->publicities[0]->advertisingType->value }}UT</td>
             <td style="width: 10%;font-size: 10px;!important">{{number_format($taxe->publicities[0]->pivot->base_imponible,2,',','.')}}</td>
         </tr>
 
@@ -179,6 +179,18 @@
                 <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
                 <td style="width: 10%;font-size: 10px !important;">-{{ number_format($taxe->publicities[0]->pivot->fiscal_credit,2,',','.') }}</td>
                 @php $totalAmount -= $taxe->publicities[0]->pivot->fiscal_credit; @endphp
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+            </tr>
+        @endif
+        @if($taxe->publicities[0]->pivot->increment != 0)
+            <tr>
+                <td style="width: 10%;font-size: 10px !important;text-align: right">Incremento</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->publicities[0]->pivot->increment,2,',','.') }}</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                @php $totalAmount += $taxe->publicities[0]->pivot->increment; @endphp
                 <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
             </tr>
         @endif
@@ -361,7 +373,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status[0]!='verified'&&$taxes[0]->status!='verified-sysprim')
+            @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->id))) !!} "
                          style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image">

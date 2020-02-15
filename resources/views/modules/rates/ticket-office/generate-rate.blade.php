@@ -84,7 +84,7 @@
 
 
                             <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn green text  waves-light">
+                                <a href="#" id='data-next' class="btn peach text  waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>

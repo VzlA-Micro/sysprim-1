@@ -53,6 +53,9 @@
                             @if($publicity->advertising_type_id == 1) 
                             <li><b>Puntos de Publicidad: </b>{{ $publicity->quantity }}</li>
                             @endif
+                            <li><b>Publicidad referente a venta de cigarrillos o bebidas alcoholicas: </b>{{ $publicity->licor }}</li>
+                            <li><b>Publicidad ubicada en espacios reservados de la alcaldía: </b>{{ $publicity->state_location }}</li>
+
                         </ul>
             		</div>
                     @can('Actualizar Mis Publicidades')

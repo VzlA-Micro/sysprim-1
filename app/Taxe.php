@@ -75,7 +75,7 @@ class Taxe extends Model implements Auditable {
 
     public function publicities() {
         return $this->belongsToMany('App\Publicity','publicity_taxes')
-            ->withPivot('publicity_id','base_imponible', 'fiscal_credit');
+            ->withPivot('publicity_id','base_imponible', 'fiscal_credit', 'interest', 'increment');
     }
 
 

@@ -7,7 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.manage') }}">Gestionar Pagos</a></li>
                 </ul>
             </div>

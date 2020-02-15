@@ -87,6 +87,7 @@ $(document).ready(function() {
         var fiscal_credit = $('#fiscal_credit').val();
         var publicity_id = $('#publicity_id').val();
         var amount = $('#amount').val();
+        var increment = $('#increment').val();
 
         $.ajax({
             method: 'POST',
@@ -95,6 +96,7 @@ $(document).ready(function() {
                 base_imponible: base_imponible,
                 interest: interest,
                 fiscal_credit: fiscal_credit,
+                increment: increment,
                 publicity_id: publicity_id,
                 amount: amount
             },

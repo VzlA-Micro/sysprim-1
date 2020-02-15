@@ -144,9 +144,9 @@
         <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
         <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
         {{--<td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2,',','.') }}</td>--}}
-        <td style="width: 15%;font-size: 10px;!important">{{ $publicity->advertisingType->value }}UT</td>
+        <td style="width: 15%;font-size: 10px;!important">{{number_format($publicityTaxes->base_imponible,2,',','.')}}</td>
 
-        <td style="width: 15%;font-size: 10px;!important"></td>
+        <td style="width: 15%;font-size: 10px;!important">{{ $publicity->advertisingType->value }}UT</td>
         <td style="width: 10%;font-size: 10px;!important">{{number_format($publicityTaxes->base_imponible,2,',','.')}}</td>
     </tr>
     {{--@endforeach--}}
@@ -207,6 +207,18 @@
             <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
             <td style="width: 10%;font-size: 10px !important;">-{{ number_format($publicityTaxes->fiscal_credit,2,',','.') }}</td>
             @php $totalAmount -= $publicityTaxes->fiscal_credit; @endphp
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
+        </tr>
+    @endif
+    @if($publicityTaxes->increment != 0)
+        <tr>
+            <td style="width: 10%;font-size: 10px !important;text-align: right">Incremento</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($publicityTaxes->increment,2,',','.') }}</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            @php $totalAmount += $publicityTaxes->increment; @endphp
             <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
         </tr>
     @endif
