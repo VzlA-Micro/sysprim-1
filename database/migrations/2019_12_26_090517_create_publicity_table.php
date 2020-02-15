@@ -19,13 +19,15 @@ class CreatePublicityTable extends Migration
             $table->string('name');
             $table->date('date_start');
             $table->date('date_end');
-            $table->string('unit',3)->nullable();
+            $table->string('unit', 3)->nullable();
             $table->integer('quantity')->unsigned()->nullable();
             $table->float('width')->unsigned()->nullable();
             $table->float('height')->unsigned()->nullable();
             $table->integer('side')->unsigned()->nullable();
-            $table->integer('floor')->unsigned()->nullable();
-            $table->integer('point')->unsigned()->nullable();
+//            $table->integer('point')->unsigned()->nullable();
+            $table->string('status',20)->unsigned()->nullable();
+            $table->string('state_location',2)->nullable();
+            $table->string('licor',2)->nullable();
             $table->string('image')->nullable();
             $table->integer('advertising_type_id')->unsigned();
             $table->foreign('advertising_type_id')->references('id')->on('advertising_type');

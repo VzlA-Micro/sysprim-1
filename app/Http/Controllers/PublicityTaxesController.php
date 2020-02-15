@@ -15,8 +15,9 @@ use App\Helpers\TaxesNumber;
 use App\User;
 use App\Company;
 use OwenIt\Auditing\Models\Audit;
-
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 
 class PublicityTaxesController extends Controller
@@ -220,7 +221,7 @@ class PublicityTaxesController extends Controller
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('properties/payments/history/'.$property->id)->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date);
+        return redirect('publicity/payments/history/'.$publicity->id)->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date);
     }
 
     public function paymentHistoryTaxPayers($id){
@@ -254,9 +255,9 @@ class PublicityTaxesController extends Controller
         ]);
 
         if(isset($download)){
-            return $pdf->stream('PLANILLA_INMUEBLE.pdf');
+            return $pdf->stream('PLANILLA_PUBLICIDAD.pdf');
         }else{
-            return $pdf->download('PLANILLA_INMUEBLE.pdf');
+            return $pdf->download('PLANILLA_PUBLICIDAD.pdf');
         }
     }
 
@@ -445,20 +446,18 @@ class PublicityTaxesController extends Controller
             ->first();
 //        dd($publicityTaxe);
 
+        $advertisingTypes = AdvertisingType::all();
         $publicity = Publicity::find($publicityTaxe->pivot->publicity_id);
         $userPublicity = UserPublicity::where('publicity_id',$publicityTaxe->pivot->publicity_id)->first();
-        $amounts = Declaration::VerifyDeclaration($propertyTaxe->id, $status,$propertyTaxe->fiscal_period);
+        $declaration = DeclarationPublicity::Declarate($publicityTaxe->id);
 //        dd($taxes);
-        if (!is_null($userProperty->company_id)) {
-            $owner = Company::find($userProperty->company_id);
+        if (!is_null($userPublicity->company_id)) {
+            $owner = Company::find($userPublicity->company_id);
             $type = 'company';
         } else {
-            $owner = User::find($userProperty->person_id);
+            $owner = User::find($userPublicity->person_id);
             $type = 'user';
         }
-
-
-
         $verified = true;
 
         if (!$taxes->payments->isEmpty()) {
@@ -470,16 +469,19 @@ class PublicityTaxesController extends Controller
         } else {
             $verified = false;
         }
+        $daysDiff = $declaration['daysDiff'];
 
-        return view('modules.properties.ticket-office.details', [
+        return view('modules.publicity-payments.ticket-office.details', [
             'taxes' => $taxes,
-            'amounts' => $amounts,
+            'declaration' => $declaration,
             'verified' => $verified,
-            'propertyTaxe' => $propertyTaxe,
+            'publicityTaxe' => $publicityTaxe,
             'status' => $status,
             'owner' => $owner,
             'type' => $type,
-            'property' => $property
+            'publicity' => $publicity,
+            'advertisingTypes' => $advertisingTypes,
+            'daysDiff' => $daysDiff
         ]);
     }
 

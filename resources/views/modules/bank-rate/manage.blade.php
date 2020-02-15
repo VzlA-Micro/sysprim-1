@@ -26,7 +26,7 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{ route('bank.rate.read') }}" class="btn-app white red-text ">
                     <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Ver Tasas Tasas de Bancos</span>
+                    <span class="truncate">Ver Tasas de Bancos</span>
                 </a>
             </div>
             @endcan
