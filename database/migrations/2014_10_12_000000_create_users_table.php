@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('phone',15)->nullable();
             $table->boolean('confirmed')->default(0);
             $table->string('confirmed_code')->nullable();
-            $table->unsignedBigInteger('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -31,6 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
 
 
