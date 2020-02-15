@@ -893,6 +893,96 @@ $('document').ready(function () {
         }
     });
 
+    $('#publicity-status').on('click', function () {
+
+        var publicityStatus = 0;
+        publicityStatus = $(this).val();
+        var id = $('#id').val();
+        var status = null;
+
+        if (publicityStatus == 'disabled') {
+            var status = 'true';
+
+            $.ajax({
+                type: "get",
+                url: url + "/ticketOffice/publicity/changeStatus/"+id+"/"+status,
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "disabled") {
+                        swal({
+                            title: "Publicidad",
+                            text: data['message'],
+                            icon: "success",
+                            button: "Ok",
+                        });
+                        location.reload();
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+
+        } else {
+            var status = 'false';
+            $.ajax({
+                type: "get",
+                url: url + "/ticketOffice/publicity/changeStatus/"+id+"/"+status,
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data.status);
+                    if (data['status'] == "enabled") {
+                        swal({
+                            title: "Publicidad",
+                            text: data['message'],
+                            icon: "success",
+                            button: "Ok",
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }
+
+    });
+
 
 });
 

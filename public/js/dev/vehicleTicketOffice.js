@@ -518,7 +518,7 @@ $('document').ready(function () {
     });
 
     $('#vehicle-status').on('click', function () {
-        console.log('hola');
+
         var vehicleStatus = 0;
         vehicleStatus = $(this).val();
         console.log(vehicleStatus);

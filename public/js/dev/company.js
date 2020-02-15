@@ -993,6 +993,29 @@ $(document).ready(function () {
         }
     });
 
+
+    $('#image').change(function () {
+        var file = this.files[0];
+        var mimetype = file.type;
+        var match = ["image/jpeg", "image/png", "image/jpg"];
+        if (!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))) {
+            swal({
+                title: "Informacion",
+                text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
+                icon: "warning",
+                button: {
+                    text: "Aceptar",
+                    visible: true,
+                    value: true,
+                    className: "green",
+                    closeModal: true
+                }
+            });
+            $(this).val('');
+            return false;
+        }
+    });
+
 });
 
     function initMap() {
