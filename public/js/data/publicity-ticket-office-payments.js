@@ -84,8 +84,12 @@ $(document).ready(function() {
                         text: 'Ya tiene un pago declarado para este periodo fiscal',
                         icon: "info",
                     });
+                    $('#general-next').attr('disabled','disabled');
+                    /*$('#fiscal_period option[value='+ fiscalPeriod +']').attr('selected',false).attr('disabled',true);
+                    $('#fiscal_period option[value=null]').attr('selected',true);
+                    $('select').formSelect();*/
                 }else {
-
+                    $('#general-next').removeAttr('disabled', '');
                 }
             },
             error: function (e) {
