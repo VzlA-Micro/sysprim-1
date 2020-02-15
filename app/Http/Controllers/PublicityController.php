@@ -171,7 +171,7 @@ class PublicityController extends Controller
 
     public function show()
     {
-        $userPublicity = UserPublicity::where('user_id', \Auth::user()->id)->get();
+        $userPublicity = UserPublicity::where('user_id', \Auth::user()->id)->select('publicity_id')->get();
         $publicities = Publicity::whereIn('id', $userPublicity)->get();
 //        dd($publicities);
         session()->forget('company');

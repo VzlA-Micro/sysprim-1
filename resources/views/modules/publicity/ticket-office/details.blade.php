@@ -385,8 +385,6 @@
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
-
-
                                     <div class="input-field col s12 m12" id="U-date-end">
                                         <i class="icon-straighten prefix"></i>
                                         <input type="text" name="unit" id="unit" value="{{$publicity->unit}}" disabled>

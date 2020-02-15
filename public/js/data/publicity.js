@@ -74,6 +74,7 @@ $(document).ready(function() {
                         success: function (response) {
                             console.log(response);
                             $('#id').val(response.id);
+                            console.log($('#id').val());
                             $('#two').removeClass('disabled');
                             $('#one').addClass('disabled');
                             $('ul.tabs').tabs("select", "property-tab");
