@@ -92,7 +92,7 @@
                                             @if($taxe->branch==='Prop. y Publicidad')
 
                                                 <td>
-                                                    <a href="{{url('/publicity/ticket-office/payments/details/',['id'=>$taxe->id])}}"
+                                                    <a href="{{url('/publicity/ticket-office/payments/details',['id'=>$taxe->id])}}"
                                                        class="btn btn-floating orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 

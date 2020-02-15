@@ -170,7 +170,6 @@
                         </div>
                     </div>
                     <div id="publicity-tab">
-
                         <div class="card-header center-align">
                             <h4>Datos de la publicidad</h4>
                         </div>
@@ -218,17 +217,19 @@
                                 </select>
                                 <label>Unidad</label>
                             </div>
-                            <div class="col s12">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="js-range-slider width" name="width" id="width" value="">
+                                <input type="text" class="validate number-date" name="width" id="width" value="">
                             </div>
-                            <div class="col s12">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="js-range-slider height" name="height" id="height" value="">
+                                <input type="text" class="validate number-date" name="height" id="height" value="">
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" name="quantity" id="quantity">
+                                <input type="text" class="validate number-date" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
                             </div>
 
@@ -294,7 +295,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" name="quantity" id="quantity">
+                                <input type="text" class="validate number-date" name="quantity" id="quantity">
                                 <label for="quantity">Ejemplares</label>
                             </div>
 
@@ -408,13 +409,15 @@
                                 </select>
                                 <label>Unidad</label>
                             </div>
-                            <div class="col s12">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="js-range-slider width" name="width" id="width" value="">
+                                <input type="text" class="validate number-date" name="width" id="width" value="">
                             </div>
-                            <div class="col s12">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="js-range-slider height" name="height" id="height" value="">
+                                <input type="text" class="validate number-date" name="height" id="height" value="">
                             </div>
 
                             <div class="input-field col s6 left-align">
@@ -467,7 +470,7 @@
                                 <input type="text" name="date_end" id="date_end" class="datepicker">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
-                            <div class="col s12 input-field">
+                            <div class="col s12  input-field">
                                 <i class="icon-straighten prefix"></i>
                                 <select name="unit" id="unit">
                                     <option value="null" disabled>Elige la unidad</option>
@@ -476,21 +479,23 @@
                                 </select>
                                 <label>Unidad</label>
                             </div>
-                            <div class="col s12">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="js-range-slider" name="width" id="width" value="">
+                                <input type="text" class="validate number-date" name="width" id="width" value="">
                             </div>
-                            <div class="col s12">
-                                <label for="height">Alto o Pisos</label>
-                                <input type="text" class="js-range-slider" name="height" id="height" value="">
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_vertical prefix"></i>
+                                <label for="height">Alto</label>
+                                <input type="text" class="validate number-date"  name="height" id="height" value="">
                             </div>
                             {{-- <div class="input-field col s12">
                                 <input type="text" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
                             </div> --}}
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 ">
                                 <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" name="side" id="side">
+                                <input type="text" class="validate number-date" name="side" id="side">
                                 <label for="side">Cantidad de Caras</label>
                             </div>
                             {{-- <div class="input-field col s12">
