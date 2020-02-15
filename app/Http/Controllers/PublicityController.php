@@ -302,6 +302,8 @@ class PublicityController extends Controller
             $person = '';
         }
 
+        dd($person);
+
         return view('modules.publicity.ticket-office.details', [
             'publicity' => $publicity,
             'person' => $person
