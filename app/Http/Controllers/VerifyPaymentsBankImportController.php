@@ -237,7 +237,7 @@ class VerifyPaymentsBankImportController extends Controller
                                         $owner = $taxe->properties()->get();
                                         $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
                                         $property = Property::find($userProperty->property_id);
-                                        $propertyTaxes = $propertyTaxes = PropertyTaxes::where('taxe_id', $taxes->id)->first();
+                                        $propertyTaxes = $propertyTaxes = PropertyTaxes::where('taxe_id', $taxe->id)->first();
 
 
                                         if (!is_null($userProperty->company_id)) {

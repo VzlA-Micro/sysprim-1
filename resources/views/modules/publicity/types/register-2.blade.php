@@ -137,7 +137,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="number" name="quantity" id="quantity" min="1" required>
+                                <input type="text" name="quantity" id="quantity"   class="validate only-number-positive number-date" maxlength="7" required>
                                 <label for="quantity">Ejemplares</label>
                             </div>
                             {{--<div class="input-field col s12">
