@@ -27,7 +27,7 @@
                             <thead>
                             <tr>
                                 <th>Codigo</th>
-                                <th>Name</th>
+                                <th>Nombre Publicidad</th>
                                 <th>Tipo</th>
                                 @can('Detalles Publicidad')
                                 <th>Detalles</th>
