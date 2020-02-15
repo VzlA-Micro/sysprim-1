@@ -673,7 +673,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('ticketOffice/publicity/cashier/{id}', 'PublicityTaxesController@QrTaxes');
         Route::get('/publicity/ticket-office/payments/details/{id}/{status?}', 'PublicityTaxesController@detailsTicketOffice')->name('publicity.ticket-office.payments.details');
 
-
+        Route::post('/ticketOffice/publicity/save', 'PublicityController@storeTicketOffice')->name('ticketOffice.publicity.save');
         ############ CONTRIBUYENTE #######################
         Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
             Route::get('/taxpayers/manage', function () {

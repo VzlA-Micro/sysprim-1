@@ -139,8 +139,8 @@ class PublicityController extends Controller
         $company_id=null;
         if($status == 'propietario'){
             if($type == 'company'){
-                $user_id = \Auth::user()->id;
-                $company_id = $owner_id;
+                    $user_id = \Auth::user()->id;
+                    $company_id = $owner_id;
             }
             else {
                 $person_id = \Auth::user()->id;
@@ -302,8 +302,6 @@ class PublicityController extends Controller
             $person = '';
         }
 
-        dd($person);
-
         return view('modules.publicity.ticket-office.details', [
             'publicity' => $publicity,
             'person' => $person
@@ -355,6 +353,66 @@ class PublicityController extends Controller
 
         return view('modules.publicity.ticket-office.historyPayments', [
             'publicity' => $publicity
+        ]);
+    }
+
+    public function storeTicketOffice(Request $request) {
+        $person_id = null;
+        $company_id = null;
+
+        $status = $request->input('status');
+        $owner_id = $request->input('id');
+        $type = $request->input('type');
+        $statusPublicity = 'enabled';
+        $person_id = $request->input('person_id');
+        $publicity = new Publicity();
+        $publicity->code = TaxesNumber::generatePublicityCode();
+        $publicity->name = $request->input('name');
+        $publicity->date_start = $request->input('date_start');
+        $publicity->date_end = $request->input('date_end');
+        $publicity->unit = $request->input('unit');
+        $publicity->quantity = $request->input('quantity');
+        $publicity->width = $request->input('width');
+        $publicity->height = $request->input('height');
+//        $publicity->floor = $request->input('floor');
+        $publicity->side = $request->input('side');
+        $publicity->status = $statusPublicity;
+        $publicity->state_location = $request->input('state_location');
+        $publicity->licor = $request->input('licor');
+        $publicity->advertising_type_id = $request->input('advertising_type_id');
+
+        $image = $request->file('image');
+        if ($image) {
+            $image_path_name = time() . $image->getClientOriginalName();
+            Storage::disk('publicities')->put($image_path_name, File::get($image));
+            $publicity->image = $image_path_name;
+        } else {
+            $publicity->image = null;
+        }
+        // $advertisingTypes = $request->input('advertising_type_id');
+        $publicity->save();
+
+
+        $id = $publicity->id;
+        $code = $publicity->code;
+
+        if ($type == 'company') {
+            $company = Company::find($owner_id);
+            $user = $company->users()->get();
+            $user_id = $user[0]->id;
+            $company_id = $owner_id;
+        } else {
+            $user_id = $owner_id;
+        }
+
+        $publicity->users()->attach(['publicity_id' => $id], ['user_id' => $user_id, 'status' => $status, 'person_id' => $person_id, 'company_id' => $company_id]);
+        // foreach ($advertisingTypes as $type) {
+        //     $publicity->advertisingTypes()->attach(['advertising_type_id' => $type]);
+        // }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'La publicidad se ha registrado con el código: ',
+            'code' => $code
         ]);
     }
 }
