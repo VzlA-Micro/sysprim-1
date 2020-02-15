@@ -23,15 +23,34 @@
             		</div>
             		<div class="card-content row">
             			@csrf
-            			<input type="hidden" name="id" id="id" value="{{ $type->id }}">
+
+
+
+                        <input type="hidden" name="id" id="id" value="{{ $type->id }}">
+                        <div class="input-field col s12">
+                            <i class="icon-featured_play_list prefix"></i>
+                            <select name="group_id" id="group_id" required disabled>
+                                <option value="#" disabled selected>Elije una opción...</option>
+                                @foreach($groups as $group)
+                                    @if($type->group_publicity_id==$group->id )
+                                        <option value="{{ $group->id }}" selected>{{ $group->name }}</option>
+                                    @else
+                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <label for="type">Grupo de Publicidad</label>
+                        </div>
+
+
                         <div class="input-field col s12">
                             <i class="icon-local_library prefix"></i>
-                            <input type="text" name="name" id="name" value="{{ $type->name }}" readonly>
+                            <input type="text" name="name" id="name" value="{{ $type->name }}" readonly  minlength="3"  required maxlength="100">
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-looks_one prefix"></i>
-                            <input type="number" name="value" id="value" value="{{ $type->value }}" readonly>
+                            <input type="text" name="value" id="value" required maxlength="6" class="validate number-date only-number-positive" value="{{ $type->value }}" readonly>
                             <label for="value">Valor UTC</label>
                         </div>
             		</div>
@@ -55,4 +74,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/data/advertising-type.js') }}"></script>
+    <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
