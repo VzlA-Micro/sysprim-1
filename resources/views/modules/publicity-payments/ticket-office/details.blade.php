@@ -80,7 +80,7 @@
                             <input type="text" name="value" id="value" value="{{ $publicity->advertisingType->value }}" readonly>
                             <label for="value">Valor U.T</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
@@ -94,7 +94,14 @@
                             <input type="text" name="interest" id="interest" class="validate money" value="{{ $interest }}" readonly>
                             <label for="interest">Interés por Mora:(Bs)</label>
                         </div>--}}
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
+                            <i class="prefix">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                            </i>
+                            <input type="text" name="increment" id="increment" class="validate money" value="{{ number_format($publicityTaxe->pivot->increment,2,',','.') }}" readonly>
+                            <label for="increment">Incremento</label>
+                        </div>
+                        <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
@@ -140,6 +147,38 @@
                                         {{--</tr>--}}
                                         {{--</tbody>--}}
                                     </table>
+                                    @if($publicity->licor == "SI")
+                                        <table class="centered responsive-table" style="font-size: 10px;!important;">
+                                            <thead>
+                                            <tr>
+                                                <th>REFERENTE A LICORES O CIGARRILLOS</th>
+                                                <th>TARIFA (U.T)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{ $publicity->licor }}</td>
+                                                <td>5000UT</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                    @if($publicity->state_location == "SI")
+                                        <table class="centered responsive-table" style="font-size: 10px;!important;">
+                                            <thead>
+                                            <tr>
+                                                <th>UBICADO EN ESPACIOS RESERVADOS DE LA ALCALDÍA</th>
+                                                <th>TARIFA (U.T)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{ $publicity->state_location }}</td>
+                                                <td>5000UT</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    @endif
                                 </div>
                                 <div class="col s12 m6">
                                     <div class="row">
@@ -147,6 +186,9 @@
                                             <input type="text" name="amount" id="amount" class="validate" value="{{ number_format($taxes->amount,2,',','.') }}" readonly>
                                             <label for="amount">Total a Pagar:(Bs)</label>
                                         </div>
+                                        <input type="hidden" id="bank" name="bank" value="0">
+                                        <input type="hidden" id="payments" name="payments" value="1">
+                                        <input type="hidden" name="taxes_id" value="{{$taxes->id}}" id="taxes_id">
                                         <div class="col s12"></div>
                                     </div>
                                 </div>

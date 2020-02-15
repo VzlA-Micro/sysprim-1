@@ -125,14 +125,21 @@
                                 <input type="text" name="value" id="value" value="" readonly>
                                 <label for="value">Valor U.T</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m4">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="base_imponible" id="base_imponible" value="" readonly>
                                 <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m4">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                                </i>
+                                <input type="text" name="increment" id="increment" class="validate money" value="" readonly>
+                                <label for="increment">Incremento</label>
+                            </div>
+                            <div class="input-field col s12 m4">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>

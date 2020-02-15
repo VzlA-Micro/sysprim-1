@@ -231,6 +231,7 @@ $(document).ready(function() {
                         var amount = resp.amount;
                         $('#owner_id').val(owner_id);
                         $('#base_imponible').val(resp.baseImponible);
+                        $('#increment').val(resp.increment);
                         $('#statusTax').val(status);
                         $('#advertising_type_id option[value=' + publicity.advertising_type_id + ']').attr('selected',true);
                         $('#value').val(advertisingType.value);
@@ -307,6 +308,7 @@ $(document).ready(function() {
         var publicity_id = $('#publicity_id').val();
         var owner_id = $('#owner_id').val();
         var base_imponible = $('#base_imponible').val();
+        var increment = $('#increment').val();
         var fiscal_credit = $('#fiscal_credit').val();
         var fiscal_period = $('#fiscal_period').val();
         var amount = $('#amount').val();
@@ -322,6 +324,7 @@ $(document).ready(function() {
                 fiscal_credit: fiscal_credit,
                 fiscal_period: fiscal_period,
                 amount: amount,
+                increment: increment,
                 status: status
             },
             url: url + 'publicity/ticket-office/taxes/store',
@@ -413,11 +416,11 @@ $(document).ready(function() {
             }
             else if (!$(this).is(":checked")) {
                 console.log('limpio');
-                property_id = '';
+                publicity_id = '';
             }
         } else {
             console.log('else');
-            property_id = $(this).attr('data-property');
+            publicity_id = $(this).attr('data-property');
         }
 
 
@@ -856,7 +859,7 @@ $(document).ready(function() {
             var search = $('#search').val();
             $.ajax({
                 method: "GET",
-                url: url + "ticketOffice/property/cashier/" + search,
+                url: url + "ticketOffice/publicity/cashier/" + search,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
@@ -904,8 +907,8 @@ $(document).ready(function() {
                     } else {
 
                         var taxe = response.taxe[0];
-                        var property = response.taxe[0]['properties'][0].code_cadastral;
-                        var propertyId = response.taxe[0]['properties'][0].id;
+                        var publicity = response.taxe[0]['publicities'][0].code;
+                        var publicityId = response.taxe[0]['publicities'][0].id;
                         swal({
                             title: "¡Bien hecho!",
                             text: "Escaneo de QR realizado correctamente.",
@@ -921,7 +924,7 @@ $(document).ready(function() {
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
-                                '<td>' + property.substr(14,12) + '</td>' +
+                                '<td>' + publicity.substr(14,12) + '</td>' +
                                 '<td><i class="icon-check text-green"></i>' + taxe.created_at + '</td>' +
                                 '<td>' + taxe.code + '</td>' +
                                 '<td>' + taxe.branch + '</td>' +
@@ -930,7 +933,7 @@ $(document).ready(function() {
                                 '  <label>\n' +
                                 '           <input type="checkbox" name="payroll" class="payroll"\n' +
                                 '                       value="' + taxe.id + '"' +
-                                'data-vehicle="' + propertyId +
+                                'data-vehicle="' + publicityId +
                                 '"/>\n' +
                                 '                         <span></span>\n' +
                                 '                                  </label>\n' +
@@ -939,20 +942,20 @@ $(document).ready(function() {
                                 '<td>' + link + '</td>' +
                                 '</tr>'
                             );
-                            var property_id = '';
+                            var publicity_id = '';
                             var type_taxes = '';
 
 
                             $('.payroll').change(function () {
 
 
-                                if (property_id !== '') {
+                                if (publicity_id !== '') {
                                     console.log('if');
 
-                                    if ($(this).is(":checked") && $(this).attr('data-property') == property_id) {
+                                    if ($(this).is(":checked") && $(this).attr('data-property') == publicity_id) {
                                         console.log('lleno');
                                         //vehicle_id = $(this).attr('data-vehicle');
-                                    } else if ($(this).attr('data-property') != property_id) {
+                                    } else if ($(this).attr('data-property') != publicity_id) {
                                         swal({
                                             title: "Información",
                                             text: "La planilla selecionada no pertenece al mismo inmueble .",
@@ -966,11 +969,11 @@ $(document).ready(function() {
                                     }
                                     else if (!$(this).is(":checked")) {
                                         console.log('limpio');
-                                        property_id = '';
+                                        publicity_id = '';
                                     }
                                 } else {
                                     console.log('else');
-                                    property_id = $(this).attr('data-property');
+                                    publicity_id = $(this).attr('data-property');
                                 }
 
 
