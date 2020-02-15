@@ -94,9 +94,9 @@ $(document).ready(function() {
                         text: 'Ya tiene un pago declarado para este periodo fiscal',
                         icon: "info",
                     });
-                    $('#fiscal_period option[value=null]').attr('selected',true);
+                    $("#general-next").attr('disabled','disabled');
                 }else {
-
+                    $("#general-next").removeAttr('disabled','');
                 }
             },
             error: function (e) {
