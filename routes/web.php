@@ -441,6 +441,8 @@ Route::middleware(['auth'])->group(/**
 
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
+        Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
+
         ##### EMPRESAS
         Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
         Route::post('company/update/map', 'CompaniesController@updatedMap');
@@ -508,7 +510,6 @@ Route::middleware(['auth'])->group(/**
 
         // ---------------- MIS INMUEBLES ------------------------------------------------>
         Route::group(['middleware' => ['permission:Mis Inmuebles']], function () {
-            Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
             Route::get('/properties/taxpayers/find/{type_document}/{document}', 'PropertyController@findTaxpayersCompany');
             Route::post('/properties/verification', 'PropertyController@verification')->name('properties.verification');
             Route::post('/properties/fractionalCalculation', 'PropertyTaxesController@fractionalCalculation');
