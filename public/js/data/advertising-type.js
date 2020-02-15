@@ -5,6 +5,10 @@ $(document).ready(function() {
 	// Registrar
 	$('#register').submit(function(e) {
 		e.preventDefault();
+
+        if($('#group_id').val()!==null) {
+
+
 		var formData = new FormData(this);
 		$.ajax({
 			url: url + "advertising-type/save",
@@ -45,6 +49,18 @@ $(document).ready(function() {
                 });
             }
 		});
+
+        }else{
+            swal({
+                title: "Información",
+                text: "Debes seleccionar el grupo  al que pertenecera esta publicidad.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        }
 	});
 
 	$('#modify-btn').click(function() {
@@ -52,6 +68,8 @@ $(document).ready(function() {
 		$('#update-btn').removeClass('hide');
         $('#name').removeAttr('readonly');
         $('#value').removeAttr('readonly');
+        $('#group_id').removeAttr('disabled','');
+        $('select').formSelect();
 	});
 
 	$('#update').submit(function(e) {
@@ -78,7 +96,7 @@ $(document).ready(function() {
                     	className: "green-gradient"
                     }
                 }).then(function (accept) {
-                    window.location.href = url + "advertising-type/manage";
+                    window.location.href = url + "advertising-type/details/"+$('#id').val();
                 });
             },
             error: function(err) {

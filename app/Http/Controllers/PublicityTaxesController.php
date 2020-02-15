@@ -75,6 +75,8 @@ class PublicityTaxesController extends Controller
             $owner = User::find($owner_id);
         }
         $baseImponible = number_format($declaration['baseImponible'],2,',','.');
+        $increment = number_format($declaration['increment'],2,',','.');
+
 //        $interest = number_format($declaration['interest'],2,',','.');
         $amount = number_format($declaration['total'],2,',','.');
 //        dd($statusTax);
@@ -91,7 +93,8 @@ class PublicityTaxesController extends Controller
             'owner_type' => $owner_type,
             'owner' => $owner,
             'statusTax' => $statusTax,
-            'daysDiff' => $declaration['daysDiff']
+            'daysDiff' => $declaration['daysDiff'],
+            'increment' => $increment
     	]);
     }
 
@@ -108,6 +111,10 @@ class PublicityTaxesController extends Controller
         /*$valueInterest = strval($request->input('interest'));
         $valorInterest = str_replace('.', '', $valueInterest);
         $interest = str_replace(',', '.', $valorInterest);*/
+
+        $valueIncrement = strval($request->input('increment'));
+        $valorIncrement = str_replace('.', '', $valueIncrement);
+        $increment = str_replace(',', '.', $valorIncrement);
 
         $valueFiscalCredit = strval($request->input('fiscal_credit'));
         $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
@@ -136,6 +143,8 @@ class PublicityTaxesController extends Controller
         $publicityTaxes->publicity_id = $request->input('publicity_id');
         $publicityTaxes->taxe_id = $taxeId;
         $publicityTaxes->base_imponible = $baseImponible;
+        $publicityTaxes->increment = $increment;
+
 //        $publicityTaxes->interest = $interest;
         $publicityTaxes->fiscal_credit = $fiscalCredit;
         if($fiscalCredit == '') {
@@ -361,6 +370,7 @@ class PublicityTaxesController extends Controller
         }
         $baseImponible = number_format($declaration['baseImponible'],2,',','.');
 //        $interest = number_format($declaration['interest'],2,',','.');
+        $increment = number_format($declaration['increment'],2,',','.');
         $amount = number_format($declaration['total'],2,',','.');
 
 
@@ -375,6 +385,7 @@ class PublicityTaxesController extends Controller
             'owner' => $owner,
             'base' => $base,
             'baseImponible' => $baseImponible,
+            'increment' => $increment,
             'amount' => $amount,
             'status' => $status,
             'statusTax' => $statusTax,
@@ -398,6 +409,10 @@ class PublicityTaxesController extends Controller
         /*$valueInterest = strval($request->input('interest'));
         $valorInterest = str_replace('.', '', $valueInterest);
         $interest = str_replace(',', '.', $valorInterest);*/
+
+        $valueIncrement = strval($request->input('increment'));
+        $valorIncrement = str_replace('.', '', $valueIncrement);
+        $increment = str_replace(',', '.', $valorIncrement);
 
         $valueFiscalCredit = strval($request->input('fiscal_credit'));
         $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
@@ -426,6 +441,7 @@ class PublicityTaxesController extends Controller
         $publicityTaxes->publicity_id = $request->input('publicity_id');
         $publicityTaxes->taxe_id = $taxeId;
         $publicityTaxes->base_imponible = $baseImponible;
+        $publicityTaxes->increment = $increment;
 //        $publicityTaxes->interest = $interest;
         $publicityTaxes->fiscal_credit = $fiscalCredit;
         if($fiscalCredit == '') {
@@ -481,7 +497,7 @@ class PublicityTaxesController extends Controller
             'type' => $type,
             'publicity' => $publicity,
             'advertisingTypes' => $advertisingTypes,
-            'daysDiff' => $daysDiff
+            'daysDiff' => $daysDiff,
         ]);
     }
 

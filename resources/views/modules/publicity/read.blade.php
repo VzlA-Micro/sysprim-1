@@ -21,7 +21,7 @@
                 @if($userPublicity[$index]->user_id == \Auth::user()->id && $userPublicity[$index]->person_id != null)
                     <div class="col s12 m4 animated bounceIn">
                         <a href="{{ route('publicity.details', ['id' => $publicity->id]) }}" class="btn-app white purple-text">
-                            <i class="icon-work"></i>
+                            <i class="icon-settings_system_daydream"></i>
                             <span class="truncate">{{ $publicity->name }}</span>
                             <span><b>Persona Natural</b></span>
                         </a>
@@ -29,7 +29,7 @@
                 @elseif($userPublicity[$index]->person_id == null)
                     <div class="col s12 m4 animated bounceIn">
                         <a href="{{ route('publicity.details', ['id' => $publicity->id]) }}" class="btn-app white purple-text">
-                            <i class="icon-work"></i>
+                            <i class="icon-settings_system_daydream"></i>
                             <span class="truncate">{{ $publicity->name }}</span>
                             <span><b>Juridico</b></span>
                         </a>

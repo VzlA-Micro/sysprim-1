@@ -436,14 +436,14 @@ $date = '31/12/' . date('Y');
             <tr>
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->taxes->id))) !!} "
-                         style="float: left;top: -1cm;right: 800px !important;left: 900px; position: absolute" alt="Image" width="100%" height="100%">
+                         style="float: left;top: -1cm;right: 800px !important;left: 900px; position: absolute" alt="Image" >
                 </td>
             </tr>
 
         @else
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->created_at)) !!} " alt="Image" width="100%" height="100%">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->created_at)) !!} " alt="Image" >
                 </td>
             </tr>
         @endif
@@ -452,7 +452,7 @@ $date = '31/12/' . date('Y');
         <tr>
             @if(!$taxes[0]->taxes->payments->isEmpty()&&substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPC' || substr($taxes[0]->taxes->payments[0]->code,0,3)=='PPE')
                 <td style="width: 20%;">
-                    <img src="https://sysprim.com/images/pdf/{{$taxes[0]->taxes->payments[0]->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="Image" width="100%" height="100%">
+                    <img src="https://sysprim.com/images/pdf/{{$taxes[0]->taxes->payments[0]->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="Image" >
                 </td>
             @endif
         </tr>

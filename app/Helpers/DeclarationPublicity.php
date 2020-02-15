@@ -116,7 +116,8 @@ class DeclarationPublicity
         $amounts = array(
             'baseImponible' => $baseImponible,
             'daysDiff' => $daysDiff,
-            'total' => $total
+            'total' => $total,
+            'increment' => $increment
         );
         return $amounts;
     }
