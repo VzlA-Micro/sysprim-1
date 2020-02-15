@@ -25,7 +25,10 @@ use App\Vehicle;
 use App\Property;
 use App\UserProperty;
 use App\PropertyTaxes;
+use App\Publicity;
+use App\UserPublicity;
 
+use App\PublicityTaxe;
 class VerifyPaymentsBankImportController extends Controller
 {
 
@@ -158,15 +161,12 @@ class VerifyPaymentsBankImportController extends Controller
                                 if ($pCode == 'PPT' || $pCode == 'PPE') {
 
 
-
-
                                     if ($taxe->branch == 'Act.Eco') {
 
 
+                                        if ($taxe->type == 'actuated') {
 
-                                        if($taxe->type=='actuated'){
-
-                                            $companyTaxes = CompanyTaxe::where('taxe_id',  $taxe->id)->get();
+                                            $companyTaxes = CompanyTaxe::where('taxe_id', $taxe->id)->get();
 
                                             $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
                                             $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
@@ -190,7 +190,7 @@ class VerifyPaymentsBankImportController extends Controller
                                                 $for = $userCompany[0]->email;
                                             }
 
-                                        }elseif($taxe->type=='definitive'){
+                                        } elseif ($taxe->type == 'definitive') {
 
                                             $taxe->status = 'verified-sysprim';
                                             $taxe->update();
@@ -211,12 +211,12 @@ class VerifyPaymentsBankImportController extends Controller
                                         }
 
 
-                                    }elseif($taxe->branch == 'Pat.Veh'){
+                                    } elseif ($taxe->branch == 'Pat.Veh') {
 
 
-                                        $vehicleTaxes=$taxe->vehicleTaxes()->get();
+                                        $vehicleTaxes = $taxe->vehicleTaxes()->get();
                                         $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
-                                        $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+                                        $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
                                         $user = $vehicleFind->users()->get();
 
                                         $taxe->status = 'verified-sysprim';
@@ -224,20 +224,20 @@ class VerifyPaymentsBankImportController extends Controller
 
                                         $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
                                             'taxes' => $taxe,
-                                            'vehicleTaxes'=>$vehicleTaxes,
-                                            'vehicle'=>$vehicleFind,
-                                            'user'=>$user,
-                                            'diffYear'=>$diffYear,
+                                            'vehicleTaxes' => $vehicleTaxes,
+                                            'vehicle' => $vehicleFind,
+                                            'user' => $user,
+                                            'diffYear' => $diffYear,
                                             'firm' => true
                                         ]);
 
-                                        $for=$user[0]->email;
-                                    }elseif($taxe->branch=='Inm.Urbanos'){
+                                        $for = $user[0]->email;
+                                    } elseif ($taxe->branch == 'Inm.Urbanos') {
 
                                         $owner = $taxe->properties()->get();
-                                        $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+                                        $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
                                         $property = Property::find($userProperty->property_id);
-                                        $propertyTaxes =   $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
+                                        $propertyTaxes = $propertyTaxes = PropertyTaxes::where('taxe_id', $taxes->id)->first();
 
 
                                         if (!is_null($userProperty->company_id)) {
@@ -258,24 +258,23 @@ class VerifyPaymentsBankImportController extends Controller
                                             'property' => $property,
                                             'propertyTaxes' => $propertyTaxes,
                                             'type' => $type,
-                                            'firm'=>true
+                                            'firm' => true
                                         ]);
 
 
-                                        $user=User::find($userProperty->user_id);
-                                        $for=$user->email;
+                                        $user = User::find($userProperty->user_id);
+                                        $for = $user->email;
 
 
-
-                                    }elseif($taxe->branch=='Tasas y Cert'){
-                                        $rate=$taxe->rateTaxes()->get();
-                                        $type='';
-                                        if(!is_null($rate[0]->pivot->company_id)){
-                                            $data=Company::find($rate[0]->pivot->company_id);
-                                            $type='company';
-                                        }else{
-                                            $data=User::find($rate[0]->pivot->person_id);
-                                            $type='user';
+                                    } elseif ($taxe->branch == 'Tasas y Cert') {
+                                        $rate = $taxe->rateTaxes()->get();
+                                        $type = '';
+                                        if (!is_null($rate[0]->pivot->company_id)) {
+                                            $data = Company::find($rate[0]->pivot->company_id);
+                                            $type = 'company';
+                                        } else {
+                                            $data = User::find($rate[0]->pivot->person_id);
+                                            $type = 'user';
                                         }
 
                                         $taxe->status = 'verified-sysprim';
@@ -285,23 +284,54 @@ class VerifyPaymentsBankImportController extends Controller
                                             'data' => $data,
                                         ]);
 
-                                        $user=User::find($rate[0]->pivot->user_id);;
-                                        $for=$user->email;
-                                        $band=true;
+                                        $user = User::find($rate[0]->pivot->user_id);;
+                                        $for = $user->email;
+
+                                    } elseif ($taxe->branch == 'Prop. y Publicidad') {
+                                        $owner = $taxe->publicities()->get();
+                                        $userPublicity = UserPublicity::where('publicity_id', $owner[0]->pivot->publicity_id)->first();
+
+                                        $publicity = Publicity::find($userPublicity->publicity_id);
+
+                                        if (!is_null($userPublicity->company_id)) {
+                                            $data = Company::find($userPublicity->company_id);
+                                            $type = 'company';
+                                        } else {
+                                            $data = User::find($userPublicity->person_id);
+                                            $type = 'user';
+                                        }
+                                        $publicityTaxes = PublicityTaxe::where('taxe_id', $taxe->id)->first();
+
+
+                                        $taxe->status = 'verified-sysprim';
+                                        $taxe->update();
+
+
+                                        $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
+                                            'taxes' => $taxe,
+                                            'data' => $data,
+                                            'publicity' => $publicity,
+                                            'publicityTaxes' => $publicityTaxes,
+                                            'type' => $type,
+                                            'firm' => true
+                                        ]);
+
+
+
+                                        $user = User::find($userPublicity->user_id);
+                                        $for = $user->email;
                                     }
 
-                                        //Enviando Planilla verificada.
-                                        $subject = "PLANILLA VERIFICADA";
-                                        Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
+                                    //Enviando Planilla verificada.
+                                    $subject = "PLANILLA VERIFICADA";
+                                    Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
 
-                                            $msj->from("grabieldiaz63@gmail.com", "SEMAT");
-                                            $msj->subject($subject);
-                                            $msj->to($for);
-                                            $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
-                                        });
-
-
-                                        $verify_taxes++;
+                                        $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                                        $msj->subject($subject);
+                                        $msj->to($for);
+                                        $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
+                                    });
+                                    $verify_taxes++;
                                 }
                             }
                         }else{
@@ -472,6 +502,37 @@ class VerifyPaymentsBankImportController extends Controller
                                 ]);
 
                                 $user = User::find($rate[0]->pivot->user_id);;
+                                $for = $user->email;
+                                $band = true;
+                            }elseif ($tax->branch == 'Prop. y Publicidad') {
+                                $owner = $tax->publicities()->get();
+                                $userPublicity = UserPublicity::where('publicity_id', $owner[0]->pivot->publicity_id)->first();
+
+                                $publicity = Publicity::find($userPublicity->publicity_id);
+
+                                if (!is_null($userPublicity->company_id)) {
+                                    $data = Company::find($userPublicity->company_id);
+                                    $type = 'company';
+                                } else {
+                                    $data = User::find($userPublicity->person_id);
+                                    $type = 'user';
+                                }
+                                $publicityTaxes = PublicityTaxe::where('taxe_id', $tax->id)->first();
+
+                                $tax->status = 'verified-sysprim';
+                                $tax->update();
+
+
+                                $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
+                                    'taxes' => $tax,
+                                    'data' => $data,
+                                    'publicity' => $publicity,
+                                    'publicityTaxes' => $publicityTaxes,
+                                    'type' => $type,
+                                    'firm' => true
+                                ]);
+
+                                $user = User::find($userPublicity->user_id);
                                 $for = $user->email;
                                 $band = true;
                             }

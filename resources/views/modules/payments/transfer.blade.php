@@ -130,6 +130,13 @@
                                                                 class="icon-pageview"></i></a>
 
                                                 </td>
+                                            @elseif($taxe->taxes[0]->branch==='Prop. y Publicidad')
+                                                <td>
+                                                    <a href="{{ route('publicity.ticket-office.payments.details', ['id' => $taxe->taxes[0]->id])  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
 
                                             @endif
                                                 <a href="#"
