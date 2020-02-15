@@ -304,4 +304,24 @@ class PublicityController extends Controller
         ]);
     }
 
+    public function changeUserWeb($type, $document, $id)
+    {
+        $publicity = UserPublicity::where('publicity_id', $id)->get();
+        $publicityUser = UserPublicity::find($publicity[0]->id);
+
+        if ($type == "E" || $type == "V") {
+            $user = User::where('ci', $type . $document)->get();
+            if (!$user->isEmpty()) {
+                $publicityUser->user_id = $user[0]->id;
+                $publicityUser->company_id = null;
+                $response = ['status' => 'success'];
+            } else {
+                $response = ['status' => 'fail'];
+            }
+
+        }
+        $publicityUser->update();
+        return Response()->json($response);
+    }
+
 }

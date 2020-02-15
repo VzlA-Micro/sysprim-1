@@ -578,7 +578,7 @@ $('document').ready(function () {
                     $('#form-5').remove();
                     for (i; i < data.length; i++) {
                         template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-3').html(template);
+                        $('#type_id-2').html(template);
                         $('select').formSelect();
                     }
                 } else if (valType == 4) {
@@ -644,7 +644,7 @@ $('document').ready(function () {
                         className: "green-gradient"
                     }
                 }).then(function (accept) {
-                    //window.location.href = url + "publicity/my-publicity";
+                    window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
                 });
             },
             error: function (err) {
@@ -673,21 +673,57 @@ $('document').ready(function () {
             $('#date-end').hide();
             $('#U-date-begin').removeClass('hide');
             $('#U-date-end').removeClass('hide');
-
+            $('#name').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
-        }else if(typePublicity == 2){
 
-        }else if(typePublicity == 3){
+        } else if (typePublicity == 2) {
+            $('#date-begin').hide();
+            $('#date-end').hide();
+            $('#U-date-begin').removeClass('hide');
+            $('#U-date-end').removeClass('hide');
+            $('#name').prop('disabled', false);
+            $('#width').prop('disabled', false);
+            $('#height').prop('disabled', false);
+            $(this).hide();
+            $('#update-publicity-save').removeClass('hide');
 
-        }else if(typePublicity == 4){
+        } else if (typePublicity == 3) {
+            $('#date-begin').hide();
+            $('#date-end').hide();
+            $('#U-date-begin').removeClass('hide');
+            $('#U-date-end').removeClass('hide');
+            $('#name').prop('disabled', false);
+            $('#quantity').prop('disabled', false);
+            $(this).hide();
+            $('#update-publicity-save').removeClass('hide');
 
-        }else if(typePublicity == 5){
-
+        } else if (typePublicity == 4) {
+            $('#date-begin').hide();
+            $('#date-end').hide();
+            $('#U-date-begin').removeClass('hide');
+            $('#U-date-end').removeClass('hide');
+            $('#name').prop('disabled', false);
+            $('#width').prop('disabled', false);
+            $('#height').prop('disabled', false);
+            $('#quantity').prop('disabled', false);
+            $(this).hide();
+            $('#update-publicity-save').removeClass('hide');
+        } else if (typePublicity == 5) {
+            $('#date-begin').hide();
+            $('#date-end').hide();
+            $('#U-date-begin').removeClass('hide');
+            $('#U-date-end').removeClass('hide');
+            $('#name').prop('disabled', false);
+            $('#width').prop('disabled', false);
+            $('#height').prop('disabled', false);
+            $('#side').prop('disabled', false);
+            $(this).hide();
+            $('#update-publicity-save').removeClass('hide');
         }
     });
 
-    $('#update-register').submit(function(e){
+    $('#update-register').submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -731,6 +767,130 @@ $('document').ready(function () {
                 });
             }
         });
+    });
+
+    $('#changeUW').click(function () {
+        var template = `
+        <h5 class="center">Cambiar Usuario Web</h5>
+        <div class="input-field col s6 tooltipped" data-tooltip="V: Venezolano; E: Extranjero">
+            <i class="icon-public prefix"></i>
+            <select name="typeDocument" id="typeDocument" required>
+                <option value="E" >E</option>
+                <option value="V"selected >V</option>
+            </select>
+            <label for="typeDocument">Tipo de documento</label>
+        </div>
+        <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
+                <i class="icon-person prefix"></i>
+                <input id="Document" type="text" name="Document" class="validate number-date" pattern="[0-9]+"
+                    title="Solo puede escribir números." required
+                    value="">
+                <label for="Document">Documento</label>
+        </div>`;
+
+        $('#changeUserWeb').html(template);
+        $('.validate.number-date').keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+        $('select').formSelect();
+        $('#Document').focus();
+        $(this).hide();
+        $('#saveUW').removeClass('hide');
+    });
+
+    $('#saveUW').click(function () {
+        var type = $('#typeDocument').val();
+        var document = $('#Document').val();
+        var nationalitys = $('#nationalitys').val();
+        var documentOld = $('#ci-uw').val();
+        var id = $('#id').val();
+
+        if (document == '' || document.length < 7) {
+            swal({
+                title: "Información",
+                text: "Verifica los datos en campo de cedula," +
+                "para poder procesar tu solicitud",
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            })
+        } else if ((type == nationalitys) && (document == documentOld)) {
+            swal({
+                title: "Información",
+                text: 'El documento que introdujo, es igual al del usuario web',
+                icon: "info",
+                button: {
+                    text: "Entendido",
+                    className: "blue-gradient",
+                    value: true
+                },
+            });
+
+            $('#Document').focus();
+        } else {
+
+            $.ajax({
+                type: "get",
+                url: url + "ticketOffice/publicity/change-user-web/" + type + "/" + document + "/" + id,
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (data['status'] === "success") {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Ha sido exitoso',
+                            icon: "success",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
+
+                        }).then(function (options) {
+                            if (options) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        swal({
+                            title: "Cambio de Usuario",
+                            text: 'Usuario no encontrado, Verifica los datos por favor',
+                            icon: "info",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient",
+                                value: true
+                            },
+
+                        })
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }
     });
 
 
