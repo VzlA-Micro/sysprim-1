@@ -33,14 +33,14 @@
                 </a>
             </div>
             @endcan
-
+            @can('Taquilla - Publicidad')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Publicidad</span>
                 </a>
             </div>
-
+            @endcan
             @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('property.ticket-office.home')}}" class="btn-app white pink-text text-darken-2">
@@ -49,7 +49,7 @@
                 </a>
             </div>
             @endcan
-            @can('Taquilla - Publicidad')
+            @can('Configurar Taquilla')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('ticket-office.config')}}" class="btn-app white red-text text-darken-2">
                     <i class="icon-dvr"></i>
