@@ -48,8 +48,8 @@ class HomeController extends Controller
             Auth::logout();
             return redirect('/')->with('notification','Su usuario ha sido bloqueado, para poder desbloquearlo debe  dirigirse a la oficinas del semat.');
         }else if(\Auth::user()->confirmed!=0){
-             $rute_serve="http://sysprim.com.devel";
-             $rute_now="http://".$_SERVER["SERVER_NAME"];
+             $rute_serve="https://sysprim.com";
+             $rute_now="https://".$_SERVER["SERVER_NAME"];
             if((\Auth::user()->role_id=='2'||\Auth::user()->role_id=='4'||\Auth::user()->role_id=='5')&&$rute_now==$rute_serve){
                 $user=User::find(\Auth::user()->id);
                 $user->status_account='block';

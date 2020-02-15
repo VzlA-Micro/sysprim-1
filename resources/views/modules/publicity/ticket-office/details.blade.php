@@ -549,7 +549,7 @@
                                 </a>
                             </div>
                         @endcan--}}
-                        @can('Actualizar Vehiculos')
+                        @can('Actualizar Publicidad')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
@@ -565,7 +565,7 @@
                             </div>
                         @endcan
 
-                        @can('Habilitar/Deshabilitar Vehiculo')
+                        @can('Habilitar/Deshabilitar Publicidad')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
@@ -691,7 +691,7 @@
                         <div id="changeUserWeb">
 
                         </div>
-                        @can('Cambiar Usuario - Vehiculo')
+                        @can('Cambiar Usuario - Publicidad')
                             <div class="input-field col s12 m12 ">
                                 <a id="changeUW" href="#"
                                    class="center btn btn-large waves-effect waves-light peach col s12 btn-rounded ">Cambiar
@@ -709,7 +709,7 @@
                 </form>
             </div>
         </div>
-        @can('Historial de Pago - Empresas')
+        @can('Historial de Pago - Publicidad')
 
             <div class="row">
                 <div class="row">

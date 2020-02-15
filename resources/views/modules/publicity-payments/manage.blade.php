@@ -19,6 +19,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}">Mis Declaraciones</a></li>
                 </ul>
             </div>
+            @if($publicity->status != 'disabled')
             @can('Declarar Publicidades')
             <div class="col s12 m4">
                 <a href="{{ route('publicity.payments.create',['id' => $publicity->id]) }}" class="btn-app white red-text text-darken-2">
@@ -27,6 +28,7 @@
                 </a>
             </div>
             @endcan
+            @endif
             @can('Historial de Pagos - Publicidades')
             <div class="col s12 m4">
                 <a href="{{ route('publicity.payments.history',['id' => $publicity->id]) }}" class="btn-app white purple-text text-darken-2">

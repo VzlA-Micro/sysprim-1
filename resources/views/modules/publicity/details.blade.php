@@ -18,6 +18,13 @@
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                 </ul>
             </div>
+            @if($publicity->status=='disabled')
+                <div class="col s112 m12">
+                    <div class="alert alert-danger" style="margin-top: 1.5rem">
+                        <span>{{ "La publicidad '".$publicity->name."' ha sido  deshabilitada temporalmente y no podrá realizar declaraciones, por favor dirigirse a la oficina de Atención al Contribuyente del SEMAT en la Torre David."}}</span>
+                    </div>
+                </div>
+            @endif
             <div class="col s12 m9">
             	<div class="card">
             		<div class="card-header center-align">
