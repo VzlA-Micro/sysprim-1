@@ -118,6 +118,8 @@ $(document).ready(function() {
                 }).then(function() {
                     location.href = url + 'publicity/payments/taxes/' + resp.taxe_id;
                 });
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             },
             error: function (err) {
                 console.log(err);
@@ -130,6 +132,8 @@ $(document).ready(function() {
                         className: "red-gradient"
                     },
                 });
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             }
         });
     });

@@ -91,7 +91,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
-                            <input type="text" name="base_imponible" id="base_imponible" value="{{ $baseImponible }}" readonly>
+                            <input type="text" name="base_imponible" id="base_imponible" value="{{ $baseImponible }}" readonly required>
                             <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                         </div>
                         {{--<div class="input-field col s12 m4">
@@ -105,14 +105,14 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="increment" id="increment" class="validate money" value="{{ $increment }}" readonly>
+                            <input type="text" name="increment" id="increment" class="validate money" value="{{ $increment }}" readonly required>
                             <label for="increment">Incremento</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup">
+                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" required>
                             <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12">

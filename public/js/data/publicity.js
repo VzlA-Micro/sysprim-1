@@ -218,8 +218,6 @@ $(document).ready(function() {
                 },
                 error: function (err) {
                     console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -229,6 +227,8 @@ $(document).ready(function() {
                             className: "red-gradient"
                         },
                     });
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 }
             });
         }else{
@@ -288,8 +288,6 @@ $(document).ready(function() {
             },
             error: function(err) {
             	console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -299,9 +297,11 @@ $(document).ready(function() {
                         className: "red-gradient"
                     },
                 });
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             }
 		});
-	})
+	});
 
     function findDocument() {
         var type_document=$('#type_document').val();
@@ -375,14 +375,14 @@ $(document).ready(function() {
                 },
                 error: function (err) {
                     console.log(err);
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
                         button: "Ok",
                     });
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 }
             });
         }
