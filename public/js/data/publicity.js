@@ -180,52 +180,68 @@ $(document).ready(function() {
     // Registrar
 	$('#register').submit(function(e) {
 		e.preventDefault();
-		var formData = new FormData(this);
-        // var image = $('#image')[0].files[0]; // Getting file input data
-        // formData.append('image',image);
-		$.ajax({
-			url: url + "publicity/save",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: formData,
-            method: "POST",
-            beforeSend: function() {
-            	$("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(resp) {
-			    /*if(resp.status == 'success') {
 
-                }*/
-			    console.log(resp);
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: resp.message + resp.code,
-                    icon: "success",
-                    button: {
-                        text: "Esta bien",
-                        className: "green-gradient"
-                    }
-                }).then(function (accept) {
-                    window.location.href = url + "publicity/my-publicity";
-                });
-            },
-            error: function(err) {
-            	console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button:{
-                        text: "Entendido",        
-                        className: "red-gradient"
-                    },
-                });
-            }
-		});
+
+
+		if($('#advertising_type_id').val()!==null) {
+
+            var formData = new FormData(this);
+            // var image = $('#image')[0].files[0]; // Getting file input data
+            // formData.append('image',image);
+            $.ajax({
+                url: url + "publicity/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (resp) {
+                    /*if(resp.status == 'success') {
+
+                    }*/
+                    console.log(resp);
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: resp.message + resp.code,
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + "publicity/my-publicity";
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        }else{
+            swal({
+                title: "Información",
+                text: "Debes selecionar el tipo de publicidad para poder registralar.",
+                icon: "info",
+                button:{
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        }
 	});
 
 	$('#btn-modify').click(function() {

@@ -80,9 +80,10 @@ $('document').ready(function () {
             text: "Debe abrir caja, para empezar a registrar pagos.",
             icon: "info",
         });
-        $('.content').css('display', 'none');
-    } else {
 
+        $('#select-next').attr('disabled','disabled');
+    } else {
+        $('#select-next').removeAttr('disabled','');
         var bank = localStorage.getItem('bank');
         var lot = localStorage.getItem('lot');
 
