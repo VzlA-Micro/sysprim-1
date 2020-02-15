@@ -50,7 +50,7 @@
             </div>
             @endcan
             @can('Configurar Taquilla')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn" id="config">
                 <a href="{{route('ticket-office.config')}}" class="btn-app white red-text text-darken-2">
                     <i class="icon-dvr"></i>
                     <span class="truncate">Configuración Taquilla</span>
