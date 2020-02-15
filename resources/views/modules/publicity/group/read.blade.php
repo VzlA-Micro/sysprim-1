@@ -25,20 +25,22 @@
                         <table class="centered striped" id="groupPublicity" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Nombre del Grupo</th>   
-                                <th>Detalles</th> 
+                                <th>Nombre del Grupo</th>
+                                @can('Detalles Grupo de Publicidad')
+                                <th>Detalles</th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($showGroups as $showGroup)
                                 <tr>
                                     <td>{{$showGroup->name}}</td>
-                                    {{-- @can('Detalles Marca de Vehiculos') --}}
+                                    @can('Detalles Grupo de Publicidad')
                                     <td>
                                         <a href="{{route('group-publicity.details',['id'=>$showGroup->id])}}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
-                                    {{-- @endcan --}}
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

@@ -125,14 +125,14 @@
                 </a>
             </div>
             @endcan
-            {{-- @can('Gestionar Catastral Terreno') --}}
+             @can('Gestionar Grupos de Publicidad')
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('group-publicity.manage')}}" class="btn-app white deep-purple-text">
                     <i class="icon-burst_mode"></i>
-                    <span class="truncate">Grupos de Publicidades</span>
+                    <span class="truncate">Grupos de Publicidad</span>
                 </a>
             </div>
-            {{-- @endcan --}}
+            @endcan
         </div>
     </div>
 @endsection

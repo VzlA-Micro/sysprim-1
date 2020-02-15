@@ -29,7 +29,7 @@
                                 <th>Codigo</th>
                                 <th>Name</th>
                                 <th>Tipo</th>
-                                @can('Detalles Vehiculos')
+                                @can('Detalles Publicidad')
                                 <th>Detalles</th>
                                 @endcan
                             </tr>
@@ -42,7 +42,7 @@
                                         <td>{{$publicity->code}}</td>
                                         <td>{{$publicity->name}}</td>
                                         <td>{{$publicity->advertisingType->name}}</td>
-                                        @can('Detalles Vehiculos')
+                                        @can('Detalles Publicidad')
                                         <td>
                                             <a href="{{route('ticketOffice.publicity.detailsPublicity',['id'=>$publicity->id])}}" class="btn btn-floating orange waves-light">
                                                 <i class="icon-pageview"></i>

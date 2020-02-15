@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
                 </ul>
             </div>
-            @can('Registrar Vehiculo')
+            @can('Registrar Publicidad')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_box"></i>
@@ -19,7 +19,7 @@
                 </a>
             </div>
             @endcan
-            @can('Consultar Vehiculos')
+            @can('Consultar Publicidad')
             <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.read') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-list"></i>

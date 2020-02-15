@@ -261,6 +261,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Publicidad']);
         Permission::create(['name' => 'Actualizar Publicidad']);
         Permission::create(['name' => 'Gestionar Pagos - Publicidad']);
+        Permission::create(['name' => 'Habilitar/Deshabilitar Publicidad']);
+
 //        Permission::create(['name' => 'Cambiar Ubicacion - Inmuebles']);
 //        Permission::create(['name' => 'Cambiar Propietario - Inmueble']);
         Permission::create(['name' => 'Cambiar Usuario - Publicidad']);
@@ -527,6 +529,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Actualizar Publicidad',
             'Gestionar Pagos - Publicidad',
             'Cambiar Usuario - Publicidad',
+            'Habilitar/Deshabilitar Publicidad',
             'Historial de Pago - Publicidad',
             # ----------------------------- #
             'Gestionar Pagos',
