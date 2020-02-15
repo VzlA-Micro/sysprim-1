@@ -564,7 +564,7 @@
                                         class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
                                         id="update-publicity-save">
                                     Guardar Cambios
-                                    <i class="icon-mode_edit right"></i>
+                                    <i class="icon-save right"></i>
                                 </button>
                             </div>
                         @endcan
