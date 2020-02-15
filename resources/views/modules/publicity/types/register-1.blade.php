@@ -114,7 +114,7 @@
 								</div>
 								<div class="file-upload-wrapper">
 									<input type="file" name="image" id="image" class="file-upload-native" accept="image/*" />
-									<input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
+									<input type="text" id="file-upload-text" disabled placeholder="Subir imagen" class="file-upload-text" />
 								</div>
 							</div>
 							<div class="input-field col s12 m6">
@@ -146,7 +146,7 @@
 							</div>
 							<div class="input-field col s12">
 								<i class="icon-exposure_plus_1 prefix"></i>
-								<input type="number" name="quantity" id="quantity" class="validate only-number-positive number-date" maxlength="6" required>
+								<input type="text" name="quantity" id="quantity" class="validate only-number-positive number-date" maxlength="6" required>
 								<label for="quantity">Cantidad de Lugares</label>
 							</div>
 						</div>

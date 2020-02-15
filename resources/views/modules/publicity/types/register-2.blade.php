@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="file-upload-wrapper">
                                     <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" />
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
+                                    <input type="text" id="file-upload-text" disabled placeholder="Subir imagen" class="file-upload-text" />
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">
