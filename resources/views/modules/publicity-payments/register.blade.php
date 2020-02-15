@@ -112,7 +112,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" required>
+                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup">
                             <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12">
