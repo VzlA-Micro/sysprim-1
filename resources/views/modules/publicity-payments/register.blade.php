@@ -23,6 +23,19 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
+                @if($statusTax == 'process')
+                    <div class="card center-align col s12">
+                        <h5>Pago Declarado</h5>
+                        <h1><i class="icon-access_alarms orange-text"></i></h1>
+                        <p>Ya has declarado tu pago, actualmete se encuentra en proceso.</p>
+                    </div>
+                @elseif($statusTax == 'verified')
+                    <div class="card center-align col s12">
+                        <h5>Pago Verificado</h5>
+                        <h1><i class="icon-check green-text"></i></h1>
+                        <p>Su pago ha sido verificado éxitosamente.</p>
+                    </div>
+                @else
             	<form method="post" action="" class="card" enctype="multipart/form-data" id="register">
                     <div class="card-header center-align">
             			<h4>Resumen de Autoliquidación</h4>
@@ -154,6 +167,7 @@
             			</button>
             		</div>
             	</form>
+                @endif
             </div>
         </div>
     </div>

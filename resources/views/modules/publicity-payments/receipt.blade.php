@@ -77,8 +77,8 @@
         <td style="width:30%;font-size: 11px !important;">{{$publicity->code}}</td>
 
         {{--@else--}}
-        <td style="width:20%;font-size: 12px !important;"><b></b></td>
-        <td style="width:30%;font-size: 11px !important;"></td>
+        {{--<td style="width:20%;font-size: 12px !important;"><b></b></td>--}}
+        {{--<td style="width:30%;font-size: 11px !important;"></td>--}}
         {{--@endif--}}
     </tr>
     <tr>
@@ -364,14 +364,14 @@ $date = '31/12/' . date('Y');
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
-                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image">
                 </td>
         @else
 
             <tr>
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image">
                 </td>
             </tr>
 
@@ -382,7 +382,7 @@ $date = '31/12/' . date('Y');
                 @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
                         <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
-                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image Pdf" width="100%" height="100%">
+                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image Pdf">
                     @endif
                 @endif
             </td>

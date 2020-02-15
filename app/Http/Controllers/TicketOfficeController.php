@@ -1053,7 +1053,7 @@ class TicketOfficeController extends Controller
             }
             $publicityTaxes = PublicityTaxe::where('taxe_id',$taxes->id)->first();
 
-            $pdf = \PDF::loadView('modules.properties-payments.receipt', [
+            $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
                 'taxes' => $taxes,
                 'data' => $data,
                 'publicity' => $publicity,
