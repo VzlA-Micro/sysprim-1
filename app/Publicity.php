@@ -23,6 +23,8 @@ class Publicity extends Model
             // ->withPivot('advertising_type_id');
     }
 
+
+
     public function publicityTaxes() {
         return $this->belongsToMany('App\Taxe','publicity_taxes')
             ->withPivot('taxe_id');
@@ -32,4 +34,5 @@ class Publicity extends Model
         return $this->belongsToMany('App\User','users_publicity')
             ->withPivot('person_id');
     }
+
 }

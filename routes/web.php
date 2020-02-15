@@ -652,6 +652,8 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
 
+        Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
+
         Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
 
         # ------------------------------------------------------------------- #

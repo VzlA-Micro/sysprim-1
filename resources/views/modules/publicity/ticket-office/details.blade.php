@@ -161,33 +161,35 @@
 
                         <h5 class="center">Datos de la Publicidad</h5>
                         <div>
-                            <input type="hidden" name="id" id="id" value="{{$publicity->id}}">                                   required>
+                            <input type="hidden" name="id" id="id" value="{{$publicity->id}}">
 
-                            @if($publicity->advertising_type_id==1)
+                            @if($publicity->advertisingType->group->id==1)
                                 <div class="card-content row">
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}" required>
+                                               value="{{$publicity->advertising_type_id}}">
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
-                                               value="{{$publicity->advertisingType->name}}" readonly required>
-                                        <label>Tipo de Publicidad</label>
+                                               value="{{$publicity->advertisingType->name}}" disabled required>
+                                        <label for="advertising_type_id">Tipo de Publicidad</label>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" readonly
+                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
                                     <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" value="{{$publicity->date_start}}" id="date_start1"
-                                               readonly required>
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}"
+                                               id="date_start1"
+                                               disabled required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
                                     <div class="input-field col s12 m6" id="date-end">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end" id="date_end1" value="{{$publicity->date_end}}" readonly required>
+                                        <input type="text" name="date_end" id="date_end1"
+                                               value="{{$publicity->date_end}}" disabled required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
                                     <div class="input-field col s12 m6 hide" id="U-date-begin">
@@ -207,108 +209,128 @@
                                      </div>--}}
 
                                 </div>
-                            @elseif($publicity->advertising_type_id==2)
+                            @elseif($publicity->advertisingType->group->id==2)
                                 <div class="card-content row">
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}" required>
+                                               value="{{$publicity->advertisingType->group->id}}" required>
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
-                                               value="{{$publicity->advertisingType->name}}" readonly required>
+                                               value="{{$publicity->advertisingType->name}}" disabled required>
                                         <label>Tipo de Publicidad</label>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" readonly
+                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start"
-                                               class="datepicker date_start" required>
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}"
+                                               id="date_start1"
+                                               disabled required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-end">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_end" id="date_end1"
+                                               value="{{$publicity->date_end}}" disabled required>
+                                        <label for="date_end">Fecha de Fin</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-begin">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                               required>
+                                        <label for="date_start">Fecha de Inicio</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
-                                    <div class="col s12 input-field">
+
+                                    <div class="input-field col s12 m12" id="U-date-end">
                                         <i class="icon-straighten prefix"></i>
-                                        <select name="unit" id="unit">
-                                            <option value="null" disabled>Elige la unidad</option>
-                                            <option value="mts" selected>Metro</option>
-                                            <option value="qnt" disabled>Cantidad</option>
-                                        </select>
-                                        <label>Unidad</label>
+                                        <input type="text" name="unit" id="unit" value="{{$publicity->unit}}" disabled>
+                                        <label for="u-med">Unidad de medida</label>
                                     </div>
-                                    <div class="col s12">
+
+                                    <div class="col s12 m6" >
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
-                                               value="" required>
+                                               value="{{$publicity->width}}" disabled required>
                                     </div>
-                                    <div class="col s12">
+
+                                    <div class="col s12 m6">
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
-                                               value="" required>
+                                               value="{{$publicity->height}}" disabled required>
                                     </div>
+
                                     {{--<div class="input-field col s12">
                                         <input type="text" name="point" id="point">
                                         <label for="point">Cantidad de Lugares</label>
                                     </div>--}}
                                 </div>
-                            @elseif($publicity->advertising_type_id==3)
+                            @elseif($publicity->advertisingType->group->id==3)
                                 <div class="card-content row">
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}" required>
+                                               value="{{$publicity->advertisingType->group->id}}" required>
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
-                                               value="{{$publicity->advertisingType->name}}" readonly required>
+                                               value="{{$publicity->advertisingType->name}}" disabled required>
                                         <label>Tipo de Publicidad</label>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" readonly
+                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
-                                    <div class="col s12">
-                                        {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                        <div class="preview img-wrapper center-align valing-wrapper">
-                                            <i class="icon-add_a_photo medium"></i>
-                                        </div>
-                                        <div class="file-upload-wrapper">
-                                            <input type="file" name="image" id="image" class="file-upload-native"
-                                                   accept="image/*"/>
-                                            <input type="text" disabled placeholder="Subir imagen"
-                                                   class="file-upload-text"/>
-                                        </div>
-                                    </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start"
-                                               class="datepicker date_start" required>
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}"
+                                               id="date_start1"
+                                               disabled required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-end">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_end" id="date_end1"
+                                               value="{{$publicity->date_end}}" disabled required>
+                                        <label for="date_end">Fecha de Fin</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-begin">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                               required>
+                                        <label for="date_start">Fecha de Inicio</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
-                                    <div class="col s12 input-field">
+
+                                    <div class="input-field col s12 m12" id="U-date-end">
                                         <i class="icon-straighten prefix"></i>
-                                        <select name="unit" id="unit">
-                                            <option value="null" disabled>Elige la unidad</option>
-                                            <option value="mts" disabled>Metro</option>
-                                            <option value="qnt" selected>Cantidad</option>
-                                        </select>
-                                        <label>Unidad</label>
+                                        <input type="text" name="unit" id="unit" value="{{$publicity->unit}}" disabled>
+                                        <label for="u-med">Unidad de medida</label>
                                     </div>
+
                                     <div class="input-field col s12">
                                         <i class="icon-chrome_reader_mode prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" required>
+                                        <input type="number" name="quantity" id="quantity" value="{{$publicity->quantity}}" disabled required>
                                         <label for="quantity">Ejemplares</label>
                                     </div>
                                     {{--<div class="input-field col s12">
@@ -316,136 +338,149 @@
                                         <label for="point">Cantidad de Lugares</label>
                                     </div>--}}
                                 </div>
-                            @elseif($publicity->advertising_type_id==4)
+                            @elseif($publicity->advertisingType->group->id==4)
                                 <div class="card-content row">
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}" required>
+                                               value="{{$publicity->advertisingType->group->id}}" required>
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
-                                               value="{{$publicity->advertisingType->name}}" readonly required>
+                                               value="{{$publicity->advertisingType->name}}" disabled required>
                                         <label>Tipo de Publicidad</label>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" readonly
+                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
 
-                                    <div class="input-field col s12 m6">
+                                    <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start1" value="{{$publicity->date_start}}" id="date_start1" readonly required>
-                                        <label for="date_start1">Fecha de Inicio</label>
-                                    </div>
-                                    <div class="input-field col s12 m6">
-                                        <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_end1" id="date_end1" value="{{$publicity->date_end}}" readonly required>
-                                        <label for="date_end1">Fecha de Fin</label>
-                                    </div>
-
-                                    <div class="input-field col s12 m6">
-                                        <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start"
-                                               class="datepicker "   required>
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}"
+                                               id="date_start1"
+                                               disabled required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-end">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_end" id="date_end1"
+                                               value="{{$publicity->date_end}}" disabled required>
+                                        <label for="date_end">Fecha de Fin</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-begin">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                               required>
+                                        <label for="date_start">Fecha de Inicio</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
 
-                                    <div class="col s12 input-field">
+
+
+                                    <div class="input-field col s12 m12" id="U-date-end">
                                         <i class="icon-straighten prefix"></i>
-                                        <select name="unit" id="unit">
-                                            <option value="null" disabled>Elige la unidad</option>
-                                            <option value="mts" selected>Metro</option>
-                                            <option value="qnt" disabled>Cantidad</option>
-                                        </select>
-                                        <label>Unidad</label>
+                                        <input type="text" name="unit" id="unit" value="{{$publicity->unit}}" disabled>
+                                        <label for="u-med">Unidad de medida</label>
                                     </div>
-                                    <div class="col s12">
+
+                                    <div class="col s12 m6" >
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
-                                               value="" required>
+                                               value="{{$publicity->width}}" disabled required>
                                     </div>
-                                    <div class="col s12">
+
+                                    <div class="col s12 m6">
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
-                                               value="" required>
+                                               value="{{$publicity->height}}" disabled required>
                                     </div>
+
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" required>
+                                        <input type="number" name="quantity" id="quantity" value="{{$publicity->quantity}}" disabled required>
                                         <label for="quantity">Cantidad de Lugares</label>
                                     </div>
                                 </div>
-                            @elseif($publicity->advertising_type_id==5)
+                            @elseif($publicity->advertisingType->group->id==5)
                                 <div class="card-content row">
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}" required>
+                                               value="{{$publicity->advertisingType->group->id}}" required>
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
-                                               value="{{$publicity->advertisingType->name}}" readonly required>
+                                               value="{{$publicity->advertisingType->name}}" disabled required>
                                         <label>Tipo de Publicidad</label>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="icon-format_size prefix"></i>
-                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" readonly
+                                        <input type="text" name="name" id="name" value="{{$publicity->name}}" disabled
                                                required>
                                         <label for="name">Nombre</label>
                                     </div>
-                                    <div class="col s12">
-                                        {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                        <div class="preview img-wrapper center-align valing-wrapper">
-                                            <i class="icon-add_a_photo medium"></i>
-                                        </div>
-                                        <div class="file-upload-wrapper">
-                                            <input type="file" name="image" id="image" class="file-upload-native"
-                                                   accept="image/*"/>
-                                            <input type="text" disabled placeholder="Subir imagen"
-                                                   class="file-upload-text"/>
-                                        </div>
-                                    </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
-                                        <input type="text" name="date_start" id="date_start"
-                                               class="datepicker date_start" required>
+                                        <input type="text" name="date_start" value="{{$publicity->date_start}}"
+                                               id="date_start1"
+                                               disabled required>
                                         <label for="date_start">Fecha de Inicio</label>
                                     </div>
-                                    <div class="input-field col s12 m6">
+
+                                    <div class="input-field col s12 m6" id="date-end">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_end" id="date_end1"
+                                               value="{{$publicity->date_end}}" disabled required>
+                                        <label for="date_end">Fecha de Fin</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-begin">
+                                        <i class="icon-date_range prefix"></i>
+                                        <input type="text" name="date_start" id="date_start" class="datepicker"
+                                               required>
+                                        <label for="date_start">Fecha de Inicio</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m6 hide" id="U-date-end">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_end" id="date_end" class="datepicker" required>
                                         <label for="date_end">Fecha de Fin</label>
                                     </div>
-                                    <div class="col s12 input-field">
+
+
+
+                                    <div class="input-field col s12 m12" id="U-date-end">
                                         <i class="icon-straighten prefix"></i>
-                                        <select name="unit" id="unit">
-                                            <option value="null" disabled>Elige la unidad</option>
-                                            <option value="mts" selected>Metro</option>
-                                            <option value="qnt" disabled>Cantidad</option>
-                                        </select>
-                                        <label>Unidad</label>
+                                        <input type="text" name="unit" id="unit" value="{{$publicity->unit}}" disabled>
+                                        <label for="u-med">Unidad de medida</label>
                                     </div>
-                                    <div class="col s12">
+
+                                    <div class="col s12 m6" >
                                         <label for="width">Ancho</label>
-                                        <input type="text" class="js-range-slider" name="width" id="width" value=""
-                                               required>
+                                        <input type="text" class="js-range-slider width" name="width" id="width"
+                                               value="{{$publicity->width}}" disabled required>
                                     </div>
-                                    <div class="col s12">
-                                        <label for="height">Alto o Pisos</label>
-                                        <input type="text" class="js-range-slider" name="height" id="height" value=""
-                                               required>
+
+                                    <div class="col s12 m6">
+                                        <label for="height">Alto / Piso</label>
+                                        <input type="text" class="js-range-slider height" name="height" id="height"
+                                               value="{{$publicity->height}}" disabled required>
                                     </div>
+
                                     {{--<div class="input-field col s12">--}}
                                     {{--<input type="number" name="quantity" id="quantity">--}}
                                     {{--<label for="quantity">Cantidad de Lugares</label>--}}
                                     {{--</div>--}}
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="side" id="side">
+                                        <input type="number" name="side" value="{{$publicity->side}}" disabled id="side">
                                         <label for="side">Cantidad de Caras</label>
                                     </div>
                                     {{-- <div class="input-field col s12">
@@ -522,8 +557,8 @@
                                     <i class="icon-mode_edit right"></i>
                                 </a>
                                 <button type="submit"
-                                   class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
-                                   id="update-publicity-save">
+                                        class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
+                                        id="update-publicity-save">
                                     Guardar Cambios
                                     <i class="icon-mode_edit right"></i>
                                 </button>
@@ -586,7 +621,7 @@
                         </div>
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
-                            <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                            <input id="ci-uw" type="text" name="ci" class="validate" pattern="[0-9]+"
                                    minlength="7" maxlength="8" title="Solo puede escribir números." required
                                    value="{{$publicity->users[0]->document }}"
                                    readonly>
@@ -690,7 +725,7 @@
                                 <i class="fas fa-car"></i>
                             </div>
                             <div class="widget-stats-content">
-                                <span class="widget-stats-title black-text">Vehiculos</span>
+                                <span class="widget-stats-title black-text">Publicidad</span>
                                 <span class="widget-stats-number black-text">{{$publicity->publicityTaxes()->count()}}</span>
                             </div>
                         </div>
