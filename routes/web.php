@@ -883,7 +883,6 @@ Route::middleware(['auth'])->group(/**
             # ------------------------------------------------------------------- #
 
 
-
             ########### TAQUILLA --- PUBLICIDAD
             Route::group(['middleware' => ['permission:Taquilla - Publicidad']], function() {
                 Route::get('/ticketOffice/publicity/home', function () {
@@ -891,6 +890,7 @@ Route::middleware(['auth'])->group(/**
                 })->name('ticketOffice.publicity.home');
                 Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
                 Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
+                Route::get('/ticketOffice/publicity/changeStatus/{id}/{status}','PublicityController@statusPublicity');
                 Route::get('/ticketOffice/publicity/history/{id}', 'PublicityController@historyPayments')->name('ticketOffice.publicity.historyPayment');
                 Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PublicityTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
                 Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');

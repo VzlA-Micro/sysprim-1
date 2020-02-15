@@ -38,7 +38,7 @@
                         <div class="card-content row">
 
                             <input type="hidden" id="tributo" value="">
-                            <div class="input-field col s4">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="licensePlate" id="licensePlate" minlength="7" maxlength="7"
                                        pattern="[0-9A-Za-z]+">
