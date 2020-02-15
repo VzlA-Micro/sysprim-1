@@ -450,7 +450,7 @@ $('document').ready(function () {
                         $('#person_id').val(response.id);
                         $('#two').removeClass('disabled');
                         $('#one').addClass('disabled');
-                        $('ul.tabs').tabs("select", "property-tab");
+                        $('ul.tabs').tabs("select", "typePublicity-tab");
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
                     },
