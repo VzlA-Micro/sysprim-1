@@ -21,7 +21,7 @@
             </div>
             @can('Declarar Publicidades')
             <div class="col s12 m4">
-                <a href="{{ route('publicity.payments.create',['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
+                <a href="{{ route('publicity.payments.create',['id' => $publicity->id]) }}" class="btn-app white red-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Declarar Mis Publicidades</span>
                 </a>
@@ -29,8 +29,8 @@
             @endcan
             @can('Historial de Pagos - Publicidades')
             <div class="col s12 m4">
-                <a href="{{ route('publicity.payments.history',['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
-                    <i class="icon-payment"></i>
+                <a href="{{ route('publicity.payments.history',['id' => $publicity->id]) }}" class="btn-app white purple-text text-darken-2">
+                    <i class="icon-list"></i>
                     <span class="truncate">Historial de Declaraciones</span>
                 </a>
             </div>

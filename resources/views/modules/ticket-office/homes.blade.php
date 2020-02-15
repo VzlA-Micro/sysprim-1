@@ -34,7 +34,7 @@
             </div>
             @endcan
 
-            <div class="col s16 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Publicidad</span>
@@ -43,7 +43,7 @@
 
             @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('property.ticket-office.home')}}" class="btn-app white brown-text">
+                <a href="{{route('property.ticket-office.home')}}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Inmuebles Urbanos</span>
                 </a>
@@ -52,7 +52,7 @@
             {{-- @can('Taquilla - Inmuebles') --}}
             <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('ticket-office.config')}}" class="btn-app white red-text text-darken-2">
-                    <i class="icon-settings_applications"></i>
+                    <i class="icon-dvr"></i>
                     <span class="truncate">Configuración Taquilla</span>
                 </a>
             </div>
@@ -67,7 +67,7 @@
             @endcan
             @can('Ver Planillas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{route('ticket-office.pay.web')}}" class="btn-app white pink-text text-darken-2">
+                    <a href="{{route('ticket-office.pay.web')}}" class="btn-app white cyan-text text-darken-4">
                         <i class="icon-library_books"></i>
                         <span class="truncate">Lista de Planillas</span>
                     </a>

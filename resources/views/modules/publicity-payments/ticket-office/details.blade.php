@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
                     @if(session()->has('property'))
                         <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar Inmuebles Urbanos</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.details-property',['id' => $property->id]) }}">Detalles del Inmueble</a></li>
@@ -65,7 +65,7 @@
                         <input type="hidden" name="status" id="status" value="{{ $status }}">--}}
                         {{--<input type="hidden" name="totalGround" id="totalGround" class="validate money" value="" readonly>--}}
                         <input type="hidden" name="publicity_id" id="publicity_id" value="{{ $publicity->id }}">
-                        <div class="input-field col s8 m9">
+                        <div class="input-field col s12 m9">
                             <i class="icon-confirmation_number prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id" disabled>
                                 <option value="null" disabled selected>Elija un tipo</option>
@@ -75,7 +75,7 @@
                             </select>
                             <label>Tipo de Publicidad</label>
                         </div>
-                        <div class="input-field col s4 m3">
+                        <div class="input-field col s12 m3">
                             <i class="icon-assignment prefix"></i>
                             <input type="text" name="value" id="value" value="{{ $publicity->advertisingType->value }}" readonly>
                             <label for="value">Valor U.T</label>
@@ -248,7 +248,7 @@
                                     <h4 class="center-align">Acciones</h4>
                                 </div>
                                 @can('Anular Pagos')
-                                    <div class="col s12 m4 center-align">
+                                    <div class="col s12 m4 center-align" style="margin-top:10px">
                                         <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel">
                                             ANULAR PLANILLA.
                                             <i class="icon-close right"></i>
@@ -257,7 +257,7 @@
                                 @endcan
                                 @can('Verificar Pagos - Manual')
                                     @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
-                                        <div class="col s12 m4 center-align">
+                                        <div class="col s12 m4 center-align" style="margin-top:10px">
                                             <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified">
                                                 VERIFICAR PLANILLA.
                                                 <i class="icon-verified_user right"></i>
@@ -266,7 +266,7 @@
                                     @endif
                                 @endcan
                                 @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                    <div class="col s12 m4 center-align">
+                                    <div class="col s12 m4 center-align" style="margin-top:10px">
                                         <button type="button" id="send-email-verified" class="btn green waves-effect waves-light" value="{{$taxes->id}}">
                                             Enviar Correo Verificado.
                                             <i class="icon-mail_outline right"></i>
@@ -274,7 +274,7 @@
                                     </div>
                                 @endif
                                 @if($taxes->status!='cancel')
-                                    <div class="col s12 m4 center-align">
+                                    <div class="col s12 m4 center-align" style="margin-top:10px">
                                         <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
                                             <i class="icon-picture_as_pdf right"></i>
                                         </a>
