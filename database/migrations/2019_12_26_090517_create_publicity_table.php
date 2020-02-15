@@ -25,7 +25,7 @@ class CreatePublicityTable extends Migration
             $table->float('height')->unsigned()->nullable();
             $table->integer('side')->unsigned()->nullable();
 //            $table->integer('point')->unsigned()->nullable();
-            $table->string('status',20)->unsigned()->nullable();
+            $table->string('status',20)->nullable();
             $table->string('state_location',2)->nullable();
             $table->string('licor',2)->nullable();
             $table->string('image')->nullable();
