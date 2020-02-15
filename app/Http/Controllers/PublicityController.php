@@ -105,6 +105,7 @@ class PublicityController extends Controller
         $status = $request->input('status');
         $owner_id = $request->input('id');
         $type = $request->input('type');
+        $statusPublicity = 'enabled';
         $publicity = new Publicity();
         $publicity->code = TaxesNumber::generatePublicityCode();
     	$publicity->name = $request->input('name');
@@ -114,8 +115,11 @@ class PublicityController extends Controller
         $publicity->quantity = $request->input('quantity');
         $publicity->width = $request->input('width');
         $publicity->height = $request->input('height');
-        $publicity->floor = $request->input('floor');
+//        $publicity->floor = $request->input('floor');
         $publicity->side = $request->input('side');
+        $publicity->status = $statusPublicity;
+        $publicity->state_location = $request->input('state_location');
+        $publicity->licor = $request->input('licor');
         $publicity->advertising_type_id = $request->input('advertising_type_id');
 
         $image = $request->file('image');
