@@ -172,7 +172,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Taquilla - Vehiculos']);
         Permission::create(['name' => 'Taquilla - Tasas']);
         Permission::create(['name' => 'Taquilla - Inmuebles']);
-//        Permission::create(['name' => 'Taquilla - Tasas']);
+        Permission::create(['name' => 'Taquilla - Publicidad']);
 
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
         // Permission::create(['name' => 'Taquilla - Publicidad']);
@@ -254,7 +254,17 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Tasas - Detalles Planilla']);
 
 
-
+        // -- Gestionar Publicidad
+        Permission::create(['name' => 'Gestionar Publicidad']);
+        Permission::create(['name' => 'Registrar Publicidad']);
+        Permission::create(['name' => 'Consultar Publicidad']);
+        Permission::create(['name' => 'Detalles Publicidad']);
+        Permission::create(['name' => 'Actualizar Publicidad']);
+        Permission::create(['name' => 'Gestionar Pagos - Publicidad']);
+//        Permission::create(['name' => 'Cambiar Ubicacion - Inmuebles']);
+//        Permission::create(['name' => 'Cambiar Propietario - Inmueble']);
+        Permission::create(['name' => 'Cambiar Usuario - Publicidad']);
+        Permission::create(['name' => 'Historial de Pago - Publicidad']);
 
 
         // -- Gestionar Vehiculos
@@ -507,7 +517,18 @@ class RolesAndPermissionsSeeder extends Seeder
             'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
             'Historial de Pago - Inmuebles',
-        # ----------------------------- #
+            # ------------------------- #
+            ##### TAQUILLA DE PUBLICIDAD #####
+            'Taquilla - Publicidad',
+            'Gestionar Publicidad',
+            'Registrar Publicidad',
+            'Consultar Publicidad',
+            'Detalles Publicidad',
+            'Actualizar Publicidad',
+            'Gestionar Pagos - Publicidad',
+            'Cambiar Usuario - Publicidad',
+            'Historial de Pago - Publicidad',
+            # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',
@@ -611,7 +632,18 @@ class RolesAndPermissionsSeeder extends Seeder
 //            'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
             'Historial de Pago - Inmuebles',
-            # ----------------------------- #
+            # ------------------------- #
+            ##### TAQUILLA DE PUBLICIDAD #####
+            'Taquilla - Publicidad',
+            'Gestionar Publicidad',
+            'Registrar Publicidad',
+            'Consultar Publicidad',
+            'Detalles Publicidad',
+//            'Actualizar Publicidad',
+            'Gestionar Pagos - Publicidad',
+            'Cambiar Usuario - Publicidad',
+            'Historial de Pago - Publicidad',
+            # ------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
 //            'Registrar Pago - Transferencias',

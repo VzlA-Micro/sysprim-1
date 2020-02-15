@@ -640,27 +640,18 @@ Route::middleware(['auth'])->group(/**
         Route::get('/ticketOffice/publicity/home', function () {
             return view('modules.publicity.ticket-office.home');
         })->name('ticketOffice.publicity.home');
-
         Route::get('/ticketOffice/publicity/manage-publicity', function () {
             return view('modules.publicity.ticket-office.menu');
         })->name('ticketOffice.publicity.managePublicity');
-
         Route::get('/ticketOffice/publicity/register', function () {
             return view('modules.publicity.ticket-office.register');
         })->name('ticketOffice.publicity.register');
-
         Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
-
         Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
-
         Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
-
         Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
-
         Route::get('/ticketOffice/publicity/history/{id}', 'PublicityController@historyPayments')->name('ticketOffice.publicity.historyPayment');
-
         Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
-
         # ------------------------------------------------------------------- #
         Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
         Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
@@ -908,6 +899,11 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertyTaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
                     Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
                 });
+            });
+
+            ########### TAQUILLA --- PUBLICIDAD
+            Route::group(['middleware' => ['permission:Taquilla - Publicidad']], function() {
+
             });
 
             ############ CONFIGURACION DE TAQUILLA
