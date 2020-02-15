@@ -147,7 +147,7 @@
                             {{--</div>--}}
                             <div class="input-field col s12">
                                 <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="number" name="side" id="side" min="1" required>
+                                <input type="number" name="side" id="side" minlength="1" required>
                                 <label for="side">Cantidad de Caras</label>
                             </div>
                             {{-- <div class="input-field col s12">
