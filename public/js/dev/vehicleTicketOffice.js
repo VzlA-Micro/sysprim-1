@@ -1252,9 +1252,9 @@ $('document').ready(function () {
                         icon: "info",
                     });
 
-                    $('#general-next').prop('disabled',true);
+                    $("#general-next").attr('disabled','disabled');
                 } else {
-                    $('#general-next').prop('disabled',false);
+                    $("#general-next").removeAttr('disabled','');
                 }
             },
             error: function (e) {

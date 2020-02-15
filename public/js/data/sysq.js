@@ -1088,6 +1088,7 @@ $('document').ready(function () {
 
     if(url_semat==='https://sysprim.com/'){
         $('#lateral-bar').addClass('hide');
+        $('#config').addClass('hide');
     }
 
 });
