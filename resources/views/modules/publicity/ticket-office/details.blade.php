@@ -549,7 +549,7 @@
                                 </a>
                             </div>
                         @endcan--}}
-                        @can('Actualizar Vehiculos')
+                        @can('Actualizar Publicidad')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
