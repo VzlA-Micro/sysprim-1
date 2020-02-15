@@ -330,7 +330,7 @@ class PublicityTaxesController extends Controller
 
 //        $advertisingTypes = AdvertisingType::all();
         $publicity = Publicity::where('id',$id)->with('advertisingType')->first();
-        $declaration = DeclarationPublicity::Declarate($id);
+        $declaration = DeclarationPublicity::Declarate($publicity->id);
         $userPublicity = UserPublicity::where('publicity_id',$id)->first();
         $base = $declaration['baseImponible'];
         $taxes = $publicity->publicityTaxes()->where('branch','Prop. y Publicidad')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();

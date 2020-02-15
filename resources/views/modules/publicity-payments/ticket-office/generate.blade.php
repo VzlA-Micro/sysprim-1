@@ -129,21 +129,21 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
-                                <input type="text" name="base_imponible" id="base_imponible" value="" readonly>
+                                <input type="text" name="base_imponible" id="base_imponible" value="" readonly required>
                                 <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                             </div>
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
-                                <input type="text" name="increment" id="increment" class="validate money" value="" readonly>
+                                <input type="text" name="increment" id="increment" class="validate money" value="" readonly required>
                                 <label for="increment">Incremento</label>
                             </div>
                             <div class="input-field col s12 m4">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
-                                <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" maxlength="13">
+                                <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" maxlength="13" required>
                                 <label for="fiscal_credit">Crédito Fiscal</label>
                             </div>
                             <div class="input-field col s12">
@@ -176,7 +176,7 @@
                                     <div class="col s12 m6">
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <input type="text" name="amount" id="amount" class="validate" value="" readonly>
+                                                <input type="text" name="amount" id="amount" class="validate" value="" readonly required>
                                                 <label for="amount">Total a Pagar:(Bs)</label>
                                             </div>
                                             <div class="col s12"></div>
