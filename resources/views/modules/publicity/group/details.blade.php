@@ -30,8 +30,8 @@
                             <label for="name">Grupo</label>
                         </div>
                     </div>
+                    @can('Actualizar Grupo de Publicidad')
                     <div class="card-action center">
-                        {{-- @can('') --}}
                             <a id="btn-modify" class="btn btn-large btn-rounded blue waves-effect waves-light">
                                 <i class="icon-update right"></i>
                                 Modificar
@@ -41,11 +41,9 @@
                                 <i class="icon-save right"></i>
                                 Guardar
                             </button>
-
-
-                        {{-- @endcan --}}
                         {{--<a href="#" class="btn btn-rounded red waves-effect waves-light">Eliminar  <i class="icon-delete right"></i></a>--}}
                     </div>
+                    @endcan
 
                 </form>
             </div>

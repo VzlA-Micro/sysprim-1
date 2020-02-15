@@ -266,19 +266,21 @@ Route::middleware(['auth'])->group(/**
             });
 
             // Gestionar Grupos de publicidad
+            Route::group(['middleware' => ['permission:Gestionar Grupos de Publicidad']], function () {
+                Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
+                Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
 
-            Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
-            # Nivel 1: Registrar y Consultar
-
-            Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
-            Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
-            Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
-            Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
-            # Nivel 2: Detalles
-
-            Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
-            Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
-
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Grupo de Publicidad|Consultar Grupos de Publicidad']], function() {
+                    Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
+                    Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
+                    Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
+                    Route::group(['middleware' => ['permission:Detalles Grupo de Publicidad']], function() {
+                        Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
+                        Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
+                    });
+                });
+            });
 
             // Gestionar Tasas del Banco
             Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
@@ -636,43 +638,6 @@ Route::middleware(['auth'])->group(/**
 
         });
 
-//PUBLICIDAD TICKET OFFICE
-        Route::get('/ticketOffice/publicity/home', function () {
-            return view('modules.publicity.ticket-office.home');
-        })->name('ticketOffice.publicity.home');
-
-        Route::get('/ticketOffice/publicity/manage-publicity', function () {
-            return view('modules.publicity.ticket-office.menu');
-        })->name('ticketOffice.publicity.managePublicity');
-
-        Route::get('/ticketOffice/publicity/register', function () {
-            return view('modules.publicity.ticket-office.register');
-        })->name('ticketOffice.publicity.register');
-
-        Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
-
-        Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
-
-        Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
-
-        Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
-
-        Route::get('/ticketOffice/publicity/history/{id}', 'PublicityController@historyPayments')->name('ticketOffice.publicity.historyPayment');
-
-        Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
-
-        # ------------------------------------------------------------------- #
-        Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
-        Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
-        Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
-        Route::get('/publicity/ticket-office/verify/fiscal-period/{id}/{year}', 'PublicityTaxesController@verifyFiscalPeriod')->name('publicity.ticket-office.verify.fiscal-period');
-        Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PublicityTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
-        Route::post('/publicity/ticket-office/taxes/store', 'PublicityTaxesController@storeTicketOffice')->name('publicity.ticket-office.taxes.store');
-        Route::get('/publicity/ticket-office/payments/taxes', 'PublicityTaxesController@getTaxesTicketOffice')->name('publicity.ticket-office.payments.taxes');
-        Route::get('/publicity/ticket-office/receipt/{id}/{download?}', 'PublicityTaxesController@generateReceipt')->name('publicity.ticket-office.receipt');
-        Route::get('ticketOffice/publicity/cashier/{id}', 'PublicityTaxesController@QrTaxes');
-        Route::get('/publicity/ticket-office/payments/details/{id}/{status?}', 'PublicityTaxesController@detailsTicketOffice')->name('publicity.ticket-office.payments.details');
-
 
         ############ CONTRIBUYENTE #######################
         Route::group(['middleware' => ['permission:Gestionar Contribuyentes']], function () {
@@ -907,6 +872,58 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/properties/ticket-office/payments/taxes', 'PropertyTaxesController@getTaxesTicketOffice')->name('properties.ticket-office.payments.taxes');
                     Route::get('/properties/ticket-office/payments/details/{id}/{status?}', 'PropertyTaxesController@detailsTicketOffice')->name('properties.ticket-office.payments.details');
                     Route::get('/properties/ticket-office/receipt/{id}/{download?}', 'PropertyTaxesController@generateReceipt')->name('properties.tickec-office.receipt');
+                });
+            });
+
+
+
+
+//            Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
+            # ------------------------------------------------------------------- #
+
+
+
+            ########### TAQUILLA --- PUBLICIDAD
+            Route::group(['middleware' => ['permission:Taquilla - Publicidad']], function() {
+                Route::get('/ticketOffice/publicity/home', function () {
+                    return view('modules.publicity.ticket-office.home');
+                })->name('ticketOffice.publicity.home');
+                Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
+                Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
+                Route::get('/ticketOffice/publicity/history/{id}', 'PublicityController@historyPayments')->name('ticketOffice.publicity.historyPayment');
+                Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PublicityTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
+                Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
+                Route::get('/publicity/ticket-office/verify/fiscal-period/{id}/{year}', 'PublicityTaxesController@verifyFiscalPeriod')->name('publicity.ticket-office.verify.fiscal-period');
+
+
+                // Nivel 1: Gestionar Publicidad
+                Route::group(['middleware' => ['permission:Gestionar Publicidad']], function() {
+                    Route::get('/ticketOffice/publicity/manage-publicity', function () {
+                        return view('modules.publicity.ticket-office.menu');
+                    })->name('ticketOffice.publicity.managePublicity');
+
+                    // Nivel 2: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Publicidad|Consultar Publicidad']], function () {
+                        Route::get('/ticketOffice/publicity/register', function () {
+                            return view('modules.publicity.ticket-office.register');
+                        })->name('ticketOffice.publicity.register');
+                        Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
+
+                        // Nivel 3: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Publicidad']], function() {
+                            Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
+                        });
+                    });
+                });
+
+                // Nivel 1: Gestionar Pagos
+                Route::group(['middleware' => ['permission:Gestionar Pagos - Publicidad']], function() {
+                    Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
+                    Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
+                    Route::post('/publicity/ticket-office/taxes/store', 'PublicityTaxesController@storeTicketOffice')->name('publicity.ticket-office.taxes.store');
+                    Route::get('/publicity/ticket-office/payments/taxes', 'PublicityTaxesController@getTaxesTicketOffice')->name('publicity.ticket-office.payments.taxes');
+                    Route::get('/publicity/ticket-office/receipt/{id}/{download?}', 'PublicityTaxesController@generateReceipt')->name('publicity.ticket-office.receipt');
+                    Route::get('/publicity/ticket-office/payments/details/{id}/{status?}', 'PublicityTaxesController@detailsTicketOffice')->name('publicity.ticket-office.payments.details');
                 });
             });
 
