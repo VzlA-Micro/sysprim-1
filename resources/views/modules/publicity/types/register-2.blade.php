@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
                     @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar Publicidad</a></li>
                     @if(session()->has('company'))
                         <li class="breadcrumb-item"><a href="{{ route('publicity.register.create',['id' => 2, 'company_id' => session('company')->id]) }}">Publicidad por cantidad de ejemplares</a></li>
                     @else
@@ -28,7 +28,7 @@
                 <form method="post" action="{{ route('publicity.save') }}" class="card" enctype="multipart/form-data" id="register">
                     <ul class="tabs">
                         <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i> Datos Generales</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#property-tab"><i class="icon-filter_2"></i> Datos del Inmueble</a></li>
+                        <li class="tab col s6 disabled" id="two"><a href="#property-tab"><i class="icon-filter_2"></i> Datos de Publicidad</a></li>
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
@@ -84,6 +84,7 @@
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
                                 <select name="licor" id="licor">
                                     <option value="" disabled selected>Elija una opción</option>
                                     <option value="SI">SI</option>
@@ -92,6 +93,7 @@
                                 <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
                                 <select name="state_location" id="state_location">
                                     <option value="" disabled selected>Elija una opción</option>
                                     <option value="SI">SI</option>
@@ -111,7 +113,7 @@
                                 </div>
                                 <div class="file-upload-wrapper">
                                     <input type="file" name="image" id="image" class="file-upload-native" accept="image/*" />
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text" />
+                                    <input type="text" id="file-upload-text" disabled placeholder="Subir imagen" class="file-upload-text" />
                                 </div>
                             </div>
                             <div class="input-field col s12 m6">

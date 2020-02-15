@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Editar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Editar Publicidad</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
