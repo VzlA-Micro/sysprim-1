@@ -666,7 +666,7 @@
                                         class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
                                         id="update-publicity-save">
                                     Guardar Cambios
-                                    <i class="icon-mode_edit right"></i>
+                                    <i class="icon-save right"></i>
                                 </button>
                             </div>
                         @endcan
@@ -678,7 +678,7 @@
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
                                             id="publicity-status" value="disabled">
                                         Deshabilitar Publicidad
-                                        <i class="icon-sync_disabled right"></i>
+                                        <i class="icon-not_interested right"></i>
                                     </button>
                                 @else
                                     <button type="button"
