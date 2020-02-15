@@ -1072,7 +1072,7 @@ $('document').ready(function () {
                             }
                         }).then(function (option) {
                             if (option) {
-                                location.reload();
+                               // location.reload();
                             }
                         });
 
@@ -1126,6 +1126,11 @@ $('document').ready(function () {
 
 
     });
+
+
+
+
+
     $('#details-next').on('click', function () {
 
         var base = $('#base').val();

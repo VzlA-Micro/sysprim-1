@@ -93,10 +93,10 @@
                                     </button>-->
                                 </div>
                                 <div class="col s12 right-align">
-                                    <button class="btn peach waves-effect waves-light" id="general-next">
+                                    <a class="btn peach waves-effect waves-light" id="general-next">
                                         <i class="icon-navigate_next right"></i>
                                         Siguiente
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
