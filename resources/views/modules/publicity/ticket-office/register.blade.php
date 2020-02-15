@@ -245,7 +245,7 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="validate only-number-positive number-only-float" name="height" id="height" maxlength="1" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" name="height" id="height" maxlength="5" value="">
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-exposure_plus_1 prefix"></i>
