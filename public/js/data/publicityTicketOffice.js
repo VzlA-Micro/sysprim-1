@@ -3,7 +3,7 @@ var updateType = false;
 
 $('document').ready(function () {
     var date = new Date();
-    $('#date_start').datepicker({
+    $('.date_start').datepicker({
         maxDate:  date,
         format: 'yyyy-mm-dd', // Configure the date format
         // yearRange: [1900,date.getFullYear()],
@@ -19,7 +19,7 @@ $('document').ready(function () {
             weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
         }
     });
-    $('#date_end').datepicker({
+    $('.date_end').datepicker({
         maxDate:  null,
         format: 'yyyy-mm-dd', // Configure the date format
         minDate: date,
@@ -657,7 +657,7 @@ $('document').ready(function () {
         // var image = $('#image')[0].files[0]; // Getting file input data
         // formData.append('image',image);
         $.ajax({
-            url: url + "publicity/save",
+            url: url + "/ticketOffice/publicity/save",
             cache: false,
             contentType: false,
             processData: false,

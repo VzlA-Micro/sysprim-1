@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
                     @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar Publicidad</a></li>
                     @if(session()->has('company'))
                         <li class="breadcrumb-item"><a href="{{ route('publicity.register.create',['id' => 2, 'company_id' => session('company')->id]) }}">Publicidad por cantidad de ejemplares</a></li>
                     @else
@@ -84,6 +84,7 @@
                                 <label>Tipo de Publicidad</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
                                 <select name="licor" id="licor">
                                     <option value="" disabled selected>Elija una opción</option>
                                     <option value="SI">SI</option>
@@ -92,6 +93,7 @@
                                 <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
                             </div>
                             <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
                                 <select name="state_location" id="state_location">
                                     <option value="" disabled selected>Elija una opción</option>
                                     <option value="SI">SI</option>
@@ -135,7 +137,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="number" name="quantity" id="quantity" min="1" required>
+                                <input type="text" name="quantity" id="quantity"   class="validate only-number-positive number-date" maxlength="7" required>
                                 <label for="quantity">Ejemplares</label>
                             </div>
                             {{--<div class="input-field col s12">

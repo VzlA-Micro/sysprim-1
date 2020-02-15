@@ -184,7 +184,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -205,7 +205,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
@@ -220,16 +220,16 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="validate number-date" name="width" id="width" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" name="width" id="width" maxlength="5" value="">
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="validate number-date" name="height" id="height" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" name="height" id="height" maxlength="1" value="">
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" class="validate number-date" name="quantity" id="quantity">
+                                <input type="text" class="validate only-number-positive number-date" maxlength="4" name="quantity" id="quantity">
                                 <label for="quantity">Cantidad de Lugares</label>
                             </div>
 
@@ -260,7 +260,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -281,7 +281,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
@@ -295,7 +295,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" class="validate number-date" name="quantity" id="quantity">
+                                <input type="text" class="validate only-number-positive number-date" maxlength="9" name="quantity" id="quantity">
                                 <label for="quantity">Ejemplares</label>
                             </div>
 
@@ -325,7 +325,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -341,12 +341,12 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker">
+                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
                                 <label for="date_start">Fecha de Inicio</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
 
@@ -376,7 +376,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -397,7 +397,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12 input-field">
@@ -412,12 +412,12 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="validate number-date" name="width" id="width" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="validate number-date" name="height" id="height" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1" name="height" id="height" value="">
                             </div>
 
                             <div class="input-field col s6 left-align">
@@ -446,7 +446,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name">
+                                <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="col s12">
@@ -467,7 +467,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker">
+                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
                                 <label for="date_end">Fecha de Fin</label>
                             </div>
                             <div class="col s12  input-field">
@@ -482,12 +482,12 @@
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
                                 <label for="width">Ancho</label>
-                                <input type="text" class="validate number-date" name="width" id="width" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_vertical prefix"></i>
                                 <label for="height">Alto</label>
-                                <input type="text" class="validate number-date"  name="height" id="height" value="">
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1"  name="height" id="height" value="">
                             </div>
                             {{-- <div class="input-field col s12">
                                 <input type="text" name="quantity" id="quantity">
@@ -495,7 +495,7 @@
                             </div> --}}
                             <div class="input-field col s12 ">
                                 <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" class="validate number-date" name="side" id="side">
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="2" name="side" id="side">
                                 <label for="side">Cantidad de Caras</label>
                             </div>
                             {{-- <div class="input-field col s12">

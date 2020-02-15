@@ -908,6 +908,7 @@ Route::middleware(['auth'])->group(/**
                             return view('modules.publicity.ticket-office.register');
                         })->name('ticketOffice.publicity.register');
                         Route::get('/ticketOffice/publicity/show-Ticket-office', 'PublicityController@showTicketOffice')->name('ticketOffice.publicity.read');
+                        Route::post('/ticketOffice/publicity/save', 'PublicityController@storeTicketOffice')->name('ticketOffice.publicity.save');
 
                         // Nivel 3: Detalles
                         Route::group(['middleware' => ['permission:Detalles Publicidad']], function() {

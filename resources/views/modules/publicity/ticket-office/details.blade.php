@@ -261,12 +261,14 @@
                                     </div>
 
                                     <div class="col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
                                     <div class="col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
@@ -392,12 +394,14 @@
                                     </div>
 
                                     <div class="col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
                                     <div class="col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
@@ -463,12 +467,14 @@
                                     </div>
 
                                     <div class="col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
                                     <div class="col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto / Piso</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
@@ -549,7 +555,7 @@
                                 </a>
                             </div>
                         @endcan--}}
-                        @can('Actualizar Vehiculos')
+                        @can('Actualizar Publicidad')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
