@@ -1251,10 +1251,8 @@ $('document').ready(function () {
                         text: 'Ya tiene un pago declarado para este periodo fiscal',
                         icon: "info",
                     });
-
-                    $('#general-next').prop('disabled',true);
                 } else {
-                    $('#general-next').prop('disabled',false);
+
                 }
             },
             error: function (e) {
