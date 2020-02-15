@@ -31,7 +31,6 @@
                             <table class="centered highlight responsive-table" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>Código Catastral</th>
                                     <th>Fecha</th>
                                     <th>Código</th>
                                     <th>Ramo</th>
@@ -48,8 +47,8 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
-                                            <td>{{ $taxe->publicities[0]->code }}</td>
                                             <td>{{ $taxe->created_at }}</td>
+                                            <td>{{ $taxe->publicities[0]->code }}</td>
                                             <td>{{ $taxe->code }}</td>
                                             <td>{{ $taxe->branch }}</td>
                                             <td>{{ number_format($taxe->amount,2) }}</td>
