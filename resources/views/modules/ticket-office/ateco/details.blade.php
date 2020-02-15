@@ -60,7 +60,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="base[]" id="base_{{ $ciu->ciu->code}}" class="validate money"
                                        value="{{ $ciu->base }}" readonly>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="tasa[]" id="tasa_{{ $ciu->ciu->code}}" class="validate recargo money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
@@ -77,7 +77,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="interest[]" id="interest_{{ $ciu->ciu->code}}" class="validate money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->interest}}" readonly>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="total_ciu[]" id="fiscal_credits__{{ $ciu->ciu->code}}" class="validate total_ciu money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $ciu->totalCiiu}}" readonly>
@@ -111,7 +111,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
 
                                 <input type="text" name="deductions[]" id="deductions" class="validate money"
@@ -121,7 +121,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="withholding[]" id="withholdings" class="validate money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->withholding }}"
@@ -130,7 +130,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credits[]" id="fiscal_credits" class="validate money"
                                        pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{ $tax->pivot->fiscal_credits }}"
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class=" input-field col s12 m12 ">
                                     <i class=" prefix">
-                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                        <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                     </i>
                                     <input type="text" name="total" class="validate total money"
                                            value="{{$amount['amountTotal']}}" readonly>
@@ -199,7 +199,7 @@
                                     {{-- Modal trigger --}}
                                     @if(!$taxes->payments->isEmpty())
                                         <h4 class="center-align">Registro de Pago:</h4>
-                                        <table class="centered highlight" id="payments" style="width: 100%">
+                                        <table class="centered highlight responsive-table" id="payments">
                                             <thead>
                                             <tr>
                                                 <th>Fecha</th>

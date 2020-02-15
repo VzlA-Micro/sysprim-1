@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('users.read') }}">Ver Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="">Detalles</a></li>
                 </ul>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="card-content row">
                             <div class="col s12 m6 center-align">
-                                <img src="{{ asset('images/user.jpg') }}" alt="" srcset=""
+                                <img src="{{ asset('images/user.jpg') }}" alt="Image User" width="100%" height="100%" srcset=""
                                      class="circle responsive-img">
                             </div>
                             <div class="col s12 m6">
@@ -52,7 +52,7 @@
                         </div>
                         <div class="card-content row">
                             <div class="col s12 m6 center-align">
-                                <img src="{{ asset('images/user.jpg') }}" alt="" srcset=""
+                                <img src="{{ asset('images/user.jpg') }}" alt="Image User" width="100%" height="100%" srcset=""
                                      class="circle responsive-img">
                             </div>
                             <div class="col s12 m6">

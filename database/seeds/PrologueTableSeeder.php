@@ -45,13 +45,19 @@ class PrologueTableSeeder extends Seeder
 
 
         DB::table('prologue')->insert([
-            'name'=>'INMUEBLE URBANOS',
+            'name'=>'INMUEBLES URBANOS',
             'branch'=>'Inm.Urbanos',
             'date_limit'=>'2020-03-31',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
 
-
+        DB::table('prologue')->insert([
+            'name'=>'PROPAGANDA Y PUBLICIDAD COMERCIAL',
+            'branch'=>'Prop. y Publicidad',
+            'date_limit'=>'2020-01-31',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);
     }
 }

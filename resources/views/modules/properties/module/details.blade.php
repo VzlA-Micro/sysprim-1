@@ -10,9 +10,9 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Modulo - Consultar Inmubles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="#">Modulo - Detalles de Inmubles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Gestionar Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.details-property',['id' => $property->id]) }}">Detalles del Inmueble</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8">
@@ -184,39 +184,39 @@
                             <input id="lng" type="text" name="lng" value="{{$property->lng}}" readonly>
                             <label for="lng">Logintud</label>
                         </div>
+                        @can('Cambiar Propietario - Inmueble')
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
+                                    <i class="icon-account_circle right"></i>
+                                    Cambiar Propietario
+                                </button>
+                            </div>
+                        @endcan
+                        @can('Actualizar Mis Inmuebles')
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
+                                    <i class="icon-mode_edit right"></i>
+                                    Editar Inmueble
+                                </button>
+                                <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide" id="update-btn">
+                                    Guardar
+                                    <i class="icon-save right"></i>
+                                </button>
+                            </div>
+                        @endcan
+                        @can('Cambiar Ubicacion - Inmuebles')
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
+                                    <i class="icon-map right"></i>
+                                    Cambiar Ubicación
+                                </button>
+                            </div>
+                        @endcan
 
 
                         <div class="col s12">
                             <div class="row">
-                                @can('Cambiar Propietario - Inmueble')
-                                <div class="col s12 m6">
-                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
-                                        <i class="icon-account_circle right"></i>    
-                                             Cambiar Propietario
-                                    </button>
-                                </div>
-                                @endcan
-                                @can('Actualizar Mis Inmuebles')
-                                <div class="col s12 m5 offset-m1" >
-                                        <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
-                                            <i class="icon-mode_edit right"></i>
-                                            Editar Inmueble
-                                        </button>
-                                         <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide" id="update-btn">
-                                            Guardar
-                                            <i class="icon-save right"></i>
-                                        </button>                                  
-                                </div>
-                                @endcan
-                                @can('Cambiar Ubicacion - Inmuebles')
-                                <div class="col s12 m6" style="margin-top:20px;">
-                                    <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
-                                        <i class="icon-map right"></i>
-                                            Cambiar Ubicación     
-                                    </button>
-                                </div> 
-                                @endcan
-                                
+
                              </div>                
                         </div>
                     </div>
@@ -230,10 +230,10 @@
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
                         @if (Storage::disk('users')->has($property->users[0]->image))
-                            <img src="{{ route('users.getImage', ['filename' => $property->users[0]->image]) }}" alt=""
+                            <img src="{{ route('users.getImage', ['filename' => $property->users[0]->image]) }}" alt="Image" width="100%" height="100%"
                                  class="circle responsive-img">
                         @else
-                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                            <img src="{{ asset('images/user.png') }}" alt="Image" width="100%" height="100%" class="circle responsive-img">
                         @endif
                     </div>
                     <div class="card-content row">
@@ -320,8 +320,8 @@
 
 
                         @can('Cambiar Usuario - Inmueble')
-                        <div class="input-field col s12 m12">
-                            <a href="#" class="btn btn-large waves-effect waves-light green col s12 btn-rounded " id="change-users">
+                        <div class="input-field col s12 m12 center-align">
+                            <a href="#" class="btn btn-large waves-effect waves-light green btn-rounded " id="change-users">
                                 <i class="icon-refresh right"></i>
                                 Cambiar Usuario 
                             </a>
@@ -337,11 +337,20 @@
 
 
         <div class="row">
-            <div class="row">
-
-                <h4 class="center-align">Registro de Pagos:</h4>
-
-            </div>
+            <h4 class="center-align">Registro de Pagos:</h4>
+            <a href="{{ route('properties.ticket-office.property-taxes',['id'=>$property->id]) }}">
+                <div class="col s12">
+                    <div class="widget bootstrap-widget stats white-text">
+                        <div class="widget-stats-icon blue-gradient">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title black-text">Pagos</span>
+                            <span class="widget-stats-number black-text">{{ $payments }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
 
 

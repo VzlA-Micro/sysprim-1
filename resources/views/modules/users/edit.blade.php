@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('users.read') }}">Ver Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="">Detalles</a></li>
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
@@ -116,7 +116,7 @@
                         <div class="row">
                             @can('Habilitar/Deshabilitar Usuarios')
                             @if($user->confirmed==0||$user->status_account=='block')
-                            <div class="col s12 m4 center-align">
+                            <div class="col s12 m3 center-align">
                                 <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
                                     <i class="icon-check right"></i>
                                     Habilitar
@@ -124,7 +124,7 @@
                             </div>
 
                             @else
-                                <div class="col s12 m4 center-align">
+                                <div class="col s12 m3 center-align">
                                     <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
                                         <i class="icon-send right"></i>
                                         Deshabilitar
@@ -134,7 +134,7 @@
                             @endif
                             @endcan
                             @can('Actualizar Usuarios')
-                            <div class="col s12 m4 center-align">
+                            <div class="col s12 m3 center-align">
                                 <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves-light">
                                     <i class="icon-update right"></i>
                                     Actualizar
@@ -142,13 +142,21 @@
                             </div>
                             @endcan
                             @can('Resetear Usuarios')
-                            <div class="col s12 m4">
+                            <div class="col s12 m3">
                                 <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
                                     <i class="icon-send right"></i>
                                     Resetear Contraseña
                                 </a>
                             </div>
                             @endcan
+
+                                <div class="col s12 m3">
+                                    <a href="{{route('users.security',['id'=>$user->id])}}" class="btn btn-rounded btn-large green waves-effect waves-light">
+                                        <i class="icon-verified_user right"></i>
+                                      Bitacora
+                                    </a>
+                                </div>
+
                         </div>
                     </div>
                 </form>

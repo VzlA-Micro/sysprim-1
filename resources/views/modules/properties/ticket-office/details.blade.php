@@ -12,8 +12,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.manage') }}">Gestionar Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.payments.taxes') }}">Pagar Planillas</a></li>
+                    @if(session()->has('property'))
+                        <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar Inmuebles Urbanos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.details-property',['id' => $property->id]) }}">Detalles del Inmueble</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.property-taxes',['id'=>$property->id]) }}">Registro de Pagos</a></li>
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.manage') }}">Gestionar Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.payments.taxes') }}">Pagar Planillas</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.payments.details',['id' => $taxes->id]) }}">Detalles de Planilla</a></li>
                 </ul>
             </div>
@@ -55,28 +61,28 @@
                         {{--<input type="hidden" name="totalGround" id="totalGround" class="validate money" value="" readonly>--}}
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="totalGround" id="totalGround" class="validate money" value="{{ number_format($amounts['totalGround'],2,',','.') }}" readonly>
                             <label for="totalGround">Total por Terreno</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="totalBuild" id="totalBuild" class="validate money" value="{{ number_format($amounts['totalBuild'],2,',','.') }}" readonly>
                             <label for="totalBuild">Total por Construcción</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate" value="{{ number_format($propertyTaxe->pivot->fiscal_credit,2,',','.') }}" readonly>
                             <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
                             <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="{{ number_format($propertyTaxe->pivot->base_imponible,2,',','.') }}" readonly>
                             <label for="base_imponible">Base Imponible Total</label>
@@ -137,21 +143,21 @@
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                             </i>
                                             <input type="text" name="interest" id="interest" class="validate money" value="{{ number_format($propertyTaxe->pivot->interest,2,',','.') }}" readonly>
                                             <label for="interest">Interés por Mora:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12 ">
                                             <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                             </i>
                                             <input type="text" name="recharge" id="recharge" class="validate money" value="{{ number_format($propertyTaxe->pivot->recharge,2,',','.') }}" readonly>
                                             <label for="recharge">Recargo Interes:(Bs)</label>
                                         </div>
                                         <div class="input-field col s12 m12">
                                             <i class="prefix">
-                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="">
+                                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                             </i>
                                             <input id="amount" type="text" name="amount" class="validate" value="{{ number_format($taxes->amount,2,',','.') }}" readonly>
                                             <label for="amount">Total a Pagar:(Bs)</label>
@@ -250,57 +256,49 @@
                                 </a>
                                 @endif
                             </div>
-                            <div class="row">
-                                @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                    <div class="col s12">
-                                        <h4 class="center-align">Acciones</h4>
-                                    </div>
-                                    @can('Anular Pagos')
-                                        <div class="col s12 m4">
-                                            <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel">
-                                                ANULAR PLANILLA.
-                                                <i class="icon-close right"></i>
-                                            </a>
-                                        </div>
-                                    @endcan
-                                    @can('Verificar Pagos - Manual')
-                                        @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
-                                            <div class="col s12 m4">
-                                                <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified">
-                                                    VERIFICAR PLANILLA.
-                                                    <i class="icon-verified_user right"></i>
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endcan
-                                    @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                        <div class="col s12 m4">
-                                            <button type="button" id="send-email-verified" class="btn green waves-effect waves-light" value="{{$taxes->id}}">
-                                                Enviar Correo Verificado.
-                                                <i class="icon-mail_outline right"></i>
-                                            </button>
-                                        </div>
-                                    @endif
-                                    @if($taxes->status!='cancel')
-                                        <div class="col s12 m4">
-                                            <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
-                                                <i class="icon-picture_as_pdf right"></i>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endif
-                            </div>
                         </div>
                     </div>
                     <div class="card-footer center-align">
-                        {{--<a href="" class="btn btn-rounded peach waves-effect waves-light">
-                            Calcular de nuevo
-                            <i class="icon-refresh right"></i>
-                        </a>
-                        <button type="submit" href="#" class="btn btn-rounded peach waves-effect waves-light modal-trigger ">
-                            Continuar
-                            <i class="icon-more_horiz right"></i>
-                        </button>--}}
+                        <div class="row">
+                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                <div class="col s12">
+                                    <h4 class="center-align">Acciones</h4>
+                                </div>
+                                @can('Anular Pagos')
+                                    <div class="col s12 m4 center-align">
+                                        <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel">
+                                            ANULAR PLANILLA.
+                                            <i class="icon-close right"></i>
+                                        </a>
+                                    </div>
+                                @endcan
+                                @can('Verificar Pagos - Manual')
+                                    @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
+                                        <div class="col s12 m4 center-align">
+                                            <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified">
+                                                VERIFICAR PLANILLA.
+                                                <i class="icon-verified_user right"></i>
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endcan
+                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                    <div class="col s12 m4 center-align">
+                                        <button type="button" id="send-email-verified" class="btn green waves-effect waves-light" value="{{$taxes->id}}">
+                                            Enviar Correo Verificado.
+                                            <i class="icon-mail_outline right"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                                @if($taxes->status!='cancel')
+                                    <div class="col s12 m4 center-align">
+                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                            <i class="icon-picture_as_pdf right"></i>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endif
+                        </div>
                     <div>
                 </form>
             </div>

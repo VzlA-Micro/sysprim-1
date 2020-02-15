@@ -38,7 +38,7 @@
                             <label for="name">Razón Social</label>
                         </div>
 
-                        <div class="input-field col s6 m4">
+                        <div class="input-field col s12 m4">
                             <i class="icon-question_answer prefix tooltipped" data-position="bottom" data-tooltip="LICENCIA DE FUNCIONAMIENTO PARA EL EJERCICIO DE ACTIVIDADES ECONÓMICAS"></i>
                             <select name="question_license" id="question_license">
                                 <option value="null" selected disabled>...</option>

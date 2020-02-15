@@ -294,7 +294,7 @@ class RateController extends Controller{
 
 
 
-    public function pdfTaxPayers($id,$download){
+    public function pdfTaxPayers($id,$download=null){
         $taxe=Taxe::find($id);
         $rate=$taxe->rateTaxes()->get();
         $type='';
@@ -312,7 +312,9 @@ class RateController extends Controller{
             'data' => $data,
         ]);
 
-        if(!isset($download)){
+
+
+        if(is_null($download)||$download=='false'){
             return $pdf->stream('PLANILLA_TASAS.pdf');
         }else{
             return $pdf->download('PLANILLA_TASAS.pdf');

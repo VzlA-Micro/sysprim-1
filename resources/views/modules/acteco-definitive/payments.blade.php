@@ -36,7 +36,7 @@
 									<input type="radio" id="ppv" name="method" value="ppv" class="type_payment_event">
 									<label class="btn-radio grey" for="ppv" >
 										<i class="">
-											<img src="{{ asset('images/png/001-point-of-service.png') }}"  style="height: 64px!important;width: 64px!important;" alt="">
+											<img src="{{ asset('images/png/001-point-of-service.png') }}"  style="height: 64px!important;width: 64px!important;" alt="Punto" width="100%" height="100%">
 										</i>
 										<span class="truncate black-text">SEMAT(PUNTO DE VENTA)</span>
 									</label>
@@ -45,7 +45,7 @@
 									<input type="radio" id="ptb" name="method" value="ppt" class="type_payment_event">
 									<label class="btn-radio grey" for="ptb">
 										<i class="">
-											<img src="{{ asset('images/png/009-smartphone-1.png') }}" style="height: 64px!important;width: 64px!important;" alt="">
+											<img src="{{ asset('images/png/009-smartphone-1.png') }}" style="height: 64px!important;width: 64px!important;" alt="Tranferencia" width="100%" height="100%">
 										</i>
 										<span class="truncate black-text">Transferencia Bancaria</span>
 									</label>
@@ -54,7 +54,7 @@
 									<input type="radio" id="ppb" name="method" value="ppb" class="type_payment_event" >
 									<label class="btn-radio grey" for="ppb">
 										<i class="">
-											<img src="{{ asset('images/png/030-bank.png') }}" style="height: 64px!important;width: 64px!important;" alt="">
+											<img src="{{ asset('images/png/030-bank.png') }}" style="height: 64px!important;width: 64px!important;" alt="Deposito" width="100%" height="100%">
 										</i>
 										<span class="truncate black-text">Deposito Bancario</span>
 									</label>

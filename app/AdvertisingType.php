@@ -12,4 +12,9 @@ class AdvertisingType extends Model
     // 	return $this->belongsToMany('App\AdvertisingTypePublicity','advertising_type_publicity')
     //         ->withPivot('publicity_id');
     // }
+
+    public function group()
+    {
+        return $this->belongsTo('App\GroupPublicity','group_publicity_id');
+    }
 }

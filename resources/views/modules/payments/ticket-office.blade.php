@@ -94,6 +94,13 @@
                                                                 class="icon-pageview"></i></a>
 
                                                 </td>
+                                            @elseif($taxe->taxes[0]->branch==='Prop. y Publicidad')
+                                                <td>
+                                                    <a href="{{ route('publicity.ticket-office.payments.details', ['id' => $taxe->taxes[0]->id])  }}"
+                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                                class="icon-pageview"></i></a>
+
+                                                </td>
                                             @endif
 
                                         @endcan
@@ -194,10 +201,10 @@
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 9;
+                        }, doc.defaultStyle.fontSize = 8;
 
                     }, exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
                 }
                 },
                 {

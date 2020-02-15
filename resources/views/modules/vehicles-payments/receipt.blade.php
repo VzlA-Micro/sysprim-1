@@ -31,6 +31,7 @@
             <td style="width: 25%;" rowspan="2">
                 <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px"
                      alt=""><br>
+
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
             </td>
@@ -42,7 +43,7 @@
 					Barquisimeto - Edo. Lara
 					</span>
             </td>
-            <td style="width: 25%;" rowspan="2">
+
                 <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt=""><br>
                 <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
                 <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>

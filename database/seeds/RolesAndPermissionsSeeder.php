@@ -106,6 +106,13 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Actualizar Accesorios']);
         // Permission::create(['name' => 'Eliminar Accesorios']);
 
+        // -- Grupo de Publicidad
+        Permission::create(['name' => 'Gestionar Grupos de Publicidad']);
+        Permission::create(['name' => 'Registrar Grupo de Publicidad']);
+        Permission::create(['name' => 'Consultar Grupos de Publicidad']);
+        Permission::create(['name' => 'Detalles Grupo de Publicidad']);
+        Permission::create(['name' => 'Actualizar Grupo de Publicidad']);
+
         // -- Gestionar Tipos de Publicidad
         Permission::create(['name' => 'Gestionar Tipos de Publicidad']);
         Permission::create(['name' => 'Registrar Tipo de Publicidad']);
@@ -165,7 +172,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Taquilla - Vehiculos']);
         Permission::create(['name' => 'Taquilla - Tasas']);
         Permission::create(['name' => 'Taquilla - Inmuebles']);
-//        Permission::create(['name' => 'Taquilla - Tasas']);
+        Permission::create(['name' => 'Taquilla - Publicidad']);
+        Permission::create(['name' => 'Configurar Taquilla']);
+
 
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
         // Permission::create(['name' => 'Taquilla - Publicidad']);
@@ -247,7 +256,19 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Tasas - Detalles Planilla']);
 
 
+        // -- Gestionar Publicidad
+        Permission::create(['name' => 'Gestionar Publicidad']);
+        Permission::create(['name' => 'Registrar Publicidad']);
+        Permission::create(['name' => 'Consultar Publicidad']);
+        Permission::create(['name' => 'Detalles Publicidad']);
+        Permission::create(['name' => 'Actualizar Publicidad']);
+        Permission::create(['name' => 'Gestionar Pagos - Publicidad']);
+        Permission::create(['name' => 'Habilitar/Deshabilitar Publicidad']);
 
+//        Permission::create(['name' => 'Cambiar Ubicacion - Inmuebles']);
+//        Permission::create(['name' => 'Cambiar Propietario - Inmueble']);
+        Permission::create(['name' => 'Cambiar Usuario - Publicidad']);
+        Permission::create(['name' => 'Historial de Pago - Publicidad']);
 
 
         // -- Gestionar Vehiculos
@@ -412,6 +433,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Tipos de Publicidad',
             'Detalles Tipo de Publicidad',
             'Actualizar Tipos de Publicidad',
+            'Gestionar Grupos de Publicidad',
+            'Registrar Grupo de Publicidad',
+            'Consultar Grupos de Publicidad',
+            'Detalles Grupo de Publicidad',
+            'Actualizar Grupo de Publicidad',
             'Gestionar Tasas del Banco',
             'Registrar Tasa de Banco',
             'Consultar Tasas del Banco',
@@ -441,6 +467,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Valor Terreno',
             'Actualizar Valor Terreno',
             'Taquillas',
+            'Configurar Taquilla',
             ##### GESTIONAR CONTRIBUYENTE #####
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
@@ -495,7 +522,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
             'Historial de Pago - Inmuebles',
-        # ----------------------------- #
+            # ------------------------- #
+            ##### TAQUILLA DE PUBLICIDAD #####
+            'Taquilla - Publicidad',
+            'Gestionar Publicidad',
+            'Registrar Publicidad',
+            'Consultar Publicidad',
+            'Detalles Publicidad',
+            'Actualizar Publicidad',
+            'Gestionar Pagos - Publicidad',
+            'Cambiar Usuario - Publicidad',
+            'Habilitar/Deshabilitar Publicidad',
+            'Historial de Pago - Publicidad',
+            # ----------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
             'Registrar Pago - Transferencias',
@@ -599,7 +638,18 @@ class RolesAndPermissionsSeeder extends Seeder
 //            'Cambiar Propietario - Inmueble',
             'Cambiar Usuario - Inmueble',
             'Historial de Pago - Inmuebles',
-            # ----------------------------- #
+            # ------------------------- #
+            ##### TAQUILLA DE PUBLICIDAD #####
+            'Taquilla - Publicidad',
+            'Gestionar Publicidad',
+            'Registrar Publicidad',
+            'Consultar Publicidad',
+            'Detalles Publicidad',
+//            'Actualizar Publicidad',
+            'Gestionar Pagos - Publicidad',
+            'Cambiar Usuario - Publicidad',
+            'Historial de Pago - Publicidad',
+            # ------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
 //            'Registrar Pago - Transferencias',
@@ -670,10 +720,15 @@ class RolesAndPermissionsSeeder extends Seeder
             'Pagar Vehiculo',
 
             # --------- Módulo de Mis Publicidades
-            //'Mis Publicidades',
-            //'Registrar Mis Publicidades',
-            //'Consultar Mis Publicidades',
-            //'Detalles Mis Publicidades',
+            'Mis Publicidades',
+            'Registrar Mis Publicidades',
+            'Consultar Mis Publicidades',
+            'Detalles Mis Publicidades',
+            // 'Actualizar Mis Publicidades',
+            // 'Eliminar Mis Publicidades',
+            'Mis Pagos - Publicidad',
+            'Declarar Publicidades',
+            'Historial de Pagos - Publicidades',
 
             # --------- Módulo de Mis Tasas
             'Generar Tasas',
@@ -755,6 +810,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
         $roleCoordinator ->givePermissionTo([
             'Taquillas',
+            'Configurar Taquilla',
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',

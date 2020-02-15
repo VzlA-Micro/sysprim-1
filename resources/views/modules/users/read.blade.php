@@ -10,7 +10,7 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios (Admin)</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('users.manage') }}">Gestionar Usuarios</a></li>
                     <li class="breadcrumb-item"><a href="">Ver Usuarios</a></li>
                 </ul>
             </div>
@@ -29,6 +29,7 @@
                                     <th>E-mail</th>
                                     <th>Rol</th>
                                     <th>Verificado</th>
+                                    <th>Fecha de creación</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,10 @@
                                         <i class="icon-close red-text" style="font-size: 20px;"></i> Sin Verificar
                                     @endif
                                     </td>
+
+                                    <td>{{$user->created_at->format('d-m-Y h:m:s')}}</td>
+
+
                                     @can('Detalles Usuarios')
                                     <td>
                                         <a href="{{ route('users.details', ['id' => $user->id]) }}" class="btn btn-floating orange waves-effect waves-light">

@@ -75,7 +75,7 @@
 
 
 
-                            <div class="input-field col s6 m6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                                 <label for="address">Dirección</label>
@@ -84,7 +84,7 @@
 
 
                             <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn green text  waves-light">
+                                <a href="#" id='data-next' class="btn peach text  waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </a>

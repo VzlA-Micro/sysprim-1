@@ -43,7 +43,7 @@
                 <div>
                     <div class="col s6 m3 animated bounceIn">
                         <a href="{{ route('publicity.my-publicity') }}" class="btn-app white purple-text text-darken-2">
-                            <i class="icon-folder_special"></i>
+                            <i class="icon-movie_filter"></i>
                             <span class="truncate">Mis Publicidades</span>
                         </a>
                     </div>
@@ -51,8 +51,8 @@
             @endcan
             @can('Generar Tasas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white amber-text accent-4">
-                        <i class="icon-picture_as_pdf"></i>
+                    <a href="{{route('rate.taxpayers.menu')}}" class="btn-app white green-text text-darken-2">
+                        <i class="fas fa-clipboard"></i>
                         <span class="truncate">Gestión de  Tasas</span>
                     </a>
                 </div>
@@ -132,5 +132,16 @@
         @endcan --}}
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/dev/ticketOffice.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#bank-point').formSelect();
+        })
+    </script>
 @endsection
 

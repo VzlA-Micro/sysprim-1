@@ -13,7 +13,7 @@
             @can('Tasas - Generar Planilla')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.generate')}}" class="btn-app white blue-text">
-                    <i class="icon-picture_as_pdf"></i>
+                    <i class="fas fa-clipboard"></i>
                     <span class="truncate">Generar Planilla</span>
                 </a>
             </div>

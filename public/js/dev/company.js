@@ -510,8 +510,6 @@ $(document).ready(function () {
 
 
 
-
-
             if ($('#sector').val() !== null && $('#parish').val() !== null) {
 
                 $('#button-company').attr('disabled','disabled');
@@ -819,12 +817,12 @@ $(document).ready(function () {
 
             if (questions_license == 'true') {
 
-                swal({
+                /*swal({
                     title: "Información",
                     text: "Ingrese el numero de licencia otorgado y su código catastral.",
                     icon: "info",
                     button: "Ok",
-                });
+                });*/
                 $('#license').removeAttr('disabled', '');
                 $('#code_catastral').removeAttr('disabled', '');
                 $('#code').removeAttr('disabled', '');
@@ -991,6 +989,29 @@ $(document).ready(function () {
         var direccion = $(this).val();
         if (direccion !== '') {
             localizar("map", "Venezuela, Baquisimeto Estado Lara. " + direccion);
+        }
+    });
+
+
+    $('#image').change(function () {
+        var file = this.files[0];
+        var mimetype = file.type;
+        var match = ["image/jpeg", "image/png", "image/jpg"];
+        if (!((mimetype == match[0]) || (mimetype == match[1]) || (mimetype == match[2]))) {
+            swal({
+                title: "Informacion",
+                text: "Por favor, elige una imagen con formato compatible. (JPG/JPEG/PNG)",
+                icon: "warning",
+                button: {
+                    text: "Aceptar",
+                    visible: true,
+                    value: true,
+                    className: "green",
+                    closeModal: true
+                }
+            });
+            $(this).val('');
+            return false;
         }
     });
 

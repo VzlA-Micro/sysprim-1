@@ -10,10 +10,21 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('publicity.details', ['id' => $publicity->id]) }}">{{ $publicity->name }}</a></li>
                 </ul>
             </div>
+            @if($publicity->status=='disabled')
+                <div class="col s112 m12">
+                    <div class="alert alert-danger" style="margin-top: 1.5rem">
+                        <span>{{ "La publicidad '".$publicity->name."' ha sido  deshabilitada temporalmente y no podrá realizar declaraciones, por favor dirigirse a la oficina de Atención al Contribuyente del SEMAT en la Torre David."}}</span>
+                    </div>
+                </div>
+            @endif
             <div class="col s12 m9">
             	<div class="card">
             		<div class="card-header center-align">
@@ -21,14 +32,15 @@
             		</div>
             			@if (Storage::disk('publicities')->has($publicity->image))
                         <div class="card-image">
-                            <img src="{{ route('publicity.image', ['filename' => $publicity->image]) }}">
+                            <img src="{{ route('publicity.image', ['filename' => $publicity->image]) }}" alt="Image" width="100%" height="100%">
                             {{-- <span class="card-title grey-text"><b>Dirección:</b> {{ $company->address }}</span> --}}
                         </div>
                     	@endif
             		<div class="card-content">
             			<ul>
-            				{{-- @foreach($publicity->advertisingTypes as $type) --}}
-                            <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li>
+                            <li><b>Código: </b>{{ $publicity->code }}</li>
+                            {{-- @foreach($publicity->advertisingTypes as $type) --}}
+                            <li><b>Tipo de Publicidad: </b>{{ $publicity->advertisingType->name }}</li>
                             {{-- @endforeach --}}
                             <li><b>Nombre: </b>{{ $publicity->name }}</li>
                             <li><b>Fecha de Inicio: </b>{{ $publicity->date_start }}</li>
@@ -48,16 +60,22 @@
                             @if($publicity->advertising_type_id == 1) 
                             <li><b>Puntos de Publicidad: </b>{{ $publicity->quantity }}</li>
                             @endif
+                            <li><b>Publicidad referente a venta de cigarrillos o bebidas alcoholicas: </b>{{ $publicity->licor }}</li>
+                            <li><b>Publicidad ubicada en espacios reservados de la alcaldía: </b>{{ $publicity->state_location }}</li>
+
                         </ul>
             		</div>
+                    @can('Actualizar Mis Publicidades')
             		<div class="card-footer center-align">
                         <a href="{{ route('publicity.edit', ['id' => $publicity->id]) }}" class="btn btn-large peach btn-rounded waves-effect waves-light">
                             <i class="icon-send right"></i>
                             Editar
                         </a>      
                     </div>
+                    @endcan
             	</div>
             </div>
+            @can('Mis Pagos - Publicidad')
             <div class="col s12 m3" style="margin-top: -8px">
                 <div class="row">
                     <a href="{{ route('publicity.payments.manage', ['id' => $publicity->id]) }}" class="btn-app white green-text text-darken-2">
@@ -66,6 +84,7 @@
                     </a>
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

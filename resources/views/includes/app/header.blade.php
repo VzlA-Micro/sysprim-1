@@ -1,7 +1,7 @@
 <header>
     <nav class="container-fluid iribarren-wine-gradient">
         <div class="nav-wrapper">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="" class="brand-logo responsive-img"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/sysprim_logo.webp') }}" style="max-width: 220px; max-height: 64px" alt="Logo Semat" width="100%" height="100%" class="brand-logo responsive-img"></a>
             {{-- <a href="" class="brand-logo waves-efect waves-light"  margin: 0; padding: 0;"> --}}
             {{-- </a> --}}
             {{-- Sidenav Trigger --}}
@@ -52,9 +52,9 @@
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
                         <i class="icon-more_vert right"></i>
                         @if (Storage::disk('users')->has(Auth::user()->image))
-                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="" class="avatar circle" style="background-size: contain; background-position:center;">
+                        <img src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}" alt="Avatar Usuario" width="100%" height="100%" class="avatar circle" style="background-size: contain; background-position:center;">
                         @else 
-                        <img src="{{ asset('images/user.png') }}" alt="" class="avatar circle">
+                        <img src="{{ asset('images/user.png') }}" alt="Avatar" width="100%" height="100%" class="avatar circle">
                         @endif
                     </a>
                 </li>
@@ -81,7 +81,7 @@
         <ul id="sidenav-menu" class="sidenav sidenav-fixed">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
-                    <img src="{{ asset('images/semat.webp') }}" alt="" srcset="">
+                    <img src="{{ asset('images/semat.webp') }}" alt="semat" width="100%" height="100%" srcset="">
                 </a>
             </li>
             @guest
@@ -98,7 +98,7 @@
                     <li>
                         <div class="user-view">
                           <div class="background">
-                            <img src="{{ asset('images/bg-user.webp') }}" class="responsive-img">
+                            <img src="{{ asset('images/bg-user.webp') }}" alt="Usuario" width="100%" height="100%" class="responsive-img">
                           </div>
                           @if (Storage::disk('users')->has(Auth::user()->image))
                           <a href="#user"><img class="circle hide-on-large-only" src="{{ route('users.getImage', ['filename' => Auth::user()->image]) }}"></a>
@@ -139,69 +139,10 @@
                     <li class="waves-efect waves-light"><a href="{{ route('dashboard') }}"><i class="icon-multiline_chart"></i>Estadisticas</a></li>
                     @endcan
                     @can('Configuración')
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold">
-                                <a href="{{ route('settings.manage') }}" class="collapsible-header"><i class="icon-settings left" style="margin-left:15px;"></i>Configuración</a>
-                                {{-- <div class="collapsible-body">
-                                    <ul>
-                                        @can('Gestionar CIIU')
-                                        <li class="waves-efect waves-light"><a href="{{ route('ciu.manage') }}"><i class="icon-assignment"></i>Gestionar CIIU</a></li>
-                                        @endcan
-                                        @can('Gestionar Unidad Tribuaria')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('tax-unit.manage') }}"><i class="icon-attach_money"></i>Gestionar Unidad Tributaria</a></li>    
-                                        @endcan
-                                        @can('Gestionar Tipos de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.type.vehicles') }}"><i class="icon-directions_car"></i>Gestionar Tipos de Vehiculos</a></li>  
-                                        @endcan
-                                        @can('Gestionar Modelos de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.models.vehicles') }}"><i class="icon-airport_shuttle"></i>Gestionar Modelos de Vehiculos</a></li> 
-                                        @endcan   
-                                        @can('Gestionar Marcas de Vehiculos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('vehicles.brand.manage') }}"><i class="icon-directions_car"></i>Gestionar Marcas de Vehiculos</a></li> 
-                                        @endcan
-                                        @can('Gestionar Recargos')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('recharges.manage') }}"><i class="icon-trending_up"></i>Gestionar Recargos</a></li> 
-                                        @endcan
-                                        @can('Gestionar Accesorios')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('accessories.manage') }}"><i class="icon-filter_tilt_shift"></i>Gestionar Accesorios</a></li>  
-                                        @endcan
-                                        @can('Gestionar Tipos de Publicidad')
-                                        <li class="waves-efect waves-light truncate"><a href="{{ route('advertising-type.manage') }}"><i class="icon-folder_special"></i>Gestionar Tipos de Publicidad</a></li>
-                                        @endcan
-                                    </ul>
-                                </div> --}}
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="waves-efect waves-light"><a href="{{ route('settings.manage') }}"><i class="icon-settings"></i>Configuración</a></li>
                     @endcan
                     @can('Taquillas')
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold">
-                                <a href="{{ route('ticketOffice.home') }}" class="collapsible-header"><i class="icon-personal_video left" style="margin-left:15px;"></i>Taquillas</a>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        {{-- @can('Gestionar Empresas')
-                                        <li><a href="{{ route('companies.manage') }}"><i class="icon-work left"></i>Gestionar Empresas</a></li>
-                                        @endcan
-                                        @can('Gestionar Pagos')
-                                        <li><a href="{{ route('payments.manage') }}"><i class="icon-payment left"></i>Gestionar Pagos</a></li>
-                                        @endcan
-                                        <!--<li><a href="{{ route('properties.my-properties') }}"><i class="icon-location_city left"></i>Gestionar Inmuebles</a></li>-->
-                                        @can('Verificar Pagos - Archivo')
-                                        <li class="waves-efect waves-light"><a href="{{ route('payments.verify.manage') }}"><i class="icon-file_upload"></i>Verificación de Pagos</a></li>
-                                        @endcan --}}
-                                        {{-- @can('Taquilla - Actividad Económica') --}}
-                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('home.ticket-office') }}"><i class="icon-personal_video"></i>Actividad Económica</a></li> --}}
-                                        {{-- @endcan --}}
-                                        {{-- <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.vehicle.home') }}"><i class="icon-personal_video"></i>Patente de Vehículos</a></li> --}}
-
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="waves-efect waves-light"><a href="{{ route('ticketOffice.home') }}"><i class="icon-personal_video"></i>Taquillas</a></li>
                     @endcan
                     @can('Seguridad')
                     <li class="waves-efect waves-light"><a href="{{ route('security.manage') }}"><i class="icon-security"></i>Seguridad</a></li>
@@ -216,10 +157,10 @@
                     <li class="waves-efect waves-light"><a href="{{ route('vehicles.my-vehicles') }}"><i class="icon-directions_car left"></i>Mis Vehiculos</a></li>
                     @endcan
                     @can('Mis Publicidades')
-                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-folder_special left"></i>Mis Publicidades</a></li>
+                    <li class="waves-efect waves-light"><a href="{{ route('publicity.my-publicity') }}"><i class="icon-movie_filter left"></i>Mis Publicidades</a></li>
                     @endcan
                     @can('Generar Tasas')
-                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="icon-picture_as_pdf left"></i>Gestión de Tasas</a></li>
+                    <li class="waves-efect waves-light"><a href="{{route('rate.taxpayers.menu')}}"><i class="fas fa-clipboard"></i>Gestión de Tasas</a></li>
                     @endcan
                     <li class="divider hide-on-large-only"></li>
                     <li class="waves-efect waves-light hide-on-large-only">

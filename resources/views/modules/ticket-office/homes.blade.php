@@ -33,11 +33,27 @@
                 </a>
             </div>
             @endcan
+            @can('Taquilla - Publicidad')
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{ route('ticketOffice.publicity.home') }}" class="btn-app white purple-text text-darken-2">
+                    <i class="icon-personal_video"></i>
+                    <span class="truncate">Taquilla - Publicidad</span>
+                </a>
+            </div>
+            @endcan
             @can('Taquilla - Inmuebles')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('property.ticket-office.home')}}" class="btn-app white brown-text">
+                <a href="{{route('property.ticket-office.home')}}" class="btn-app white pink-text text-darken-2">
                     <i class="icon-personal_video"></i>
                     <span class="truncate">Taquilla - Inmuebles Urbanos</span>
+                </a>
+            </div>
+            @endcan
+            @can('Configurar Taquilla')
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('ticket-office.config')}}" class="btn-app white red-text text-darken-2">
+                    <i class="icon-dvr"></i>
+                    <span class="truncate">Configuración Taquilla</span>
                 </a>
             </div>
             @endcan
@@ -51,7 +67,7 @@
             @endcan
             @can('Ver Planillas')
                 <div class="col s6 m3 animated bounceIn">
-                    <a href="{{route('ticket-office.pay.web')}}" class="btn-app white pink-text text-darken-2">
+                    <a href="{{route('ticket-office.pay.web')}}" class="btn-app white cyan-text text-darken-4">
                         <i class="icon-library_books"></i>
                         <span class="truncate">Lista de Planillas</span>
                     </a>
@@ -66,12 +82,28 @@
                     </a>
                 </div>
             @endcan
+        </div>
+        <div id="mode" class="modal modal-sm">
+            <div class="">
+                <div class="modal-content">
+                    <h5 class="center-align">Taquillas</h5>
+                </div>
+                <div class="modal-footer">
+                    <div class="content row">
 
 
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    @include('includes.lateral-bar')
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/data/sysq.js') }}"></script>
 @endsection

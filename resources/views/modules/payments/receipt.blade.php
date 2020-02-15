@@ -12,7 +12,7 @@
     	<table style="width: 100%; border-collapse: collapse;">
 	        <tr style="text-align: center">
 	            <td style="width: 25%;">
-					<img src="http://sysprim.com.devel/images/alcaldia_logo.png" style="width:180px; height:80px" alt="">
+					<img src="http://sysprim.com.devel/images/alcaldia_logo.png" style="width:180px; height:80px" alt="Logo" width="100%" height="100%">
 	            </td>
 	            <td style="width: 50%;" style="text-align: center;">
 					República Bolivariana de Venezuela <br>
@@ -20,7 +20,7 @@
 					Barquisimeto - Edo. Lara
 	            </td>
 	            <td style="width: 25%;">
-					<img src="http://sysprim.com.devel/images/semat_logo.png" style="width:180px; height:80px" alt="">
+					<img src="http://sysprim.com.devel/images/semat_logo.png" style="width:180px; height:80px" alt="Logo" width="100%" height="100%">
 	            </td>
 	        </tr>
 	    </table>
@@ -31,7 +31,7 @@
         <tr style="text-align: center">
             <td style="width: 15%;"></td>
             <td style="width: 70%;">
-				<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/paymentsTaxes-register/1")) !!} " style="width:400px">
+				<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate("http://sysprim.com.devel/paymentsTaxes-register/1")) !!} " style="width:400px" alt="base png" width="100%" height="100%">
             </td>
             <td style="width: 15%;"></td>
         </tr>

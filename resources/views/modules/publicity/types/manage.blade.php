@@ -10,41 +10,79 @@
             <div class="col s12">
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    @if(session()->has('company'))
+                        <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item"><a href="{{ route('publicity.my-publicity') }}">Mis Publicidades</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register') }}">Registrar</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar por Tipo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('publicity.register.types') }}">Registrar</a></li>
 
                 </ul>
             </div>
             <div class="col s12 m6 animated bounceIn">
+                @if(session()->has('company'))
+                <a href="{{ route('publicity.register.create',['id' => 1, 'company_id' => session('company')->id]) }}" class="btn-app white orange-text">
+                    <i class="icon-add_circle"></i>
+                    <span class="truncate">Publicidad eventual u ocasional</span>
+                </a>
+                @else
                 <a href="{{ route('publicity.register.create',['id' => 1]) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
-                    <span class="truncate">Art. 57 (Publicidad eventual u ocacional)</span>
+                    <span class="truncate">Publicidad eventual u ocasional</span>
                 </a>
+                @endif
             </div>
             <div class="col s12 m6 animated bounceIn">
+                @if(session()->has('company'))
+                <a href="{{ route('publicity.register.create',['id' => 2, 'company_id' => session('company')->id]) }}" class="btn-app white orange-text">
+                    <i class="icon-add_circle"></i>
+                    <span class="truncate">Publicidad por cantidad de ejemplares</span>
+                </a>
+                @else
                 <a href="{{ route('publicity.register.create',['id' => 2]) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
-                    <span class="truncate">Art. 61, 62, 63, 64, 65, 66</span>
+                    <span class="truncate">Publicidad por cantidad de ejemplares</span>
                 </a>
+                @endif
             </div>
             <div class="col s12 m6 animated bounceIn">
+                @if(session()->has('company'))
+                <a href="{{ route('publicity.register.create',['id' => 3,'company_id' => session('company')->id]) }}" class="btn-app white orange-text">
+                    <i class="icon-add_circle"></i>
+                    <span class="truncate">Publicidad por tiempo de duración</span>
+                </a>
+                @else
                 <a href="{{ route('publicity.register.create',['id' => 3]) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
-                    <span class="truncate">Art. 67, 68, 73</span>
+                    <span class="truncate">Publicidad por tiempo de duración</span>
                 </a>
+                @endif
             </div>
             <div class="col s12 m6 animated bounceIn">
+                @if(session()->has('company'))
+                <a href="{{ route('publicity.register.create',['id' => 4,'company_id' => session('company')->id]) }}" class="btn-app white orange-text">
+                    <i class="icon-add_circle"></i>
+                    <span class="truncate">Publicidad por tamaño</span>
+                </a>
+                @else
                 <a href="{{ route('publicity.register.create',['id' => 4]) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
-                    <span class="truncate">Art. 70, 71, 77, 84, 85</span>
+                    <span class="truncate">Publicidad por tamaño</span>
                 </a>
+                @endif
             </div>
             <div class="col s12 m6 animated bounceIn">
+                @if(session()->has('company'))
+                <a href="{{ route('publicity.register.create',['id' => 5, 'company_id' => session('company')->id]) }}" class="btn-app white orange-text">
+                    <i class="icon-add_circle"></i>
+                    <span class="truncate">Publicidad por vallas publicitarias o pizarras electricas</span>
+                </a>
+                @else
                 <a href="{{ route('publicity.register.create',['id' => 5]) }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
-                    <span class="truncate">Art. 83, 86 (Vallas publicitarias)</span>
+                    <span class="truncate">Publicidad por vallas publicitarias o pizarras electricas</span>
                 </a>
+                @endif
             </div>
         </div>
     </div>

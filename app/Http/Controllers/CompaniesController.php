@@ -26,6 +26,7 @@ use App\FindCompany;
 use App\CiuCompany;
 use Alert;
 use Illuminate\Support\Facades\Mail;
+use App\Helpers\TaxesMonth;
 class CompaniesController extends Controller
 {
     /**
@@ -178,7 +179,7 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
         $ciu = Ciu::all();
         $parish=Parish::all();
-
+        $taxes=TaxesMonth::verify($company->id,true);
         return view('modules.companies.edit',['ciu' => $ciu, 'company' => $company,'parish'=>$parish]);
     }
 
@@ -231,6 +232,7 @@ class CompaniesController extends Controller
 
     public function details($id) {
         $company = Company::find($id);
+
         return view('modules.companies.details',['company' => $company]);
     }
 

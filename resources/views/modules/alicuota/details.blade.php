@@ -18,7 +18,7 @@
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="update">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Detalles del Recargo</h4>
+                        <h4>Detalles de Alicuota</h4>
                     </div>
                     <div class="card-content row">
                         <input type="hidden" name="id" id="id" value="{{ $alicuota->id }}">

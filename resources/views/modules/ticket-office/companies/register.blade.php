@@ -73,7 +73,7 @@
                             <h4>Datos de la Empresa</h4>
                         </div>
                         <div class="card-content row">
-                            <div class="input-field col s3 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
+                            <div class="input-field col s5 m3 tooltipped" data-position="bottom" data-tooltip="J = Juridico<br>G = Gubernamental<br>V = Venezolano<br>E = Extranjero">
                                 <i class="icon-perm_contact_calendar prefix"></i>
                                 <select name="document_type" id="document_type">
                                     <option value="null" selected disabled>...</option>
@@ -84,17 +84,17 @@
                                 </select>
                                 <label for="document_type">Documento</label>
                             </div>
-                            <div class="input-field col s9 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
+                            <div class="input-field col s7 m3 tooltipped" data-position="bottom" data-tooltip="EL RIF solo debe contener número sin - ni caracteres extraños. Ej: 1234567890">
                                 <input type="text" name="RIF" id="RIF" class="validate company-validate number-date" pattern="[0-9]+" maxlength="10" minlength="8" title="Solo puede escribir números." required data-validate="RIF">
                                 <label for="RIF">RIF</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Razón social o nombre de la empresa.">
                                 <i class="icon-work prefix"></i>
-                                <input type="text" name="name_company" id="name_company" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -" required data-validate="Razon social">
+                                <input type="text" name="name_company" id="name_company" class="validate company-validate"  title="Solo puede usar letras (con acentos), números y los caracteres especiales: . , $ ! ? % + -"  minlength="3" maxlength="200" required data-validate="Razon social">
                                 <label for="name_company" >Razón Social</label>
                             </div>
 
-                            <div class="input-field col s6 m4">
+                            <div class="input-field col s12 m4">
                                 <i class="icon-question_answer prefix tooltipped" data-position="bottom" data-tooltip="LICENCIA DE FUNCIONAMIENTO PARA EL EJERCICIO DE ACTIVIDADES ECONÓMICAS"></i>
                                 <select name="question_license" id="question_license">
                                     <option value="null" selected disabled>...</option>
@@ -105,25 +105,26 @@
                             </div>
 
 
-                            <div class="input-field col s12 m4 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
+                            <div class="input-field col s12 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede usar números y letras en mayúsculas. Ej: A1B2C3">
                                 <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" data-validate="licencia">
+                                <input type="text" name="license" id="license" class="validate question_license_validate" pattern="[0-9A-Z]+" title="Solo puede usar números y letras en mayúsculas." required  minlength="6" maxlength="15" data-validate="licencia">
                                 <label for="license">Licencia</label>
                             </div>
 
 
 
-                            <div class="input-field col s12 m4">
+                           <!-- <div class="input-field col s12 m4">
                                 <i class="icon-date_range prefix"></i>
                                 <input type="text" name="opening_date" id="opening_date" class="datepicker company-validate" required data-validate="Fecha de apertura">
                                 <label for="opening_date">Fecha de Apertura</label>
-                            </div>
+                            </div>-->
 
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
+                            <!--<div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Todo contribuyente que emplee y mantenga en nómina la cantidad de trabajadores o trabajadoras especificados o especificadas en el cuadro anexo, de nacionalidad venezolana, residenciados o residenciadas en el Municipio Iribarren y que garantice estabilidad laboral, gozará de rebajas en el monto del impuesto mensual, con un ajuste impositivo anual al presentar la declaración definitiva que deba pagar según la actual ordenanza (Ord. AE Art. 87).">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <input type="text" name="number_employees" id="number_employees" class="validate company-validate number-date only-number-positive" maxlength="5" pattern="[0-9]+" title="Solo puede usar números" data-validate="Número de empleados " required>
                                 <label for="number_employees">Número de Empleados</label>
                             </div>
+                          -->
 
 
                             <div class="input-field col m6 s12">
@@ -151,18 +152,17 @@
                                  <option value="INDUSII">ZONA INDUSTRIAL II</option>
                                  <option value="INDUSIII">ZONA INDUSTRIAL III</option>
                                     -->
-                             </select>
+                                </select>
 
                                 <label for="sector">Ubicación Geográfica </label>
                             </div>
 
 
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
+                        <!--<div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble.">
                                 <i class="icon-offline_pin prefix"></i>
                                 <input type="text" name="code_catastral" id="code_catastral" class="validate question_license_validate" data-validate="Código Catastral" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas."  required>
                                 <label for="code_catastral">Código Catastral</label>
-                            </div>
-
+                            </div>-->
                             <div class="input-field col s6 m3 tooltipped" data-position="bottom" data-tooltip="412: Digitel; 414/424: Movistar; 416/426: Movilnet">
                                 <i class="icon-phone_android prefix"></i>
                                 <select name="country_code_company" id="country_code_company" required>
@@ -196,7 +196,7 @@
                             </div>
 
                             <div class="input-field col s12 m6">
-                                <a href="#" class="btn btn-large waves-effect waves-light peach col s12 " id="search-ciu">
+                                <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 " id="search-ciu">
                                     Buscar
                                     <i class="icon-search right"></i>
                                 </a>

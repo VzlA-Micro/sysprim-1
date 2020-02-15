@@ -1,6 +1,6 @@
 $('document').ready(function () {
-    var user = $('#user').val();
     var url = localStorage.getItem('url');
+    var user = $('#user').val();
 
 
 

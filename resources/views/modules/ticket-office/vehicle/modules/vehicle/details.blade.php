@@ -247,9 +247,11 @@
                                 <label for="model">Módelo</label>
                             </div>
                         </div>
-
+                            <div class="col s12 m6 center-align">
+                                <h4>Estado:</h4>
+                            </div>
                             @if($vehicle->status===null||$vehicle->status==='enabled')
-                                <div class="input-field col s12 m6" id="estado">
+                                <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                     <a href="#"
                                        class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
                                     >Habilitado
@@ -258,7 +260,7 @@
                                 </div>
 
                             @else
-                                <div class="input-field col s12 m6" id="estado">
+                                <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                     <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
                                     >Deshabilitado
                                         <i class="icon-refresh right"></i>
@@ -266,11 +268,8 @@
                                 </div>
 
                             @endif
-
-
-                        <div class="row">
                             @can('Cambiar Propietario - Vehiculo')
-                            <div class="col s12 m6">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
                                     Cambiar Propietario
@@ -284,7 +283,7 @@
                             </div>
                             @endcan
                             @can('Actualizar Vehiculos')
-                                <div class="col s12 m6" style="margin-top:10px">
+                                <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                     <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle">
                                         Actualizar
@@ -298,29 +297,28 @@
                                 </div>
                             @endcan
 
-
-
                             @can('Habilitar/Deshabilitar Vehiculo')
-                                @if($vehicle->status===null||$vehicle->status==='enabled')
-                                    <div class="col s12 m6" id="button-status">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                                @if($vehicle->status===null||$vehicle->status==='enabled')                                  
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light red col s12 "
+                                                class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
                                                 id="vehicle-status" value="disabled">
                                             Deshabilitar Vehículo
                                             <i class="icon-sync_disabled right"></i>
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="col s12 m6" id="button-status">
+                                        </button>                                 
+                                @else                                    
                                         <button type="button"
-                                                class="btn btn-large waves-effect waves-light green col s12 "
+                                                class="btn btn-rounded btn-large waves-effect waves-light green col s12 "
                                                 id="vehicle-status" value="enabled">
                                             Activar Vehículo
                                             <i class="icon-check right"></i>
                                         </button>
-                                    </div>
                                 @endif
+                              </div>
                             @endcan
+
+                    <div class="row">
+                            
                         </div>
                     </div>
                 </form>
@@ -333,10 +331,10 @@
                     <div class="card-up"></div>
                     <div class="avatar avatar-centered">
                         @if (Storage::disk('users')->has($vehicle->users[0]->image))
-                            <img src="{{ route('users.getImage', ['filename' => $vehicle->users[0]->image]) }}" alt=""
+                            <img src="{{ route('users.getImage', ['filename' => $vehicle->users[0]->image]) }}" alt="Image" width="100%" height="100%"
                                  class="circle responsive-img">
                         @else
-                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img">
+                            <img src="{{ asset('images/user.png') }}" alt="" class="circle responsive-img" alt="Image" width="100%" height="100%">
                         @endif
                     </div>
                     <div class="card-content row">
@@ -437,115 +435,31 @@
                 </form>
             </div>
         </div>
+        @can('Historial de Pago - Empresas')
 
 
-        {{--
-                @can('Historial de Pago - Empresas')
-                    <div class="col s12 m12">
-                        <div class="card">
-                            <div class="card-header center-align">
-                                <h5>Historial de Pagos</h5>
+            <div class="row">
+                <div class="row">
+
+                    <h4 class="center-align">Registro de Pagos:</h4>
+
+                </div>
+                <a href="{{route('ticketOffice.vehicle.history',['id'=>$vehicle->id])}}">
+                    <div class="col s12 m6">
+                        <div class="widget bootstrap-widget stats white-text">
+                            <div class="widget-stats-icon green-gradient white-text">
+                                <i class="fas fa-car"></i>
                             </div>
-                            <div class="card-content">
-                                <table class="centered highlight" id="history" style="width: 100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Código</th>
-                                        <th>Periodo Fiscal</th>
-                                        <th>Tipo de Declaración</th>
-                                        <th>Ramo</th>
-                                        <th class="tooltipped" data-position="right"
-                                            data-tooltip="Sin conciliar aún<br>Cancelado<br>Verificado">Estado
-                                        </th>
-                                        <th>Acción</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($company->taxesCompanies as $taxe)
-
-
-
-                                        <tr>
-
-                                            <td>{{$taxe->created_at->format('d-m-Y H:i')}}</td>
-                                            <td>{{ $taxe->code }}</td>
-                                            @if($taxe->type==='definitive')
-                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period).'--'.\App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
-                                            @else
-                                                <td>{{ \App\Helpers\TaxesMonth::convertFiscalPeriod($taxe->fiscal_period_end)}}</td>
-                                            @endif
-
-                                            <td>{{$taxe->typeTaxes}}</td>
-                                            <td>{{$taxe->branch}}</td>
-
-
-                                            @if($taxe->status==='process')
-                                                <td>
-
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        SIN CONCILIAR AÚN
-                                                    </button>
-                                                </td>
-
-                                            @elseif($taxe->status==='verified')
-                                                <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        VERIFICADA.
-                                                    </button>
-                                                </td>
-
-
-
-                                            @elseif($taxe->status=='cancel')
-                                                <td>
-                                                    <button class="btn green">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        CANCELADA.
-                                                    </button>
-                                                </td>
-                                            @endif
-
-
-                                            @if($taxe->type!='definitive')
-                                                <td><a href="{{route('taxes.download',[$taxe->id])}}"
-                                                       class="btn orange waves-effect waves-light col l6"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a>
-
-                                                    <a href="{{url('payments/taxes/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light col l6"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                </td>
-
-
-
-                                            @else
-                                                <td>
-                                                    <a href="{{route('taxes.definitive.pdf',[$taxe->id])}}"
-                                                       class="btn orange waves-effect waves-light col l6"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla.</a>
-
-                                                    <a href="{{url('taxes/definitive/'.$taxe->id)  }}"
-                                                       class="btn indigo waves-effect waves-light col l6"><i
-                                                                class="icon-pageview left"></i>Detalles</a>
-                                                <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
-                                                </td>
-
-                                            @endif
-                                        </tr>
-
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                            <div class="widget-stats-content">
+                                <span class="widget-stats-title black-text">Vehiculos</span>
+                                <span class="widget-stats-number black-text">{{$vehicle->taxesVehicle()->count()}}</span>
                             </div>
                         </div>
                     </div>
-                @endcan
-        --}}
+                </a>
+
+            </div>
+        @endcan
 
     </div>
 

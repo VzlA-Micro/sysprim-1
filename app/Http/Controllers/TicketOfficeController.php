@@ -33,6 +33,10 @@ use App\Helpers\CheckCollectionDay;
 use App\Property;
 use App\UserProperty;
 use App\PropertyTaxes;
+use App\Publicity;
+use App\PublicityTaxe;
+use App\UserPublicity;
+
 
 
 
@@ -265,10 +269,8 @@ class TicketOfficeController extends Controller
             'name_company' => 'required',
             'RIF' => 'required|min:8',
             'address' => 'required',
-            'opening_date' => 'required',
             'parish' => 'required|integer',
             'sector' => 'required',
-            'number_employees' => 'required',
         ]);
 
         if(!$license){
@@ -1037,6 +1039,36 @@ class TicketOfficeController extends Controller
             $email=$user[0]->email;
             $band=true;
         }
+        elseif ($taxes->branch=='Prop. y Publicidad' &&($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+            $owner = $taxes->publicities()->get();
+            $userPublicity = UserPublicity::where('publicity_id',$owner[0]->pivot->publicity_id)->first();
+
+            $publicity = Publicity::find($userPublicity->publicity_id);
+
+            if (!is_null($userPublicity->company_id)) {
+                $data = Company::find($userPublicity->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userPublicity->person_id);
+                $type = 'user';
+            }
+            $publicityTaxes = PublicityTaxe::where('taxe_id',$taxes->id)->first();
+
+            $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'publicity' => $publicity,
+                'publicityTaxes' => $publicityTaxes,
+                'type' => $type,
+                'firm'=>true
+            ]);
+
+            $user=User::find($userPublicity->user_id);
+            $email=$user->email;
+            $band=true;
+        }
+
+
         if($band){
             $subject = "PLANILLA VERIFICADA";
             $for = $email;
@@ -1425,11 +1457,36 @@ class TicketOfficeController extends Controller
             ]);
         }
 
+        elseif ($taxes->branch=='Prop. y Publicidad') {
+            $owner = $taxes->publicities()->get();
+            $userPublicity = UserPublicity::where('publicity_id',$owner[0]->pivot->publicity_id)->first();
 
+            $publicity = Publicity::find($userPublicity->publicity_id);
+
+            if (!is_null($userPublicity->company_id)) {
+                $data = Company::find($userPublicity->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($userPublicity->person_id);
+                $type = 'user';
+            }
+            $publicityTaxes = PublicityTaxe::where('taxe_id',$taxes->id)->first();
+            $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+                'publicity' => $publicity,
+                'publicityTaxes' => $publicityTaxes,
+                'type' => $type
+            ]);
+        }
 
 
 
         return $pdf->stream();
+    }
+
+    public function config(){
+        return view('modules.ticket-office.config.manage');
     }
 
 
