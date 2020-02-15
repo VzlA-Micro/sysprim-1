@@ -144,7 +144,7 @@
 							</div>
 							<div class="input-field col s12">
 								<i class="icon-exposure_plus_1 prefix"></i>
-								<input type="number" name="quantity" id="quantity" minlength="1" required>
+								<input type="number" name="quantity" id="quantity" class="validate only-number-positive number-date" maxlength="6" required>
 								<label for="quantity">Cantidad de Lugares</label>
 							</div>
 						</div>
