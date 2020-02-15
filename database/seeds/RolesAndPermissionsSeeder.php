@@ -173,6 +173,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Taquilla - Tasas']);
         Permission::create(['name' => 'Taquilla - Inmuebles']);
         Permission::create(['name' => 'Taquilla - Publicidad']);
+        Permission::create(['name' => 'Configurar Taquilla']);
+
 
         // Permission::create(['name' => 'Taquilla - Inmuebles']);
         // Permission::create(['name' => 'Taquilla - Publicidad']);
@@ -465,6 +467,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Valor Terreno',
             'Actualizar Valor Terreno',
             'Taquillas',
+            'Configurar Taquilla',
             ##### GESTIONAR CONTRIBUYENTE #####
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
@@ -807,6 +810,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleCoordinator = Role::create(['name' => 'Coordinador - Taquilla']);
         $roleCoordinator ->givePermissionTo([
             'Taquillas',
+            'Configurar Taquilla',
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
