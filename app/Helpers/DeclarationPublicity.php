@@ -97,7 +97,19 @@ class DeclarationPublicity
 //            dd($baseImponible);
 
         }
-        $total = $baseImponible;
+        if($publicity->state_location == 'SI') {
+            $increment = $taxUnitPrice[0]->value * 5000;
+        }
+        elseif($publicity->licor == 'SI') {
+            $increment = $taxUnitPrice[0]->value * 5000;
+        }
+        elseif($publicity->licor == 'SI' && $publicity->state_location == 'SI') {
+            $increment = $taxUnitPrice[0]->value * (5000 * 2);
+        }
+        else {
+            $increment = 0;
+        }
+        $total = $baseImponible + $increment;
 
 
         // Retornar datos
