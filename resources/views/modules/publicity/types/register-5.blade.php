@@ -28,7 +28,7 @@
                 <form method="post" action="{{ route('publicity.save') }}" class="card" enctype="multipart/form-data" id="register">
                     <ul class="tabs">
                         <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i> Datos Generales</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#property-tab"><i class="icon-filter_2"></i> Datos del Inmueble</a></li>
+                        <li class="tab col s6 disabled" id="two"><a href="#property-tab"><i class="icon-filter_2"></i> Datos de Publicidad</a></li>
                     </ul>
                     <div id="user-tab">
                         <div class="card-header center-align">
