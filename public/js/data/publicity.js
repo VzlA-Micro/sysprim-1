@@ -183,7 +183,10 @@ $(document).ready(function() {
 
 
 
-		if($('#advertising_type_id').val()!==null) {
+		if($('#advertising_type_id').val()!==null&&$('#state_location').val()!==null&&$('#licor').val()!==null) {
+
+
+
 
             var formData = new FormData(this);
             // var image = $('#image')[0].files[0]; // Getting file input data
@@ -231,16 +234,46 @@ $(document).ready(function() {
                     $("#preloader-overlay").fadeOut('fast');
                 }
             });
-        }else{
-            swal({
-                title: "Información",
-                text: "Debes selecionar el tipo de publicidad para poder registralar.",
-                icon: "info",
-                button:{
-                    text: "Esta bien",
-                    className: "blue-gradient"
-                },
-            });
+        }else {
+
+
+            if ($('#advertising_type_id').val() === null) {
+                swal({
+                    title: "Información",
+                    text: "Debes selecionar el tipo de publicidad para poder registralar.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+
+            } else if ($('#state_location').val() === null) {
+                swal({
+                    title: "Información",
+                    text: "Debes selecionar si la publicidad está ubicada en un espacio reservado de la alcaldía.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+            }else if($('#licor').val()===null){
+
+                swal({
+                    title: "Información",
+                    text: "Debes selecionar si la publicidad hace refencia a cigarrillos o bebidas alcoholicas.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+
+            }
         }
 	});
 

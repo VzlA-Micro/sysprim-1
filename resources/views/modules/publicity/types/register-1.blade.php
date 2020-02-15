@@ -85,7 +85,7 @@
 								<label>Tipo de Publicidad</label>
 							</div>
 							<div class="input-field col s12 m6">
-								<select name="licor" id="licor" required>
+								<select name="licor" id="licor">
 									<option value="" disabled selected>Elija una opción</option>
 									<option value="SI">SI</option>
 									<option value="NO">NO</option>
@@ -93,7 +93,7 @@
 								<label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
 							</div>
 							<div class="input-field col s12 m6">
-								<select name="state_location" id="state_location" required>
+								<select name="state_location" id="state_location">
 									<option value="" disabled selected>Elija una opción</option>
 									<option value="SI">SI</option>
 									<option value="NO">NO</option>

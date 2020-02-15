@@ -821,7 +821,7 @@ Route::middleware(['auth'])->group(/**
                         Route::group(['middleware' => ['permission:Detalles Vehiculos']], function () {
                             Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
                             Route::post('/ticketOffice/vehicle/update', 'VehicleController@update')->name('ticketOffice.vehicle.update');
-                            Route::get('/ticketOffice/vehicle/history/{id}', 'TicketOfficeVehicleController@historyPayments')->name('f');
+                            Route::get('/ticketOffice/vehicle/history/{id}', 'TicketOfficeVehicleController@historyPayments')->name('ticketOffice.vehicle.history');
                         });
                     });
                 });

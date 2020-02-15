@@ -476,7 +476,7 @@ $('document').ready(function () {
             } else {
                 $('#two').removeClass('disabled');
                 $('#one').addClass('disabled');
-                $('ul.tabs').tabs("select", "vehicle-tab");
+                $('ul.tabs').tabs("select", "typePublicity-tab");
             }
         }
     });
