@@ -328,4 +328,31 @@ class PublicityController extends Controller
         return Response()->json($response);
     }
 
+    public function statusPublicity($id,$status)
+    {
+
+        if ($status == 'true') {
+            $publicity = Publicity::findOrFail($id);
+            $publicity->status = 'disabled';
+            $publicity->update();
+            $response = array('status' => 'disabled', 'message' => 'Ha sido desactivado con exito.');
+
+        } else {
+            $publicity = Publicity::findOrFail($id);
+            $publicity->status = 'enabled';
+            $publicity->update();
+            $response = array('status' => 'enabled', 'message' => 'Ha sido activado con exito.');
+        }
+
+        return response()->json($response);
+    }
+
+    public function historyPayments($id)
+    {
+        $publicity = Publicity::find($id);
+
+        return view('modules.publicity.ticket-office.historyPayments', [
+            'publicity' => $publicity
+        ]);
+    }
 }

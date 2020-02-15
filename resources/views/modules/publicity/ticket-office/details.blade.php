@@ -14,9 +14,9 @@
                             Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar
                             Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Ver
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.read')}}">Ver
                             Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Detalles De
+                    <li class="breadcrumb-item"><a href="#">Detalles De
                             Publicidad</a></li>
                 </ul>
             </div>
@@ -516,11 +516,11 @@
                         <div class="col s12 m6 center-align">
                             <h4>Estado:</h4>
                         </div>
-                        {{--@if($vehicle->status===null||$vehicle->status==='enabled')
+                        @if($publicity->status===null||$publicity->status==='enabled')
                             <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                 <a href="#"
                                    class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
-                                >Habilitado
+                                >Habilitada
                                     <i class="icon-check right"></i>
                                 </a>
                             </div>
@@ -528,13 +528,13 @@
                         @else
                             <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
-                                >Deshabilitado
+                                >Deshabilitada
                                     <i class="icon-refresh right"></i>
                                 </a>
                             </div>
 
                         @endif
-                        @can('Cambiar Propietario - Vehiculo')
+                        {{--@can('Cambiar Propietario - Vehiculo')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
@@ -565,25 +565,25 @@
                             </div>
                         @endcan
 
-                        {{--@can('Habilitar/Deshabilitar Vehiculo')
+                        @can('Habilitar/Deshabilitar Vehiculo')
                             <div class="col s12 m4 center-align" style="margin-top:.5rem">
-                                @if($vehicle->status===null||$vehicle->status==='enabled')
+                                @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
-                                            id="vehicle-status" value="disabled">
-                                        Deshabilitar Vehículo
+                                            id="publicity-status" value="disabled">
+                                        Deshabilitar Publicidad
                                         <i class="icon-sync_disabled right"></i>
                                     </button>
                                 @else
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light green col s12 "
-                                            id="vehicle-status" value="enabled">
-                                        Activar Vehículo
+                                            id="publicity-status" value="enabled">
+                                        Activar Publicidad
                                         <i class="icon-check right"></i>
                                     </button>
                                 @endif
                             </div>
-                        @endcan--}}
+                        @endcan
                         <div class="row">
 
                         </div>
@@ -711,14 +711,13 @@
         </div>
         @can('Historial de Pago - Empresas')
 
-
             <div class="row">
                 <div class="row">
 
                     <h4 class="center-align">Registro de Pagos:</h4>
 
                 </div>
-                <a href="">
+                <a href="{{route('ticketOffice.publicity.historyPayment',['id'=>$publicity->id])}}">
                     <div class="col s12 m6">
                         <div class="widget bootstrap-widget stats white-text">
                             <div class="widget-stats-icon green-gradient white-text">
@@ -731,7 +730,6 @@
                         </div>
                     </div>
                 </a>
-
             </div>
         @endcan
 
