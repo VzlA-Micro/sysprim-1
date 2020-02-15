@@ -260,13 +260,15 @@
                                         <label for="u-med">Unidad de medida</label>
                                     </div>
 
-                                    <div class="col s12 m6" >
+                                    <div class="input-field col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
-                                    <div class="col s12 m6">
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
@@ -391,13 +393,15 @@
                                         <label for="u-med">Unidad de medida</label>
                                     </div>
 
-                                    <div class="col s12 m6" >
+                                    <div class="input-field col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
                                         <label for="width">Ancho</label>
                                         <input type="text" class="js-range-slider width" name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
                                     </div>
 
-                                    <div class="col s12 m6">
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>
                                         <label for="height">Alto</label>
                                         <input type="text" class="js-range-slider height" name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
@@ -462,16 +466,18 @@
                                         <label for="u-med">Unidad de medida</label>
                                     </div>
 
-                                    <div class="col s12 m6" >
-                                        <label for="width">Ancho</label>
-                                        <input type="text" class="js-range-slider width" name="width" id="width"
+                                    <div class="input-field col s12 m6" >
+                                        <i class="icon-panorama_horizontal prefix"></i>
+                                        <input type="text"  name="width" id="width"
                                                value="{{$publicity->width}}" disabled required>
+                                        <label for="width">Ancho</label>
                                     </div>
 
-                                    <div class="col s12 m6">
-                                        <label for="height">Alto / Piso</label>
-                                        <input type="text" class="js-range-slider height" name="height" id="height"
+                                    <div class="input-field col s12 m6">
+                                        <i class="icon-panorama_vertical prefix"></i>                                        
+                                        <input type="text"  name="height" id="height"
                                                value="{{$publicity->height}}" disabled required>
+                                        <label for="height">Alto / Piso</label>
                                     </div>
 
                                     {{--<div class="input-field col s12">--}}
@@ -513,11 +519,11 @@
                             </div>--}}
 
                         </div>
-                        <div class="col s12 m6 center-align">
+                        <div class="col s12 m4 center-align">
                             <h4>Estado:</h4>
                         </div>
                         @if($publicity->status===null||$publicity->status==='enabled')
-                            <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
+                            <div class="input-field col s12 m8" id="estado" style="margin-top:.5rem">
                                 <a href="#"
                                    class="btn btn-large waves-effect waves-light green col s12 btn-rounded "
                                 >Habilitada
@@ -526,7 +532,7 @@
                             </div>
 
                         @else
-                            <div class="input-field col s12 m6" id="estado" style="margin-top:.5rem">
+                            <div class="input-field col s12 m8" id="estado" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large waves-effect waves-light red col s12 btn-rounded "
                                 >Deshabilitada
                                     <i class="icon-refresh right"></i>
@@ -550,7 +556,7 @@
                             </div>
                         @endcan--}}
                         @can('Actualizar Publicidad')
-                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
                                     Actualizar
@@ -566,7 +572,7 @@
                         @endcan
 
                         @can('Habilitar/Deshabilitar Publicidad')
-                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
                                 @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
@@ -718,10 +724,10 @@
 
                 </div>
                 <a href="{{route('ticketOffice.publicity.historyPayment',['id'=>$publicity->id])}}">
-                    <div class="col s12 m6">
+                    <div class="col s12 m12">
                         <div class="widget bootstrap-widget stats white-text">
                             <div class="widget-stats-icon green-gradient white-text">
-                                <i class="fas fa-car"></i>
+                                <i class="fas fa-camera-retro"></i>
                             </div>
                             <div class="widget-stats-content">
                                 <span class="widget-stats-title black-text">Publicidad</span>

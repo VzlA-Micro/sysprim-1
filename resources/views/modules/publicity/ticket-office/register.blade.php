@@ -182,6 +182,26 @@
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name" minlength="5" maxlength="256">
@@ -258,6 +278,26 @@
                                 </select>
                                 <label>Tipo de Publicidad</label>
                             </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
                             <div class="input-field col s12">
                                 <i class="icon-format_size prefix"></i>
                                 <input type="text" name="name" id="name" minlength="5" maxlength="256">
@@ -328,6 +368,26 @@
                                 <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
                             <div class="col s12">
                                 {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
                                 <div class="preview img-wrapper center-align valing-wrapper">
@@ -379,6 +439,26 @@
                                 <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
                             <div class="col s12">
                                 {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
                                 <div class="preview img-wrapper center-align valing-wrapper">
@@ -449,6 +529,34 @@
                                 <input type="text" name="name" id="name" minlength="5" maxlength="256">
                                 <label for="name">Nombre</label>
                             </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
                             <div class="col s12">
                                 {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
                                 <div class="preview img-wrapper center-align valing-wrapper">
