@@ -38,6 +38,9 @@ class DeclarationPublicity
             $dateStart = Carbon::parse($publicity->date_start);
             $dateEnd = Carbon::parse($publicity->date_end);
             $daysDiff = $dateEnd->diffInDays($dateStart); // Calcula la cantidad de dias que tendra la publicidad
+            if($daysDiff == 0) {
+                $daysDiff = 1;
+            }
             $linealMeters = $publicity->width + $publicity->height; // Calcula los metros lineales (Se suman)
             $baseImponible = $taxUnitPrice[0]->value * ((($linealMeters * $publicity->advertisingType->value) * $daysDiff) * $publicity->quantity); // Calcula la Base Imponible a paga
 //            dd($baseImponible);
@@ -74,18 +77,27 @@ class DeclarationPublicity
             $dateStart = Carbon::parse($publicity->date_start);
             $dateEnd = Carbon::parse($publicity->date_end);
             $daysDiff = $dateEnd->diffInDays($dateStart); // Calcula la cantidad de dias que tendra la publicidad
+            if($daysDiff == 0) {
+                $daysDiff = 1;
+            }
             $baseImponible = $taxUnitPrice[0]->value * ($daysDiff * $publicity->advertisingType->value);
 //            dd($baseImponible);
 
         }
         elseif ($type == 10 || $type == 11 || $type == 16 || $type == 18 || $type == 19) {
             $squareMeters = $publicity->width * $publicity->height;
+            if($squareMeters == 0) {
+                $squareMeters = 1;
+            }
             $baseImponible = $taxUnitPrice[0]->value * ($squareMeters * $publicity->advertisingType->value);
 //            dd($baseImponible);
 
         }
         elseif ($type == 17 || $type == 20) {
             $squareMeters = $publicity->width * $publicity->height;
+            if($squareMeters == 0) {
+                $squareMeters = 1;
+            }
             $squareMeters_UT = ($squareMeters * $publicity->advertisingType->value);
             if($type == 17) {
                 $baseImponible = $taxUnitPrice[0]->value * ($squareMeters_UT * $publicity->side) + ($squareMeters_UT * $publicity->floor);
