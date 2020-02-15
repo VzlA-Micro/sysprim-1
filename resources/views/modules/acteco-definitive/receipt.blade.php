@@ -362,14 +362,14 @@ $date = '31/12/' . date('Y');
 
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
             <td style="width: 80%;">
-                <img alt="Imagen Varias" width="100%" height="100%" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                <img alt="Imagen Varias" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
                      style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
             </td>
             @else
 
             <tr>
                 <td style="width: 80%;">
-                    <img alt="Imagen Varias" width="100%" height="100%" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+                    <img alt="Imagen Varias" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
                 </td>
             </tr>
             @endif
