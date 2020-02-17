@@ -9,18 +9,18 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}" >Gestionar
-                            Marcas De Vehiculos</a></li>
+                            Marcas De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
-                            Marcas De Vehiculos</a></li>
+                            Marcas De Vehículos</a></li>
 
                     <li class="breadcrumb-item"><a href="#">Detalles De
-                            Marcas De Vehiculos</a></li>
+                            Marcas De Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 <form id="updateBrand" method="" class="card">
                     <div class="card-header center-align">
-                        <h5>Detalles De Marca De Vehiculo</h5>
+                        <h5>Detalles De Marca De Vehículo</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
