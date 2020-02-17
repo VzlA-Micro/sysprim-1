@@ -379,6 +379,7 @@ $('document').ready(function () {
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
+        var type_document = $('#type_document_full').val();
 
         if(type_document === 'J' || type_document === 'G') {
             var name_full = $('#name_full').val();
