@@ -342,14 +342,30 @@ $(document).ready(function () {
 
     $('#data-next').click(function () {
         var status = $('#status').val();
-
+        var type_document = $('#type_document_full').val();
 
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
 
+        if(type_document === 'J' || type_document === 'G') {
+            var name_full = $('#name_full').val();
+            var address = $('#address').val();
+            var document_full = $('#document_full').val();
 
-        if ((status == null || status == '')) {
+            if (name_full === '' && address === '' && document_full === '') {
+                swal({
+                    title: "Información",
+                    text: "Debe ingresar el documento de identificación para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+
+        } else if ((status == null || status == '')) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar una condicion legal para continuar con el registro.",
@@ -364,7 +380,6 @@ $(document).ready(function () {
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "property-tab");
         } else {
-
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {
