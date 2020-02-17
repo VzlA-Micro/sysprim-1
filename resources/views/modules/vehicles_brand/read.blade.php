@@ -13,9 +13,9 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a>
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}">Gestionar
-                            Marcas De Vehiculos</a></li>
+                            Marcas De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
-                            Marcas De Vehiculos</a></li>
+                            Marcas De Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12">
