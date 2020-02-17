@@ -398,7 +398,8 @@ $('document').ready(function () {
                 });
             }
 
-        } else if ((status == null || status == '')) {
+        }
+        if ((status == null || status == '')) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar una condicion social para continuar con el registro.",

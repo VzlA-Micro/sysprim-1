@@ -342,11 +342,10 @@ $(document).ready(function () {
 
     $('#data-next').click(function () {
         var status = $('#status').val();
-        var type_document = $('#type_document_full').val();
-
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
+        var type_document = $('#type_document_full').val();
 
         if(type_document === 'J' || type_document === 'G') {
             var name_full = $('#name_full').val();
@@ -365,7 +364,8 @@ $(document).ready(function () {
                 });
             }
 
-        } else if ((status == null || status == '')) {
+        }
+        if ((status == null || status == '')) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar una condicion legal para continuar con el registro.",
