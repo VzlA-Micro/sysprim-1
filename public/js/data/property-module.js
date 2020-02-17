@@ -351,6 +351,7 @@ $(document).ready(function () {
             var name_full = $('#name_full').val();
             var address = $('#address').val();
             var document_full = $('#document_full').val();
+            console.log('hola');
 
             if (name_full === '' && address === '' && document_full === '') {
                 swal({

@@ -341,11 +341,36 @@ $(document).ready(function () {
     }
 
     $('#data-next').click(function () {
-            var status = $('#status').val();
+        var status = $('#status').val();
+        var name_full = $('#name_full').val();
+        var address = $('#address_full').val();
+        var document_full = $('#document_full').val();
 
-            if ($('#type').val() == 'company') {
-                status = 'propietario';
+        if ($('#type').val() == 'company') {
+            status = 'propietario';
+        }
+        var type = $('#type_document_full').val();
+
+        if (type === 'J' || type === 'G') {
+            var name_full = $('#name_full').val();
+            var address = $('#address_full').val();
+            var document_full = $('#document_full').val();
+
+            if (name_full === '' && address === '' && document_full === '') {
+                swal({
+                    title: "Información",
+                    text: "Debe ingresar el documento de identificación para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
             }
+
+        }
+
+        if (name_full !== '' && address !== '' && document_full !== '') {
 
             if ((status == null || status == '')) {
                 swal({
@@ -369,7 +394,7 @@ $(document).ready(function () {
                             className: "blue-gradient"
                         },
                     });
-                }else if($('#document').val() == ''){
+                } else if ($('#document').val() == '') {
                     swal({
                         title: "Información",
                         text: "Debe introducir el documento de la persona responsable.",
@@ -379,7 +404,7 @@ $(document).ready(function () {
                             className: "blue-gradient"
                         },
                     });
-                }else{
+                } else {
                     $('#two').removeClass('disabled');
                     $('#one').addClass('disabled');
                     $('ul.tabs').tabs("select", "vehicle-tab");
@@ -474,7 +499,7 @@ $(document).ready(function () {
                 }
             }
         }
-    );
+    });
 
     $('#property').on('submit', function (e) {
         var type = $('#type').val();
