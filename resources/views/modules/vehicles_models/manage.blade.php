@@ -18,7 +18,7 @@
             <div class="col s12 m4 animated bounceIn">
                     <a href="{{ route('vehicles.models.register') }}" class="btn-app white green-text">
                         <i class="icon-add_circle"></i>
-                        <span class="truncate">Registrar Modelos De Vehículo</span>
+                        <span class="truncate">Registrar Modelo De Vehículo</span>
                     </a>
                 </div>
             @endcan
