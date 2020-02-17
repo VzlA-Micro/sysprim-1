@@ -108,10 +108,10 @@ class PublicityController extends Controller
         $statusPublicity = 'enabled';
         $publicity = new Publicity();
         $publicity->code = TaxesNumber::generatePublicityCode();
-    	$publicity->name = $request->input('name');
-    	$publicity->date_start = $request->input('date_start');
-    	$publicity->date_end = $request->input('date_end');
-    	$publicity->unit = $request->input('unit');
+        $publicity->name = $request->input('name');
+        $publicity->date_start = $request->input('date_start');
+        $publicity->date_end = $request->input('date_end');
+        $publicity->unit = $request->input('unit');
         $publicity->quantity = $request->input('quantity');
         $publicity->width = $request->input('width');
         $publicity->height = $request->input('height');
@@ -139,8 +139,8 @@ class PublicityController extends Controller
         $company_id=null;
         if($status == 'propietario'){
             if($type == 'company'){
-                    $user_id = \Auth::user()->id;
-                    $company_id = $owner_id;
+                $user_id = \Auth::user()->id;
+                $company_id = $owner_id;
             }
             else {
                 $person_id = \Auth::user()->id;
@@ -163,9 +163,9 @@ class PublicityController extends Controller
         //     $publicity->advertisingTypes()->attach(['advertising_type_id' => $type]);
         // }
         return response()->json([
-           'status' => 'success',
-           'message' => 'La publicidad se ha registrado con el código: ',
-           'code' => $code
+            'status' => 'success',
+            'message' => 'La publicidad se ha registrado con el código: ',
+            'code' => $code
         ]);
     }
 
@@ -291,7 +291,7 @@ class PublicityController extends Controller
 
     public function showTicketOffice()
     {
-        $publicities = Publicity::all();
+        $publicities = Publicity::ordeBy('id','desc')->get();
         return view('modules.publicity.ticket-office.read', ['show' => $publicities]);
     }
 
