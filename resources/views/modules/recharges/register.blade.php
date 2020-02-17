@@ -49,13 +49,13 @@
                             <i class="icon-nature  prefix"></i>
                             <select name="branch" id="branch">
                                 <option value="null" selected disabled>Elija un ramo</option>
-                                <option value="Act.Eco">Actividad Economica</option>
+                                <option value="Act.Eco">Actividad Económica</option>
                                 <option value="Pat.Vehiculo">Patente De Vehículo</option>
                                 <option value="Inmueble.Urb">Inmuebles Urbanos</option>
-                                <option value="Publicidad">Publicidad</option>
-                                <option value="Espectaculo">Espectaculos</option>
+                                <option value="Prop. y Publicidad">Publicidad</option>
+                                {{-- <option value="Espectaculo">Espectaculos</option> --}}
                             </select>
-                            <label for="branch">Ramo</label>
+                            <label for="branch">Ramos</label>
                         </div>
                     </div>
                     <div class="card-footer center-align">
