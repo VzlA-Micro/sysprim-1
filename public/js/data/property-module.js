@@ -379,7 +379,35 @@ $(document).ready(function () {
             $('#two').removeClass('disabled');
             $('#one').addClass('disabled');
             $('ul.tabs').tabs("select", "property-tab");
-        } else {
+        }
+        else if(status !== 'propietario') {
+            if ($('#type_document').val() == null) {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar un tipo de documento de la persona responsable.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }else if($('#document').val() == ''){
+                swal({
+                    title: "Información",
+                    text: "Debe introducir el documento de la persona responsable.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }else{
+                $('#two').removeClass('disabled');
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "vehicle-tab");
+            }
+        }
+        else {
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {
