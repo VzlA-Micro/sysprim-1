@@ -341,112 +341,140 @@ $(document).ready(function () {
     }
 
     $('#data-next').click(function () {
-        var status = $('#status').val();
+            var status = $('#status').val();
 
-        if ($('#type').val() == 'company') {
-            status = 'propietario';
-        }
+            if ($('#type').val() == 'company') {
+                status = 'propietario';
+            }
 
-        if ((status == null || status == '')) {
-            swal({
-                title: "Información",
-                text: "Debe seleccionar una condicion social para continuar con el registro.",
-                icon: "info",
-                button: {
-                    text: "Esta bien",
-                    className: "blue-gradient"
-                },
-            });
-        } else if (status == 'propietario') {
+            if ((status == null || status == '')) {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar una condicion social para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            } else if (status !== 'propietario') {
 
-            $('#two').removeClass('disabled');
-            $('#one').addClass('disabled');
-            $('ul.tabs').tabs("select", "vehicle-tab");
-        } else {
-            band = true;
-            $('.rate').each(function () {
-                if ($(this).val() === '' || $(this).val() === null) {
+                if ($('#type_document').val() == null) {
                     swal({
                         title: "Información",
-                        text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                        text: "Debe seleccionar un tipo de documento de la persona responsable.",
                         icon: "info",
                         button: {
                             text: "Esta bien",
                             className: "blue-gradient"
                         },
                     });
-                    band = false;
+                }else if($('#document').val() == ''){
+                    swal({
+                        title: "Información",
+                        text: "Debe introducir el documento de la persona responsable.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+                }else{
+                    $('#two').removeClass('disabled');
+                    $('#one').addClass('disabled');
+                    $('ul.tabs').tabs("select", "vehicle-tab");
                 }
-            });
-            if ($('#person_id').val() !== '') {
-                band = false;
-            }
+            } else if (status == 'propietario') {
 
-            if (band) {
-                var type = $('#type').val();
-                var name;
-                if (type == 'user') {
-                    name = $('#user_name').val();
-                } else {
-                    name = $('#name').val();
-                }
-
-                var type_document = $('#type_document').val();
-                var document = $('#document').val();
-                var address = $('#address').val();
-                var surname = $('#surname').val();
-
-                $.ajax({
-                    method: "POST",
-                    dataType: "json",
-                    data: {
-                        name: name,
-                        surname: surname,
-                        type_document: type_document,
-                        document: document,
-                        address: address,
-                        type: type
-                    },
-                    url: url + 'properties/taxpayers/company-user/register',
-
-                    beforeSend: function () {
-                        $("#preloader").fadeIn('fast');
-                        $("#preloader-overlay").fadeIn('fast');
-                    },
-                    success: function (response) {
-                        $('#person_id').val(response.id);
-                        $('#two').removeClass('disabled');
-                        $('#one').addClass('disabled');
-                        $('ul.tabs').tabs("select", "property-tab");
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
-                            icon: "error",
-                            button: {
-                                text: "Aceptar",
-                                visible: true,
-                                value: true,
-                                className: "green",
-                                closeModal: true
-                            }
-                        });
-
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                    }
-                });
-            } else {
                 $('#two').removeClass('disabled');
                 $('#one').addClass('disabled');
                 $('ul.tabs').tabs("select", "vehicle-tab");
+            } else {
+                band = true;
+                $('.rate').each(function () {
+                    if ($(this).val() === '' || $(this).val() === null) {
+                        swal({
+                            title: "Información",
+                            text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                            icon: "info",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        band = false;
+                    }
+                });
+                if ($('#person_id').val() !== '') {
+                    band = false;
+                }
+
+                if (band) {
+                    var type = $('#type').val();
+                    var name;
+                    if (type == 'user') {
+                        name = $('#user_name').val();
+                    } else {
+                        name = $('#name').val();
+                    }
+
+                    var type_document = $('#type_document').val();
+                    var document = $('#document').val();
+                    var address = $('#address').val();
+                    var surname = $('#surname').val();
+
+                    $.ajax({
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            name: name,
+                            surname: surname,
+                            type_document: type_document,
+                            document: document,
+                            address: address,
+                            type: type
+                        },
+                        url: url + 'properties/taxpayers/company-user/register',
+
+                        beforeSend: function () {
+                            $("#preloader").fadeIn('fast');
+                            $("#preloader-overlay").fadeIn('fast');
+                        },
+                        success: function (response) {
+                            $('#person_id').val(response.id);
+                            $('#two').removeClass('disabled');
+                            $('#one').addClass('disabled');
+                            $('ul.tabs').tabs("select", "property-tab");
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            swal({
+                                title: "¡Oh no!",
+                                text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                                icon: "error",
+                                button: {
+                                    text: "Aceptar",
+                                    visible: true,
+                                    value: true,
+                                    className: "green",
+                                    closeModal: true
+                                }
+                            });
+
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                        }
+                    });
+                } else {
+                    $('#two').removeClass('disabled');
+                    $('#one').addClass('disabled');
+                    $('ul.tabs').tabs("select", "vehicle-tab");
+                }
             }
         }
-    });
+    );
 
     $('#property').on('submit', function (e) {
         var type = $('#type').val();
@@ -793,7 +821,7 @@ $(document).ready(function () {
         var brand = $('#brand').val();
         var brandN = $('#brand-n').val();
         var modelN = $('#model-n').val();
-        if (brand == null && brandN==undefined) {
+        if (brand == null && brandN == undefined) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar un marca de vehículo para poder completar el registro",
@@ -815,8 +843,8 @@ $(document).ready(function () {
                 },
             });
             $('#brand-n').focus();
-        }else if((brand!=null)||(brandN!=null && modelN!=null)) {
-        $.ajax({
+        } else if ((brand != null) || (brandN != null && modelN != null)) {
+            $.ajax({
                 url: url + "ticketOffice/vehicle/save",
                 cache: false,
                 contentType: false,
