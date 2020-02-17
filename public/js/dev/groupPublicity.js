@@ -72,7 +72,7 @@ $('document').ready(function () {
                             className: "green-gradient"
                         },
                     }).then(function () {
-                        location.reload();
+                        window.location.href = url + "group_publicity/read";
                     });
                 }
 
