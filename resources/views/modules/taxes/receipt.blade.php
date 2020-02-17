@@ -359,11 +359,11 @@
 
 				@if($firm)
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" width="100%" height="100%">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} " style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image">
 					</td>
 				@else
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -20px !important;right: 800px !important;left: 900px;" alt="Image" width="100%" height="100%">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -20px !important;right: 800px !important;left: 900px;" alt="Image" >
 					</td>
 				@endif
 			</tr>
