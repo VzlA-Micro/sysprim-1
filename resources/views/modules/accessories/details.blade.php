@@ -25,11 +25,11 @@
             			@csrf
             			<input type="hidden" name="id" id="id" value="{{ $accessory->id }}">
                         <div class="input-field col s12 m6">
-                            <input type="text" name="name" id="name" value="{{ $accessory->name }}" readonly>
+                            <input type="text" name="name" id="name" value="{{ $accessory->name }}" readonly min="5" maxlength="50" required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input type="number" name="value" id="value" value="{{ $accessory->value }}" readonly>
+                            <input type="text" name="value" id="value" value="{{ $accessory->value }}" readonly pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="3" required>
                             <label for="value">Valor UTC</label>
                         </div>
             		</div>

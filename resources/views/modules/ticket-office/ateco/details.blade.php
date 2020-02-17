@@ -297,8 +297,8 @@
                                                 <div class="input-field col s12">
 
                                                     @can('Anular Pagos')
-                                                        <a href="#"
-                                                           class="btn btn-rounded col s3 red waves-effect waves-ligt reconcile"
+                                                        <a href="#" style="margin-top:20px"
+                                                           class="btn col s12 m6  red waves-effect waves-ligt reconcile"
                                                            data-status="cancel">
                                                             ANULAR PLANILLA.
                                                             <i class="icon-close right"></i>
@@ -307,8 +307,8 @@
                                                     @can('Verificar Pagos - Manual')
                                                         @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
 
-                                                                <a href="#" class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
-
+                                                                <a href="#" class="btn col s12 m6  blue waves-effect waves-light reconcile"
+                                                                style="margin-top:20px"
                                                                    data-status="verified">
                                                                      VERIFICAR PLANILLA.
                                                                 <i class="icon-verified_user right"></i>

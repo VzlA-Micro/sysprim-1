@@ -181,8 +181,8 @@ $(document).ready(function() {
     // Registrar
 	$('#register').submit(function(e) {
 		e.preventDefault();
-
-
+        var company_id = $('#id').val();
+        var status = $('#status').val();
 
 		if($('#advertising_type_id').val()!==null&&$('#state_location').val()!==null&&$('#licor').val()!==null) {
 
@@ -217,7 +217,13 @@ $(document).ready(function() {
                             className: "green-gradient"
                         }
                     }).then(function (accept) {
-                        window.location.href = url + "publicity/my-publicity";
+                        console.log(status, company_id);
+                        if(status === 'propietario' && company_id !== '') {
+                            window.location.href = url + "publicity/company/my-publicity/" + company_id;
+                        }
+                        else {
+                            window.location.href = url + "publicity/my-publicity";
+                        }
                     });
                 },
                 error: function (err) {

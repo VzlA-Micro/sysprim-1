@@ -32,7 +32,7 @@
                                     <option value="{{ $group->id }}">{{ $group->name }}</option>
                                 @endforeach
                             </select>
-                            <label for="type">Grupo CIIU</label>
+                            <label for="type">Grupo de Publicidad</label>
                         </div>
 
 

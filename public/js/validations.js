@@ -15,6 +15,11 @@ $(document).ready(function(){
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
 
+    $('.validate.code-only').keyup(function (){
+        this.value = (this.value + '').replace(/[^A-Z0-9-]/g, '');
+
+    });
+
     $('.only-number-positive').change(function () {
          if($(this).val()<1) {
              swal({

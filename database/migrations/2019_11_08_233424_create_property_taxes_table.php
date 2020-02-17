@@ -16,7 +16,6 @@ class CreatePropertyTaxesTable extends Migration
         Schema::create('property_taxes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('property_id')->unsigned();
-
             $table->integer('taxe_id')->unsigned();
             $table->string('status',15);
             $table->float('recharge',13,2)->nullable();;
