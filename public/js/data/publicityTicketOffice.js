@@ -4,7 +4,7 @@ var updateType = false;
 $('document').ready(function () {
     var date = new Date();
     $('.date_start').datepicker({
-        maxDate:  date,
+        maxDate: date,
         format: 'yyyy-mm-dd', // Configure the date format
         // yearRange: [1900,date.getFullYear()],
         showClearBtn: false,
@@ -20,7 +20,7 @@ $('document').ready(function () {
         }
     });
     $('.date_end').datepicker({
-        maxDate:  null,
+        maxDate: null,
         format: 'yyyy-mm-dd', // Configure the date format
         minDate: date,
         showClearBtn: false,
@@ -652,50 +652,92 @@ $('document').ready(function () {
     });
 
     $('#register').submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        // var image = $('#image')[0].files[0]; // Getting file input data
-        // formData.append('image',image);
-        $.ajax({
-            url: url + "/ticketOffice/publicity/save",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: formData,
-            method: "POST",
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (resp) {
-                console.log(resp);
+        if ($('#advertising_type_id').val() !== null && $('#state_location').val() !== null && $('#licor').val() !== null) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            // var image = $('#image')[0].files[0]; // Getting file input data
+            // formData.append('image',image);
+            $.ajax({
+                url: url + "/ticketOffice/publicity/save",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Se ha registrado la publicidad exitosamente.",
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
+                }
+            });
+        } else {
+
+
+            if ($('#advertising_type_id').val() === null) {
                 swal({
-                    title: "¡Bien Hecho!",
-                    text: "Se ha registrado la publicidad exitosamente.",
-                    icon: "success",
+                    title: "Información",
+                    text: "Debes selecionar el tipo de publicidad para poder registralar.",
+                    icon: "info",
                     button: {
                         text: "Esta bien",
-                        className: "green-gradient"
-                    }
-                }).then(function (accept) {
-                    window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
-                });
-            },
-            error: function (err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
+                        className: "blue-gradient"
                     },
                 });
+
+
+            } else if ($('#state_location').val() === null) {
+                swal({
+                    title: "Información",
+                    text: "Debes selecionar si la publicidad está ubicada en un espacio reservado de la alcaldía.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+            } else if ($('#licor').val() === null) {
+
+                swal({
+                    title: "Información",
+                    text: "Debes selecionar si la publicidad hace refencia a cigarrillos o bebidas alcoholicas.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
+
             }
-        });
+        }
     });
 
     //::::::::UPDATE FOR TICKET OFFICE::::::::::::::::::
@@ -708,6 +750,10 @@ $('document').ready(function () {
             $('#U-date-begin').removeClass('hide');
             $('#U-date-end').removeClass('hide');
             $('#name').prop('disabled', false);
+            $('#licor').prop('disabled', false);
+            $('select').formSelect();
+            $('#state_location').prop('disabled', false);
+            $('select').formSelect();
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
 
@@ -719,6 +765,10 @@ $('document').ready(function () {
             $('#name').prop('disabled', false);
             $('#width').prop('disabled', false);
             $('#height').prop('disabled', false);
+            $('#licor').prop('disabled', false);
+            $('select').formSelect();
+            $('#state_location').prop('disabled', false);
+            $('select').formSelect();
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
 
@@ -729,6 +779,10 @@ $('document').ready(function () {
             $('#U-date-end').removeClass('hide');
             $('#name').prop('disabled', false);
             $('#quantity').prop('disabled', false);
+            $('#licor').prop('disabled', false);
+            $('select').formSelect();
+            $('#state_location').prop('disabled', false);
+            $('select').formSelect();
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
 
@@ -740,6 +794,10 @@ $('document').ready(function () {
             $('#name').prop('disabled', false);
             $('#width').prop('disabled', false);
             $('#height').prop('disabled', false);
+            $('#licor').prop('disabled', false);
+            $('select').formSelect();
+            $('#state_location').prop('disabled', false);
+            $('select').formSelect();
             $('#quantity').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
@@ -751,6 +809,10 @@ $('document').ready(function () {
             $('#name').prop('disabled', false);
             $('#width').prop('disabled', false);
             $('#height').prop('disabled', false);
+            $('#licor').prop('disabled', false);
+            $('select').formSelect();
+            $('#state_location').prop('disabled', false);
+            $('select').formSelect();
             $('#side').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
@@ -939,7 +1001,7 @@ $('document').ready(function () {
 
             $.ajax({
                 type: "get",
-                url: url + "/ticketOffice/publicity/changeStatus/"+id+"/"+status,
+                url: url + "/ticketOffice/publicity/changeStatus/" + id + "/" + status,
 
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
@@ -978,7 +1040,7 @@ $('document').ready(function () {
             var status = 'false';
             $.ajax({
                 type: "get",
-                url: url + "/ticketOffice/publicity/changeStatus/"+id+"/"+status,
+                url: url + "/ticketOffice/publicity/changeStatus/" + id + "/" + status,
 
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');

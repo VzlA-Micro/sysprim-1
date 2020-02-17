@@ -258,7 +258,9 @@ class PublicityController extends Controller
         $publicity->width = $request->input('width');
         $publicity->height = $request->input('height');
         $publicity->side = $request->input('side');
-        $publicity->floor = $request->input('floor');
+        $publicity->state_location = $request->input('state_location');
+        $publicity->licor = $request->input('licor');
+        //$publicity->floor = $request->input('floor');
         $image = $request->file('image');
         $old_image = $publicity->image;
         if ($old_image == null) {
