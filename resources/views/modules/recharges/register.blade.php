@@ -42,20 +42,20 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                             </i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="2"  required>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-date only-number-positive"  maxlength="2"  required>
                             <label for="value">Valor</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="icon-nature  prefix"></i>
                             <select name="branch" id="branch">
                                 <option value="null" selected disabled>Elija un ramo</option>
-                                <option value="Act.Eco">Actividad Economica</option>
+                                <option value="Act.Eco">Actividad Económica</option>
                                 <option value="Pat.Vehiculo">Patente De Vehículo</option>
                                 <option value="Inmueble.Urb">Inmuebles Urbanos</option>
-                                <option value="Publicidad">Publicidad</option>
-                                <option value="Espectaculo">Espectaculos</option>
+                                <option value="Prop. y Publicidad">Publicidad</option>
+                                {{-- <option value="Espectaculo">Espectaculos</option> --}}
                             </select>
-                            <label for="branch">Ramo</label>
+                            <label for="branch">Ramos</label>
                         </div>
                     </div>
                     <div class="card-footer center-align">
