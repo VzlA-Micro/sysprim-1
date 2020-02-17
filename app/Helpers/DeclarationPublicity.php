@@ -29,7 +29,7 @@ class DeclarationPublicity
 
 //        $advertisingTypes = AdvertisingType::all();
 //        $interest = 0;
-//        $baseImponible = 0;
+        $baseImponible = 0;
         $daysDiff = 0;
         $publicity = Publicity::find($id);
         $type = $publicity->advertising_type_id;
