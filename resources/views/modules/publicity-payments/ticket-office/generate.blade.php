@@ -31,7 +31,7 @@
                             <input type="hidden" name="taxe_id" id="taxe_id">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code" id="code" maxlength="12">
+                                <input type="text" name="code" id="code" maxlength="12" class="validate code-only">
                                 <label for="code">Código de Publicidad</label>
                             </div>
                             <div class="input-field col s12">

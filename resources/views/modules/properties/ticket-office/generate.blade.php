@@ -31,12 +31,12 @@
                             <input type="hidden" name="taxe_id" id="taxe_id">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code_cadastral" id="code_cadastral" maxlength="35">
+                                <input type="text" name="code_cadastral" id="code_cadastral" maxlength="35" class="validate code-only">
                                 <label for="code_cadastral">Código Catastral</label>
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-map prefix"></i>
-                                <select name="value_cadastral_ground_id" id="value_cadastral_ground_id" required disabled>
+                                <select name="value_cadastral_ground_id" id="value_cadastral_ground_id"  required disabled>
                                     <option value="null" disabled selected>Seleccionar ubicacion Catastral</option>
                                     @foreach($catastralTerreno as $terreno):
                                     <option value="{{ $terreno->id }}">{{ $terreno->name}}</option>

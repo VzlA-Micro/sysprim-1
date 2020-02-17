@@ -379,8 +379,26 @@ $('document').ready(function () {
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
+        var type_document = $('#type_document_full').val();
 
-        if ((status == null || status == '')) {
+        if(type_document === 'J' || type_document === 'G') {
+            var name_full = $('#name_full').val();
+            var address = $('#address').val();
+            var document_full = $('#document_full').val();
+
+            if (name_full === '' && address === '' && document_full === '') {
+                swal({
+                    title: "Información",
+                    text: "Debe ingresar el documento de identificación para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+
+        } else if ((status == null || status == '')) {
             swal({
                 title: "Información",
                 text: "Debe seleccionar una condicion social para continuar con el registro.",
