@@ -346,7 +346,8 @@ $(document).ready(function () {
         var name_full = $('#name').val();
         var address = $('#address').val();
         var document_full = $('#document').val();
-        var responsable=null;
+        var responsable = null;
+        var type_document_company = false;
 
         if ($('#type').val() == 'company') {
             status = 'propietario';
@@ -354,8 +355,10 @@ $(document).ready(function () {
         var type = $('#type_document_full').val();
 
         if (type === 'J' || type === 'G') {
-
-            if (name_full === '' && address === '' && document_full === '') {
+            var name_f = $('#name_full').val();
+            var address_f = $('#address_full').val();
+            var document_f = $('#document_full').val();
+            if (name_f === '' && address_f === '' && document_f === '') {
                 swal({
                     title: "Información",
                     text: "Debe ingresar el documento de identificación para continuar con el registro.",
@@ -365,9 +368,13 @@ $(document).ready(function () {
                         className: "blue-gradient"
                     },
                 });
+            } else {
+                type_document_company = true;
             }
 
         }
+
+
         if ((status == null || status == '')) {
             swal({
                 title: "Información",
@@ -447,19 +454,22 @@ $(document).ready(function () {
                 });
             } else {
 
-               /* $('#two').removeClass('disabled');
-                $('#user-tab-one').addClass('disabled');
-                $('ul.tabs').tabs("select", "vehicle-tab");*/
-                responsable=true;
+                /* $('#two').removeClass('disabled');
+                 $('#user-tab-one').addClass('disabled');
+                 $('ul.tabs').tabs("select", "vehicle-tab");*/
+                responsable = true;
             }
         } else if (status == 'propietario') {
+            if (type_document_company) {
+                $('#two').removeClass('disabled');
+                $('#user-tab-one').addClass('disabled');
+                $('ul.tabs').tabs("select", "vehicle-tab");
+            } else {
 
-            $('#two').removeClass('disabled');
-            $('#one').addClass('disabled');
-            $('ul.tabs').tabs("select", "vehicle-tab");
+            }
         }
 
-        if(responsable) {
+        if (responsable) {
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {
@@ -513,7 +523,7 @@ $(document).ready(function () {
                     success: function (response) {
                         $('#person_id').val(response.id);
                         $('#two').removeClass('disabled');
-                        $('#one').addClass('disabled');
+                        $('#user-tab-one').addClass('disabled');
                         $('ul.tabs').tabs("select", "vehicle-tab");
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
@@ -539,14 +549,14 @@ $(document).ready(function () {
                 });
             } else {
                 $('#two').removeClass('disabled');
-                $('#one').addClass('disabled');
+                $('#user-tab-one').addClass('disabled');
                 $('ul.tabs').tabs("select", "vehicle-tab");
             }
         }
 
     });
 
-    $('#property').on('submit', function (e) {
+    /*$('#property').on('submit', function (e) {
         var type = $('#type').val();
         var id = $('#id').val();
         e.preventDefault();
@@ -605,21 +615,21 @@ $(document).ready(function () {
                 }
             });
         }
-    });
+    });*/
 
     $('#year').change(function () {
-        var anio=$(this).val();
-        var yearCurrent= (new Date).getFullYear();
+        var anio = $(this).val();
+        var yearCurrent = (new Date).getFullYear();
 
-        if (anio > yearCurrent){
+        if (anio > yearCurrent) {
             swal({
-                title:"informacion",
-                text:'Debe introducir un año valido',
-                icon:'info'
+                title: "informacion",
+                text: 'Debe introducir un año valido',
+                icon: 'info'
             });
             $(this).val('');
             $(this).focus();
-        }else{
+        } else {
 
         }
     });
