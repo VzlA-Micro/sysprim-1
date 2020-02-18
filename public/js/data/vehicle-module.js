@@ -354,7 +354,9 @@ $(document).ready(function () {
         var type = $('#type_document_full').val();
 
         if (type === 'J' || type === 'G') {
-
+            var name_f = $('#name_full').val();
+            var address_f = $('#address').val();
+            var document_f = $('#document_full').val();
             if (name_full === '' && address === '' && document_full === '') {
                 swal({
                     title: "Información",
