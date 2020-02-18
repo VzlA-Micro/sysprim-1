@@ -99,65 +99,287 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.tax-unit.manage');
                 })->name('tax-unit.manage');
             });
-            
+
          //Menu de configuraciones de los modulos.
-            Route::get('/config/vehicles', function () {
-                return view('modules.settings.vehicle.home');
-            })->name('settings.vehicle');
+            // Configuración Actividad Económica
+            Route::group(['middleware' => ['permission:Configuración - Actividad Económica']], function() {
+                Route::get('/config/companies', function () {
+                    return view('modules.settings.companies.home');
+                })->name('settings.companies');
 
-            Route::get('/config/property', function () {
-                return view('modules.settings.property.home');
-            })->name('settings.property');
-
-            Route::get('/config/publicity', function () {
-                return view('modules.settings.publicity.home');
-            })->name('settings.publicity');
-
-            Route::get('/config/companies', function () {
-                return view('modules.settings.companies.home');
-            })->name('settings.companies');
-
-            // Nivel 3: Registro y Consulta
-            Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
-                Route::get('/tax-unit/register', function () {
-                    return view('modules.tax-unit.register');
-                })->name('tax-unit.register');
-                Route::post('/tax-unit/save', 'TributoController@store')->name('tax-unit.save');
-                Route::get('/tax-unit/read', 'TributoController@show')->name('tax-unit.read');
-            });
-
-
-            Route::group(['middleware' => ['permission:Registrar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
-                Route::get('/ciu-group/register', function () {
-                    return view('modules.ciiu-group.register');
-                })->name('ciu-group.register');
-                Route::post('/ciu-group/save', 'groupCiiuController@store')->name('ciu-group.save');
-                Route::get('/ciu-group/read', 'GroupCiiuController@show')->name('ciu-group.read');
-                Route::get('/ciu-group/verify-code/{code}', 'GroupCiiuController@verifyGroupCiu');
-
-                Route::get('/ciu-branch/manage', function () {
-                    return view('modules.ciiu.menu');
-                })->name('ciu-branch.manage');
-                // Nivel 4 (Gestionar Ramo CIIU)
-
-
-                Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
-                    Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
-                    Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
-                    Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
-                    Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
-
-
-                    // Nivel 5 (Detalles)
-                    Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function () {
-                        Route::get('/ciu-branch/details/{id}', 'CiuController@edit')->name('ciu-branch.details');
-                        Route::post('/ciu-branch/update', 'CiuController@update')->name('ciu-branch.update');
-                        // Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
+                # Gestionar Grupo CIIU
+                Route::group(['middleware' => ['permission:Registrar Grupo CIIU|Consultar Grupos CIIU|Gestionar Ramos CIIU']], function () {
+                    Route::get('/ciu-group/register', function () {
+                        return view('modules.ciiu-group.register');
+                    })->name('ciu-group.register');
+                    Route::post('/ciu-group/save', 'groupCiiuController@store')->name('ciu-group.save');
+                    Route::get('/ciu-group/read', 'GroupCiiuController@show')->name('ciu-group.read');
+                    Route::get('/ciu-group/verify-code/{code}', 'GroupCiiuController@verifyGroupCiu');
+    
+                    Route::get('/ciu-branch/manage', function () {
+                        return view('modules.ciiu.menu');
+                    })->name('ciu-branch.manage');
+                    // Nivel 4 (Gestionar Ramo CIIU)
+    
+                    # Gestionar Ramos CIIU
+                    Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
+                        Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
+                        Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
+                        Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
+                        Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
+    
+                        // Nivel 5 (Detalles)
+                        Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function () {
+                            Route::get('/ciu-branch/details/{id}', 'CiuController@edit')->name('ciu-branch.details');
+                            Route::post('/ciu-branch/update', 'CiuController@update')->name('ciu-branch.update');
+                            // Route::get('/ciu-branch/delete/{id}', 'CiuController@destroy')->name('ciu-branch.delete');
+                        });
                     });
                 });
             });
 
-            // Gestionar Tipos de Vehiculos
+            Route::group(['middleware' => ['permission:Configuración - Vehículos']], function() {
+                Route::get('/config/vehicles', function () {
+                    return view('modules.settings.vehicle.home');
+                })->name('settings.vehicle');
+
+                // Gestionar Tipos de Vehiculos
+                Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
+                    Route::get('/vehicles/type-vehicles', function () {
+                        return view('modules.vehicle_type.manage');
+                    })->name('vehicles.type.vehicles');
+                    # Nivel 1: Registrar o Consultar
+                    Route::group(['middleware' => ['permission:Registrar Tipo de Vehiculo|Consultar Tipos de Vehiculos']], function () {
+                        Route::get('/vehicles/register-type', function () {
+                            return view('modules.vehicle_type.register');
+                        })->name('vehicles.type.register');
+                        Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
+                        Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Tipo de Vehiculos']], function () {
+                            Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
+                            Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
+                        });
+                    });
+                });
+
+                // Gestionar Marcas de vehiculos
+                Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
+                    Route::get('/vehicles/brands-vehicles', function () {
+                        return view('modules.vehicles_brand.manage');
+                    })->name('vehicles.brand.manage');
+                    Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Marca de Vehiculo|Consultar Marcas de Vehiculos']], function () {
+                        Route::get('/vehicles-brand/register', 'BrandVehicleController@create')->name('vehicles.brand.register');
+                        Route::post('/vehicles-brand/save', 'BrandVehicleController@store')->name('vehicles.brand.save');
+                        Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Marca de Vehiculos']], function () {
+                            Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
+                            Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
+                        });
+                    });
+                });
+
+                // Gestionar Modelos de Vehiculos
+                Route::group(['middleware' => ['permission:Gestionar Modelos de Vehiculos']], function () {
+                    Route::get('/vehicles/models-vehicles', function () {
+                        return view('modules.vehicles_models.manage');
+                    })->name('vehicles.models.vehicles');
+                    # nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Modelo de Vehiculo|Consultar Modelos de Vehiculos']], function () {
+                        Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
+                        Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
+                        Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Modelo de Vehiculos']], function () {
+                            Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
+                            Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
+                        });
+                    });
+                });
+            });
+
+            Route::group(['middleware' => ['permission:Configuración - Inmuebles']], function() {
+                Route::get('/config/property', function () {
+                    return view('modules.settings.property.home');
+                })->name('settings.property');
+
+                 // GEstion de Alicuotas
+                Route::group(['middleware' => ['permission:Gestionar Alicuotas']], function () {
+                    Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Consultar Alicuotas']], function () {
+                        Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Alicuota']], function () {
+                            Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
+                            Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
+                        });
+                    });
+                });
+
+
+                // Gestionar Valor Catastral - Construccion
+                Route::group(['middleware' => ['permission:Gestionar Catastral Construccion']], function () {
+                    Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
+                    # Nivel 1 - Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Valor Construccion|Consultar Valores Construccion']], function () {
+                        Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
+                        Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
+                        Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
+                        # Nivel 2 - Detalles
+                        Route::group(['middleware' => ['permission:Detalles Valor Construccion']], function () {
+                            Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
+                            Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
+                        });
+                    });
+                });
+
+                // Gestionar Valor Catastral - Terreno
+                Route::group(['middleware' => ['permission:Gestionar Catastral Terreno']], function () {
+                    Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
+                    #Nivel 1 - Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Valor Terreno|Consultar Valores Terreno']], function () {
+                        Route::get('/catastral-terreno/register', 'CatastralTerrenoController@create')->name('catrastal.terreno.register');
+                        Route::post('/catastral-terreno/save', 'CatastralTerrenoController@store')->name('catrastal.terreno.save');
+                        Route::get('/catastral-terreno/read', 'CatastralTerrenoController@show')->name('catrastal.terreno.read');
+                        # Nivel 2 - Detalles
+                        Route::group(['middleware' => ['permission:Detalles Valor Terreno']], function () {
+                            Route::get('/catastral-terreno/details/{id}', 'CatastralTerrenoController@details')->name('catrastal.terreno.details');
+                            Route::post('/catastral-terreno/update', 'CatastralTerrenoController@update')->name('catrastal.terreno.update');
+                        });
+                    });
+                });
+            });
+
+
+
+            Route::group(['middleware' => ['permission:Configuración - Publicidad']], function() {
+                Route::get('/config/publicity', function () {
+                    return view('modules.settings.publicity.home');
+                })->name('settings.publicity');
+
+                // Gestionar tipos de publicidad
+                Route::group(['middleware' => ['permission:Gestionar Tipos de Publicidad']], function () {
+                    Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Tipo de Publicidad|Consultar Tipos de Publicidad']], function () {
+                        Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
+                        Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
+                        Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Tipo de Publicidad']], function () {
+                            Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
+                            Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
+                        });
+                    });
+                });
+
+                // Gestionar Grupos de publicidad
+                Route::group(['middleware' => ['permission:Gestionar Grupos de Publicidad']], function () {
+                    Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
+                    Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
+
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Grupo de Publicidad|Consultar Grupos de Publicidad']], function() {
+                        Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
+                        Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
+                        Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
+                        Route::group(['middleware' => ['permission:Detalles Grupo de Publicidad']], function() {
+                            Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
+                            Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
+                        });
+                    });
+                });
+            });
+
+            
+            Route::group(['middleware' => ['permission:Configuración - General']], function() {
+                // Configuracion general
+                Route::get('/config/general', function () {
+                    return view('modules.settings.general.home');
+                })->name('settings.general');
+
+                // Gestionar UT
+                Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
+                    Route::get('/tax-unit/register', function () {
+                        return view('modules.tax-unit.register');
+                    })->name('tax-unit.register');
+                    Route::post('/tax-unit/save', 'TributoController@store')->name('tax-unit.save');
+                    Route::get('/tax-unit/read', 'TributoController@show')->name('tax-unit.read');
+                });
+
+
+                // Gestionar Recargos
+                Route::group(['middleware' => ['permission:Gestionar Recargos']], function () {
+                    Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Recargo|Consultar Recargos']], function () {
+                        Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
+                        Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
+                        Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Recargo']], function () {
+                            Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
+                            Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');
+                        });
+                    });
+                });
+
+                // Gestionar Accesorios
+                Route::group(['middleware' => ['permission:Gestionar Accesorios']], function () {
+                    Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Accesorio|Consultar Accesorios']], function () {
+                        Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
+                        Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
+                        Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Accesorio']], function () {
+                            Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
+                            Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
+                        });
+                    });
+                });
+
+                
+
+                // Gestionar Tasas del Banco
+                Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
+                    Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
+                    # Nivel 1: Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Registrar Tasa de Banco|Consultar Tasas del Banco']], function () {
+                        Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
+                        Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
+                        Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
+                        # Nivel 2: Detalles
+                        Route::group(['middleware' => ['permission:Detalles Tasa de Banco']], function () {
+                            Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
+                            Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');
+                        });
+                    });
+                });
+
+
+                // Gestionar Dias de Cobro
+                Route::group(['middleware' => ['permission:Gestionar Dias de Cobro']], function () {
+                    Route::get('/prologue/manage', 'PrologueController@manage')->name('prologue.manage');
+                    #Nivel 1 - Registrar y Consultar
+                    Route::group(['middleware' => ['permission:Consultar Dias de Cobro']], function () {
+                        Route::get('/prologue/index', 'PrologueController@index')->name('prologue.index');
+                        # Nivel 2 - Detalles
+                        Route::group(['middleware' => ['permission:Detalles Dia de Cobro']], function () {
+                            Route::get('/prologue/details/{id}', 'PrologueController@details')->name('prologue.details');
+                            Route::post('/prologue/update', 'PrologueController@update')->name('prologue.update');
+                        });
+                    });
+                });
+            });
+            
+
+            /* // Gestionar Tipos de Vehiculos
             Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
                 Route::get('/vehicles/type-vehicles', function () {
                     return view('modules.vehicle_type.manage');
@@ -175,145 +397,7 @@ Route::middleware(['auth'])->group(/**
                         Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
                     });
                 });
-            });
-
-            // Gestionar Tipos de Vehiculos
-            Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
-                Route::get('/vehicles/type-vehicles', function () {
-                    return view('modules.vehicle_type.manage');
-                })->name('vehicles.type.vehicles');
-                # Nivel 1: Registrar o Consultar
-                Route::group(['middleware' => ['permission:Registrar Tipo de Vehiculo|Consultar Tipos de Vehiculos']], function () {
-                    Route::get('/vehicles/register-type', function () {
-                        return view('modules.vehicle_type.register');
-                    })->name('vehicles.type.register');
-                    Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
-                    Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Tipo de Vehiculos']], function () {
-                        Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
-                        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-                    });
-                });
-            });
-
-            // Gestionar Marcas de vehiculos
-            Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
-                Route::get('/vehicles/brands-vehicles', function () {
-                    return view('modules.vehicles_brand.manage');
-                })->name('vehicles.brand.manage');
-                Route::post('/vehicles-brand/verifyBrand', 'BrandVehicleController@verifyBrand')->name('vehicles.brand.verifyBrand');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Marca de Vehiculo|Consultar Marcas de Vehiculos']], function () {
-                    Route::get('/vehicles-brand/register', 'BrandVehicleController@create')->name('vehicles.brand.register');
-                    Route::post('/vehicles-brand/save', 'BrandVehicleController@store')->name('vehicles.brand.save');
-                    Route::get('/vehicles-brand/read', 'BrandVehicleController@show')->name('vehicles.brand.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Marca de Vehiculos']], function () {
-                        Route::get('/vehicles-brand/details/{id}', 'BrandVehicleController@edit')->name('vehicles.brand.details');
-                        Route::post('/vehicles-brand/update', 'BrandVehicleController@update')->name('vehicles.brand.update');
-                    });
-                });
-            });
-
-            // Gestionar Modelos de Vehiculos
-            Route::group(['middleware' => ['permission:Gestionar Modelos de Vehiculos']], function () {
-                Route::get('/vehicles/models-vehicles', function () {
-                    return view('modules.vehicles_models.manage');
-                })->name('vehicles.models.vehicles');
-                # nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Modelo de Vehiculo|Consultar Modelos de Vehiculos']], function () {
-                    Route::get('/vehicles-models/register', 'ModelsVehicleController@create')->name('vehicles.models.register');
-                    Route::post('/vehicles-models/save', 'ModelsVehicleController@store')->name('vehicles.register.save');
-                    Route::get('/vehicles-models/read', 'ModelsVehicleController@show')->name('vehicles.models.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Modelo de Vehiculos']], function () {
-                        Route::get('/vehicles-models/details/{id}', 'ModelsVehicleController@edit')->name('vehicles.models.details');
-                        Route::post('/vehicles-models/update', 'ModelsVehicleController@update')->name('vehicles.models.update');
-                    });
-                });
-            });
-
-            // Gestionar Recargos
-            Route::group(['middleware' => ['permission:Gestionar Recargos']], function () {
-                Route::get('/recharges/manage', 'RechargeController@manage')->name('recharges.manage');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Recargo|Consultar Recargos']], function () {
-                    Route::get('/recharges/register', 'RechargeController@create')->name('recharges.register');
-                    Route::post('/recharges/save', 'RechargeController@store')->name('recharges.save');
-                    Route::get('/recharges/read', 'RechargeController@show')->name('recharges.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Recargo']], function () {
-                        Route::get('/recharges/details/{id}', 'RechargeController@details')->name('recharges.details');
-                        Route::post('/recharges/update', 'RechargeController@update')->name('recharges.update');
-                    });
-                });
-            });
-
-            // Gestionar Accesorios
-            Route::group(['middleware' => ['permission:Gestionar Accesorios']], function () {
-                Route::get('accessories/manage', 'AccessoriesController@manage')->name('accessories.manage');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Accesorio|Consultar Accesorios']], function () {
-                    Route::get('accessories/register', 'AccessoriesController@create')->name('accessories.register');
-                    Route::post('accessories/save', 'AccessoriesController@store')->name('accessories.save');
-                    Route::get('accessories/read', 'AccessoriesController@show')->name('accessories.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Accesorio']], function () {
-                        Route::get('accessories/details/{id}', 'AccessoriesController@details')->name('accessories.details');
-                        Route::post('accessories/update', 'AccessoriesController@update')->name('accessories.update');
-                    });
-                });
-            });
-
-            // Gestionar tipos de publicidad
-            Route::group(['middleware' => ['permission:Gestionar Tipos de Publicidad']], function () {
-                Route::get('advertising-type/manage', 'AdvertisingTypeController@manage')->name('advertising-type.manage');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Tipo de Publicidad|Consultar Tipos de Publicidad']], function () {
-                    Route::get('advertising-type/register', 'AdvertisingTypeController@create')->name('advertising-type.register');
-                    Route::post('advertising-type/save', 'AdvertisingTypeController@store')->name('advertising-type.save');
-                    Route::get('advertising-type/read', 'AdvertisingTypeController@show')->name('advertising-type.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Tipo de Publicidad']], function () {
-                        Route::get('advertising-type/details/{id}', 'AdvertisingTypeController@details')->name('advertising-type.details');
-                        Route::post('advertising-type/update', 'AdvertisingTypeController@update')->name('advertising-type.update');
-                    });
-                });
-            });
-
-            // Gestionar Grupos de publicidad
-            Route::group(['middleware' => ['permission:Gestionar Grupos de Publicidad']], function () {
-                Route::get('group_publicity/manage', 'GroupPublicityController@index')->name('group-publicity.manage');
-                Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
-
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Grupo de Publicidad|Consultar Grupos de Publicidad']], function() {
-                    Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
-                    Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
-                    Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
-                    Route::group(['middleware' => ['permission:Detalles Grupo de Publicidad']], function() {
-                        Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
-                        Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
-                    });
-                });
-            });
-
-            // Gestionar Tasas del Banco
-            Route::group(['middleware' => ['permission:Gestionar Tasas del Banco']], function () {
-                Route::get('bank-rate/manage', 'BankRateController@manage')->name('bank.rate.manage');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Tasa de Banco|Consultar Tasas del Banco']], function () {
-                    Route::get('bank-rate/register', 'BankRateController@create')->name('bank.rate.register');
-                    Route::post('bank-rate/save', 'BankRateController@store')->name('bank.rate.save');
-                    Route::get('bank-rate/read', 'BankRateController@show')->name('bank.rate.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Tasa de Banco']], function () {
-                        Route::get('bank-rate/details/{id}', 'BankRateController@details')->name('bank.rate.details');
-                        Route::post('bank-rate/update', 'BankRateController@update')->name('bank.rate.update');
-                    });
-                });
-            });
+            }); */
 
             // Gestionar Tasas
             Route::group(['middleware' => ['permission:Gestionar Tasas']], function () {
@@ -331,69 +415,9 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
             });
-
-            // GEstion de Alicuotas
-            Route::group(['middleware' => ['permission:Gestionar Alicuotas']], function () {
-                Route::get('/alicuota/manage', 'AlicuotaController@manage')->name('alicuota.manage');
-                # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Consultar Alicuotas']], function () {
-                    Route::get('/alicuota/read', 'AlicuotaController@show')->name('alicuota.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Alicuota']], function () {
-                        Route::get('/alicuota/details/{id}', 'AlicuotaController@details')->name('alicuota.details');
-                        Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
-                    });
-                });
-            });
-
-
-            // Gestionar Valor Catastral - Construccion
-            Route::group(['middleware' => ['permission:Gestionar Catastral Construccion']], function () {
-                Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
-                # Nivel 1 - Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Valor Construccion|Consultar Valores Construccion']], function () {
-                    Route::get('/catastral-construction/register', 'CatastralConstruccionController@create')->name('catrastal.construction.register');
-                    Route::post('/catastral-construction/save', 'CatastralConstruccionController@store')->name('catrastal.construction.save');
-                    Route::get('/catastral-construction/read', 'CatastralConstruccionController@show')->name('catrastal.construction.read');
-                    # Nivel 2 - Detalles
-                    Route::group(['middleware' => ['permission:Detalles Valor Construccion']], function () {
-                        Route::get('/catastral-construction/details/{id}', 'CatastralConstruccionController@details')->name('catrastal.construction.details');
-                        Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
-                    });
-                });
-            });
-
-            // Gestionar Valor Catastral - Terreno
-            Route::group(['middleware' => ['permission:Gestionar Catastral Terreno']], function () {
-                Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
-                #Nivel 1 - Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Valor Terreno|Consultar Valores Terreno']], function () {
-                    Route::get('/catastral-terreno/register', 'CatastralTerrenoController@create')->name('catrastal.terreno.register');
-                    Route::post('/catastral-terreno/save', 'CatastralTerrenoController@store')->name('catrastal.terreno.save');
-                    Route::get('/catastral-terreno/read', 'CatastralTerrenoController@show')->name('catrastal.terreno.read');
-                    # Nivel 2 - Detalles
-                    Route::group(['middleware' => ['permission:Detalles Valor Terreno']], function () {
-                        Route::get('/catastral-terreno/details/{id}', 'CatastralTerrenoController@details')->name('catrastal.terreno.details');
-                        Route::post('/catastral-terreno/update', 'CatastralTerrenoController@update')->name('catrastal.terreno.update');
-                    });
-                });
-            });
-
-            // Gestionar Dias de Cobro
-            Route::group(['middleware' => ['permission:Gestionar Dias de Cobro']], function () {
-                Route::get('/prologue/manage', 'PrologueController@manage')->name('prologue.manage');
-                #Nivel 1 - Registrar y Consultar
-                Route::group(['middleware' => ['permission:Consultar Dias de Cobro']], function () {
-                    Route::get('/prologue/index', 'PrologueController@index')->name('prologue.index');
-                    # Nivel 2 - Detalles
-                    Route::group(['middleware' => ['permission:Detalles Dia de Cobro']], function () {
-                        Route::get('/prologue/details/{id}', 'PrologueController@details')->name('prologue.details');
-                        Route::post('/prologue/update', 'PrologueController@update')->name('prologue.update');
-                    });
-                });
-            });
-
         });
+
+
         // GeoSysPRIM
 
         Route::group(['middleware' => ['permission:GeoSEMAT']], function () {

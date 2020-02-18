@@ -48,6 +48,12 @@ class RolesAndPermissionsSeeder extends Seeder
         /*                            CONFIGURACION                              */
         ###########################################################################
         Permission::create(['name' => 'Configuración']);
+        Permission::create(['name' => 'Configuración - Actividad Económica']);
+        Permission::create(['name' => 'Configuración - Vehículos']);
+        Permission::create(['name' => 'Configuración - Inmuebles']);
+        Permission::create(['name' => 'Configuración - Publicidad']);
+        Permission::create(['name' => 'Configuración - General']);
+
 
         /* ------- GESTIONAR UNIDAD TRIBUTARIA ------ */
         Permission::create(['name' => 'Gestionar Unidad Tribuaria']);
@@ -392,6 +398,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Habilitar/Deshabilitar Usuarios',
             'Resetear Usuarios',
             'Configuración',
+            'Configuración - Actividad Económica',
+            'Configuración - Vehículos',
+            'Configuración - Inmuebles',
+            'Configuración - Publicidad',
+            'Configuración - General',
             'Gestionar Unidad Tribuaria',
             'Registrar Unidad Tribuaria',
             'Consultar Unidades Tribuarias',
