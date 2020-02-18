@@ -61,14 +61,14 @@
                         <a href="{{ route('vehicles.register',['register'=>'COMPANY-'.$company->id]) }}"
                            class="btn-app white orange-text">
                             <i class="icon-add_circle"></i>
-                            <span class="truncate">Agregar nuevo vehiculo...</span>
+                            <span class="truncate">Agregar nuevo vehículo...</span>
                         </a>
                     </div>
                 @else
                     <div class="col s12 m4 animated bounceIn">
                         <a href="{{ route('vehicles.register',['register'=>'']) }}" class="btn-app white orange-text">
                             <i class="icon-add_circle"></i>
-                            <span class="truncate">Agregar nuevo vehiculo...</span>
+                            <span class="truncate">Agregar nuevo vehículo...</span>
                             <span class="truncate white-text">w</span>
                         </a>
                     </div>

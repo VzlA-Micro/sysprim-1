@@ -7,15 +7,16 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}">Ver Tipos De Vehiculos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('typeVehicle.details') }}">Detalles De Tipo De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}">Ver Tipos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('typeVehicle.details') }}">Detalles De Tipo De Vehículos</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 <form id="updateType"  method="post" class="card">
                     <div class="card-header center-align">
-                        <h5>Detalles De Tipo De Vehiculo</h5>
+                        <h5>Detalles De Tipo De Vehículo</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
@@ -27,7 +28,7 @@
                         <div class="input-field col s12">
                             <i class="icon-check prefix"></i>
                             <input id="name" type="text" name="name" readonly value="{{ $type->name }}" minlength="" maxlength="100" required>
-                            <label for="name">Tipo de vehiculo</label>
+                            <label for="name">Tipo de vehículo</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>

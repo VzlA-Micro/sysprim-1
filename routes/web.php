@@ -99,6 +99,23 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.tax-unit.manage');
                 })->name('tax-unit.manage');
             });
+            
+         //Menu de configuraciones de los modulos.
+            Route::get('/config/vehicles', function () {
+                return view('modules.settings.vehicle.home');
+            })->name('settings.vehicle');
+
+            Route::get('/config/property', function () {
+                return view('modules.settings.property.home');
+            })->name('settings.property');
+
+            Route::get('/config/publicity', function () {
+                return view('modules.settings.publicity.home');
+            })->name('settings.publicity');
+
+            Route::get('/config/companies', function () {
+                return view('modules.settings.companies.home');
+            })->name('settings.companies');
 
             // Nivel 3: Registro y Consulta
             Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {

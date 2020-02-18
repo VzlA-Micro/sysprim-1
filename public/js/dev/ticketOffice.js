@@ -376,6 +376,8 @@ $(document).ready(function () {
                                 },
                             });
 
+                            $('#fiscal_period').val(' ');
+
                         } else if (response.status === 'process') {
                             swal({
                                 title: "Información",
@@ -385,7 +387,8 @@ $(document).ready(function () {
                                     text: "Esta bien",
                                     className: "blue-gradient"
                                 },
-                            })
+                            });
+                            $('#fiscal_period').val(' ');
                         } else if (response.status === 'new') {
                             $('#fiscal_period').val('2019-01-01');
                             $('#fiscal_period').attr('readonly', 'readonly');

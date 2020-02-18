@@ -7,6 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu.manage') }}">Gestionar CIIU</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-group.register') }}">Registrar Grupo CIIU</a></li>
                 </ul>
@@ -20,7 +21,7 @@
                         @csrf
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code" required minlength="5" maxlength="10">
+                            <input id="code" type="text" name="code" class="validate code-only" required minlength="5" maxlength="10">
                             <label for="code">Código</label>
                         </div>
                         <div class="input-field col s12 m6">

@@ -11,7 +11,8 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.register') }}">Gestionar Marcas De Vehiculos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.register') }}">Gestionar Marcas De Vehículos</a></li>
                 </ul>
             </div>
             @can('Registrar Marca de Vehiculo')

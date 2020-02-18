@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Gestionar Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.create-property') }}"> Registrar- Inmuebles Urbanos</a></li>
                 </ul>
             </div>
@@ -87,7 +87,7 @@
                     </div>
                     <div id="property-tab">
                         <div class="card-header center-align">
-                            <h5>Datos del Inmueble</h5>
+                            <h5>Datos de la Publicidad</h5>
                         </div>
 
                         <input type="hidden" name="id" value="" id="id">

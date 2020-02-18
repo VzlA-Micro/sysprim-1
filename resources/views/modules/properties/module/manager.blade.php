@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.home') }}">Taquilla - Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Modulo - Inmuebles Urbanos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.manager-property') }}">Gestionar Inmuebles Urbanos</a></li>
                 </ul>
             </div>
             @can('Registrar Inmueble')

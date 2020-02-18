@@ -49,7 +49,7 @@
                                     <option value="{{$types->id}}">{{$types->name}}</option>
                                 @endforeach
                             </select>
-                            <label for="type">Tipo De Vehiculo</label>
+                            <label for="type">Tipo De Vehículo</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
@@ -113,7 +113,7 @@
 
                         </div>
                         <div class="container col s12">
-                            <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehiculo no se
+                            <p><span class=""><b>NOTA: </b></span>En caso que la marca o modelo de su vehículo no se
                                 encuentre registrado en nuestro sistema, presiona el botón de <b>REGISTRAR MARCA</b> e
                                 introduce los siguientes datos:<br> 1- Marca<br> 2- Modelo<br></p>
                         </div>

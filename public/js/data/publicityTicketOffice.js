@@ -375,11 +375,36 @@ $('document').ready(function () {
 
     $('#data-next').click(function () {
         var status = $('#status').val();
+        var name_full = $('#name').val();
+        var address = $('#address').val();
+        var document_full = $('#document').val();
+        var responsable = null;
+        var type_document_company = false;
 
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
+        var type = $('#type_document_full').val();
 
+        if (type === 'J' || type === 'G') {
+            var name_f = $('#name_full').val();
+            var address_f = $('#address_full').val();
+            var document_f = $('#document_full').val();
+            if (name_f === '' && address_f === '' && document_f === '') {
+                swal({
+                    title: "Información",
+                    text: "Debe ingresar el documento de identificación para continuar con el registro.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            } else {
+                type_document_company = true;
+            }
+
+        }
         if ((status == null || status == '')) {
             swal({
                 title: "Información",
@@ -391,11 +416,82 @@ $('document').ready(function () {
                 },
             });
         } else if (status == 'propietario') {
-
-            $('#two').removeClass('disabled');
-            $('#one').addClass('disabled');
-            $('ul.tabs').tabs("select", "typePublicity-tab");
-        } else {
+            if(type_document_company) {
+                $('#two').removeClass('disabled');
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "typePublicity-tab");
+            }
+        }
+        else if(status != 'propietario') {
+            if ($('#type_document').val() == null) {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar un tipo de documento de la persona responsable.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }else if($('#document').val() == ''){
+                swal({
+                    title: "Información",
+                    text: "Debe introducir el documento de la persona responsable.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+            else if (name_full == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            } else if (address == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            }
+            else if (document_full == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            } else {
+                /* $('#two').removeClass('disabled');
+                 $('#user-tab-one').addClass('disabled');
+                 $('ul.tabs').tabs("select", "vehicle-tab");*/
+                responsable = true;
+            }
+        }
+        if(responsable) {
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {

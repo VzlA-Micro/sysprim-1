@@ -194,10 +194,11 @@
 
             $('select').formSelect();
             var date = new Date();
+            var date = new Date();
             $('#date_start').datepicker({
                 maxDate:  date,
                 format: 'yyyy-mm-dd', // Configure the date format
-                minDate: date,
+                // yearRange: [1900,date.getFullYear()],
                 showClearBtn: false,
                 i18n: {
                     cancel: 'Cerrar',
@@ -213,7 +214,7 @@
             $('#date_end').datepicker({
                 maxDate:  null,
                 format: 'yyyy-mm-dd', // Configure the date format
-                // yearRange: [1900,date.getFullYear()],
+                minDate: date,
                 showClearBtn: false,
                 i18n: {
                     cancel: 'Cerrar',

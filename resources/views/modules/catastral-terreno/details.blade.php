@@ -11,6 +11,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de  Terreno</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.read') }}">Consultar  Valor  Catastral de Terreno</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
@@ -79,7 +80,7 @@
 
                     </div>
 
-                    @can('Actualizar Valor Terreno'')
+                    @can('Actualizar Valor Terreno')
             		<div class="card-footer center-align">
             			<a id="modify-btn" class="btn btn-large btn-rounded blue waves-effect waves-light">
                             <i class="icon-update right"></i>

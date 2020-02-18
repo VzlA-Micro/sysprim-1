@@ -7,7 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu.manage') }}">Gestionar CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.read') }}">Ver Ramos CIIU's</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code" class="validate" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
+                            <input id="code" type="text" name="code" class="validate code-only" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">

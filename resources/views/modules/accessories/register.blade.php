@@ -24,12 +24,12 @@
                         @csrf
                         <div class="input-field col s12 m6">
                             <i class="icon-brush prefix"></i>
-                            <input type="text" name="name" id="name">
+                            <input type="text" name="name" id="name" min="5" maxlength="50" required>
                             <label for="name">Nombre</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-exposure_plus_1 prefix"></i>
-                            <input type="number" name="value" id="value">
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="3" required>
                             <label for="value">Valor UTC</label>
                         </div>
                     </div>
