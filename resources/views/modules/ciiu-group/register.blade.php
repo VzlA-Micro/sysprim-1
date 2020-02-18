@@ -7,6 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu.manage') }}">Gestionar CIIU</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-group.register') }}">Registrar Grupo CIIU</a></li>
                 </ul>
