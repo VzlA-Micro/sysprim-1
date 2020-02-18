@@ -355,9 +355,9 @@ $(document).ready(function () {
 
         if (type === 'J' || type === 'G') {
             var name_f = $('#name_full').val();
-            var address_f = $('#address').val();
+            var address_f = $('#address_full').val();
             var document_f = $('#document_full').val();
-            if (name_full === '' && address === '' && document_full === '') {
+            if (name_f === '' && address_f === '' && document_f === '') {
                 swal({
                     title: "Información",
                     text: "Debe ingresar el documento de identificación para continuar con el registro.",
