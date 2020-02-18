@@ -11,6 +11,7 @@
             	<ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('settings.general') }}">Configuración General</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('bank.rate.manage') }}">Gestionar Tasa del Banco</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('bank.rate.register') }}">Registrar</a></li>
                 </ul>

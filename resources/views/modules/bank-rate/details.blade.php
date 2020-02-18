@@ -11,8 +11,9 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('accessories.manage') }}">Gestionar Accesorios</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('accessories.read') }}">Consultar Accesorios</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.general') }}">Configuración General</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('accessories.manage') }}">Gestionar Tasa de Banco</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('accessories.read') }}">Consultar Tasa de Banco</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
                 </ul>
             </div>
