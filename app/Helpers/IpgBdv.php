@@ -7,8 +7,10 @@ namespace App\Helpers;
 class IpgBdv{
 
     private $urlApi = 'https://biopago.banvenez.com/ipg/api/Payment';
+    protected $user;
+    protected $pass;
 
-    function IpgBdv($user1,$pass1){
+    function __construct($user1,$pass1){
         $this->user = $user1;
         $this->pass = $pass1;
         $this->messages = array(
@@ -56,6 +58,9 @@ class IpgBdv{
 
         $response = new IpgBdvCheckPaymentResponse();
         $resp = curl_exec($curl);
+
+
+
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode == 200)
@@ -160,6 +165,7 @@ class IpgBdv{
         $response = new IpgBdvPaymentResponse();
         $resp = curl_exec($curl);
 
+
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode == 200)
@@ -203,58 +209,13 @@ class IpgBdv{
     }
 
     public function getMessageDescription($code) {
+
+
         return $this->messages[$code];
     }
 }
 
-class IpgBdvPaymentRequest
-{
-    // propiedades
-    public $idLetter;
-    public $idNumber;
-    public $amount;
-    public $currency;
-    public $reference;
-    public $title;
-    public $description;
-    public $email;
-    public $cellphone;
-    public $urlToReturn;
 
-}
 
-class IpgBdvPaymentResponse
-{
-    // propiedades
-    public $success;
-    public $responseCode;
-    public $responseMessage;
-    public $paymentId;
-    public $urlPayment;
-}
 
-class IpgBdvCheckPaymentResponse
-{
-    // propiedades
-    public $status;
-    public $success;
-    public $responseCode;
-    public $responseMessage;
 
-    public $idLetter;
-    public $idNumber;
-    public $amount;
-    public $currency;
-    public $reference;
-    public $title;
-    public $description;
-
-    public $token;
-    public $transactionId;
-    public $paymentMethodCode;
-    public $paymentMethodDescription;
-    public $authorizationCode;
-    public $paymentMethodNumber;
-    public $paymentDate;
-
-}

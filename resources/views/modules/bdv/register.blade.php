@@ -13,18 +13,22 @@
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" method="post" class="card" id="#">
+                <form action="#" method="post"  class="card" id="register">
                     <ul class="tabs">
-                        <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i>Datos del Pago</a>
+                        <li class="tab col s6" id="one"><a href="#payment-tab"><i class="icon-filter_1"></i>Datos del Pago</a>
                         </li>
-                        <li class="tab col s6 disabled" id="two"><a href="#rate-tab"><i class="icon-filter_2"></i> Obtener Link</a></li>
+                        <li class="tab col s6 disabled" id="two"><a href="#link-tab"><i class="icon-filter_2"></i> Obtener Link</a></li>
                     </ul>
 
-                    <div id="user-tab">
+                    <div id="payment-tab">
                         <div class="card-header center-align">
                             <h4>Datos del Pago</h4>
                         </div>
                         <div class="card-content row">
+
+                            <input type="hidden" id="id" name="id" value="{{$id}}">
+
+
 
                             <div class="input-field col s6 m4 tooltipped" data-position="bottom"
                                  data-tooltip="V: Venezolano; E: Extranjero">
@@ -38,7 +42,6 @@
                             </div>
 
 
-
                             <div class="input-field col s12 m8 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <i class="icon-payment prefix"></i>
                                 <input id="document" type="text" name="document" data-validate="documento" maxlength="8"
@@ -48,35 +51,20 @@
                             </div>
 
 
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <i class="icon-payment prefix"></i>
-                                <input id="title" type="text" name="title" data-validate="title" maxlength="8"
-                                       class="validate number-only rate" pattern="[0-9]+"
-                                       title="Solo puede escribir números." required>
-                                <label for="title">Titulo</label>
-                            </div>
-
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
-                                <i class="icon-payment prefix"></i>
-                                <input id="description" type="text" name="description" data-validate="description" maxlength="8"
-                                       class="validate number-only rate" pattern="[0-9]+"
-                                       title="Solo puede escribir números." required>
-                                <label for="description">Descripción</label>
-                            </div>
-
-
 
                             <div class="input-field col s12 m12 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <i class="icon-mail_outline prefix"></i>
-                                <input id="description" type="email" name="email" data-validate="email" maxlength="8"
-                                       class="validate number-only rate" pattern="[0-9]+"
+                                <input id="email" type="email" name="email" data-validate="email" maxlength="25"
+                                       class="validate"
                                        title="Solo puede escribir números." required>
                                 <label for="email">Email</label>
                             </div>
 
+
+
                             <div class="input-field col s6">
                                 <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
-                                <select name="country_code" id="country_code_company" required>
+                                <select name="country_code" id="country_code" required>
                                     <option value="null" selected disabled>...</option>
                                     <option value="0412" >(412)</option>
                                     <option value="0414" >(414)</option>
@@ -92,15 +80,28 @@
                             </div>
 
 
+
+                            <div class="input-field col s12 m12">
+                                <i class="prefix">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                                </i>
+                                <input type="text" name="amount" id="amount" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$amount}}" readonly>
+                                <label for="amount">Monto a Pagar<b> (Bs)</b></label>
+                            </div>
+
+
+
+
                             <div class="input-field col s12 right-align">
-                                <a href="#" id='data-next' class="btn peach waves-effect waves-light">
+                                <button type="submit" id='data-next' class="btn peach waves-effect waves-light">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
-                                </a>
+                                </button>
                             </div>
+
                         </div>
                     </div>
-                    <div id="rate-tab">
+                    <div id="link-tab">
                         <div class="card-header center-align">
                             <h4>Obtener Link de Pago</h4>
                         </div>
@@ -129,6 +130,6 @@
 @endsection
 
 @section('scripts')
-
     <script src="{{ asset('js/validations.js') }}"></script>
+    <script src="{{ asset('js/data/bdv.js') }}"></script>
 @endsection
