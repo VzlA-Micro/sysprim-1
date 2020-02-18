@@ -46,7 +46,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code" class="validate" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
+                            <input id="code" type="text" name="code" class="validate code-only" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
                             <label for="code">Codigo</label>
                         </div>
                         <div class="input-field col s12 m6">

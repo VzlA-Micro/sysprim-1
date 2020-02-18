@@ -22,7 +22,7 @@
             {{--@if(\Carbon\Carbon::now()->format('m') >= '01' || \Carbon\Carbon::now()->format('m') <= '03')--}}
             @can('Declarar Inmuebles')
             <div class="col s12 m4">
-                <a href="#mode" class="btn-app white red-text modal-trigger">
+                <a href="{{  route('properties.taxes.create',['id' => $property->id, 'status' => 'full']) }}" class="btn-app white red-text modal-trigger">
                     <i class="icon-report"></i>
                     <span class="truncate">Declarar Inmueble</span>
                 </a>
@@ -44,7 +44,7 @@
                 </a>
             </div>
             @endcan
-            <div id="mode" class="modal modal-sm">
+            {{--<div id="mode" class="modal modal-sm">
                 <div class="">
                     <div class="modal-content">
                         <h5 class="center-align">Forma de Pago</h5>
@@ -53,11 +53,11 @@
                     <div class="modal-footer">
                         <a href="{{  route('properties.taxes.create',['id' => $property->id, 'status' => 'full']) }}"
                            class="modal-close green waves-effect waves-green btn-small"><i class="icon-payment right"></i>Pago Completo Anual</a>
-                        {{--<a href="{{ route('properties.taxes.create',['id' => $property->id, 'status' => 'trimestral']) }}"
-                           class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>--}}
+                        --}}{{--<a href="{{ route('properties.taxes.create',['id' => $property->id, 'status' => 'trimestral']) }}"
+                           class="modal-close waves-effect waves-green btn-small">Pago Trimestral</a>--}}{{--
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
 @endsection

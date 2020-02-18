@@ -274,6 +274,7 @@ $(document).ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+
         if (document !== '') {
             $.ajax({
                 method: "GET",
@@ -342,9 +343,11 @@ $(document).ready(function () {
 
     $('#data-next').click(function () {
         var status = $('#status').val();
-        var name_full = $('#name_full').val();
-        var address = $('#address_full').val();
-        var document_full = $('#document_full').val();
+        var name_full = $('#name').val();
+        var address = $('#address').val();
+        var document_full = $('#document').val();
+        var responsable = null;
+        var type_document_company = false;
 
         if ($('#type').val() == 'company') {
             status = 'propietario';
@@ -352,11 +355,10 @@ $(document).ready(function () {
         var type = $('#type_document_full').val();
 
         if (type === 'J' || type === 'G') {
-            var name_full = $('#name_full').val();
-            var address = $('#address_full').val();
-            var document_full = $('#document_full').val();
-
-            if (name_full === '' && address === '' && document_full === '') {
+            var name_f = $('#name_full').val();
+            var address_f = $('#address_full').val();
+            var document_f = $('#document_full').val();
+            if (name_f === '' && address_f === '' && document_f === '') {
                 swal({
                     title: "Información",
                     text: "Debe ingresar el documento de identificación para continuar con el registro.",
@@ -366,142 +368,195 @@ $(document).ready(function () {
                         className: "blue-gradient"
                     },
                 });
+            } else {
+                type_document_company = true;
             }
 
         }
 
-        if (name_full !== '' && address !== '' && document_full !== '') {
 
-            if ((status == null || status == '')) {
+        if ((status == null || status == '')) {
+            swal({
+                title: "Información",
+                text: "Debe seleccionar una condicion social para continuar con el registro.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+        } else if (status !== 'propietario') {
+
+            if ($('#type_document').val() == null) {
+
                 swal({
                     title: "Información",
-                    text: "Debe seleccionar una condicion social para continuar con el registro.",
+                    text: "Debe seleccionar un tipo de documento de la persona responsable.",
                     icon: "info",
                     button: {
                         text: "Esta bien",
                         className: "blue-gradient"
                     },
                 });
-            } else if (status !== 'propietario') {
+            } else if ($('#document').val() == '') {
 
-                if ($('#type_document').val() == null) {
-                    swal({
-                        title: "Información",
-                        text: "Debe seleccionar un tipo de documento de la persona responsable.",
-                        icon: "info",
-                        button: {
-                            text: "Esta bien",
-                            className: "blue-gradient"
-                        },
-                    });
-                } else if ($('#document').val() == '') {
-                    swal({
-                        title: "Información",
-                        text: "Debe introducir el documento de la persona responsable.",
-                        icon: "info",
-                        button: {
-                            text: "Esta bien",
-                            className: "blue-gradient"
-                        },
-                    });
-                } else {
-                    $('#two').removeClass('disabled');
-                    $('#one').addClass('disabled');
-                    $('ul.tabs').tabs("select", "vehicle-tab");
-                }
-            } else if (status == 'propietario') {
+                swal({
+                    title: "Información",
+                    text: "Debe introducir el documento de la persona responsable.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            } else if (name_full == '') {
 
-                $('#two').removeClass('disabled');
-                $('#one').addClass('disabled');
-                $('ul.tabs').tabs("select", "vehicle-tab");
-            } else {
-                band = true;
-                $('.rate').each(function () {
-                    if ($(this).val() === '' || $(this).val() === null) {
-                        swal({
-                            title: "Información",
-                            text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
-                            icon: "info",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
-                        band = false;
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
                     }
                 });
-                if ($('#person_id').val() !== '') {
-                    band = false;
-                }
+            } else if (address == '') {
 
-                if (band) {
-                    var type = $('#type').val();
-                    var name;
-                    if (type == 'user') {
-                        name = $('#user_name').val();
-                    } else {
-                        name = $('#name').val();
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
                     }
+                });
+            }
+            else if (document_full == '') {
 
-                    var type_document = $('#type_document').val();
-                    var document = $('#document').val();
-                    var address = $('#address').val();
-                    var surname = $('#surname').val();
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            } else {
 
-                    $.ajax({
-                        method: "POST",
-                        dataType: "json",
-                        data: {
-                            name: name,
-                            surname: surname,
-                            type_document: type_document,
-                            document: document,
-                            address: address,
-                            type: type
-                        },
-                        url: url + 'properties/taxpayers/company-user/register',
+                /* $('#two').removeClass('disabled');
+                 $('#user-tab-one').addClass('disabled');
+                 $('ul.tabs').tabs("select", "vehicle-tab");*/
+                responsable = true;
+            }
+        } else if (status == 'propietario') {
+            if (type_document_company) {
+                $('#two').removeClass('disabled');
+                $('#user-tab-one').addClass('disabled');
+                $('ul.tabs').tabs("select", "vehicle-tab");
+            } else {
 
-                        beforeSend: function () {
-                            $("#preloader").fadeIn('fast');
-                            $("#preloader-overlay").fadeIn('fast');
-                        },
-                        success: function (response) {
-                            $('#person_id').val(response.id);
-                            $('#two').removeClass('disabled');
-                            $('#one').addClass('disabled');
-                            $('ul.tabs').tabs("select", "property-tab");
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                        },
-                        error: function (err) {
-                            console.log(err);
-                            swal({
-                                title: "¡Oh no!",
-                                text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
-                                icon: "error",
-                                button: {
-                                    text: "Aceptar",
-                                    visible: true,
-                                    value: true,
-                                    className: "green",
-                                    closeModal: true
-                                }
-                            });
-
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                        }
-                    });
-                } else {
-                    $('#two').removeClass('disabled');
-                    $('#one').addClass('disabled');
-                    $('ul.tabs').tabs("select", "vehicle-tab");
-                }
             }
         }
+
+        if (responsable) {
+            band = true;
+            $('.rate').each(function () {
+                if ($(this).val() === '' || $(this).val() === null) {
+                    swal({
+                        title: "Información",
+                        text: "Complete el campo " + $(this).attr('data-validate') + " para continuar con el registro.",
+                        icon: "info",
+                        button: {
+                            text: "Esta bien",
+                            className: "blue-gradient"
+                        },
+                    });
+                    band = false;
+                }
+            });
+            if ($('#person_id').val() !== '') {
+                band = false;
+            }
+
+            if (band) {
+                var type = $('#type').val();
+                var name;
+                if (type == 'user') {
+                    name = $('#user_name').val();
+                } else {
+                    name = $('#name').val();
+                }
+
+                var type_document = $('#type_document').val();
+                var document = $('#document').val();
+                var address = $('#address').val();
+                var surname = $('#surname').val();
+
+                $.ajax({
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        name: name,
+                        surname: surname,
+                        type_document: type_document,
+                        document: document,
+                        address: address,
+                        type: type
+                    },
+                    url: url + 'properties/taxpayers/company-user/register',
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        $('#person_id').val(response.id);
+                        $('#two').removeClass('disabled');
+                        $('#user-tab-one').addClass('disabled');
+                        $('ul.tabs').tabs("select", "vehicle-tab");
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ha ocurrido un error inesperado, refresca la página e intentalo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Aceptar",
+                                visible: true,
+                                value: true,
+                                className: "green",
+                                closeModal: true
+                            }
+                        });
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }
+                });
+            } else {
+                $('#two').removeClass('disabled');
+                $('#user-tab-one').addClass('disabled');
+                $('ul.tabs').tabs("select", "vehicle-tab");
+            }
+        }
+
     });
 
-    $('#property').on('submit', function (e) {
+    /*$('#property').on('submit', function (e) {
         var type = $('#type').val();
         var id = $('#id').val();
         e.preventDefault();
@@ -559,6 +614,23 @@ $(document).ready(function () {
                     });
                 }
             });
+        }
+    });*/
+
+    $('#year').change(function () {
+        var anio = $(this).val();
+        var yearCurrent = (new Date).getFullYear();
+
+        if (anio > yearCurrent) {
+            swal({
+                title: "informacion",
+                text: 'Debe introducir un año valido',
+                icon: 'info'
+            });
+            $(this).val('');
+            $(this).focus();
+        } else {
+
         }
     });
 
