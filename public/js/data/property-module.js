@@ -408,6 +408,7 @@ $(document).ready(function () {
                 $('ul.tabs').tabs("select", "vehicle-tab");
             }
         }
+
         else {
             band = true;
             $('.rate').each(function () {

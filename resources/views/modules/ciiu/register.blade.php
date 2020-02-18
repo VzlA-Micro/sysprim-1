@@ -33,7 +33,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input id="code" type="text" name="code"  class="validate" required minlength="5" maxlength="15">
+                            <input id="code" type="text" name="code"  class="validate code-only" required minlength="5" maxlength="15">
                             <label for="code">Codigo</label>
                         </div>
 
