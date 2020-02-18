@@ -7,6 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.publicity') }}">Configuración de Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('group-publicity.manage') }}">Gestionar Grupo de Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('group-publicity.read') }}" >Ver
                             Grupos</a></li>

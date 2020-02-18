@@ -12,6 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a>
                     </li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.manage') }}">Gestionar
                             Marcas De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.brand.read') }}" >Ver
