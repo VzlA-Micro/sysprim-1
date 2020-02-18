@@ -189,7 +189,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\DeclarationPublicityServiceProvider::class,
         App\Providers\CheckCollectionDayServiceProvider::class,
-        App\Providers\VerificationProviderService::class
+        App\Providers\VerificationProviderService::class,
+        App\Providers\BdvServiceProvider::class
 
     ],
 
@@ -255,6 +256,7 @@ return [
         'DeclarationPublicity'=>App\Helpers\DeclarationPublicity::class,
         'CheckCollectionDay'=>App\Helpers\CheckCollectionDay::class,
         'Verification'=>App\Helpers\Verification::class,
+        'Bdv'=>App\Helpers\IpgBdv::class,
     ],
 
 ];

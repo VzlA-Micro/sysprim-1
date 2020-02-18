@@ -1139,10 +1139,12 @@ Route::middleware(['auth'])->group(/**
 
 
         /*taxpayers company*/
-
-
         Route::get('test/{code}/{date_limit}', 'VerifyPaymentsBankImportController@verifyPaymentsTaxes');
-
-
         Route::get('home/test','HomeController@test');
+
+
+
+
+        /*BDV- MODULE */
+        route::get('payments/bdv/register','BdvController@register')->name('payments.bdv.register');
     });
