@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(/**
                 return view('modules.settings.manage');
             })->name('settings.manage');
             // Nivel 2: CIIU y UTC
+
             Route::group(['middleware' => ['permission:Gestionar Unidad Tribuaria|Gestionar CIIU']], function () {
                 Route::get('/ciu/manage', function () {
                     return view('modules.ciiu-group.menu');
@@ -135,17 +136,27 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/ciu-group/read', 'GroupCiiuController@show')->name('ciu-group.read');
                 Route::get('/ciu-group/verify-code/{code}', 'GroupCiiuController@verifyGroupCiu');
 
+
                 Route::get('/ciu-branch/manage', function () {
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
-                // Nivel 4 (Gestionar Ramo CIIU)
 
+                //time-line///
+                Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
+                Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
+                Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
+
+
+                Route::get('/ciu-branch/time-line/test', 'CiuController@test');
+
+                // Nivel 4 (Gestionar Ramo CIIU)
 
                 Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
                     Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
                     Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
                     Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
                     Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
+
 
 
                     // Nivel 5 (Detalles)

@@ -24,7 +24,6 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Codigo</th>
-                                    <th>Valor</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
@@ -33,7 +32,6 @@
                                 <tr>
                                     <td>{{ $ciu->name }}</td>
                                     <td>{{ $ciu->code }}</td>
-                                    <td>{{ $ciu->alicuota }}</td>
                                     @can('Detalles Ramo CIIU')
                                     <td>
                                         <a href="{{ route('ciu-branch.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
