@@ -83,14 +83,16 @@ class CatastralTerrenoController extends Controller
     }
 
     public function timelineIndex() {
-        $timelines = TimelineCatastralBuild::all();
-        return view('modules.catastral-construction.timeline.read', ['timelines' => $timelines]);
+        $timelines = TimelineCatastralTerrain::all();
+
+//        dd($timelines);
+        return view('modules.catastral-terreno.timeline.read', ['timelines' => $timelines]);
     }
 
     public function timelineShow($id) {
-        $catastralConstrucciones = CatastralConstruccion::all();
-        $timeline = TimelineCatastralBuild::findOrFail($id);
-        return view('modules.catastral-construction.timeline.details', ['timeline' => $timeline, 'catastralConstrucciones' => $catastralConstrucciones]);
+        $catastralTerrenos = CatastralTerreno::all();
+        $timeline = TimelineCatastralTerrain::findOrFail($id);
+        return view('modules.catastral-terreno.timeline.details', ['timeline' => $timeline, 'catastralTerrenos' => $catastralTerrenos]);
     }
 
     public function timelineUpdate(Request $request) {

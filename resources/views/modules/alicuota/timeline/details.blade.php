@@ -44,7 +44,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ $timeline->value }}" maxlength="6" disabled required>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ $timeline->value }}" maxlength="2" disabled required>
                             <label for="value">Valor</label>
                         </div>
                     </div>
