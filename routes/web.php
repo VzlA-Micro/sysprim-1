@@ -144,7 +144,7 @@ Route::middleware(['auth'])->group(/**
                 //time-line///
                 Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
                 Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
-                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
+                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index ');
 
                 Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
 
@@ -1181,10 +1181,15 @@ Route::middleware(['auth'])->group(/**
 
         /*BDV- MODULE */
 
-        route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
-        route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
+        Route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
+        Route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
+        Route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
+        Route::get('payments/bdv/verified/{token}/{id}', 'BdvController@verifyTaxes');
 
 
-        route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
+
+
+
+
 
     });

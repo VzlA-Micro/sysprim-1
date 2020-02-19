@@ -66,7 +66,7 @@
                                     </label>
                                 </div>
 
-                                <a href="{{route('payments.bdv.register',['id'=>$taxes_id])}}">
+                                <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
                                     <div class="col s12 m4">
                                         <input type="radio" class="">
                                         <label class="btn-radio red">
