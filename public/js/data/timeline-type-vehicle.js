@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     var url = localStorage.getItem('url');
 
-
+///////////////////////////////////////////////////////////////
     $('#register').submit(function (e) {
         e.preventDefault();
         $.ajax({
@@ -74,6 +74,94 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+
+    $('#btn-modify').click(function () {
+        $(this).hide();
+        $('#rate').prop('disabled',false);
+        $('#rate_ut').prop('disabled',false);
+        $('#dateStart').prop('disabled',false);
+        $('#dateEnd').prop('disabled',false);
+        $('#btn-update').removeClass('hide');
+    });
+
+    $('#updateTimeLine').on('submit', function (e) {
+        e.preventDefault();
+
+        swal({
+            icon: "info",
+            title: "Actualizar Linea De Tiempo",
+            text: "¿Está seguro que desea modificar los datos?, Si lo hace, no podrá revertir los cambios.",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey",
+                    closeModal: true
+                },
+                confirm: {
+                    text: "Aceptar",
+                    value: true,
+                    visible: true,
+                    className: "blue",
+                },
+            }
+
+        }).then(confirm => {
+            if (confirm) {
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    url: url + "type-vehicles/update",
+                    data: new FormData(this),
+                    dataType: false,
+
+                    beforeSend: function () {
+                        $('#name').attr('readonly', 'readonly');
+                        $('#rate').attr('readonly', 'readonly');
+                        $('#rate_ut').attr('readonly', 'readonly');
+                    },
+                    success: function (data) {
+                        if (data.status == true) {
+                            swal({
+                                title: "¡Bien Hecho!",
+                                text: data.message,
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }else{
+                            swal({
+                                title: "Información",
+                                text: data.message,
+                                icon: "info",
+                                button: "Ok",
+                            })
+                        }
+                    },
+                    error: function (e) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                });
+                updateType = false;
+            }
+        });
+
     });
 });
 

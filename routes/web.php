@@ -205,6 +205,7 @@ Route::middleware(['auth'])->group(/**
             Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
             Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
             Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
+            Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             // Gestionar Marcas de vehiculos

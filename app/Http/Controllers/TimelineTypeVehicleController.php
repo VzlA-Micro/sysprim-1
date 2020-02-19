@@ -109,9 +109,32 @@ class TimelineTypeVehicleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $response=null;
+        $timeLine=TimelineTypeVehicle::find($request->input('id'));
+
+        $timeLine->type_vehicle_id=$request->input('type_vehicle');
+        $timeLine->rate= $request->input('rate');
+        $timeLine->rate_UT= $request->input('rate_ut');
+        $timeLine->since = $request->input('date_start');
+        $timeLine->to= $request->input('date_end');
+
+        $timeLine->update();
+
+        if ($timeLine->update()){
+            $response=[
+                'status'=>true,
+                'message'=>'Se ha actualizado el registro exitosamente'
+                ];
+        }else{
+            $response=[
+                'status'=>false,
+                'message'=>'Se ha actualizado el registro exitosamente'
+            ];
+        }
+
+        return response()->json($response);
     }
 
     /**
