@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\CatastralConstruccion;
 
 
-
-
-
 class CatastralConstruccionController extends Controller{
 
     public function manage() {
@@ -49,8 +46,8 @@ class CatastralConstruccionController extends Controller{
         return response()->json(['status'=>'success'],200);
     }
 
+    public function timelineManage() {
 
-
-
+    }
 
 }

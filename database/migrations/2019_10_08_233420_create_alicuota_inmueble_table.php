@@ -16,7 +16,7 @@ class CreateAlicuotaInmuebleTable extends Migration
         Schema::create('alicuota_inmueble', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',30);
-            $table->float('value',3);
+            $table->string('status',10);
             $table->timestamps();
         });
     }

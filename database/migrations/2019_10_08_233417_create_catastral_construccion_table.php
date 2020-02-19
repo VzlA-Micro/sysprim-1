@@ -17,7 +17,8 @@ class CreateCatastralConstruccionTable extends Migration
             $table->increments('id');
             $table->text('name');
             $table->boolean('regimen_horizontal');
-            $table->integer('value_edificacion');
+            $table->string('status',15);
+//            $table->integer('value_edificacion');
             $table->timestamps();
         });
     }

@@ -1145,4 +1145,25 @@ Route::middleware(['auth'])->group(/**
 
 
         Route::get('home/test','HomeController@test');
+
+
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('alicuota/timeline/manage', 'AlicuotaController@timelineManage')->name('alicuota.timeline.manage');
+        Route::get('alicuota/timeline/register', 'AlicuotaController@timelineCreate')->name('alicuota.timeline.register');
+        Route::get('alicuota/timeline/read', 'AlicuotaController@timelineIndex')->name('alicuota.timeline.read');
+        Route::post('alicuota/timeline/store', 'AlicuotaController@timelineStore')->name('alicuota.timeline.store');
+        Route::get('alicuota/timeline/details/{id}', 'AlicuotaController@timelineShow')->name('alicuota.timeline.details');
+        Route::post('alicuota/timeline/update', 'AlicuotaController@timelineUpdate')->name('alicuota.timeline.update');
+
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('/catastral-construction/timeline/manage', 'CatastralConstruccionController@manage')->name('catrastal.construction.timeline.manage');
+
+
+
     });
