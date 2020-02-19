@@ -99,16 +99,18 @@ class CatastralTerrenoController extends Controller
         $id = $request->input('id');
         $since = $request->input('since');
         $to = $request->input('to');
-        $value = $request->input('value');
-        $timeline = TimelineCatastralBuild::find($id);
+        $valueBuiltTerrain = $request->input('value_built_terrain');
+        $valueEmptyTerrain = $request->input('value_empty_terrain');
+        $timeline = TimelineCatastralTerrain::find($id);
         $timeline->since = $since;
         $timeline->to = $to;
-        $timeline->value = $value;
+        $timeline->value_built_terrain = $valueBuiltTerrain;
+        $timeline->value_empty_terrain = $valueEmptyTerrain;
         $timeline->update();
         $id = $timeline->id;
         return response()->json([
             'status' => 'success',
-            'message' => 'Se ha actualizado un valor en la linea de tiempo del valor catastral de construcción.',
+            'message' => 'Se ha actualizado un valor en la linea de tiempo del valor catastral de terreno.',
             'id' => $id
         ]);
     }

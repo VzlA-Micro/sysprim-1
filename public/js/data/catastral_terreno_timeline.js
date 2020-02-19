@@ -86,14 +86,16 @@ $(document).ready(function() {
         $('#name').removeAttr('disabled');
         $('#since').removeAttr('disabled');
         $('#to').removeAttr('disabled');
-        $('#value').removeAttr('disabled');
+        $('#value_built_terrain').removeAttr('disabled');
+        $('#value_empty_terrain').removeAttr('disabled');
+
     });
 
     $('#update').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-            url: url + "catastral-construction/timeline/update",
+            url: url + "catastral-terreno/timeline/update",
             cache: false,
             contentType: false,
             processData: false,
@@ -113,7 +115,7 @@ $(document).ready(function() {
                         className: "green-gradient"
                     }
                 }).then(accept => {
-                    window.location.href = url + 'catastral-construction/timeline/details/' + resp.id;
+                    window.location.href = url + 'catastral-terreno/timeline/details/' + resp.id;
                 });
             },
             error: function(err) {
