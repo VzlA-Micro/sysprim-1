@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\TimelineCiiu;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Ciu;
 use App\GroupCiiu;
@@ -31,8 +33,6 @@ class CiuController extends Controller
         $ciu= new ciu();
         $ciu->code= $request->input('code');
         $ciu->name= $request->input('name');
-        $ciu->alicuota= $request->input('alicuota');
-        $ciu->min_tribu_men= $request->input('mTM');
         $ciu->group_ciu_id= $request->input('idGroupCiiu');
         $ciu->save();
         return response()->json('true');
@@ -96,8 +96,6 @@ class CiuController extends Controller
         $ciu=ciu::findOrFail($request->input('id'));
         $ciu->code= $request->input('code');
         $ciu->name= $request->input('name');
-        $ciu->alicuota= $request->input('alicuota')/100;
-        $ciu->min_tribu_men= $request->input('mTM');
         $ciu->group_ciu_id= $request->input('idGroupCiiu');
         $ciu->update();
     }
@@ -148,4 +146,48 @@ class CiuController extends Controller
         return response()->json($response);
 
     }
+
+    public function managerTimeLine(){
+        return view('modules.ciiu.timeline.manage');
+    }
+
+    public function registerTimeLine(){
+         $ciiu=Ciu::orderBy('name','asc')->get();
+         return view('modules.ciiu.timeline.register',['ciiu'=>$ciiu]);
+    }
+
+    public function storeTimeLine(Request $request){
+        $ciu_id=$request->input('ciu_id');
+        $since_format=Carbon::parse($request->input('since'));
+        $since=Carbon::parse($request->input('since'));
+        $timeline=TimelineCiiu::where('ciu_id',(int)$ciu_id)->whereYear('since', '=',$since_format->format('Y'))->get();
+
+        if($timeline->isEmpty()){
+            $alicuota=$request->input('alicuota');
+            $min_tribu=$request->input('mTM');
+            $timeline=new TimelineCiiu();
+            $timeline->alicuota=$alicuota/100;
+            $timeline->ciu_id=$ciu_id;
+            $timeline->min_tribu_men=$min_tribu;
+            $timeline->since=$since;
+            $timeline->to=$since_format->format('Y').'-12-31';
+            $timeline->save();
+
+            $response=['status'=>'success','message'=>'Se ha registrado una nueva linea de tiempo para este CIIU con éxito.'];
+        }else{
+            $response=['status'=>'error','message'=>'Ya hay Linea del tiempo en este rango de fecha asociada a este CIIU'];
+        }
+
+        return response()->json($response);
+    }
+
+
+
+    public function indexTimeLine(){
+        $ciiu = TimelineCiiu::orderBy('id','desc')->get();
+        return view('modules.ciiu.timeline.read',['ciiu'=>$ciiu]);
+    }
+
+
+
 }

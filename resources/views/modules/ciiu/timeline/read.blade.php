@@ -24,14 +24,18 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Codigo</th>
+                                    <th>Desde</th>
+                                    <th>Hasta</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($showCiu as $ciu)
+                                @foreach($ciiu as $ciu)
                                 <tr>
-                                    <td>{{ $ciu->name }}</td>
-                                    <td>{{ $ciu->code }}</td>
+                                    <td>{{ $ciu->ciiu->name }}</td>
+                                    <td>{{ $ciu->ciiu->code }}</td>
+                                    <td>{{ $ciu->since }}</td>
+                                    <td>{{ $ciu->to }}</td>
                                     @can('Detalles Ramo CIIU')
                                     <td>
                                         <a href="{{ route('ciu-branch.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
