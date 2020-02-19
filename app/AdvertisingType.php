@@ -3,15 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AdvertisingType extends Model
+class AdvertisingType extends Model implements Auditable
 {
     protected $table="advertising_type";
-
-    // public function publicities() {
-    // 	return $this->belongsToMany('App\AdvertisingTypePublicity','advertising_type_publicity')
-    //         ->withPivot('publicity_id');
-    // }
+    
+    use \OwenIt\Auditing\Auditable;
 
     public function group()
     {
