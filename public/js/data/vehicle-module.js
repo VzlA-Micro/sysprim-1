@@ -460,12 +460,14 @@ $(document).ready(function () {
                 responsable = true;
             }
         } else if (status == 'propietario') {
-            if (type_document_company) {
+            if (type === 'J' || type === 'G' && type_document_company) {
                 $('#two').removeClass('disabled');
                 $('#user-tab-one').addClass('disabled');
                 $('ul.tabs').tabs("select", "vehicle-tab");
-            } else {
-
+            } else if (type === 'V' || type === 'E' && document_full !== '') {
+                $('#two').removeClass('disabled');
+                $('#user-tab-one').addClass('disabled');
+                $('ul.tabs').tabs("select", "vehicle-tab");
             }
         }
 

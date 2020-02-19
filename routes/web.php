@@ -207,6 +207,7 @@ Route::middleware(['auth'])->group(/**
             Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
             Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
 
+            Route::get('/type-vehicles/timeline/verified/{id}/{if}/{pf}', 'TimelineTypeVehicleController@verifiedTimeline');
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             // Gestionar Marcas de vehiculos
             Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
