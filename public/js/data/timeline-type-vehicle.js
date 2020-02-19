@@ -45,7 +45,7 @@ $(document).ready(function () {
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {
-                        window.location.href = url + "type-vehicles/timeline/register";
+                        window.location.href = url + "type-vehicles/timeline/read";
                     });
                 } else if (data.status == "validation-failed") {
                     swal({
@@ -89,7 +89,7 @@ $(document).ready(function () {
         $('#rate').prop('disabled', false);
         $('#rate_ut').prop('disabled', false);
         $('#dateStart').prop('disabled', false);
-        $('#dateEnd').prop('disabled', false);
+        //$('#dateEnd').prop('disabled', false);
         $('#btn-update').removeClass('hide');
     });
 
@@ -133,6 +133,7 @@ $(document).ready(function () {
                             $('#rate_ut').attr('readonly', 'readonly');
                         },
                         success: function (data) {
+                            console.log(data)
                             if (data.status == true) {
                                 swal({
                                     title: "¡Bien Hecho!",
@@ -142,6 +143,13 @@ $(document).ready(function () {
                                 }).then(function () {
                                     location.reload();
                                 });
+                            }else if(data.status == "validation-failed"){
+                                swal({
+                                    title: "Información",
+                                    text: data.message,
+                                    icon: "info",
+                                    button: "Ok",
+                                })
                             } else {
                                 swal({
                                     title: "Información",

@@ -25,6 +25,8 @@
 
                         </div>-->
                         <input id="id" type="hidden" name="id" value="{{ $timeline->id }}">
+                        <input id="id" type="hidden" name="typeVehicleId" value="{{ $timeline->type_vehicle_id}}">
+
                         <div class="input-field col s12">
                             <i class="icon-motorcycle prefix"></i>
                             <select name="type_vehicle" id="type_vehicle" disabled required>
