@@ -20,12 +20,16 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function(resp) {
+            console.log(resp.success);
 
-                swal({
-                    title: "Información",
-                    text:resp.responseMessage,
-                    icon: 'info'
-                });
+                if(resp.success){
+                    console.log('epa');
+                    $('#two').removeClass('disabled');
+                    $('#one').addClass('disabled');
+                    $('ul.tabs').tabs("select", "link-tab");
+                    $('#link').attr('href',resp.urlPayment);
+                }
+
 
                 console.log(resp);
                 $("#preloader").fadeOut('fast');

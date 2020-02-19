@@ -56,7 +56,7 @@
 
                         <div class="input-field col s12 m12">
                             <i class="icon-date_range prefix"></i>
-                            <select id="since" name="since" id="since">
+                            <select name="since" id="since">
                                 <option value="null">Seleccione</option>
                                 @while($cont <= 2030)
                                     <option value="{{$cont.'-01-01'}}">{{$cont}}</option>

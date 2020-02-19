@@ -1,7 +1,8 @@
 <?php
 namespace App\Helpers;
 
-class IpgBdvPaymentResponse{
+class IpgBdvPaymentResponse
+{
     // propiedades
     public $success;
     public $responseCode;

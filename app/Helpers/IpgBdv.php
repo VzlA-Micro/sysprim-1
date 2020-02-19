@@ -4,11 +4,14 @@
 namespace App\Helpers;
 
 
+
+
 class IpgBdv{
 
     private $urlApi = 'https://biopago.banvenez.com/ipg/api/Payment';
-    protected $user;
-    protected $pass;
+    private $messages;
+    private $pass;
+    private $user;
 
     function __construct($user1,$pass1){
         $this->user = $user1;
@@ -58,9 +61,6 @@ class IpgBdv{
 
         $response = new IpgBdvCheckPaymentResponse();
         $resp = curl_exec($curl);
-
-
-
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode == 200)
@@ -165,7 +165,6 @@ class IpgBdv{
         $response = new IpgBdvPaymentResponse();
         $resp = curl_exec($curl);
 
-
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpcode == 200)
@@ -201,18 +200,20 @@ class IpgBdv{
             $response->success = false;
         }
 
+
+
         $response->responseMessage = $this->getMessageDescription($response->responseCode);
 
         curl_close($curl); // cerrar el request para liberar recursos
+
 
         return $response;
     }
 
     public function getMessageDescription($code) {
-
-
         return $this->messages[$code];
     }
+
 }
 
 

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Helpers;
-class IpgBdvPaymentRequest{
+class IpgBdvPaymentRequest
+{
     // propiedades
     public $idLetter;
     public $idNumber;

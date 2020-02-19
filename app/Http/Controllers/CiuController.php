@@ -158,23 +158,19 @@ class CiuController extends Controller
 
     public function storeTimeLine(Request $request){
         $ciu_id=$request->input('ciu_id');
-        $since=Carbon::parse($request->input('since'))->format('Y-m-d');
-
-        $to=Carbon::parse($request->input('to'))->format('Y-m-d');
-
-
-        $timeline=TimelineCiiu::where('ciu_id',(int)$ciu_id)->whereYear('since', '=',(string)$since)->get();
+        $since_format=Carbon::parse($request->input('since'));
+        $since=Carbon::parse($request->input('since'));
+        $timeline=TimelineCiiu::where('ciu_id',(int)$ciu_id)->whereYear('since', '=',$since_format->format('Y'))->get();
 
         if($timeline->isEmpty()){
             $alicuota=$request->input('alicuota');
             $min_tribu=$request->input('mTM');
-
             $timeline=new TimelineCiiu();
             $timeline->alicuota=$alicuota/100;
             $timeline->ciu_id=$ciu_id;
             $timeline->min_tribu_men=$min_tribu;
             $timeline->since=$since;
-            $timeline->to=$to;
+            $timeline->to=$since_format->format('Y').'-12-31';
             $timeline->save();
 
             $response=['status'=>'success','message'=>'Se ha registrado una nueva linea de tiempo para este CIIU con éxito.'];
@@ -187,9 +183,9 @@ class CiuController extends Controller
 
 
 
-    public function test(){
-        $timeline=TimelineCiiu::where('ciu_id',423)->whereDate('since', '>=','2020-02-03')->whereDate('to','<=','2020-02-09')->get();
-        dd($timeline);
+    public function indexTimeLine(){
+        $ciiu = TimelineCiiu::orderBy('id','desc')->get();
+        return view('modules.ciiu.timeline.read',['ciiu'=>$ciiu]);
     }
 
 

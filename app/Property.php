@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Property extends Model
+class Property extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'property';
 
     public function users() {

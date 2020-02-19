@@ -15,8 +15,7 @@
             <div class="col s12 m8 l8 offset-m2 offset-l2">
                 <form action="#" method="post"  class="card" id="register">
                     <ul class="tabs">
-                        <li class="tab col s6" id="one"><a href="#payment-tab"><i class="icon-filter_1"></i>Datos del Pago</a>
-                        </li>
+                        <li class="tab col s6" id="one"><a href="#payment-tab"><i class="icon-filter_1"></i>Datos del Pago</a></li>
                         <li class="tab col s6 disabled" id="two"><a href="#link-tab"><i class="icon-filter_2"></i> Obtener Link</a></li>
                     </ul>
 
@@ -106,20 +105,17 @@
                             <h4>Obtener Link de Pago</h4>
                         </div>
 
+                            <div class="col s12 m6 offset-m3 center-align" id="div-send">
+                                <a href=""  id="link" class="btn-app green">
+                                    <i class="far fa-file-pdf"></i>
+                                    <span class="truncate">Obtener Link</span>
+                                </a>
+                            </div>
 
-                        <div class="col l12">
-
-
-                        </div>
 
 
                         <div class="card-content row">
-                            <div class="input-field col s12 right-align">
-                                <a href="#" class="btn peach waves-effect waves light" id="register-rates">
-                                    Siguiente
-                                    <i class="icon-navigate_next right"></i>
-                                </a>
-                            </div>
+
                         </div>
 
                     </div>
