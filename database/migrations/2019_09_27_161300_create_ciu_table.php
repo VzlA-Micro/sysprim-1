@@ -17,8 +17,6 @@ class CreateCiuTable extends Migration
             $table->increments('id');
             $table->string('code',15)->unique();
             $table->text('name');
-            $table->float('alicuota');
-            $table->integer('min_tribu_men');
             $table->integer('group_ciu_id')->unsigned();
             $table->foreign('group_ciu_id')->references('id')->on('group_ciu')->onDelete('cascade');
             $table->timestamps();
