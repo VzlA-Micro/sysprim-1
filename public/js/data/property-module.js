@@ -383,12 +383,14 @@ $(document).ready(function () {
                 },
             });
         } else if (status == 'propietario') {
-            if (type_document_company) {
+            if (type === 'J' || type === 'G' && type_document_company) {
                 $('#two').removeClass('disabled');
-                $('#user-tab-one').addClass('disabled');
-                $('ul.tabs').tabs("select", "vehicle-tab");
-            } else {
-
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "property-tab");
+            } else if (type === 'V' || type === 'E' && document_full !== '') {
+                $('#two').removeClass('disabled');
+                $('#one').addClass('disabled');
+                $('ul.tabs').tabs("select", "property-tab");
             }
         }
         else if(status != 'propietario') {

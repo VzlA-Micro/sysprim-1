@@ -651,7 +651,7 @@ $('document').ready(function () {
         var license = $(this).val();
         if (license == '') {
 
-        }else if(license.length < 7){
+        } else if (license.length < 7) {
             swal({
                 title: "Información",
                 text: "Ingrese una placa válida.",
@@ -662,127 +662,127 @@ $('document').ready(function () {
                 },
             });
         }
-        else{
-        $.ajax({
-            type: "get",
-            url: url + "/ticketOffice/vehicle/search-license/" + license,
+        else {
+            $.ajax({
+                type: "get",
+                url: url + "/ticketOffice/vehicle/search-license/" + license,
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "empty") {
-                    swal({
-                        title: data['message'],
-                        icon: "info",
-                        button: "Ok"
-                    });
-                    $('#brandTo').prop('disabled', true);
-                    $('#modelTo').prop('disabled', true);
-                    $('#colorTo').prop('disabled', true);
-                    $('#personTo').prop('disabled', true);
-                    $('#fiscal_period').prop('disabled', true);
-
-                }
-                else {
-
-
-                    $('#vehicle_id').val(data['vehicle'][0].id);
-                    M.updateTextFields();
-                    $('#brandTo').val(data['modelVehicle']);
-                    M.updateTextFields();
-                    $('#modelTo').val(data['vehicle'][0]['model'].name);
-                    M.updateTextFields();
-                    $('#colorTo').val(data['vehicle'][0].color);
-                    M.updateTextFields();
-                    $('#personTo').val(data['userVehicle'][0].name);
-                    M.updateTextFields();
-
-
-                    $('#fiscal_period').prop('disabled', false);
-                    $('select').formSelect();
-                    /*swal({
-                        title: "Periodo Fiscal",
-                        text: "Elija entre los siguientes periodo",
-                        icon: "info",
-                        buttons: {
-                            cancel: {
-                                text: "Anual",
-                                value: false,
-                                visible: true,
-                                className: "green",
-                                closeModal: true
-                            },
-                            confirm: {
-                                text: "Trimestral",
-                                value: true,
-                                visible: true,
-                                className: "blue",
-                                closeModal: true
-                            }
-                        } M.updateTextFields();
-
-                    }).then(function (options) {
-
-                        if (options) {
-                            period = 'true';
-                        } else {
-                            period = 'false';
-                        }
-
-                        $.ajax({
-                            type: "get",
-                            url: url + "/ticketOffice/vehicle/period-fiscal/" + period,
-                            beforeSend: function () {
-                            },
-                            success: function (data) {
-                                $("#preloader").fadeOut('fast');
-                                $("#preloader-overlay").fadeOut('fast');
-                                console.log(data);
-                                if (data['status'] == "trimestre") {
-                                    $('#fiscal_periodTo').val(data['trimestre']);
-                                    M.updateTextFields();
-                                } else {
-                                    $('#fiscal_periodTo').val(data['year']);
-                                    M.updateTextFields();
-                                }
-
-                            },
-                            error: function (e) {
-                                $("#preloader").fadeOut('fast');
-                                $("#preloader-overlay").fadeOut('fast');
-                                swal({
-                                    title: "¡Oh no!",
-                                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                                    icon: "error",
-                                    button: {
-                                        text: "Entendido",
-                                        className: "red-gradient"
-                                    },
-                                });
-                            }
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "empty") {
+                        swal({
+                            title: data['message'],
+                            icon: "info",
+                            button: "Ok"
                         });
-                    })*/
+                        $('#brandTo').prop('disabled', true);
+                        $('#modelTo').prop('disabled', true);
+                        $('#colorTo').prop('disabled', true);
+                        $('#personTo').prop('disabled', true);
+                        $('#fiscal_period').prop('disabled', true);
+
+                    }
+                    else {
+
+
+                        $('#vehicle_id').val(data['vehicle'][0].id);
+                        M.updateTextFields();
+                        $('#brandTo').val(data['modelVehicle']);
+                        M.updateTextFields();
+                        $('#modelTo').val(data['vehicle'][0]['model'].name);
+                        M.updateTextFields();
+                        $('#colorTo').val(data['vehicle'][0].color);
+                        M.updateTextFields();
+                        $('#personTo').val(data['userVehicle'][0].name);
+                        M.updateTextFields();
+
+
+                        $('#fiscal_period').prop('disabled', false);
+                        $('select').formSelect();
+                        /*swal({
+                            title: "Periodo Fiscal",
+                            text: "Elija entre los siguientes periodo",
+                            icon: "info",
+                            buttons: {
+                                cancel: {
+                                    text: "Anual",
+                                    value: false,
+                                    visible: true,
+                                    className: "green",
+                                    closeModal: true
+                                },
+                                confirm: {
+                                    text: "Trimestral",
+                                    value: true,
+                                    visible: true,
+                                    className: "blue",
+                                    closeModal: true
+                                }
+                            } M.updateTextFields();
+
+                        }).then(function (options) {
+
+                            if (options) {
+                                period = 'true';
+                            } else {
+                                period = 'false';
+                            }
+
+                            $.ajax({
+                                type: "get",
+                                url: url + "/ticketOffice/vehicle/period-fiscal/" + period,
+                                beforeSend: function () {
+                                },
+                                success: function (data) {
+                                    $("#preloader").fadeOut('fast');
+                                    $("#preloader-overlay").fadeOut('fast');
+                                    console.log(data);
+                                    if (data['status'] == "trimestre") {
+                                        $('#fiscal_periodTo').val(data['trimestre']);
+                                        M.updateTextFields();
+                                    } else {
+                                        $('#fiscal_periodTo').val(data['year']);
+                                        M.updateTextFields();
+                                    }
+
+                                },
+                                error: function (e) {
+                                    $("#preloader").fadeOut('fast');
+                                    $("#preloader-overlay").fadeOut('fast');
+                                    swal({
+                                        title: "¡Oh no!",
+                                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                        icon: "error",
+                                        button: {
+                                            text: "Entendido",
+                                            className: "red-gradient"
+                                        },
+                                    });
+                                }
+                            });
+                        })*/
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
 
         }
     });
@@ -1017,8 +1017,8 @@ $('document').ready(function () {
     }
 
 
-    $('#general-next').click(function () {
-
+    $('#general-next').click(function (e) {
+        e.preventDefault();
         var fiscalP = $('#fiscal_period').val();
         console.log(fiscalP);
         if ($('#vehicle_id').val() === '') {
@@ -1189,7 +1189,7 @@ $('document').ready(function () {
                         if (data['status'] === "success") {
                             swal({
                                 title: "Información",
-                                text: 'Planilla registrada con exito. Desea registrar otra planilla?',
+                                text: 'Planilla registrada con exito. ¿Desea registrar otra planilla?',
                                 icon: "info",
                                 buttons: {
                                     cancel: {
@@ -1257,9 +1257,9 @@ $('document').ready(function () {
                         icon: "info",
                     });
 
-                    $("#general-next").attr('disabled','disabled');
+                    $("#general-next").attr('disabled', 'disabled');
                 } else {
-                    $("#general-next").removeAttr('disabled','');
+                    $("#general-next").removeAttr('disabled', '');
                 }
             },
             error: function (e) {
