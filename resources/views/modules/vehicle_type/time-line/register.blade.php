@@ -49,7 +49,23 @@
                             <label for="rate_ut">Tarifa mayor a 3 años(U.T)</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
+
+                        <div class="input-field col s12 m12">
+                            <i class="icon-date_range prefix"></i>
+                            <select id="since" name="since" id="since">
+                                <option value="null">Seleccione</option>
+                                @while($cont <= 2030)
+                                    <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
+                        </div>
+
+                        {{--<div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="date_start" id="date_start" class="datepicker">
                             <label for="date_start">Fecha de Inicio</label>
@@ -59,7 +75,7 @@
                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="date_end" id="" class="datepicker">
                             <label for="date_end">Fecha de Fin</label>
-                        </div>
+                        </div>--}}
 
                         <div class="input-field col s12 center-align">
                             <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">

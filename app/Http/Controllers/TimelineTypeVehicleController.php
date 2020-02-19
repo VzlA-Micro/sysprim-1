@@ -51,11 +51,12 @@ class TimelineTypeVehicleController extends Controller
     public function store(Request $request)
     {
         $typeVehicle = $request->input('type_vehicle');
-        $since = $request->input('date_start');
-        $to = $request->input('date_end');
+        $since = Carbon::parse($request->input('date_start'));
+        $to = $since->format('Y').'-12-'.'31';
         $response = false;
-        $verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since, $to);
-        var_dump($verifiedTimeline);
+        //$verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since, $to);
+
+        var_dump($to);
         die();
         if ($verifiedTimeline) {
             $response = array(
