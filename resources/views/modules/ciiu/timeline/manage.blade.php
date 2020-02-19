@@ -24,9 +24,8 @@
                     <span class="truncate">Registrar Linea de Tiempo-CIIU</span>
                 </a>
             </div>
-
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{route('type-vehicles.timeline.read')}}" class="btn-app white blue-grey-text">
+                <a href="{{route('ciu-branch.timeline.index')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Ver Linea Del Tiempo-CIIU</span>
                 </a>
