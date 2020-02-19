@@ -14,6 +14,14 @@ class CiuCompanyTableSeeder extends Seeder
         $path = base_path().'/database/seeds/register/ciu.sql';
         $sql = file_get_contents($path);
         DB::unprepared($sql);
+
+        $path = base_path().'/database/seeds/register/timeline_ciu.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
+
+
+
+
         DB::table('company_ciu')->insert([
             'ciu_id'=>6,
             'company_id'=>1,
