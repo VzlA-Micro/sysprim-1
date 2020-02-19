@@ -53,13 +53,13 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
-                            <input type="text" name="date_start" disabled id="date_start" value="{{$timeline->since}}" class="datepicker">
+                            <input type="text" name="date_start" disabled id="dateStart" value="{{$timeline->since}}" class="datepicker">
                             <label for="date_start">Fecha de Inicio</label>
                         </div>
 
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
-                            <input type="text" name="date_end" disabled value="{{$timeline->since}}" id="" class="datepicker">
+                            <input type="text" name="date_end" disabled value="{{$timeline->since}}" id="dateEnd" class="datepicker">
                             <label for="date_end">Fecha de Fin</label>
                         </div>
                     </div>
@@ -86,6 +86,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/dev/typeVehicle.js') }}"></script>
+    <script src="{{ asset('js/data/timeline-type-vehicle.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
