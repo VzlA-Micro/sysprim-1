@@ -450,7 +450,6 @@ class PropertyTaxesController extends Controller
 
     public function paymentsHelp(Request $request)
     {
-        echo 'hola';
         $amountInterest = 0;//total de intereses
         $amountRecargo = 0;//total de recargos
         $amountCiiu = 0;//total de ciiu
@@ -609,6 +608,7 @@ class PropertyTaxesController extends Controller
         $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
         $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
         $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
+//        dd($declaration);
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty[0]->company_id != null) {
             $owner_id = $userProperty[0]->company_id;
