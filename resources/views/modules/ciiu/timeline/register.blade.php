@@ -50,16 +50,20 @@
                         </div>
 
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-date_range prefix"></i>
-                            <input type="text" name="since" id="since" class="datepicker">
-                            <label for="since">Fecha de Inicio</label>
-                        </div>
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m12">
                             <i class="icon-date_range prefix"></i>
-                            <input type="text" name="to" id="to" class="datepicker">
-                            <label for="to">Fecha de Fin</label>
+                            <select id="since" name="since" id="since">
+                                <option value="null">Seleccione</option>
+                                @while($cont <= 2030)
+                                    <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
                         </div>
 
                     </div>

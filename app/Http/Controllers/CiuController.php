@@ -163,10 +163,9 @@ class CiuController extends Controller
         $to=Carbon::parse($request->input('to'))->format('Y-m-d');
 
 
-        $timeline=TimelineCiiu::where('ciu_id',(int)$ciu_id)->whereDate('since', '>=',(string)$since)->whereDate('to','<=',(string)$to)->get();
+        $timeline=TimelineCiiu::where('ciu_id',(int)$ciu_id)->whereYear('since', '=',(string)$since)->get();
 
         if($timeline->isEmpty()){
-
             $alicuota=$request->input('alicuota');
             $min_tribu=$request->input('mTM');
 
