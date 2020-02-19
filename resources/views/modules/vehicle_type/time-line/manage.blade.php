@@ -15,26 +15,18 @@
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
                 </ul>
             </div>
-            @can('Registrar Tipo de Vehiculo')
+
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('vehicles.type.register') }}" class="btn-app white green-text">
-                    <i class="icon-add_circle"></i>
-                    <span class="truncate">Registrar Tipo De Vehículo</span>
+                <a href="{{route('type-vehicles.timeline.register')}}" class="btn-app white blue-grey-text">
+                    <i class="icon-alarm_add"></i>
+                    <span class="truncate">Registrar Linea Del Tiempo</span>
                 </a>
             </div>
-            @endcan
-            @can('Consultar Tipos de Vehiculos')
+
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('type-vehicles.read') }}" class="btn-app white amber-text">
-                    <i class="icon-directions_car"></i>
-                    <span class="truncate">Ver Tipos De Vehículos</span>
-                </a>
-            </div>
-            @endcan
-            <div class="col s12 m4 animated bounceIn">
-                <a href="{{route('type-vehicle.timeline.manage')}}" class="btn-app white blue-grey-text">
+                <a href="{{route('type-vehicles.timeline.read')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
-                    <span class="truncate">Linea Del Tiempo</span>
+                    <span class="truncate">Ver Linea Del Tiempo</span>
                 </a>
             </div>
         </div>
