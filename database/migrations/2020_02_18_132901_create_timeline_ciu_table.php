@@ -17,8 +17,8 @@ class CreateTimelineCiuTable extends Migration
             $table->bigIncrements('id');
             $table->float('alicuota');
             $table->integer('min_tribu_men');
-            $table->date('since');
-            $table->date('to');
+            $table->date('since')->default('2019-12-01');
+            $table->date('to')->default('2020-12-31');
             $table->integer('ciu_id')->unsigned();
             $table->foreign('ciu_id')->references('id')->on('ciu')->onDelete('cascade');
             $table->timestamps();

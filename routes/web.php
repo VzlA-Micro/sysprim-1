@@ -1169,5 +1169,11 @@ Route::middleware(['auth'])->group(/**
 
 
         /*BDV- MODULE */
+
+        route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
+        route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
+
+
         route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
+
     });
