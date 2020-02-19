@@ -3,8 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class BankRate extends Model{
+class BankRate extends Model implements Auditable
+{
+    use \OwenIt\Auditing\Auditable;
+
+
     protected $table="bank_rates";
     //
 }

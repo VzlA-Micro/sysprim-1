@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AdvertisingTypePublicity extends Model
+class AdvertisingTypePublicity extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    
     protected $table = 'advertising_type_pubicity';
 
     // public function publicities() {
