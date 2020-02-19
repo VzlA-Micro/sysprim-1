@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CatastralConstruccion extends Model
+
+class CatastralConstruccion extends Model implements Auditable
 {
-    //
+ use \OwenIt\Auditing\Auditable;
+   
     protected $table='value_catastral_construccion';
 
     public function property(){

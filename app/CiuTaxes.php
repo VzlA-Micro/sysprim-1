@@ -4,9 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Tributo;
-class CiuTaxes extends Model{
+use OwenIt\Auditing\Contracts\Auditable;
 
+class CiuTaxes extends Model implements Auditable
 
+{
+
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'ciu_taxes';
     protected $appends = ['totalCiiu','totalCiiuDefinitive'];
 
