@@ -31,6 +31,10 @@
                             <thead>
                             <tr>
                                 <th>Tipo</th>
+                                <th>Valor Menor A 3 Años</th>
+                                <th>Valor Mayor A 3 Años</th>
+                                <th>Desde</th>
+                                <th>Hasta</th>
                                 {{--<th>Tarifa U.T menor a 3 años</th>
                                 <th>Tarifa U.T mayor a 3 años</th>--}}
                                 @can('Detalles Tipo de Vehiculos')
@@ -39,14 +43,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($showType as $type)
+                            @foreach($timeline as $tl)
                                 <tr>
-                                    <td>{{$type->name}}</td>
+                                    <td>{{$tl->type->name}}</td>
+                                    <td>{{$tl->rate}} U.T</td>
+                                    <td>{{$tl->rate_UT}} U.T</td>
+                                    <td>{{$tl->since}}</td>
+                                    <td>{{$tl->to}}</td>
                                     {{--<td>{{$type->rate}}</td>
                                     <td>{{$type->rate_UT}}</td>--}}
                                     @can('Detalles Tipo de Vehiculos')
                                         <td>
-                                            <a href="{{route('typeVehicle.details',['id'=>$type->id])}}"
+                                            <a href="{{route('type-vehicles.timeline.details',['id'=>$tl->id])}}"
                                                class="btn btn-floating orange waves-light"><i
                                                         class="icon-pageview"></i></a>
                                         </td>

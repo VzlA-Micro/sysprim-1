@@ -4,7 +4,6 @@ var updateType = false;
 
 $('document').ready(function () {
 
-
     $('#btn-modify').click(function () {
         $(this).hide();
         $('#name').removeAttr('readonly');
@@ -12,8 +11,7 @@ $('document').ready(function () {
         $('#rate_ut').removeAttr('readonly');
         $('#btn-update').removeClass('hide');
     });
-
-
+    
     $('#updateType').on('submit', function (e) {
         e.preventDefault();
 
@@ -130,12 +128,7 @@ $('document').ready(function () {
                 });
             }
         });
-
-
-
     });
-
-
 });
 
 
