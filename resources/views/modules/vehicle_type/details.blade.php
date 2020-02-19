@@ -7,6 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}">Ver Tipos De Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('typeVehicle.details') }}">Detalles De Tipo De Vehículos</a></li>
@@ -29,7 +30,7 @@
                             <input id="name" type="text" name="name" readonly value="{{ $type->name }}" minlength="" maxlength="100" required>
                             <label for="name">Tipo de vehículo</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        {{--<div class="input-field col s12 m6">
                             <i class="icon-check prefix"></i>
                             <input id="rate" type="text" name="rate" readonly value="{{ $type->rate }}" maxlength="5" class="validate number-date only-number-positive" required>
                             <label for="name">Tarifa U.T menor a 3 años</label>
@@ -38,7 +39,7 @@
                             <i class="icon-confirmation_number prefix"></i>
                             <input id="rate_ut" type="text" name="rate_ut" readonly maxlength="5"  class="validate  number-date  only-number-positive" value="{{ $type->rate_UT}}"  required>
                             <label for="rate_ut">Tarifa U.T mayor a 3 años</label>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="card-action center">
                         @can('Actualizar Tipos de Vehiculos')

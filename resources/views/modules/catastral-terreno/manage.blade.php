@@ -11,6 +11,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de  Terreno</a></li>
                 </ul>
             </div>
@@ -30,6 +31,15 @@
                 </a>
             </div>
             @endcan
+
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('catrastal-terreno.timeline.manage') }}" class="btn-app white green-text accent-1">
+                    <i class="icon-format_list_bulleted"></i>
+                    <span class="truncate">Linea de Tiempo</span>
+                </a>
+            </div>
+
+
         </div>
     </div>
 @endsection

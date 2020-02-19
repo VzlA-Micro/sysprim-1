@@ -11,6 +11,7 @@
             	<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Contrucción Catastral</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.read') }}">Consultar  Valor de Contrucción Catastral</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>

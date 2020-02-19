@@ -11,9 +11,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Linea de Tiempo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.register') }}" >Registrar Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.register') }}" >Registrar</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
@@ -49,7 +50,7 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="2"  required>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive"  maxlength="6"  required>
                             <label for="value">Valor</label>
                         </div>
                     </div>

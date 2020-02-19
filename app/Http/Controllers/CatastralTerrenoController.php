@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Parish;
 use Illuminate\Http\Request;
 use App\CatastralTerreno;
+use App\TimelineCatastralTerrain;
+
 class CatastralTerrenoController extends Controller
 {
     public function manage() {
@@ -52,5 +54,60 @@ class CatastralTerrenoController extends Controller
         $catastral->value_terreno_construccion =$request->input('value_terreno_construccion');
         $catastral->update();
         return response()->json(['status'=>'success'],200);
+    }
+
+    public function timelineManage() {
+        return view('modules.catastral-terreno.timeline.manage');
+    }
+
+    public function timelineCreate() {
+        $catastralTerrenos = CatastralTerreno::all();
+        return view('modules.catastral-terreno.timeline.register', ['catastralTerrenos' => $catastralTerrenos]);
+    }
+
+    public function timelineStore(Request $request) {
+        $catastralTerreno_id = $request->input('value_catastral_construccion_id');
+        $since = $request->input('since');
+        $to = $request->input('to');
+        $value = $request->input('value');
+        $timeline = new TimelineCatastralTerrain();
+        $timeline->since = $since;
+        $timeline->to = $to;
+        $timeline->value = $value;
+        $timeline->value_catastral_construccion_id = $catastralConstruccion_id;
+        $timeline->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se ha registrado un valor en la linea de tiempo del valor catastral de construcción.'
+        ]);
+    }
+
+    public function timelineIndex() {
+        $timelines = TimelineCatastralBuild::all();
+        return view('modules.catastral-construction.timeline.read', ['timelines' => $timelines]);
+    }
+
+    public function timelineShow($id) {
+        $catastralConstrucciones = CatastralConstruccion::all();
+        $timeline = TimelineCatastralBuild::findOrFail($id);
+        return view('modules.catastral-construction.timeline.details', ['timeline' => $timeline, 'catastralConstrucciones' => $catastralConstrucciones]);
+    }
+
+    public function timelineUpdate(Request $request) {
+        $id = $request->input('id');
+        $since = $request->input('since');
+        $to = $request->input('to');
+        $value = $request->input('value');
+        $timeline = TimelineCatastralBuild::find($id);
+        $timeline->since = $since;
+        $timeline->to = $to;
+        $timeline->value = $value;
+        $timeline->update();
+        $id = $timeline->id;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Se ha actualizado un valor en la linea de tiempo del valor catastral de construcción.',
+            'id' => $id
+        ]);
     }
 }

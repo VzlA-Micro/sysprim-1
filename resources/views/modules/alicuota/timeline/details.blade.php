@@ -7,6 +7,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Linea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.read') }}" >Consultar Linea de Tiempo</a></li>
@@ -32,18 +33,18 @@
                             <label for="alicuota_inmueble_id">Alicuotas</label>
                         </div>
                         <div class="input-field col s12 m4">
-                            <input type="text" name="since" id="since" class="datepicker" value="{{ $timeline->since }}" readonly required>
+                            <input type="text" name="since" id="since" class="datepicker" value="{{ $timeline->since }}" disabled required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m4">
-                            <input type="text" name="to" id="to" class="datepicker" value="{{ $timeline->to }}" required>
+                            <input type="text" name="to" id="to" class="datepicker" value="{{ $timeline->to }}" disabled required>
                             <label for="to">Hasta</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ $timeline->value }}" maxlength="3" readonly required>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ $timeline->value }}" maxlength="6" disabled required>
                             <label for="value">Valor</label>
                         </div>
                     </div>

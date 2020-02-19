@@ -11,9 +11,10 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Linea de Tiempo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.read') }}" >Consultar Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.read') }}" >Consultar</a></li>
                 </ul>
             </div>
             <div class="col s12">

@@ -100,6 +100,23 @@ Route::middleware(['auth'])->group(/**
                 })->name('tax-unit.manage');
             });
 
+            //Menu de configuraciones de los modulos.
+            Route::get('/config/vehicles', function () {
+                return view('modules.settings.vehicle.home');
+            })->name('settings.vehicle');
+
+            Route::get('/config/property', function () {
+                return view('modules.settings.property.home');
+            })->name('settings.property');
+
+            Route::get('/config/publicity', function () {
+                return view('modules.settings.publicity.home');
+            })->name('settings.publicity');
+
+            Route::get('/config/companies', function () {
+                return view('modules.settings.companies.home');
+            })->name('settings.companies');
+
             // Nivel 3: Registro y Consulta
             Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
                 Route::get('/tax-unit/register', function () {
@@ -159,8 +176,7 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
             });
-
-            // Gestionar Tipos de Vehiculos
+            //::::::::::::::::::: Gestionar Tipos de Vehiculos::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
                 Route::get('/vehicles/type-vehicles', function () {
                     return view('modules.vehicle_type.manage');
@@ -180,6 +196,18 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+            //:::::::::::::::::::::::::::::::::LINEA DEL TIEMPO DE TIPO DE VEHICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            Route::get('/type-vehicles/timeline/manage', function () {
+                return view('modules.vehicle_type.time-line.manage');
+            })->name('type-vehicle.timeline.manage');
+
+            Route::get('/type-vehicles/timeline/register', 'TimelineTypeVehicleController@create')->name('type-vehicles.timeline.register');
+            Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
+            Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
+            Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
+            Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
+
+            //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             // Gestionar Marcas de vehiculos
             Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
                 Route::get('/vehicles/brands-vehicles', function () {
@@ -271,11 +299,11 @@ Route::middleware(['auth'])->group(/**
                 Route::post('/group_publicity/verifyName', 'GroupPublicityController@verifyName')->name('group-publicity.verifyBrand');
 
                 # Nivel 1: Registrar y Consultar
-                Route::group(['middleware' => ['permission:Registrar Grupo de Publicidad|Consultar Grupos de Publicidad']], function() {
+                Route::group(['middleware' => ['permission:Registrar Grupo de Publicidad|Consultar Grupos de Publicidad']], function () {
                     Route::get('group_publicity/register', 'GroupPublicityController@create')->name('group-publicity.register');
                     Route::post('group_publicity/save', 'GroupPublicityController@store')->name('group-publicity.save');
                     Route::get('group_publicity/read', 'GroupPublicityController@show')->name('group-publicity.read');
-                    Route::group(['middleware' => ['permission:Detalles Grupo de Publicidad']], function() {
+                    Route::group(['middleware' => ['permission:Detalles Grupo de Publicidad']], function () {
                         Route::get('group_publicity/details/{id}', 'GroupPublicityController@edit')->name('group-publicity.details');
                         Route::post('group_publicity/update', 'GroupPublicityController@update')->name('group-publicity.update');
                     });
@@ -706,7 +734,6 @@ Route::middleware(['auth'])->group(/**
             Route::get('ticketOffice/publicity/cashier/{id}', 'PublicityTaxesController@QrTaxes');
 
 
-
             Route::get('ticket-office/taxes/download/{id}', 'TicketOfficeController@viewPDF')->name('ticket-office.download.pdf');
 
 
@@ -876,20 +903,18 @@ Route::middleware(['auth'])->group(/**
             });
 
 
-
-
 //            Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
             # ------------------------------------------------------------------- #
 
 
             ########### TAQUILLA --- PUBLICIDAD
-            Route::group(['middleware' => ['permission:Taquilla - Publicidad']], function() {
+            Route::group(['middleware' => ['permission:Taquilla - Publicidad']], function () {
                 Route::get('/ticketOffice/publicity/home', function () {
                     return view('modules.publicity.ticket-office.home');
                 })->name('ticketOffice.publicity.home');
                 Route::get('/ticketOffice/publicity/getTypeGroup/{group}', 'PublicityController@searchGroup')->name('ticketOffice.publicity.getGroup');
                 Route::get('/ticketOffice/publicity/change-user-web/{type}/{document}/{id}', 'PublicityController@changeUserWeb')->name('ticketOffice.publicity.changeUserWeb');
-                Route::get('/ticketOffice/publicity/changeStatus/{id}/{status}','PublicityController@statusPublicity');
+                Route::get('/ticketOffice/publicity/changeStatus/{id}/{status}', 'PublicityController@statusPublicity');
                 Route::get('/ticketOffice/publicity/history/{id}', 'PublicityController@historyPayments')->name('ticketOffice.publicity.historyPayment');
                 Route::get('/publicity/ticket-office/taxes/{id}/{status?}/{fiscal_period}', 'PublicityTaxesController@taxesTicketOfficePayroll')->name('publicity.ticket-office.store');
                 Route::get('/publicity/ticket-office/find/code/{code}', 'PublicityTaxesController@findCode')->name('publicity.ticket-office.find.code');
@@ -897,7 +922,7 @@ Route::middleware(['auth'])->group(/**
 
 
                 // Nivel 1: Gestionar Publicidad
-                Route::group(['middleware' => ['permission:Gestionar Publicidad']], function() {
+                Route::group(['middleware' => ['permission:Gestionar Publicidad']], function () {
                     Route::get('/ticketOffice/publicity/manage-publicity', function () {
                         return view('modules.publicity.ticket-office.menu');
                     })->name('ticketOffice.publicity.managePublicity');
@@ -911,14 +936,14 @@ Route::middleware(['auth'])->group(/**
                         Route::post('/ticketOffice/publicity/save', 'PublicityController@storeTicketOffice')->name('ticketOffice.publicity.save');
 
                         // Nivel 3: Detalles
-                        Route::group(['middleware' => ['permission:Detalles Publicidad']], function() {
+                        Route::group(['middleware' => ['permission:Detalles Publicidad']], function () {
                             Route::get('/ticketOffice/publicity/details/{id}', 'PublicityController@detailsPublicity')->name('ticketOffice.publicity.detailsPublicity');
                         });
                     });
                 });
 
                 // Nivel 1: Gestionar Pagos
-                Route::group(['middleware' => ['permission:Gestionar Pagos - Publicidad']], function() {
+                Route::group(['middleware' => ['permission:Gestionar Pagos - Publicidad']], function () {
                     Route::get('/publicity/ticket-office/manage', 'PublicityTaxesController@manageTicketOffice')->name('publicity.ticket-office.manage');
                     Route::get('/publicity/ticket-office/generate', 'PublicityTaxesController@generateTicketOffice')->name('publicity.ticket-office.generate');
                     Route::post('/publicity/ticket-office/taxes/store', 'PublicityTaxesController@storeTicketOffice')->name('publicity.ticket-office.taxes.store');
@@ -1139,10 +1164,17 @@ Route::middleware(['auth'])->group(/**
 
 
         /*taxpayers company*/
-
-
         Route::get('test/{code}/{date_limit}', 'VerifyPaymentsBankImportController@verifyPaymentsTaxes');
+        Route::get('home/test', 'HomeController@test');
 
+
+        /*BDV- MODULE */
+
+        route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
+        route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
+
+
+        route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
 
         Route::get('home/test','HomeController@test');
 
@@ -1162,8 +1194,23 @@ Route::middleware(['auth'])->group(/**
         ///
         ///
         ///
-        Route::get('/catastral-construction/timeline/manage', 'CatastralConstruccionController@manage')->name('catrastal.construction.timeline.manage');
+        Route::get('catastral-construction/timeline/manage', 'CatastralConstruccionController@timelineManage')->name('catrastal-construction.timeline.manage');
+        Route::get('catastral-construction/timeline/register', 'CatastralConstruccionController@timelineCreate')->name('catastral-construction.timeline.register');
+        Route::post('catastral-construction/timeline/store', 'CatastralConstruccionController@timelineStore')->name('catastral-construction.timeline.store');
+        Route::get('catastral-construction/timeline/read', 'CatastralConstruccionController@timelineIndex')->name('catastral-construction.timeline.read');
+        Route::get('catastral-construction/timeline/details/{id}', 'CatastralConstruccionController@timelineShow')->name('catastral-construction.timeline.details');
+        Route::post('catastral-construction/timeline/update', 'CatastralConstruccionController@timelineUpdate')->name('catastral-construction.timeline.update');
 
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('catastral-terreno/timeline/manage', 'CatastralTerrenoController@timelineManage')->name('catrastal-terreno.timeline.manage');
+        Route::get('catastral-terreno/timeline/register', 'CatastralTerrenoController@timelineCreate')->name('catastral-terreno.timeline.register');
+        Route::get('catastral-terreno/timeline/read', 'CatastralTerrenoController@timelineIndex')->name('catastral-terreno.timeline.read');
+
+
+//        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
 
 
     });

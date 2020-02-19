@@ -83,10 +83,10 @@ $(document).ready(function() {
     $('#btn-modify').click(function() {
         $(this).hide();
         $('#btn-update').removeClass('hide');
-        $('#name').removeAttr('readonly');
-        $('#since').removeAttr('readonly');
-        $('#to').removeAttr('readonly');
-        $('#value').removeAttr('readonly');
+        $('#name').removeAttr('disabled');
+        $('#since').removeAttr('disabled');
+        $('#to').removeAttr('disabled');
+        $('#value').removeAttr('disabled');
     });
 
     $('#update').submit(function(e) {
@@ -113,7 +113,7 @@ $(document).ready(function() {
                         className: "green-gradient"
                     }
                 }).then(accept => {
-                    window.location.href = url + 'alicuota/timeline/read';
+                    window.location.href = url + 'alicuota/timeline/details/' + resp.id;
                 });
             },
             error: function(err) {

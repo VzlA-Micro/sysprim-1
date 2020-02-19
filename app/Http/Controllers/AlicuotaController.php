@@ -79,9 +79,11 @@ class AlicuotaController extends Controller
         $timeline->to = $to;
         $timeline->value = $value;
         $timeline->update();
+        $id = $timeline->id;
         return response()->json([
             'status' => 'success',
-            'message' => 'Se ha actualizado un valor en la linea de tiempo de la alicuota.'
+            'message' => 'Se ha actualizado un valor en la linea de tiempo de la alicuota.',
+            'id' => $id
         ]);
     }
 }

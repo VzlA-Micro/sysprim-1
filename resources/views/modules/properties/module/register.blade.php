@@ -87,7 +87,7 @@
                     </div>
                     <div id="property-tab">
                         <div class="card-header center-align">
-                            <h5>Datos del Inmueble</h5>
+                            <h5>Datos de la Publicidad</h5>
                         </div>
 
                         <input type="hidden" name="id" value="" id="id">
