@@ -12,6 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}">Consultar Alicuota</a></li>
                 </ul>

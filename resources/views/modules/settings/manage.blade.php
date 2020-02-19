@@ -13,126 +13,58 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                 </ul>
             </div>
-            @can('Gestionar CIIU')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('ciu.manage') }}" class="btn-app white red-text text-darken-1">
-                    <i class="icon-assignment"></i>
-                    <span class="truncate">Gestionar CIIU's</span>
+           
+            @can('Configuración - Actividad Económica')
+             <div class="col s6 m3 animated bounceIn">
+                <a href="{{ route('settings.companies') }}" class="btn-app white red-text text-darken-4">
+                    <i class="icon-work"></i>
+                    <span class="truncate">Gestionar Configuración Act. Económica</span>
                 </a>
             </div>
             @endcan
-            @can('Gestionar Unidad Tribuaria')
+            @can('Configuración - Vehículos')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('tax-unit.manage') }}" class="btn-app white red-text text-darken-4 ">
-                    <i class="icon-exposure_plus_1"></i>
-                    <span class="truncate">Gestionar Unidades Tributarias</span>
+                <a href="{{ route('settings.vehicle') }}" class="btn-app white red-text">
+                    <i class="icon-local_car_wash"></i>
+                    <span class="truncate">Gestionar Configuración Vehículos</span>
+                </a>
+            </div>
+            @endcan  
+            @can('Configuración - Inmuebles')
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('settings.property')}}" class="btn-app white orange-text ">
+                    <i class="icon-location_city"></i>
+                    <span class="truncate">Gestionar Configuración Inmuebles</span>
                 </a>
             </div>
             @endcan
-            @can('Gestionar Tipos de Vehiculos')
+            @can('Configuración - Publicidad')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white orange-text text-darken-1 ">
-                    <i class="icon-local_shipping"></i>
-                    <span class="truncate">Gestionar Tipos de Vehículos</span>
+                <a href="{{ route('settings.publicity') }}" class="btn-app white amber-text text-darken-4">
+                    <i class="icon-filter_frames"></i>
+                    <span class="truncate">Gestionar Configuración Publicidad</span>
                 </a>
             </div>
             @endcan
-            @can('Gestionar Marcas de Vehiculos')
+            @can('Configuración - General')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('vehicles.brand.manage') }}" class="btn-app white amber-text">
-                    <i class="icon-directions_car"></i>
-                    <span class="truncate">Gestionar Marcas de Vehículos</span>
+                <a href="{{ route('settings.general') }}" class="btn-app white green-text text-darken-4 ">
+                    <i class="icon-settings_applications"></i>
+                    <span class="truncate">Gestionar Configuraciones Generales</span>
                 </a>
             </div>
-            @endcan
-            @can('Gestionar Modelos de Vehiculos')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white light-green-text text-darken-4 ">
-                    <i class="icon-airport_shuttle"></i>
-                    <span class="truncate">Gestionar Modelos de Vehículos</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Recargos')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('recharges.manage') }}" class="btn-app white green-text ">
-                    <i class="icon-trending_up"></i>
-                    <span class="truncate">Gestionar Recargos</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Accesorios')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('accessories.manage') }}" class="btn-app white green-text text-accent-3 ">
-                    <i class="icon-filter_tilt_shift"></i>
-                    <span class="truncate">Gestionar Accesorios</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Tipos de Publicidad')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('advertising-type.manage') }}" class="btn-app white teal-text">
-                    <i class="icon-movie_filter"></i>
-                    <span class="truncate">Gestionar Tipos de Publicidades</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Tasas del Banco')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('bank.rate.manage') }}" class="btn-app white indigo-text">
-                    <i class="icon-business_center"></i>
-                    <span class="truncate">Gestionar Tasa del Banco</span>
-                </a>
-            </div>
-            @endcan
+            @endcan   
+            
             @can('Gestionar Tasas')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('rate.manager')}}" class="btn-app white blue-text">
+                <a href="{{route('rate.manager')}}" class="btn-app white teal-text">
                     <i class="fas fa-clipboard"></i>
                     <span class="truncate">Gestionar Tasas</span>
                 </a>
             </div>
             @endcan
-            @can('Gestionar Dias de Cobro')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('prologue.manage')}}" class="btn-app white cyan-text ">
-                    <i class="icon-date_range"></i>
-                    <span class="truncate">Días de Cobros</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Alicuotas')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('alicuota.manage')}}" class="btn-app white pink-text ">
-                    <i class="icon-format_list_numbered"></i>
-                    <span class="truncate">Alicuotas Inmuebles</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Catastral Construccion')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.construction.manage')}}" class="btn-app white red-text text-accent-3 ">
-                    <i class="icon-build"></i>
-                    <span class="truncate">Valores Catastrales de Construcciones</span>
-                </a>
-            </div>
-            @endcan
-            @can('Gestionar Catastral Terreno')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white purple-text ">
-                    <i class="icon-nature_people"></i>
-                    <span class="truncate">Valores Catastrales de Terrenos</span>
-                </a>
-            </div>
-            @endcan
-             @can('Gestionar Grupos de Publicidad')
-            <div class="col s6 m3 animated bounceIn">
-                <a href="{{route('group-publicity.manage')}}" class="btn-app white deep-purple-text">
-                    <i class="icon-burst_mode"></i>
-                    <span class="truncate">Grupos de Publicidad</span>
-                </a>
-            </div>
-            @endcan
+           
+
         </div>
     </div>
 @endsection
