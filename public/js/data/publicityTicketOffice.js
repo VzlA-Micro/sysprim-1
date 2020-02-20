@@ -416,7 +416,7 @@ $('document').ready(function () {
                 },
             });
         } else if (status == 'propietario') {
-            if (type === 'J' || type === 'G' && type_document_company) {
+            if ((type === 'J' || type === 'G') && type_document_company) {
                 $('#two').removeClass('disabled');
                 $('#one').addClass('disabled');
                 $('ul.tabs').tabs("select", "typePublicity-tab");
