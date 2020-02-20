@@ -138,7 +138,7 @@
 				<td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
 				<td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
 				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
-				<td style="width: 15%;font-size: 10px;!important">{{}}</td>
+				<td style="width: 15%;font-size: 10px;!important"></td>
 				<td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
 			</tr>
 

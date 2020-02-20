@@ -221,6 +221,7 @@ class CompanyTaxesController extends Controller
             $ciu = Ciu::find($ciu_id[$i]);
 
 
+            /*NO CAMBIAR, ASI NO ENTIENDA. RECUERDA QUE ASI QUE FUNCION ES LOCO. PERO ME LO AGREDECERAS  */
             $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
 
             if (is_null($timeline_ciu)) {
@@ -230,6 +231,7 @@ class CompanyTaxesController extends Controller
 
             //Calculo de minimo  a tributar
             $min_amount = $timeline_ciu->min_tribu_men * $tributo->value;
+
 
             //Calculo de base imponible
             $base_amount_sub = $timeline_ciu->alicuota * $base_format_verify;
@@ -265,7 +267,7 @@ class CompanyTaxesController extends Controller
             $base_format = str_replace(',', '.', $base_format);
             $ciu = Ciu::find($ciu_id[$i]);
 
-            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '>=', $fiscal_period_format->format('Y'))->whereYear('to', '<=', $fiscal_period_format->format('Y'))->first();
+            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
 
             if (is_null($timeline_ciu)) {
                 $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
@@ -290,7 +292,7 @@ class CompanyTaxesController extends Controller
             }
 
             if($verify_prologue['mora']) {
-                /*
+
                 if ($date['mora']) {//si tiene mora
                     //Obtengo recargo
 
@@ -310,7 +312,7 @@ class CompanyTaxesController extends Controller
                     $amount_recharge = 0;
                     $interest = 0;
                 }
-                */
+
             }
 
 
@@ -731,10 +733,17 @@ class CompanyTaxesController extends Controller
         $id = $taxe->id;
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
+
         $total_base=0;
         $fiscal_period_format=Carbon::parse($fiscal_period);
 
-        $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_end)->first();
+        $tributo = Tributo::whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+
+        if (is_null($tributo)) {
+            $tributo = Tributo::orderBy('id', 'desc')->take(1)->first();
+        }
+
+
 
         $fiscal_credits_format = str_replace('.', '', $fiscal_credits);
         $fiscal_credits_format = str_replace(',', '.', $fiscal_credits_format);
@@ -756,11 +765,19 @@ class CompanyTaxesController extends Controller
 
             $ciu = Ciu::find($ciu_id[$i]);
 
+            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
+            }
+
+
+
             //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value*12;
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value*12;
 
             //Calculo de base imponible
-            $base_amount_sub =$ciu->alicuota * $base_format_verify;
+            $base_amount_sub =$timeline_ciu->alicuota * $base_format_verify;
 
 
 
@@ -795,12 +812,21 @@ class CompanyTaxesController extends Controller
             $ciu = Ciu::find($ciu_id[$i]);
 
 
+            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
+            }
 
             //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value *12;
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value * 12;
+
+
+
 
             //Calculo de base imponible
-            $base_amount_sub = $ciu->alicuota * $base_format;
+            $base_amount_sub = $timeline_ciu->alicuota * $base_format;
 
             //si lo que va a pagar es mayor que el min a tributar
             if($base_amount_sub>$min_amount){
@@ -816,10 +842,11 @@ class CompanyTaxesController extends Controller
 
 
                 $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_end)->first();
+
+
                 if (is_null($recharge)) {
                     $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
                 }
-
 
 
                 //Obtengo Intereset del banco

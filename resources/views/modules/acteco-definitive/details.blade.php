@@ -176,8 +176,9 @@
 
                         @endforeach
                         <div class="col l12 s12">
+
                             <div class="col l6 s12">
-                                <table class="centered responsive-table" style="font-size: 10px;!important;">
+                            <!---  <table class="centered responsive-table" style="font-size: 10px;!important;">
                                     <thead>
                                         <tr>
                                             <th>CODIGO</th>
@@ -196,10 +197,11 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                </table>
+                                </table>    -->
                                 <div class="col s12">
                                     
                                 </div>
+
                             </div>
 
 
