@@ -224,6 +224,7 @@ Route::middleware(['auth'])->group(/**
             Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
             Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
 
+            Route::get('/type-vehicles/timeline/verified/{id}/{if}/{pf}', 'TimelineTypeVehicleController@verifiedTimeline');
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             // Gestionar Marcas de vehiculos
             Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
@@ -1230,6 +1231,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('catastral-terreno/timeline/manage', 'CatastralTerrenoController@timelineManage')->name('catrastal-terreno.timeline.manage');
         Route::get('catastral-terreno/timeline/register', 'CatastralTerrenoController@timelineCreate')->name('catastral-terreno.timeline.register');
         Route::get('catastral-terreno/timeline/read', 'CatastralTerrenoController@timelineIndex')->name('catastral-terreno.timeline.read');
+        Route::post('catastral-terreno/timeline/store', 'CatastralTerrenoController@timelineStore')->name('catastral-terreno.timeline.store');
         Route::get('catastral-terreno/timeline/details/{id}', 'CatastralTerrenoController@timelineShow')->name('catastral-terreno.timeline.details');
         Route::post('catastral-terreno/timeline/update', 'CatastralTerrenoController@timelineUpdate')->name('catastral-terreno.timeline.update');
 

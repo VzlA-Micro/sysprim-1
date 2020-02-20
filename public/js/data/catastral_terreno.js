@@ -62,8 +62,6 @@ $(document).ready(function() {
         $('#name').removeAttr('readonly');
         $('#sector_nueva').removeAttr('readonly');
         $('#sector_catastral').removeAttr('readonly');
-        $('#value_terreno_construccion').removeAttr('readonly');
-        $('#value_terreno_vacio').removeAttr('readonly');
         $('#parish_id').removeAttr('disabled','');
         $('select').formSelect();
 	});

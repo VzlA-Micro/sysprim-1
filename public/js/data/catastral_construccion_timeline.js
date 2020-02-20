@@ -52,17 +52,32 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (resp) {
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: resp.message,
-                    icon: "success",
-                    button: {
-                        text: "Esta bien",
-                        className: "green-gradient"
-                    }
-                }).then(accept => {
-                    // window.location.href = url + 'catastral-construction/timeline/read';
-                });
+                if(resp.status === 'success') {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: resp.message,
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + 'catastral-construction/timeline/read';
+                    });
+                }
+                else if(resp.status === 'error'){
+                    swal({
+                        title: "¡Error!",
+                        text: resp.message,
+                        icon: "error",
+                        button: {
+                            text: "Esta bien",
+                            className: "red-gradient"
+                        }
+                    });
+                }
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             }, error: function (err) {
                 console.log(err);
                 swal({
@@ -85,8 +100,9 @@ $(document).ready(function() {
         $('#btn-update').removeClass('hide');
         $('#name').removeAttr('disabled');
         $('#since').removeAttr('disabled');
-        $('#to').removeAttr('disabled');
+        // $('#to').removeAttr('disabled');
         $('#value').removeAttr('disabled');
+        $('select').formSelect();
     });
 
     $('#update').submit(function(e) {
@@ -104,17 +120,32 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function(resp) {
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: resp.message,
-                    icon: "success",
-                    button: {
-                        text: "Esta bien",
-                        className: "green-gradient"
-                    }
-                }).then(accept => {
-                    window.location.href = url + 'catastral-construction/timeline/details/' + resp.id;
-                });
+                if(resp.status === 'success') {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: resp.message,
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + 'catastral-construction/timeline/details/' + resp.id;
+                    });
+                }
+                else if(resp.status === 'error'){
+                    swal({
+                        title: "¡Error!",
+                        text: resp.message,
+                        icon: "error",
+                        button: {
+                            text: "Esta bien",
+                            className: "red-gradient"
+                        }
+                    });
+                }
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             },
             error: function(err) {
                 console.log(err);

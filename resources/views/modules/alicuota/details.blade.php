@@ -25,16 +25,16 @@
                         <input type="hidden" name="id" id="id" value="{{ $alicuota->id }}">
 
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12">
                             <i class="icon-time_to_leave prefix"></i>
                             <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" value="{{ $alicuota->name }}" required readonly>
                             <label for="name">Nombre</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-time_to_leave prefix"></i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only-float" value="{{ $alicuota->value }}" required readonly>
-                            <label for="value">Valor</label>
-                        </div>
+                        {{--<div class="input-field col s12 m6">--}}
+                            {{--<i class="icon-time_to_leave prefix"></i>--}}
+                            {{--<input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only-float" value="{{ $alicuota->value }}" required readonly>--}}
+                            {{--<label for="value">Valor</label>--}}
+                        {{--</div>--}}
                     </div>
                     @can('Actualizar Alicuota')
                     <div class="card-footer center-align">

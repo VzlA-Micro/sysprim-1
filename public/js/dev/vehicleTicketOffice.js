@@ -1017,8 +1017,8 @@ $('document').ready(function () {
     }
 
 
-    $('#general-next').click(function () {
-
+    $('#general-next').click(function (e) {
+e.preventDefault();
         var fiscalP = $('#fiscal_period').val();
         console.log(fiscalP);
         if ($('#vehicle_id').val() === '') {

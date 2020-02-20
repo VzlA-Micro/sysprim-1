@@ -13,20 +13,21 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo - Tipo De Vehículos</a></li>
                 </ul>
             </div>
 
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('type-vehicles.timeline.register')}}" class="btn-app white blue-grey-text">
                     <i class="icon-alarm_add"></i>
-                    <span class="truncate">Registrar Linea Del Tiempo</span>
+                    <span class="truncate">Registrar Linea Del Tiempo - Tipo De Vehículos</span>
                 </a>
             </div>
 
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{route('type-vehicles.timeline.read')}}" class="btn-app white blue-grey-text">
+                <a href="{{route('type-vehicles.timeline.read')}}" class="btn-app white bnc-blue-text">
                     <i class="icon-schedule"></i>
-                    <span class="truncate">Ver Linea Del Tiempo</span>
+                    <span class="truncate">Ver Linea Del Tiempo - Tipo De Vehículos</span>
                 </a>
             </div>
         </div>

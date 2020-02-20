@@ -38,15 +38,22 @@ $(document).ready(function () {
                 console.log(data);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
-                if (data.status) {
+                if (data.status == true) {
                     swal({
                         title: "¡Bien Hecho!",
                         text: data.message,
                         icon: "success",
                         button: "Ok",
                     }).then(function (accept) {
-                        window.location.href = url + "type-vehicles/timeline/register";
+                        window.location.href = url + "type-vehicles/timeline/read";
                     });
+                } else if (data.status == "validation-failed") {
+                    swal({
+                        title: "Información",
+                        text: data.message,
+                        icon: "info",
+                        button: "Ok",
+                    })
                 } else {
                     swal({
                         title: "¡Oh no!",
@@ -79,14 +86,14 @@ $(document).ready(function () {
 
     $('#btn-modify').click(function () {
         $(this).hide();
-        $('#rate').prop('disabled',false);
-        $('#rate_ut').prop('disabled',false);
-        $('#dateStart').prop('disabled',false);
-        $('#dateEnd').prop('disabled',false);
+        $('#rate').prop('disabled', false);
+        $('#rate_ut').prop('disabled', false);
+        $('#dateStart').prop('disabled', false);
+        //$('#dateEnd').prop('disabled', false);
         $('#btn-update').removeClass('hide');
     });
 
-    $('#updateTimeLine').on('submit', function (e) {
+    $('#update-timeline').on('submit', function (e) {
         e.preventDefault();
 
         swal({
@@ -112,56 +119,64 @@ $(document).ready(function () {
         }).then(confirm => {
             if (confirm) {
                 $.ajax({
-                    type: "POST",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    url: url + "type-vehicles/update",
-                    data: new FormData(this),
-                    dataType: false,
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        url: url + "/type-vehicles/timeline/update",
+                        data: new FormData(this),
+                        dataType: false,
 
-                    beforeSend: function () {
-                        $('#name').attr('readonly', 'readonly');
-                        $('#rate').attr('readonly', 'readonly');
-                        $('#rate_ut').attr('readonly', 'readonly');
-                    },
-                    success: function (data) {
-                        if (data.status == true) {
+                        beforeSend: function () {
+                            $('#name').attr('readonly', 'readonly');
+                            $('#rate').attr('readonly', 'readonly');
+                            $('#rate_ut').attr('readonly', 'readonly');
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            if (data.status == true) {
+                                swal({
+                                    title: "¡Bien Hecho!",
+                                    text: data.message,
+                                    icon: "success",
+                                    button: "Ok",
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            }else if(data.status == "validation-failed"){
+                                swal({
+                                    title: "Información",
+                                    text: data.message,
+                                    icon: "info",
+                                    button: "Ok",
+                                })
+                            } else {
+                                swal({
+                                    title: "Información",
+                                    text: data.message,
+                                    icon: "info",
+                                    button: "Ok",
+                                })
+                            }
+                        },
+                        error: function (e) {
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
                             swal({
-                                title: "¡Bien Hecho!",
-                                text: data.message,
-                                icon: "success",
-                                button: "Ok",
-                            }).then(function () {
-                                location.reload();
+                                title: "¡Oh no!",
+                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                icon: "error",
+                                button: {
+                                    text: "Entendido",
+                                    className: "red-gradient"
+                                },
                             });
-                        }else{
-                            swal({
-                                title: "Información",
-                                text: data.message,
-                                icon: "info",
-                                button: "Ok",
-                            })
                         }
-                    },
-                    error: function (e) {
-                        $("#preloader").fadeOut('fast');
-                        $("#preloader-overlay").fadeOut('fast');
-                        swal({
-                            title: "¡Oh no!",
-                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                            icon: "error",
-                            button: {
-                                text: "Entendido",
-                                className: "red-gradient"
-                            },
-                        });
                     }
-                });
+                );
                 updateType = false;
             }
         });
-
     });
 });
 

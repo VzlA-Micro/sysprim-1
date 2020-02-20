@@ -11,4 +11,8 @@ class TimelineCatastralTerrain extends Model
     public function catastralTerrain() {
         return $this->belongsTo('App\CatastralTerreno', 'value_catastral_terreno_id');
     }
+
+    public function timelineValue() {
+        return $this->hasMany('App\TimelineCatastralTerrain', 'value_catastral_terreno_id');
+    }
 }

@@ -12,7 +12,7 @@ class CreateTimelineTypeVehicle extends Migration
         Schema::create('timeline_type_vehicle', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type_vehicle_id')->unsigned();
-            $table->date('since')->default('2020-01-01');
+            $table->date('since')->default('2019-01-01');
             $table->date('to')->default('2020-12-31');
             $table->float('rate');
             $table->float('rate_UT');

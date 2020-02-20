@@ -29,12 +29,12 @@
                             <label for="name">Nombre</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-verified_user prefix"></i>
-                            <input type="text" name="value_edification" id="value" maxlength="5"  minlength="1" class="validate number-date only-number-positive"   required >
-                            <label for="value">Valor de edificación (UT)</label>
+                        {{--<div class="input-field col s12 m6">--}}
+                            {{--<i class="icon-verified_user prefix"></i>--}}
+                            {{--<input type="text" name="value_edification" id="value" maxlength="5"  minlength="1" class="validate number-date only-number-positive"   required >--}}
+                            {{--<label for="value">Valor de edificación (UT)</label>--}}
 
-                        </div>
+                        {{--</div>--}}
 
                         <div class="input-field col s12 m6">
                             <i class="icon-question_answer prefix"></i>
@@ -43,7 +43,17 @@
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
-                            <label for="regime_horizontal">Regimen Horizontal</label>
+                            <label for="regimen_horizontal">Regimen Horizontal</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <i class="icon-question_answer prefix"></i>
+                            <select name="status" id="status">
+                                <option value="null" selected disabled>...</option>
+                                <option value="enabled">Habilitado</option>
+                                <option value="disabled">Inhabilitado</option>
+                            </select>
+                            <label for="status">Status</label>
                         </div>
 
                     </div>
