@@ -12,40 +12,45 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}">Consultar Alicuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor  Catastral de Contrucción</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal-construction.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catastral-construction.timeline.read') }}" >Consultar</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h4>Consultar Alicuota Inmuebles</h4>
+                        <h4>Consultar Linea de Tiempo - Valor Catastral de Construcción</h4>
                     </div>
                     <div class="card-content">
-                        <table class="highlight centered" id="recharges-table" style="width: 100%">
+                        <table class="highlight centered" id="timeline-table" style="width: 100%">
                             <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Valor</th>
-                                    @can('Detalles Alicuota')
-                                    <th>Detalles</th>
-                                    @endcan
-                                </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Valor</th>
+                                <th>Desde</th>
+                                <th>Hasta</th>
+                                {{--@can('Detalles Alicuota')--}}
+                                <th>Detalles</th>
+                                {{--@endcan--}}
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($alicuotas as $alicuota)
+                            @foreach($timelines as $timeline)
                                 <tr>
-                                    <td>{{ $alicuota->name }}</td>
-                                    <td>{{ $alicuota->value }}</td>
-                                    @can('Detalles Alicuota')
+                                    <td>{{ $timeline->catastralBuild->name }}</td>
+                                    <td>{{ $timeline->value }}</td>
+                                    <td>{{ $timeline->since }}</td>
+                                    <td>{{ $timeline->to }}</td>
+                                    {{--@can('Detalles Alicuota')--}}
                                     <td>
-                                        <a href="{{ route('alicuota.details', ['id' => $alicuota->id]) }}" class="btn btn-floating blue waves-effect waves-light">
+                                        <a href="{{ route('catastral-construction.timeline.details', ['id' => $timeline->id]) }}" class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
-                                    @endcan
+                                    {{--@endcan--}}
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -57,7 +62,7 @@
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
     <script>
-        $('#recharges-table').DataTable({
+        $('#timeline-table').DataTable({
             responsive: true,
             "scrollX": true,
             "pageLength": 10,

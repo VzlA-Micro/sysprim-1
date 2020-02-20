@@ -35,5 +35,13 @@ class CompanyRespaldoTableSeeder extends Seeder
         $path = base_path() . '/database/seeds/register/sql_sysprim_vehicle/models_new.sql';
         $sql = file_get_contents($path);
         DB::unprepared($sql);
+
+        $path = base_path() . '/database/seeds/register/sql_sysprim_inmueble/catastral_built_new.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
+
+        $path = base_path() . '/database/seeds/register/sql_sysprim_inmueble/catastral_terrain_new.sql';
+        $sql = file_get_contents($path);
+        DB::unprepared($sql);
     }
 }
