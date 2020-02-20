@@ -102,8 +102,6 @@ class DeclarationVehicle
             $moreThereYear = true;
         }
 
-
-
         if ($fiscal_period_format->year==$yearCurrent){
 
             $day= CheckCollectionDay::verify('Pat.Veh');
