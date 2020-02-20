@@ -178,11 +178,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($taxes->taxesCiu as $ciu)
+                                    @foreach($taxes->taxesCiu as $ciu->timeLine)
                                         <tr class="centered">
                                             <td>{{$ciu->code}}</td>
                                             <td>{{$ciu->name}}</td>
-                                            <td>{{($ciu->alicuota*100)."%"}}</td>
+                                            <td>{{($ciu->timeLine->alicuota*100)."%"}}</td>
                                             <td>{{$ciu->min_tribu_men}}</td>
                                         </tr>
                                     @endforeach
