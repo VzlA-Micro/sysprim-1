@@ -9,8 +9,9 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.read') }}">Ver Ramos CIIU's</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Consultar Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Detalles de Linea de Tiempo-CIIU</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -81,7 +82,7 @@
                         <div class="input-field col s12 m12">
                             <i class="icon-date_range prefix"></i>
                             <select name="since" id="since" disabled>
-                                <option value="null" selected>Seleccione</option>
+                                <option value="null" selected disabled>Seleccione</option>
                                 @while($cont <= 2030)
 
                                     @if($ciu->since==$cont.'-01-01')

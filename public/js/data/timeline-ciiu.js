@@ -18,87 +18,117 @@ $(document).ready(function () {
     });
 
 
-    $('#register').submit(function(e) {
+    $('#register').submit(function (e) {
         e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: url + "ciu-branch/time-line/store",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: formData,
-            method: "POST",
-            beforeSend: function() {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(response) {
+
+        if ($('#ciu_id').val() !== null && $('#since').val()!==null) {
+            var formData = new FormData(this);
+            $.ajax({
+                url: url + "ciu-branch/time-line/store",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
 
 
+                    if (response.status === 'success') {
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: response.message,
+                            icon: "success",
+                            button: {
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            }
+                        }).then(function (accept) {
+                            //window.location.href = url + "accessories/manage";
+                        });
 
-                if(response.status==='success'){
+                    } else if (response.status === 'error') {
+                        swal({
+                            title: "¡Error!",
+                            text: response.message,
+                            icon: "error",
+                            button: {
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            }
+                        })
+                    }
+
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Bien Hecho!",
-                        text: response.message,
-                        icon: "success",
-                        button: {
-                            text: "Esta bien",
-                            className: "green-gradient"
-                        }
-                    }).then(function (accept) {
-                        //window.location.href = url + "accessories/manage";
-                    });
-
-                }else if(response.status==='error'){
-                    swal({
-                        title: "¡Error!",
-                        text: response.message,
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                         icon: "error",
                         button: {
-                            text: "Esta bien",
-                            className: "green-gradient"
-                        }
-                    })
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
                 }
-
-            },
-            error: function(err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+            });
+        } else {
+            if($('#since').val()==null){
                 swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button:{
-                        text: "Entendido",
-                        className: "red-gradient"
+                    title: "Información",
+                    text: "Debes seleccionar el año al que estara asociado este CIIU.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
                     },
                 });
+            }else if($('#ciu_id').val()===null){
+
+                swal({
+                    title: "Información",
+                    text: "Debes seleccionar el ramo del ciu, al que estara asociado la linea de tiempo.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+
             }
-        });
+
+        }
     });
 
 
     $('#btn-edit').click(function () {
         $(this).hide();
-        $('#alicuota').removeAttr('readonly','');
-        $('#mTM').removeAttr('readonly','');
-        $('#since').prop('disabled',false);
+        $('#alicuota').removeAttr('readonly', '');
+        $('#mTM').removeAttr('readonly', '');
+        $('#since').prop('disabled', false);
         $('select').formSelect();
         $('#btn-update').show();
     });
 
 
-    $('#ciiu-timiline-details').on('submit',function (e) {
+    $('#ciiu-timiline-details').on('submit', function (e) {
         e.preventDefault();
 
         $.ajax({
-            url: url+"ciu-branch/time-line/update",
-            cache:false,
-            contentType:false,
-            processData:false,
-            data:new FormData(this),
+            url: url + "ciu-branch/time-line/update",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: new FormData(this),
             method: "POST",
 
             beforeSend: function () {
@@ -108,7 +138,7 @@ $(document).ready(function () {
             success: function (response) {
 
 
-                if(response.status==='success'){
+                if (response.status === 'success') {
                     swal({
                         title: "¡Bien Hecho!",
                         text: response.message,
@@ -121,7 +151,7 @@ $(document).ready(function () {
                         location.reload();
                     });
 
-                }else if(response.status==='error'){
+                } else if (response.status === 'error') {
                     swal({
                         title: "¡Error!",
                         text: response.message,
@@ -134,19 +164,19 @@ $(document).ready(function () {
                 }
 
 
-
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
 
             },
             error: function (err) {
+                console.log(err);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button:{
+                    button: {
                         text: "Entendido",
                         className: "red-gradient"
                     },

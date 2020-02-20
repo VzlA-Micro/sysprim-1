@@ -199,13 +199,28 @@ class CiuController extends Controller
     {
         $id = $request->input('id');
         $ciu_id = $request->input('ciu_id');
-        $alicuota=$request->input('alicuota')/100;
+
+        $alicuota=$request->input('alicuota');
+
+        $alicuota = str_replace('.', '', $alicuota);
+        $alicuota = str_replace(',', '.', $alicuota);
+
+
+        if(!is_float($alicuota)){
+            $alicuota=$alicuota/100;
+        }
+
+
+
+
+
+
         $since_format = Carbon::parse($request->input('since'));
 
         $timeline = TimelineCiiu::where('ciu_id', $ciu_id)->whereYear('since', '=', $since_format->format('Y'))->get();
         if (!$timeline->isEmpty()) {
             $timeline = TimelineCiiu::findOrFail($request->input('id'));
-            $timeline->alicuota = $alicuota;
+            $timeline->alicuota = (float)$alicuota;
             $timeline->min_tribu_men = $request->input('mTM');
             $since = Carbon::parse($request->input('since'));
             $timeline->since = $since;
