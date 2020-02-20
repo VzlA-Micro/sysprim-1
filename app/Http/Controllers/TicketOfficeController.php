@@ -1090,9 +1090,6 @@ class TicketOfficeController extends Controller
 
 
 
-
-
-
     public function changeStatusPayment($id, $status)
     {
         $payments = Payment::find($id);
