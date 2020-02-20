@@ -13,7 +13,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.read') }}">Ver Ramos CIIU's</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Consultar Linea de Tiempo-CIIU</a></li>
                 </ul>
             </div>
             <div class="col s12">
@@ -38,7 +39,7 @@
                                     <td>{{ $ciu->to }}</td>
                                     @can('Detalles Ramo CIIU')
                                     <td>
-                                        <a href="{{ route('ciu-branch.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
+                                        <a href="{{ route('ciu-branch.timeline.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
                                     </td>
                                     @endcan
                                 </tr>

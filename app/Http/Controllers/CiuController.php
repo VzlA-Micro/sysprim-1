@@ -188,6 +188,57 @@ class CiuController extends Controller
         return view('modules.ciiu.timeline.read',['ciiu'=>$ciiu]);
     }
 
+    public function detailsTimeLine($id){
+        $ciu=TimelineCiiu::find($id);
+        $ciiu=Ciu::orderBy('name','asc')->get();
+        return view('modules.ciiu.timeline.details',['ciu'=>$ciu,'ciiu'=>$ciiu]);
+    }
+
+
+    public function updateTimeLine(Request $request)
+    {
+        $id = $request->input('id');
+        $ciu_id = $request->input('ciu_id');
+
+        $alicuota=$request->input('alicuota');
+
+        $alicuota = str_replace('.', '', $alicuota);
+        $alicuota = str_replace(',', '.', $alicuota);
+
+
+        if(!is_float($alicuota)){
+            $alicuota=$alicuota/100;
+        }
+
+
+
+
+
+
+        $since_format = Carbon::parse($request->input('since'));
+
+        $timeline = TimelineCiiu::where('ciu_id', $ciu_id)->whereYear('since', '=', $since_format->format('Y'))->get();
+        if (!$timeline->isEmpty()) {
+            $timeline = TimelineCiiu::findOrFail($request->input('id'));
+            $timeline->alicuota = (float)$alicuota;
+            $timeline->min_tribu_men = $request->input('mTM');
+            $since = Carbon::parse($request->input('since'));
+            $timeline->since = $since;
+            $timeline->to = $since_format->format('Y') . '-12-31';
+            $timeline->update();
+            $response=['status'=>'success','message'=>'Linea del tiempo se ha actualizado con éxito.'];
+        }else{
+            $response=['status'=>'error','message'=>'Ya hay Linea del tiempo en este rango de fecha asociada a este CIIU'];
+        }
+        return response()->json($response);
+    }
+
+
+
+
+
+
+
 
 
 }

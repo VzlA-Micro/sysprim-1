@@ -141,12 +141,18 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
 
-                //time-line///
+                //TIME-LINE CIIU///
                 Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
+
                 Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
-                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index ');
+
+                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
+
+                Route::get('/ciu-branch/time-line/details/{id}', 'CiuController@detailsTimeLine')->name('ciu-branch.timeline.details');
 
                 Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
+
+                Route::post('/ciu-branch/time-line/update', 'CiuController@updateTimeLine')->name('ciu-branch.timeline.update');
 
 
                 // Nivel 4 (Gestionar Ramo CIIU)
