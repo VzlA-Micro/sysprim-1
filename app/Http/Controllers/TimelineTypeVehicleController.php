@@ -166,4 +166,20 @@ class TimelineTypeVehicleController extends Controller
 
         return $response;
     }
+
+    public function verifiedTimelineUpdate($idTimeline,$since)
+    {
+        $response = 0;
+
+        $timeline = TimelineTypeVehicle::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', (string)$since)->get();
+
+        if ($timeline->isEmpty()) {
+            $response = false;
+        } else {
+            $response = true;
+        }
+
+        return $response;
+    }
 }

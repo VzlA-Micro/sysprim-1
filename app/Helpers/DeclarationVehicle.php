@@ -23,6 +23,7 @@ use App\Recharge;
 use App\Helpers\Trimester;
 use App\BankRate;
 use App\Prologue;
+use App\TimelineTypeVehicle;
 
 class DeclarationVehicle
 {
@@ -57,6 +58,8 @@ class DeclarationVehicle
             $rate = Tributo::orderBy('id', 'desc')->first();
         }
 
+        //dd($rate);
+
 
         $moreThereYear = null;
         $bank = BankRate::select('value_rate')->latest()->first();
@@ -85,12 +88,16 @@ class DeclarationVehicle
 
         $diffYear = $yearCurrent - intval($yearVehicle);
 
+        $since = TimelineTypeVehicle::where('type_vehicle_id',$vehicle[0]->type_vehicle_id)
+            ->whereYear('since','<=',(string)$year->format('Y'))
+            ->whereYear('to','>=',(string)$year->format('Y'))->first();
+
         if ($diffYear < 3) {
-            $rateYear = $vehicle[0]->type->rate;
+            $rateYear = $since->rate;
             $taxes = $rateYear * $rate->value;
             $moreThereYear = false;
         } else {
-            $rateYear = $vehicle[0]->type->rate_UT;
+            $rateYear = $since->rate_UT;
             $taxes = $rateYear * $rate->value;
             $moreThereYear = true;
         }

@@ -921,7 +921,7 @@ class TicketOfficeVehicleController extends Controller
         }
 
 
-        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment, $year);
+        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment, $years['periodInit']);
 
         $type = null;
 
