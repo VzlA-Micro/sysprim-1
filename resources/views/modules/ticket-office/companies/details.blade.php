@@ -259,7 +259,7 @@
                         <div class="col l12">
                             <div class="row">
                                 @can('Actualizar Empresas')
-                                    <div class="col s12 m3" style="margin-top:20px;">
+                                    <div class="col s12 m3" style="margin-top:20px;" id="block-update">
                                         <button type="button"  class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                            id="update-company">
                                             Actualizar
@@ -268,7 +268,7 @@
                                     </div>
                                 @endcan
                                 @can('Añadir CIIU Empresas')
-                                    <div class="col s12 m3" style="margin-top:20px;">
+                                    <div class="col s12 m3" style="margin-top:20px;" id="block-ciiu">
                                         <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                            id="add-ciiu">
                                             Añadir CIIU
@@ -303,11 +303,19 @@
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light purple col s12 "
                                                 id="change-maps">
-                                            Cambiar Ubicación
+                                            Ubicación
                                             <i class="icon-map right"></i>
                                         </button>
                                     </div>
                                 @endcan
+
+                                <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                                    <a href="{{route('tickOffice.companies.details',['id'=>$company->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
+                                       id="back">
+                                        Atrás
+                                        <i class="icon-keyboard_arrow_left left" style="margin:0"></i>
+                                    </a>
+                                </div>
                             </div>
 
                         </div>

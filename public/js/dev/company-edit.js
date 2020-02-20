@@ -103,7 +103,17 @@ $('document').ready(function () {
             $('#address').removeAttr('disabled');
             $('#phone').removeAttr('disabled');
             updateCompany=true;
-            $('#update-company').text('Guardar');
+            $('#update-company').text('Guardar Datos de la Empresa');
+            $('#update-company').removeClass();
+            $('#update-company').addClass('btn btn-large btn-rounded waves-effect waves-light blue col s12');
+            $('#block-back').show();
+            $('#block-update').addClass('col s12 m12');
+            $('#update-company-status').hide();
+            $('#change-maps').hide();
+            $('#add-ciiu').hide();
+            $('#company-status').hide();
+
+
             swal({
                 title: "Información",
                 text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
@@ -217,6 +227,15 @@ $('document').ready(function () {
             $('#search-ciu').removeAttr('disabled');
             addCiiu = true;
             $('#add-ciiu').text('Guardar CIIU');
+            $('#add-ciiu').removeClass();
+            $('#add-ciiu').addClass('btn btn-large btn-rounded waves-effect waves-light blue col s12');
+            $('#block-back').show();
+            $('#block-ciiu').addClass('col s12 m12');
+            $('#update-company-status').hide();
+            $('#change-maps').hide();
+            $('#update-company').hide();
+            $('#company-status').hide();
+            
             swal({
                 title: "Información",
                 text: "Ingresa los codigo CIIU en la casilla selecionada",
