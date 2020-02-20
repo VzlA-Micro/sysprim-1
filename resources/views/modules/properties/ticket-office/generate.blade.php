@@ -101,15 +101,15 @@
                             </div>
                             @php
                                 $cont=(int)date('Y');
+                                $date=2019;
                             @endphp
                             <div class="input-field col s12 m6">
                                 <i class="icon-date_range prefix"></i>
-                                <select id="fiscal_period" disabled >
-                                    <option value="null" disabled selected>Seleccione</option>
-                                    @while($cont >= 2010)
+                                <select id="fiscal_period" name="fiscal_period" disabled>
+                                    <option value="null" disabled selected>Seleccione un año...</option>
+                                    @for($cont;$cont>=$date;$cont--)
                                         <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
-                                        @php $cont--; @endphp
-                                    @endwhile
+                                    @endfor
                                 </select>
                                 <label>Periodo Fiscal</label>
                             </div>
