@@ -33,6 +33,7 @@ class Calculate{
         foreach ($ciuTaxes as $ciu){
             $amountInterest+=$ciu->interest;
             $amountRecargo=$ciu->recharge;
+
             $amountCiiu+=$ciu->totalCiiu+$ciu->recharge+$ciu->interest;
 
 
