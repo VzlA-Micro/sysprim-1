@@ -39,7 +39,7 @@
                             @foreach($timelines as $timeline)
                                 <tr>
                                     <td>{{ $timeline->catastralBuild->name }}</td>
-                                    <td>{{ $timeline->value }}</td>
+                                    <td>{{ $timeline->value }} UT</td>
                                     <td>{{ $timeline->since }}</td>
                                     <td>{{ $timeline->to }}</td>
                                     {{--@can('Detalles Alicuota')--}}

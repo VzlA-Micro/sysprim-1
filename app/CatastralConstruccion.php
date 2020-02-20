@@ -16,4 +16,8 @@ class CatastralConstruccion extends Model implements Auditable
         return $this->belongsToMany('App\Inmueble','val_cat_const_inmu')
             ->withPivot('property_id');
     }
+
+    public function timelineValue() {
+        return $this->hasMany('App\TimelineCatastralBuild', 'value_catastral_construccion_id');
+    }
 }

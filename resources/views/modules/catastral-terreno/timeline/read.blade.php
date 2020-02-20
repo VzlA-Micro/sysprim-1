@@ -40,8 +40,8 @@
                             @foreach($timelines as $timeline)
                                 <tr>
                                     <td>{{ $timeline->catastralTerrain->name }}</td>
-                                    <td>{{ $timeline->value_empty_terrain }}</td>
-                                    <td>{{ $timeline->value_built_terrain }}</td>
+                                    <td>{{ $timeline->value_empty_terrain }} UT</td>
+                                    <td>{{ $timeline->value_built_terrain }} UT</td>
                                     <td>{{ $timeline->since }}</td>
                                     <td>{{ $timeline->to }}</td>
                                     {{--@can('Detalles Alicuota')--}}

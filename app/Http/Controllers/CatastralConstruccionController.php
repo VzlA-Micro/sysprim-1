@@ -20,7 +20,7 @@ class CatastralConstruccionController extends Controller{
     public function store(Request $request) {
         $catastral = new CatastralConstruccion();
         $catastral->name = $request->input('name');
-        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->status = $request->input('status');
         $catastral->regimen_horizontal =$request->input('regimen_horizontal');
         $catastral->save();
         return response()->json(['status'=>'success'],200);
@@ -41,7 +41,7 @@ class CatastralConstruccionController extends Controller{
         $id = $request->input('id');
         $catastral = CatastralConstruccion::find($id);
         $catastral->name = $request->input('name');
-        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->status = $request->input('status');
         $catastral->regimen_horizontal =$request->input('regimen_horizontal');
         $catastral->update();
         return response()->json(['status'=>'success'],200);

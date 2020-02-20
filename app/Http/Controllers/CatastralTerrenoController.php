@@ -24,8 +24,6 @@ class CatastralTerrenoController extends Controller
         $catastral->parish_id = $request->input('parish_id');
         $catastral->sector_nueva_nomenclatura = $request->input('sector_nueva');
         $catastral->sector_catastral = $request->input('sector_catastral');
-        $catastral->value_terreno_vacio =$request->input('value_terreno_vacio');
-        $catastral->value_terreno_construccion =$request->input('value_terreno_construccion');
         $catastral->save();
         return response()->json(['status'=>'success'],200);
     }
@@ -50,8 +48,6 @@ class CatastralTerrenoController extends Controller
         $catastral->parish_id = $request->input('parish_id');
         $catastral->sector_nueva_nomenclatura = $request->input('sector_nueva');
         $catastral->sector_catastral = $request->input('sector_catastral');
-        $catastral->value_terreno_vacio =$request->input('value_terreno_vacio');
-        $catastral->value_terreno_construccion =$request->input('value_terreno_construccion');
         $catastral->update();
         return response()->json(['status'=>'success'],200);
     }
@@ -66,19 +62,21 @@ class CatastralTerrenoController extends Controller
     }
 
     public function timelineStore(Request $request) {
-        $catastralTerreno_id = $request->input('value_catastral_construccion_id');
+        $catastralTerreno_id = $request->input('value_catastral_terreno_id');
         $since = $request->input('since');
         $to = $request->input('to');
-        $value = $request->input('value');
+        $valueBuiltTerrain = $request->input('value_built_terrain');
+        $valueEmptyTerrain = $request->input('value_empty_terrain');
         $timeline = new TimelineCatastralTerrain();
         $timeline->since = $since;
         $timeline->to = $to;
-        $timeline->value = $value;
-        $timeline->value_catastral_construccion_id = $catastralConstruccion_id;
+        $timeline->value_built_terrain = $valueBuiltTerrain;
+        $timeline->value_empty_terrain = $valueEmptyTerrain;
+        $timeline->value_catastral_terreno_id = $catastralTerreno_id;
         $timeline->save();
         return response()->json([
             'status' => 'success',
-            'message' => 'Se ha registrado un valor en la linea de tiempo del valor catastral de construcción.'
+            'message' => 'Se ha registrado un valor en la linea de tiempo del valor catastral de terreno.'
         ]);
     }
 

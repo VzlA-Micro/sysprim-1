@@ -60,7 +60,7 @@ $(document).ready(function() {
 		$(this).hide();
 		$('#update-btn').removeClass('hide');
         $('#name').removeAttr('readonly');
-        $('#value').removeAttr('readonly');
+        $('#status').removeAttr('disabled');
         $('#regimen_horizontal').removeAttr('disabled');
         $('select').formSelect();
 	});

@@ -46,7 +46,7 @@ $(document).ready(function() {
             cache: false,
             contentType: false,
             processData: false,
-            url: url + 'catastral-construction/timeline/store',
+            url: url + 'catastral-terreno/timeline/store',
             beforeSend: function() {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
@@ -61,10 +61,12 @@ $(document).ready(function() {
                         className: "green-gradient"
                     }
                 }).then(accept => {
-                    // window.location.href = url + 'catastral-construction/timeline/read';
+                    window.location.href = url + 'catastral-terreno/timeline/read';
                 });
             }, error: function (err) {
                 console.log(err);
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
                 swal({
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -74,8 +76,6 @@ $(document).ready(function() {
                         className: "red-gradient"
                     },
                 });
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
             }
         });
     });

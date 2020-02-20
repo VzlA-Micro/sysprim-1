@@ -47,27 +47,11 @@
                             <label for="sector_nueva">Sector nueva Nomenclatura</label>
                         </div>
 
-
                         <div class="input-field col s12 m6">
                             <i class="icon-directions_run prefix"></i>
                             <input type="text" name="sector_catastral" id="sector_catastral" maxlength="5"  minlength="1" class="validate number-date" required>
                             <label for="sector_catastral">Sector Catastral</label>
-
                         </div>
-
-
-                        <div class="input-field col s12 m6">
-                            <i class="icon-build prefix"></i>
-                            <input type="text" name="value_terreno_construccion" id="value_terreno_construccion" maxlength="5"  minlength="1" class="validate number-date only-number-positive"   required >
-                            <label for="value_terreno_construccion">Valor de Terreno en construción (UT)</label>
-                        </div>
-
-                        <div class="input-field col s12 m6">
-                            <i class="icon-terrain prefix"></i>
-                            <input type="text" name="value_terreno_vacio" id="value_terreno_vacio" maxlength="5"  minlength="1" class="validate number-date only-number-positive"   required >
-                            <label for="value_terreno_vacio">Valor de Terreno Vacio (UT)</label>
-                        </div>
-
                     </div>
                     <div class="card-footer center-align">
                         <button type="submit" class="btn btn-large btn-rounded peach waves-effect waves-light">

@@ -39,7 +39,7 @@
                             @foreach($timelines as $timeline)
                                 <tr>
                                     <td>{{ $timeline->alicuota->name }}</td>
-                                    <td>{{ $timeline->value }}</td>
+                                    <td>{{ ($timeline->value * 100) }}%</td>
                                     <td>{{ $timeline->since }}</td>
                                     <td>{{ $timeline->to }}</td>
                                     {{--@can('Detalles Alicuota')--}}

@@ -49,14 +49,14 @@
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
                             <input type="text" name="value_built_terrain" id="value_built_terrain" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only" value="{{ $timeline->value_built_terrain }}" maxlength="6" disabled required>
-                            <label for="value_built_terrain">Valor de Terreno Construido</label>
+                            <label for="value_built_terrain">Valor de Terreno Construido (UT)</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
                             <input type="text" name="value_empty_terrain" id="value_empty_terrain" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only" value="{{ $timeline->value_empty_terrain }}"  maxlength="6" disabled required>
-                            <label for="value_empty_terrain">Valor de Terreno Vacío</label>
+                            <label for="value_empty_terrain">Valor de Terreno Vacío (UT)</label>
                         </div>
                     </div>
                     {{--@can('Actualizar Alicuota')--}}
