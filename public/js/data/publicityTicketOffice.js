@@ -853,6 +853,11 @@ $('document').ready(function () {
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
 
+            $('#block-update').addClass('col s12 m12 center-align');
+            $('#block-status').hide();
+            $('#block-back').show();
+
+
         } else if (typePublicity == 2) {
             $('#date-begin').hide();
             $('#date-end').hide();
@@ -868,6 +873,10 @@ $('document').ready(function () {
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
 
+            $('#block-update').addClass('col s12 m12 center-align');
+            $('#block-status').hide();
+            $('#block-back').show();
+
         } else if (typePublicity == 3) {
             $('#date-begin').hide();
             $('#date-end').hide();
@@ -881,6 +890,10 @@ $('document').ready(function () {
             $('select').formSelect();
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
+
+            $('#block-update').addClass('col s12 m12 center-align');
+            $('#block-status').hide();
+            $('#block-back').show();
 
         } else if (typePublicity == 4) {
             $('#date-begin').hide();
@@ -897,6 +910,11 @@ $('document').ready(function () {
             $('#quantity').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
+            
+            $('#block-update').addClass('col s12 m12 center-align');
+            $('#block-status').hide();
+            $('#block-back').show();
+            
         } else if (typePublicity == 5) {
             $('#date-begin').hide();
             $('#date-end').hide();
@@ -912,6 +930,10 @@ $('document').ready(function () {
             $('#side').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
+
+            $('#block-update').addClass('col s12 m12 center-align');
+            $('#block-status').hide();
+            $('#block-back').show();
         }
     });
 

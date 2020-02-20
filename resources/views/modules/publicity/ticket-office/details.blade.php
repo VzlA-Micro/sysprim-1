@@ -672,7 +672,7 @@
                         @endcan
 
                         @can('Habilitar/Deshabilitar Publicidad')
-                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-status">
                                 @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
