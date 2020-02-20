@@ -86,13 +86,14 @@ class PropertyTaxesController extends Controller
         $actualDate = Carbon::now();
         $declaration = Declaration::VerifyDeclaration($id, $status);
         $statusTax = '';
-        $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
-        $constProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
-        //$catasGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
-        $catasBuild = CatastralConstruccion::where('id', $constProperty[0]->value_catas_const_id)->get();
-        //$alicuota = Alicuota::where('id', $property[0]->type_inmueble_id)->get();
+        $property = Property::where('id', $id)->with('valueGround')->with('type')->first();
+        $constProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
+        $catasGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
+        $catasBuild = CatastralConstruccion::where('id', $constProperty->value_catas_const_id)->first();
+
         $period_fiscal = Carbon::now()->year;
-        $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
+        $userProperty = UserProperty::where('property_id', $property->id)->first();
+
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Prop. y Publicidad')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
@@ -116,13 +117,13 @@ class PropertyTaxesController extends Controller
             $statusTax = 'new';
         }
         // Realizar verificacion si el propietario es una compañia o es una persona
-        if($userProperty[0]->company_id != null) {
-            $owner_id = $userProperty[0]->company_id;
+        if($userProperty->company_id != null) {
+            $owner_id = $userProperty->company_id;
             $owner_type = 'company';
             $owner = Company::find($owner_id);
         }
-        elseif($userProperty[0]->person_id != null) {
-            $owner_id = $userProperty[0]->person_id;
+        elseif($userProperty->person_id != null) {
+            $owner_id = $userProperty->person_id;
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
@@ -605,18 +606,18 @@ class PropertyTaxesController extends Controller
     public function taxesTicketOfficePayroll($id, $status, $fiscal_period) {
         $actualDate = Carbon::now();
         $statusTax = '';
-        $property = Property::where('id', $id)->with('valueGround')->with('type')->get();
-        $userProperty = UserProperty::where('property_id', $property[0]->id)->get();
+        $property = Property::where('id', $id)->with('valueGround')->with('type')->first();
+        $userProperty = UserProperty::where('property_id', $property->id)->first();
         $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
 //        dd($declaration);
         // Realizar verificacion si el propietario es una compañia o es una persona
-        if($userProperty[0]->company_id != null) {
-            $owner_id = $userProperty[0]->company_id;
+        if($userProperty->company_id != null) {
+            $owner_id = $userProperty->company_id;
             $owner_type = 'company';
             $owner = Company::find($owner_id);
         }
-        elseif($userProperty[0]->person_id != null) {
-            $owner_id = $userProperty[0]->person_id;
+        elseif($userProperty->person_id != null) {
+            $owner_id = $userProperty->person_id;
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
