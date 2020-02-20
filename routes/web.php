@@ -141,12 +141,18 @@ Route::middleware(['auth'])->group(/**
                     return view('modules.ciiu.menu');
                 })->name('ciu-branch.manage');
 
-                //time-line///
+                //TIME-LINE CIIU///
                 Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
+
                 Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
-                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index ');
+
+                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
+
+                Route::get('/ciu-branch/time-line/details/{id}', 'CiuController@detailsTimeLine')->name('ciu-branch.timeline.details');
 
                 Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
+
+                Route::post('/ciu-branch/time-line/update', 'CiuController@updateTimeLine')->name('ciu-branch.timeline.update');
 
 
                 // Nivel 4 (Gestionar Ramo CIIU)
@@ -1191,6 +1197,45 @@ Route::middleware(['auth'])->group(/**
 
 
 
+
+
+        Route::get('home/test','HomeController@test');
+
+
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('alicuota/timeline/manage', 'AlicuotaController@timelineManage')->name('alicuota.timeline.manage');
+        Route::get('alicuota/timeline/register', 'AlicuotaController@timelineCreate')->name('alicuota.timeline.register');
+        Route::get('alicuota/timeline/read', 'AlicuotaController@timelineIndex')->name('alicuota.timeline.read');
+        Route::post('alicuota/timeline/store', 'AlicuotaController@timelineStore')->name('alicuota.timeline.store');
+        Route::get('alicuota/timeline/details/{id}', 'AlicuotaController@timelineShow')->name('alicuota.timeline.details');
+        Route::post('alicuota/timeline/update', 'AlicuotaController@timelineUpdate')->name('alicuota.timeline.update');
+
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('catastral-construction/timeline/manage', 'CatastralConstruccionController@timelineManage')->name('catrastal-construction.timeline.manage');
+        Route::get('catastral-construction/timeline/register', 'CatastralConstruccionController@timelineCreate')->name('catastral-construction.timeline.register');
+        Route::post('catastral-construction/timeline/store', 'CatastralConstruccionController@timelineStore')->name('catastral-construction.timeline.store');
+        Route::get('catastral-construction/timeline/read', 'CatastralConstruccionController@timelineIndex')->name('catastral-construction.timeline.read');
+        Route::get('catastral-construction/timeline/details/{id}', 'CatastralConstruccionController@timelineShow')->name('catastral-construction.timeline.details');
+        Route::post('catastral-construction/timeline/update', 'CatastralConstruccionController@timelineUpdate')->name('catastral-construction.timeline.update');
+
+        ///////////////////////////////////////////////////////////////
+        ///
+        ///
+        ///
+        Route::get('catastral-terreno/timeline/manage', 'CatastralTerrenoController@timelineManage')->name('catrastal-terreno.timeline.manage');
+        Route::get('catastral-terreno/timeline/register', 'CatastralTerrenoController@timelineCreate')->name('catastral-terreno.timeline.register');
+        Route::get('catastral-terreno/timeline/read', 'CatastralTerrenoController@timelineIndex')->name('catastral-terreno.timeline.read');
+        Route::get('catastral-terreno/timeline/details/{id}', 'CatastralTerrenoController@timelineShow')->name('catastral-terreno.timeline.details');
+        Route::post('catastral-terreno/timeline/update', 'CatastralTerrenoController@timelineUpdate')->name('catastral-terreno.timeline.update');
+
+
+//        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
 
 
     });

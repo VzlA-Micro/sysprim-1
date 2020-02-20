@@ -36,12 +36,23 @@ class Declaration
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $currentDate = Carbon::now();
-        $fiscalPeriod = Carbon::parse($fiscal_period);
+
         $dayCurrent = Carbon::now()->format('d');
         $monthCurrent = Carbon::now()->format('m');
         $january = 01;
         $currentFiscalPeriodStart = '2019-01-01';
         $currentFiscalPeriodEnd = '2020-01-01';
+//        if (is_null($fiscal_period)){
+//            $fiscalPeriod = Carbon::parse($fiscal_period);
+//        }
+        $fiscalPeriod = Carbon::parse($fiscal_period);
+
+
+        $taxUnitPrice = Tributo::whereDate('to','>=',$fiscalPeriod)->whereDate('since','<=',$fiscalPeriod)->get();
+        if (is_null($taxUnitPrice)){
+            $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
+        }
+//        dd($taxUnitPrice);
 
 //        dd($fiscal_period);
 //        var_dump($currentDate->month);
@@ -56,7 +67,7 @@ class Declaration
                 $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
                 $cadastralBuild = CatastralConstruccion::where('id', $buildProperty[0]->value_catas_const_id)->get();
                 $cadastralGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
+//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
 
                 if ($property[0]->area_ground !== 0) {
                     $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
@@ -91,7 +102,7 @@ class Declaration
                 $buildProperty = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
                 $cadastralBuild = CatastralConstruccion::where('id', $buildProperty[0]->value_catas_const_id)->get();
                 $cadastralGround = CatastralTerreno::where('id', $property[0]->value_cadastral_ground_id)->get();
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
+//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
 
                 if ($property[0]->area_ground !== 0) {
                     $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
@@ -113,7 +124,7 @@ class Declaration
                 $total = ($baseImponible + $porcentaje) - $discount; // Total del impuesto
             }
             else {
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
+//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
                 $discount = 0;
 
                 $property = Property::where('id', $id)->get();
