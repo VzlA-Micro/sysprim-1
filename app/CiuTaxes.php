@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Tributo;
 use OwenIt\Auditing\Contracts\Auditable;
-
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use App\TimelineCiiu;
 class CiuTaxes extends Model implements Auditable
 
 {
@@ -17,7 +19,12 @@ class CiuTaxes extends Model implements Auditable
 
 
     public function getTotalCiiuAttribute(){
-        $ciu=Ciu::find($this->ciu_id);
+        $fiscal_period=Carbon::parse($this->taxes->fiscal_period)->format('Y');
+
+
+        $ciu=TimelineCiiu::where('ciu_id',$this->ciu_id)->whereYear('since','>=',$fiscal_period)->get();
+dd($ciu);
+
         $this->totalCiiu=$this->base*$ciu->alicuota;
 
         if($this->taxable_minimum!=0) {
