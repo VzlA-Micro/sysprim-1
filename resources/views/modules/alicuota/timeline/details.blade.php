@@ -32,13 +32,33 @@
                             </select>
                             <label for="alicuota_inmueble_id">Alicuotas</label>
                         </div>
-                        <div class="input-field col s12 m4">
+                        <input type="hidden" name="alicuota_inmueble_id" value="{{ $timeline->alicuota->id }}">
+                        {{--<div class="input-field col s12 m4">
                             <input type="text" name="since" id="since" class="datepicker" value="{{ $timeline->since }}" disabled required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <input type="text" name="to" id="to" class="datepicker" value="{{ $timeline->to }}" disabled required>
                             <label for="to">Hasta</label>
+                        </div>--}}
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
+
+                        <div class="input-field col s12 m8">
+                            <i class="icon-date_range prefix"></i>
+                            <select name="since" id="since" disabled>
+                                <option value="null" selected disabled>Seleccione</option>
+                                @while($cont <= 2030)
+                                    @if($timeline->since==$cont.'-01-01')
+                                        <option value="{{$cont.'-01-01'}}" selected>{{$cont}}</option>
+                                    @else
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @endif
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">

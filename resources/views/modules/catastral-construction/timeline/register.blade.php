@@ -23,6 +23,7 @@
                     <div class="card-header center-align">
                         <h4>Registrar Linea de Tiempo</h4>
                     </div>
+
                     <div class="card-content row">
                         <div class="input-field col s12">
                             <select name="value_catastral_construccion_id" id="value_catastral_construccion_id" required>
@@ -33,19 +34,29 @@
                             </select>
                             <label for="value_catastral_construccion_id">Valor Catastral de Construcción</label>
                         </div>
-                        <div class="input-field col s12 m4">
+                        {{--<div class="input-field col s12 m4">
                             <input type="text" name="since" id="since" class="datepicker" required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <input type="text" name="to" id="to" class="datepicker" required>
                             <label for="to">Hasta</label>
-                        </div>
-                        {{--<div class="input-field col s12 m6">
-                            <i class="icon-text_fields prefix"></i>
-                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" minlength="5" maxlength="30" required>
-                            <label for="name"> Nombre</label>
                         </div>--}}
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
+
+                        <div class="input-field col s12 m8">
+                            <i class="icon-date_range prefix"></i>
+                            <select name="since" id="since">
+                                <option value="null" disabled selected>Seleccione</option>
+                                @while($cont <= 2030)
+                                    <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
+                        </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">

@@ -40,7 +40,7 @@ class AlicuotaController extends Controller
     }
 
     public function timelineCreate() {
-        $alicuotas = Alicuota::all();
+        $alicuotas = Alicuota::orderBy('name','asc')->get();
         return view('modules.alicuota.timeline.register', ['alicuotas' => $alicuotas]);
     }
 
@@ -73,7 +73,7 @@ class AlicuotaController extends Controller
     }
 
     public function timelineShow($id) {
-        $alicuotas = Alicuota::all();
+        $alicuotas = Alicuota::orderBy('name','asc')->get();
         $timeline = TimelineAlicuota::findOrFail($id);
         return view('modules.alicuota.timeline.details', ['timeline' => $timeline, 'alicuotas' => $alicuotas]);
     }
@@ -85,19 +85,38 @@ class AlicuotaController extends Controller
 
     public function timelineUpdate(Request $request) {
         $id = $request->input('id');
-        $since = $request->input('since');
-        $to = $request->input('to');
+        $alicuota_id = $request->input('alicuota_inmueble_id');
+        $sinceFormat = Carbon::parse($request->input('since'));
+        $since = Carbon::parse($request->input('since'));
+//        $to = $request->input('to');
         $value = ($request->input('value') / 100);
-        $timeline = TimelineAlicuota::find($id);
+        $timeline = TimelineAlicuota::where('alicuota_inmueble_id',(int)$alicuota_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
+
+        if(!$timeline->isEmpty()) {
+            $timeline = TimelineAlicuota::findOrFail($id);
+            $timeline->since = $since;
+            $timeline->to = $sinceFormat->format('Y').'-12-31';
+            $timeline->value = $value;
+            $timeline->update();
+            $id = $timeline->id;
+            $response = [
+                'status' => 'success',
+                'message' => 'Se ha actualizado un valor en la linea de tiempo de la alicuota.',
+                'id' => $id
+            ];
+        }
+        else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Ya existe una linea del tiempo en este rango de fecha asociadas a esta alicuota'
+            ];
+        }
+        /*$timeline = TimelineAlicuota::find($id);
         $timeline->since = $since;
-        $timeline->to = $to;
+        $timeline->to = $sinceFormat->format('Y').'-12-31';
         $timeline->value = $value;
         $timeline->update();
-        $id = $timeline->id;
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se ha actualizado un valor en la linea de tiempo de la alicuota.',
-            'id' => $id
-        ]);
+        $id = $timeline->id;*/
+        return response()->json($response);
     }
 }
