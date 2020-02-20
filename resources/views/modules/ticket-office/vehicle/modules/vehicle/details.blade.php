@@ -269,7 +269,7 @@
 
                             @endif
                             @can('Cambiar Propietario - Vehiculo')
-                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem" id="block-users">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
                                     Cambiar Propietario
@@ -277,13 +277,13 @@
                                 </a>
                                 <a href="#" class=" hide btn btn-large btn-rounded waves-effect waves-light blue col s12"
                                    id="save-change">
-                                    Guardar Cambios
+                                    Guardar Cambios de Propietario
                                     <i class="icon-save right"></i>
                                 </a>
                             </div>
                             @endcan
                             @can('Actualizar Vehiculos')
-                                <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                                <div class="col s12 m4 center-align" style="margin-top:.5rem" id="block-update">
                                     <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle">
                                         Actualizar
@@ -291,8 +291,8 @@
                                     </a>
                                     <a href="#" class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle-save">
-                                     Guardar Cambios
-                                        <i class="icon-mode_edit right"></i>
+                                     Guardar Cambios de actualización
+                                        <i class="icon-save right"></i>
                                     </a>
                                 </div>
                             @endcan
@@ -316,6 +316,15 @@
                                 @endif
                               </div>
                             @endcan
+                            
+                            <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                                <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
+                                   id="back">
+                                    Atrás
+                                    <i class="icon-keyboard_arrow_left left" style="margin:0"></i>
+                                </a>
+                            </div>
+
 
                     <div class="row">
                             
@@ -445,13 +454,13 @@
 
                 </div>
                 <a href="{{route('ticketOffice.vehicle.history',['id'=>$vehicle->id])}}">
-                    <div class="col s12 m6">
+                    <div class="col s12 m12">
                         <div class="widget bootstrap-widget stats white-text">
                             <div class="widget-stats-icon green-gradient white-text">
                                 <i class="fas fa-car"></i>
                             </div>
                             <div class="widget-stats-content">
-                                <span class="widget-stats-title black-text">Vehiculos</span>
+                                <span class="widget-stats-title black-text">Histórico Vehiculo</span>
                                 <span class="widget-stats-number black-text">{{$vehicle->taxesVehicle()->count()}}</span>
                             </div>
                         </div>
