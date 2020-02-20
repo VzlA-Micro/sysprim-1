@@ -22,7 +22,9 @@ use App\Property;
 use App\Recharge;
 use App\Helpers\CheckCollectionDay;
 use App\BankRate;
-
+use App\TimelineAlicuota;
+use App\TimelineCatastralBuild;
+use App\TimelineCatastralTerrain;
 //////////////////////////////////////////////////////////
 ///
 ///       Hacer o acomodar valores de la unidad tributaria, filtrar por fechas, tomar la uniodad tributaria actual
@@ -46,33 +48,53 @@ class Declaration
         $january = 01;
         $currentFiscalPeriodStart = '2019-01-01';
         $currentFiscalPeriodEnd = '2020-01-01';
-//        if (is_null($fiscal_period)){
-//            $fiscalPeriod = Carbon::parse($fiscal_period);
-//        }
         $fiscalPeriod = Carbon::parse($fiscal_period);
-//        $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
-//        dd($taxUnitPrice);
 
-        /*$taxUnitPrice = Tributo::whereDate('to','>=',$fiscalPeriod)->whereDate('since','<=',$fiscalPeriod)->get();
-        if (is_null($taxUnitPrice)){
-            $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $taxUnitPrice = Tributo::whereDate('to', '>=', $fiscalPeriod)->whereDate('since', '<=', $fiscalPeriod)->first();
+
+        if (is_null($taxUnitPrice)) {
+            $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();
+        }
+
+        $property = Property::where('id', $id)->first();
+        $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
+//                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
+        $cadastralBuild = CatastralConstruccion::where('id', $property->value_cadastral_build_id)->first();
+        $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
+        //// Obteniendo valores de los timelines
+        $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id',$alicuota->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
+        if (is_null($timelineAlicuota)) {
+            $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id',$alicuota->id)->orderBy('id', 'desc')->take(1)->first();
+        }
+
+        $timelineCatastralBuild = TimelineCatastralBuild::where('value_catastral_construccion_id',$cadastralBuild->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
+        if (is_null($timelineCatastralBuild)) {
+            $timelineCatastralBuild = TimelineCatastralBuild::where('value_catastral_construccion_id',$cadastralBuild->id)->orderBy('id', 'desc')->take(1)->first();
+        }
+
+        $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id',$cadastralGround->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
+        if (is_null($timelineCatastralTerrain)) {
+            $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id',$cadastralGround->id)->orderBy('id', 'desc')->take(1)->first();
+        }
+        ////////////////////////////////////////////////////
+
+//        $timelineAlicuota = TimelineAlicuota::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+        /*if (is_null($timeline_ciu)) {
+            $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
         }*/
-//        dd($taxUnitPrice);
-
-//        dd($fiscal_period);
-//        var_dump($currentDate->month);
 
         if($currentDate->year == $fiscalPeriod->year) {
             if (intVal($currentDate->month) == 01) {
                 $recharge = 0;
                 $interest = 0;
                 $descuento = 0.20;
-                $property = Property::where('id', $id)->first();
+                /*$property = Property::where('id', $id)->first();
                 $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
-                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
-                $cadastralBuild = CatastralConstruccion::where('id', $buildProperty->value_catas_const_id)->first();
+//                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
+                $cadastralBuild = CatastralConstruccion::where('id', $property->value_cadastral_build_id)->first();
                 $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();
+//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();*/
 
                 if ($property->area_ground !== 0) {
                     $totalground = ($property->area_ground * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
@@ -102,22 +124,18 @@ class Declaration
             elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
                 $recharge = 0;
                 $interest = 0;
-                $property = Property::where('id', $id)->first();
-                $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
-                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
-                $cadastralBuild = CatastralConstruccion::where('id', $buildProperty->value_catas_const_id)->first();
-                $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();
+
+
 
                 if ($property->area_ground !== 0) {
-                    $totalground = ($property->area_ground * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
+                    $totalground = ($property->area_ground * $timelineCatastralBuild->value) * $taxUnitPrice->value;
 //                    $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
                 }
                 else {
                     $totalground = 0;
                 }
                 if ($property->area_build !== 0) {
-                    $baseImponibleForBuild = ($property->area_build * $cadastralGround->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
+                    $baseImponibleForBuild = ($property->area_build * $timelineCatastralTerrain->value_built_terrain) * $taxUnitPrice->value;
                     $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
                     $totalbuild = $baseImponibleForBuild + $valueBuild;
                 }
@@ -126,19 +144,18 @@ class Declaration
                 }
                 $baseImponible = $totalground + $totalbuild; // Base imponible bruta
                 $discount = 0;
-                $porcentaje = $baseImponible * $alicuota->timelineValue[0]->value; // Valor de alicuota
+                $porcentaje = $baseImponible * $timelineAlicuota->value; // Valor de alicuota
                 $total = ($baseImponible + $porcentaje) - $discount; // Total del impuesto
             }
             else {
-//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
                 $discount = 0;
 
-                $property = Property::where('id', $id)->first();
+                /*$property = Property::where('id', $id)->first();
                 $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
-                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
-                $cadastralBuild = CatastralConstruccion::where('id', $buildProperty->value_catas_const_id)->first();
+//                $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
+                $cadastralBuild = CatastralConstruccion::where('id', $property->value_cadastral_build_id)->first();
                 $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
-                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();
+//                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();*/
                 $verifyPrologue = CheckCollectionDay::verify('Inm.Urbanos');
 
                 if ($property->area_ground !== 0) {
@@ -174,16 +191,14 @@ class Declaration
             }
         }
         else { // SI el periodo fiscal es diferente del año actual
-            $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
 //            $recargo = Recharge::where('branch', 'Inmuebles Urb.')->get();
             $discount = 0;
-
-            $property = Property::where('id', $id)->first();
+            /*$property = Property::where('id', $id)->first();
             $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
-            $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
-            $cadastralBuild = CatastralConstruccion::where('id', $buildProperty->value_catas_const_id)->first();
+//            $buildProperty = Val_cat_const_inmu::where('property_id', $property->id)->first();
+            $cadastralBuild = CatastralConstruccion::where('id', $property->value_cadastral_build_id)->first();
             $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
-//            $propertyTaxe = $property->propertyTaxes(); dd($propertyTaxe);
+//            $propertyTaxe = $property->propertyTaxes(); dd($propertyTaxe);*/
             $verifyPrologue = CheckCollectionDay::verify('Inm.Urbanos', $fiscal_period);
 
             if ($property->area_ground !== 0) {
@@ -212,13 +227,12 @@ class Declaration
                 $recharge = ($recargo->value * $baseImponible) / 100;
                 $interestCalc = (($bankInterest->value_rate / 100) / 360) * $verifyPrologue['diffDayMora'] * ($recharge + $baseImponible);
                 $interest = round($interestCalc, 2);
-//                dd($num);
             } else {
                 $recharge = 0;
                 $interest = 0;
             }
 //            $recharge = $base * $recargo->value;
-            $porcentaje = $baseImponible * $alicuota[0]->value;
+            $porcentaje = $baseImponible * $alicuota->value;
             $total = $baseImponible + $porcentaje + $interest + $recharge;
         }
 
