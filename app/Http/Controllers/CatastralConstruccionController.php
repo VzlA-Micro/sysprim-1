@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\CatastralConstruccion;
 use App\TimelineCatastralBuild;
+use Carbon\Carbon;
+
 
 
 class CatastralConstruccionController extends Controller{
@@ -20,7 +22,7 @@ class CatastralConstruccionController extends Controller{
     public function store(Request $request) {
         $catastral = new CatastralConstruccion();
         $catastral->name = $request->input('name');
-        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->status = $request->input('status');
         $catastral->regimen_horizontal =$request->input('regimen_horizontal');
         $catastral->save();
         return response()->json(['status'=>'success'],200);
@@ -41,7 +43,7 @@ class CatastralConstruccionController extends Controller{
         $id = $request->input('id');
         $catastral = CatastralConstruccion::find($id);
         $catastral->name = $request->input('name');
-        $catastral->value_edificacion = $request->input('value_edification');
+        $catastral->status = $request->input('status');
         $catastral->regimen_horizontal =$request->input('regimen_horizontal');
         $catastral->update();
         return response()->json(['status'=>'success'],200);
@@ -52,25 +54,37 @@ class CatastralConstruccionController extends Controller{
     }
 
     public function timelineCreate() {
-        $catastralConstrucciones = CatastralConstruccion::all();
+        $catastralConstrucciones = CatastralConstruccion::orderBy('name','asc')->get();
         return view('modules.catastral-construction.timeline.register', ['catastralConstrucciones' => $catastralConstrucciones]);
     }
 
     public function timelineStore(Request $request) {
         $catastralConstruccion_id = $request->input('value_catastral_construccion_id');
-        $since = $request->input('since');
-        $to = $request->input('to');
+        $sinceFormat = Carbon::parse($request->input('since'));
+        $since = Carbon::parse($request->input('since'));
+//        $to = $request->input('to');
         $value = $request->input('value');
-        $timeline = new TimelineCatastralBuild();
-        $timeline->since = $since;
-        $timeline->to = $to;
-        $timeline->value = $value;
-        $timeline->value_catastral_construccion_id = $catastralConstruccion_id;
-        $timeline->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se ha registrado un valor en la linea de tiempo del valor catastral de construcción.'
-        ]);
+        $timeline = TimelineCatastralBuild::where('value_catastral_construccion_id',(int)$catastralConstruccion_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
+
+        if($timeline->isEmpty()) {
+            $timeline = new TimelineCatastralBuild();
+            $timeline->since = $since;
+            $timeline->to = $sinceFormat->format('Y').'-12-31';
+            $timeline->value = $value;
+            $timeline->value_catastral_construccion_id = $catastralConstruccion_id;
+            $timeline->save();
+            $response = [
+                'status' => 'success',
+                'message' => 'Se ha registrado un valor en la linea de tiempo del valor catastral de construcción.'
+            ];
+        }
+        else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Ya existe una linea del tiempo en este rango de fecha asociadas a este valor catastral de construcción'
+            ];
+        }
+        return response()->json($response);
     }
 
     public function timelineIndex() {
@@ -79,26 +93,38 @@ class CatastralConstruccionController extends Controller{
     }
 
     public function timelineShow($id) {
-        $catastralConstrucciones = CatastralConstruccion::all();
+        $catastralConstrucciones = CatastralConstruccion::orderBy('name','asc')->get();
         $timeline = TimelineCatastralBuild::findOrFail($id);
         return view('modules.catastral-construction.timeline.details', ['timeline' => $timeline, 'catastralConstrucciones' => $catastralConstrucciones]);
     }
 
     public function timelineUpdate(Request $request) {
         $id = $request->input('id');
-        $since = $request->input('since');
-        $to = $request->input('to');
+        $catastralConstruccion_id = $request->input('value_catastral_construccion_id');
+        $sinceFormat = Carbon::parse($request->input('since'));
+        $since = Carbon::parse($request->input('since'));
         $value = $request->input('value');
-        $timeline = TimelineCatastralBuild::find($id);
-        $timeline->since = $since;
-        $timeline->to = $to;
-        $timeline->value = $value;
-        $timeline->update();
-        $id = $timeline->id;
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Se ha actualizado un valor en la linea de tiempo del valor catastral de construcción.',
-            'id' => $id
-        ]);
+
+        $timeline = TimelineCatastralBuild::where('value_catastral_construccion_id',(int)$catastralConstruccion_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
+        if(!$timeline->isEmpty()) {
+            $timeline = TimelineCatastralBuild::findOrFail($id);
+            $timeline->since = $since;
+            $timeline->to = $sinceFormat->format('Y').'-12-31';
+            $timeline->value = $value;
+            $timeline->update();
+            $id = $timeline->id;
+            $response = [
+                'status' => 'success',
+                'message' => 'Se ha actualizado un valor en la linea de tiempo del valor catastral de construcción.',
+                'id' => $id
+            ];
+        }
+        else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Ya existe una linea del tiempo en este rango de fecha asociadas a este valor catastral de construcción.'
+            ];
+        }
+        return response()->json($response);
     }
 }

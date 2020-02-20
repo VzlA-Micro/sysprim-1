@@ -16,7 +16,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.read') }}">Consultar  Valor  Catastral de Terreno</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12">
             	<div class="card">
             		<div class="card-header center-align">
             			<h4>Consultar Valores Catastrales de Terreno</h4>
@@ -26,8 +26,6 @@
 		            		<thead>
 		            			<tr>
 		            				<th>Nombre</th>
-                                    <th>Valor de terreno en construcción</th>
-                                    <th>Valor de terreno vacio</th>
                                     @can('Detalles Valor Terreno')
 		            				<th>Detalles</th>
                                     @endcan
@@ -37,8 +35,6 @@
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
-                                    <td>{{ $cat->value_terreno_construccion}} UT</td>
-                                    <td>{{ $cat->value_terreno_vacio}} UT</td>
                                     @can('Detalles Valor Terreno')
                                     <td>
                                         <a href="{{ route('catrastal.terreno.details', ['id' => $cat->id]) }}"

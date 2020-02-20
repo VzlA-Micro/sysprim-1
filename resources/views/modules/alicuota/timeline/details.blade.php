@@ -32,20 +32,40 @@
                             </select>
                             <label for="alicuota_inmueble_id">Alicuotas</label>
                         </div>
-                        <div class="input-field col s12 m4">
+                        <input type="hidden" name="alicuota_inmueble_id" value="{{ $timeline->alicuota->id }}">
+                        {{--<div class="input-field col s12 m4">
                             <input type="text" name="since" id="since" class="datepicker" value="{{ $timeline->since }}" disabled required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <input type="text" name="to" id="to" class="datepicker" value="{{ $timeline->to }}" disabled required>
                             <label for="to">Hasta</label>
+                        </div>--}}
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
+
+                        <div class="input-field col s12 m8">
+                            <i class="icon-date_range prefix"></i>
+                            <select name="since" id="since" disabled>
+                                <option value="null" selected disabled>Seleccione</option>
+                                @while($cont <= 2030)
+                                    @if($timeline->since==$cont.'-01-01')
+                                        <option value="{{$cont.'-01-01'}}" selected>{{$cont}}</option>
+                                    @else
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @endif
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ $timeline->value }}" maxlength="2" disabled required>
-                            <label for="value">Valor</label>
+                            <input type="text" name="value" id="value" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only only-number-positive" value="{{ ($timeline->value * 100) }}" maxlength="2" disabled required>
+                            <label for="value">Valor (%)</label>
                         </div>
                     </div>
                     {{--@can('Actualizar Alicuota')--}}

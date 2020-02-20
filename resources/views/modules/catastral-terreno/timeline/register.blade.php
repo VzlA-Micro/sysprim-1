@@ -33,32 +33,42 @@
                             </select>
                             <label for="value_catastral_terreno_id">Valor Catastral de Construcción</label>
                         </div>
-                        <div class="input-field col s12 m6">
+                        {{--<div class="input-field col s12 m6">
                             <input type="text" name="since" id="since" class="datepicker" required>
                             <label for="since">Desde</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <input type="text" name="to" id="to" class="datepicker" required>
                             <label for="to">Hasta</label>
-                        </div>
-                        {{--<div class="input-field col s12 m6">
-                            <i class="icon-text_fields prefix"></i>
-                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" minlength="5" maxlength="30" required>
-                            <label for="name"> Nombre</label>
                         </div>--}}
+                        @php
+                            $cont=(int)date('Y');
+                        @endphp
+
+                        <div class="input-field col s12">
+                            <i class="icon-date_range prefix"></i>
+                            <select name="since" id="since">
+                                <option value="null" disabled selected>Seleccione</option>
+                                @while($cont <= 2030)
+                                    <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
+                        </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
                             <input type="text" name="value_built_terrain" id="value_built_terrain" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only"  maxlength="6"  required>
-                            <label for="value_built_terrain">Valor de Terreno Construido</label>
+                            <label for="value_built_terrain">Valor de Terreno Construido (UT)</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
                             <input type="text" name="value_empty_terrain" id="value_empty_terrain" pattern="[0-9,.]+" title="Solo puede escribir números." class="validate number-only"  maxlength="6"  required>
-                            <label for="value_empty_terrain">Valor de Terreno Vacío</label>
+                            <label for="value_empty_terrain">Valor de Terreno Vacío (UT)</label>
                         </div>
                     </div>
                     <div class="card-footer center-align">

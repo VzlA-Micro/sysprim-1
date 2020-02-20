@@ -37,5 +37,33 @@ class AlicuotaTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 1
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 2
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.03,
+            'alicuota_inmueble_id' => 3
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 4
+        ]);
     }
 }

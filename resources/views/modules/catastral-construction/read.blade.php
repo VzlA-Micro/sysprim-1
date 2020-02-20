@@ -16,7 +16,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.read') }}">Consultar  Valor de Contrucción Catastral</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1">
             	<div class="card">
             		<div class="card-header center-align">
             			<h4>Consultar Valor de Construcción</h4>
@@ -26,7 +26,6 @@
 		            		<thead>
 		            			<tr>
 		            				<th>Nombre</th>
-                                    <th>Cantidad UT</th>
                                     @can('Detalles Valor Construccion')
 		            				<th>Detalles</th>
                                     @endcan
@@ -36,7 +35,7 @@
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
-                                    <td>{{ $cat->value_edificacion }} UT</td>
+                                    {{--<td>{{ $cat->value_edificacion }} UT</td>--}}
                                     @can('Detalles Valor Construccion')
                                     <td>
                                         <a href="{{ route('catrastal.construction.details', ['id' => $cat->id]) }}"
