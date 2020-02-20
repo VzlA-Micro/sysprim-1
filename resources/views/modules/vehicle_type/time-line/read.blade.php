@@ -10,21 +10,19 @@
             <div class="col s12">
                 <div class="col s12">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de
-                                Vehículos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De
-                                Vehículos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.read') }}">Ver Tipos De
-                                Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo - Tipo De Vehículos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.read') }}">Ver Linea Del Tiempo</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Tipos Vehículos</h5>
+                        <h5>Linea De Tiempo - Tipo de Vehículo</h5>
                     </div>
                     <div class="card-content">
                         <table class="centered striped" id="typeVehicle" style="width: 100%">

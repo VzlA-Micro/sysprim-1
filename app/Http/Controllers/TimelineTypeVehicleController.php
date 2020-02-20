@@ -11,7 +11,6 @@ use App\VehicleType;
 use App\TimelineTypeVehicle;
 
 
-
 class TimelineTypeVehicleController extends Controller
 {
     /**
@@ -21,11 +20,11 @@ class TimelineTypeVehicleController extends Controller
      */
     public function index()
     {
-        $timeline=TimelineTypeVehicle::orderBy('id','desc')->get();
+        $timeline = TimelineTypeVehicle::orderBy('id', 'desc')->get();
         //dd($timeline[0]->type);
 
-        return view('modules.vehicle_type.time-line.read',array(
-            'timeline'=>$timeline
+        return view('modules.vehicle_type.time-line.read', array(
+            'timeline' => $timeline
         ));
     }
 
@@ -36,9 +35,9 @@ class TimelineTypeVehicleController extends Controller
      */
     public function create()
     {
-        $type=VehicleType::all();
-        return view('modules.vehicle_type.time-line.register',array(
-            'type'=>$type
+        $type = VehicleType::all();
+        return view('modules.vehicle_type.time-line.register', array(
+            'type' => $type
         ));
 
     }
@@ -46,105 +45,141 @@ class TimelineTypeVehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $timeLine= new TimelineTypeVehicle();
-        $timeLine->type_vehicle_id=$request->input('type_vehicle');
-        $timeLine->rate= $request->input('rate');
-        $timeLine->rate_UT= $request->input('rate_ut');
-        $timeLine->since = $request->input('date_start');
-        $timeLine->to= $request->input('date_end');
+        $typeVehicle = $request->input('type_vehicle');
+        $since = Carbon::parse($request->input('since'));
+        $to = $since->format('Y') . '-12-' . '31';
+        $response = false;
+        $verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since);
 
-        $timeLine->save();
-
-        $response=null;
-
-        if ($timeLine->save()){
-            $response=array(
-                'status'=>true,
-                'message'=>'Linea del tiempo ha sido registrada exitosamente'
+        if ($verifiedTimeline) {
+            $response = array(
+                'status' => 'validation-failed',
+                'message' => 'Esta linea de tiempo ya posee un registro con este año'
             );
-        }else{
-            $response=array(
-                'status'=>false,
-                'message'=>'Linea del tiempo no se ha podido registrar'
-            );
+            return response()->json($response);
+        } else {
+
+            $timeLine = new TimelineTypeVehicle();
+            $timeLine->type_vehicle_id = $typeVehicle;
+            $timeLine->rate = $request->input('rate');
+            $timeLine->rate_UT = $request->input('rate_ut');
+            $timeLine->since = $since->format('Y-m-d');
+            $timeLine->to = $to;
+
+            $timeLine->save();
+
+
+            if ($timeLine->save()) {
+                $response = array(
+                    'status' => true,
+                    'message' => 'Linea del tiempo ha sido registrada exitosamente'
+                );
+            } else {
+                $response = array(
+                    'status' => false,
+                    'message' => 'Linea del tiempo no se ha podido registrar'
+                );
+            }
+
+            return response()->json($response);
         }
-
-        return response()->json($response);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $timeline=TimelineTypeVehicle::find($id);
-        return view('modules.vehicle_type.time-line.details',array(
-            'timeline'=>$timeline
+        $timeline = TimelineTypeVehicle::find($id);
+        return view('modules.vehicle_type.time-line.details', array(
+            'timeline' => $timeline
         ));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $response=null;
-        $timeLine=TimelineTypeVehicle::find($request->input('id'));
+        $typeVehicle = $request->input('typeVehicleId');
+        $since = Carbon::parse($request->input('date_start'));
+        $to = $since->format('Y') . '-12-' . '31';
+        $response = false;
+        $verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since);
 
-        $timeLine->type_vehicle_id=$request->input('type_vehicle');
-        $timeLine->rate= $request->input('rate');
-        $timeLine->rate_UT= $request->input('rate_ut');
-        $timeLine->since = $request->input('date_start');
-        $timeLine->to= $request->input('date_end');
+        if ($verifiedTimeline) {
+            $response = array(
+                'status' => 'validation-failed',
+                'message' => 'Esta linea de tiempo ya posee un registro con este año'
+            );
+            return response()->json($response);
+        } else {
 
-        $timeLine->update();
+            $timeLine = TimelineTypeVehicle::find($request->input('id'));
+            $timeLine->rate = $request->input('rate');
+            $timeLine->rate_UT = $request->input('rate_ut');
+            $timeLine->since = $since;
+            $timeLine->to = $to;
 
-        if ($timeLine->update()){
-            $response=[
-                'status'=>true,
-                'message'=>'Se ha actualizado el registro exitosamente'
+            $timeLine->update();
+
+            if ($timeLine->update()) {
+                $response = [
+                    'status' => true,
+                    'message' => 'Se ha actualizado el registro exitosamente'
                 ];
-        }else{
-            $response=[
-                'status'=>false,
-                'message'=>'Se ha actualizado el registro exitosamente'
-            ];
-        }
+            } else {
+                $response = [
+                    'status' => false,
+                    'message' => 'No se ha podido actualizar'
+                ];
+            }
 
-        return response()->json($response);
+            return response()->json($response);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function verifiedTimeline($TypeVehicleId, $since)
     {
-        //
+        $response = 0;
+
+        $timeline = TimelineTypeVehicle::where('type_vehicle_id', (int)$TypeVehicleId)
+            ->whereYear('since', '=', (string)$since)->get();
+
+        if ($timeline->isEmpty()) {
+            $response = false;
+        } else {
+            $response = true;
+        }
+
+        return $response;
+    }
+
+    public function verifiedTimelineUpdate($idTimeline,$since)
+    {
+        $response = 0;
+
+        $timeline = TimelineTypeVehicle::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', (string)$since)->get();
+
+        if ($timeline->isEmpty()) {
+            $response = false;
+        } else {
+            $response = true;
+        }
+
+        return $response;
     }
 }
