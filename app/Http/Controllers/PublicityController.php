@@ -292,7 +292,7 @@ class PublicityController extends Controller
 
     public function showTicketOffice()
     {
-        $publicities = Publicity::ordeBy('id','desc')->get();
+        $publicities = Publicity::orderBy('id','desc')->get();
         return view('modules.publicity.ticket-office.read', ['show' => $publicities]);
     }
 
