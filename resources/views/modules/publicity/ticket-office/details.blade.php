@@ -656,7 +656,7 @@
                             </div>
                         @endcan--}}
                         @can('Actualizar Publicidad')
-                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-update">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
                                     Actualizar
@@ -672,7 +672,7 @@
                         @endcan
 
                         @can('Habilitar/Deshabilitar Publicidad')
-                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-status">
                                 @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
@@ -690,9 +690,15 @@
                                 @endif
                             </div>
                         @endcan
-                        <div class="row">
 
+                        <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                            <a href="{{route('ticketOffice.publicity.detailsPublicity',['id'=>$publicity->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
+                               id="back">
+                                Atrás
+                                <i class="icon-keyboard_arrow_left left" style="margin:0"></i>
+                            </a>
                         </div>
+
                     </div>
                 </form>
             </div>
