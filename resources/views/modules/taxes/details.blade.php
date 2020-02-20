@@ -169,7 +169,7 @@
                         <div class="col l12 s12">
                             <div class="col l6 s12">
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
-                                    <thead>
+                                   <!-- <thead>
                                     <tr>
                                         <th>CODIGO</th>
                                         <th>NOMBRE</th>
@@ -186,6 +186,7 @@
                                             <td>{{$ciu->min_tribu_men}}</td>
                                         </tr>
                                     @endforeach
+                                       -->
                                     </tbody>
                                 </table>
                                 <div class="col s12">

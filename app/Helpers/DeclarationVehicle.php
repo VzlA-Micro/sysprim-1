@@ -27,12 +27,12 @@ use App\TimelineTypeVehicle;
 
 class DeclarationVehicle
 {
-    public static function Declaration($id, $optionPayment,$year=null)
+    public static function Declaration($id, $optionPayment, $year = null)
     {
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
-        if (is_null($year)){
-            $year=Carbon::now();
+        if (is_null($year)) {
+            $year = Carbon::now();
         }
         $dateCurrent = Carbon::now();
         $yearCurrent = Carbon::now()->format('Y');
@@ -47,14 +47,14 @@ class DeclarationVehicle
         $previousDebt = 0;
         $valueDiscount = 0;
         $valueDayMora = 0;
-        $recharge=0;
-        $prologue= Prologue::where('branch','Pat.Veh')->first();
+        $recharge = 0;
+        $prologue = Prologue::where('branch', 'Pat.Veh')->first();
 
-        $fiscal_period_format=Carbon::parse($year);
-        $rate = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+        $fiscal_period_format = Carbon::parse($year);
+        $rate = Tributo::whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
 
-        $date=Carbon::parse($prologue->date_limit);
-        if (is_null($rate)){
+        $date = Carbon::parse($prologue->date_limit);
+        if (is_null($rate)) {
             $rate = Tributo::orderBy('id', 'desc')->first();
         }
 
@@ -87,10 +87,15 @@ class DeclarationVehicle
         $yearVehicle = $vehicle[0]->year;
 
         $diffYear = $yearCurrent - intval($yearVehicle);
+//NO CAMBIAR LA LINEA DE ABAJO CON EL WHEREYEAR AUNQUE TE DE UN TIC EN EL OJO PARECE ESTAR MALO PERO FUNCIONA
+        $since = TimelineTypeVehicle::where('type_vehicle_id', $vehicle[0]->type_vehicle_id)
+            ->whereYear('since', '<=', (string)$year->format('Y'))
+            ->whereYear('to', '>=', (string)$year->format('Y'))->first();
 
-        $since = TimelineTypeVehicle::where('type_vehicle_id',$vehicle[0]->type_vehicle_id)
-            ->whereYear('since','<=',(string)$year->format('Y'))
-            ->whereYear('to','>=',(string)$year->format('Y'))->first();
+        if (is_null($since)) {
+            $since = TimelineTypeVehicle::where('type_vehicle_id', $vehicle[0]->type_vehicle_id)
+                ->orderBy('id', 'desc')->take(1)->first();
+        }
 
         if ($diffYear < 3) {
             $rateYear = $since->rate;
@@ -102,9 +107,9 @@ class DeclarationVehicle
             $moreThereYear = true;
         }
 
-        if ($fiscal_period_format->year==$yearCurrent){
+        if ($fiscal_period_format->year == $yearCurrent) {
 
-            $day= CheckCollectionDay::verify('Pat.Veh');
+            $day = CheckCollectionDay::verify('Pat.Veh');
 
             if ($dateCurrent->month <= $date->month) {
 
@@ -113,23 +118,23 @@ class DeclarationVehicle
                     $recharge = ($taxes * $recharges->value) / 100;
 
                     $dayMora = 31;
-                    $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+                    $valueDayMora = ($rateBank / 100 / 360) * ($day['diffDayMora'] + $dayMora) * ($taxes + $recharge);
 
                 } else {
                     $dayMora = 0;
-                    $valueDayMora=0;
+                    $valueDayMora = 0;
                     //$valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
                 }
             } else {
                 $recharge = ($taxes * $recharges->value) / 100;
 
-                $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora'])*($taxes+$recharge);
+                $valueDayMora = ($rateBank / 100 / 360) * ($day['diffDayMora']) * ($taxes + $recharge);
             }
-        }else{
+        } else {
             $recharge = ($taxes * $recharges->value) / 100;
             $dayMora = 31;
             $day = DeclarationVehicle::dayMora($year);
-            $valueDayMora = ($rateBank / 100 / 360)*($day['diffDayMora']+$dayMora)*($taxes+$recharge);
+            $valueDayMora = ($rateBank / 100 / 360) * ($day['diffDayMora'] + $dayMora) * ($taxes + $recharge);
         }
 
         //--------------option of payments-------------------------|||||||||||||||||||||||||||||||||
@@ -143,7 +148,7 @@ class DeclarationVehicle
             } else {
                 //$valueDiscount = ($taxes * 20) / 100;
 
-                $total = ($taxes - $valueDiscount) + $valueDayMora+$recharge;
+                $total = ($taxes - $valueDiscount) + $valueDayMora + $recharge;
 
             }
             $amounts = array(
@@ -274,7 +279,7 @@ class DeclarationVehicle
 
     public static function dayMora($year)
     {
-        $varDayForMora = CheckCollectionDay::verify('Pat.Veh',$year);
+        $varDayForMora = CheckCollectionDay::verify('Pat.Veh', $year);
         return $varDayForMora;
     }
 }

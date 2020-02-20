@@ -43,13 +43,18 @@ class CiuTaxes extends Model implements Auditable
     }
 
     public function getTotalCiiuDefinitiveAttribute(){
-        $ciu=Ciu::find($this->ciu_id);
+
+        $fiscal_period=Carbon::parse($this->taxes->fiscal_period)->format('Y');
+        $ciu=TimelineCiiu::where('ciu_id',$this->ciu_id)->whereYear('since','<=',$fiscal_period)->whereYear('to','>=',$fiscal_period)->first();
+
+        if (is_null($ciu)) {
+            $ciu = TimelineCiiu::where('ciu_id',$this->ciu_id)->orderBy('id', 'desc')->take(1)->first();
+        }
 
         $this->totalCiiuDefinitive=($this->base*$ciu->alicuota);
         if($this->taxable_minimum!=0){
             $this->totalCiiuDefinitive=$this->taxable_minimum;
         }
-
         return $this->attributes['totalCiiuDefinitive'];
     }
 
