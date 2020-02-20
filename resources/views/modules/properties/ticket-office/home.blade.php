@@ -19,7 +19,7 @@
             </div>
             @endcan
             @can('Gestionar Pagos - Inmuebles')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s12 m3 animated bounceIn">
                 <a href="{{ route('properties.ticket-office.manage') }}" class="btn-app white red-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>

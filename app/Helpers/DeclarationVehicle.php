@@ -92,6 +92,11 @@ class DeclarationVehicle
             ->whereYear('since','<=',(string)$year->format('Y'))
             ->whereYear('to','>=',(string)$year->format('Y'))->first();
 
+        if (is_null($since)) {
+            $since = TimelineTypeVehicle::where('type_vehicle_id',$vehicle[0]->type_vehicle_id)
+                ->orderBy('id', 'desc')->take(1)->first();
+        }
+
         if ($diffYear < 3) {
             $rateYear = $since->rate;
             $taxes = $rateYear * $rate->value;
