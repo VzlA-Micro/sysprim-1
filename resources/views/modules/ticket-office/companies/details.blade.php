@@ -377,7 +377,7 @@
                         </div>
                         <div class="input-field col s6 ">
                             <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251:
-                        Local"></i>
+                        Local"></i>{{$company->users[0]->operator}}
                             <select name="country_code" id="country_code_user" required disabled>
                                 <option value="null" selected disabled>...</option>
                                 <option value="+58412" @if ($company->users[0]->operator=='+58412'){{"selected"}}@endif >
