@@ -137,16 +137,19 @@
                                 </select>
                                 <label>Ubicación Catastral</label>
                             </div>
+
                             <div class="input-field col m6 s12">
-                                <i class="icon-domain prefix"></i>
-                                <select name="type_const" id="type_const" required>
-                                    <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
-                                    @foreach($catasConstruccion as $cC):
-                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
+                                <i class="icon-satellite prefix"></i>
+                                <select name="parish" id="parish" required>
+                                    <option value="null" disabled selected>Seleccionar una Parroquia</option>
+                                    @foreach($parish as $parish):
+                                    <option value="{{ $parish->id }}">{{ $parish->name }}</option>
                                     @endforeach
                                 </select>
-                                <label>Tipo de Construccion</label>
+                                <label>Parroquia</label>
                             </div>
+
+
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
@@ -175,15 +178,16 @@
                             </div>
 
                             <div class="input-field col m6 s12">
-                                <i class="icon-satellite prefix"></i>
-                                <select name="parish" id="parish" required>
-                                    <option value="null" disabled selected>Seleccionar una Parroquia</option>
-                                    @foreach($parish as $parish):
-                                    <option value="{{ $parish->id }}">{{ $parish->name }}</option>
+                                <i class="icon-domain prefix"></i>
+                                <select name="type_const" id="type_const" required>
+                                    <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
+                                    @foreach($catasConstruccion as $cC):
+                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
                                     @endforeach
                                 </select>
-                                <label>Parroquia</label>
+                                <label>Tipo de Construccion</label>
                             </div>
+
                             <div class="input-field col s12">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required maxlength="200"></textarea>

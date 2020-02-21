@@ -441,6 +441,58 @@ $('document').ready(function () {
             });
         }
     }
+
+
+    $('#C4').change(function () {
+
+        var sector=$(this).val();
+
+
+        $.ajax({
+            method: "GET",
+            url: url + "properties/filter-sector/" + sector,
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (response) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+
+                var sector=response.sector;
+
+                $('#location_cadastral').html('');
+
+
+
+
+                var html = ' <option value="null" disabled selected>Seleccionar ubicacion Catastral</option>';
+                for (var i = 0; i < sector.length; i++) {
+                    html += '<option value=' + sector[i].id + '>' + sector[i].name + '</option>'
+                }
+
+                $('#location_cadastral').append(html);
+                $('select').formSelect();
+
+            },
+            error: function (err) {
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button: {
+                        text: "Entendido",
+                        className: "blue-gradient"
+                    },
+                });
+            }
+
+
+
+        });
+    });
 });
 
 
@@ -488,6 +540,9 @@ function localizar(elemento,direccion) {
             alert(mensajeError);
         }
     });
+
+
+
 }
 
 $('#address').change(function () {
