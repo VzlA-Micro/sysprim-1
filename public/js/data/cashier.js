@@ -57,7 +57,7 @@ $('document').ready(function () {
         } else {
             swal({
                 title: "Información",
-                text: "Acción cancelada,debe abrir caja.",
+                text: "Acción cancelada, debe cerrar caja.",
                 icon: 'info'
             });
         }
