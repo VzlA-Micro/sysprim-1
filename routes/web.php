@@ -1234,5 +1234,18 @@ Route::middleware(['auth'])->group(/**
 
 //        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
 
+        //:::::::::::::::::::::::::::::::::LINEA DEL TIEMPO DE TIPO DE VEHICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        Route::get('/type-vehicles/timeline/manage', function () {
+            return view('modules.vehicle_type.time-line.manage');
+        })->name('type-vehicle.timeline.manage');
+
+        Route::get('/type-vehicles/timeline/register', 'TimelineTypeVehicleController@create')->name('type-vehicles.timeline.register');
+        Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
+        Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
+        Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
+        Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
+
+        Route::get('/type-vehicles/timeline/verified/{id}/{if}/{pf}', 'TimelineTypeVehicleController@verifiedTimeline');
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     });
