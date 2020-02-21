@@ -69,7 +69,7 @@
 
                                                     <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
-                                                        SIN CONCILIAR AÚN
+                                                       <span class="truncate">SIN CONCILIAR AÚN</span> 
                                                     </button>
                                                 </td>
                                                 <td><a href="{{url('payments/taxes/download/'.$taxe->id)}}"
@@ -83,7 +83,7 @@
 
                                                         <button class="btn blue">
                                                             <i class="icon-more_horiz left"></i>
-                                                            SIN CONCILIAR AÚN
+                                                            <span class="truncate">SIN CONCILIAR AÚN</span>
                                                         </button>
                                                     </td>
                                                     <td><a href="{{route('taxes.definitive.pdf',['id'=>$taxe->id])}}"
@@ -97,7 +97,7 @@
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-check left"></i>
-                                                        VERIFICADA.
+                                                        <span class="truncate">VERIFICADA.</span>
                                                     </button>
                                                 </td>
 
@@ -110,7 +110,7 @@
                                                     <td>
                                                         <a href="{{url('taxes/definitive/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
                                                             <i class="icon-description left">
-                                                         </i> <span class="truncate">Descargar.</span></a>
+                                                         </i> <span class="truncate">Descargar Planilla.</span></a>
                                                     </td>
 
                                                 @endif
@@ -119,7 +119,7 @@
                                                 <td>
                                                     <button class="btn" disabled>
                                                         <i class="icon-block left"></i>
-                                                        CANCELADA.
+                                                       <span class="truncate">CANCELADA.</span> 
                                                     </button>
                                                 </td>
 

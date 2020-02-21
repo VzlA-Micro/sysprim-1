@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de Terreno</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal-terreno.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal-terreno.timeline.manage') }}" >Línea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catastral-terreno.timeline.register') }}" >Registrar</a></li>
                 </ul>
             </div>
@@ -21,10 +21,11 @@
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="register">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Registrar Linea de Tiempo</h4>
+                        <h4>Registrar Línea de  - Catastral Terreno </h4>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12">
+                            <i class="icon-exposure_plus_1 prefix"></i>
                             <select name="value_catastral_terreno_id" id="value_catastral_terreno_id" required>
                                 <option value="null" disabled selected>Elige un valor catastral de terreno</option>
                                 @foreach($catastralTerrenos as $catastralTerreno)

@@ -123,7 +123,7 @@
                                     <!-- Modal trigger -->
                                     @if(!$response['taxes']->payments->isEmpty())
                                         <h4 class="center-align">Registro de Pago:</h4>
-                                        <table class="centered highlight" id="payments" style="width: 100%">
+                                        <table class="centered highlight responsive-table" id="payments">
                                             <thead>
                                             <tr>
                                                 <th>Fecha</th>
@@ -222,8 +222,8 @@
 
                                                     @can('Anular Pagos')
                                                         <a href="#"
-                                                           class="btn btn-rounded col s4 red waves-effect waves-ligt reconcile"
-                                                           data-status="cancel">
+                                                           class="btn col s12 m6 red waves-effect waves-ligt reconcile"
+                                                           data-status="cancel" style="margin-top:10px;">
                                                             ANULAR PLANILLA.
                                                             <i class="icon-close right"></i>
                                                         </a>
@@ -231,8 +231,8 @@
                                                     @can('Verificar Pagos - Manual')
                                                         @if($response['verified']&&$response['taxes']->status!=='verified')
                                                             <a href="#"
-                                                               class="btn btn-rounded col s4 blue waves-effect waves-light reconcile"
-                                                               data-status="verified">
+                                                               class="btn col s12 m6 blue waves-effect waves-light reconcile"
+                                                               data-status="verified" style="margin-top:10px;">
                                                                 VERIFICAR PLANILLA.
                                                                 <i class="icon-verified_user right"></i>
                                                             </a>
@@ -240,8 +240,8 @@
                                                     @endcan
                                                     @if($response['taxes']->status=='verified')
                                                         <button type="button" id="send-email-verified"
-                                                                class="btn btn-rounded col s4 green waves-effect waves-light"
-                                                                value="{{$response['taxes']->id}}">Enviar Correo Verificado.
+                                                                class="btn col s12 m6 green waves-effect waves-light"
+                                                                value="{{$response['taxes']->id}}" style="margin-top:10px;">Enviar Correo Verificado.
                                                             <i class="icon-send right"></i>
                                                         </button>
                                                     @endif

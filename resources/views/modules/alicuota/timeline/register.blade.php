@@ -12,8 +12,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alícuota Inmuebles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Línea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.register') }}" >Registrar</a></li>
                 </ul>
             </div>
@@ -21,10 +21,11 @@
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="register">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Registrar Linea de Tiempo</h4>
+                        <h4>Registrar Línea de Tiempo - Alícuota Inmuebles</h4>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12">
+                                <i class="icon-exposure_plus_1 prefix"></i>
                             <select name="alicuota_inmueble_id" id="alicuota_inmueble_id" required>
                                 <option value="null" disabled selected>Elige una Alicuota</option>
                                 @foreach($alicuotas as $alicuota)

@@ -9,7 +9,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.terreno.manage') }}">Gestionar Valor  Catastral de Terreno</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal-terreno.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal-terreno.timeline.manage') }}" >Línea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catastral-terreno.timeline.read') }}" >Consultar</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catastral-terreno.timeline.details',['id' => $timeline->id]) }}">Detalles</a></li>
                 </ul>
@@ -18,13 +18,14 @@
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="update">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Detalles de Valor Catastral del Terreno</h4>
+                        <h4>Detalles de Línea de Tiempo de Valor Catastral del Terreno</h4>
                     </div>
                     <div class="card-content row">
                         <input type="hidden" name="id" id="id" value="{{ $timeline->id }}">
                         <input type="hidden" name="value_catastral_terreno_id" value="{{ $timeline->catastralTerrain->id }}">
 
                         <div class="input-field col s12">
+                            <i class="icon-exposure_plus_1 prefix"></i>
                             <select name="value_catastral_terreno_id" id="value_catastral_terreno_id" disabled>
                                 <option value="null" disabled selected>Elige un valor catastral de terreno</option>
                                 @foreach($catastralTerrenos as $catastralTerreno)

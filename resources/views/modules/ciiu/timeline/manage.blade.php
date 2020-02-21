@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Línea de Tiempo-CIIU</a></li>
 
                 </ul>
             </div>
@@ -21,13 +21,13 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.register')}}" class="btn-app white blue-grey-text">
                     <i class="icon-alarm_add"></i>
-                    <span class="truncate">Registrar Linea de Tiempo-CIIU</span>
+                    <span class="truncate">Registrar Línea de Tiempo-CIIU</span>
                 </a>
             </div>
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.index')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
-                    <span class="truncate">Ver Linea Del Tiempo-CIIU</span>
+                    <span class="truncate">Ver Línea Del Tiempo-CIIU</span>
                 </a>
             </div>
         </div>

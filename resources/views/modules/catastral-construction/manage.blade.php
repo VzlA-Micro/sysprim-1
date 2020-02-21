@@ -33,9 +33,9 @@
             @endcan
 
             <div class="col s12 m4 animated bounceIn">
-                <a href="{{ route('catrastal-construction.timeline.manage') }}" class="btn-app white green-text accent-1">
-                    <i class="icon-format_list_bulleted"></i>
-                    <span class="truncate">Linea de Tiempo</span>
+                <a href="{{ route('catrastal-construction.timeline.manage') }}" class="btn-app white blue-grey-text">
+                    <i class="icon-schedule"></i>
+                    <span class="truncate">Línea de Tiempo</span>
                 </a>
             </div>
 
