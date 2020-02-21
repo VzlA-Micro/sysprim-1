@@ -114,10 +114,11 @@ class TimelineTypeVehicleController extends Controller
     public function update(Request $request)
     {
         $typeVehicle = $request->input('typeVehicleId');
+        $timeLineId = $request->input('id');
         $since = Carbon::parse($request->input('date_start'));
         $to = $since->format('Y') . '-12-' . '31';
         $response = false;
-        $verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since);
+        $verifiedTimeline = $this->verifiedTimelineUpdate($timeLineId,$typeVehicle, $since);
 
         if ($verifiedTimeline) {
             $response = array(
@@ -167,7 +168,7 @@ class TimelineTypeVehicleController extends Controller
         return $response;
     }
 
-    public function verifiedTimelineUpdate($idTimeline,$since,$typeVehicleId)
+    public function verifiedTimelineUpdate($idTimeline, $since, $typeVehicleId)
     {
         $response = 0;
 
@@ -178,12 +179,13 @@ class TimelineTypeVehicleController extends Controller
 
             $timelines = TimelineTypeVehicle::where('type_vehicle_id', (int)$typeVehicleId)
                 ->whereYear('since', '=', (string)$since)->get();
-            if ($timelines->isEmpty){
 
-            }else{
+            if ($timelines->isEmpty) {
+
+            } else {
 
             }
-            $response = ['status'=>''];
+            $response = ['status' => ''];
         } else {
             $response = true;
         }
