@@ -460,7 +460,7 @@ $(document).ready(function () {
                 responsable = true;
             }
         } else if (status == 'propietario') {
-            if (type === 'J' || type === 'G' && type_document_company) {
+            if ((type === 'J' || type === 'G') && type_document_company) {
                 $('#two').removeClass('disabled');
                 $('#user-tab-one').addClass('disabled');
                 $('ul.tabs').tabs("select", "vehicle-tab");

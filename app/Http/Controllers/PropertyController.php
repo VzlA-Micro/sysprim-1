@@ -374,10 +374,10 @@ class PropertyController extends Controller
 
     public function detailsPropertyTicketOffice($id){
         $property=Property::find($id);
-        $catastralTerre = CatastralTerreno::all();
-        $catastralConst = CatastralConstruccion::all();
-        $parish = Parish::all();
-        $alicuota= Alicuota::all();
+        $catastralTerre = CatastralTerreno::orderBy('name','asc')->get();
+        $catastralConst = CatastralConstruccion::orderBy('name','asc')->get();
+        $parish = Parish::orderBy('name','asc')->get();
+        $alicuota= Alicuota::orderBy('name','asc')->get();
 
         $type='';
 

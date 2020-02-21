@@ -77,13 +77,7 @@ class Declaration
             $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id',$cadastralGround->id)->orderBy('id', 'desc')->take(1)->first();
         }
         ////////////////////////////////////////////////////
-
-//        $timelineAlicuota = TimelineAlicuota::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
-
-        /*if (is_null($timeline_ciu)) {
-            $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
-        }*/
-
+        
         if($currentDate->year == $fiscalPeriod->year) {
             if (intVal($currentDate->month) == 01) {
                 $recharge = 0;
@@ -97,14 +91,14 @@ class Declaration
 //                $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->first();*/
 
                 if ($property->area_ground !== 0) {
-                    $totalground = ($property->area_ground * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
+                    $totalground = ($property->area_ground * $cadastralGround->timelineValue[0]->value) * $taxUnitPrice->value;
 //                    $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
                 }
                 else {
                     $totalground = 0;
                 }
                 if ($property->area_build !== 0) {
-                    $baseImponibleForBuild = ($property->area_build * $cadastralGround->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
+                    $baseImponibleForBuild = ($property->area_build * $cadastralBuild->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
                     $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
                     $totalbuild = $baseImponibleForBuild + $valueBuild;
                 }
@@ -125,23 +119,39 @@ class Declaration
                 $recharge = 0;
                 $interest = 0;
 
+                    
 
+                // if ($property->area_ground !== 0) {
+                    if($property->area_ground > 0) {
+                    $totalground =  (($property->area_ground * $cadastralGround->timelineValue[0]->value_empty_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
+                        dd($totalground);
+                    }
+                    else {
+                        $totalground =  ($property->area_ground * $taxUnitPrice->value) * $cadastralGround->timelineValue[0]->value_empty_terrain;
+                    }
+                    // $totalground = ($property->area_ground * $cadastralGround->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
+                    // dd($totalground);
 
-                if ($property->area_ground !== 0) {
-                    $totalground = ($property->area_ground * $timelineCatastralBuild->value) * $taxUnitPrice->value;
 //                    $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
-                }
-                else {
-                    $totalground = 0;
-                }
-                if ($property->area_build !== 0) {
-                    $baseImponibleForBuild = ($property->area_build * $timelineCatastralTerrain->value_built_terrain) * $taxUnitPrice->value;
-                    $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
-                    $totalbuild = $baseImponibleForBuild + $valueBuild;
-                }
-                else {
-                    $totalbuild = 0;
-                }
+                // }
+                // else {
+                //     $totalground = 0;
+                // }
+                // if ($property->area_build !== 0) {
+                    if($property->area_build > 0) {
+                        $totalbuild = ($property->area_build * $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value) / 1000;
+                        // dd($totalbuild);
+                    }
+                    else {
+                        $totalbuild = 0;
+                    }
+                    // $baseImponibleForBuild = ($property->area_build * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
+                    // $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
+                    // $totalbuild = $baseImponibleForBuild + $valueBuild;
+                // }
+                // else {
+                //     $totalbuild = 0;
+                // }
                 $baseImponible = $totalground + $totalbuild; // Base imponible bruta
                 $discount = 0;
                 $porcentaje = $baseImponible * $timelineAlicuota->value; // Valor de alicuota
@@ -159,14 +169,14 @@ class Declaration
                 $verifyPrologue = CheckCollectionDay::verify('Inm.Urbanos');
 
                 if ($property->area_ground !== 0) {
-                    $totalground = ($property->area_ground * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
+                    $totalground = ($property->area_ground * $cadastralGround->timelineValue[0]->value) * $taxUnitPrice->value;
 //                    $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
                 }
                 else {
                     $totalground = 0;
                 }
                 if ($property->area_build !== 0) {
-                    $baseImponibleForBuild = ($property->area_build * $cadastralGround->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
+                    $baseImponibleForBuild = ($property->area_build * $cadastralBuild->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
                     $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
                     $totalbuild = $baseImponibleForBuild + $valueBuild;
                 }
@@ -202,14 +212,14 @@ class Declaration
             $verifyPrologue = CheckCollectionDay::verify('Inm.Urbanos', $fiscal_period);
 
             if ($property->area_ground !== 0) {
-                $totalground = ($property->area_ground * $cadastralBuild->timelineValue[0]->value) * $taxUnitPrice->value;
+                $totalground = ($property->area_ground * $cadastralGround->timelineValue[0]->value) * $taxUnitPrice->value;
 //                    $totalground = $property[0]->area_ground * $cadastralGround[0]->value_terreno_vacio * $taxUnitPrice[0]->value;
             }
             else {
                 $totalground = 0;
             }
             if ($property->area_build !== 0) {
-                $baseImponibleForBuild = ($property->area_build * $cadastralGround->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
+                $baseImponibleForBuild = ($property->area_build * $cadastralBuild->timelineValue[0]->value_built_terrain) * $taxUnitPrice->value;
                 $valueBuild = $cadastralBuild->timelineValue[0]->value * $taxUnitPrice->value;
                 $totalbuild = $baseImponibleForBuild + $valueBuild;
             }
@@ -219,7 +229,6 @@ class Declaration
 
             $baseImponible = $totalground + $totalbuild; // Base imponible bruta
 
-//            $base = $totalground + $totalbuild;
             if ($verifyPrologue['mora']) { // Verifica si hay dias de mora
                 $recargo = Recharge::where('branch', 'Inm.Urbanos')->whereDate('to', '>=', $currentFiscalPeriodStart)->whereDate('since', '<=', $currentFiscalPeriodEnd)->first();
 //                dd($recargo);
@@ -231,7 +240,6 @@ class Declaration
                 $recharge = 0;
                 $interest = 0;
             }
-//            $recharge = $base * $recargo->value;
             $porcentaje = $baseImponible * $alicuota->value;
             $total = $baseImponible + $porcentaje + $interest + $recharge;
         }
