@@ -1763,9 +1763,14 @@ class DashboardController extends Controller
         }
         foreach ($company as $compa) {
             $co = $compa->ciu()->get();
+
+
+
             $countCiu = count($co);
+
+
             for ($i = 0; $i < $countCiu; $i++) {
-                $min = $compa->ciu()->value('min_tribu_men');
+                $min = $compa->ciu()->timeLine()->value('min_tribu_men');
                 $acum += $min * $tributo;
             }
         }

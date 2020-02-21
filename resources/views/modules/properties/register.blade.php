@@ -70,7 +70,7 @@
                         <div class="card-content row">
                             <div class="center-align">
                                 <span style="font-size: 20px;display: block;">Codigo Catastral</span>
-                                <span style="font-size: 16px" ><b>Nota:Ingrese el código catastral, si al terminar faltan digitos complete  con 0.</b></span>
+                                <span style="font-size: 16px" ><b>Nota: Ingrese el código catastral, si al terminar faltan digitos complete  con 0.</b></span>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">

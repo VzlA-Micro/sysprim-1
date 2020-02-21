@@ -183,7 +183,7 @@ $('document').ready(function () {
 
 
 
-    $('#change-status').click(function () {
+    $('.change-status-point').click(function () {
         var status=$(this).attr('data-status');
         var id=$(this).val();
 
