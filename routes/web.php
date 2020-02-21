@@ -1263,7 +1263,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
         Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
 
-        Route::get('/type-vehicles/timeline/verified/{id}/{if}/{pf}', 'TimelineTypeVehicleController@verifiedTimeline');
+        Route::get('/type-vehicles/timeline/verified/{id}/{year}/{type}', 'TimelineTypeVehicleController@verifiedTimelineUpdate');
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     });
