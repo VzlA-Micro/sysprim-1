@@ -322,17 +322,15 @@
                                                     @endcan
                                                     @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                         <button type="button" id="send-email-verified"
-
-
-                                                                class="btn btn-rounded col s3 green waves-effect waves-light"
-                                                                value="{{$taxes->id}}">Enviar Correo Verificado.
+                                                                class="btn col s12 m6 green waves-effect waves-light"
+                                                                value="{{$taxes->id}}" style="margin-top:20px">Enviar Correo Verificado.
                                                             <i class="icon-mail_outline right"></i>
                                                         </button>
 
                                                         @endif
                                                     @if($taxes->status!='cancel')
                                                         <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
-                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                                           class="btn col s12 m6 red darken-4 waves-effect waves-light" target="_blank" style="margin-top:20px" >Ver Planilla(PDF).
                                                             <i class="icon-picture_as_pdf right"></i>
                                                         </a>
                                                     @endif

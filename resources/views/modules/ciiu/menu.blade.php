@@ -32,7 +32,7 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.manage')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
-                    <span class="truncate">Linea Del Tiempo-Ramo CIIU</span>
+                    <span class="truncate">Línea Del Tiempo-Ramo CIIU</span>
                 </a>
             </div>
         </div>

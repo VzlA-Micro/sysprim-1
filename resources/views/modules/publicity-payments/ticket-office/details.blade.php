@@ -290,8 +290,8 @@
                                     <h4 class="center-align">Acciones</h4>
                                 </div>
                                 @can('Anular Pagos')
-                                    <div class="col s12 m4 center-align" style="margin-top:10px">
-                                        <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel">
+                                    <div class="col s12 m6 center-align" style="margin-top:20px">
+                                        <a href="#" class="btn red waves-effect waves-ligt reconcile col s12" data-status="cancel">
                                             ANULAR PLANILLA.
                                             <i class="icon-close right"></i>
                                         </a>
@@ -299,8 +299,8 @@
                                 @endcan
                                 @can('Verificar Pagos - Manual')
                                     @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
-                                        <div class="col s12 m4 center-align" style="margin-top:10px">
-                                            <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified">
+                                        <div class="col s12 m6 center-align" style="margin-top:20px">
+                                            <a href="#" class="btn blue waves-effect waves-light reconcile col s12" data-status="verified">
                                                 VERIFICAR PLANILLA.
                                                 <i class="icon-verified_user right"></i>
                                             </a>
@@ -308,16 +308,16 @@
                                     @endif
                                 @endcan
                                 @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                    <div class="col s12 m4 center-align" style="margin-top:10px">
-                                        <button type="button" id="send-email-verified" class="btn green waves-effect waves-light" value="{{$taxes->id}}">
+                                    <div class="col s12 m6 center-align" style="margin-top:20px">
+                                        <button type="button" id="send-email-verified" class="btn green waves-effect waves-light col s12" value="{{$taxes->id}}">
                                             Enviar Correo Verificado.
                                             <i class="icon-mail_outline right"></i>
                                         </button>
                                     </div>
                                 @endif
                                 @if($taxes->status!='cancel')
-                                    <div class="col s12 m4 center-align" style="margin-top:10px">
-                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                    <div class="col s12 m6 center-align" style="margin-top:20px">
+                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light col s12" target="_blank" >Ver Planilla(PDF).
                                             <i class="icon-picture_as_pdf right"></i>
                                         </a>
                                     </div>

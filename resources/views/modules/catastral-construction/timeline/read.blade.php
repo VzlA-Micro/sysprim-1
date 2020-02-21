@@ -13,14 +13,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor  Catastral de Contrucción</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal-construction.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal-construction.timeline.manage') }}" >Línea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('catastral-construction.timeline.read') }}" >Consultar</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h4>Consultar Linea de Tiempo - Valor Catastral de Construcción</h4>
+                        <h4>Consultar Línea de Tiempo - Valor Catastral de Construcción</h4>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered" id="timeline-table" style="width: 100%">

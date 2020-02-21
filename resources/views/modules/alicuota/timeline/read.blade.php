@@ -12,15 +12,15 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alicuota Inmuebles</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Linea de Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}" >Gestionar Alícuota Inmuebles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Línea de Tiempo</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.read') }}" >Consultar</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h4>Consultar Linea de Tiempo - Alicuota Inmuebles</h4>
+                        <h4>Consultar Línea de Tiempo - Alícuota Inmuebles</h4>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered" id="timeline-table" style="width: 100%">
