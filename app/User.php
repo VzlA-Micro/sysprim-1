@@ -118,7 +118,7 @@ class User extends Authenticatable  implements Auditable
 
     public function getOperatorAttribute()
     {
-        return $this->operator = substr($this->phone, 0, 3);
+        return $this->operator = substr($this->phone, 0, 6);
     }
 
     public function getNumberPhoneAttribute()

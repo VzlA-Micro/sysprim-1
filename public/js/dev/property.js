@@ -483,9 +483,6 @@ $('document').ready(function () {
                             }
 
 
-
-
-
                             $('#location_cadastral').attr('disabled', 'disabled');
                         }
 

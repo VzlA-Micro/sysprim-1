@@ -28,6 +28,7 @@
                                 <th>PLANILLA</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
+                                <th>Banco</th>
                                 <th>Ramo</th>
                                 <th>Status</th>
                                 <th>Monto</th>
@@ -42,6 +43,7 @@
                                     <td>{{$taxe->code}}</td>
                                     <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                     <td>{{$taxe->typePayment}}</td>
+                                    <td>{{$taxe->bankName}}</td>
                                     <td>{{$taxe->branch}}</td>
                                     <td>{{$taxe->statusName}}</td>
                                     <td>{{number_format($taxe->amount,2)}}</td>
