@@ -501,6 +501,9 @@ Route::middleware(['auth'])->group(/**
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
         Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
+        Route::get('properties/filter-sector/{sector}', 'PropertyController@filterLocation');
+
+
 
         ##### EMPRESAS
         Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
