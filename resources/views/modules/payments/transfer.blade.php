@@ -27,7 +27,6 @@
                             <tr>
                                 <th>Código</th>
                                 <th>Fecha</th>
-                                <th>Forma de Pago</th>
                                 <th>Banco</th>
                                 <th>Status</th>
                                 <th>Planilla</th>
@@ -47,7 +46,6 @@
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         {{--<td class="hide">{{$taxe->name}}</td>
                                         <td class="hide">{{$taxe->phone}}</td>--}}
-                                        <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->statusName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
@@ -56,30 +54,30 @@
                                             <td>
                                                 <div class="row">
                                                     @if($taxe->status==='cancel')
-                                                        <div class="input-field col s12 m12">
+                                                        <div class="input-field col s12 m6">
                                                             <button type="button" disabled
-                                                                    class="btn waves-effect waves-light  col s12 red"
+                                                                    class="btn waves-effect waves-light  red"
                                                                     value="">
                                                                 <i class="icon-do_not_disturb_alt"></i></button>
                                                         </div>
                                                     @elseif($taxe->status=='verified'||$taxe->status=='verified-sysprim')
-                                                        <div class="input-field col s12 m12">
+                                                        <div class="input-field col s12 m6">
                                                             <button type="button" id="change-status"
-                                                                    class="btn waves-effect waves-light green col s12"
+                                                                    class="btn waves-effect waves-light green"
                                                                     value="" data-status="#">
                                                                 <i class="icon-check"></i></button>
                                                         </div>
                                                     @else
-                                                        <div class="input-field col s12 m12 l12 xl6 ">
+                                                        <div class="input-field col s12 m6 ">
                                                             <button type="button"
-                                                                    class="change-status btn waves-effect waves-light green col s12"
+                                                                    class="change-status btn waves-effect waves-light green"
                                                                     value="{{$taxe->id}}" data-status="verified">
                                                                 <i class="icon-check"></i></button>
                                                         </div>
 
-                                                        <div class="input-field col s12 m12 l12 xl6 ">
+                                                        <div class="input-field col s12 m6 ">
                                                             <button type="button"
-                                                                    class="change-status btn waves-effect waves-light red col s12"
+                                                                    class="change-status btn waves-effect waves-light red"
                                                                     value="{{$taxe->id}}" data-status="cancel">
                                                                 <i class="icon-cancel"></i></button>
                                                         </div>
@@ -98,13 +96,13 @@
 
                                                     <td>
                                                         <a href="{{url('ticket-office/taxes/ateco/details/'.$taxe->taxes[0]->id)  }}"
-                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                           class="btn orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
 
                                                 @else
                                                     <td>
                                                         <a href="{{url('ticket-office/taxes/definitive/'.$taxe->taxes[0]->id) }}"
-                                                           class="btn btn-floating orange waves-effect waves-light"><i
+                                                           class="btn orange waves-effect waves-light"><i
                                                                     class="icon-pageview"></i></a>
 
                                                 @endif
@@ -113,35 +111,35 @@
 
                                                 <td>
                                                     <a href="{{url('rate/ticket-office/details/'.$taxe->taxes[0]->id)  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                       class="btn orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
 
                                             @elseif($taxe->taxes[0]->branch==='Pat.Veh')
                                                 <td>
                                                     <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light">
+                                                       class="btn orange waves-effect waves-light">
                                                         <i class="icon-pageview left"></i>
                                                     </a>
                                             @elseif($taxe->taxes[0]->branch==='Inm.Urbanos')
                                                 <td>
                                                     <a href="{{ route('properties.ticket-office.payments.details', ['id' => $taxe->taxes[0]->id])  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                       class="btn orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
-                                                </td>
+                                               
                                             @elseif($taxe->taxes[0]->branch==='Prop. y Publicidad')
                                                 <td>
                                                     <a href="{{ route('publicity.ticket-office.payments.details', ['id' => $taxe->taxes[0]->id])  }}"
-                                                       class="btn btn-floating orange waves-effect waves-light"><i
+                                                       class="btn orange waves-effect waves-light"><i
                                                                 class="icon-pageview"></i></a>
 
-                                                </td>
+                                               
 
                                             @endif
-
+                                            
                                                 <a href="#"
-                                                   class="btn btn-floating blue waves-effect waves-light details-payment"
+                                                   class="btn blue waves-effect waves-light details-payment"
                                                    data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
                                                    data-phone="{{$taxe->phone}}"
                                                    data-name="{{$taxe->name}}"
@@ -212,7 +210,7 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/TRANSFERENCIA',
                     className: 'btn orange waves-effect waves-light',
                 },
                 {
