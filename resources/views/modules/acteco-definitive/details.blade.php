@@ -176,8 +176,9 @@
 
                         @endforeach
                         <div class="col l12 s12">
+
                             <div class="col l6 s12">
-                                <table class="centered responsive-table" style="font-size: 10px;!important;">
+                            <!---  <table class="centered responsive-table" style="font-size: 10px;!important;">
                                     <thead>
                                         <tr>
                                             <th>CODIGO</th>
@@ -196,10 +197,11 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                </table>
+                                </table>    -->
                                 <div class="col s12">
                                     
                                 </div>
+
                             </div>
 
 
@@ -208,10 +210,12 @@
                                     <input type="text" name="interest"  class="validate money" id='interest' value="{{$total_interest}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
+
                                 <div class="col s12 m12 ">
                                     <input type="text" name="recargo" class="validate money" value="{{$total_recharge}}"  readonly>
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
+
                                 <div class="col s12 m12">
                                     <input type="text" name="total" class="validate total money"  value="{{$taxes->amount}}" readonly>
                                     <label for="total_pagar">Total a Pagar:(Bs)</label>

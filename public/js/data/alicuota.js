@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$(this).hide();
 		$('#btn-update').removeClass('hide');
         $('#name').removeAttr('readonly');
-        $('#value').removeAttr('readonly');
+        // $('#value').removeAttr('readonly');
 	});
 
 	$('#update').submit(function(e) {

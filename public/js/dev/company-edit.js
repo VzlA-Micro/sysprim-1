@@ -103,7 +103,17 @@ $('document').ready(function () {
             $('#address').removeAttr('disabled');
             $('#phone').removeAttr('disabled');
             updateCompany=true;
-            $('#update-company').text('Guardar');
+            $('#update-company').text('Guardar Datos de la Empresa');
+            $('#update-company').removeClass();
+            $('#update-company').addClass('btn btn-large btn-rounded waves-effect waves-light blue col s12');
+            $('#block-back').show();
+            $('#block-update').addClass('col s12 m12');
+            $('#update-company-status').hide();
+            $('#change-maps').hide();
+            $('#add-ciiu').hide();
+            $('#company-status').hide();
+
+
             swal({
                 title: "Información",
                 text: "Los campos fueron habilitados, una vez hagas los cambios has click en guardar.",
@@ -217,6 +227,15 @@ $('document').ready(function () {
             $('#search-ciu').removeAttr('disabled');
             addCiiu = true;
             $('#add-ciiu').text('Guardar CIIU');
+            $('#add-ciiu').removeClass();
+            $('#add-ciiu').addClass('btn btn-large btn-rounded waves-effect waves-light blue col s12');
+            $('#block-back').show();
+            $('#block-ciiu').addClass('col s12 m12');
+            $('#update-company-status').hide();
+            $('#change-maps').hide();
+            $('#update-company').hide();
+            $('#company-status').hide();
+            
             swal({
                 title: "Información",
                 text: "Ingresa los codigo CIIU en la casilla selecionada",
@@ -236,48 +255,66 @@ $('document').ready(function () {
 
 
 
-            $('.ciu').each(function () {
+            $('.ciu-add').each(function () {
                 ciu.push($(this).val());
             });
-            $.ajax({
-                type: "POST",
-                url: url + "company/addCiiu",
-                data: {
-                    id: id,
-                    ciu: ciu
-                },
-                dataType: "JSON",
 
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (data) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-
-                    $('#bDelete').remove();
+            console.log(ciu);
 
 
-                    if (data == true) {
-                        swal({
-                            title: "¡Bien Hecho!",
-                            text: "Has Añadido Los nuevos CIIU Con éxito",
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function () {
-                            location.reload();
-                        });
+            if(ciu.length >= 1) {
 
+
+                $.ajax({
+                    type: "POST",
+                    url: url + "company/addCiiu",
+                    data: {
+                        id: id,
+                        ciu: ciu
+                    },
+                    dataType: "JSON",
+
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (data) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+
+                        $('#bDelete').remove();
+
+
+                        if (data == true) {
+                            swal({
+                                title: "¡Bien Hecho!",
+                                text: "Has Añadido Los nuevos CIIU Con éxito",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function () {
+                                location.reload();
+                            });
+
+                        }
+                    },
+                    error: function (e) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        console.log(e);
                     }
-                },
-                error: function (e) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    console.log(e);
-                }
 
-            });
+                });
+            }else{
+                swal({
+                    title: "Información",
+                    text: "Todavia no has ingresado ningún CIIU.",
+                    icon: "info",
+                    button:{
+                        text: "Esta bien",
+                        className: "amber-gradient"
+                    },
+                })
+            }
         }
     });
 
@@ -298,7 +335,7 @@ $('document').ready(function () {
                     if (response.status !== 'error') {
                         var subr = response.ciu.name.substr(0, 3);
                         var template = `<div>
-                                <input type="hidden" name="ciuAdd[]" id="ciuAdd" class="ciu" value="${response.ciu.id}">
+                                <input type="hidden" name="ciuAdd[]" id="ciuAdd" class="ciu-add" value="${response.ciu.id}">
                                 <div class="input-field col s12 m4">
                                     <i class="icon-assignment prefix"></i>
                                     <input type="text" name="search-ciu" id="ciu"  disabled value="${response.ciu.code}" >

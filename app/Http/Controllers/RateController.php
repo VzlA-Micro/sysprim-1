@@ -34,9 +34,6 @@ class RateController extends Controller{
 
 
 
-
-
-
     public function verifyCode($code,$id=null){
         $rate=Rate::where('code', $code)->get();
 

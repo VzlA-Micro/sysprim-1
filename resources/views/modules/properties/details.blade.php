@@ -26,8 +26,13 @@
 
                     <div class="card-content">
                         <ul>
+                            <li><b>Alias del Inmueble: </b>{{ $property[0]->alias }}</li>
                             <li><b>Direccion: </b>{{ $property[0]->address }}</li>
-                            <li><b>Tipo de Construccion: </b>{{$catasConstruct->name}}</li>
+                            <li><b>Tipo(s) de Construccion(es): </b>
+                                @foreach($propertyBuildings as $propertyBuilding)
+                                    <b>[</b>{{ $propertyBuilding->buildingValue->name }}<b>]</b>,
+                                @endforeach
+                            </li>
                             <li><b>Lugar: </b>{{$catasTerreno->name}}</li>
                             <li><b>Parroquia: </b>{{$parish->name}}</li>
                             <li><b>Area De Construccion: </b>{{ $property[0]->area_build}} MT2</li>

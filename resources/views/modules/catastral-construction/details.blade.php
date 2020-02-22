@@ -12,8 +12,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Contrucción Catastral</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.read') }}">Consultar  Valor de Contrucción Catastral</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Construcción Catastral</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.read') }}">Consultar  Valor de Construcción Catastral</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
                 </ul>
             </div>
@@ -29,25 +29,27 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-data_usage prefix"></i>
-                            <input type="text" name="name" id="name" minlength="3" maxlength="10"  value="{{$catastral->name}}" required readonly>
+                            <input type="text" name="name" id="name" minlength="3" maxlength="120"  value="{{$catastral->name}}" required readonly>
                             <label for="name">Nombre</label>
                         </div>
-
-
                         <div class="input-field col s12 m6">
-                            <i class="icon-verified_user prefix"></i>
-                            <input type="text" name="value_edification" id="value" maxlength="5"  minlength="1" class="validate number-date only-number-positive"  value="{{$catastral->value_edificacion}}"  required readonly >
-                            <label for="value">Valor de edificación (UT)</label>
-                        </div>
-
-                        <div class="input-field col s12 m12">
                             <i class="icon-question_answer prefix"></i>
                             <select name="regimen_horizontal" id="regimen_horizontal" disabled>
                                 <option value="null" selected disabled>...</option>
                                 <option value="1"  @if ($catastral->regimen_horizontal=='1'){{"selected"}}  @endif>Si</option>
                                 <option value="0"  @if ($catastral->regimen_horizontal=='0'){{"selected"}}  @endif >No</option>
                             </select>
-                            <label for="regime_horizontal">Regimen Horizontal</label>
+                            <label for="regimen_horizontal">Regimen Horizontal</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <i class="icon-question_answer prefix"></i>
+                            <select name="status" id="status" disabled>
+                                <option value="null" selected disabled>...</option>
+                                <option value="enabled" @if ($catastral->status =='enabled') {{"selected"}} @endif>Habilitado</option>
+                                <option value="disabled" @if ($catastral->status =='disabled') {{"selected"}} @endif>Inhabilitado</option>
+                            </select>
+                            <label for="status">Status</label>
                         </div>
                     </div>
                     @can('Actualizar Valor Construccion')

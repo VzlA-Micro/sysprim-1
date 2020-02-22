@@ -16,4 +16,8 @@ class Ciu extends Model implements Auditable{
     public function GroupCiiu (){
         return $this->belongsTo('App\Ciu','group_ciu_id');
     }
+
+    public function timeLine(){
+        return $this->hasMany('App\TimelineCiiu');
+    }
 }

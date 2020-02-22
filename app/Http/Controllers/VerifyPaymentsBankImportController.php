@@ -27,7 +27,6 @@ use App\UserProperty;
 use App\PropertyTaxes;
 use App\Publicity;
 use App\UserPublicity;
-
 use App\PublicityTaxe;
 class VerifyPaymentsBankImportController extends Controller
 {

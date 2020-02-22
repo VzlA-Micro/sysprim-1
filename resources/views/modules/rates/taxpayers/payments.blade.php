@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -9,10 +9,11 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-					<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
-					<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
-					<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles de Autoliquidación</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles
+                            de Autoliquidación</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -59,46 +60,46 @@
 
 
 
-							<div class="row">
+                            <div class="row">
 
-							</div>
+                            </div>
 
 
-						</div>
-					</div>
-					<div id="payment-bank">
-						<div class="card-content">
-							<div class="card-header">
-								<h4 class="center-align">Seleciona el banco:</h4>
-							</div>
-							<div class="row">
-								<div class="col s12 m6">
-									<input type="radio" id="banesco" name="method" value="55" class="bank-div">
-									<label class="btn-radio banesco-green" for="banesco">
-										<i class="i-banesco-logo"></i>
-									</label>
-								</div>
-								<div class="col s12 m6">
-									<input type="radio" id="bnc" name="method" value="99" class="bank-div">
-									<label class="btn-radio bnc-blue" for="bnc">
-										<i class="i-bnc"></i>
-									</label>
-								</div>
-								<div class="col s12 m6" id="bod-div">
-									<input type="radio" id="bod" name="method" value="44" class="bank-div">
-									<label class="btn-radio bod-green" for="bod">
-										<i class="i-bod"></i>
-									</label>
-								</div>
+                        </div>
+                    </div>
+                    <div id="payment-bank">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h4 class="center-align">Seleciona el banco:</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m6">
+                                    <input type="radio" id="banesco" name="method" value="55" class="bank-div">
+                                    <label class="btn-radio banesco-green" for="banesco">
+                                        <i class="i-banesco-logo"></i>
+                                    </label>
+                                </div>
+                                <div class="col s12 m6">
+                                    <input type="radio" id="bnc" name="method" value="99" class="bank-div">
+                                    <label class="btn-radio bnc-blue" for="bnc">
+                                        <i class="i-bnc"></i>
+                                    </label>
+                                </div>
+                                <div class="col s12 m6" id="bod-div">
+                                    <input type="radio" id="bod" name="method" value="44" class="bank-div">
+                                    <label class="btn-radio bod-green" for="bod">
+                                        <i class="i-bod"></i>
+                                    </label>
+                                </div>
 
-								<div class="col s12 m6">
-									<input type="radio" id="percent-banco" name="method" value="33" class="bank-div">
-									<label class="btn-radio x100-banco-yellow" for="percent-banco">
-										<i class="i-percent-banco"></i>
-									</label>
-								</div>
-							</div>
-							<div class="row">
+                                <div class="col s12 m6">
+                                    <input type="radio" id="percent-banco" name="method" value="33" class="bank-div">
+                                    <label class="btn-radio x100-banco-yellow" for="percent-banco">
+                                        <i class="i-percent-banco"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col s6 left-align">
                                     <a href="#" class="btn peach waves-effect waves-light" id="previous-bank">
                                         <i class="icon-navigate_before left"></i>
@@ -109,43 +110,43 @@
 
                                 </div>
                             </div>
-						</div>
-					</div>
-					<div id="payment-receipt">
-						<div class="card-content">
-							<div class="card-header">
-								<h4 class="center-align">Obtener Planilla:</h4>
-							</div>
-							<div class="row">
-								@can('Obtener Mi Planilla')
-								<div class="col s12 m6 offset-m3 center-align" id="div-send"  >
-									<a href="#" class="btn-app green" >
-										<i class="far fa-file-pdf"></i>
-										<span class="truncate">Obtener Planilla</span>
-									</a>
-								</div>
-								@endcan
-							</div>
-							<div class="row">
-								<div class="col s6 left-align">
-									<a href="#" class="btn peach waves-effect waves-light" id="previous-receipt">
-										<i class="icon-navigate_before left"></i>
-										Anterior
-									</a>
-								</div>
-								<div class="col s6 right-align">
+                        </div>
+                    </div>
+                    <div id="payment-receipt">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h4 class="center-align">Obtener Planilla:</h4>
+                            </div>
+                            <div class="row">
+                                @can('Obtener Mi Planilla')
+                                    <div class="col s12 m6 offset-m3 center-align" id="div-send">
+                                        <a href="#" class="btn-app green">
+                                            <i class="far fa-file-pdf"></i>
+                                            <span class="truncate">Obtener Planilla</span>
+                                        </a>
+                                    </div>
+                                @endcan
+                            </div>
+                            <div class="row">
+                                <div class="col s6 left-align">
+                                    <a href="#" class="btn peach waves-effect waves-light" id="previous-receipt">
+                                        <i class="icon-navigate_before left"></i>
+                                        Anterior
+                                    </a>
+                                </div>
+                                <div class="col s6 right-align">
 
-								</div>
-							</div>
-						</div>
-					</div>
-            	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<form id="form-payment" method="POST" action="{{route('rate.taxpayers.paymentStore')}}">
-					<input type="hidden" class="#" name="type_payment" id="type_payment" >
-					<input type="hidden" class="#" name="bank_payment" id="bank_payment" >
-					<input type="hidden" class="#" name="id_taxes" id="id_taxes"  value="{{$taxes_id}}">
-				</form>
+                <form id="form-payment" method="POST" action="{{route('rate.taxpayers.paymentStore')}}">
+                    <input type="hidden" class="#" name="type_payment" id="type_payment">
+                    <input type="hidden" class="#" name="bank_payment" id="bank_payment">
+                    <input type="hidden" class="#" name="id_taxes" id="id_taxes" value="{{$taxes_id}}">
+                </form>
 
 
             </div>
@@ -154,5 +155,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{asset('js/dev/taxes-definitive.js')}}"></script>
+    <script src="{{asset('js/dev/taxes-definitive.js')}}"></script>
 @endsection

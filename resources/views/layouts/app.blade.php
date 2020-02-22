@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/style.css') }}">--}}
     <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono color.ico') }}">
+
+
+
+
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
@@ -51,5 +55,6 @@
     
     @include('includes.scripts')
     @yield('scripts')
+
 </body>
 </html>

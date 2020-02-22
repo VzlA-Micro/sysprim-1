@@ -57,10 +57,10 @@ class PropertyController extends Controller
         else{
             $company = '';
         }
-        $catastralTerre = CatastralTerreno::all();
+        $catastralTerre = CatastralTerreno::orderBy('name','asc')->get();
         $catastralConst = CatastralConstruccion::all();
-        $parish = Parish::all();
-        $alicuota= Alicuota::all();
+        $parish = Parish::orderBy('name','asc')->get();
+        $alicuota= Alicuota::orderBy('name','asc')->get();
         return view('modules.properties.register', [
             'parish' => $parish,
             'catasTerreno' => $catastralTerre,
@@ -108,6 +108,7 @@ class PropertyController extends Controller
         $lng = $request->input('lng');
         $typeConst = $request->input('type_const');
         $type_inmueble_id = $request->input('type_inmueble_id');
+        $alias = $request->input('alias');
         $status = $request->input('status');
         $owner_id = $request->input('id');
 //        $type = $request->input('type');
@@ -117,16 +118,25 @@ class PropertyController extends Controller
         $property->value_cadastral_ground_id = $location_cadastral;
         $property->code_cadastral = $code_cadastral;
         $property->address = $address;
+        $property->alias = $alias;
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
         $property->type_inmueble_id = $type_inmueble_id;
-        $property->value_cadastral_build_id = $typeConst;
+//        $property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();
         $property->save();
 
         $id = $property->id; // Obtengo el id del inmueble que registro
+
+        for($i = 0; $i < count($typeConst); $i++) {
+            $valCat = new Val_cat_const_inmu();
+            $valCat->value_catas_const_id = $typeConst[$i];
+            $valCat->property_id = $id;
+            $valCat->save();
+        }
+
         $person_id=null;
         $company_id=null;
 
@@ -153,17 +163,6 @@ class PropertyController extends Controller
 //        $property->catastralConstruction()->attach(['value_catas_const_id' => $typeConst], ['property_id' => $id]); // Inserto en la tabla puente
         $property->users()->attach(['property_id' => $id], ['user_id' => $user_id, 'status' => $status, 'person_id' => $person_id, 'company_id' => $company_id]);
 
-        /*elseif($status == 'responsable') {
-            $property->users()->attach(
-                ['property_id' => $id],
-                ['user_id' => $user_id],
-                ['status' => $status],
-                ['person_id' => $owner_id]);
-        }*/
-        $valCat = new Val_cat_const_inmu();
-        $valCat->value_catas_const_id = $typeConst;
-        $valCat->property_id = $id;
-        $valCat->save();
         return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
     }
 
@@ -195,14 +194,19 @@ class PropertyController extends Controller
 
     public function details($id) {
         $property = Property::where('id', $id)->get();
-        $pCatasConstruct = Val_cat_const_inmu::where('property_id', $property[0]->id)->select('value_catas_const_id')->get();
-        $catasConstruct = CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
+        $propertyBuildings = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
+
+
+
+//        $catasConstruct = CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
         $catasTerreno = CatastralTerreno::find($property[0]->value_cadastral_ground_id);
+
+//        dd($propertyBuildings);
 
         $parish = Parish::find($property[0]->parish_id);
         return view('modules.properties.details', array(
             'property' => $property,
-            'catasConstruct' => $catasConstruct,
+            'propertyBuildings' => $propertyBuildings,
             'catasTerreno' => $catasTerreno,
             'parish' => $parish
         ));
@@ -374,10 +378,15 @@ class PropertyController extends Controller
 
     public function detailsPropertyTicketOffice($id){
         $property=Property::find($id);
-        $catastralTerre = CatastralTerreno::all();
-        $catastralConst = CatastralConstruccion::all();
-        $parish = Parish::all();
-        $alicuota= Alicuota::all();
+        $catastralTerre = CatastralTerreno::orderBy('name','asc')->get();
+        $catastralConst = CatastralConstruccion::orderBy('name','asc')->get();
+        $propertyBuilding = Val_cat_const_inmu::where('property_id', $property->id)->get();
+        $collectionCatastralConstruccion = $catastralConst->pluck('name','id');
+        $selectedPropertyBuilding = $propertyBuilding->pluck('id');
+//        dd($collectionCatastralConstruccion);
+
+        $parish = Parish::orderBy('name','asc')->get();
+        $alicuota= Alicuota::orderBy('name','asc')->get();
 
         $type='';
 
@@ -403,7 +412,10 @@ class PropertyController extends Controller
             'property'=>$property,
             'type'=>$type,
             'data'=>$data,
-            'payments' => $payments
+            'payments' => $payments,
+            'propertyBuilding' => $propertyBuilding,
+            'collectionCatastralConstruccion' => $collectionCatastralConstruccion,
+            'selectedPropertyBuilding' => $selectedPropertyBuilding
         ]);
     }
 
@@ -463,6 +475,7 @@ class PropertyController extends Controller
         $lng = $request->input('lng');
         $typeConst = $request->input('type_const');
         $type_inmueble_id = $request->input('type_inmueble_id');
+        $alias = $request->input('alias');
         $status = $request->input('status');
 //        $type = $request->input('type');
         $owner_id = $request->input('id');
@@ -474,18 +487,24 @@ class PropertyController extends Controller
         $property->value_cadastral_ground_id = $location_cadastral;
         $property->code_cadastral = $code_cadastral;
         $property->address = $address;
+        $property->alias = $alias;
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
         $property->type_inmueble_id = $type_inmueble_id;
-        $property->value_cadastral_build_id = $typeConst;
+//        $property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();
         $property->save();
 
         $id = $property->id; // Obtengo el id del inmueble que registro
 
-
+        for($i = 0; $i < count($typeConst); $i++) {
+            $valCat = new Val_cat_const_inmu();
+            $valCat->value_catas_const_id = $typeConst[$i];
+            $valCat->property_id = $id;
+            $valCat->save();
+        }
 
 
             if($type == 'company'){
@@ -502,7 +521,6 @@ class PropertyController extends Controller
 
 
 
-//        $property->catastralConstruction()->attach(['value_catas_const_id' => $typeConst], ['property_id' => $id]); // Inserto en la tabla puente
         $property->users()->attach(['property_id' => $id], [
                                                             'user_id' => $user_id,
                                                             'status' => $status,
@@ -510,21 +528,8 @@ class PropertyController extends Controller
                                                             'company_id' => $company_id
             ]);
 
-        /*elseif($status == 'responsable') {
-            $property->users()->attach(
-                ['property_id' => $id],
-                ['user_id' => $user_id],
-                ['status' => $status],
-                ['person_id' => $owner_id]);
-        }*/
-        $valCat = new Val_cat_const_inmu();
-        $valCat->value_catas_const_id = $typeConst;
-        $valCat->property_id = $id;
-        $valCat->save();
+
         return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
-
-
-
 
     }
 
@@ -683,6 +688,16 @@ class PropertyController extends Controller
         $property->update();
 
         return response()->json(['status'=>'success']);
+    }
+
+
+    public function filterLocation($sector){
+            $sector=CatastralTerreno::where('sector_catastral',$sector)->get();
+
+            if($sector->isEmpty()){
+                $sector=CatastralTerreno::where('sector_catastral',0)->get();
+            }
+            return response()->json(['status'=>'success','sector'=>$sector]);
     }
 
 

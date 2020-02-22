@@ -138,7 +138,7 @@
 				<td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
 				<td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
 				<td style="width: 15%;font-size: 10px;!important">@php echo number_format($ciu->base, 2);@endphp</td>
-				<td style="width: 15%;font-size: 10px;!important">{{($ciu->ciu->alicuota*100)."%"}}</td>
+				<td style="width: 15%;font-size: 10px;!important"></td>
 				<td style="width: 10%;font-size: 10px;!important">{{number_format($ciu->totalCiiu,2)}}</td>
 			</tr>
 
@@ -325,7 +325,7 @@
 
 				@if($firm)
 					<td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
-						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image" width="100%" height="100%">
+						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image">
 
 					</td>
 				@else
@@ -378,7 +378,7 @@
 
 					<td style="width: 20%;">
 						@if($taxes->bank!=null)
-							<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="Image" width="100%" height="100%">
+							<img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="Image" >
 						@endif
 					</td>
 				@endif

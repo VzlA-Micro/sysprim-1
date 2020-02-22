@@ -1,6 +1,10 @@
 $(document).ready(function () {
     var url = localStorage.getItem('url');
 
+
+
+
+
     function reset() {
         $('#details').text('');
         $('ul.tabs').tabs("select", "general-tab");
@@ -769,7 +773,7 @@ $(document).ready(function () {
         maxDate: date,
         // defaultDate: date,
         format: 'yyyy-mm-dd', // Configure the date format
-        yearRange: [1900, date.getFullYear()],
+        yearRange: [2019, date.getFullYear()],
         showClearBtn: false,
         i18n: {
             cancel: 'Cerrar',

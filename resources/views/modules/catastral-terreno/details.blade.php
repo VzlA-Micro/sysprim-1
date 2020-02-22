@@ -66,17 +66,7 @@
                         </div>
 
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-build prefix"></i>
-                            <input type="text" name="value_terreno_construccion" id="value_terreno_construccion" maxlength="5"  minlength="1" class="validate number-date only-number-positive"   value="{{$catastral->value_terreno_construccion}}"   readonly required >
-                            <label for="value_terreno_construccion">Valor de Terreno en construción (UT)</label>
-                        </div>
 
-                        <div class="input-field col s12 m6">
-                            <i class="icon-terrain prefix"></i>
-                            <input type="text" name="value_terreno_vacio" id="value_terreno_vacio" maxlength="5"  minlength="1" class="validate number-date only-number-positive"    value="{{$catastral->value_terreno_vacio}}" readonly  required >
-                            <label for="value_terreno_vacio">Valor de Terreno Vacio (UT)</label>
-                        </div>
 
                     </div>
 

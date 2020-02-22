@@ -28,6 +28,7 @@
                                 <th>PLANILLA</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
+                                <th>Banco</th>
                                 <th>Ramo</th>
                                 <th>Status</th>
                                 <th>Monto</th>
@@ -42,6 +43,7 @@
                                     <td>{{$taxe->code}}</td>
                                     <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                     <td>{{$taxe->typePayment}}</td>
+                                    <td>{{$taxe->bankName}}</td>
                                     <td>{{$taxe->branch}}</td>
                                     <td>{{$taxe->statusName}}</td>
                                     <td>{{number_format($taxe->amount,2)}}</td>
@@ -166,12 +168,12 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'LISTA DE PLANILLAS',
                     className: 'btn orange waves-effect waves-light',
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'LISTA DE PLANILLAS',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
@@ -185,16 +187,16 @@
                         }, doc.styles.tableHeader = {
                             fillColor: '#247bff',
                             color: '#FFF',
-                            fontSize: '11',
+                            fontSize: '9',
                             alignment: 'center',
                             bold: true
 
                         },
-                            doc.defaultStyle.fontSize = 9;
+                            doc.defaultStyle.fontSize = 8;
 
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
+                        columns: [0, 1, 2, 3, 4, 5,6]
                     }
                 },
                 {

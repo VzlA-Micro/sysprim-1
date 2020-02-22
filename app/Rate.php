@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Tributo;
-class Rate extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+
+class Rate extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table="rates";
     protected $appends = ['totalRate'];
 

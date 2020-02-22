@@ -31,6 +31,15 @@
                 </a>
             </div>
             @endcan
+
+            <div class="col s12 m4 animated bounceIn">
+                <a href="{{ route('catrastal-terreno.timeline.manage') }}" class="btn-app white blue-grey-text">
+                    <i class="icon-schedule"></i>
+                    <span class="truncate">Línea de Tiempo</span>
+                </a>
+            </div>
+
+
         </div>
     </div>
 @endsection

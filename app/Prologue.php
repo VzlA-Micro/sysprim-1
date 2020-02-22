@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Prologue extends Model
+class Prologue extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table="prologue";
 
 

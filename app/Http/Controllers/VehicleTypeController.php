@@ -44,8 +44,8 @@ class VehicleTypeController extends Controller
     {
         $type= new VehicleType();
         $type->name= $request->input('type_vehicle');
-        $type->rate= $request->input('rate');
-        $type->rate_UT= $request->input('rate_ut');
+        //$type->rate= $request->input('rate');
+        //$type->rate_UT= $request->input('rate_ut');
         $type->save();
 
         return redirect()->route('type-vehicles.read');
@@ -93,8 +93,8 @@ class VehicleTypeController extends Controller
         //$id=$request->input('id');
         $type=VehicleType::findOrFail($request->input('id'));
         $type->name= $request->input('name');
-        $type->rate= $request->input('rate');
-        $type->rate_UT= $request->input('rate_ut');
+        //$type->rate= $request->input('rate');
+        //$type->rate_UT= $request->input('rate_ut');
         $type->update();
         $update=true;
         return response()->json(['update'=>$update]);

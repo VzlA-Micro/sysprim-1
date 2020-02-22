@@ -67,16 +67,16 @@
                                 <label for="personTo">Usuario Web</label>
                             </div>
                             @php
-                            $cont=(int)date('Y');
+                                $cont=(int)date('Y');
+                                $date=2019;
                             @endphp
                             <div class="input-field col s12 m4">
                                 <i class="icon-date_range prefix"></i>
                                 <select id="fiscal_period" name="fiscal_period" disabled>
                                     <option value="null">Seleccione</option>
-                                    @while($cont >= 2010)
+                                    @for($cont;$cont>=$date;$cont--)
                                         <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
-                                        @php $cont--; @endphp
-                                    @endwhile
+                                    @endfor
                                 </select>
                                 <label>Periodo Fiscal</label>
                             </div>
@@ -108,7 +108,8 @@
                         <div class="card-content" id="details">
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="base" id="base" class="validate money"
                                        value=""
@@ -118,7 +119,8 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="tasa" id="tasa" class="validate recargo money"
                                        pattern="^[0-9.,]+"
@@ -127,7 +129,8 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="discount" id="discount" class="validate money"
                                        pattern="[0-9.,-]+"
@@ -137,7 +140,8 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="recharge" id="recharge" class="validate money"
                                        pattern="[0-9.,]+"
@@ -148,7 +152,8 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="rechargeMora" id="rechargeMora" class="validate money"
                                        pattern="[0-9.,]+"
@@ -159,7 +164,8 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
                                        class="validate number-only" pattern="[0-9.,]+"
@@ -170,7 +176,8 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
-                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                    <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                         width="100%" height="100%">
                                 </i>
                                 <input type="text" name="total" id="total" class="validate money"
                                        pattern="[0-9.,]+"
@@ -214,7 +221,8 @@
                 <h4 class="center-align">Escanear QR O Ingresar Código</h4>
                 <div class="col l12">
                     <div class="col s12 center-align">
-                        <img src="{{asset('images/scan.gif')}}" class="img-responsive" alt="Image" width="100%" height="100%">
+                        <img src="{{asset('images/scan.gif')}}" class="img-responsive" alt="Image" width="100%"
+                             height="100%">
                     </div>
                     <div class="input-field col s10">
                         <i class="icon-search prefix"></i>
