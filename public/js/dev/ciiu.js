@@ -169,7 +169,7 @@ $('document').ready(function () {
     $('#code').change(function () {
         var code=$(this).val();
 
-        if(code!=''){
+        if(code!='') {
             $.ajax({
                 method: "GET",
                 url: url + "ciu-branch/verify-code/" + code,
@@ -211,12 +211,7 @@ $('document').ready(function () {
                 }
             });
 
-
-
         }
-
-
-
     });
 
 

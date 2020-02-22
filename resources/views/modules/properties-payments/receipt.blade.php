@@ -136,22 +136,53 @@ margin: 0 !important;
     {{--    @foreach($taxes->rateTaxes as $rate)--}}
 
 
+    @foreach($propertyBuildings as $propertyBuilding)
+        @if($propertyBuilding->buildingValue->id == 1 || $propertyBuilding->buildingValue->name == 'NINGUNA')
+            @if($property->type->id == 2 || $property->type->id == 3)
+                <tr>
+                    {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+                    <td style="width: 30%;font-size: 10px;!important;">{{ $property->type->name }}</td>
+                    <td style="width: 10%;font-size: 10px !important;"></td>
 
-    <tr>
-        {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
-        <td style="width: 30%;font-size: 10px;!important;">{{ $property->valueBuild->name }}</td>
-        <td style="width: 10%;font-size: 10px !important;"></td>
+                    <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
+                    <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
+                    <td style="width: 15%;font-size: 10px;!important"></td>
+                    <td style="width: 10%;font-size: 10px;!important">{{--{{number_format($propertyTaxes->base_imponible,2,',','.')}}--}}</td>
+                    <td style="width: 15%;font-size: 10px;!important">{{ number_format($propertyTaxes->terrain_amount,2,',','.') }}</td>
+                </tr>
+            @endif
+        @else{{--if ($property->type->name == 1 || $property->type->name == 4)--}}
+            {{--@if($property->type->name == 1 || $property->type->name == 4)
+            <tr>
+                <td style="width: 30%;font-size: 10px;!important;">{{ $property->type->name }}</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
 
-        <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
-        <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
-        <td style="width: 15%;font-size: 10px;!important">{{ number_format($property->valueBuild->value_edificacion,2,',','.') }}</td>
-        <td style="width: 15%;font-size: 10px;!important"></td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($propertyTaxes->base_imponible,2,',','.')}}</td>
-    </tr>
-    {{--@endforeach--}}
+                <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
+                <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
+                <td style="width: 15%;font-size: 10px;!important"></td>
+                <td style="width: 10%;font-size: 10px;!important">--}}{{--{{number_format($propertyTaxes->base_imponible,2,',','.')}}--}}{{--</td>
+                <td style="width: 15%;font-size: 10px;!important">{{ number_format($propertyTaxes->build_amount,2,',','.') }}</td>
+            </tr>
+            @endif--}}
+        <tr>
+            {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+            <td style="width: 30%;font-size: 10px;!important;">{{ $propertyBuilding->buildingValue->name }}</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+
+            <td style="width: 10%;font-size: 10px;!important">{{$taxes->branch}}</td>
+            <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
+            <td style="width: 15%;font-size: 10px;!important"></td>
+            <td style="width: 10%;font-size: 10px;!important">{{--{{number_format($propertyTaxes->base_imponible,2,',','.')}}--}}</td>
+            <td style="width: 15%;font-size: 10px;!important">{{ number_format($propertyBuilding->buildingValue->timelineValue[0]->value,2,',','.') }}</td>
+        </tr>
+        @endif
+    @endforeach
+
+
+
 
     @php $totalAmount = $propertyTaxes->base_imponible; @endphp
-    <tr>
+    {{--<tr>
         <td style="width: 10%;font-size: 10px !important;text-align: right">Alicuota</td>
         <td style="width: 10%;font-size: 10px !important;"></td>
         <td style="width: 10%;font-size: 10px !important;"></td>
@@ -160,7 +191,32 @@ margin: 0 !important;
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->alicuota,2,',','.') }}</td>
         @php $totalAmount += $propertyTaxes->alicuota @endphp
         <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-    </tr>
+    </tr>--}}
+    @if($propertyTaxes->terrain_amount != 0)
+        <tr>
+            <td style="width: 10%;font-size: 10px !important;text-align: right">Valor del Terreno</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            <td style="width: 10%;font-size: 10px;!important">{{--{{$taxes->branch}}--}}</td>
+            <td style="width: 10%;font-size: 10px; !important;">{{--{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}--}}</td>
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->terrain_amount,2,',','.') }}</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            {{--@php $totalAmount += $propertyTaxes->recharge; @endphp--}}
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->terrain_amount,2,',','.') }}</td>
+        </tr>
+    @endif
+    @if($propertyTaxes->build_amount != 0)
+        <tr>
+            <td style="width: 10%;font-size: 10px !important;text-align: right">Valor de la Construcción</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            <td style="width: 10%;font-size: 10px;!important">{{--{{$taxes->branch}}--}}</td>
+            <td style="width: 10%;font-size: 10px; !important;">{{--{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}--}}</td>
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->build_amount,2,',','.') }}</td>
+            <td style="width: 10%;font-size: 10px !important;"></td>
+            {{--@php $totalAmount += $propertyTaxes->recharge; @endphp--}}
+            <td style="width: 10%;font-size: 10px !important;">{{ number_format($propertyTaxes->build_amount,2,',','.') }}</td>
+        </tr>
+    @endif
+
     @if($propertyTaxes->recharge != 0)
     <tr>
         <td style="width: 10%;font-size: 10px !important;text-align: right">Recargos</td>
@@ -363,14 +419,14 @@ $date = '31/12/' . date('Y');
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
-                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                         style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Base Image">
                 </td>
         @else
 
             <tr>
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Base Image" width="100%" height="100%">
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Base Image">
                 </td>
             </tr>
 
@@ -381,7 +437,7 @@ $date = '31/12/' . date('Y');
                 @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
                         <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
-                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image Pdf" width="100%" height="100%">
+                             style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image Pdf">
                     @endif
                 @endif
             </td>

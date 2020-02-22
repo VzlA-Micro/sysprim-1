@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Publicity extends Model
+class Publicity extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'publicity';
 
     public function users() {
@@ -14,8 +16,9 @@ class Publicity extends Model
     }
 
     public function company() {
-    	return $this->belongsToMany('App\User','users_publicity')
-            ->withPivot('company_id');
+
+
+        return $this->belongsToMany('App\User','users_publicity')->withPivot('company_id');
     }
 
     public function advertisingType() {

@@ -269,7 +269,7 @@
 
                             @endif
                             @can('Cambiar Propietario - Vehiculo')
-                            <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m4 center-align" style="margin-top:.5rem" id="block-users">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
                                     Cambiar Propietario
@@ -277,13 +277,13 @@
                                 </a>
                                 <a href="#" class=" hide btn btn-large btn-rounded waves-effect waves-light blue col s12"
                                    id="save-change">
-                                    Guardar Cambios
+                                    Guardar Cambios de Propietario
                                     <i class="icon-save right"></i>
                                 </a>
                             </div>
                             @endcan
                             @can('Actualizar Vehiculos')
-                                <div class="col s12 m4 center-align" style="margin-top:.5rem">
+                                <div class="col s12 m4 center-align" style="margin-top:.5rem" id="block-update">
                                     <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle">
                                         Actualizar
@@ -291,8 +291,8 @@
                                     </a>
                                     <a href="#" class="btn btn-large hide btn-rounded waves-effect waves-light blue col s12 "
                                        id="update-vehicle-save">
-                                     Guardar Cambios
-                                        <i class="icon-mode_edit right"></i>
+                                     Guardar Cambios de actualización
+                                        <i class="icon-save right"></i>
                                     </a>
                                 </div>
                             @endcan
@@ -316,6 +316,15 @@
                                 @endif
                               </div>
                             @endcan
+                            
+                            <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                                <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
+                                   id="back">
+                                    Atrás
+                                    <i class="icon-keyboard_arrow_left left" style="margin:0"></i>
+                                </a>
+                            </div>
+
 
                     <div class="row">
                             
@@ -352,11 +361,11 @@
                         </div>
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
-                            <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                            <input id="ciU" type="text" name="ciU" class="validate" pattern="[0-9]+"
                                    minlength="7" maxlength="8" title="Solo puede escribir números." required
                                    value="{{$vehicle->users[0]->document }}"
                                    readonly>
-                            <label for="ci">Cedula</label>
+                            <label for="ciU">Cedula</label>
                         </div>
                         <div class="input-field col s12 m12 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
@@ -381,23 +390,17 @@
                         Local"></i>
                             <select name="country_code" id="country_code_user" required disabled>
                                 <option value="null" selected disabled>...</option>
-                                <option value="+58412" @if ($vehicle->users[0]->operator=='+58412'){{"selected"}}@endif >
-                                    (412)
+                                <option value="+58412" @if ($vehicle->users[0]->operator=='+58412'){{"selected"}}@endif >(412)
                                 </option>
-                                <option value="+58414" @if ($vehicle->users[0]->operator=='+58414'){{"selected"}}@endif>
-                                    (414)
+                                <option value="+58414" @if ($vehicle->users[0]->operator=='+58414'){{"selected"}}@endif>(414)
                                 </option>
-                                <option value="+58416" @if ($vehicle->users[0]->operator=='+58416'){{"selected"}}@endif>
-                                    (416)
+                                <option value="+58416" @if ($vehicle->users[0]->operator=='+58416'){{"selected"}}@endif>(416)
                                 </option>
-                                <option value="+58424" @if ($vehicle->users[0]->operator=='+58424'){{"selected"}}@endif>
-                                    (424)
+                                <option value="+58424" @if ($vehicle->users[0]->operator=='+58424'){{"selected"}}@endif>(424)
                                 </option>
-                                <option value="+58426" @if ($vehicle->users[0]->operator=='+58426'){{"selected"}}@endif>
-                                    (426)
+                                <option value="+58426" @if ($vehicle->users[0]->operator=='+58426'){{"selected"}}@endif>(426)
                                 </option>
-                                <option value="+58251" @if ($vehicle->users[0]->operator=='+58251'){{"selected"}}@endif>
-                                    (251)
+                                <option value="+58251" @if ($vehicle->users[0]->operator=='+58251'){{"selected"}}@endif>(251)
                                 </option>
                             </select>
                             <label for="country_code">Operadora</label>
@@ -445,13 +448,13 @@
 
                 </div>
                 <a href="{{route('ticketOffice.vehicle.history',['id'=>$vehicle->id])}}">
-                    <div class="col s12 m6">
+                    <div class="col s12 m12">
                         <div class="widget bootstrap-widget stats white-text">
                             <div class="widget-stats-icon green-gradient white-text">
                                 <i class="fas fa-car"></i>
                             </div>
                             <div class="widget-stats-content">
-                                <span class="widget-stats-title black-text">Vehiculos</span>
+                                <span class="widget-stats-title black-text">Histórico Vehiculo</span>
                                 <span class="widget-stats-number black-text">{{$vehicle->taxesVehicle()->count()}}</span>
                             </div>
                         </div>

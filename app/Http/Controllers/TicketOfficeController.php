@@ -36,9 +36,8 @@ use App\PropertyTaxes;
 use App\Publicity;
 use App\PublicityTaxe;
 use App\UserPublicity;
-
-
-
+use App\TimelineCiiu;
+use App\Val_cat_const_inmu;
 
 
 class TicketOfficeController extends Controller
@@ -52,7 +51,7 @@ class TicketOfficeController extends Controller
 
             $taxe = Taxe::with('companies')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -69,10 +68,10 @@ class TicketOfficeController extends Controller
             }
 
         } catch (DecryptException $e) {
-            $code=strtoupper($id);
+            $code = strtoupper($id);
             $taxe = Taxe::with('companies')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -154,10 +153,7 @@ class TicketOfficeController extends Controller
         $payments->lot = $lot;
 
 
-
-
-
-        $payments_number = TaxesNumber::generateNumberPayment($payments_type.'55');
+        $payments_number = TaxesNumber::generateNumberPayment($payments_type . '55');
 
 
         $payments->code = $payments_number;
@@ -188,14 +184,20 @@ class TicketOfficeController extends Controller
 
 
         $paymentsTaxe = $taxe->payments()->get();
+
+
+
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
         foreach ($paymentsTaxe as $payment) {
 
-            if ($payments->amount !== 'cancel') {
+            if ($payment->status != 'cancel') {
                 $acum = $acum + $payment->amount;
             }
         }
+
+
+
 
 
         $band = bccomp($acum, $amount_total, 2);
@@ -209,19 +211,19 @@ class TicketOfficeController extends Controller
                 if ($bank_destinations !== null) {
                     $code = substr($taxes_find->code, 3, 12);
                     $taxes_find->bank = $bank_destinations;
-                    $taxes_find->code = $payments_type. $code;
+                    $taxes_find->code = $payments_type . $code;
                     $taxes_find->status = 'process';
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type. $code;
+                    $taxes_find->code = $payments_type . $code;
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type. $code;
+                    $taxes_find->code = $payments_type . $code;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
                     $taxes_find->bank = $bank;
@@ -231,9 +233,13 @@ class TicketOfficeController extends Controller
 
 
         } else {
+
+
             $amountPayment = $amount_total - $acum;
+
             $data = ['status' => 'process', 'payment' => number_format($amountPayment, 2)];
         }
+
 
         return response()->json($data);
     }
@@ -273,8 +279,8 @@ class TicketOfficeController extends Controller
             'sector' => 'required',
         ]);
 
-        if(!$license){
-            $license=TaxesNumber::generateNumberLicense();
+        if (!$license) {
+            $license = TaxesNumber::generateNumberLicense();
         }
 
         $company = new Company();
@@ -298,13 +304,13 @@ class TicketOfficeController extends Controller
 
         $company->users()->attach(['company_id' => $id_company], ['user_id' => $id_user]);
 
-        if($ciu) {
+        if ($ciu) {
             foreach ($ciu as $ciu) {
                 $company->ciu()->attach(['company_id' => $id_company], ['ciu_id' => $ciu]);
             }
         }
 
-        return response()->json(['status'=>'success','Registro de Empresa realiazado con éxito']);
+        return response()->json(['status' => 'success', 'Registro de Empresa realiazado con éxito']);
     }
 
 
@@ -321,31 +327,29 @@ class TicketOfficeController extends Controller
         $company = Company::findOrFail($id);
         $parish = Parish::all();
 
-        $number_acteco=$company->taxesCompanies()->orderBy('id', 'desc')->count();
-        $number_rate=$company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
+        $number_acteco = $company->taxesCompanies()->orderBy('id', 'desc')->count();
+        $number_rate = $company->taxesCompaniesRate()->orderBy('id', 'desc')->count();
 
-        $number_vehicle=$company->companyVehicle()->orderBy('id','desc')->count();
-        $number_property=$company->companyProperty()->orderBy('id','desc')->count();
+        $number_vehicle = $company->companyVehicle()->orderBy('id', 'desc')->count();
+        $number_property = $company->companyProperty()->orderBy('id', 'desc')->count();
 
 
-        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish,'number_rate'=>$number_rate,'number_ateco'=>$number_acteco,'number_property'=>$number_property,'number_vehicle'=>$number_vehicle]);
+        return view('modules.ticket-office.companies.details', ['company' => $company, 'parish' => $parish, 'number_rate' => $number_rate, 'number_ateco' => $number_acteco, 'number_property' => $number_property, 'number_vehicle' => $number_vehicle]);
     }
 
 
     //Pago de empresas
 
-    public function detailsCompanyTaxes($id,$type){
+    public function detailsCompanyTaxes($id, $type)
+    {
         $company = Company::findOrFail($id);
-        if($type=='Act.Eco'){
-            $companyTaxes=$company->taxesCompanies()->orderBy('id', 'desc')->get();
-        }elseif($type=='Tasas y Cert'){
-            $companyTaxes=$company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
+        if ($type == 'Act.Eco') {
+            $companyTaxes = $company->taxesCompanies()->orderBy('id', 'desc')->get();
+        } elseif ($type == 'Tasas y Cert') {
+            $companyTaxes = $company->taxesCompaniesRate()->orderBy('id', 'desc')->get();
         }
-        return view('modules.ticket-office.companies.all-taxes',['taxesCompanies'=>$companyTaxes,'id'=>$id]);
+        return view('modules.ticket-office.companies.all-taxes', ['taxesCompanies' => $companyTaxes, 'id' => $id]);
     }
-
-
-
 
 
     //find-license
@@ -374,9 +378,8 @@ class TicketOfficeController extends Controller
     }
 
 
-
-
-    public function getTaxes(){
+    public function getTaxes()
+    {
         $taxes = Audit::where('user_id', \Auth::user()->id)
             ->where('event', 'created')
             ->where('auditable_type', 'App\Taxe')
@@ -387,7 +390,7 @@ class TicketOfficeController extends Controller
                 $id_taxes[] = $taxe->auditable_id;
             }
             if (count($id_taxes) !== 0) {
-                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=','Act.Eco')->whereIn('id', $id_taxes)->get();
+                $taxes = Taxe::where('status', '=', 'ticket-office')->where('branch', '=', 'Act.Eco')->whereIn('id', $id_taxes)->get();
             } else {
                 $amount_taxes = null;
                 $taxes = null;
@@ -452,17 +455,24 @@ class TicketOfficeController extends Controller
 
         for ($i = 0; $i < count($base); $i++) {
 
-             //damos formato a la base
+            //damos formato a la base
             $base_format_verify = str_replace('.', '', $base[$i]);
             $base_format_verify = str_replace(',', '.', $base_format_verify);
 
             $ciu = Ciu::find($ciu_id[$i]);
 
+            $timeline_ciu = TimelineCiiu::where('ciu_id', $ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id', $ciu->id)->orderBy('id', 'desc')->take(1)->first();
+            }
+
+
             //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value;
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value;
 
             //Calculo de base imponible
-            $base_amount_sub = $ciu->alicuota * $base_format_verify;
+            $base_amount_sub = $timeline_ciu->alicuota * $base_format_verify;
 
 
             if ($min_amount > $base_amount_sub) {
@@ -506,11 +516,18 @@ class TicketOfficeController extends Controller
             $ciu = Ciu::find($ciu_id[$i]);
 
 
+            $timeline_ciu = TimelineCiiu::where('ciu_id', $ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id', $ciu->id)->orderBy('id', 'desc')->take(1)->first();
+            }
+
+
             //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value;
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value;
 
             //Calculo de base imponible
-            $base_amount_sub = $ciu->alicuota * $base_format;
+            $base_amount_sub = $timeline_ciu->alicuota * $base_format;
 
             //si lo que va a pagar es mayor que el min a tributar
             if ($base_amount_sub > $min_amount) {
@@ -522,19 +539,21 @@ class TicketOfficeController extends Controller
             }
 
 
-
             if ($date['mora']) {//si tiene mora
-                    //Obtengo recargo
-                    $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
-                    if (is_null($recharge)) {
-                        $recharge = Recharge::orderBy('id', 'desc')->take(1)->first();
-                    }
 
-                    //Obtengo Intereset del banco
-                    $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                    $amount_recharge = $base_amount_sub * $recharge->value / 100;
-                    $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
+                $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();
+
+                if (is_null($recharge)) {
+                    $recharge = Recharge::where('branch', 'Act.Eco')->orderBy('id', 'desc')->take(1)->first();
+                }
+
+
+                //Obtengo Intereset del banco
+                $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
+
+                $amount_recharge = $base_amount_sub * $recharge->value / 100;
+                $interest = (($interest_bank->value_rate / 100) / 360) * $date['diffDayMora'] * ($amount_recharge + $base_amount_sub);
 
             }
             $taxe->taxesCiu()->attach(['taxe_id' => $id],
@@ -675,14 +694,13 @@ class TicketOfficeController extends Controller
             }
             if (count($id_taxes) !== 0) {
 
-                if($type==="DEPOSITO BANCARIO"){
-                    $taxes = Payment::with('taxes')->whereIn('id', $id_taxes)->where('type_payment', '=', $type.'/EFECTIVO')->orWhere('type_payment', '=', $type.'/CHEQUE')->get();
+                if ($type === "DEPOSITO BANCARIO") {
+                    $taxes = Payment::with('taxes')->whereIn('id', $id_taxes)->where('type_payment', '=', $type . '/EFECTIVO')->orWhere('type_payment', '=', $type . '/CHEQUE')->get();
 
 
-                }else{
+                } else {
                     $taxes = Payment::with('taxes')->whereIn('id', $id_taxes)->where('type_payment', '=', $type)->get();
                 }
-
 
 
                 foreach ($taxes as $taxe) {
@@ -705,15 +723,14 @@ class TicketOfficeController extends Controller
     public function payments($type)
     {
 
-        if($type=='DEPOSITO BANCARIO'){
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type.'/CHEQUE')->orWhere('type_payment', '=', $type.'/EFECTIVO')->get();
-        }else{
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
+        if ($type == 'DEPOSITO BANCARIO') {
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->orderBy('id','desc')->get();
+        } else {
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->orderBy('id','desc')->get();
         }
         if ($payment->isEmpty()) {
             $payment = null;
         }
-
 
 
         if ($type == 'TRANSFERENCIA BANCARIA') {
@@ -722,7 +739,7 @@ class TicketOfficeController extends Controller
             return view('modules.payments.pointofsale', ['taxes' => $payment, 'amount_taxes' => 0]);
         } else if ($type === 'DEPOSITO BANCARIO') {
             return view('modules.payments.deposit', ['taxes' => $payment, 'amount_taxes' => 0]);
-        }else{
+        } else {
             return redirect('ticket-office/type-payment');
         }
 
@@ -748,7 +765,7 @@ class TicketOfficeController extends Controller
                     $verified = false;
                 }
             }
-        }else{
+        } else {
             $verified = false;
         }
 
@@ -769,16 +786,15 @@ class TicketOfficeController extends Controller
         $taxes_data = substr($taxes_data, 0, -1);
         $taxes_explode = explode('-', $taxes_data);
 
-        $amount_total=0;
+        $amount_total = 0;
 
         $ciuTaxes = CiuTaxes::whereIn('taxe_id', $taxes_explode)->with('ciu')->with('taxes')->get();
         $companyTaxes = CompanyTaxe::whereIn('taxe_id', $taxes_explode)->get();
 
-        for ($i=0;$i<count($taxes_explode);$i++){
-             $amount=Calculate::calculateTaxes($taxes_explode[$i]);
-             $amount_total+=$amount['amountTotal'];
-            }
-
+        for ($i = 0; $i < count($taxes_explode); $i++) {
+            $amount = Calculate::calculateTaxes($taxes_explode[$i]);
+            $amount_total += $amount['amountTotal'];
+        }
 
 
         if ($ciuTaxes[0]->taxes->type != 'definitive') {
@@ -786,10 +802,8 @@ class TicketOfficeController extends Controller
                 [
                     'taxes' => $ciuTaxes,
                     'companyTaxes' => $companyTaxes,
-                    'amount_total'=>$amount_total
+                    'amount_total' => $amount_total
                 ]);
-
-
 
 
         } else {
@@ -832,32 +846,28 @@ class TicketOfficeController extends Controller
         }
         $amount = $amount - $amount_payment;
 
-        $data=['status' => 'success', 'amount' => $amount];
+        $data = ['status' => 'success', 'amount' => $amount];
 
-        if($amount==0){
+        if ($amount == 0) {
             foreach ($taxes as $tax) {
-                $taxes_find=Taxe::find($tax->id);
-                $taxes_find->status='verified';
+                $taxes_find = Taxe::find($tax->id);
+                $taxes_find->status = 'verified';
 
-                if($taxes_find->type==='definitive'){
+                if ($taxes_find->type === 'definitive') {
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "89");
-                    $taxes_find->code=$code;
-                }elseif($taxes_find->type==='actuated') {
+                    $taxes_find->code = $code;
+                } elseif ($taxes_find->type === 'actuated') {
 
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "81");
                     $taxes_find->code = $code;
 
-                }elseif($taxes_find->branch==='Tasas y Cert'){
+                } elseif ($taxes_find->branch === 'Tasas y Cert') {
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "88");
                     $taxes_find->code = $code;
-                }
-
-                elseif($taxes_find->branch==='Pat.Veh'){
+                } elseif ($taxes_find->branch === 'Pat.Veh') {
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "85");
                     $taxes_find->code = $code;
-                }
-
-                elseif($taxes_find->branch==='Inm.Urbanos'){
+                } elseif ($taxes_find->branch === 'Inm.Urbanos') {
                     $code = TaxesNumber::generateNumberTaxes('PSP' . "84");
                     $taxes_find->code = $code;
                 }
@@ -866,7 +876,7 @@ class TicketOfficeController extends Controller
             }
 
 
-            $data=['status' => 'verified'];
+            $data = ['status' => 'verified'];
         }
 
 
@@ -881,8 +891,8 @@ class TicketOfficeController extends Controller
         $taxes->update();
 
 
-        if($status==='cancel'){
-            if(!$taxes->payments->isEmpty()){
+        if ($status === 'cancel') {
+            if (!$taxes->payments->isEmpty()) {
                 foreach ($taxes->payments as $payment) {
                     $payment = Payment::find($payment->id);
                     $payment->status = 'cancel';
@@ -910,19 +920,18 @@ class TicketOfficeController extends Controller
     }
 
 
-
     public function sendEmailVerified($id)
     {
         $taxes = Taxe::findOrFail($id);
-        $band=false;
-        $pdf='';
-        $email='';
+        $band = false;
+        $pdf = '';
+        $email = '';
 
 
-        if($taxes->branch==='Act.Eco') {
+        if ($taxes->branch === 'Act.Eco') {
 
 
-            if ($taxes->type == 'actuated' && $taxes->status == 'verified'||$taxes->status == 'verified-sysprim') {
+            if ($taxes->type == 'actuated' && $taxes->status == 'verified' || $taxes->status == 'verified-sysprim') {
                 $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -943,9 +952,9 @@ class TicketOfficeController extends Controller
                     ]);
 
                 $band = true;
-                $email=$user[0]->email;
+                $email = $user[0]->email;
 
-            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')) {
+            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
 
                 $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
                 $companyTaxe = $taxes->companies()->get();
@@ -966,17 +975,17 @@ class TicketOfficeController extends Controller
             }
 
 
-            $email=$user[0]->email;
-        }elseif($taxes->branch=='Tasas y Cert'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+            $email = $user[0]->email;
+        } elseif ($taxes->branch == 'Tasas y Cert' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
 
-            $rate=$taxes->rateTaxes()->get();
-            $type='';
-            if(!is_null($rate[0]->pivot->company_id)){
-                $data=Company::find($rate[0]->pivot->company_id);
-                $type='company';
-            }else{
-                $data=User::find($rate[0]->pivot->person_id);
-                $type='user';
+            $rate = $taxes->rateTaxes()->get();
+            $type = '';
+            if (!is_null($rate[0]->pivot->company_id)) {
+                $data = Company::find($rate[0]->pivot->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($rate[0]->pivot->person_id);
+                $type = 'user';
             }
 
             $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
@@ -985,17 +994,17 @@ class TicketOfficeController extends Controller
             ]);
 
 
-            $user=User::find($rate[0]->pivot->user_id);;
-            $email=$user->email;
-            $band=true;
-        } elseif ($taxes->branch=='Inm.Urbanos'&&($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+            $user = User::find($rate[0]->pivot->user_id);;
+            $email = $user->email;
+            $band = true;
+        } elseif ($taxes->branch == 'Inm.Urbanos' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
 
 
             $owner = $taxes->properties()->get();
-            $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+            $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
             $property = Property::find($userProperty->property_id);
             $propertyTaxes = PropertyTaxes::find($taxes->id);
-
+            $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
                 $type = 'company';
@@ -1009,38 +1018,36 @@ class TicketOfficeController extends Controller
                 'property' => $property,
                 'propertyTaxes' => $propertyTaxes,
                 'type' => $type,
-                'firm'=>true
+                'propertyBuildings' => $propertyBuildings,
+                'firm' => true
             ]);
 
-            $user=User::find($userProperty->user_id);
-            $email=$user->email;
-            $band=true;
-        }
-        elseif ($taxes->branch=='Pat.Veh'&& ($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+            $user = User::find($userProperty->user_id);
+            $email = $user->email;
+            $band = true;
+        } elseif ($taxes->branch == 'Pat.Veh' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
 
-            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $vehicleTaxes = $taxes->vehicleTaxes()->get();
             $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
-            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
             $user = $vehicleFind->users()->get();
 
 
             $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
                 'taxes' => $taxes,
-                'vehicleTaxes'=>$vehicleTaxes,
-                'vehicle'=>$vehicleFind,
-                'user'=>$user,
-                'diffYear'=>$diffYear,
+                'vehicleTaxes' => $vehicleTaxes,
+                'vehicle' => $vehicleFind,
+                'user' => $user,
+                'diffYear' => $diffYear,
                 'firm' => true
             ]);
 
 
-
-            $email=$user[0]->email;
-            $band=true;
-        }
-        elseif ($taxes->branch=='Prop. y Publicidad' &&($taxes->status == 'verified'||$taxes->status == 'verified-sysprim')){
+            $email = $user[0]->email;
+            $band = true;
+        } elseif ($taxes->branch == 'Prop. y Publicidad' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
             $owner = $taxes->publicities()->get();
-            $userPublicity = UserPublicity::where('publicity_id',$owner[0]->pivot->publicity_id)->first();
+            $userPublicity = UserPublicity::where('publicity_id', $owner[0]->pivot->publicity_id)->first();
 
             $publicity = Publicity::find($userPublicity->publicity_id);
 
@@ -1051,7 +1058,7 @@ class TicketOfficeController extends Controller
                 $data = User::find($userPublicity->person_id);
                 $type = 'user';
             }
-            $publicityTaxes = PublicityTaxe::where('taxe_id',$taxes->id)->first();
+            $publicityTaxes = PublicityTaxe::where('taxe_id', $taxes->id)->first();
 
             $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
                 'taxes' => $taxes,
@@ -1059,16 +1066,16 @@ class TicketOfficeController extends Controller
                 'publicity' => $publicity,
                 'publicityTaxes' => $publicityTaxes,
                 'type' => $type,
-                'firm'=>true
+                'firm' => true
             ]);
 
-            $user=User::find($userPublicity->user_id);
-            $email=$user->email;
-            $band=true;
+            $user = User::find($userPublicity->user_id);
+            $email = $user->email;
+            $band = true;
         }
 
 
-        if($band){
+        if ($band) {
             $subject = "PLANILLA VERIFICADA";
             $for = $email;
             try {
@@ -1082,15 +1089,8 @@ class TicketOfficeController extends Controller
                 return response()->json(['status' => 'error', 'message' => 'Ocurrio un error de conexión durante el envio de correo,recargue el navegador e intentelo mas tarde.']);
             }
         }
-        return response()->json(['status'=>'success','message'=>'Correo enviado con éxito.']);
+        return response()->json(['status' => 'success', 'message' => 'Correo enviado con éxito.']);
     }
-
-
-
-
-
-
-
 
 
     public function changeStatusPayment($id, $status)
@@ -1131,8 +1131,9 @@ class TicketOfficeController extends Controller
     }
 
 
-    public function registerTaxeDefinitive(Request $request){
-        $verify_prologue=CheckCollectionDay::verify('Act.Eco.Defi');
+    public function registerTaxeDefinitive(Request $request)
+    {
+        $verify_prologue = CheckCollectionDay::verify('Act.Eco.Defi');
 
         $datos = $request->all();
 
@@ -1161,12 +1162,12 @@ class TicketOfficeController extends Controller
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
 
-        $amount_recharge=0;
-        $interest=0;
+        $amount_recharge = 0;
+        $interest = 0;
 
-        $amount_total=0;
-        $interest_total=0;
-        $recharge_total=0;
+        $amount_total = 0;
+        $interest_total = 0;
+        $recharge_total = 0;
 
 
         $fiscal_period_format = Carbon::parse($fiscal_period);
@@ -1198,22 +1199,29 @@ class TicketOfficeController extends Controller
 
 
             $anticipated_format_verify = str_replace('.', '', $base_anticipated[$i]);
-            $anticipated_format_verify = str_replace(',', '.', $anticipated_format_verify );
+            $anticipated_format_verify = str_replace(',', '.', $anticipated_format_verify);
 
 
             $ciu = Ciu::find($ciu_id[$i]);
 
+            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
+
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
+            }
+
+
             //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value *12;
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value * 12;
 
             //Calculo de base imponible
-            $base_amount_sub = $ciu->alicuota * $base_format_verify;
+            $base_amount_sub = $timeline_ciu->alicuota * $base_format_verify;
 
 
             if ($min_amount > $base_amount_sub) {
-                $total_base = $total_base + $min_amount-$anticipated_format_verify ;
+                $total_base = $total_base + $min_amount - $anticipated_format_verify;
             } else {
-                $total_base = $total_base + $base_amount_sub-$anticipated_format_verify ;
+                $total_base = $total_base + $base_amount_sub - $anticipated_format_verify;
             }
         }
 
@@ -1229,10 +1237,6 @@ class TicketOfficeController extends Controller
         }
 
 
-
-
-
-
         for ($i = 0; $i < count($base); $i++) {
             //format a base
 
@@ -1241,31 +1245,34 @@ class TicketOfficeController extends Controller
             $base_format = str_replace(',', '.', $base_format);
 
 
-
             $anticipated_format = str_replace('.', '', $base_anticipated[$i]);
             $anticipated_format = str_replace(',', '.', $anticipated_format);
 
             $ciu = Ciu::find($ciu_id[$i]);
 
-            //Calculo de minimo  a tributar
-            $min_amount = $ciu->min_tribu_men * $tributo->value *12;
+            $timeline_ciu=TimelineCiiu::where('ciu_id',$ciu->id)->whereYear('since', '<=', $fiscal_period_format->format('Y'))->whereYear('to', '>=', $fiscal_period_format->format('Y'))->first();
 
-            //Calculo de base imponible
-            $base_amount_sub = $ciu->alicuota * $base_format;
-
-
-            //si lo que va a pagar es mayor que el min a tributar
-            if($base_amount_sub>$min_amount){
-                $min_amount=0;
-            }else{//si no paga minimo
-                $base_amount_sub=$min_amount;
+            if (is_null($timeline_ciu)) {
+                $timeline_ciu = TimelineCiiu::where('ciu_id',$ciu->id)->orderBy('id', 'desc')->take(1)->first();
             }
 
 
+            //Calculo de minimo  a tributar
+            $min_amount = $timeline_ciu->min_tribu_men * $tributo->value * 12;
 
-            $taxes_amount+=$base_amount_sub-$anticipated_format;
+            //Calculo de base imponible
+            $base_amount_sub = $timeline_ciu->alicuota * $base_format;
 
 
+            //si lo que va a pagar es mayor que el min a tributar
+            if ($base_amount_sub > $min_amount) {
+                $min_amount = 0;
+            } else {//si no paga minimo
+                $base_amount_sub = $min_amount;
+            }
+
+
+            $taxes_amount += $base_amount_sub - $anticipated_format;
 
 
             if ($verify_prologue['mora']) {//si tiene mora
@@ -1277,13 +1284,12 @@ class TicketOfficeController extends Controller
                 }
 
 
-
                 //Obtengo Intereset del banco
                 $interest_bank = BankRate::orderBy('id', 'desc')->take(1)->first();
 
-                $amount_recharge = ($base_amount_sub - $anticipated_format)* $recharge->value / 100;
+                $amount_recharge = ($base_amount_sub - $anticipated_format) * $recharge->value / 100;
 
-                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub-$anticipated_format));
+                $interest = (($interest_bank->value_rate / 100) / 360) * $verify_prologue['diffDayMora'] * ($amount_recharge + ($base_amount_sub - $anticipated_format));
 
             } else {
                 $amount_recharge = 0;
@@ -1291,41 +1297,42 @@ class TicketOfficeController extends Controller
             }
 
 
-            $taxe->taxesCiu()->attach(['taxe_id'=>$id],
-                ['ciu_id'=>$ciu_id[$i],
-                    'base'=>$base_format,
-                    'recharge'=>$amount_recharge,
-                    'tax_unit'=>$tributo->value,
-                    'interest'=>$interest,
-                    'base_anticipated'=>$anticipated_format,
-                    'taxable_minimum'=>$min_amount
+            $taxe->taxesCiu()->attach(['taxe_id' => $id],
+                ['ciu_id' => $ciu_id[$i],
+                    'base' => $base_format,
+                    'recharge' => $amount_recharge,
+                    'tax_unit' => $tributo->value,
+                    'interest' => $interest,
+                    'base_anticipated' => $anticipated_format,
+                    'taxable_minimum' => $min_amount
                 ]);
 
-            $interest_total+=$interest;
-            $recharge_total+=$amount_recharge;
+            $interest_total += $interest;
+            $recharge_total += $amount_recharge;
 
         }
-        $day_mora=$verify_prologue['diffDayMora'];
+        $day_mora = $verify_prologue['diffDayMora'];
 
-        $taxe->companies()->attach(['taxe_id'=>$id], [
-            'company_id'=>$company_find->id,
-            'fiscal_credits'=>$fiscal_credits_format,
-            'withholding'=>0,
-            'deductions'=>0,
-            'day_mora'=>$day_mora
+        $taxe->companies()->attach(['taxe_id' => $id], [
+            'company_id' => $company_find->id,
+            'fiscal_credits' => $fiscal_credits_format,
+            'withholding' => 0,
+            'deductions' => 0,
+            'day_mora' => $day_mora
         ]);
 
-        $taxe=Taxe::find($taxe->id);
-        $taxe->amount=($taxes_amount-$fiscal_credits_format)+$recharge_total+$interest_total;
+        $taxe = Taxe::find($taxe->id);
+        $taxe->amount = ($taxes_amount - $fiscal_credits_format) + $recharge_total + $interest_total;
         $taxe->update();
 
 
-        return response()->json(['status'=>'success','message'=>'']);
+        return response()->json(['status' => 'success', 'message' => '']);
     }
 
 
-    public function detailsTaxesDefinitive($id){
-        $taxes=Taxe::find($id);
+    public function detailsTaxesDefinitive($id)
+    {
+        $taxes = Taxe::find($id);
         $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
         $companyTaxe = $taxes->companies()->get();
         $verified = true;
@@ -1337,33 +1344,32 @@ class TicketOfficeController extends Controller
                     $verified = false;
                 }
             }
-        }else{
+        } else {
             $verified = false;
         }
 
-        return view('modules.ticket-office.ateco-definitive.details',[
-            'taxes'=>$taxes,
-            'ciuTaxes'=>$ciuTaxes,
-            'verified'=>$verified
+        return view('modules.ticket-office.ateco-definitive.details', [
+            'taxes' => $taxes,
+            'ciuTaxes' => $ciuTaxes,
+            'verified' => $verified
         ]);
     }
 
 
-
-
-    public function viewPDF($id){
+    public function viewPDF($id)
+    {
         $taxes = Taxe::findOrFail($id);
 
-        $firm=false;
+        $firm = false;
 
-        $pdf='';
+        $pdf = '';
 
 
-        if($taxes->status=='verified'||$taxes->status=='verified-sysprim'){
-            $firm=true;
+        if ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim') {
+            $firm = true;
         }
 
-        if($taxes->branch==='Act.Eco') {
+        if ($taxes->branch === 'Act.Eco') {
             if ($taxes->type == 'actuated') {
                 $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
                 $companyTaxe = $taxes->companies()->get();
@@ -1399,46 +1405,45 @@ class TicketOfficeController extends Controller
             }
 
 
-        } elseif($taxes->branch==='Tasas y Cert') {
-                $rate = $taxes->rateTaxes()->get();
-                $type = '';
-                if (!is_null($rate[0]->pivot->company_id)) {
-                    $data = Company::find($rate[0]->pivot->company_id);
-                    $type = 'company';
-                } else {
-                    $data = User::find($rate[0]->pivot->person_id);
-                    $type = 'user';
-                }
+        } elseif ($taxes->branch === 'Tasas y Cert') {
+            $rate = $taxes->rateTaxes()->get();
+            $type = '';
+            if (!is_null($rate[0]->pivot->company_id)) {
+                $data = Company::find($rate[0]->pivot->company_id);
+                $type = 'company';
+            } else {
+                $data = User::find($rate[0]->pivot->person_id);
+                $type = 'user';
+            }
 
-                $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
-                    'taxes' => $taxes,
-                    'data' => $data,
-                ]);
+            $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
+                'taxes' => $taxes,
+                'data' => $data,
+            ]);
 
-        }
-        elseif ($taxes->branch=='Pat.Veh'){
+        } elseif ($taxes->branch == 'Pat.Veh') {
 
-            $vehicleTaxes=$taxes->vehicleTaxes()->get();
+            $vehicleTaxes = $taxes->vehicleTaxes()->get();
             $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
-            $vehicleFind=Vehicle::find($vehicleTaxes[0]->id);
+            $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
             $user = $vehicleFind->users()->get();
 
             $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
                 'taxes' => $taxes,
-                'vehicleTaxes'=>$vehicleTaxes,
-                'vehicle'=>$vehicleFind,
-                'user'=>$user,
-                'diffYear'=>$diffYear,
+                'vehicleTaxes' => $vehicleTaxes,
+                'vehicle' => $vehicleFind,
+                'user' => $user,
+                'diffYear' => $diffYear,
                 'firm' => $firm
             ]);
 
-        }
-        elseif ($taxes->branch=='Inm.Urbanos') {
+        } elseif ($taxes->branch == 'Inm.Urbanos') {
             $owner = $taxes->properties()->get();
-            $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
+            $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
 
             $property = Property::find($userProperty->property_id);
-            $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
+            $propertyTaxes = PropertyTaxes::where('taxe_id', $taxes->id)->first();
+            $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
 
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
@@ -1452,13 +1457,12 @@ class TicketOfficeController extends Controller
                 'data' => $data,
                 'property' => $property,
                 'propertyTaxes' => $propertyTaxes,
-                'type' => $type
+                'type' => $type,
+                'propertyBuildings' => $propertyBuildings
             ]);
-        }
-
-        elseif ($taxes->branch=='Prop. y Publicidad') {
+        } elseif ($taxes->branch == 'Prop. y Publicidad') {
             $owner = $taxes->publicities()->get();
-            $userPublicity = UserPublicity::where('publicity_id',$owner[0]->pivot->publicity_id)->first();
+            $userPublicity = UserPublicity::where('publicity_id', $owner[0]->pivot->publicity_id)->first();
 
             $publicity = Publicity::find($userPublicity->publicity_id);
 
@@ -1469,7 +1473,7 @@ class TicketOfficeController extends Controller
                 $data = User::find($userPublicity->person_id);
                 $type = 'user';
             }
-            $publicityTaxes = PublicityTaxe::where('taxe_id',$taxes->id)->first();
+            $publicityTaxes = PublicityTaxe::where('taxe_id', $taxes->id)->first();
             $pdf = \PDF::loadView('modules.publicity-payments.receipt', [
                 'taxes' => $taxes,
                 'data' => $data,
@@ -1480,11 +1484,11 @@ class TicketOfficeController extends Controller
         }
 
 
-
         return $pdf->stream();
     }
 
-    public function config(){
+    public function config()
+    {
         return view('modules.ticket-office.config.manage');
     }
 

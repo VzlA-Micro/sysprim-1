@@ -398,7 +398,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes[0]->taxes->status=='verified'||$taxes[0]->taxes->status=='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -48px!important;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:200px; height:200px;" alt="Image" width="100%" height="100%">
+                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:200px; height:200px;" alt="Image">
                 </td>
             @else
                 <td style="width: 40%;text-align: center;">

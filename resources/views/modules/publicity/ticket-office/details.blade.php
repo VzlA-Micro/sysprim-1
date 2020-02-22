@@ -656,7 +656,7 @@
                             </div>
                         @endcan--}}
                         @can('Actualizar Publicidad')
-                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-update">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
                                     Actualizar
@@ -672,7 +672,7 @@
                         @endcan
 
                         @can('Habilitar/Deshabilitar Publicidad')
-                            <div class="col s12 m6 center-align" style="margin-top:.5rem">
+                            <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-status">
                                 @if($publicity->status===null||$publicity->status==='enabled')
                                     <button type="button"
                                             class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
@@ -690,9 +690,15 @@
                                 @endif
                             </div>
                         @endcan
-                        <div class="row">
 
+                        <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                            <a href="{{route('ticketOffice.publicity.detailsPublicity',['id'=>$publicity->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
+                               id="back">
+                                Atrás
+                                <i class="icon-keyboard_arrow_left left" style="margin:0"></i>
+                            </a>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -756,23 +762,17 @@
                         Local"></i>
                             <select name="country_code" id="country_code_user" required disabled>
                                 <option value="null" selected disabled>...</option>
-                                <option value="+58412" @if ($publicity->users[0]->operator=='+58412'){{"selected"}}@endif >
-                                    (412)
+                                <option value="+58412" @if ($publicity->users[0]->operator=='+58412'){{"selected"}}@endif >(412)
                                 </option>
-                                <option value="+58414" @if ($publicity->users[0]->operator=='+58414'){{"selected"}}@endif>
-                                    (414)
+                                <option value="+58414" @if ($publicity->users[0]->operator=='+58414'){{"selected"}}@endif>(414)
                                 </option>
-                                <option value="+58416" @if ($publicity->users[0]->operator=='+58416'){{"selected"}}@endif>
-                                    (416)
+                                <option value="+58416" @if ($publicity->users[0]->operator=='+58416'){{"selected"}}@endif>(416)
                                 </option>
-                                <option value="+58424" @if ($publicity->users[0]->operator=='+58424'){{"selected"}}@endif>
-                                    (424)
+                                <option value="+58424" @if ($publicity->users[0]->operator=='+58424'){{"selected"}}@endif>(424)
                                 </option>
-                                <option value="+58426" @if ($publicity->users[0]->operator=='+58426'){{"selected"}}@endif>
-                                    (426)
+                                <option value="+58426" @if ($publicity->users[0]->operator=='+58426'){{"selected"}}@endif>(426)
                                 </option>
-                                <option value="+58251" @if ($publicity->users[0]->operator=='+58251'){{"selected"}}@endif>
-                                    (251)
+                                <option value="+58251" @if ($publicity->users[0]->operator=='+58251'){{"selected"}}@endif>(251)
                                 </option>
                             </select>
                             <label for="country_code">Operadora</label>

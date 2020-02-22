@@ -49,20 +49,6 @@
                             <input id="code" type="text" name="code" class="validate code-only" required value="{{ $ciu->code }}" minlength="3" maxlength="30" readonly>
                             <label for="code">Codigo</label>
                         </div>
-                        <div class="input-field col s12 m6">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
-                            </i>
-                            <input id="alicuota" type="text" name="alicuota" class="validate number-only " required value="{{ $ciu->alicuota }}"  maxlength="5"  minlength="1" readonly>
-                            <label for="code">Alicuota</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
-                            </i>
-                            <input id="mTM" type="text" name="mTM" required value="{{ $ciu->min_tribu_men }}"  maxlength="3"  minlength="1" readonly>
-                            <label for="mTM">Minimo de Tributo Mensual</label>
-                        </div>
                     </div>
                     @can('Actualizar Ramos CIIU')
 

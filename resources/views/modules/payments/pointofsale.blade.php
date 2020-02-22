@@ -65,8 +65,8 @@
                                                     </div>
                                                 @else
                                                     <div class="input-field col s12 m12">
-                                                        <button type="button" id="change-status"
-                                                                class="btn waves-effect waves-light green col s12"
+                                                        <button type="button"
+                                                                class="btn waves-effect waves-light green col s12 change-status-point"
                                                                 value="{{$taxe->id}}" data-status="cancel">
                                                             <i class="icon-cancel"></i></button>
                                                     </div>

@@ -15,27 +15,55 @@ class AlicuotaTableSeeder extends Seeder
     {
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Construidos',
-            'value'=>0.01,
+            'status'=> 'enabled',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Vacios',
-            'value'=>0.01,
+            'status'=> 'enabled',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Terrenos Vacios Ociosos',
-            'value'=>0.03,
+            'status'=> 'enabled',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('alicuota_inmueble')->insert([
             'name'=>'Construcciones',
-            'value'=>0.01,
+            'status'=> 'enabled',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 1
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 2
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.03,
+            'alicuota_inmueble_id' => 3
+        ]);
+
+        DB::table('timeline_alicuota')->insert([
+            'since' => '2020-01-01',
+            'to' => '2020-12-31',
+            'value' => 0.01,
+            'alicuota_inmueble_id' => 4
         ]);
     }
 }

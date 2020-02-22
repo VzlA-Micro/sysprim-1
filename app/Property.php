@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Property extends Model
+class Property extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'property';
 
     public function users() {
@@ -27,8 +29,8 @@ class Property extends Model
 
 
     public function catastralConstruction() {
-        return $this->belongsToMany('App\CatastralConstruccion','val_cat_const_inmu')
-            ->withPivot('value_catas_const_id');
+        return $this->hasMany('App\CatastralConstruccion','val_cat_const_inmu', 'value_catas_const_id');
+//            ->withPivot('value_catas_const_id');
     }
 /*
     public function catasConstruct(){

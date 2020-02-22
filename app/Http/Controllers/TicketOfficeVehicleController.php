@@ -921,7 +921,7 @@ class TicketOfficeVehicleController extends Controller
         }
 
 
-        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment, $year);
+        $declaration = DeclarationVehicle::Declaration($idVehicle, $optionPayment, $years['periodInit']);
 
         $type = null;
 
@@ -1320,7 +1320,7 @@ class TicketOfficeVehicleController extends Controller
                 $response = ['status' => 'fail'];
             }
         } elseif ($type == "E" || $type == "V") {
-            var_dump($type);
+           // var_dump($type);
             $user = User::where('ci', $type . $document)->get();
             if (!$user->isEmpty()) {
                 $vehicleUser->company_id = null;

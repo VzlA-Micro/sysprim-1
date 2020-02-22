@@ -68,9 +68,8 @@ class Taxe extends Model implements Auditable {
 
     public function properties() {
         return $this->belongsToMany('App\Property','property_taxes')
-            ->withPivot('property_id', 'recharge',
-                                'base_imponible', 'alicuota',
-                                'interest', 'discount', 'fiscal_credit');
+            ->withPivot('property_id', 'recharge', 'terrain_amount', 'build_amount',
+                                'base_imponible', 'interest', 'discount', 'fiscal_credit');
     }
 
     public function publicities() {
@@ -153,6 +152,8 @@ class Taxe extends Model implements Auditable {
              return $this->bankName="100%BANCO";
         }else if($this->bank==55){
            return  $this->bankName="BANESCO";
+        }else{
+            return $this->bankName="S/N";
         }
 
 

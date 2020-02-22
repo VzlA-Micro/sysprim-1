@@ -13,7 +13,7 @@ class SecurityController extends Controller
     }
 
     public function audits() {
-    	$audits = Audit::get();
+    	$audits = Audit::orderBy('id','desc')->get();
     	return view('modules.security.audits', ['audits' => $audits]);
     }
 }

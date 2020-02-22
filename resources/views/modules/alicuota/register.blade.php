@@ -13,15 +13,15 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a>
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.register') }}">Registrar Alicuota de Inmubles </a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alícuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.register') }}">Registrar Alícuota de Inmubles </a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
                 <form action="" method="post" class="card" enctype="multipart/form-data" id="register">
                     @csrf
                     <div class="card-header center-align">
-                        <h4>Registrar Alicuota de Inmuebles</h4>
+                        <h4>Registrar Alícuota de Inmuebles</h4>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12 m6">

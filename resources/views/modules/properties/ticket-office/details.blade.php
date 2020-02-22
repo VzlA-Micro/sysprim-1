@@ -95,14 +95,14 @@
                                         <tr>
                                             <th>ALICUOTA</th>
                                             <th>VALOR</th>
-                                            <th>COSTO</th>
+                                            {{--<th>COSTO</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
                                             <td>{{ $amounts['alicuota']->name }}</td>
-                                            <td>{{ $amounts['alicuota']->value * 100 }}%</td>
-                                            <td>{{ number_format($propertyTaxe->pivot->alicuota,2,',','.') }}</td>
+                                            <td>{{ $amounts['alicuota']->timelineValue[0]->value * 100 }}%</td>
+                                            {{--<td>{{ number_format($propertyTaxe->pivot->alicuota,2,',','.') }}</td>--}}
                                         </tr>
                                         </tbody>
                                     </table>
@@ -138,7 +138,7 @@
                                     </div>--}}
                                 </div>
                                 <div class="col s12 m6">
-                                    <input type="hidden" name="alicuota" id="alicuota" value="{{ $propertyTaxe->pivot->alicuota }}">
+                                    {{--<input type="hidden" name="alicuota" id="alicuota" value="{{ $propertyTaxe->pivot->alicuota }}">--}}
                                     <input type="hidden" name="discount" id="discount" value="{{ $propertyTaxe->pivot->discount }}">
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">
@@ -265,34 +265,34 @@
                                     <h4 class="center-align">Acciones</h4>
                                 </div>
                                 @can('Anular Pagos')
-                                    <div class="col s12 m4 center-align">
-                                        <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel">
+                                    <div class="col s12 m6 center-align">
+                                        <a href="#" class="btn red waves-effect waves-ligt reconcile" data-status="cancel" style="margin-top: 20px;">
                                             ANULAR PLANILLA.
-                                            <i class="icon-close right"></i>
+                                            <i class="icon-close right col s12"></i>
                                         </a>
                                     </div>
                                 @endcan
                                 @can('Verificar Pagos - Manual')
                                     @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
-                                        <div class="col s12 m4 center-align">
-                                            <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified">
+                                        <div class="col s12 m6 center-align">
+                                            <a href="#" class="btn blue waves-effect waves-light reconcile" data-status="verified" style="margin-top: 20px;">
                                                 VERIFICAR PLANILLA.
-                                                <i class="icon-verified_user right"></i>
+                                                <i class="icon-verified_user right col s12"></i>
                                             </a>
                                         </div>
                                     @endif
                                 @endcan
                                 @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                    <div class="col s12 m4 center-align">
-                                        <button type="button" id="send-email-verified" class="btn green waves-effect waves-light" value="{{$taxes->id}}">
+                                    <div class="col s12 m6 center-align">
+                                        <button type="button" id="send-email-verified" style="margin-top: 20px;" class="btn green waves-effect waves-light col s12" value="{{$taxes->id}}">
                                             Enviar Correo Verificado.
                                             <i class="icon-mail_outline right"></i>
                                         </button>
                                     </div>
                                 @endif
                                 @if($taxes->status!='cancel')
-                                    <div class="col s12 m4 center-align">
-                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
+                                    <div class="col s12 m6 center-align">
+                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" style="margin-top: 20px;" id="#" class="btn red darken-4 waves-effect waves-light col s12" target="_blank" >Ver Planilla(PDF).
                                             <i class="icon-picture_as_pdf right"></i>
                                         </a>
                                     </div>
