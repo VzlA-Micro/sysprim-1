@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\PaymentsImport;
 use App\Inmueble;
+use App\TimelineCiiu;
 use App\Vehicle;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -1761,19 +1762,35 @@ class DashboardController extends Controller
         if ($raised > 0) {
             $percentage = $raised / $totalCollection * 100;
         }
+
+
+
+
+        $ciiu=[];
+
         foreach ($company as $compa) {
-            $co = $compa->ciu()->get();
 
 
-
-            $countCiu = count($co);
-
-
-            for ($i = 0; $i < $countCiu; $i++) {
-                $min = $compa->ciu()->timeLine()->value('min_tribu_men');
-                $acum += $min * $tributo;
+            foreach ($compa->ciu as $ciu){
+                $ciiu[] =$ciu->id;
             }
+
         }
+
+        $now=Carbon::now()->format('Y');
+
+        $timelines=TimelineCiiu::whereIn('ciu_id',$ciiu)->whereYear('to','=',$now)->orderBy('id','desc')->get();
+
+
+
+
+        foreach ($timelines as $timeline){
+                $acum+=$timeline->min_tribu_men*$tributo;
+        }
+
+
+
+
 
         $increment = $totalCollection - $acum;
         if ($increment < 0) {

@@ -302,7 +302,7 @@ $date = '31/12/'.date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
             <tr>
                 <td style="width: 40%;text-align: center;position: relative;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="Image" width="100%" height="100%">
+                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="right: 2cm !important;left:7cm;top: -4cm; !important;position:absolute;width: 200px;height: 200px;" alt="Image">
                 </td>
             </tr>
             <tr>
@@ -321,7 +321,7 @@ $date = '31/12/'.date('Y');
     <table style="width: 100%;">
             <tr>
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->code.'-'.$taxes[0]->taxes->created_at)) !!} " alt="Image" width="100%" height="100%" >
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes[0]->taxes->fiscal_period.'-'.$taxes[0]->taxes->code.'-'.$taxes[0]->taxes->created_at)) !!} " alt="Image" >
                 </td>
             </tr>
             <tr>

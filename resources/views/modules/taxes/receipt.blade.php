@@ -325,7 +325,7 @@
 
 				@if($firm)
 					<td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
-						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image" width="100%" height="100%">
+						<img src="http://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image">
 
 					</td>
 				@else
