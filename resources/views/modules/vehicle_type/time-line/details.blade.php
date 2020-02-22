@@ -11,19 +11,19 @@
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De
                             Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo -
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Línea Del Tiempo -
                             Tipo De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.read') }}">Ver Linea Del
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.read') }}">Ver Línea Del
                             Tiempo</a></li>
                     <li class="breadcrumb-item"><a
                                 href="{{ route('type-vehicles.timeline.details',['id'=>$timeline->id]) }}">Detalles
-                            Linea Del Tiempo</a></li>
+                            Línea Del Tiempo</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 <form id="update-timeline" class="card">
                     <div class="card-header center-align">
-                        <h5>Detalles De Linea De Tiempo</h5>
+                        <h5>Detalles De Línea De Tiempo</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
