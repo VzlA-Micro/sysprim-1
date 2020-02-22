@@ -121,14 +121,29 @@ Route::middleware(['auth'])->group(/**
                         return view('modules.ciiu.menu');
                     })->name('ciu-branch.manage');
                     // Nivel 4 (Gestionar Ramo CIIU)
-    
+
+
                     # Gestionar Ramos CIIU
                     Route::group(['middleware' => ['permission:Registrar Ramo CIIU|Consultar Ramos CIIU']], function () {
                         Route::get('/ciu-branch/register', 'CiuController@index')->name('ciu-branch.register');
                         Route::post('/ciu-branch/save', 'CiuController@create')->name('ciu-branch.save');
                         Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
                         Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
-    
+
+                        //TIME-LINE CIIU///
+                        Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
+
+                        Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
+
+                        Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
+
+                        Route::get('/ciu-branch/time-line/details/{id}', 'CiuController@detailsTimeLine')->name('ciu-branch.timeline.details');
+
+                        Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
+
+                        Route::post('/ciu-branch/time-line/update', 'CiuController@updateTimeLine')->name('ciu-branch.timeline.update');
+
+
                         // Nivel 5 (Detalles)
                         Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function () {
                             Route::get('/ciu-branch/details/{id}', 'CiuController@edit')->name('ciu-branch.details');
@@ -486,6 +501,9 @@ Route::middleware(['auth'])->group(/**
         ##### INMUEBLES
         Route::post('/properties/taxes/total', 'PropertyTaxesController@calculateAmount');
         Route::post('properties/taxpayers/company-user/register', 'PropertyController@registerCompanyUsers');
+        Route::get('properties/filter-sector/{sector}', 'PropertyController@filterLocation');
+
+
 
         ##### EMPRESAS
         Route::get('company/ciu/{id_ciu}/{company_id}/{status}', 'CompaniesController@changeStatusCiiu');
@@ -1234,5 +1252,18 @@ Route::middleware(['auth'])->group(/**
 
 //        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
 
+        //:::::::::::::::::::::::::::::::::LINEA DEL TIEMPO DE TIPO DE VEHICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        Route::get('/type-vehicles/timeline/manage', function () {
+            return view('modules.vehicle_type.time-line.manage');
+        })->name('type-vehicle.timeline.manage');
+
+        Route::get('/type-vehicles/timeline/register', 'TimelineTypeVehicleController@create')->name('type-vehicles.timeline.register');
+        Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
+        Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
+        Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
+        Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
+
+        Route::get('/type-vehicles/timeline/verified/{id}/{year}/{type}', 'TimelineTypeVehicleController@verifiedTimelineUpdate');
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     });

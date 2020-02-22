@@ -222,7 +222,7 @@
 
                                                 @can('Anular Pagos')
                                                     <a href="#"
-                                                       class="btn btn-rounded col s3 red waves-effect waves-ligt reconcile"
+                                                       class="btn col s12 m6 red waves-effect waves-ligt reconcile" style="margin-top:20px;"
                                                        data-status="cancel">
                                                         ANULAR PLANILLA.
                                                         <i class="icon-close right"></i>
@@ -231,7 +231,7 @@
                                                 @can('Verificar Pagos - Manual')
                                                     @if($verified&&$taxes->status!=='verified'&&$taxes->status!='verified-sysprim')
                                                         <a href="#"
-                                                           class="btn btn-rounded col s3 blue waves-effect waves-light reconcile"
+                                                           class="btn col s12 m6 blue waves-effect waves-light reconcile" style="margin-top:20px;"
                                                            data-status="verified">
                                                             VERIFICAR PLANILLA.
                                                             <i class="icon-verified_user right"></i>
@@ -240,15 +240,15 @@
                                                 @endcan
                                                 @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
                                                     <button type="button" id="send-email-verified"
-                                                            class="btn btn-rounded col s3 green waves-effect waves-light"
+                                                            class="btn col s12 m6 green waves-effect waves-light" style="margin-top:20px;"
                                                             value="{{$taxes->id}}">Enviar Correo Verificado.
                                                         <i class="icon-send right"></i>
                                                     </button>
                                                 @endif
                                                     @can('Ver Planilla PDF')
                                                     @if($taxes->status!='cancel')
-                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
-                                                           class="btn btn-rounded col s3 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla (PDF).
+                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" style="margin-top:20px;"
+                                                           class="btn col s12 m6 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla (PDF).
                                                             <i class="icon-picture_as_pdf right"></i>
                                                         </a>
                                                     @endif

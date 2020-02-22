@@ -90,9 +90,9 @@ class AlicuotaController extends Controller
         $since = Carbon::parse($request->input('since'));
 //        $to = $request->input('to');
         $value = ($request->input('value') / 100);
-        $timeline = TimelineAlicuota::where('alicuota_inmueble_id',(int)$alicuota_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
+        $verifiedTimeline = $this->verifiedTimelineUpdate($id, $sinceFormat->format('Y'), $alicuota_id);
 
-        if(!$timeline->isEmpty()) {
+        if ($verifiedTimeline['response']) {
             $timeline = TimelineAlicuota::findOrFail($id);
             $timeline->since = $since;
             $timeline->to = $sinceFormat->format('Y').'-12-31';
@@ -118,5 +118,46 @@ class AlicuotaController extends Controller
         $timeline->update();
         $id = $timeline->id;*/
         return response()->json($response);
+    }
+
+    public function verifiedTimelineUpdate($idTimeline, $since, $id)
+    {
+        $timelines = TimelineAlicuota::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', $since)->get();
+
+        $respon='';
+
+        if (!$timelines->isEmpty()) {
+            $update = true;
+        } else {
+            $update = false;
+        }
+
+        $timeline = TimelineAlicuota::where('alicuota_inmueble_id', $id)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
+
+        if (!$timeline->isEmpty()) {
+            $updateSince =true;
+        } else {
+            $updateSince =false;
+        }
+
+        if ($update==false && $updateSince==true){
+            //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
+            $response=false;
+        }elseif ($update==false && $updateSince==false){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }elseif ($update==true && $updateSince==true){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }
+
+        $respon=[
+            'response'=>$response
+        ];
+
+        return $respon;
     }
 }

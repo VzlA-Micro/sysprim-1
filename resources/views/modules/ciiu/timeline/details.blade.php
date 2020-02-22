@@ -9,15 +9,15 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Linea de Tiempo-CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Consultar Linea de Tiempo-CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Detalles de Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Línea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Consultar Línea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.index') }}">Detalles de Línea de Tiempo-CIIU</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
                 <form id="ciiu-timiline-details" method="#" class="card">
                     <div class="card-header center-align">
-                        <h5>Detalles Linea de Tiempo de CIIU</h5>
+                        <h5>Detalles Línea de Tiempo de CIIU</h5>
                     </div>
                     <div class="card-content row">
                         @csrf
@@ -77,6 +77,7 @@
 
                         @php
                             $cont=(int)date('Y');
+                            $cont--;
                         @endphp
 
                         <div class="input-field col s12 m12">

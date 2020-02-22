@@ -114,19 +114,17 @@ class TimelineTypeVehicleController extends Controller
     public function update(Request $request)
     {
         $typeVehicle = $request->input('typeVehicleId');
-        $since = Carbon::parse($request->input('date_start'));
+        $timeLineId = $request->input('id');
+
+        $since = Carbon::parse($request->input('since'));
         $to = $since->format('Y') . '-12-' . '31';
+
         $response = false;
-        $verifiedTimeline = $this->verifiedTimeline($typeVehicle, $since);
 
-        if ($verifiedTimeline) {
-            $response = array(
-                'status' => 'validation-failed',
-                'message' => 'Esta linea de tiempo ya posee un registro con este año'
-            );
-            return response()->json($response);
-        } else {
-
+        $verifiedTimeline = $this->verifiedTimelineUpdate($timeLineId, $since->format('Y'), $typeVehicle);
+        //var_dump($verifiedTimeline);
+        //die();
+        if ($verifiedTimeline['response']) {
             $timeLine = TimelineTypeVehicle::find($request->input('id'));
             $timeLine->rate = $request->input('rate');
             $timeLine->rate_UT = $request->input('rate_ut');
@@ -146,17 +144,24 @@ class TimelineTypeVehicleController extends Controller
                     'message' => 'No se ha podido actualizar'
                 ];
             }
-
-            return response()->json($response);
+        } else {
+            $response = array(
+                'status' => 'validation-failed',
+                'message' => 'Esta linea de tiempo ya posee un registro con este año'
+            );
         }
+
+        return response()->json($response);
     }
+
 
     public function verifiedTimeline($TypeVehicleId, $since)
     {
         $response = 0;
 
-        $timeline = TimelineTypeVehicle::where('type_vehicle_id', (int)$TypeVehicleId)
-            ->whereYear('since', '=', (string)$since)->get();
+        $timeline = TimelineTypeVehicle::where('type_vehicle_id', $TypeVehicleId)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
 
         if ($timeline->isEmpty()) {
             $response = false;
@@ -167,27 +172,48 @@ class TimelineTypeVehicleController extends Controller
         return $response;
     }
 
-    public function verifiedTimelineUpdate($idTimeline,$since,$typeVehicleId)
+    public function verifiedTimelineUpdate($idTimeline, $since, $typeVehicleId)
     {
-        $response = 0;
+        $respon='';
 
-        $timeline = TimelineTypeVehicle::where('id', (int)$idTimeline)
-            ->whereYear('since', '=', (string)$since)->get();
+        $timelines = TimelineTypeVehicle::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', $since)->get();
 
-        if ($timeline->isEmpty()) {
-
-            $timelines = TimelineTypeVehicle::where('type_vehicle_id', (int)$typeVehicleId)
-                ->whereYear('since', '=', (string)$since)->get();
-            if ($timelines->isEmpty){
-
-            }else{
-
-            }
-            $response = ['status'=>''];
+        if (!$timelines->isEmpty()) {
+            $update = true;
         } else {
+            $update = false;
+        }
+
+        $timeline = TimelineTypeVehicle::where('type_vehicle_id', $typeVehicleId)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
+
+        if (!$timeline->isEmpty()) {
+            $updateSince = true;
+        } else {
+            $updateSince =  false;
+        }
+
+        if ($update== false && $updateSince == true) {
+            //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
+            $response = false;
+        } elseif ($update== false && $updateSince== false) {
+            //PUEDE ACTUALIZAR
+            $response = true;
+        } elseif ($update== true && $updateSince == true) {
+            //PUEDE ACTUALIZAR
             $response = true;
         }
 
-        return $response;
+        $respon = [
+            'response' => $response
+        ];
+
+        //$respon=[$update,$updateSince,$response];
+
+        return $respon;
+        //return $update;
     }
+
 }

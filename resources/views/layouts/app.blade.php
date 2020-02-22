@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <!--<script src="{{asset('js/openpgp.min.js')}}"></script>-->
     <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157083345-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -25,6 +26,10 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/style.css') }}">--}}
     <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono color.ico') }}">
+
+
+
+
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">
@@ -51,5 +56,6 @@
     
     @include('includes.scripts')
     @yield('scripts')
+
 </body>
 </html>

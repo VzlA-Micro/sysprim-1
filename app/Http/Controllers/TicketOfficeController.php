@@ -184,14 +184,20 @@ class TicketOfficeController extends Controller
 
 
         $paymentsTaxe = $taxe->payments()->get();
+
+
+
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
         foreach ($paymentsTaxe as $payment) {
 
-            if ($payments->amount !== 'cancel') {
+            if ($payment->status != 'cancel') {
                 $acum = $acum + $payment->amount;
             }
         }
+
+
+
 
 
         $band = bccomp($acum, $amount_total, 2);
@@ -227,9 +233,13 @@ class TicketOfficeController extends Controller
 
 
         } else {
+
+
             $amountPayment = $amount_total - $acum;
+
             $data = ['status' => 'process', 'payment' => number_format($amountPayment, 2)];
         }
+
 
         return response()->json($data);
     }
@@ -714,9 +724,9 @@ class TicketOfficeController extends Controller
     {
 
         if ($type == 'DEPOSITO BANCARIO') {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->get();
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->orderBy('id','desc')->get();
         } else {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->orderBy('id','desc')->get();
         }
         if ($payment->isEmpty()) {
             $payment = null;

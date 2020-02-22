@@ -183,7 +183,7 @@ $('document').ready(function () {
 
 
 
-    $('#change-status').click(function () {
+    $('.change-status-point').click(function () {
         var status=$(this).attr('data-status');
         var id=$(this).val();
 
@@ -314,13 +314,15 @@ $('document').ready(function () {
         var destino= $(this).attr('data-destino');
         var phone=   $(this).attr('data-phone');
         var name=   $(this).attr('data-name');
+        var ref=   $(this).attr('data-reference');
 
         swal({
             title: "Datos de Pago:",
             text:   'Nombre: '+   name +'\n'+
                     'Telefono:'+ phone+'\n'+
                     'Banco:' + bank+'\n'+
-                    'Destino:'+  destino+'\n',
+                    'Destino:'+  destino+'\n'
+                    +'Referencia:'+  ref+'\n',
             icon: "info",
             button: "Ok",
         });

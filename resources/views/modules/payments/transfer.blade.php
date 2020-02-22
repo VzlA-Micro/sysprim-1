@@ -28,7 +28,7 @@
                                 <th>Código</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
-                                <th>Ref</th>
+                                <th>Banco</th>
                                 <th>Status</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
@@ -48,7 +48,7 @@
                                         {{--<td class="hide">{{$taxe->name}}</td>
                                         <td class="hide">{{$taxe->phone}}</td>--}}
                                         <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->ref}}</td>
+                                        <td>{{$taxe->bankName}}</td>
                                         <td>{{$taxe->statusName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
@@ -139,13 +139,15 @@
                                                 </td>
 
                                             @endif
+
                                                 <a href="#"
                                                    class="btn btn-floating blue waves-effect waves-light details-payment"
                                                    data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
                                                    data-phone="{{$taxe->phone}}"
                                                    data-name="{{$taxe->name}}"
-                                                ><i class="icon-info"></i></a>
-
+                                                   data-reference="{{$taxe->ref}}">
+                                                    <i class="icon-info"></i>
+                                                </a>
                                                 </td>
                                         @endcan
                                     </tr>

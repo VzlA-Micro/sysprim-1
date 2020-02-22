@@ -361,11 +361,11 @@
                         </div>
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
-                            <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                            <input id="ciU" type="text" name="ciU" class="validate" pattern="[0-9]+"
                                    minlength="7" maxlength="8" title="Solo puede escribir números." required
                                    value="{{$vehicle->users[0]->document }}"
                                    readonly>
-                            <label for="ci">Cedula</label>
+                            <label for="ciU">Cedula</label>
                         </div>
                         <div class="input-field col s12 m12 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">
@@ -390,23 +390,17 @@
                         Local"></i>
                             <select name="country_code" id="country_code_user" required disabled>
                                 <option value="null" selected disabled>...</option>
-                                <option value="+58412" @if ($vehicle->users[0]->operator=='+58412'){{"selected"}}@endif >
-                                    (412)
+                                <option value="+58412" @if ($vehicle->users[0]->operator=='+58412'){{"selected"}}@endif >(412)
                                 </option>
-                                <option value="+58414" @if ($vehicle->users[0]->operator=='+58414'){{"selected"}}@endif>
-                                    (414)
+                                <option value="+58414" @if ($vehicle->users[0]->operator=='+58414'){{"selected"}}@endif>(414)
                                 </option>
-                                <option value="+58416" @if ($vehicle->users[0]->operator=='+58416'){{"selected"}}@endif>
-                                    (416)
+                                <option value="+58416" @if ($vehicle->users[0]->operator=='+58416'){{"selected"}}@endif>(416)
                                 </option>
-                                <option value="+58424" @if ($vehicle->users[0]->operator=='+58424'){{"selected"}}@endif>
-                                    (424)
+                                <option value="+58424" @if ($vehicle->users[0]->operator=='+58424'){{"selected"}}@endif>(424)
                                 </option>
-                                <option value="+58426" @if ($vehicle->users[0]->operator=='+58426'){{"selected"}}@endif>
-                                    (426)
+                                <option value="+58426" @if ($vehicle->users[0]->operator=='+58426'){{"selected"}}@endif>(426)
                                 </option>
-                                <option value="+58251" @if ($vehicle->users[0]->operator=='+58251'){{"selected"}}@endif>
-                                    (251)
+                                <option value="+58251" @if ($vehicle->users[0]->operator=='+58251'){{"selected"}}@endif>(251)
                                 </option>
                             </select>
                             <label for="country_code">Operadora</label>

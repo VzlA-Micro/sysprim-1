@@ -351,7 +351,7 @@
                                                     @endif
                                                 @endcan
                                                 @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
-                                                    <button type="button" id="send-email-verified"
+                                                    <button type="button" id="send-email-verified" style="margin-top:20px"
                                                             class="btn col s12 m6 green waves-effect waves-light"
                                                             value="{{$taxes->id}}">Enviar Correo Verificado.
                                                         <i class="icon-mail_outline right"></i>

@@ -682,5 +682,15 @@ class PropertyController extends Controller
     }
 
 
+    public function filterLocation($sector){
+            $sector=CatastralTerreno::where('sector_catastral',$sector)->get();
+
+            if($sector->isEmpty()){
+                $sector=CatastralTerreno::where('sector_catastral',0)->get();
+            }
+            return response()->json(['status'=>'success','sector'=>$sector]);
+    }
+
+
 
 }
