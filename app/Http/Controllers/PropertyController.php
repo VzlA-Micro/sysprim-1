@@ -108,6 +108,7 @@ class PropertyController extends Controller
         $lng = $request->input('lng');
         $typeConst = $request->input('type_const');
         $type_inmueble_id = $request->input('type_inmueble_id');
+        $alias = $request->input('alias');
         $status = $request->input('status');
         $owner_id = $request->input('id');
 //        $type = $request->input('type');
@@ -117,6 +118,7 @@ class PropertyController extends Controller
         $property->value_cadastral_ground_id = $location_cadastral;
         $property->code_cadastral = $code_cadastral;
         $property->address = $address;
+        $property->alias = $alias;
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -192,14 +194,19 @@ class PropertyController extends Controller
 
     public function details($id) {
         $property = Property::where('id', $id)->get();
-        $pCatasConstruct = Val_cat_const_inmu::where('property_id', $property[0]->id)->select('value_catas_const_id')->get();
-        $catasConstruct = CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
+        $propertyBuildings = Val_cat_const_inmu::where('property_id', $property[0]->id)->get();
+
+
+
+//        $catasConstruct = CatastralConstruccion::find($pCatasConstruct[0]->value_catas_const_id);
         $catasTerreno = CatastralTerreno::find($property[0]->value_cadastral_ground_id);
+
+//        dd($propertyBuildings);
 
         $parish = Parish::find($property[0]->parish_id);
         return view('modules.properties.details', array(
             'property' => $property,
-            'catasConstruct' => $catasConstruct,
+            'propertyBuildings' => $propertyBuildings,
             'catasTerreno' => $catasTerreno,
             'parish' => $parish
         ));
@@ -468,6 +475,7 @@ class PropertyController extends Controller
         $lng = $request->input('lng');
         $typeConst = $request->input('type_const');
         $type_inmueble_id = $request->input('type_inmueble_id');
+        $alias = $request->input('alias');
         $status = $request->input('status');
 //        $type = $request->input('type');
         $owner_id = $request->input('id');
@@ -479,6 +487,7 @@ class PropertyController extends Controller
         $property->value_cadastral_ground_id = $location_cadastral;
         $property->code_cadastral = $code_cadastral;
         $property->address = $address;
+        $property->alias = $alias;
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;

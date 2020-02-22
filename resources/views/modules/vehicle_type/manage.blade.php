@@ -34,7 +34,7 @@
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('type-vehicle.timeline.manage')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
-                    <span class="truncate">Linea Del Tiempo - Tipo De Vehículos</span>
+                    <span class="truncate">Línea Del Tiempo - Tipo De Vehículos</span>
                 </a>
             </div>
         </div>

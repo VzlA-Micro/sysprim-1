@@ -23,6 +23,7 @@ class CreatePropertyTable extends Migration
             $table->string('address');
             $table->float('area_ground');
             $table->float('area_build');
+            $table->string('alias',100);
             $table->string('lat',20);
             $table->string('lng',20);
             $table->foreign('parish_id')->references('id')->on('parish')->onDelete('cascade');

@@ -13,8 +13,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo - Tipo De Vehículos</a></li>}
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.register') }}">Registrar Linea Del Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Línea Del Tiempo - Tipo De Vehículos</a></li>}
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.register') }}">Registrar Línea Del Tiempo</a></li>
                 </ul>
             </div>
 
@@ -22,7 +22,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Registrar Linea Del Tiempo - Tipo De Vehículos</h5>
+                        <h5>Registrar Línea Del Tiempo - Tipo De Vehículos</h5>
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s12">
