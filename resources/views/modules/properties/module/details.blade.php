@@ -280,23 +280,17 @@
                         Local"></i>
                             <select name="country_code" id="country_code_user" required disabled>
                                 <option value="null" selected disabled>...</option>
-                                <option value="+58412" @if ($property->users[0]->operator=='+58412'){{"selected"}}@endif >
-                                    (412)
+                                <option value="+58412" @if ($property->users[0]->operator=='+58412'){{"selected"}}@endif >(412)
                                 </option>
-                                <option value="+58414" @if ($property->users[0]->operator=='+58414'){{"selected"}}@endif>
-                                    (414)
+                                <option value="+58414" @if ($property->users[0]->operator=='+58414'){{"selected"}}@endif>(414)
                                 </option>
-                                <option value="+58416" @if ($property->users[0]->operator=='+58416'){{"selected"}}@endif>
-                                    (416)
+                                <option value="+58416" @if ($property->users[0]->operator=='+58416'){{"selected"}}@endif>(416)
                                 </option>
-                                <option value="+58424" @if ($property->users[0]->operator=='+58424'){{"selected"}}@endif>
-                                    (424)
+                                <option value="+58424" @if ($property->users[0]->operator=='+58424'){{"selected"}}@endif>(424)
                                 </option>
-                                <option value="+58426" @if ($property->users[0]->operator=='+58426'){{"selected"}}@endif>
-                                    (426)
+                                <option value="+58426" @if ($property->users[0]->operator=='+58426'){{"selected"}}@endif>(426)
                                 </option>
-                                <option value="+58251" @if ($property->users[0]->operator=='+58251'){{"selected"}}@endif>
-                                    (251)
+                                <option value="+58251" @if ($property->users[0]->operator=='+58251'){{"selected"}}@endif>(251)
                                 </option>
                             </select>
                             <label for="country_code">Operadora</label>
