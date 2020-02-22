@@ -157,6 +157,17 @@
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
+                                <select name="type_const[]" id="type_const" multiple required>
+                                    <option value="null" disabled>Seleccionar Tipo de Construccion</option>
+                                    @foreach($catasConstruccion as $cC):
+                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label>Tipo de Construccion</label>
+                            </div>
+
+                            <div class="input-field col m6 s12">
+                                <i class="icon-domain prefix"></i>
                                 <select name="type_inmueble_id" id="type_inmueble_id" required>
                                     <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
                                     @foreach($alicuota as $value):
@@ -166,16 +177,7 @@
                                 <label>Tipo de Inmueble</label>
                             </div>
 
-                            <div class="input-field col m6 s12">
-                                <i class="icon-domain prefix"></i>
-                                <select name="type_const[]" id="type_const" required>
-                                    <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
-                                    @foreach($catasConstruccion as $cC):
-                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
-                                    @endforeach
-                                </select>
-                                <label>Tipo de Construccion</label>
-                            </div>
+                            
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
