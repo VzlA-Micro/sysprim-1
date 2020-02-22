@@ -212,7 +212,7 @@
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
-                                <select name="type_const" id="type_const" required>
+                                <select name="type_const[]" id="type_const" required>
                                     <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
                                     @foreach($catasConstruccion as $cC):
                                     <option value="{{$cC->id }}">{{ $cC->name}}</option>

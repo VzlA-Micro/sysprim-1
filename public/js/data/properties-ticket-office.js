@@ -235,18 +235,20 @@ $(document).ready(function() {
                         var property = resp.property[0];
                         var owner_id = resp.owner_od;
                         var owner = resp.owner;
-                        var alicuota = resp.alicuota;
+                        // var alicuota = resp.alicuota;
                         var discount = resp.discount;
+                        var terrain_amount = resp.totalGround;
+                        var build_amount = resp.totalBuild;
                         var interest = resp.interest;
                         var recharge = resp.recharge;
                         var status = resp.status;
                         var total = resp.total;
                         console.log(resp.totalGround, resp.totalBuild);
                         $('#owner_id').val(owner_id);
-                        $('#totalGround').val(resp.totalGround);
-                        $('#totalBuild').val(resp.totalBuild);
+                        $('#terrain_amount').val(terrain_amount);
+                        $('#build_amount').val(build_amount);
                         $('#base_imponible').val(resp.baseImponible)
-                        $('#alicuota').val(alicuota);
+                        // $('#alicuota').val(alicuota);
                         $('#discount').val(discount);
                         $('#interest').val(interest);
                         $('#recharge').val(recharge);
@@ -284,7 +286,9 @@ $(document).ready(function() {
         var base_imponible = $('#base_imponible').val();
         var recharge = $('#recharge').val();
         var interest = $('#interest').val();
-        var alicuota = $('#alicuota').val();
+        var terrain_amount = $('#terrain_amount').val();
+        var build_amount = $('#build_amount').val();
+        // var alicuota = $('#alicuota').val();
         var fiscal_credit = $('#fiscal_credit').val();
         var fiscal_period = $('#fiscal_period').val();
         var discount = $('#discount').val();
@@ -300,7 +304,9 @@ $(document).ready(function() {
                 base_imponible: base_imponible,
                 recharge: recharge,
                 interest: interest,
-                alicuota: alicuota,
+                terrain_amount: terrain_amount,
+                build_amount: build_amount,
+                // alicuota: alicuota,
                 fiscal_credit: fiscal_credit,
                 fiscal_period: fiscal_period,
                 discount: discount,

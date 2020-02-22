@@ -73,15 +73,15 @@
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="totalGround" id="totalGround" class="validate money" value="{{ $totalGround }}" readonly>
-                            <label for="totalGround">Total por Terreno</label>
+                            <input type="text" name="terrain_amount" id="terrain_amount" class="validate money" value="{{ $totalGround }}" readonly>
+                            <label for="terrain_amount">Total por Terreno</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                             </i>
-                            <input type="text" name="totalBuild" id="totalBuild" class="validate money" value="{{ $totalBuild }}" readonly>
-                            <label for="totalBuild">Total por Construcción</label>
+                            <input type="text" name="build_amount" id="build_amount" class="validate money" value="{{ $totalBuild }}" readonly>
+                            <label for="build_amount">Total por Construcción</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="prefix">
@@ -105,14 +105,14 @@
                                             <tr>
                                                 <th>ALICUOTA</th>
                                                 <th>VALOR</th>
-                                                <th>COSTO</th>
+                                                {{--<th>COSTO</th>--}}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>{{ $response['declaration']['alicuota']->name }}</td>
-                                                <td>{{ $response['declaration']['alicuota']->value * 100 }}%</td>
-                                                <td>{{ $discount }}</td>
+                                                <td>{{ $response['declaration']['alicuota']->timelineValue[0]->value * 100 }}%</td>
+                                                {{--<td>{{ $discount }}</td>--}}
                                             </tr>
                                         </tbody>
                                     </table>
@@ -148,7 +148,7 @@
                                     </div>--}}
                                 </div>
                                 <div class="col s12 m6">
-                                    <input type="hidden" name="alicuota" id="alicuota" value="{{ $response['declaration']['porcentaje'] }}">
+                                    {{--<input type="hidden" name="alicuota" id="alicuota" value="{{ $response['declaration']['porcentaje'] }}">--}}
                                     <input type="hidden" name="discount" id="discount" value="{{ $response['declaration']['discount'] }}">
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">

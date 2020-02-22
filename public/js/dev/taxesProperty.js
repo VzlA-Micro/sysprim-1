@@ -141,8 +141,10 @@ $('document').ready(function () {
         var owner_id = $('#owner_id').val();
         var base_imponible = $('#base_imponible').val();
         var recharge = $('#recharge').val();
+        var terrain_amount = $('#terrain_amount').val();
+        var build_amount = $('#build_amount').val();
         var interest = $('#interest').val();
-        var alicuota = $('#alicuota').val();
+        // var alicuota = $('#alicuota').val();
         var fiscal_credit = $('#fiscal_credit').val();
         var discount = $('#discount').val();
         var amount = $('#amount').val();
@@ -158,7 +160,9 @@ $('document').ready(function () {
                 base_imponible: base_imponible,
                 recharge: recharge,
                 interest: interest,
-                alicuota: alicuota,
+                terrain_amount: terrain_amount,
+                build_amount: build_amount,
+                // alicuota: alicuota,
                 fiscal_credit: fiscal_credit,
                 discount: discount,
                 amount: amount,

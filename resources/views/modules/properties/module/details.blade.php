@@ -103,16 +103,9 @@
                         </div>
                         <div class="input-field col m6 s12">
                             <i class="icon-domain prefix"></i>
-                            <select name="type_const" id="type_const" required disabled>
-                                <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
-                                @foreach($catasConstruccion as $cC):
-                                @if($property->valueBuild->id==$cC->id)
-                                     <option value="{{$cC->id }}" selected>{{ $cC->name}}</option>
-                                @else
-                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
-                                @endif
-                                @endforeach
-                            </select>
+                            {{ Form::select('type_const[]',
+                                [null => 'Seleccionar Tipo de Construccion'] +
+                                [$collectionCatastralConstruccion], $selectedPropertyBuilding, array('multiple' => true, 'disabled' => true)) }}
                             <label>Tipo de Construccion</label>
                         </div>
 
