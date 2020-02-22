@@ -363,6 +363,71 @@ $('document').ready(function () {
     });
 
 
+    $('#C4').change(function () {
+
+        var sector=$(this).val();
+
+
+        if(sector!=='') {
+
+            $.ajax({
+                method: "GET",
+                url: url + "properties/filter-sector/" + sector,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    var sector = response.sector;
+
+                    $('#location_cadastral').html('');
+                    $('#location_cadastral').removeAttr('disabled', 'disabled');
+
+
+                    var html = '<option value="null" disabled selected>Seleccionar ubicacion Catastral</option>';
+                    for (var i = 0; i < sector.length; i++) {
+
+
+                        if (sector.length >= 2) {
+                            html += '<option value=' + sector[i].id + '>' + sector[i].name + '</option>';
+                        } else {
+                            html += '<option value=' + sector[i].id + ' selected>' + sector[i].name + '</option>';
+                            $("#parish option[value=" + sector[i].parish_id + "]").attr("selected", true);
+                            $('#parish').attr('disabled', 'disabled');
+                            $('#location_cadastral').attr('disabled', 'disabled');
+                        }
+
+
+                    }
+
+
+                    $('#location_cadastral').append(html);
+                    $('select').formSelect();
+
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient"
+                        },
+                    });
+                }
+
+
+            });
+        }
+    });
+
+
 
 });
 

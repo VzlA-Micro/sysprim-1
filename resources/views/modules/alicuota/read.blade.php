@@ -12,14 +12,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alicuota</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}">Consultar Alicuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('alicuota.manage') }}">Gestionar Alícuota</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('recharges.read') }}">Consultar Alícuota</a></li>
                 </ul>
             </div>
             <div class="col s12">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h4>Consultar Alicuota Inmuebles</h4>
+                        <h4>Consultar Alícuota Inmuebles</h4>
                     </div>
                     <div class="card-content">
                         <table class="highlight centered" id="recharges-table" style="width: 100%">

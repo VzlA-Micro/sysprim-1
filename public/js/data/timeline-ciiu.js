@@ -47,7 +47,7 @@ $(document).ready(function () {
                                 className: "green-gradient"
                             }
                         }).then(function (accept) {
-                            //window.location.href = url + "accessories/manage";
+                            window.location.href = url + "ciu-branch/time-line/index";
                         });
 
                     } else if (response.status === 'error') {
@@ -96,7 +96,7 @@ $(document).ready(function () {
 
                 swal({
                     title: "Información",
-                    text: "Debes seleccionar el ramo del ciu, al que estara asociado la linea de tiempo.",
+                    text: "Debes seleccionar el ramo del CIIU, al que estara asociado la linea de tiempo.",
                     icon: "info",
                     button: {
                         text: "Esta bien",

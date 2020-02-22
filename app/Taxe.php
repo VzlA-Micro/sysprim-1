@@ -153,6 +153,8 @@ class Taxe extends Model implements Auditable {
              return $this->bankName="100%BANCO";
         }else if($this->bank==55){
            return  $this->bankName="BANESCO";
+        }else{
+            return $this->bankName="S/N";
         }
 
 

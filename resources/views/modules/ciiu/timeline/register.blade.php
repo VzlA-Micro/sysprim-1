@@ -9,8 +9,8 @@
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.companies') }}">Configuración de Act. Económica</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ciu-branch.manage') }}">Gestionar Ramos CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Linea de Tiempo-CIIU</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.register') }}">Registrar Linea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.manage') }}">Gestionar Línea de Tiempo-CIIU</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ciu-branch.timeline.register') }}">Registrar Línea de Tiempo-CIIU</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
@@ -18,7 +18,7 @@
                 <form id="register" method="#" class="card">
 
                     <div class="card-header center-align">
-                        <h5>Registrar Ramo CIIU</h5>
+                        <h5>Registrar Línea de Tiempo Ramo CIIU</h5>
                     </div>
 
                     <div class="card-content row">
