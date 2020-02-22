@@ -26,7 +26,7 @@
                     <div class="card-content row">
                         <div class="input-field col s12">
                             <i class="icon-exposure_plus_1 prefix"></i>
-                            <select name="value_catastral_terreno_id" id="value_catastral_terreno_id" required>
+                            <select name="value_catastral_terreno_id" id="value_catastral_terreno_id">
                                 <option value="null" disabled selected>Elige un valor catastral de terreno</option>
                                 @foreach($catastralTerrenos as $catastralTerreno)
                                     <option value="{{ $catastralTerreno->id }}">{{ $catastralTerreno->name }}</option>

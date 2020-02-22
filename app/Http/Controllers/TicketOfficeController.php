@@ -723,9 +723,9 @@ class TicketOfficeController extends Controller
     {
 
         if ($type == 'DEPOSITO BANCARIO') {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->get();
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type . '/CHEQUE')->orWhere('type_payment', '=', $type . '/EFECTIVO')->orderBy('id','desc')->get();
         } else {
-            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->get();
+            $payment = Payment::with('taxes')->where('type_payment', '=', $type)->orderBy('id','desc')->get();
         }
         if ($payment->isEmpty()) {
             $payment = null;
