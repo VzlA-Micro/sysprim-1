@@ -8,9 +8,9 @@
 </footer> --}}
 <footer style="z-index: 1" class="page-footer iribarren-wine-gradient">
         <div class="row valign-wrapper">
-                <div class="col s12 m3 center-align social">
+                <div class="col s12 m3 left-align social">
                     <span class="white-text" style="font-size:12px">
-                         SERVICIO MUNICIPAL DE ADMINISTRACION TRIBUTARIA,
+                        SERVICIO MUNICIPAL DE ADMINISTRACION TRIBUTARIA,
                         <b>RIF:</b> G-20000207-7,
                         <b>CORREO:</b> semat.alcaldia.iribarren@gmail.com
                     </span>
