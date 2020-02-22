@@ -1265,6 +1265,7 @@ class TicketOfficeController extends Controller
             $base_amount_sub = $timeline_ciu->alicuota * $base_format;
 
 
+
             //si lo que va a pagar es mayor que el min a tributar
             if ($base_amount_sub > $min_amount) {
                 $min_amount = 0;
