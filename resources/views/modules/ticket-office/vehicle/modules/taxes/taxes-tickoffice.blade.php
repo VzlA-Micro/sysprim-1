@@ -215,12 +215,9 @@
                                                                     <div class="input-field col m6 s12">
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank" id="bank_tr">
-                                                                            <option value="null" selected disabled>
-                                                                                Seleciona una opción
-                                                                            </option>
+                                                                            <option value="null" selected disabled>Seleciona una opción</option>
                                                                             <option value="44">BOD</option>
-                                                                            <option value="77">Banco Bicentenario
-                                                                            </option>
+                                                                            <option value="77">Banco Bicentenario</option>
                                                                             <option value="55">Banesco</option>
                                                                             <option value="99">BNC</option>
                                                                             <option value="33">100% Banco</option>
@@ -232,12 +229,9 @@
                                                                         <i class="icon-satellite prefix"></i>
                                                                         <select name="bank_destinations"
                                                                                 id="bank_destinations_tr">
-                                                                            <option value="null" selected disabled>
-                                                                                Seleciona una opción
-                                                                            </option>
+                                                                            <option value="null" selected disabled>Seleciona una opción</option>
                                                                             <option value="44">BOD</option>
-                                                                            <option value="77">Banco Bicentenario
-                                                                            </option>
+                                                                            <option value="77">Banco Bicentenario</option>
                                                                             <option value="55">Banesco</option>
                                                                             <option value="99">BNC</option>
                                                                             <option value="33">100% Banco</option>
