@@ -118,62 +118,78 @@ $(document).ready(function () {
 
         }).then(confirm => {
             if (confirm) {
-                $.ajax({
-                        type: "POST",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        url: url + "/type-vehicles/timeline/update",
-                        data: new FormData(this),
-                        dataType: false,
+                if ($('#rate').val() == '') {
+                    swal({
+                        title: "Información",
+                        text: "No puede dejar el campo 'Tarifa menor a 3 años(U.T)' vacio.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                } else if ($('#rate_UT').val() == '') {
+                    swal({
+                        title: "Información",
+                        text: "No puede dejar el campo 'Tarifa mayor a 3 años(U.T)' vacio.",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                } else {
+                    $.ajax({
+                            type: "POST",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            url: url + "/type-vehicles/timeline/update",
+                            data: new FormData(this),
+                            dataType: false,
 
-                        beforeSend: function () {
-                            $('#name').attr('readonly', 'readonly');
-                            $('#rate').attr('readonly', 'readonly');
-                            $('#rate_ut').attr('readonly', 'readonly');
-                        },
-                        success: function (data) {
-                            console.log(data)
-                            if (data.status == true) {
+                            beforeSend: function () {
+                                $('#name').attr('readonly', 'readonly');
+                                $('#rate').attr('readonly', 'readonly');
+                                $('#rate_ut').attr('readonly', 'readonly');
+                            },
+                            success: function (data) {
+                                console.log(data)
+                                if (data.status == true) {
+                                    swal({
+                                        title: "¡Bien Hecho!",
+                                        text: data.message,
+                                        icon: "success",
+                                        button: "Ok",
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                } else if (data.status == "validation-failed") {
+                                    swal({
+                                        title: "Información",
+                                        text: data.message,
+                                        icon: "info",
+                                        button: "Ok",
+                                    })
+                                } else {
+                                    swal({
+                                        title: "Información",
+                                        text: data.message,
+                                        icon: "info",
+                                        button: "Ok",
+                                    })
+                                }
+                            },
+                            error: function (e) {
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
                                 swal({
-                                    title: "¡Bien Hecho!",
-                                    text: data.message,
-                                    icon: "success",
-                                    button: "Ok",
-                                }).then(function () {
-                                    location.reload();
+                                    title: "¡Oh no!",
+                                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                    icon: "error",
+                                    button: {
+                                        text: "Entendido",
+                                        className: "red-gradient"
+                                    },
                                 });
-                            }else if(data.status == "validation-failed"){
-                                swal({
-                                    title: "Información",
-                                    text: data.message,
-                                    icon: "info",
-                                    button: "Ok",
-                                })
-                            } else {
-                                swal({
-                                    title: "Información",
-                                    text: data.message,
-                                    icon: "info",
-                                    button: "Ok",
-                                })
                             }
-                        },
-                        error: function (e) {
-                            $("#preloader").fadeOut('fast');
-                            $("#preloader-overlay").fadeOut('fast');
-                            swal({
-                                title: "¡Oh no!",
-                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                                icon: "error",
-                                button: {
-                                    text: "Entendido",
-                                    className: "red-gradient"
-                                },
-                            });
                         }
-                    }
-                );
+                    );
+                }
                 updateType = false;
             }
         });

@@ -116,14 +116,15 @@ class TimelineTypeVehicleController extends Controller
         $typeVehicle = $request->input('typeVehicleId');
         $timeLineId = $request->input('id');
 
-        $since = Carbon::parse($request->input('date_start'));
+        $since = Carbon::parse($request->input('since'));
         $to = $since->format('Y') . '-12-' . '31';
 
         $response = false;
 
         $verifiedTimeline = $this->verifiedTimelineUpdate($timeLineId, $since->format('Y'), $typeVehicle);
-
-        if ($verifiedTimeline) {
+        //var_dump($verifiedTimeline);
+        //die();
+        if ($verifiedTimeline['response']) {
             $timeLine = TimelineTypeVehicle::find($request->input('id'));
             $timeLine->rate = $request->input('rate');
             $timeLine->rate_UT = $request->input('rate_ut');
@@ -154,7 +155,6 @@ class TimelineTypeVehicleController extends Controller
     }
 
 
-
     public function verifiedTimeline($TypeVehicleId, $since)
     {
         $response = 0;
@@ -173,13 +173,15 @@ class TimelineTypeVehicleController extends Controller
 
     public function verifiedTimelineUpdate($idTimeline, $since, $typeVehicleId)
     {
+        $respon='';
+
         $timelines = TimelineTypeVehicle::where('id', (int)$idTimeline)
             ->whereYear('since', '=', $since)->get();
 
         if (!$timelines->isEmpty()) {
-            $update = ['status'=>true];
+            $update = true;
         } else {
-            $update = ['status'=>false];
+            $update = false;
         }
 
         $timeline = TimelineTypeVehicle::where('type_vehicle_id', $typeVehicleId)
@@ -187,27 +189,30 @@ class TimelineTypeVehicleController extends Controller
             ->whereYear('to', '>=', (string)$since)->get();
 
         if (!$timeline->isEmpty()) {
-            $updateSince =['status'=>true];
+            $updateSince = true;
         } else {
-            $updateSince = ['status'=>false];
+            $updateSince =  false;
         }
 
-        if ($update==false && $updateSince==true){
+        if ($update== false && $updateSince == true) {
             //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
-            $response=false;
-        }elseif ($update==false && $updateSince==false){
+            $response = false;
+        } elseif ($update== false && $updateSince== false) {
             //PUEDE ACTUALIZAR
-            $response=true;
-        }elseif ($update==true && $updateSince==true){
+            $response = true;
+        } elseif ($update== true && $updateSince == true) {
             //PUEDE ACTUALIZAR
-            $response=true;
+            $response = true;
         }
 
-        $respon=[
-            'response'=>$response
+        $respon = [
+            'response' => $response
         ];
 
+        //$respon=[$update,$updateSince,$response];
+
         return $respon;
+        //return $update;
     }
 
 }

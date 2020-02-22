@@ -66,6 +66,7 @@ class CatastralConstruccionController extends Controller{
         $value = $request->input('value');
         $timeline = TimelineCatastralBuild::where('value_catastral_construccion_id',(int)$catastralConstruccion_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
 
+
         if($timeline->isEmpty()) {
             $timeline = new TimelineCatastralBuild();
             $timeline->since = $since;
@@ -105,8 +106,10 @@ class CatastralConstruccionController extends Controller{
         $since = Carbon::parse($request->input('since'));
         $value = $request->input('value');
 
-        $timeline = TimelineCatastralBuild::where('value_catastral_construccion_id',(int)$catastralConstruccion_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
-        if(!$timeline->isEmpty()) {
+        $verifiedTimeline = $this->verifiedTimelineUpdate($id, $sinceFormat->format('Y'), $catastralConstruccion_id);
+
+        //$timeline = TimelineCatastralBuild::where('value_catastral_construccion_id',(int)$catastralConstruccion_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
+        if ($verifiedTimeline['response']) {
             $timeline = TimelineCatastralBuild::findOrFail($id);
             $timeline->since = $since;
             $timeline->to = $sinceFormat->format('Y').'-12-31';
@@ -126,5 +129,46 @@ class CatastralConstruccionController extends Controller{
             ];
         }
         return response()->json($response);
+    }
+
+    public function verifiedTimelineUpdate($idTimeline, $since, $id)
+    {
+        $timelines = TimelineCatastralBuild::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', $since)->get();
+
+        $respon='';
+
+        if (!$timelines->isEmpty()) {
+            $update = true;
+        } else {
+            $update = false;
+        }
+
+        $timeline = TimelineCatastralBuild::where('value_catastral_construccion_id', $id)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
+
+        if (!$timeline->isEmpty()) {
+            $updateSince =true;
+        } else {
+            $updateSince =false;
+        }
+
+        if ($update==false && $updateSince==true){
+            //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
+            $response=false;
+        }elseif ($update==false && $updateSince==false){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }elseif ($update==true && $updateSince==true){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }
+
+        $respon=[
+            'response'=>$response
+        ];
+
+        return $respon;
     }
 }

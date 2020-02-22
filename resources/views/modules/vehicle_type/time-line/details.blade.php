@@ -52,7 +52,7 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
-                            <input type="text" name="date_start" disabled id="dateStart" value="{{$timeline->since}}" class="datepicker">
+                            <input type="text" name="since" disabled id="dateStart" value="{{$timeline->since}}" class="datepicker">
                             <label for="date_start">Fecha de Inicio</label>
                         </div>
 

@@ -120,6 +120,7 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function(resp) {
+                console.log(resp);
                 if(resp.status === 'success') {
                     swal({
                         title: "¡Bien Hecho!",
