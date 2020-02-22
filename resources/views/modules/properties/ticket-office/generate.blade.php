@@ -46,7 +46,7 @@
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
-                                <select name="value_cadastral_build_id" id="value_cadastral_build_id" required disabled>
+                                <select name="value_cadastral_build_id[]" id="value_cadastral_build_id" required disabled multiple>
                                     <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
                                     @foreach($catastralConstruccion as $construccion):
                                     <option value="{{ $construccion->id }}">{{ $construccion->name}}</option>
@@ -144,15 +144,15 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
-                                <label for="totalGround">Total por Terreno</label>
-                                <input type="text" name="totalGround" id="totalGround" class="validate money" value="" readonly>
+                                <label for="terrain_amount">Total por Terreno</label>
+                                <input type="text" name="terrain_amount" id="terrain_amount" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
-                                <label for="totalBuild">Total por Construcción</label>
-                                <input type="text" name="totalBuild" id="totalBuild" class="validate money" value="" readonly>
+                                <label for="build_amount">Total por Construcción</label>
+                                <input type="text" name="build_amount" id="build_amount" class="validate money" value="" readonly>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="prefix">
@@ -168,7 +168,7 @@
                                 <label for="base_imponible">Base Imponible Total</label>
                                 <input type="text" name="base_imponible" id="base_imponible" class="validate money" value="" readonly>
                             </div>
-                            <input type="hidden" name="alicuota" id="alicuota" value="">
+                            {{--<input type="hidden" name="alicuota" id="alicuota" value="">--}}
                             <input type="hidden" name="discount" id="discount" value="">
                             <div class="input-field col s12 m4">
                                 <i class="prefix">

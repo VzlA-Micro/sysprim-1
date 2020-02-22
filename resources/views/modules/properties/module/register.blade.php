@@ -171,6 +171,18 @@
                                 </select>
                                 <label>Ubicación Catastral</label>
                             </div>
+                            
+
+                            <div class="input-field col m6 s12">
+                                <i class="icon-domain prefix"></i>
+                                <select name="type_inmueble_id" id="type_inmueble_id"  required>
+                                    <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
+                                    @foreach($alicuota as $value):
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label>Tipo de Inmueble</label>
+                            </div>
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
@@ -183,6 +195,19 @@
                                 <label>Parroquia</label>
                             </div>
 
+                            
+
+
+                            <div class="input-field col m6 s12">
+                                <i class="icon-domain prefix"></i>
+                                <select name="type_const[]" id="type_const" required multiple>
+                                    <option value="null" disabled>Seleccionar Tipo de Construccion</option>
+                                    @foreach($catasConstruccion as $cC):
+                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label>Tipo de Construccion</label>
+                            </div>
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
@@ -198,28 +223,7 @@
                                 <label for="area_build">Area de Construcción</label>
                             </div>
 
-                            <div class="input-field col m6 s12">
-                                <i class="icon-domain prefix"></i>
-                                <select name="type_inmueble_id" id="type_inmueble_id" required>
-                                    <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
-                                    @foreach($alicuota as $value):
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label>Tipo de Inmueble</label>
-                            </div>
-
-
-                            <div class="input-field col m6 s12">
-                                <i class="icon-domain prefix"></i>
-                                <select name="type_const" id="type_const" required>
-                                    <option value="null" disabled selected>Seleccionar Tipo de Construccion</option>
-                                    @foreach($catasConstruccion as $cC):
-                                    <option value="{{$cC->id }}">{{ $cC->name}}</option>
-                                    @endforeach
-                                </select>
-                                <label>Tipo de Construccion</label>
-                            </div>
+                            
 
 
                             <div class="input-field col s12">
