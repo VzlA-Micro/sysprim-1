@@ -110,56 +110,56 @@
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C1" id="C1" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C1" id="C1" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required value="13" readonly>
                                 <label for="C1">Estado</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C2" id="C2" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C2" id="C2" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required value="3" readonly>
                                 <label for="C2">Municipio</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C3" id="C3" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C3" id="C3" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="3" minlength="2" title="Solo puede escribir números."
                                        required>
                                 <label for="C3">Parroquia</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C4" id="C4" class="validate number-and-capital-letter-only" pattern="[0-9a-zA-Z]+"
+                                <input type="text" name="C4" id="C4" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C4">Sector</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números."
                                        required>
                                 <label for="C5">Comuna</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="4" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C6">Barrio</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C7" id="C7" class="validate number-and-capital-letter-only" pattern="[0-9]+"
+                                <input type="text" name="C7" id="C7" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números."
                                        required>
                                 <label for="C7">Manzana</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
-                                <input type="text" name="C8" id="C8" class="validate number-and-capital-letter-only" pattern="[0-9a-zA-Z]+"
+                                <input type="text" name="C8" id="C8" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="8" minlength="3" title="."
                                        required>
                                 <label for="C8">Terreno</label>
@@ -174,17 +174,6 @@
                             
 
                             <div class="input-field col m6 s12">
-                                <i class="icon-domain prefix"></i>
-                                <select name="type_inmueble_id" id="type_inmueble_id"  required>
-                                    <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
-                                    @foreach($alicuota as $value):
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label>Tipo de Inmueble</label>
-                            </div>
-
-                            <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
                                 <select name="parish" id="parish" required>
                                     <option value="null" disabled selected>Seleccionar una Parroquia</option>
@@ -194,9 +183,6 @@
                                 </select>
                                 <label>Parroquia</label>
                             </div>
-
-                            
-
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
@@ -208,6 +194,18 @@
                                 </select>
                                 <label>Tipo de Construccion</label>
                             </div>
+                            
+                            <div class="input-field col m6 s12">
+                                <i class="icon-domain prefix"></i>
+                                <select name="type_inmueble_id" id="type_inmueble_id"  required>
+                                    <option value="null" disabled selected>Seleccionar Tipo de Inmueble</option>
+                                    @foreach($alicuota as $value):
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label>Tipo de Inmueble</label>
+                            </div>
+
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
