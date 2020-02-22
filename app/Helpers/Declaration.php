@@ -111,7 +111,7 @@ class Declaration
                 if($property->area_build > 0) {
                     $acum = 0;
                     foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
-                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) / 1000;
+                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                     }
                     $totalbuild = $acum;
                 }
@@ -155,7 +155,7 @@ class Declaration
                 if($property->area_build > 0) {
                     $acum = 0;
                     foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
-                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) / 1000;
+                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                     }
                     $totalbuild = $acum;
                 }
@@ -197,7 +197,7 @@ class Declaration
                 if($property->area_build > 0) {
                     $acum = 0;
                     foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
-                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) / 1000;
+                        $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                     }
                     $totalbuild = $acum;
                 }
@@ -249,7 +249,7 @@ class Declaration
             if($property->area_build > 0) {
                 $acum = 0;
                 foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
-                    $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) / 1000;
+                    $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                 }
                 $totalbuild = $acum;
             }
