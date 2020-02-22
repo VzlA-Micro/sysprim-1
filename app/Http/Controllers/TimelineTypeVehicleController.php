@@ -159,8 +159,9 @@ class TimelineTypeVehicleController extends Controller
     {
         $response = 0;
 
-        $timeline = TimelineTypeVehicle::where('type_vehicle_id', (int)$TypeVehicleId)
-            ->whereYear('since', '=', (string)$since)->get();
+        $timeline = TimelineTypeVehicle::where('type_vehicle_id', $TypeVehicleId)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
 
         if ($timeline->isEmpty()) {
             $response = false;
