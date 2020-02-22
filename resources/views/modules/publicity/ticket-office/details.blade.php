@@ -168,7 +168,7 @@
                                     <div class="input-field col s12">
                                         <i class="icon-linked_camera prefix"></i>
                                         <input type="hidden" name="advertising_type_id" id="advertising_type_id2"
-                                               value="{{$publicity->advertising_type_id}}">
+                                               value="{{$publicity->advertisingType->group->id}}">
                                         <input type="text" name="advertising_type_id" id="advertising_type_id"
                                                value="{{$publicity->advertisingType->name}}" disabled required>
                                         <label for="advertising_type_id">Tipo de Publicidad</label>
@@ -200,7 +200,7 @@
                                         <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
                                     </div>
 
-                                    <div class="input-field col s12 m6" id="date-begin ">
+                                    <div class="input-field col s12 m6" id="date-begin">
                                         <i class="icon-date_range prefix"></i>
                                         <input type="text" name="date_start" value="{{$publicity->date_start}}"
                                                id="date_start1"
@@ -394,7 +394,7 @@
 
                                     <div class="input-field col s12">
                                         <i class="icon-chrome_reader_mode prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" disabled required>
+                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" min="1" disabled required>
                                         <label for="quantity">Ejemplares</label>
                                     </div>
                                     {{--<div class="input-field col s12">
@@ -489,7 +489,7 @@
 
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" disabled required>
+                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" min="1" disabled required>
                                         <label for="quantity">Cantidad de Lugares</label>
                                     </div>
                                 </div>
@@ -657,7 +657,7 @@
                         @endcan--}}
                         @can('Actualizar Publicidad')
                             <div class="col s12 m6 center-align" style="margin-top:.5rem" id="block-update">
-                                <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
+                                <a href="#!" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                    id="update-publicity">
                                     Actualizar
                                     <i class="icon-mode_edit right"></i>
