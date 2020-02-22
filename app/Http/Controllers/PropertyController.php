@@ -58,7 +58,7 @@ class PropertyController extends Controller
             $company = '';
         }
         $catastralTerre = CatastralTerreno::orderBy('name','asc')->get();
-        $catastralConst = CatastralConstruccion::orderBy('name','asc')->get();
+        $catastralConst = CatastralConstruccion::all();
         $parish = Parish::orderBy('name','asc')->get();
         $alicuota= Alicuota::orderBy('name','asc')->get();
         return view('modules.properties.register', [
