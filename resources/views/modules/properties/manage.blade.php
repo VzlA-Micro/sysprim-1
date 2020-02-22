@@ -26,7 +26,7 @@
                 <div class="col s12 m4">
                 <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
                     <i class="icon-location_city"></i>
-                        <span class="truncate">{{ $property->code_cadastral }}</span>
+                        <span class="truncate">{{ $property->alias }}</span>
                         <span><b>Persona Natural</b></span>
                     </a>
                 </div>

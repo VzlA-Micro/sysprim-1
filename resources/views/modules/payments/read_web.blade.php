@@ -168,12 +168,12 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'LISTA DE PLANILLAS',
                     className: 'btn orange waves-effect waves-light',
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'LISTA DE PLANILLAS',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,

@@ -548,14 +548,7 @@
                                 </select>
                                 <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
                             </div>
-                            <div class="input-field col s12 m6">
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
+
 
                             <div class="col s12">
                                 {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
