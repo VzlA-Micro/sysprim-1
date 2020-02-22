@@ -65,7 +65,7 @@
                                         <span class="truncate black-text">Deposito Bancario</span>
                                     </label>
                                 </div>
-
+                             {{--
                                 <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
                                     <div class="col s12 m4">
                                         <input type="radio" class="">
@@ -79,6 +79,7 @@
                                         </label>
                                     </div>
                                 </a>
+                                --}}
                             </div>
 
 
