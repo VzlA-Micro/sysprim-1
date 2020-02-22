@@ -210,15 +210,11 @@ class CiuController extends Controller
             $alicuota=$alicuota/100;
         }
 
-
-
-
-
-
         $since_format = Carbon::parse($request->input('since'));
 
-        $timeline = TimelineCiiu::where('ciu_id', $ciu_id)->whereYear('since', '=', $since_format->format('Y'))->get();
-        if (!$timeline->isEmpty()) {
+        $verifiedTimeline = $this->verifiedTimelineUpdate($id, $since_format->format('Y'), $ciu_id);
+
+        if ($verifiedTimeline['response']) {
             $timeline = TimelineCiiu::findOrFail($request->input('id'));
             $timeline->alicuota = (float)$alicuota;
             $timeline->min_tribu_men = $request->input('mTM');
@@ -234,7 +230,44 @@ class CiuController extends Controller
     }
 
 
+    public function verifiedTimelineUpdate($idTimeline, $since, $ciiuId)
+    {
+        $timelines = TimelineCiiu::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', $since)->get();
+        $respon='';
+        if (!$timelines->isEmpty()) {
+            $update = true;
+        } else {
+            $update = false;
+        }
 
+        $timeline = TimelineCiiu::where('ciu_id', $ciiuId)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
+
+        if (!$timeline->isEmpty()) {
+            $updateSince = true;
+        } else {
+            $updateSince =  false;
+        }
+
+        if ($update==false && $updateSince==true){
+            //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
+            $response=false;
+        }elseif ($update==false && $updateSince==false){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }elseif ($update==true && $updateSince==true){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }
+
+        $respon=[
+            'response'=>$response
+        ];
+
+        return $respon;
+    }
 
 
 

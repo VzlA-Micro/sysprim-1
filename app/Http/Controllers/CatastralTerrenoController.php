@@ -112,8 +112,10 @@ class CatastralTerrenoController extends Controller
 //        $to = $request->input('to');
         $valueBuiltTerrain = $request->input('value_built_terrain');
         $valueEmptyTerrain = $request->input('value_empty_terrain');
-        $timeline = TimelineCatastralTerrain::where('value_catastral_terreno_id',(int)$catastralTerreno_id)->whereYear('since', '=',$sinceFormat->format('Y'))->get();
-        if(!$timeline->isEmpty()) {
+
+        $verifiedTimeline = $this->verifiedTimelineUpdate($id, $sinceFormat->format('Y'), $catastralConstruccion_id);
+
+        if ($verifiedTimeline['response']) {
             $timeline = TimelineCatastralTerrain::find($id);
             $timeline->since = $since;
             $timeline->to = $sinceFormat->format('Y').'-12-31';
@@ -134,5 +136,46 @@ class CatastralTerrenoController extends Controller
             ];
         }
         return response()->json($response);
+    }
+
+    public function verifiedTimelineUpdate($idTimeline, $since, $id)
+    {
+        $timelines = TimelineCatastralTerrain::where('id', (int)$idTimeline)
+            ->whereYear('since', '=', $since)->get();
+
+        $respon='';
+
+        if (!$timelines->isEmpty()) {
+            $update = true;
+        } else {
+            $update = false;
+        }
+
+        $timeline = TimelineCatastralTerrain::where('value_catastral_terreno_id', $id)
+            ->whereYear('since', '<=', (string)$since)
+            ->whereYear('to', '>=', (string)$since)->get();
+
+        if (!$timeline->isEmpty()) {
+            $updateSince =true;
+        } else {
+            $updateSince =false;
+        }
+
+        if ($update==false && $updateSince==true){
+            //NO PUEDE ACTUALIZAR, PORQUE YA EXISTE UN REGISTRO CON ESA FECHA
+            $response=false;
+        }elseif ($update==false && $updateSince==false){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }elseif ($update==true && $updateSince==true){
+            //PUEDE ACTUALIZAR
+            $response=true;
+        }
+
+        $respon=[
+            'response'=>$response
+        ];
+
+        return $respon;
     }
 }

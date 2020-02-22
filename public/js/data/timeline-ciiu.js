@@ -137,7 +137,7 @@ $(document).ready(function () {
             },
             success: function (response) {
 
-
+console.log(response);
                 if (response.status === 'success') {
                     swal({
                         title: "¡Bien Hecho!",
