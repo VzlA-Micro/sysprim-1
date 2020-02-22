@@ -194,13 +194,18 @@
                                 <label for="area_build">Area de Construcción</label>
                             </div>
 
-                            
-
                             <div class="input-field col s12">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required maxlength="200"></textarea>
                                 <label for="address">Dirección</label>
                             </div>
+
+                            <div class="input-field col s12">
+                                <i class="icon-location_searching prefix"></i>
+                                <input type="text" id="alias" name="alias" value="" required maxlength="100">
+                                <label for="alias">Alias del Inmueble</label>
+                            </div>
+
                             <div class="input-field col s12 location-container tooltipped" data-position="bottom"
                                  data-tooltip="Acerca el mapa y selecciona tu ubicación, puede tomar algunos segundos.">
                                 <span>Elige con mas exactitud la ubicación de tu Inmueble:</span>
