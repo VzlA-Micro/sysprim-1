@@ -87,13 +87,14 @@
 
 
                             <div class="divider"></div>
-                            @foreach($company->ciu as $ciu)
 
+                            @foreach($company->ciu as $ciu)
                                 @if($ciu->pivot->status!=='disabled')
                                     <div class="ciu-company">
                                         <input type="hidden" name="ciu_id[]" value="{{ $ciu->id }}">
                                         <input type="hidden" name="ciu_alicuota" class="ciu_alicuota"
-                                               value="{{ $ciu->alicuota }}">
+
+                                               value="{{ $ciu->timeline[count($ciu->timeline)-1]->min_tribu_men }}">
                                         <input type="hidden" name="min_tribu_men[]" class="min_tribu_men"  id="min_tribu_{{$ciu->code}}" value="{{ $ciu->min_tribu_men}}">
 
                                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
@@ -135,7 +136,7 @@
 
 
                                         <input type="hidden" id="alicuota_{{$ciu->code}}" class="alicuota"
-                                               value="{{ $ciu->alicuota }}">
+                                               value="{{ $ciu->timeline[count($ciu->timeline)-1]->alicuota}}">
 
                                         <div class="input-field col s12">
                                             <div class="divider"></div>

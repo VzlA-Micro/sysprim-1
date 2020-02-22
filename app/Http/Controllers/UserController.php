@@ -122,10 +122,10 @@ class UserController extends Controller{
     public function show()
     {
         if(\Auth::User()->role_id == 6) {
-            $user= User::where('role_id',2)->where('status_account','!=','waiting')->orWhere('role_id',3)->orWhere('role_id',4)->get();
+            $user= User::where('role_id',2)->where('status_account','!=','waiting')->orWhere('role_id',3)->orWhere('role_id',4)->orderBy('id','desc')->get();
         }
         else{
-            $user= User::where('status_account','!=','waiting')->get();
+            $user= User::where('status_account','!=','waiting')->orderBy('id','desc')->get();
         }
 
 
