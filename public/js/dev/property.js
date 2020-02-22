@@ -24,7 +24,7 @@ $('document').ready(function () {
                 }
             });
             M.updateTextFields();
-            $('select').formSelect();
+           $('select').formSelect();
         }
         else {
             area_build.val('');
@@ -43,8 +43,7 @@ $('document').ready(function () {
                     }
                 }
             });
-            M.updateTextFields();
-            $('select').formSelect();
+           M.updateTextFields();
         }
     });
 
