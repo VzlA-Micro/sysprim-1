@@ -381,7 +381,7 @@ $(document).ready(function () {
                 }
             });
             M.updateTextFields();
-            $('select').formSelect();
+            // $('select').formSelect();
         }
     });
 
