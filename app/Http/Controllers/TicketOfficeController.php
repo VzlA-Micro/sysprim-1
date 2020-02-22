@@ -183,14 +183,20 @@ class TicketOfficeController extends Controller
 
 
         $paymentsTaxe = $taxe->payments()->get();
+
+
+
         $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 
         foreach ($paymentsTaxe as $payment) {
 
-            if ($payments->amount !== 'cancel') {
+            if ($payment->status != 'cancel') {
                 $acum = $acum + $payment->amount;
             }
         }
+
+
+
 
 
         $band = bccomp($acum, $amount_total, 2);
@@ -226,9 +232,13 @@ class TicketOfficeController extends Controller
 
 
         } else {
+
+
             $amountPayment = $amount_total - $acum;
+
             $data = ['status' => 'process', 'payment' => number_format($amountPayment, 2)];
         }
+
 
         return response()->json($data);
     }
