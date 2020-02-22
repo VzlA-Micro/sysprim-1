@@ -100,7 +100,7 @@ $(document).ready(function() {
             if($('#since').val()==null){
                 swal({
                     title: "Información",
-                    text: "Debes seleccionar el año al que estara asociado este valor catastral de contrución.",
+                    text: "Debes seleccionar el año al que estara asociado este valor catastral de construcción.",
                     icon: "info",
                     button: {
                         text: "Esta bien",
@@ -111,7 +111,7 @@ $(document).ready(function() {
 
                 swal({
                     title: "Información",
-                    text: "Debes seleccionar el valor catastral de contrución  al que estara asociado la linea de tiempo.",
+                    text: "Debes seleccionar el valor catastral de construcción  al que estara asociado la linea de tiempo.",
                     icon: "info",
                     button: {
                         text: "Esta bien",
@@ -197,7 +197,7 @@ $(document).ready(function() {
             if($('#since').val()==null){
                 swal({
                     title: "Información",
-                    text: "Debes seleccionar el año al que estara asociado este valor catastral de contrución.",
+                    text: "Debes seleccionar el año al que estara asociado este valor catastral de construcción.",
                     icon: "info",
                     button: {
                         text: "Esta bien",
@@ -208,7 +208,7 @@ $(document).ready(function() {
 
                 swal({
                     title: "Información",
-                    text: "Debes seleccionar el valor catastral de contrución  al que estara asociado la linea de tiempo.",
+                    text: "Debes seleccionar el valor catastral de construcción  al que estara asociado la linea de tiempo.",
                     icon: "info",
                     button: {
                         text: "Esta bien",
