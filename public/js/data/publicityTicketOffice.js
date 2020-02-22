@@ -842,11 +842,16 @@ $('document').ready(function () {
 
     //::::::::UPDATE FOR TICKET OFFICE::::::::::::::::::
 
+    console.log($('#update-publicity'));
+
     $('#update-publicity').click(function () {
         var typePublicity = $('#advertising_type_id2').val();
+        console.log(typePublicity);
         if (typePublicity == 1) {
-            $('#date-begin').hide();
-            $('#date-end').hide();
+            console.log('hola');
+
+            $('#date-begin').addClass('hide');
+            $('#date-end').addClass('hide');
             $('#U-date-begin').removeClass('hide');
             $('#U-date-end').removeClass('hide');
             $('#name').prop('disabled', false);

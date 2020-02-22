@@ -16,7 +16,7 @@
                     <!-- <li class="breadcrumb-item"><a href="">Editar</a></li> -->
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1">
+            <div class="col s12 m12">
 
 
 
@@ -117,7 +117,7 @@
                             @can('Habilitar/Deshabilitar Usuarios')
                             @if($user->confirmed==0||$user->status_account=='block')
                             <div class="col s12 m3 center-align">
-                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="enabled">
+                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light truncate" id="button-enable" value="enabled">
                                     <i class="icon-check right"></i>
                                     Habilitar
                                 </button>
@@ -125,7 +125,7 @@
 
                             @else
                                 <div class="col s12 m3 center-align">
-                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light" id="button-enable" value="disabled">
+                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light truncate" id="button-enable" value="disabled">
                                         <i class="icon-send right"></i>
                                         Deshabilitar
                                     </button>

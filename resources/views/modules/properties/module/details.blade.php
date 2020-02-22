@@ -164,7 +164,11 @@
 
                         </div>
 
-
+                        <div class="input-field col s12">
+                            <i class="icon-location_searching prefix"></i>
+                            <input type="text" id="alias" name="alias" value="{{ $property->alias }}" required maxlength="100" required disabled>
+                            <label for="alias">Alias del Inmueble</label>
+                        </div>
 
 
                         <div class="input-field col s12 m6">

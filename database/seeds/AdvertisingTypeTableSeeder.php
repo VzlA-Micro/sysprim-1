@@ -115,14 +115,14 @@ class AdvertisingTypeTableSeeder extends Seeder
         DB::table('advertising_type')->insert([
         	'name' => 'Publicidad en vehículos y similares',
             'value' => 2500,
-            'group_publicity_id'=>4,
+            'group_publicity_id'=>3,
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
         DB::table('advertising_type')->insert([
         	'name' => 'Publicidad en los puestos de revistas, kioscos o similares',
             'value' => 1500,
-            'group_publicity_id'=>4,
+            'group_publicity_id'=>1,
         	'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
