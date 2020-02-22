@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Alert;
 use App\Helpers\TaxesMonth;
 use App\Helpers\TaxesNumber;
 use Illuminate\Support\Facades\Session;
@@ -31,6 +30,9 @@ use App\BankRate;
 use App\Company;
 use App\Parish;
 use OwenIt\Auditing\Models\Audit;
+use App\TimelineAlicuota;
+use App\TimelineCatastralBuild;
+use App\TimelineCatastralTerrain;
 
 
 class PropertyTaxesController extends Controller
@@ -194,9 +196,17 @@ class PropertyTaxesController extends Controller
         $valorRecharge = str_replace('.', '', $valueRecharge);
         $recharge = str_replace(',', '.', $valorRecharge);
 
-        $valueAlicuota = strval($request->input('alicuota'));
+        $valueTerrain = strval($request->input('terrain_amount'));
+        $valorTerrain = str_replace('.', '', $valueTerrain);
+        $terrainAmount = str_replace(',', '.', $valorTerrain);
+
+        $valueBuild = strval($request->input('build_amount'));
+        $valorBuild = str_replace('.', '', $valueBuild);
+        $buildAmount = str_replace(',', '.', $valorBuild);
+
+        /*$valueAlicuota = strval($request->input('alicuota'));
         $valorAlicuota = str_replace('.', '', $valueAlicuota);
-        $alicuota = str_replace(',', '.', $valorAlicuota);
+        $alicuota = str_replace(',', '.', $valorAlicuota);*/
 
 
         $valueInterest = strval($request->input('interest'));
@@ -237,11 +247,12 @@ class PropertyTaxesController extends Controller
         $propertyTaxes = new PropertyTaxes();
         $propertyTaxes->property_id = $request->input('property_id');
         $propertyTaxes->taxe_id = $taxeId;
-
         $propertyTaxes->base_imponible = $baseImponible;
+        $propertyTaxes->terrain_amount = $terrainAmount;
+        $propertyTaxes->build_amount = $buildAmount;
         $propertyTaxes->recharge = $recharge;
         $propertyTaxes->discount = $discount;
-        $propertyTaxes->alicuota = $alicuota;
+//        $propertyTaxes->alicuota = $alicuota;
         $propertyTaxes->interest = $interest;
         if($fiscalCredit == '') {
             $propertyTaxes->fiscal_credit = 0;
@@ -308,7 +319,7 @@ class PropertyTaxesController extends Controller
         $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
         $property = Property::find($userProperty->property_id);
         $propertyTaxes = PropertyTaxes::where('taxe_id',$taxe->id)->first();
-
+        $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
         if (!is_null($userProperty->company_id)) {
             $data = Company::find($userProperty->company_id);
             $type = 'company';
@@ -321,7 +332,8 @@ class PropertyTaxesController extends Controller
             'data' => $data,
             'property' => $property,
             'propertyTaxes' => $propertyTaxes,
-            'type' => $type
+            'type' => $type,
+            'propertyBuildings' => $propertyBuildings
         ]);
 
         if(isset($download)){
@@ -349,7 +361,7 @@ class PropertyTaxesController extends Controller
         $userProperty = UserProperty::where('property_id',$owner[0]->pivot->property_id)->first();
 
         $property = Property::find($userProperty->property_id);
-
+        $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
         if (!is_null($userProperty->company_id)) {
             $data = Company::find($userProperty->company_id);
             $type = 'company';
@@ -378,17 +390,20 @@ class PropertyTaxesController extends Controller
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
 
+//        dd($property->type->name);
+
         $pdf = \PDF::loadView('modules.properties-payments.receipt', [
             'taxes' => $taxes,
             'data' => $data,
             'firm' => false,
             'type' => $type,
             'propertyTaxes' => $propertyTaxes,
-            'property' => $property
+            'property' => $property,
+            'propertyBuildings' => $propertyBuildings
         ]);
+        return $pdf->stream();
+        die();
 
-//        return $pdf->stream();
-//        die();
         Mail::send('mails.payment-payroll', ['type' => 'Declaración de Inmuebles Urbanos'], function ($msj) use ($subject, $for, $pdf) {
             $msj->from("semat.alcaldia.iribarren@gmail.com", "SEMAT");
             $msj->subject($subject);
@@ -686,9 +701,17 @@ class PropertyTaxesController extends Controller
         $valorRecharge = str_replace('.', '', $valueRecharge);
         $recharge = str_replace(',', '.', $valorRecharge);
 
-        $valueAlicuota = strval($request->input('alicuota'));
+        $valueTerrain = strval($request->input('terrain_amount'));
+        $valorTerrain = str_replace('.', '', $valueTerrain);
+        $terrainAmount = str_replace(',', '.', $valorTerrain);
+
+        $valueBuild = strval($request->input('build_amount'));
+        $valorBuild = str_replace('.', '', $valueBuild);
+        $buildAmount = str_replace(',', '.', $valorBuild);
+
+        /*$valueAlicuota = strval($request->input('alicuota'));
         $valorAlicuota = str_replace('.', '', $valueAlicuota);
-        $alicuota = str_replace(',', '.', $valorAlicuota);
+        $alicuota = str_replace(',', '.', $valorAlicuota);*/
 
 
         $valueInterest = strval($request->input('interest'));
@@ -725,11 +748,12 @@ class PropertyTaxesController extends Controller
         $propertyTaxes = new PropertyTaxes();
         $propertyTaxes->property_id = $request->input('property_id');
         $propertyTaxes->taxe_id = $taxeId;
-
         $propertyTaxes->base_imponible = $baseImponible;
+        $propertyTaxes->terrain_amount = $terrainAmount;
+        $propertyTaxes->build_amount = $buildAmount;
         $propertyTaxes->recharge = $recharge;
         $propertyTaxes->discount = $discount;
-        $propertyTaxes->alicuota = $alicuota;
+//        $propertyTaxes->alicuota = $alicuota;
         $propertyTaxes->interest = $interest;
         if($fiscalCredit == '') {
             $propertyTaxes->fiscal_credit = 0;
@@ -764,6 +788,7 @@ class PropertyTaxesController extends Controller
             $amount_taxes = null;
             $taxes = null;
         }
+//        dd($);
 
         //dd($taxes[0]->properties[0]->code_cadastral);
 
@@ -826,8 +851,8 @@ class PropertyTaxesController extends Controller
         ]);
     }
 
-    public function verifyFiscalPeriod($id, $year)
-    {
+    public function verifyFiscalPeriod($id, $year){
+        $statusTax = false;
         $date = Carbon::now();
         $property = Property::find($id);
         $taxe = $property->propertyTaxes()->whereDate('fiscal_period',$year)->first();
@@ -848,7 +873,7 @@ class PropertyTaxesController extends Controller
             } else if ($taxe->status === 'cancel') {
                 $statusTax = false;
             }
-
+//            dd($statusTax);
             return Response()->json($statusTax);
         }
     }
@@ -860,6 +885,8 @@ class PropertyTaxesController extends Controller
         $taxes = Taxe::whereIn('id', $taxes_explode)->with('properties')->get();
         $property = Property::find($taxes[0]->properties[0]->id);
         $userProperty = UserProperty::where('property_id',$taxes[0]->properties[0]->id)->first();
+        $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
+//        dd($propertyBuildings);
 //        dd($userProperty);
         if (!is_null($userProperty->company_id)) {
             $data = Company::find($userProperty->company_id);
@@ -872,7 +899,9 @@ class PropertyTaxesController extends Controller
             'taxes' => $taxes,
             'property' => $property,
             'data' => $data,
-            'type' => $type
+            'type' => $type,
+            'propertyBuildings' => $propertyBuildings
+
         ]);
 
         return $pdf->stream();

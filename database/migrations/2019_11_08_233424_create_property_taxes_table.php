@@ -19,8 +19,10 @@ class CreatePropertyTaxesTable extends Migration
             $table->integer('taxe_id')->unsigned();
             $table->string('status',15);
             $table->float('recharge',13,2)->nullable();;
+            $table->float('terrain_amount',13,2)->nullable();
+            $table->float('build_amount',13,2)->nullable();
             $table->float('base_imponible',13,2)->nullable();
-            $table->float('alicuota',13,2)->nullable();
+//            $table->float('alicuota',13,2)->nullable();
             $table->float('interest',13,2)->nullable();
             $table->float('discount',13,2)->nullable();
             $table->float('fiscal_credit',13,2)->nullable();

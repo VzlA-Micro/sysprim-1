@@ -29,8 +29,8 @@ class Property extends Model implements Auditable
 
 
     public function catastralConstruction() {
-        return $this->belongsToMany('App\CatastralConstruccion','val_cat_const_inmu')
-            ->withPivot('value_catas_const_id');
+        return $this->hasMany('App\CatastralConstruccion','val_cat_const_inmu', 'value_catas_const_id');
+//            ->withPivot('value_catas_const_id');
     }
 /*
     public function catasConstruct(){

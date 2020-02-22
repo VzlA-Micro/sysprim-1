@@ -37,6 +37,7 @@ use App\Publicity;
 use App\PublicityTaxe;
 use App\UserPublicity;
 use App\TimelineCiiu;
+use App\Val_cat_const_inmu;
 
 
 class TicketOfficeController extends Controller
@@ -993,7 +994,7 @@ class TicketOfficeController extends Controller
             $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
             $property = Property::find($userProperty->property_id);
             $propertyTaxes = PropertyTaxes::find($taxes->id);
-
+            $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
                 $type = 'company';
@@ -1007,6 +1008,7 @@ class TicketOfficeController extends Controller
                 'property' => $property,
                 'propertyTaxes' => $propertyTaxes,
                 'type' => $type,
+                'propertyBuildings' => $propertyBuildings,
                 'firm' => true
             ]);
 
@@ -1431,6 +1433,7 @@ class TicketOfficeController extends Controller
 
             $property = Property::find($userProperty->property_id);
             $propertyTaxes = PropertyTaxes::where('taxe_id', $taxes->id)->first();
+            $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
 
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
@@ -1444,7 +1447,8 @@ class TicketOfficeController extends Controller
                 'data' => $data,
                 'property' => $property,
                 'propertyTaxes' => $propertyTaxes,
-                'type' => $type
+                'type' => $type,
+                'propertyBuildings' => $propertyBuildings
             ]);
         } elseif ($taxes->branch == 'Prop. y Publicidad') {
             $owner = $taxes->publicities()->get();

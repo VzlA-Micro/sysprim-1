@@ -122,11 +122,19 @@ class PropertyController extends Controller
         $property->lat = $lat;
         $property->lng = $lng;
         $property->type_inmueble_id = $type_inmueble_id;
-        $property->value_cadastral_build_id = $typeConst;
+//        $property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();
         $property->save();
 
         $id = $property->id; // Obtengo el id del inmueble que registro
+
+        for($i = 0; $i < count($typeConst); $i++) {
+            $valCat = new Val_cat_const_inmu();
+            $valCat->value_catas_const_id = $typeConst[$i];
+            $valCat->property_id = $id;
+            $valCat->save();
+        }
+
         $person_id=null;
         $company_id=null;
 
@@ -153,17 +161,6 @@ class PropertyController extends Controller
 //        $property->catastralConstruction()->attach(['value_catas_const_id' => $typeConst], ['property_id' => $id]); // Inserto en la tabla puente
         $property->users()->attach(['property_id' => $id], ['user_id' => $user_id, 'status' => $status, 'person_id' => $person_id, 'company_id' => $company_id]);
 
-        /*elseif($status == 'responsable') {
-            $property->users()->attach(
-                ['property_id' => $id],
-                ['user_id' => $user_id],
-                ['status' => $status],
-                ['person_id' => $owner_id]);
-        }*/
-        $valCat = new Val_cat_const_inmu();
-        $valCat->value_catas_const_id = $typeConst;
-        $valCat->property_id = $id;
-        $valCat->save();
         return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
     }
 
@@ -376,6 +373,11 @@ class PropertyController extends Controller
         $property=Property::find($id);
         $catastralTerre = CatastralTerreno::orderBy('name','asc')->get();
         $catastralConst = CatastralConstruccion::orderBy('name','asc')->get();
+        $propertyBuilding = Val_cat_const_inmu::where('property_id', $property->id)->get();
+        $collectionCatastralConstruccion = $catastralConst->pluck('name','id');
+        $selectedPropertyBuilding = $propertyBuilding->pluck('id');
+//        dd($collectionCatastralConstruccion);
+
         $parish = Parish::orderBy('name','asc')->get();
         $alicuota= Alicuota::orderBy('name','asc')->get();
 
@@ -403,7 +405,10 @@ class PropertyController extends Controller
             'property'=>$property,
             'type'=>$type,
             'data'=>$data,
-            'payments' => $payments
+            'payments' => $payments,
+            'propertyBuilding' => $propertyBuilding,
+            'collectionCatastralConstruccion' => $collectionCatastralConstruccion,
+            'selectedPropertyBuilding' => $selectedPropertyBuilding
         ]);
     }
 
@@ -479,13 +484,18 @@ class PropertyController extends Controller
         $property->lat = $lat;
         $property->lng = $lng;
         $property->type_inmueble_id = $type_inmueble_id;
-        $property->value_cadastral_build_id = $typeConst;
+//        $property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();
         $property->save();
 
         $id = $property->id; // Obtengo el id del inmueble que registro
 
-
+        for($i = 0; $i < count($typeConst); $i++) {
+            $valCat = new Val_cat_const_inmu();
+            $valCat->value_catas_const_id = $typeConst[$i];
+            $valCat->property_id = $id;
+            $valCat->save();
+        }
 
 
             if($type == 'company'){
@@ -502,7 +512,6 @@ class PropertyController extends Controller
 
 
 
-//        $property->catastralConstruction()->attach(['value_catas_const_id' => $typeConst], ['property_id' => $id]); // Inserto en la tabla puente
         $property->users()->attach(['property_id' => $id], [
                                                             'user_id' => $user_id,
                                                             'status' => $status,
@@ -510,21 +519,8 @@ class PropertyController extends Controller
                                                             'company_id' => $company_id
             ]);
 
-        /*elseif($status == 'responsable') {
-            $property->users()->attach(
-                ['property_id' => $id],
-                ['user_id' => $user_id],
-                ['status' => $status],
-                ['person_id' => $owner_id]);
-        }*/
-        $valCat = new Val_cat_const_inmu();
-        $valCat->value_catas_const_id = $typeConst;
-        $valCat->property_id = $id;
-        $valCat->save();
+
         return response()->json(['status' => 'success', 'message' => 'El inmueble se ha registrado con éxito.']);
-
-
-
 
     }
 

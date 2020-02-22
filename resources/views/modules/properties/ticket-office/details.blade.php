@@ -95,14 +95,14 @@
                                         <tr>
                                             <th>ALICUOTA</th>
                                             <th>VALOR</th>
-                                            <th>COSTO</th>
+                                            {{--<th>COSTO</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
                                             <td>{{ $amounts['alicuota']->name }}</td>
-                                            <td>{{ $amounts['alicuota']->value * 100 }}%</td>
-                                            <td>{{ number_format($propertyTaxe->pivot->alicuota,2,',','.') }}</td>
+                                            <td>{{ $amounts['alicuota']->timelineValue[0]->value * 100 }}%</td>
+                                            {{--<td>{{ number_format($propertyTaxe->pivot->alicuota,2,',','.') }}</td>--}}
                                         </tr>
                                         </tbody>
                                     </table>
@@ -138,7 +138,7 @@
                                     </div>--}}
                                 </div>
                                 <div class="col s12 m6">
-                                    <input type="hidden" name="alicuota" id="alicuota" value="{{ $propertyTaxe->pivot->alicuota }}">
+                                    {{--<input type="hidden" name="alicuota" id="alicuota" value="{{ $propertyTaxe->pivot->alicuota }}">--}}
                                     <input type="hidden" name="discount" id="discount" value="{{ $propertyTaxe->pivot->discount }}">
                                     <div class="row">
                                         <div class="input-field col s12 m12 ">

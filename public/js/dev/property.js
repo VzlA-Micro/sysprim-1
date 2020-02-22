@@ -2,7 +2,51 @@ $('document').ready(function () {
     var url = localStorage.getItem('url');
     var user = $('#user').val();
 
+    $('#type_const').change(function() {
+        var option = $(this).val();
+        var area_build = $('#area_build');
+        var type_inmueble_id = $('#type_inmueble_id option');
 
+        if(option == 1) {
+            console.log('Hola 1');
+            area_build.val("0").attr('readonly');
+            type_inmueble_id.each(function() {
+                if(this.value == '1' || this.value == '4') {
+                    this.setAttribute('disabled', 'disabled');
+                }
+                else {
+                    if(this.value == 'null') {
+                        this.setAttribute('disabled', 'disabled');
+                    }
+                    else {
+                        this.removeAttribute('disabled');
+                    }
+                }
+            });
+            M.updateTextFields();
+            $('select').formSelect();
+        }
+        else {
+            area_build.val('');
+            type_inmueble_id.each(function() {
+                // console.log(this.value);
+                if(this.value == '2' || this.value == '3') {
+                    this.setAttribute('disabled', 'disabled');
+                    console.log('estoy aqui');
+                }
+                else {
+                    if(this.value == 'null') {
+                        this.setAttribute('disabled', 'disabled');
+                    }
+                    else {
+                        this.removeAttribute('disabled');
+                    }
+                }
+            });
+            M.updateTextFields();
+            $('select').formSelect();
+        }
+    });
 
 
 
@@ -250,7 +294,7 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-
+                    console.log(response);
 
 
                     if(response.status==='success'){

@@ -18,7 +18,7 @@ class CreatePropertyTable extends Migration
             $table->integer('parish_id')->unsigned();
             $table->integer('type_inmueble_id')->unsigned();
             $table->integer('value_cadastral_ground_id')->unsigned();
-            $table->integer('value_cadastral_build_id')->unsigned();
+//            $table->integer('value_cadastral_build_id')->unsigned();
             $table->string('code_cadastral',35)->unique();
             $table->string('address');
             $table->float('area_ground');
@@ -28,7 +28,7 @@ class CreatePropertyTable extends Migration
             $table->foreign('parish_id')->references('id')->on('parish')->onDelete('cascade');
             $table->foreign('type_inmueble_id')->references('id')->on('alicuota_inmueble')->onDelete('cascade');
             $table->foreign('value_cadastral_ground_id')->references('id')->on('value_catastral_terreno')->onDelete('cascade');
-            $table->foreign('value_cadastral_build_id')->references('id')->on('value_catastral_construccion')->onDelete('cascade');
+//            $table->foreign('value_cadastral_build_id')->references('id')->on('value_catastral_construccion')->onDelete('cascade');
             $table->timestamps();
         });
     }
