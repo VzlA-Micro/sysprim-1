@@ -119,6 +119,7 @@ $(document).ready(function () {
         $('#rate').prop('disabled', false);
         $('#rate_ut').prop('disabled', false);
         $('#dateStart').prop('disabled', false);
+        $('select').formSelect();
         //$('#dateEnd').prop('disabled', false);
         $('#btn-update').removeClass('hide');
     });

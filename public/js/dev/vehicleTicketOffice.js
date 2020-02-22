@@ -2104,7 +2104,7 @@ $('document').ready(function () {
 
     $('#change-users').click(function () {
         var template = `
-        <h5 class="center">Cambiar Usuario</h5>
+        <h5 class="center">Cambiar Propietario</h5>
         <div class="input-field col s6 tooltipped" data-tooltip="V: Venezolano; E: Extranjero">
             <i class="icon-public prefix"></i>
             <select name="typeDocument" id="typeDocument" required>
@@ -2117,19 +2117,33 @@ $('document').ready(function () {
         </div>
         <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                 <i class="icon-person prefix"></i>
-                <input id="document" type="text" name="document" class="validate number-date" pattern="[0-9]+"
+                <input id="document" type="text" name="document" class="validate number-date" maxlength="8" pattern="[0-9]+"
                     title="Solo puede escribir números." required
                     value="">
                 <label for="document">Documento</label>
         </div>`;
+
+
+
 
         $('#change').html(template);
         $('.validate.number-date').keyup(function () {
             this.value = (this.value + '').replace(/[^0-9]/g, '');
         });
         $('select').formSelect();
-        $('#Document').focus();
+
         $(this).hide();
+        swal({
+            title: "Información",
+            text: "Ahora puede proceder a cambiar de propietario."+"\nIntroduciendo el numero de documento del contribuyente por el cual desea cambiar",
+            icon: "info",
+            button: {
+                text: "Entendido",
+                className: "blue-gradient",
+            }
+        }).then(function () {
+            $('#document').focus();
+        });
         $('#save-change').removeClass('hide');
         $('#update-vehicle').hide();
         $('#vehicle-status').hide();
@@ -2150,7 +2164,7 @@ $('document').ready(function () {
         if (document == '' || document.length < 7) {
             swal({
                 title: "Información",
-                text: "Verifica los datos en campo de cedula," +
+                text: "Verifica los datos en el campo de documento," +
                 "para poder procesar tu solicitud",
                 icon: "info",
                 button: {
@@ -2158,7 +2172,9 @@ $('document').ready(function () {
                     className: "blue-gradient",
                     value: true
                 },
-            })
+            }).then(function () {
+                $('#document').focus();
+            });
         } else if ((type == nationality) && (document == documentOld)) {
             swal({
                 title: "Información",
@@ -2169,9 +2185,9 @@ $('document').ready(function () {
                     className: "blue-gradient",
                     value: true
                 },
+            }).then(function () {
+                $('#document').focus();
             });
-
-            $('#document').focus();
         }
         else {
             $.ajax({
@@ -2188,7 +2204,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-                    if (data['status'] === "success") {
+                    if (data.status === "success") {
                         swal({
                             title: "Cambio de Usuario",
                             text: 'Ha sido exitoso',
@@ -2205,6 +2221,7 @@ $('document').ready(function () {
                             }
                         });
                     } else {
+
                         swal({
                             title: "Cambio de Usuario",
                             text: 'Usuario no encontrado, Verifica los datos por favor',
@@ -2214,13 +2231,17 @@ $('document').ready(function () {
                                 className: "blue-gradient",
                                 value: true
                             },
-
+                        }).then(function () {
+                            $('#document').focus();
                         })
+
+
                     }
                 },
                 error: function (e) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
+                    //console.log(e)
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -2250,7 +2271,7 @@ $('document').ready(function () {
         </div>
         <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                 <i class="icon-person prefix"></i>
-                <input id="Document" type="text" name="Document" class="validate number-date" pattern="[0-9]+"
+                <input id="Document" type="text" name="Document" maxlength="8" class="validate number-date" pattern="[0-9]+"
                     title="Solo puede escribir números." required
                     value="">
                 <label for="Document">Documento</label>
@@ -2261,7 +2282,19 @@ $('document').ready(function () {
             this.value = (this.value + '').replace(/[^0-9]/g, '');
         });
         $('select').formSelect();
-        $('#Document').focus();
+
+        swal({
+            title: "Información",
+            text: "Ahora puede proceder a cambiar de usuario web."+"\nIntroduciendo el numero de documento del contribuyente por el cual desea cambiar",
+            icon: "info",
+            button: {
+                text: "Entendido",
+                className: "blue-gradient",
+            }
+        }).then(function () {
+            $('#Document').focus();
+        });
+
         $(this).hide();
         $('#saveUW').removeClass('hide');
     });
@@ -2270,7 +2303,7 @@ $('document').ready(function () {
         var type = $('#typeDocument').val();
         var document = $('#Document').val();
         var nationalitys = $('#nationalitys').val();
-        var documentOld = $('#ci').val();
+        var documentOld = $('#ciU').val();
         var id = $('#id').val();
 
         if (document == '' || document.length < 7) {
@@ -2295,9 +2328,9 @@ $('document').ready(function () {
                     className: "blue-gradient",
                     value: true
                 },
+            }).then(function () {
+                $('#Document').focus();
             });
-
-            $('#Document').focus();
         } else {
 
             $.ajax({
@@ -2314,7 +2347,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
 
-                    if (data['status'] === "success") {
+                    if (data.status === "success") {
                         swal({
                             title: "Cambio de Usuario",
                             text: 'Ha sido exitoso',
@@ -2341,7 +2374,9 @@ $('document').ready(function () {
                                 value: true
                             },
 
-                        })
+                        }).then(function () {
+                            $('#Document').focus();
+                        });
                     }
                 },
                 error: function (e) {

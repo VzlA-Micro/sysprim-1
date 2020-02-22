@@ -5,17 +5,23 @@
         <div class="row">
             <div class="col s12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" >Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo - Tipo De Vehículos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.read') }}">Ver Linea Del Tiempo</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.details',['id'=>$timeline->id]) }}">Detalles Linea Del Tiempo</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('settings.vehicle') }}">Configuración de Vehículos</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('vehicles.type.vehicles') }}">Gestionar Tipos De
+                            Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Linea Del Tiempo -
+                            Tipo De Vehículos</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('type-vehicles.timeline.read') }}">Ver Linea Del
+                            Tiempo</a></li>
+                    <li class="breadcrumb-item"><a
+                                href="{{ route('type-vehicles.timeline.details',['id'=>$timeline->id]) }}">Detalles
+                            Linea Del Tiempo</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 l8 offset-m1 offset-l2">
-                <form id="update-timeline"  class="card">
+                <form id="update-timeline" class="card">
                     <div class="card-header center-align">
                         <h5>Detalles De Linea De Tiempo</h5>
                     </div>
@@ -37,7 +43,8 @@
 
                         <div class="input-field col s12 m6">
                             <i class="icon-swap_vert prefix"></i>
-                            <input type="text" name="rate" id="rate" value="{{$timeline->rate}}" class="validate number-only-positve number-date"
+                            <input type="text" name="rate" id="rate" value="{{$timeline->rate}}"
+                                   class="validate number-only-positve number-date"
                                    pattern="[A-Za-z0-9,.]+"
                                    title="Solo puede escribir letras y numeros." maxlength="5" disabled required>
                             <label for="rate">Tarifa menor a 3 años(U.T).</label>
@@ -45,20 +52,48 @@
                         <div class="input-field col s12 m6">
                             <i class="icon-swap_vert prefix"></i>
                             <input type="text" name="rate_ut" id="rate_ut"
-                                   class="validate  only-number-positive number-date" disabled value="{{$timeline->rate_UT}}" pattern="[A-Za-z0-9,.]+"
+                                   class="validate  only-number-positive number-date" disabled
+                                   value="{{$timeline->rate_UT}}" pattern="[A-Za-z0-9,.]+"
                                    title="Solo puede escribir letras." required maxlength="5">
                             <label for="rate_ut">Tarifa mayor a 3 años(U.T)</label>
                         </div>
 
-                        <div class="input-field col s12 m6">
+
+                        {{--<div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
                             <input type="text" name="since" disabled id="dateStart" value="{{$timeline->since}}" class="datepicker">
                             <label for="date_start">Fecha de Inicio</label>
-                        </div>
+                        </div>--}}
+
+                        @php
+                            $cont=(int)date('Y');
+                        $cont--;
+
+                        @endphp
 
                         <div class="input-field col s12 m6">
                             <i class="icon-date_range prefix"></i>
-                            <input type="text" name="date_end" disabled value="{{$timeline->to}}" id="dateEnd" class="datepicker">
+                            <select name="since" id="dateStart" disabled>
+                                <option value="null" selected disabled>Seleccione</option>
+                                @while($cont <= 2030)
+
+                                    @if($timeline->since==$cont.'-01-01')
+                                        <option value="{{$cont.'-01-01'}}" selected>{{$cont}}</option>
+                                    @else
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @endif
+
+                                    @php $cont++; @endphp
+                                @endwhile
+                            </select>
+                            <label for="since">Año</label>
+                        </div>
+
+
+                        <div class="input-field col s12 m6">
+                            <i class="icon-date_range prefix"></i>
+                            <input type="text" name="date_end" disabled value="{{$timeline->to}}" id="dateEnd"
+                                   class="datepicker">
                             <label for="date_end">Fecha de Fin</label>
                         </div>
                     </div>

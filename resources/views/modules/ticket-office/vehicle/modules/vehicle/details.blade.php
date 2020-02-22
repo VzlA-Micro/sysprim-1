@@ -361,11 +361,11 @@
                         </div>
                         <div class="input-field col s6 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede escribir números. Ej: 12345678">
-                            <input id="ci" type="text" name="ci" class="validate" pattern="[0-9]+"
+                            <input id="ciU" type="text" name="ciU" class="validate" pattern="[0-9]+"
                                    minlength="7" maxlength="8" title="Solo puede escribir números." required
                                    value="{{$vehicle->users[0]->document }}"
                                    readonly>
-                            <label for="ci">Cedula</label>
+                            <label for="ciU">Cedula</label>
                         </div>
                         <div class="input-field col s12 m12 tooltipped" data-position="bottom"
                              data-tooltip="Solo puede agregar letras (con acentos).">

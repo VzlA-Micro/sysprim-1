@@ -1320,7 +1320,7 @@ class TicketOfficeVehicleController extends Controller
                 $response = ['status' => 'fail'];
             }
         } elseif ($type == "E" || $type == "V") {
-            var_dump($type);
+           // var_dump($type);
             $user = User::where('ci', $type . $document)->get();
             if (!$user->isEmpty()) {
                 $vehicleUser->company_id = null;
