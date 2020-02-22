@@ -147,7 +147,7 @@
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
                                 <select name="parish" id="parish" required>
-                                    <option value="null" disabled selected>Seleccionar una Parroquia</option>
+                                    <option value="null" selected disabled>Seleccionar una Parroquia</option>
                                     @foreach($parish as $parish):
                                     <option value="{{ $parish->id }}">{{ $parish->name }}</option>
                                     @endforeach

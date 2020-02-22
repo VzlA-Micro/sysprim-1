@@ -574,7 +574,8 @@ $(document).ready(function () {
 
                     $('#location_cadastral').html('');
                     $('#location_cadastral').removeAttr('disabled', 'disabled');
-
+                    $('#parish option:first').prop('selected',true);
+                    $('#parish').removeAttr('disabled', 'disabled');
 
                     var html = '<option value="null" disabled selected>Seleccionar ubicacion Catastral</option>';
                     for (var i = 0; i < sector.length; i++) {
@@ -586,8 +587,7 @@ $(document).ready(function () {
                             html += '<option value=' + sector[i].id + ' selected>' + sector[i].name + '</option>';
 
                             if (sector[i].parish_id != '0') {
-                                $("#parish option[value=" + sector[i].parish_id + "]").attr("selected", true);
-                                $("#parish option[value=" + sector[i].parish_id + "]").attr("selected", true);
+                                $("#parish option[value=" + sector[i].parish_id + "]").prop("selected", true);
                                 $('#parish').attr('disabled', 'disabled');
                             }
 
