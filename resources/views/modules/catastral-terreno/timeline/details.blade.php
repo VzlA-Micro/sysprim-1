@@ -44,6 +44,7 @@
                         </div>--}}
                         @php
                             $cont=(int)date('Y');
+                            $cont--;
                         @endphp
 
                         <div class="input-field col s12">

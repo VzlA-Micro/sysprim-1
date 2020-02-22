@@ -145,8 +145,9 @@
 
     @php $totalAcum = 0; @endphp
     @foreach($taxes as $taxe)
-        <tr>
-            {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+        {{--<tr>
+
+            --}}{{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}{{--
             <td style="width: 30%;font-size: 10px;!important;">{{ $taxe->properties[0]->valueBuild->name }}</td>
             <td style="width: 10%;font-size: 10px !important;"></td>
             <td style="width: 10%;font-size: 10px;!important">{{ $taxe->branch }}</td>
@@ -154,10 +155,40 @@
             <td style="width: 15%;font-size: 10px;!important">{{ number_format($taxe->properties[0]->valueBuild->value_edificacion,2,',','.') }}</td>
             <td style="width: 15%;font-size: 10px;!important"></td>
             <td style="width: 10%;font-size: 10px;!important">{{number_format($taxe->properties[0]->pivot->base_imponible,2,',','.')}}</td>
-        </tr>
+        </tr>--}}
+
+        @foreach($propertyBuildings as $propertyBuilding)
+            @if($propertyBuilding->buildingValue->id == 1 || $propertyBuilding->buildingValue->name == 'NINGUNA')
+                @if($property->type->id == 2 || $property->type->id == 3)
+                    <tr>
+                        {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+                        <td style="width: 30%;font-size: 10px;!important;">{{ $property->type->name }}</td>
+                        <td style="width: 10%;font-size: 10px !important;"></td>
+
+                        <td style="width: 10%;font-size: 10px;!important">{{$taxe->branch}}</td>
+                        <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxe->fiscal_period)->format('d-m-Y')}}</td>
+                        <td style="width: 15%;font-size: 10px;!important"></td>
+                        <td style="width: 10%;font-size: 10px;!important">{{--{{number_format($propertyTaxes->base_imponible,2,',','.')}}--}}</td>
+                        <td style="width: 15%;font-size: 10px;!important">{{ number_format($taxe->properties[0]->pivot->terrain_amount,2,',','.') }}</td>
+                    </tr>
+                @endif
+            @else
+            <tr>
+                {{--<td style="width: 10%;font-size: 10px !important;">{{$taxes->code}}</td>--}}
+                <td style="width: 30%;font-size: 10px;!important;">{{ $propertyBuilding->buildingValue->name }}</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+
+                <td style="width: 10%;font-size: 10px;!important">{{ $taxe->branch }}</td>
+                <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxe->fiscal_period)->format('d-m-Y')}}</td>
+                <td style="width: 15%;font-size: 10px;!important"></td>
+                <td style="width: 10%;font-size: 10px;!important">{{--{{number_format($propertyTaxes->base_imponible,2,',','.')}}--}}</td>
+                <td style="width: 15%;font-size: 10px;!important">{{ number_format($propertyBuilding->buildingValue->timelineValue[0]->value,2,',','.') }}</td>
+            </tr>
+            @endif
+        @endforeach
 
         @php $totalAmount = $taxe->properties[0]->pivot->base_imponible; @endphp
-        <tr>
+        {{--<tr>
             <td style="width: 10%;font-size: 10px !important;"></td>
             <td style="width: 10%;font-size: 10px !important;text-align: right">Alicuota</td>
             <td style="width: 10%;font-size: 10px !important;"></td>
@@ -166,7 +197,31 @@
             <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->alicuota,2,',','.') }}</td>
             @php $totalAmount += $taxe->properties[0]->pivot->alicuota @endphp
             <td style="width: 10%;font-size: 10px !important;">{{ number_format($totalAmount,2,',','.') }}</td>
-        </tr>
+        </tr>--}}
+        @if($taxe->properties[0]->pivot->terrain_amount != 0)
+            <tr>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;text-align: right">Valor del Terreno</td>
+                <td style="width: 10%;font-size: 10px;!important">{{--{{ $taxe->branch }}--}}</td>
+                <td style="width: 10%;font-size: 10px; !important;">{{--{{\Carbon\Carbon::parse($taxe->fiscal_period)->format('d-m-Y')}}--}}</td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->terrain_amount,2,',','.') }}</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                {{--@php $totalAmount += $propertyTaxes->recharge; @endphp--}}
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->terrain_amount,2,',','.') }}</td>
+            </tr>
+        @endif
+        @if($taxe->properties[0]->pivot->build_amount != 0)
+            <tr>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                <td style="width: 10%;font-size: 10px !important;text-align: right">Valor de la Construcción</td>
+                <td style="width: 10%;font-size: 10px;!important">{{--{{ $taxe->branch }}--}}</td>
+                <td style="width: 10%;font-size: 10px; !important;">{{--{{\Carbon\Carbon::parse($taxe->fiscal_period)->format('d-m-Y')}}--}}</td>
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->build_amount,2,',','.') }}</td>
+                <td style="width: 10%;font-size: 10px !important;"></td>
+                {{--@php $totalAmount += $propertyTaxes->recharge; @endphp--}}
+                <td style="width: 10%;font-size: 10px !important;">{{ number_format($taxe->properties[0]->pivot->build_amount,2,',','.') }}</td>
+            </tr>
+        @endif
         @if($taxe->properties[0]->pivot->recharge != 0)
             <tr>
                 <td style="width: 10%;font-size: 10px !important;"></td>
