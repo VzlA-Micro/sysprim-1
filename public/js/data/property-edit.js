@@ -28,6 +28,10 @@ $('document').ready(function () {
 
     $('#update-property').on('submit', function (e) {
         e.preventDefault();
+        $('#location_cadastral').removeAttr('disabled', 'disabled');
+        $('#parish').removeAttr('disabled', 'disabled');
+
+
         $('#name').removeAttr('readonly');
         swal({
             icon: "warning",

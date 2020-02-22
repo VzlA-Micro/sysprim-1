@@ -626,7 +626,8 @@ $(document).ready(function () {
         var type = $('#type').val();
         var id = $('#id').val();
         e.preventDefault();
-
+        $('#location_cadastral').removeAttr('disabled', 'disabled');
+        $('#parish').removeAttr('disabled', 'disabled');
 
         if($('#location_cadastral').val()!=null&&$('#type_const').val()!=null&&$('#type_inmueble_id').val()!=null&&$('#parish').val()!=null&&$('#lat').val() !== "") {
             $.ajax({

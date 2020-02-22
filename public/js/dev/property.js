@@ -228,7 +228,8 @@ $('document').ready(function () {
     $('#property').on('submit', function (e) {
         var type = $('#type').val();
         var id = $('#id').val(); // Id de la compañia
-
+        $('#location_cadastral').removeAttr('disabled', 'disabled');
+        $('#parish').removeAttr('disabled', 'disabled');
 
         e.preventDefault();
 
