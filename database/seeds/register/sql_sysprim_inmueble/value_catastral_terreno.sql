@@ -148,6 +148,6 @@ INSERT INTO `value_catastral_terreno` (`id`, `parish_id`, `sector_nueva_nomencla
 (DEFAULT, 10, 0, 817, 'CORDERO, SAN  ANTONIO, EL POTRERO ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36'),
 (DEFAULT, 10, 0, 818, 'EL PAMPERO, RASTROJITOS, LAS PLAYITAS. ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36'),
 (DEFAULT, 10, 0, 819, 'TOROY, COTOPERY, PARAMO DE LAS ROSAS ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36'),
-(DEFAULT, 0, 0, 0, 'Todos aquellos sectores que no se encuentren codificados catastralmente, en todas las parroquias que comprenden el Municipio Iribarren. ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36');
-(DEFAULT, 1, 0, 101, 'URB. GIL FORTOUL ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36');
+(DEFAULT, 0, 0, 0, 'Todos aquellos sectores que no se encuentren codificados catastralmente, en todas las parroquias que comprenden el Municipio Iribarren. ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36'),
+(DEFAULT, 1, 0, 101, 'URB. GIL FORTOUL ', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36'),
 (DEFAULT, 3, 0, ,201 'RESTO DEL SECTOR 201', 'enabled', '2020-01-10 14:48:36', '2020-01-10 14:48:36');
