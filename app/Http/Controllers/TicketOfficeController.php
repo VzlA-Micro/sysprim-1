@@ -1003,7 +1003,7 @@ class TicketOfficeController extends Controller
             $owner = $taxes->properties()->get();
             $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
             $property = Property::find($userProperty->property_id);
-
+            $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
             $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
 
             if (!is_null($userProperty->company_id)) {
