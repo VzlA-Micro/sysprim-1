@@ -12,14 +12,14 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}">Configuración</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.property') }}">Configuración de Inmuebles Urbanos</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Contrucción Catastral</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.register') }}">Registrar  Valor Catastral  de  Contrucción</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.manage') }}">Gestionar Valor de Construcción Catastral</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('catrastal.construction.register') }}">Registrar  Valor Catastral  de  Construcción</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 offset-m2">
                 <form action="" method="post" class="card" id="register">
                     <div class="card-header center-align">
-                        <h4>Registrar Valor  Catastral de Contrucción  </h4>
+                        <h4>Registrar Valor  Catastral de Construcción  </h4>
                     </div>
                     <div class="card-content row">
                         @csrf
