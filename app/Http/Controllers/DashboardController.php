@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\PaymentsImport;
 use App\Inmueble;
 use App\TimelineCiiu;
+use App\TimelineTypeVehicle;
 use App\Vehicle;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -1818,11 +1819,13 @@ class DashboardController extends Controller
         $year = Carbon::now()->format('Y');
         $month = Carbon::now()->format('m');
         $vehicle = Vehicle::where('status', 'enabled')->get();
-        $rate = Tributo::orderBy('id', 'desc')->take(1)->get();
+        //$rate = Tributo::orderBy('id', 'desc')->take(1)->get();
+        $rate = Tributo::latest()->value('value');
         $acum = 0;
         $percentage = 0;
         $raised = 0;
         $wait = 0;
+        $timeline='';
 
         $raised = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', $month)
@@ -1845,18 +1848,25 @@ class DashboardController extends Controller
 
             $diffYear = $year - intval($yearVehicle);
 
+            $now=Carbon::now();
+            $timeline=TimelineTypeVehicle::where('type_vehicle_id',$vehicles->type->id)
+                ->whereYear('to','=',(string)$now->format('Y'))->orderBy('id','desc')->get();
+
+
             if ($diffYear < 3) {
-                $rateYear = $vehicle[0]->type->rate;
-                $taxes = $rateYear * $rate[0]->value;
+                $rateYear = $timeline[0]->rate;
+                $taxes = $rateYear * $rate;
             } else {
-                $rateYear = $vehicle[0]->type->rate_UT;
-                $taxes = $rateYear * $rate[0]->value;
+                $rateYear = $timeline[0]->rate_UT;
+                $taxes = $rateYear * $rate;
             }
             $acum += $taxes;
         }
 
 
         $totalCollection = $raised + $wait;
+
+
 
         if ($raised > 0) {
             $percentage = $raised / $totalCollection * 100;
