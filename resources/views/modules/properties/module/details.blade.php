@@ -183,7 +183,7 @@
                             <label for="lng">Logintud</label>
                         </div>
                         @can('Cambiar Propietario - Inmueble')
-                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem" id="block-owner">
                                 <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red col s12" id="edit-propietario">
                                     <i class="icon-account_circle right"></i>
                                     Cambiar Propietario
@@ -191,7 +191,7 @@
                             </div>
                         @endcan
                         @can('Actualizar Inmuebles')
-                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem" id="block-edit">
                                 <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach col s12" id="edit-btn">
                                     <i class="icon-mode_edit right"></i>
                                     Editar Inmueble
@@ -203,7 +203,7 @@
                             </div>
                         @endcan
                         @can('Cambiar Ubicacion - Inmuebles')
-                            <div class="col s12 m6 center-align" style="margin-top: .5rem">
+                            <div class="col s12 m6 center-align" style="margin-top: .5rem" id="block-location">
                                 <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green col s12" id="change-maps">
                                     <i class="icon-map right"></i>
                                     Cambiar Ubicación

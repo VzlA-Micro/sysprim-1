@@ -12,7 +12,9 @@ $('document').ready(function () {
         $('#type_inmueble_id').removeAttr('disabled', '');
         $('#parish').removeAttr('disabled', '');
         $('#address').removeAttr('disabled');
-
+        $('#block-owner').hide();
+        $('#block-location').hide();
+        $('#block-edit').addClass('col s12 m12 center-align');
 
         $('select').formSelect();
         $(this).addClass('hide');
