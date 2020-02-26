@@ -52,18 +52,18 @@
                         </ul>
                     </div>
                     <div class="card-footer">
-                        <div class="row" style="margin-bottom:0">
-                            <div class="col s12 m4 offset-m4 right-align">
+                        <div class="row" style="margin-bottom:0" ">
+                            <div class="col s12 m4 offset-m4 right-align" style="margin-top: 10px">
                                 <a href="{{ route('companies.edit', ['id' => $company->id]) }}"
-                                   class="btn blue btn-rounded waves-light">
+                                   class="btn blue waves-light">
                                    Información
                                     <i class="icon-more_horiz right"></i>
                                 </a>
                             </div>
 
-                            <div class="col s12 m4 right-align">
+                            <div class="col s12 m4 right-align" style="margin-top: 10px">
                                 <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
-                                   class="btn red btn-rounded waves-light">
+                                   class="btn red waves-light">
                                     Descargar Carnet
                                     <i class="icon-get_app right"></i>
                                 </a>

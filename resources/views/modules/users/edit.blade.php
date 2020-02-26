@@ -116,44 +116,44 @@
                         <div class="row">
                             @can('Habilitar/Deshabilitar Usuarios')
                             @if($user->confirmed==0||$user->status_account=='block')
-                            <div class="col s12 m3 center-align">
-                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light truncate" id="button-enable" value="enabled">
+                            <div class="col s12 m3 center-align" style="margin-top: 10px">
+                                <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light  col s12" id="button-enable" value="enabled">
                                     <i class="icon-check right"></i>
-                                    Habilitar
+                                    <span class="truncate">Habilitar</span>
                                 </button>
                             </div>
 
                             @else
-                                <div class="col s12 m3 center-align">
-                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light truncate" id="button-enable" value="disabled">
+                                <div class="col s12 m3 center-align" style="margin-top: 10px">
+                                    <button type="button" class="btn btn-rounded btn-large peach waves-effect waves-light truncate col s12" id="button-enable" value="disabled">
                                         <i class="icon-send right"></i>
-                                        Deshabilitar
+                                        <span class="truncate">Deshabilitar</span>          
                                     </button>
                                 </div>
 
                             @endif
                             @endcan
                             @can('Actualizar Usuarios')
-                            <div class="col s12 m3 center-align">
-                                <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves-light">
+                            <div class="col s12 m3 center-align" style="margin-top: 10px">
+                                <button type="submit" id="actualizar" class="btn btn-rounded btn-large blue waves-effect waves- col s12">
                                     <i class="icon-update right"></i>
-                                    Actualizar
+                                    <span class="truncate">Actualizar</span>           
                                 </button>
                             </div>
                             @endcan
                             @can('Resetear Usuarios')
-                            <div class="col s12 m3">
-                                <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light" id="btn-reset-password">
+                            <div class="col s12 m3" style="margin-top: 10px">
+                                <a href="#!" class="btn btn-rounded btn-large red waves-effect waves-light col s12" id="btn-reset-password">
                                     <i class="icon-send right"></i>
-                                    Resetear Contraseña
+                                    <span class="truncate"> Resetear Contraseña</span>              
                                 </a>
                             </div>
                             @endcan
 
-                                <div class="col s12 m3">
-                                    <a href="{{route('users.security',['id'=>$user->id])}}" class="btn btn-rounded btn-large green waves-effect waves-light">
+                                <div class="col s12 m3" style="margin-top: 10px">
+                                    <a href="{{route('users.security',['id'=>$user->id])}}" class="btn btn-rounded btn-large green waves-effect waves-light col s12">
                                         <i class="icon-verified_user right"></i>
-                                      Bitacora
+                                        <span class="truncate">Bitacora</span>        
                                     </a>
                                 </div>
 

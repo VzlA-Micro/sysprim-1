@@ -184,22 +184,22 @@
                             <div class="row">
                                 @can('Resetear Contribuyentes')
                                     <div class="col s12 m6 center-align">
-                                        <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light"
-                                           id="btn-reset-password">
+                                        <a href="#!" class="btn btn-rounded btn-large peach waves-effect waves-light col s12"
+                                           id="btn-reset-password" style="margin-top:10px">
                                             <i class="icon-send right"></i>
                                             Restablecer Contraseña
                                         </a>
                                     </div>
                                 @endcan
                                 <div class="col s12 m6 center-align">
-                                    <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light"
-                                       id="btn-edit">
+                                    <a href="#!" class="btn btn-rounded btn-large blue waves-effect waves-light col s12"
+                                       id="btn-edit" style="margin-top:10px">
                                         <i class="icon-send right"></i>
                                         Editar
                                     </a>
                                     <button type="submit"
-                                            class="btn btn-rounded btn-large peach waves-effect waves-light"
-                                            style="display: none" id="btn-update">
+                                            class="btn btn-rounded btn-large peach waves-effect waves-light col s12"
+                                            style="display: none" id="btn-update" style="margin-top:10px">
                                         <i class="icon-save right"></i>
                                         Guardar
                                     </button>

@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
                     @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->code_cadastral }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $property[0]->id]) }}">{{ $property[0]->alias }}</a></li>
                 </ul>
             </div>
             <div class="col s12 m8">

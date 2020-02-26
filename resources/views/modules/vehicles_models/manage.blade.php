@@ -16,15 +16,15 @@
                 </ul>
             </div>
             @can('Registrar Modelo de Vehiculo')
-            <div class="col s12 m4 animated bounceIn">
-                    <a href="{{ route('vehicles.models.register') }}" class="btn-app white green-text">
+            <div class="col s6 m4 animated bounceIn">
+                    <a href="{{ route('vehicles.models.register') }}" class="btn-app white purple-text">
                         <i class="icon-add_circle"></i>
                         <span class="truncate">Registrar Modelos De Vehículo</span>
                     </a>
                 </div>
             @endcan
             @can('Consultar Modelos de Vehiculos')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('vehicles.models.read') }}" class="btn-app white amber-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Ver Modelos De Vehículos</span>

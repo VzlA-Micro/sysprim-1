@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Unidad Tribuaria')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('tax-unit.register') }}" class="btn-app white red-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Unidad Tributaria</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Unidades Tribuarias')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('tax-unit.read') }}" class="btn-app white blue-text">
                     <i class="icon-playlist_add_check"></i>
                     <span class="truncate">Ver Unidades Tributarias</span>
