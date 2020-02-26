@@ -29,7 +29,7 @@
                                     <th>Código Catastral</th>
                                     <th>Tipo de Inmueble</th>
                                     <th>Ubicación Catastral</th>
-                                    <th>Alias </th>
+                                    <th>Alias</th>
                                     <th>Dirección</th>
                                     <th>Detalles</th>
                                 </tr>
@@ -41,7 +41,7 @@
                                     <td>{{$property->code_cadastral}}</td>
                                     <td>{{$property->type->name}}</td>
                                     <td>{{$property->valueGround->name}}</td>
-                                    <td>{{$property->parish->name}}</td>
+                                    <td>{{$property->alias}}</td>
                                     <td>{{$property->address}}</td>
                                     @can('Detalles Inmuebles')
                                     <td>

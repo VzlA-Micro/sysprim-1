@@ -1213,9 +1213,12 @@ $('document').ready(function () {
     });
 
     $('#publicity-previous2').click(function () {
-        $('#two').removeClass('disabled');
-        $('#there').addClass('disabled');
-        $('ul.tabs').tabs("select", "typePublicity-tab");
+        $("#preloader").fadeOut('fast');
+        $("#preloader-overlay").fadeOut('fast');
+        location.reload();
+        //$('#two').removeClass('disabled');
+        //$('#there').addClass('disabled');
+        //$('ul.tabs').tabs("select", "typePublicity-tab");
     });
 
 });

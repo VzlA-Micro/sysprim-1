@@ -158,7 +158,7 @@
                                 <a href="#" id="publicity-previous"
                                    class="btn peach waves-effect waves light">
                                     Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6  right-align">
@@ -256,8 +256,8 @@
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                    Cargar De Nuevo
+                                    <i class="icon-autorenew left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
@@ -342,8 +342,8 @@
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                    Cargar De Nuevo
+                                    <i class="icon-autorenew left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
@@ -413,8 +413,8 @@
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                    Cargar De Nuevo
+                                    <i class="icon-autorenew left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
@@ -503,8 +503,8 @@
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                    Cargar De Nuevo
+                                    <i class="icon-autorenew left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
@@ -607,8 +607,8 @@
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Anterior
-                                    <i class="icon-navigate_before left"></i>
+                                    Cargar De Nuevo
+                                    <i class="icon-autorenew left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
