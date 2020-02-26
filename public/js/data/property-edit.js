@@ -4,6 +4,7 @@ $('document').ready(function () {
 
     $('#edit-btn').click(function () {
 
+        console.log('epa');
         $('#update-btn').removeClass('hide');
         $('#location_cadastral').removeAttr('disabled', '');
         $('#type_const').removeAttr('disabled', '');
@@ -16,6 +17,8 @@ $('document').ready(function () {
         $('#block-location').hide();
         $('#block-edit').addClass('col s12 m12 center-align');
 
+        $('#alias').removeAttr('readonly','');
+        $('select').removeAttr('disabled','');
         $('select').formSelect();
         $(this).addClass('hide');
 

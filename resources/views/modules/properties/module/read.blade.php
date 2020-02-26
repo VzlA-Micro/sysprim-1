@@ -29,7 +29,7 @@
                                     <th>Código Catastral</th>
                                     <th>Tipo de Inmueble</th>
                                     <th>Ubicación Catastral</th>
-                                    <th>Parroquia </th>
+                                    <th>Alias </th>
                                     <th>Dirección</th>
                                     <th>Detalles</th>
                                 </tr>
