@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/owner.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono color.ico') }}">
-
+    <meta name="theme-color" content="#a51d1d">
     @yield('styles')
     <title>Geolocalización - GeoSEMAT</title>
 </head>
