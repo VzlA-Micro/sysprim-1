@@ -612,8 +612,16 @@ class PropertyController extends Controller
         $property->lat = $lat;
         $property->lng = $lng;
         $property->type_inmueble_id = $type_inmueble_id;
-        $property->value_cadastral_build_id = $typeConst;
+        //$property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();
+   /*
+        for($i = 0; $i < count($typeConst); $i++) {
+            $valCat = new Val_cat_const_inmu();
+            $valCat->value_catas_const_id = $typeConst[$i];
+            $valCat->update();
+        }
+   */
+
         $property->update();
 
         response()->json(['status'=>'success','message'=>'Los datos del inmueble han sido actualizado con éxito']);
