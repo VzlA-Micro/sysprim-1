@@ -43,18 +43,11 @@
                             <label for="document_type_prop">Documento</label>
                         </div>
 
-
-
-
-
-
                         <div class="input-field col s8 m4">
                             <i class="icon-account_box prefix"></i>
                             <input id="document_pro" type="text" name="document" class="validate number-date" value="{{$data->document}}" readonly maxlength="8">
                             <label for="document_pro">Cedula o RIF</label>
                         </div>
-
-
 
                         <div class="input-field col s12 m4">
                             <i class="icon-account_box prefix"></i>
@@ -85,6 +78,14 @@
 
                         <div class="input-field col m12 s12">
                             <h5 class="center-align">Datos del Inmuebles</h5>
+                        </div>
+
+                        <div class="input-field col s12 m12">
+                            <i class="icon-format_bold prefix"></i>
+                            <input type="text" name="alias" id="alias" class="validate number-only" pattern="[0-9.]+"
+                                   data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
+                                   required maxlength="8" value="{{$property->alias}}" readonly>
+                            <label for="alias">Alias del Inmueble</label>
                         </div>
 
                         <div class="input-field col m6 s12">
@@ -183,7 +184,7 @@
                         </div>
                         @can('Cambiar Propietario - Inmueble')
                             <div class="col s12 m6 center-align" style="margin-top: .5rem">
-                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red" id="edit-propietario">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light red col s12" id="edit-propietario">
                                     <i class="icon-account_circle right"></i>
                                     Cambiar Propietario
                                 </button>
@@ -191,11 +192,11 @@
                         @endcan
                         @can('Actualizar Mis Inmuebles')
                             <div class="col s12 m6 center-align" style="margin-top: .5rem">
-                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach" id="edit-btn">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach col s12" id="edit-btn">
                                     <i class="icon-mode_edit right"></i>
                                     Editar Inmueble
                                 </button>
-                                <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide" id="update-btn">
+                                <button type="submit" class="btn btn-large btn-rounded waves-effect waves-light blue hide col s12" id="update-btn">
                                     Guardar
                                     <i class="icon-save right"></i>
                                 </button>
@@ -203,7 +204,7 @@
                         @endcan
                         @can('Cambiar Ubicacion - Inmuebles')
                             <div class="col s12 m6 center-align" style="margin-top: .5rem">
-                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green" id="change-maps">
+                                <button type="button" class="btn btn-large btn-rounded waves-effect waves-light green col s12" id="change-maps">
                                     <i class="icon-map right"></i>
                                     Cambiar Ubicación
                                 </button>
@@ -235,7 +236,7 @@
                     </div>
                     <div class="card-content row">
                         <div class="input-field col s6 tooltipped" data-position="bottom"
-                             data-tooltip="V: Venezolano; E: Extrangero">
+                             data-tooltip="V: Venezolano; E: Extranjero">
                             <i class="icon-public prefix"></i>
                             <select name="nationality" id="nationality" required disabled>
                                 <option value="null">...</option>
@@ -312,7 +313,7 @@
 
                         @can('Cambiar Usuario - Inmueble')
                         <div class="input-field col s12 m12 center-align">
-                            <a href="#" class="btn btn-large waves-effect waves-light green btn-rounded " id="change-users">
+                            <a href="#" class="btn btn-large waves-effect waves-light green btn-rounded col s12 " id="change-users">
                                 <i class="icon-refresh right"></i>
                                 Cambiar Usuario 
                             </a>
