@@ -4,6 +4,7 @@ $('document').ready(function () {
 
     $('#edit-btn').click(function () {
 
+        console.log('epa');
         $('#update-btn').removeClass('hide');
         $('#location_cadastral').removeAttr('disabled', '');
         $('#type_const').removeAttr('disabled', '');
@@ -12,8 +13,8 @@ $('document').ready(function () {
         $('#type_inmueble_id').removeAttr('disabled', '');
         $('#parish').removeAttr('disabled', '');
         $('#address').removeAttr('disabled');
-
-
+        $('#alias').removeAttr('readonly','');
+        $('select').removeAttr('disabled','');
         $('select').formSelect();
         $(this).addClass('hide');
 
