@@ -190,7 +190,7 @@
                                 </button>
                             </div>
                         @endcan
-                        @can('Actualizar Mis Inmuebles')
+                        @can('Actualizar Inmuebles')
                             <div class="col s12 m6 center-align" style="margin-top: .5rem">
                                 <button type="button" class="btn btn-large btn-rounded waves-effect waves-light peach col s12" id="edit-btn">
                                     <i class="icon-mode_edit right"></i>
