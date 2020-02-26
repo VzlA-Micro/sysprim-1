@@ -1206,6 +1206,17 @@ $('document').ready(function () {
 
     });
 
+    $('#publicity-previous').click(function () {
+        $('#user-tab-one').removeClass('disabled');
+        $('#two').addClass('disabled');
+        $('ul.tabs').tabs("select", "user-tab");
+    });
+
+    $('#publicity-previous2').click(function () {
+        $('#two').removeClass('disabled');
+        $('#there').addClass('disabled');
+        $('ul.tabs').tabs("select", "typePublicity-tab");
+    });
 
 });
 
