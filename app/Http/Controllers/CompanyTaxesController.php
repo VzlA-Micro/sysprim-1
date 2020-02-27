@@ -709,9 +709,8 @@ class CompanyTaxesController extends Controller
         $base=$request->input('base');
         $anticipated = $request->input('anticipated');
         $fiscal_credits = $request->input('fiscal_credits');
-
-        $fiscal_period_end='2019-12-01';
-
+        $fiscal_period_end=Carbon::parse($fiscal_period)->format('Y');
+        $fiscal_period_end=$fiscal_period_end.'-12-31';
         //$date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');

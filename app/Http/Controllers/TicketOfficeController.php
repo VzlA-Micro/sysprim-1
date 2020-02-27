@@ -1124,20 +1124,43 @@ class TicketOfficeController extends Controller
 
     //*________DEFINITIVE_________*
 
-    public function verifyDefinitive($company_id)
+    public function verifyDefinitive($company_id,$fiscal_period)
     {
-        $status = TaxesMonth::verifyDefinitive($company_id);
-        return response()->json(['status' => $status]);
+
+        $fiscal_period=Carbon::parse($fiscal_period)->format('Y');
+
+        $date = Carbon::now();
+        $company = Company::find($company_id);
+
+        $tax = $company->taxesCompanies()->where('type', 'definitive')->whereYear('fiscal_period', $fiscal_period)->first();
+        $statusTax = false;
+        if (is_null($tax)) {
+            $statusTax = false;
+        } else {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                $statusTax =true;
+            } else if ($tax->status === 'temporal') {
+//                      $tax->delete();
+                $statusTax =false;
+            } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'cancel') {
+                $statusTax = false;
+            } else if ($tax->status === null) {
+                $statusTax = false;
+            }
+        }
+        return response()->json($statusTax);
     }
 
 
-    public function registerTaxeDefinitive(Request $request)
-    {
-        $verify_prologue = CheckCollectionDay::verify('Act.Eco.Defi');
-
+    public function registerTaxeDefinitive(Request $request){
         $datos = $request->all();
-
         $fiscal_period = $datos['fiscal_period'];
+
+        $verify_prologue = CheckCollectionDay::verify('Act.Eco.Defi',$datos['fiscal_period']);
 
         $company = $datos['company_id'];
 
@@ -1148,11 +1171,12 @@ class TicketOfficeController extends Controller
         $fiscal_credits = $datos['fiscal_credits'];
         $base_anticipated = $datos['anticipated'];
 
+        $fiscal_period_end=Carbon::parse($fiscal_period)->format('Y');
 
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('PTS89');
         $taxe->fiscal_period = $fiscal_period;
-        $taxe->fiscal_period_end = '2019-12-01';
+        $taxe->fiscal_period_end =$fiscal_period_end.'-12-31';
         $taxe->status = 'ticket-office';
         $taxe->type = 'definitive';
         $taxe->branch = 'Act.Eco';

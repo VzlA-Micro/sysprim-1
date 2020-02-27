@@ -123,7 +123,7 @@ $(document).ready(function () {
 
     function registerTaxes() {
         var form = new FormData(document.getElementById('register-taxes'));
-        form.append('fiscal_period', $('#fiscal_period').val());
+        form.append('fiscal_period', $('#fiscal_period_send').val());
 
         var type=$('#type').val();
 
@@ -276,10 +276,15 @@ $(document).ready(function () {
     }
 
 
-    $('#fiscal_period').change(function () {
+    $('.fiscal_period').change(function () {
         var company = $('#company_id').val();
+
+        $('#fiscal_period_send').val($(this).val());
         var fiscal_period = $('#fiscal_period').val();
-        var type = $('#type').val()
+
+
+
+        var type = $('#type').val();
 
         if (type != null) {
             if (company !== '') {
@@ -304,7 +309,10 @@ $(document).ready(function () {
                                         className: "blue-gradient"
                                     },
                                 });
-                                $('#fiscal_period').val(' ')
+                                $('#fiscal_period').val(' ');
+                                $("#general-next").attr('disabled','disabled');
+                            }else{
+                                $("#general-next").removeAttr('disabled','');
                             }
 
                             $("#preloader").fadeOut('fast');
@@ -359,44 +367,57 @@ $(document).ready(function () {
         var type = $(this).val();
         var company = $('#company_id').val();
 
+
+        if(type == 'definitive'){
+            $('#anticipated').addClass('hide');
+            $('#definitive').removeClass('hide');
+
+
+        }else{
+            $('#definitive').addClass('hide');
+            $('#anticipated').removeClass('hide');
+            $("#general-next").removeAttr('disabled','');
+        }
+
+
+        $('#fiscal_period_send').val('');
+
+
+
+    });
+
+
+    $('.fiscal_period').change(function () {
+        console.log('epa');
+
+
+        var type = $('#type').val();
+        var company = $('#company_id').val();
         if (company !== '') {
             if (type == 'definitive') {
+
+
+
                 $.ajax({
                     method: "GET",
-                    url: url + "tick-office/taxes/definitive/verify/" + company,
+                    url: url + "tick-office/taxes/definitive/verify/" + company + "/" + $(this).val(),
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-                        if (response.status === 'verified') {
+                        console.log(response);
+
+
+                        if (response) {
                             swal({
                                 title: "Información",
-                                text: 'La empresa ' + $('#name_company').val() + ' ya realizo la declaración definitiva de este año.',
+                                text: 'Ya tiene un pago declarado para este periodo fiscal',
                                 icon: "info",
-                                button: {
-                                    text: "Esta bien",
-                                    className: "blue-gradient"
-                                },
                             });
-
-                            $('#fiscal_period').val(' ');
-
-                        } else if (response.status === 'process') {
-                            swal({
-                                title: "Información",
-                                text: 'La empresa ' + $('#name_company').val() + ' tiene una declaracion definitiva en proceso.',
-                                icon: "info",
-                                button: {
-                                    text: "Esta bien",
-                                    className: "blue-gradient"
-                                },
-                            });
-                            $('#fiscal_period').val(' ');
-                        } else if (response.status === 'new') {
-                            $('#fiscal_period').val('2019-01-01');
-                            $('#fiscal_period').attr('readonly', 'readonly');
-
+                            $("#general-next").attr('disabled','disabled');
+                        }else {
+                            $("#general-next").removeAttr('disabled','');
                             $('#details').html('');
 
 
@@ -462,34 +483,34 @@ $(document).ready(function () {
                                     base = base.replace(/\./g, '');
 
 
-                                   /* if (base !== '0') {
-                                        if (parseFloat(base) <= min_total) {
-                                            swal({
-                                                title: "Información",
-                                                text: "El monto de la base imponible no " +
-                                                "puede ser menor que el minimo tributable " +
-                                                "por este CIIU,en caso de ser menor debe declarar " +
-                                                "como base imponible  0. Ord. Act. Económica Art.44",
-                                                icon: "info",
-                                                button: {
-                                                    text: "Esta bien",
-                                                    className: "blue-gradient"
-                                                },
-                                            });
-                                        }
+                                    /* if (base !== '0') {
+                                         if (parseFloat(base) <= min_total) {
+                                             swal({
+                                                 title: "Información",
+                                                 text: "El monto de la base imponible no " +
+                                                 "puede ser menor que el minimo tributable " +
+                                                 "por este CIIU,en caso de ser menor debe declarar " +
+                                                 "como base imponible  0. Ord. Act. Económica Art.44",
+                                                 icon: "info",
+                                                 button: {
+                                                     text: "Esta bien",
+                                                     className: "blue-gradient"
+                                                 },
+                                             });
+                                         }
 
-                                        if ($(this).val() != 0) {
-                                            console.log($(this).val());
-                                            $('.min > input.money_keyup').prop('readonly', false);
-                                            $(this).parent().siblings().removeClass('min');
-                                        } else {
-                                            $(this).parent().siblings().addClass('min');
-                                            $('.min > input.money_keyup').prop('readonly', true);
-                                        }
-                                    }
+                                         if ($(this).val() != 0) {
+                                             console.log($(this).val());
+                                             $('.min > input.money_keyup').prop('readonly', false);
+                                             $(this).parent().siblings().removeClass('min');
+                                         } else {
+                                             $(this).parent().siblings().addClass('min');
+                                             $('.min > input.money_keyup').prop('readonly', true);
+                                         }
+                                     }
 
 
-                                    */
+                                     */
                                 });
 
 
@@ -612,15 +633,11 @@ $(document).ready(function () {
                     }
                 });
 
-
             } else {
-                $('#fiscal_period').removeAttr('readonly', '');
-                $('#fiscal_period').val('');
                 $('#details').html('');
                 generarCiiu();
             }
         }
-
     });
 
     $('#search-code').blur(function () {
@@ -687,6 +704,8 @@ $(document).ready(function () {
 
     $('#general-next').click(function () {
 
+
+
         if ($('#company_id').val() === '') {
             swal({
                 title: "Información",
@@ -697,7 +716,7 @@ $(document).ready(function () {
                     className: "blue-gradient"
                 },
             });
-        } else if ($('#fiscal_period').val() === '') {
+        } else if ($('#fiscal_period_send').val() === '') {
             swal({
                 title: "Información",
                 text: 'Debe seleccionar un periodo fiscal, para continuar con el registro.',

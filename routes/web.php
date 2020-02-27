@@ -789,7 +789,7 @@ Route::middleware(['auth'])->group(/**
                 })->name('home.ticket-office');
 
                 ############### DIFINITIVE TICKET OFFICE ####################
-                Route::get('tick-office/taxes/definitive/verify/{id}', 'TicketOfficeController@verifyDefinitive');
+                Route::get('tick-office/taxes/definitive/verify/{id}/{fiscal_period}', 'TicketOfficeController@verifyDefinitive');
                 Route::post('ticket-office/taxes/definitive/save', 'TicketOfficeController@registerTaxeDefinitive');
                 Route::get('ticket-office/taxes/definitive/{id}', 'TicketOfficeController@detailsTaxesDefinitive')->name('ticketoffice.details.definitive');
 
