@@ -626,6 +626,8 @@ class PropertyController extends Controller
 
         $property->update();
 
+        $property->catasConstruct()->sync($typeConst);
+
         response()->json(['status' => 'success', 'message' => 'Los datos del inmueble han sido actualizado con éxito']);
 
     }
