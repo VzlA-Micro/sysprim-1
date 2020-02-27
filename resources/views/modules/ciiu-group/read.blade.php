@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Codigo</th>
+                                    <th>Fecha de creación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,6 +32,7 @@
                                 <tr>
                                     <td>{{ $groupCiiu->name }}</td>
                                     <td>{{ $groupCiiu->code }}</td>
+                                    <td>{{$groupCiiu->created_at->format('d-m-Y h:m:s')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

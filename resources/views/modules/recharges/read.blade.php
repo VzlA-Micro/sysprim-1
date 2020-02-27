@@ -31,6 +31,7 @@
                                     <th>Hasta</th>
                                     <th>Valor</th>
                                     <th>Ramo</th>
+                                    <th>Fecha de creación</th>
                                     @can('Detalles Recargo')
                                     <th>Detalles</th>
                                     @endcan
@@ -44,6 +45,7 @@
                                     <td>{{ $recharge->to }}</td>
                                     <td>{{ $recharge->value }}%</td>
                                     <td>{{ $recharge->branch }}</td>
+                                    <td>{{$recharge->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Recargo')
                                     <td>
                                         <a href="{{ route('recharges.details', ['id' => $recharge->id]) }}" class="btn btn-floating blue waves-effect waves-light">
