@@ -74,17 +74,69 @@
                         </button>
 
 
-
-
                         <div class="input-field col m12 s12">
                             <h5 class="center-align">Datos del Inmuebles</h5>
                         </div>
 
+                        <div class="input-field col m12 s12">
+                            <h6 class="center-align">Codígo Catastral</h6>
+                        </div>
+
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C1" id="C1" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="4" minlength="2" title="Solo puede escribir números."
+                                   required value="{{$codeCadastral[0]}}" readonly>
+                            <label for="C1">Estado</label>
+
+                        </div>
+
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C2" id="C2" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="4" minlength="2" title="Solo puede escribir números."
+                                   required value="{{$codeCadastral[1]}}" readonly>
+                            <label for="C2">Municipio</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C3" id="C3" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="3" minlength="2" value="{{$codeCadastral[2]}}" title="Solo puede escribir números."
+                                   required  readonly>
+                            <label for="C3">Parroquia</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C4" id="C4" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="3" minlength="3" value="{{$codeCadastral[3]}}" title="Solo puede escribir números."
+                                   required  readonly>
+                            <label for="C4">Sector</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="4" minlength="2" value="{{$codeCadastral[4]}}" title="Solo puede escribir números."
+                                   required  readonly>
+                            <label for="C5">Comuna</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="4" minlength="3" value="{{$codeCadastral[5]}}" title="Solo puede escribir números."
+                                   required  readonly>
+                            <label for="C6">Barrio</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C7" id="C7" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="3" minlength="3" value="{{$codeCadastral[6]}}" title="Solo puede escribir números."
+                                   required  readonly>
+                            <label for="C7">Manzana</label>
+                        </div>
+                        <div class="input-field col s12 m3">
+                            <input type="text" name="C8" id="C8" value="{{$codeCadastral[7]}}" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="8" minlength="3" title="."
+                                   required  readonly>
+                            <label for="C8">Terreno</label>
+                        </div>
+
                         <div class="input-field col s12 m12">
                             <i class="icon-format_bold prefix"></i>
-                            <input type="text" name="alias" id="alias" class="validate number-only" pattern="[0-9.]+"
-                                   data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
-                                   required maxlength="8" value="{{$property->alias}}" readonly>
+                            <input type="text" name="alias" id="alias" class="validate " pattern="[.,A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                   required maxlength="25" value="{{$property->alias}}" readonly>
                             <label for="alias">Alias del Inmueble</label>
                         </div>
 
@@ -164,13 +216,6 @@
                             <label for="address">Dirección</label>
 
                         </div>
-
-                        <div class="input-field col s12">
-                            <i class="icon-location_searching prefix"></i>
-                            <input type="text" id="alias" name="alias" value="{{ $property->alias }}" required maxlength="100" required disabled>
-                            <label for="alias">Alias del Inmueble</label>
-                        </div>
-
 
                         <div class="input-field col s12 m6">
                             <i class="icon-my_location prefix"></i>
