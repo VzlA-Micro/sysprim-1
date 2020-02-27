@@ -58,6 +58,13 @@
                     <div class="card-header center-align">
                         <h5>Detalles de Actividad Económica</h5>
                     </div>
+                           @php
+                                $recharge=0;
+                                $interest=0;
+                            @endphp
+
+
+
                     <form method="post" action="{{ route('company.taxes.save')}}" id='register-taxes' class="card-content row">
                         @csrf
                         @foreach($ciuTaxes as $ciu)
@@ -147,6 +154,12 @@
                             <input type="text" name="tasa[]" id="tasa_{{$ciu->ciu->code}}" class="validate recargo money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$ciu->recharge}}" readonly>
                             <label for="tasa_{{$ciu->ciu->code}}">Recargo (12%)<b> (Bs)</b></label>
                         </div>
+
+
+                            @php
+                                $recharge+=$ciu->recharge;
+                                $interest+=$ciu->interest;
+                            @endphp
                         <div class="input-field col s12 m6">
                             <i class="prefix">
                                 <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
@@ -188,11 +201,11 @@
 
                             <div class="col l6 s12">
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{'0'}}"  readonly>
+                                    <input type="text" name="interest"  class="validate money" id='interest' value="{{$interest}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12 ">
-                                    <input type="text" name="recargo" class="validate money" value="{{'0'}}"  readonly>
+                                    <input type="text" name="recargo" class="validate money" value="{{$recharge}} "  readonly>
                                     <label for="recargo">Recargo  Interes:(Bs)</label>
                                 </div>
                                 <div class="col s12 m12">
