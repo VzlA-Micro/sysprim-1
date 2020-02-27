@@ -378,8 +378,14 @@ class PropertyController extends Controller
         $catastralTerre = CatastralTerreno::orderBy('name', 'asc')->get();
         $catastralConst = CatastralConstruccion::orderBy('name', 'asc')->get();
         $propertyBuilding = Val_cat_const_inmu::where('property_id', $property->id)->get();
+
         $collectionCatastralConstruccion = $catastralConst->pluck('name', 'id');
         $selectedPropertyBuilding = $propertyBuilding->pluck('value_catas_const_id');
+
+        $cat=CatastralConstruccion::whereIn('id',$selectedPropertyBuilding)->get();
+
+        dd($cat);
+
         $parish = Parish::orderBy('name', 'asc')->get();
         $alicuota = Alicuota::orderBy('name', 'asc')->get();
         $codeCadastral = explode('-', $property->code_cadastral);
