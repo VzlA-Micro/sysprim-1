@@ -272,7 +272,7 @@
                             <div class="col s12 m4 center-align" style="margin-top:.5rem" id="block-users">
                                 <a href="#" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                    id="change-users">
-                                    Cambiar Propietario
+                                   <span class="truncate">Cambiar Propietario</span>       
                                     <i class="icon-refresh right"></i>
                                 </a>
                                 <a href="#" class=" hide btn btn-large btn-rounded waves-effect waves-light blue col s12"
@@ -303,14 +303,14 @@
                                         <button type="button"
                                                 class="btn btn-rounded btn-large waves-effect waves-light red col s12 "
                                                 id="vehicle-status" value="disabled">
-                                            Deshabilitar Vehículo
+                                                <span class="truncate">Deshabilitar Vehículo</span>                            
                                             <i class="icon-sync_disabled right"></i>
                                         </button>                                 
                                 @else                                    
                                         <button type="button"
                                                 class="btn btn-rounded btn-large waves-effect waves-light green col s12 "
                                                 id="vehicle-status" value="enabled">
-                                            Activar Vehículo
+                                                <span class="truncate">Activar Vehículo</span>         
                                             <i class="icon-check right"></i>
                                         </button>
                                 @endif
