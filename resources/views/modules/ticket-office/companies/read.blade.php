@@ -29,6 +29,7 @@
                                     <th>RIF</th>
                                     <th>Licencia</th>
                                     <th>Dirección</th>
+                                    <th>Fecha de creación</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
@@ -39,6 +40,7 @@
                                     <td>{{$company->RIF}}</td>
                                     <td>{{$company->license}}</td>
                                     <td>{{$company->address}}</td>
+                                    <td>{{$company->created_at->format('d-m-Y h:m:s')}}</td>
                                     <td><a href="{{route('tickOffice.companies.details',['id'=>$company->id])}}" class="btn btn-floating red"><i class="icon-pageview"></i></a></td>
                                 </tr>
                             @endforeach

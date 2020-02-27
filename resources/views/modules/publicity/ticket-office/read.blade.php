@@ -29,6 +29,7 @@
                                 <th>Codigo</th>
                                 <th>Nombre Publicidad</th>
                                 <th>Tipo</th>
+                                <th>Fecha de creación</th>
                                 @can('Detalles Publicidad')
                                 <th>Detalles</th>
                                 @endcan
@@ -42,6 +43,7 @@
                                         <td>{{$publicity->code}}</td>
                                         <td>{{$publicity->name}}</td>
                                         <td>{{$publicity->advertisingType->name}}</td>
+                                        <td>{{$publicity->created_at->format('d-m-Y h:m:s')}}</td>
                                         @can('Detalles Publicidad')
                                         <td>
                                             <a href="{{route('ticketOffice.publicity.detailsPublicity',['id'=>$publicity->id])}}" class="btn btn-floating orange waves-light">

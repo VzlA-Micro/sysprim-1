@@ -32,11 +32,11 @@ class Property extends Model implements Auditable
         return $this->hasMany('App\CatastralConstruccion','val_cat_const_inmu', 'value_catas_const_id');
 //            ->withPivot('value_catas_const_id');
     }
-/*
+
     public function catasConstruct(){
-        return $this->belongsToMany('App\CatastralConstruccion','val_cat_const_inmu')
-            ->withPivot('value_catas_const_id');
-    }*/
+        return $this->belongsToMany('App\CatastralConstruccion','val_cat_const_inmu','property_id','value_catas_const_id')
+            ->withPivot('property_id');
+    }
 
 
 

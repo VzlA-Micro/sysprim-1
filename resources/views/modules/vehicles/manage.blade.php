@@ -29,7 +29,7 @@
                 </ul>
             </div>
             @can('Declarar Vehiculos')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{route('taxes.vehicle',['id'=>$id."-".'true'])}}" class="btn-app white green-text">
                     <i class="icon-payment"></i>
                     <span class="truncate">Mis Declaraciones</span>
@@ -37,7 +37,7 @@
             </div>
             @endcan
             @can('Historial de Pagos - Vehiculos')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ url('/vehicle/payments/history/'.$id)}}" class="btn-app white orange-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Historial de Pagos</span>

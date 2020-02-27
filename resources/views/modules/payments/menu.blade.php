@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Declaración Anticipada - Actividad Económica')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}" class="btn-app white">
                     <i class="icon-account_balance grey-text"></i>
                     <span class="truncate black-text">Declaración  ANTICIPADA - Actividad Económica</span>
@@ -20,7 +20,7 @@
             </div>
             @endcan
             @can('Declaración Definitiva - Actividad Económica')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}" class="btn-app white green-text">
                     <i class="icon-account_balance"></i>
                     <span class="truncate">Declaración  DEFINITIVA - Actividad Económica</span>

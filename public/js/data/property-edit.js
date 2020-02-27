@@ -13,9 +13,19 @@ $('document').ready(function () {
         $('#type_inmueble_id').removeAttr('disabled', '');
         $('#parish').removeAttr('disabled', '');
         $('#address').removeAttr('disabled');
-        $('#alias').removeAttr('readonly','');
-        $('select').removeAttr('disabled','');
+        $('#block-owner').hide();
+        $('#block-location').hide();
+        $('#block-edit').addClass('col s12 m12 center-align');
+
+        $('#alias').removeAttr('readonly', '');
+        $('select').removeAttr('disabled', '');
         $('select').formSelect();
+        $('#C3').prop('readonly', false);
+        $('#C4').prop('readonly', false);
+        $('#C5').prop('readonly', false);
+        $('#C6').prop('readonly', false);
+        $('#C7').prop('readonly', false);
+        $('#C8').prop('readonly', false);
         $(this).addClass('hide');
 
         swal({
@@ -69,16 +79,25 @@ $('document').ready(function () {
                         $('#name').attr('readonly', 'readonly');
                     },
                     success: function (data) {
+                        console.log(data)
+                        if (data.status == "error") {
+                            swal({
+                                title: "Información",
+                                text: data.message,
+                                icon: "success",
+                                button: "Ok",
+                            })
+                        } else {
+                            swal({
+                                title: "¡Bien Hecho!",
+                                text: "Has Actualizado Los datos del inmueble con éxito.",
+                                icon: "success",
+                                button: "Ok",
+                            }).then(function () {
+                                location.reload();
+                            });
 
-                        swal({
-                            title: "¡Bien Hecho!",
-                            text: "Has Actualizado Los datos del inmueble con éxito.",
-                            icon: "success",
-                            button: "Ok",
-                        }).then(function () {
-                            location.reload();
-                        });
-
+                        }
                     },
                     error: function (e) {
                         console.log(e);
@@ -370,10 +389,10 @@ $('document').ready(function () {
 
     $('#C4').change(function () {
 
-        var sector=$(this).val();
+        var sector = $(this).val();
 
 
-        if(sector!=='') {
+        if (sector !== '') {
 
             $.ajax({
                 method: "GET",
@@ -390,7 +409,7 @@ $('document').ready(function () {
 
                     $('#location_cadastral').html('');
                     $('#location_cadastral').removeAttr('disabled', 'disabled');
-                    $('#parish option:first').prop('selected',true);
+                    $('#parish option:first').prop('selected', true);
                     $('#parish').removeAttr('disabled', 'disabled');
 
 
@@ -433,7 +452,6 @@ $('document').ready(function () {
             });
         }
     });
-
 
 
 });
@@ -584,8 +602,6 @@ function addMark(myLatLng, map, image, marcadores, remove) {
         $('#lng').val(marcadores[0].getPosition().lng());//coloca la marca
         $('#lat').val(marcadores[0].getPosition().lat);//a quien le coloco la multa
     }
-
-
 
 
 }

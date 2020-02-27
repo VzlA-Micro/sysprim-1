@@ -36,6 +36,7 @@
                                 <tr>
                                     <th>Codigo</th>
                                     <th>Ramo</th>
+                                    <th>Fecha de creación</th>
                                     <th>Monto</th>
                                 </tr>
                             </thead>
@@ -44,6 +45,7 @@
                                 <tr>
                                     <td>{{$taxe->code}}</td>
                                     <td>{{$taxe->branch}}</td>
+                                    <td>{{$taxe->created_at->format('d-m-Y h:m:s')}}</td>
                                     <td>{{$taxe->amountFormat}}</td>
                                 </tr>
                                 @endforeach

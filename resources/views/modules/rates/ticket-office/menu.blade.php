@@ -11,7 +11,7 @@
                 </ul>
             </div>
             @can('Tasas - Generar Planilla')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.generate')}}" class="btn-app white blue-text">
                     <i class="fas fa-clipboard"></i>
                     <span class="truncate">Generar Planilla</span>
@@ -19,7 +19,7 @@
             </div>
             @endcan
             @can('Tasas - Pagar Planillas')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{route('rate.ticketoffice.payments')}}" class="btn-app white amber-text">
                     <i class="icon-payment"></i>
                     <span class="truncate">Pagar Planilla</span>

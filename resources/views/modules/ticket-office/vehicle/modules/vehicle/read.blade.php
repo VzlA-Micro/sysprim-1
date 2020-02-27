@@ -32,6 +32,7 @@
                                 <th>Marca</th>
                                 <th>Módelo</th>
                                 <th>Año</th>
+                                 <th>Fecha de creación</th>
                                 @can('Detalles Vehiculos')
                                 <th>Detalles</th>
                                 @endcan
@@ -47,6 +48,7 @@
                                         <td>{{$vehicle->model->brand->name}}</td>
                                         <td>{{$vehicle->model->name}}</td>
                                         <td>{{$vehicle->year}}</td>
+                                        <td>{{$vehicle->created_at->format('d-m-Y h:m:s')}}</td>
                                         @can('Detalles Vehiculos')
                                         <td>
                                             <a href="{{route('ticketOffice.vehicle.details',['id'=>$vehicle->id])}}" class="btn btn-floating orange waves-light">
