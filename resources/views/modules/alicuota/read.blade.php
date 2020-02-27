@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     {{--<th>Valor</th>--}}
+                                    <th>Fecha de creación</th>
                                     @can('Detalles Alicuota')
                                     <th>Detalles</th>
                                     @endcan
@@ -37,6 +38,7 @@
                                 <tr>
                                     <td>{{ $alicuota->name }}</td>
                                     {{--<td>{{ $alicuota->value }}</td>--}}
+                                    <td>{{$alicuota->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Alicuota')
                                     <td>
                                         <a href="{{ route('alicuota.details', ['id' => $alicuota->id]) }}" class="btn btn-floating blue waves-effect waves-light">

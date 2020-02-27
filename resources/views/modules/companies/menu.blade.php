@@ -12,7 +12,7 @@
             {{-- @include('sweet::alert') --}} 
             @can('Consultar Mis Empresas')
             @foreach($companies as $company)
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('companies.details', ['id' => $company->id]) }}" class="btn-app white">
                     <i class="icon-work grey-text"></i>
                     <span class="truncate black-text">{{ $company->name }}</span>
@@ -21,7 +21,7 @@
             @endforeach
             @endcan
             @can('Registrar Mis Empresas')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('companies.register') }}" class="btn-app white orange-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Agregar nueva empresa...</span>

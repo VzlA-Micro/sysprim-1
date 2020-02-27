@@ -29,6 +29,7 @@
                                     <th>Teléfono</th>
                                     <th>E-mail</th>
                                     <th>Verificado</th>
+                                    <th>Fecha de creación</th>
                                     @can('Detalles Contribuyentes')
                                     <th>Detalles</th>
                                     @endcan
@@ -48,6 +49,7 @@
                                         Sin Verificar<i class="icon-close red-text" style="font-size: 20px"></i>
                                         @endif
                                     </td>
+                                    <td>{{$user->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Contribuyentes')
                                     <td>
                                         <a href="{{ route('taxpayers.details',['id' => $user->id]) }}" class="btn btn-floating orange waves-effect waves-light">

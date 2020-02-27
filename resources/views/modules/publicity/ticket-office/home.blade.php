@@ -11,7 +11,7 @@
                 </ul>
             </div>
             @can('Gestionar Publicidad')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.managePublicity') }}" class="btn-app white red-text">
                     <i class="icon-folder_special"></i>
                     <span class="truncate">Gestionar Publicidad</span>
@@ -19,7 +19,7 @@
             </div>
             @endcan
             @can('Gestionar Pagos - Publicidad')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('publicity.ticket-office.manage') }}" class="btn-app white blue-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Gestionar Pagos</span>
