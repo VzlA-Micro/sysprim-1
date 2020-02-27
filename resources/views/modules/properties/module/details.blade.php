@@ -166,7 +166,7 @@
                             @if($cats)
                             <div id="block-info-type">
                                 <div class="input-field col m12 s12">
-                                        <h6 class="center-align">Tipo de Construcciones</h6>
+                                        <h6 class="center-align">Tipos de Construcciones</h6>
                                 </div>
                                     @foreach ($cats as $cat)
                                     <div class="input-field col m12 s12">
