@@ -16,6 +16,10 @@ $('document').ready(function () {
         $('#block-owner').hide();
         $('#block-location').hide();
         $('#block-edit').addClass('col s12 m12 center-align');
+        $('#block-type').show();
+        $('#block-ubication').removeClass();
+        $('#block-ubication').addClass('input-field col m6 s12');
+        $('#block-info-type').hide();
 
         $('#alias').removeAttr('readonly', '');
         $('select').removeAttr('disabled', '');
