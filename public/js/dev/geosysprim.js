@@ -10,15 +10,15 @@ function initMap() {
 
 
 
-$('#refresh').click(function () {
+$('.refresh').click(function () {
     findCompanySolvent();
 });
-$('#company-solvent').click(function () {
+$('.company-solvent').click(function () {
     findCompanySolvent();
 });
 
 
-    $('#company-registered').click(function () {
+    $('.company-registered').click(function () {
         $.ajax({
             method: "GET",
             url: url + "geosysprim/find-company/registered",
@@ -92,7 +92,7 @@ $('#company-solvent').click(function () {
 });
 
 
-$('#company-process').click(function () {
+$('.company-process').click(function () {
     $.ajax({
         method: "GET",
         url: url + "geosysprim/find-company/process",
@@ -172,7 +172,7 @@ $('#company-process').click(function () {
 });
 
 
-$('#company-process-verified').click(function () {
+$('.company-process-verified').click(function () {
     $.ajax({
         method: "GET",
         url: url + "geosysprim/find-company/solvent-process",
