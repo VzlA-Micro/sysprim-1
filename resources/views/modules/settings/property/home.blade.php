@@ -16,7 +16,7 @@
             </div>
             
             @can('Gestionar Alicuotas')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('alicuota.manage')}}" class="btn-app white pink-text ">
                     <i class="icon-format_list_numbered"></i>
                     <span class="truncate">Alicuotas Inmuebles</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Gestionar Catastral Construccion')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('catrastal.construction.manage')}}" class="btn-app white red-text text-accent-3 ">
                     <i class="icon-build"></i>
                     <span class="truncate">Valores Catastrales de Construcciones</span>
@@ -32,7 +32,7 @@
             </div>
             @endcan
             @can('Gestionar Catastral Terreno')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('catrastal.terreno.manage')}}" class="btn-app white purple-text ">
                     <i class="icon-nature_people"></i>
                     <span class="truncate">Valores Catastrales de Terrenos</span>

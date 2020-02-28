@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Accesorio')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('accessories.register') }}" class="btn-app white cyan-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Accesorio</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Accesorios')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('accessories.read') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Accessorios</span>

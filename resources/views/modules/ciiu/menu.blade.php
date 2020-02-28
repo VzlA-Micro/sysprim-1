@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Registrar Ramo CIIU')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ciu-branch.register') }}" class="btn-app white green-text">
                     <i class="icon-note_add"></i>
                     <span class="truncate">Registrar Ramo CIIU</span>
@@ -20,7 +20,7 @@
             </div>
             @endcan
             @can('Consultar Ramos CIIU')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ciu-branch.read') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Ramos CIIU's</span>
@@ -29,7 +29,7 @@
             @endcan
 
 
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.manage')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Línea Del Tiempo-Ramo CIIU</span>

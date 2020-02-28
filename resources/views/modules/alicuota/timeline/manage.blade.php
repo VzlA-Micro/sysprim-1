@@ -17,7 +17,7 @@
                 </ul>
             </div>
             {{--@can('Consultar Alicuotas')--}}
-                <div class="col s6 m4 animated bounceIn">
+                <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('alicuota.timeline.register') }}" class="btn-app white blue-grey-text">
                         <i class="icon-alarm_add"></i>
                         <span class="truncate">Registrar Línea de Tiempo</span>
@@ -25,7 +25,7 @@
                 </div>
             {{--@endcan--}}
 
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('alicuota.timeline.read') }}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Consultar Línea de Tiempo</span>
