@@ -383,9 +383,7 @@ class PropertyController extends Controller
         $selectedPropertyBuilding = $propertyBuilding->pluck('value_catas_const_id');
 
         $cat=CatastralConstruccion::whereIn('id',$selectedPropertyBuilding)->get();
-
-        dd($cat);
-
+// dd($cat);
         $parish = Parish::orderBy('name', 'asc')->get();
         $alicuota = Alicuota::orderBy('name', 'asc')->get();
         $codeCadastral = explode('-', $property->code_cadastral);
@@ -409,6 +407,7 @@ class PropertyController extends Controller
             'parish' => $parish,
             'catasTerreno' => $catastralTerre,
             'catasConstruccion' => $catastralConst,
+            'cats' => $cat,
             'alicuota' => $alicuota,
             'property' => $property,
             'type' => $type,
@@ -631,6 +630,8 @@ class PropertyController extends Controller
         */
 
         $property->update();
+
+        $property->catasConstruct()->sync($typeConst);
 
         response()->json(['status' => 'success', 'message' => 'Los datos del inmueble han sido actualizado con éxito']);
 

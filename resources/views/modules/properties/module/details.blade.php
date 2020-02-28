@@ -140,7 +140,7 @@
                             <label for="alias">Alias del Inmueble</label>
                         </div>
 
-                        <div class="input-field col m6 s12">
+                        <div class="input-field col m12 s12" id="block-ubication">
                             <i class="icon-map prefix"></i>
                             <select name="location_cadastral" id="location_cadastral" required disabled>
                                 <option value="null" disabled selected>Seleccionar ubicacion Catastral</option>
@@ -154,13 +154,29 @@
                             </select>
                             <label>Ubicación Catastral</label>
                         </div>
-                        <div class="input-field col m6 s12">
+
+                        <div class="input-field col m6 s12" style="display:none" id="block-type">
                             <i class="icon-domain prefix"></i>
                             {{ Form::select('type_const[]',
                                 [null => 'Seleccionar Tipo de Construccion'] +
                                 [$collectionCatastralConstruccion], $selectedPropertyBuilding, array('multiple' => true, 'disabled' => true)) }}
                             <label>Tipo de Construccion</label>
                         </div>
+                   
+                            @if($cats)
+                            <div id="block-info-type">
+                                <div class="input-field col m12 s12">
+                                        <h6 class="center-align">Tipos de Construcciones</h6>
+                                </div>
+                                    @foreach ($cats as $cat)
+                                    <div class="input-field col m12 s12">
+                                        <i class="icon-domain prefix"></i>
+                                        <input type="text" value="{{$cat->name}}" disabled>
+                                    </div>
+                                    @endforeach
+                            </div>
+                            @endif                           
+                                               
 
                         <div class="input-field col s12 m6">
                             <i class="icon-panorama_horizontal prefix"></i>
