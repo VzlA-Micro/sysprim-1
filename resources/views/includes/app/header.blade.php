@@ -123,7 +123,6 @@
                     <li class="waves-efect waves-light">
                         <a href="{{ route('helps.manage') }}"class="waves-effect waves-black"><i class="icon-info left"></i>Ayuda</a>
                     </li>
-                    <li class="divider"></li>
                     {{-- @can('Ver Notificaciones')
                     <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>
                     @endcan --}}
