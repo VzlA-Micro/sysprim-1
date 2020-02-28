@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Registrar Publicidad')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Publicidad</span>
@@ -20,7 +20,7 @@
             </div>
             @endcan
             @can('Consultar Publicidad')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ticketOffice.publicity.read') }}" class="btn-app white grey-text text-darken-2">
                     <i class="icon-list"></i>
                     <span class="truncate">Ver Publicidad</span>
