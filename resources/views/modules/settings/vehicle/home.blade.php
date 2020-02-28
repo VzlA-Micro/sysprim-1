@@ -16,7 +16,7 @@
             </div>
             
             @can('Gestionar Tipos de Vehiculos')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('vehicles.type.vehicles') }}" class="btn-app white orange-text text-darken-1 ">
                     <i class="icon-local_shipping"></i>
                     <span class="truncate">Gestionar Tipos de Vehículos</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Gestionar Marcas de Vehiculos')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('vehicles.brand.manage') }}" class="btn-app white amber-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Gestionar Marcas de Vehículos</span>
@@ -32,7 +32,7 @@
             </div>
             @endcan
             @can('Gestionar Modelos de Vehiculos')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('vehicles.models.vehicles') }}" class="btn-app white light-green-text text-darken-4 ">
                     <i class="icon-airport_shuttle"></i>
                     <span class="truncate">Gestionar Modelos de Vehículos</span>

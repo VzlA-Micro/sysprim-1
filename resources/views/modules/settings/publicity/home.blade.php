@@ -16,7 +16,7 @@
             </div>
             
             @can('Gestionar Tipos de Publicidad')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('advertising-type.manage') }}" class="btn-app white teal-text">
                     <i class="icon-movie_filter"></i>
                     <span class="truncate">Gestionar Tipos de Publicidades</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Gestionar Grupos de Publicidad')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('group-publicity.manage')}}" class="btn-app white deep-purple-text">
                     <i class="icon-burst_mode"></i>
                     <span class="truncate">Grupos de Publicidad</span>
