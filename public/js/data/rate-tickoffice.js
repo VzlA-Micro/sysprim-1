@@ -267,13 +267,15 @@ $('document').ready(function () {
 
                         }else{
                             $('#name').val(user.nombres + ' ' + user.apellidos);
-                            $('#name').attr('readonly', '');
+                            $('#name').attr('readonly', 'readonly');
                             $('#surname').val(user.apellidos);
                             $('#user_name').val(user.nombres);
                             $('#type').val('user');
                             $('#address').prop('readonly', false);
                             $('#id').val(user.id);
+                            $('#email').val('');
                             $('#email').removeAttr('readonly','');
+
                         }
 
 
