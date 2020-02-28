@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="row show-on-medium-and-down hide-on-large-only">
-            <div class="col s12 m6 offset-m3 animated bounceInDown">
+            <div class="col s12 m8 offset-m2 l6 offset-l3 animated bounceInDown">
                 @if(session('notification'))
                 <div class="alert alert-success" style="margin-top: 1.5rem">
                     <span>{{ session('notification') }}</span>

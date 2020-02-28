@@ -144,11 +144,11 @@
                         </div>
 
                         <div class="card-content row">
-                            <div class="input-field col s6 left-align">
+                            <div class="input-field col s12 m6 left-align">
                                 <a href="#" id="button-brand" class="btn btn-rounded btn-large blue waves-effect">Registrar Marca<i
                                             class="icon-file_upload right"></i></a>
                             </div>
-                            <div class="input-field col s6 right-align">
+                            <div class="input-field col s12 m6 right-align">
                                 <button id="button-vehicle" type="submit" class="btn btn-rounded btn-large peach waves-effect">
                                     Registrar<i class="icon-send right"></i></button>
                             </div>
