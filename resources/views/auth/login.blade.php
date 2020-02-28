@@ -123,7 +123,7 @@
 
                     <div class="message-body">
                         <div class="row" style="margin-bottom: 0">
-                            <div class="col s1">
+                            <div class="col s1 center-align">
                                 <i class="icon-info medium"></i>
                             </div>
                             <div class="col s10">
