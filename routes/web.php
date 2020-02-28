@@ -821,9 +821,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/ticket-office/taxes/ateco/send-email/{id}', 'TicketOfficeController@sendEmailVerified');
                     Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 
-                    Route::get('/ticket-office/type-payment', function () {
-                        return view('modules.payments.type_payment');
-                    })->name('ticket-office.type.payments');
+                    
                 });
             });
 
@@ -989,6 +987,9 @@ Route::middleware(['auth'])->group(/**
             ############ CONFIGURACION DE TAQUILLA
 
             Route::get('/ticket-office/config', 'TicketOfficeController@config')->name('ticket-office.config');
+            Route::get('/ticket-office/type-payment', function () {
+                return view('modules.payments.type_payment');
+            })->name('ticket-office.type.payments');
 
             ########### VERIFICACION DE PAGOS
             Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function () {

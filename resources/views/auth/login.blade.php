@@ -54,11 +54,13 @@
                     <span>{{ session('notification') }}</span>
                 </div>
                 @endif
-                <div class="alert alert-info bg-info-opacity-7" style="margin-top: 1.5rem">
-                    <span><b>Bienvenido(a) Contribuyente</b> al nuevo <b>Sistema para la Recaudación de Impuestos Municipales del SEMAT (SysPRIM)</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
-                    <!-- <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted.  -->
-                    </span>
-                </div>
+                <article class="message bg-opacity-8" style="margin-top: 1.5rem">
+                    <div class="message-body">
+                        <span><b>Bienvenido(a) Contribuyente</b> al nuevo <b>Sistema para la Recaudación de Impuestos Municipales del SEMAT (SysPRIM)</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
+                            <!-- <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted.  -->
+                        </span>
+                    </div>
+                </article>
                 <form action="{{ route('login') }}" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">
                         <h5>
@@ -117,11 +119,20 @@
         </div>
         <div class="row">
             <div class="col s12 hide-on-med-and-down animated bounceInDown"  style="padding-top: 1.5rem">
-                <div class="alert alert-info bg-info-opacity-7">
-                    <span> <!-- <b>Semat</b>  es el Servicio Municipal de Administración Tributaria (SEMAT), es un ente descentralizado que se encarga de desarrollar políticas y planes tributarios que permitan asumir el proceso de recaudación de los ingresos municipales.<br>--><b>Bienvenido(a) Contribuyente</b> al nuevo <b>Sistema para la Recaudación de Impuestos Municipales del SEMAT (SysPRIM)</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
-                    <!-- <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted.  -->
-                    </span>
-                </div>
+                <article class="message bg-opacity-8">
+
+                    <div class="message-body">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s1">
+                                <i class="icon-info medium"></i>
+                            </div>
+                            <div class="col s10">
+                                <span><b>Bienvenido(a) Contribuyente</b> al nuevo <b>Sistema para la Recaudación de Impuestos Municipales del SEMAT (SysPRIM)</b>. Por favor, Inicia Sesión ó <a href="{{ route('register') }}" style="color:#126887;font-weight: 900; text-decoration: underline;">Regístrate aquí</a> para comenzar a contribuir. Y Recuerda: <b>¡No deber es tu deber!</b><br>
+                                    <!-- <b>Nota:</b> Por el momento, solo se realizan <b>pagos de Actividad Económica</b>. El equipo de desarrollo esta trabajando para usted.  --></span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </div>
