@@ -273,9 +273,7 @@ $('document').ready(function () {
                             $('#type').val('user');
                             $('#address').prop('readonly', false);
                             $('#id').val(user.id);
-
-                            $('#address').attr('readonly','');
-                            $('#email').attr('readonly','');
+                            $('#email').removeAttr('readonly','');
                         }
 
 
