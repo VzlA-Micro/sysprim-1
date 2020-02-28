@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Marca de Vehiculo')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('vehicles.brand.register') }}" class="btn-app white green-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Marcas De Vehículo</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Marcas de Vehiculos')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('vehicles.brand.read') }}" class="btn-app white amber-text">
                     <i class="icon-directions_car"></i>
                     <span class="truncate">Ver Marcas De Vehículos</span>

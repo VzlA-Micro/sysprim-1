@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Registrar Inmueble')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('property.ticket-office.create-property')}}" class="btn-app white light-blue-text">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Registrar Inmuebles Urbanos</span>
@@ -20,7 +20,7 @@
             </div>
             @endcan
             @can('Consultar Inmuebles')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{route('property.ticket-office.read-property')}}" class="btn-app white green-text text-darken-2">
                     <i class="icon-list"></i>
                     <span class="truncate">Consultar Inmuebles Urbanos</span>

@@ -25,7 +25,7 @@
             @endcan
 
             @can('Gestionar Ramos CIIU')
-            <div class="col s12 m3 animated bounceIn">
+            <div class="col s6 m3 animated bounceIn">
                 <a href="{{ route('ciu-branch.manage') }}" class="btn-app white teal-text">
                     <i class="icon-view_list"></i>
                     <span class="truncate">Gestionar Ramos CIIU's</span>

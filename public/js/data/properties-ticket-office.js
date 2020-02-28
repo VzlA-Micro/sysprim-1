@@ -85,7 +85,7 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeIn('fast');
             },
             success: function (data) {
-                console.log(data);
+
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
                 if (data) {

@@ -27,7 +27,7 @@
 		            				<th>Código</th>
 		            				<th>Nombre</th>
 		            				<th>Cantidad UT</th>
-		            				<th>Status</th>
+                                    <th>Status</th>
                                     @can('Detalles Tasa')
 		            				<th>Detalles</th>
 		            			    @endcan

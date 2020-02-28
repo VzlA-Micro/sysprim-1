@@ -25,7 +25,8 @@
 		            	<table class="highlight centered" id="accessories-table" style="width: 100%">
 		            		<thead>
 		            			<tr>
-		            				<th>Nombre</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha de creación</th>
                                     @can('Detalles Valor Terreno')
 		            				<th>Detalles</th>
                                     @endcan
@@ -35,6 +36,7 @@
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
+                                    <td>{{$cat->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Valor Terreno')
                                     <td>
                                         <a href="{{ route('catrastal.terreno.details', ['id' => $cat->id]) }}"

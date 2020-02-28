@@ -23,7 +23,7 @@
                 {{--<div class="col s12">--}}
                     {{--<p><b>Usuario Web</b></p>--}}
                 {{--</div>--}}
-                <div class="col s12 m4">
+                <div class="col s6 m4">
                 <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
                     <i class="icon-location_city"></i>
                         <span class="truncate">{{ $property->alias }}</span>
@@ -45,10 +45,10 @@
                 {{--<div class="col s12">--}}
                       {{--<p><b>Juridico</b></p>--}}
                 {{--</div>--}}
-                <div class="col s12 m4">
+                <div class="col s6 m4">
                      <a href="{{ route('properties.details',['id' => $property->id]) }}" class="btn-app white purple-text">
                          <i class="icon-location_city"></i>
-                         <span class="truncate">{{ $property->code_cadastral }}</span>
+                         <span class="truncate">{{ $property->alias }}</span>
                          <span><b>Juridico</b></span>
                      </a>
                 </div>
@@ -56,7 +56,7 @@
             @endforeach
             @endcan
             @can('Registrar Mis Inmuebles')
-            <div class="col s12 m4">
+            <div class="col s6 m4">
                 @if(isset($company))
                 <a href="{{ route('properties.register', ['company_id' => $company->id]) }}" class="btn-app white orange-text">
                 @else

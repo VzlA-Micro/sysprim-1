@@ -23,7 +23,7 @@
             @can('Consultar Mis Vehiculos')
                 @foreach($show as $vehicle)
                     @if(isset($company))
-                        <div class="col s12 m4 animated bounceIn">
+                        <div class="col s6 m4 animated bounceIn">
                             <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.true])}}"
                                class="btn-app white purple-text">
                                 <i class="icon-directions_car"></i>
@@ -33,7 +33,7 @@
                         </div>
                     @else
                         @if(isset($vehicle->company[0]->id))
-                            <div class="col s12 m4 animated bounceIn">
+                            <div class="col s6 m4 animated bounceIn">
                                 <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.false])}}"
                                    class="btn-app white purple-text">
                                     <i class="icon-directions_car"></i>
@@ -42,7 +42,7 @@
                                 </a>
                             </div>
                         @else
-                            <div class="col s12 m4 animated bounceIn">
+                            <div class="col s6 m4 animated bounceIn">
                                 <a href="{{ route('vehicles.details',['id'=>$vehicle->id.'-'.false])}}"
                                    class="btn-app white purple-text">
                                     <i class="icon-directions_car"></i>
@@ -57,7 +57,7 @@
             @endcan
             @can('Registrar Mis Vehiculos')
                 @if(isset($company))
-                    <div class="col s12 m4 animated bounceIn">
+                    <div class="col s6 m4 animated bounceIn">
                         <a href="{{ route('vehicles.register',['register'=>'COMPANY-'.$company->id]) }}"
                            class="btn-app white orange-text">
                             <i class="icon-add_circle"></i>
@@ -65,7 +65,7 @@
                         </a>
                     </div>
                 @else
-                    <div class="col s12 m4 animated bounceIn">
+                    <div class="col s6 m4 animated bounceIn">
                         <a href="{{ route('vehicles.register',['register'=>'']) }}" class="btn-app white orange-text">
                             <i class="icon-add_circle"></i>
                             <span class="truncate">Agregar nuevo vehículo...</span>

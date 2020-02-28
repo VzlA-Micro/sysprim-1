@@ -25,6 +25,7 @@
                                     <th>Inicio</th>
                                     <th>Fin</th>
                                     <th>Valor</th>
+                                    <th>Fecha de creación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,6 +34,7 @@
                                     <td>{{ $tributo->since }}</td>
                                     <td>{{ $tributo->to }}</td>
                                     <td>{{ $tributo->value }}</td>
+                                    <td>{{$tributo->created_at->format('d-m-Y h:m:s')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

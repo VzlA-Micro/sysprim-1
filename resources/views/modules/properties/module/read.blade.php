@@ -29,8 +29,9 @@
                                     <th>Código Catastral</th>
                                     <th>Tipo de Inmueble</th>
                                     <th>Ubicación Catastral</th>
-                                    <th>Parroquia </th>
+                                    <th>Alias</th>
                                     <th>Dirección</th>
+                                    <th>Fecha de creación</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
@@ -41,8 +42,9 @@
                                     <td>{{$property->code_cadastral}}</td>
                                     <td>{{$property->type->name}}</td>
                                     <td>{{$property->valueGround->name}}</td>
-                                    <td>{{$property->parish->name}}</td>
+                                    <td>{{$property->alias}}</td>
                                     <td>{{$property->address}}</td>
+                                    <td>{{$property->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Inmuebles')
                                     <td>
                                         <a href="{{route('property.ticket-office.details-property',['id'=>$property->id])}}" class="btn btn-floating red">

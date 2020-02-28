@@ -55,14 +55,19 @@
 
                                                     <button class="btn blue">
                                                         <i class="icon-more_horiz left"></i>
-                                                        SIN CONCILIAR AÚN
+                                                        <span class="truncate">
+                                                            SIN CONCILIAR AÚN
+                                                        </span>   
                                                     </button>
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td><a href="{{url('rate/taxpayers/pdf/'.$taxe->id.'/true')}}"
                                                        class="btn orange waves-effect waves-light">
                                                         <i class="icon-description left"></i>
-                                                        Descargar planilla
+                                                        <span class="truncate">
+                                                            Descargar planilla
+                                                        </span>
+                                                        
                                                     </a>
                                                 </td>
                                                 @endcan
@@ -71,14 +76,18 @@
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-check left"></i>
-                                                        VERIFICADA.
+                                                        <span class="truncate">
+                                                            VERIFICADA.
+                                                        </span>
                                                     </button>
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td>
                                                     <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
                                                         <i class="icon-description left"></i>
-                                                        Descargar Planilla
+                                                        <span class="truncate">
+                                                            Descargar Planilla
+                                                        </span>
                                                     </a>
                                                 </td>
                                                 @endcan
@@ -86,14 +95,18 @@
                                                 <td>
                                                     <button class="btn" disabled>
                                                         <i class="icon-block left"></i>
-                                                        CANCELADA.
+                                                        <span class="truncate">
+                                                            CANCELADA.
+                                                        </span>
                                                     </button>
                                                 </td>
                                                 @can('Detalles Mi Planilla')
                                                 <td>
                                                     <a href="#" class="btn indigo waves-effect waves-light" disabled>
                                                         <i class="icon-pageview left"></i>
-                                                        Detalles
+                                                        <span class="truncate">
+                                                            Detalles
+                                                        </span>                                                       
                                                     </a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>

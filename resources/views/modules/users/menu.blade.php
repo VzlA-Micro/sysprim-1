@@ -14,7 +14,7 @@
                 </ul>
             </div>
             @can('Registrar Usuario')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('users.register') }}" class="btn-app white amber-text">
                     <i class="icon-person_add"></i>
                     <span class="truncate">Registrar Usuario</span>
@@ -22,7 +22,7 @@
             </div>
             @endcan
             @can('Consultar Usuarios')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('users.read') }}" class="btn-app white indigo-text">
                     <i class="icon-assignment_ind"></i>
                     <span class="truncate">Ver Usuarios</span>
