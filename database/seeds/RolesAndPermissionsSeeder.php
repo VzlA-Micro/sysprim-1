@@ -1058,6 +1058,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleTreasurer = Role::create(['name' => 'Tesorero']);
         $roleTreasurer->givePermissionTo([
             'Taquillas',
+            'Estadisticas',
+            'Estadisticas - Bancos',
             'Ver Pagos',
             'Ver Pagos - Transferencias',
             'Ver Pagos - Punto de Venta',

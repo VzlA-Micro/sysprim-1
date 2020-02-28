@@ -41,7 +41,7 @@
                             <label for="license_plate">Placa</label>
                         </div>
 
-                        <div class="input-field col s6">
+                        <div class="input-field col s12 m6">
                             <i class="icon-airport_shuttle prefix"></i>
                             <select name="typeV" id="typev" required>
                                 {{--<option value="null" disabled selected>Selecciona el tipo de vehiculo</option>--}}
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div id="group-MB">
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-directions_car prefix"></i>
                                 <select name="brand" id="brand" required>
                                     <option value="null" disabled selected>Selecciona la marca</option>
@@ -101,7 +101,7 @@
                                 </select>
                                 <label for="brand">Marca</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-local_shipping prefix"></i>
                                 <select name="model" id="model" required>
                                     <option value="null" disabled selected>Selecciona el módelo</option>
