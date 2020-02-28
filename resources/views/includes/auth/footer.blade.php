@@ -8,20 +8,20 @@
 </footer> --}}
 <footer style="z-index: 1" class="page-footer iribarren-wine-gradient">
         <div class="row valign-wrapper">
-                <div class="col s12 m3 left-align social">
-                    <span class="white-text" style="font-size:12px">
-                        SERVICIO MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA <br>
-                        <b>RIF:</b> G-20000207-7,
-                        <b>CORREO:</b> semat.alcaldia.iribarren@gmail.com
-                    </span>
-                </div>
-            <div class="col s12 m3 center-align social">
+            <div class="col s12 m3 left-align social hide-on-med-and-down">
+                <span class="white-text" style="font-size:12px">
+                    SERVICIO MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA <br>
+                    <b>RIF:</b> G-20000207-7,
+                    <b>CORREO:</b> semat.alcaldia.iribarren@gmail.com
+                </span>
+            </div>
+            <div class="col s4 m3 center-align social">
                 <a href="https://www.facebook.com/SematBolivariano" target="_blank"><i class="fab fa-facebook-f"></i></a>
             </div>
-            <div class="col s12 m3 center-align social">
+            <div class="col s4 m3 center-align social">
                 <a href="https://twitter.com/SEMATIribarren" target="_blank"><i class="fab fa-twitter"></i></a>
             </div>
-            <div class="col s12 m3 center-align social">
+            <div class="col s4 m3 center-align social">
                 <a href="https://www.instagram.com/prensasemati/?hl=es-la" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
