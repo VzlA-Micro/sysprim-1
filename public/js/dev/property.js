@@ -423,13 +423,30 @@ $('document').ready(function () {
                     if(response.status!=='error') {
                         if (response.type == 'not-user') {
                             var user = response.user.response;
-                            $('#name').val(user.nombres + ' ' + user.apellidos);
-                            $('#name').attr('readonly');
-                            $('#surname').val(user.apellidos);
-                            $('#user_name').val(user.nombres);
-                            $('#type').val('user');
-                            $('#id').val(user.id);
-                            $('#address').removeAttr('readonly', '');
+                            if(user.inscrito==false){
+                                swal({
+                                    title: "Lo sentimos",
+                                    text: "Su cédula no se encuentra registrada en el CNE.",
+                                    icon: "info",
+                                    button: {
+                                        text: "Entendido",
+                                        className: "red-gradient"
+                                    },
+                                }).then(function () {
+                                    $('#document').val('');
+                                    $('#document').focus();
+                                });
+
+                            }else{
+                                $('#name').val(user.nombres + ' ' + user.apellidos);
+                                $('#name').attr('readonly');
+                                $('#surname').val(user.apellidos);
+                                $('#user_name').val(user.nombres);
+                                $('#type').val('user');
+                                $('#id').val(user.id);
+                                $('#address').removeAttr('readonly', '');
+                            }
+
                         } else if (response.type == 'user') {
                             var user = response.user;
                             $('#name').val(user.name + ' ' + user.surname);
