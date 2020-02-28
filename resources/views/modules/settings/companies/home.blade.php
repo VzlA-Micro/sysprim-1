@@ -16,7 +16,7 @@
             </div>
             
             @can('Gestionar CIIU')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ciu.manage') }}" class="btn-app white red-text text-darken-1">
                     <i class="icon-assignment"></i>
                     <span class="truncate">Gestionar Grupos CIIU's</span>
@@ -25,7 +25,7 @@
             @endcan
 
             @can('Gestionar Ramos CIIU')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('ciu-branch.manage') }}" class="btn-app white teal-text">
                     <i class="icon-view_list"></i>
                     <span class="truncate">Gestionar Ramos CIIU's</span>

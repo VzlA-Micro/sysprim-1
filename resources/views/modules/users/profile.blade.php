@@ -16,7 +16,7 @@
             <div class="col s12 m8 offset-m2">
                 <div class="card">
                     <div class="card-content row">
-                        <div class="col s12 m6 center-align">
+                        <div class="col s12 m12 l6 center-align">
                             @if (Storage::disk('users')->has(Auth::user()->image))
                             <div class="wrapper center">
                                 <!-- <form action="" method="post" id="change-image"> -->
@@ -31,7 +31,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="col s12 m6">
+                        <div class="col s12 m12 l6">
                             <h4 class="center-align">{{ Auth::user()->name . " " . Auth::user()->surname }}</h4>
                             <div class="divider"></div>
                             <div id="user_info">

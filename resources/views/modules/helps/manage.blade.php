@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>--}}
-            <div class="col s12 m8">
+            <div class="col s12 m12 l8">
                 <div class="collection with-header">
                     <div class="collection-header center-align"><h4>Ayuda</h4></div>
                     <a href="{{ route('download', ['file' => 'Manual_Registro_Empresa.pdf']) }}" class="collection-item red-text text-darken-4">
@@ -53,18 +53,18 @@
                     </a> -->
                 </div>
             </div>
-            <div class="col s12 m4" style="margin-top: 7px; margin-bottom: 0">
+            <div class="col s12 m12 l4" style="margin-top: 7px; margin-bottom: 0">
                 <article class="message message-red-semat">
                     <div class="message-header">
                         <span style="font-size: 20px">Contactanos:</span>
                         <i class="fas fa-phone-alt right small"></i>
                     </div>
                     <div class="message-body">
-                        <span style="font-size: 20px">
+                        <span style="font-size: 20px" class="truncate">
                             <i class="fab fa-whatsapp"></i>
                             <b>WhatsApp: </b> <a href="https://wa.me/584120574860">+584120574860</a>
                         </span><br>
-                        <span style="font-size: 20px">
+                        <span style="font-size: 20px" class="truncate">
                             <i class="fas fa-mail-bulk"></i>
                             <b>E-mail: </b> sysprim@gmail.com
                         </span>
