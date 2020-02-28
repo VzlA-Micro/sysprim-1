@@ -27,6 +27,7 @@
                             <thead>
                             <tr>
                                 <th>Nombre del Grupo</th>
+                                <th>Fecha de creación</th>
                                 @can('Detalles Grupo de Publicidad')
                                 <th>Detalles</th>
                                 @endcan
@@ -36,6 +37,7 @@
                             @foreach($showGroups as $showGroup)
                                 <tr>
                                     <td>{{$showGroup->name}}</td>
+                                    <td>{{$showGroup->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Grupo de Publicidad')
                                     <td>
                                         <a href="{{route('group-publicity.details',['id'=>$showGroup->id])}}" class="btn btn-floating orange waves-light"><i

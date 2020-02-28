@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Cantidad de unidades tributarias</th>
+                                    <th>Fecha de creación</th>
                                     <th>Detalles</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,7 @@
                                 <tr>
                                     <td>{{ $fines->name }}</td>
                                     <td>{{ $fines->cant_unid_tribu }}</td>
+                                    <td>{{$fines->created_at->format('d-m-Y h:m:s')}}</td>
                                     <td>
                                         <a href="{{ route('fines.details',['id' => $fines->id]) }}" class="btn btn-small btn-floating pink waves-effect effect-light"><i class="icon-pageview"></i></a>
                                     </td>

@@ -10,7 +10,7 @@
                 </ul>
             </div>
             @can('Declarar Tasas')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{route('rate.taxpayers.register')}}" class="btn-app white indigo-text">
                     <i class="icon-add_box"></i>
                     <span class="truncate">Declarar Tasa</span>
@@ -18,7 +18,7 @@
             </div>
             @endcan
             @can('Historial de Pagos - Tasas')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{route('rate.taxpayers.payment.history')}}" class="btn-app white orange-text">
                     <i class="icon-assignment"></i>
                     <span class="truncate">Historial de Pagos</span>

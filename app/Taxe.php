@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes','amountFormat','fiscalPeriodFormat'];
+    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes','amountFormat','fiscalPeriodFormat','fiscalPeriodFormatEnd'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
@@ -169,8 +169,15 @@ class Taxe extends Model implements Auditable {
         return  number_format($this->amount,2);
     }
 
+
+
     public function getFiscalPeriodFormatAttribute(){
         return Carbon::parse($this->fiscal_period)->format('d-m-Y');
+    }
+
+
+    public function getFiscalPeriodFormatEndAttribute(){
+        return Carbon::parse($this->fiscal_period_end)->format('d-m-Y');
     }
 
 

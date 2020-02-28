@@ -74,7 +74,9 @@
                             </div>
 
 
-                            <div class="input-field col s6">
+
+                            <input type="hidden" name="fiscal_period" id="fiscal_period_send">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-picture_as_pdf prefix"></i>
                                 <select name="type" id="type">
                                     <option value="null" disabled selected>Seleciona una Opción</option>
@@ -84,18 +86,27 @@
                                 <label for="type">Tipo de Planilla</label>
                             </div>
 
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6" id="anticipated">
                                 <i class="icon-date_range prefix"></i>
-                                <input type="text" name="fiscal_period" id="fiscal_period" class="fiscal_period"
+                                <input type="text" id="fiscal_period" class="fiscal_period"
                                        value="">
                                 <label for="fiscal_period">Periodo Fiscal</label>
                             </div>
 
-
-
-
-
-
+                            @php
+                                $cont=(int)date('Y')-1;
+                                $date=2019;
+                            @endphp
+                            <div class="input-field col s12 m6 hide" id="definitive">
+                                <i class="icon-date_range prefix"></i>
+                                <select id="fiscal_period_select" class="fiscal_period" >
+                                    <option value="null" disabled selected>Seleccione</option>
+                                    @for($cont;$cont>=$date;$cont--)
+                                        <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
+                                    @endfor
+                                </select>
+                                <label for="fiscal_period_select">Periodo Fiscal</label>
+                            </div>
 
                         </div>
                         <div class="card-footer" style="padding-bottom: .2rem">

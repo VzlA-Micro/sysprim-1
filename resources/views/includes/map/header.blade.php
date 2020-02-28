@@ -79,19 +79,19 @@
                 </a>
             </li>
             <li>
-                <a href="#" id='company-process' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                <a href="#" class="waves-effect waves-blue hide-on-med-and-down show-on-large-only company-process">
                     <i class="fa fa-money-check left"></i>
                     Pagos en Proceso
                 </a>
             </li>
             <li>
-                <a href="#" id='company-registered' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                <a href="#"  class="waves-effect waves-blue hide-on-med-and-down show-on-large-only company-registered">
                     <i class="fas fa-map-marked left"></i>
                     Empresas Registradas
                 </a>
             </li>
             <li>
-                <a href="#" id='company-process-verified' class="waves-effect waves-blue hide-on-med-and-down show-on-large-only">
+                <a href="#"  class="waves-effect waves-blue hide-on-med-and-down show-on-large-only company-process-verified">
                     <i class="fas fa-map-marked-alt left"></i>
                     Relación Actual
                 </a>

@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Grupo de Publicidad')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
              <a href="{{route('group-publicity.register')}}" class="btn-app white purple-text">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Grupo de Publicidad</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Grupos de Publicidad')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('group-publicity.read') }}" class="btn-app white blue-text">
                     <i class="icon-list"></i>
                     <span class="truncate">Ver Grupo de Publicidad</span>

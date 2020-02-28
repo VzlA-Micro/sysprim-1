@@ -53,7 +53,16 @@
                                             <td>{{$taxe->companies[0]->name}}</td>
                                             <td>{{$taxe->companies[0]->license}}</td>
                                             <td>{{$taxe->code}}</td>
-                                            <td>{{$taxe->fiscalPeriodFormat}}</td>
+
+
+                                            @if($taxe->type=='definitive')
+                                                <td>{{$taxe->fiscalPeriodFormat.'/'.$taxe->fiscalPeriodFormatEnd}}</td>
+                                            @else
+                                                <td>{{$taxe->fiscalPeriodFormat}}</td>
+                                            @endif
+
+
+
 
                                             <td class="center-align">
                                                 <label>

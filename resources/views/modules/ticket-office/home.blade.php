@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Gestionar Empresas')
-                <div class="col s12 m3 animated bounceIn">
+                <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('companies.manage') }}" class="btn-app white light-green-text">
                         <i class="icon-work"></i>
                         <span class="truncate">Gestionar Empresas</span>
@@ -20,7 +20,7 @@
                 </div>
             @endcan
             @can('Gestionar Pagos - Actividad Económica')
-                <div class="col s12 m3 animated bounceIn">
+                <div class="col s6 m3 animated bounceIn">
                     <a href="{{ route('payments.manage') }}" class="btn-app white grey-text text-darken-2">
                         <i class="icon-payment"></i>
                         <span class="truncate">Gestionar Pagos</span>

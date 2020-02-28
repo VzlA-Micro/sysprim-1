@@ -15,6 +15,7 @@
     <meta name="keywords" content="semat, semat en linea, alcaldia de iribarren semat, semat iribarren, semat barquisimeto, alcaldia de iribarren, pago de impuestos iribarren, recaudacion iribarren, impuestos iribarren">
     <meta name="description" content="SEMAT. El Servicio Municipal de Administración Tributaria es el encargado de la recaudación de impuestos dentro del municipio Iribarren. semat">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#a51d1d">
     <title>{{ config('app.name') }} - Alcaldía de Iribarren</title>
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.min.css') }}">
@@ -25,10 +26,6 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/style.css') }}">--}}
     <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono color.ico') }}">
-
-
-
-
     @yield('styles')
 </head>
 <body class="grey lighten-4 @guest auth-view auth-background @endguest">

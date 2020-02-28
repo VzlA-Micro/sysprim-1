@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Registrar Grupo CIIU')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('ciu-group.register') }}" class="btn-app white green-text">
                     <i class="icon-assignment_turned_in"></i>
                     <span class="truncate">Registrar Grupo CIIU</span>
@@ -20,7 +20,7 @@
             </div>
             @endcan
             @can('Consultar Grupos CIIU')
-            <div class="col s12 m4 animated bounceIn">
+            <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('ciu-group.read') }}" class="btn-app white amber-text">
                     <i class="icon-chrome_reader_mode"></i>
                     <span class="truncate">Ver Grupos CIIU</span>

@@ -26,7 +26,8 @@
 		            		<thead>
 		            			<tr>
 		            				<th>Nombre</th>
-		            				<th>Cantidad UT</th>
+                                    <th>Cantidad UT</th>
+                                    <th>Fecha de creación</th>
                                     @can('Detalles Tipo de Publicidad')
 		            				<th>Detalles</th>
                                     @endcan
@@ -36,7 +37,8 @@
 		            			@foreach($advertisingType as $type)
 		            			<tr>
 		            				<td>{{ $type->name }}</td>
-		            				<td>{{ $type->value }} UT</td>
+                                    <td>{{ $type->value }} UT</td>
+                                    <td>{{$type->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Tipo de Publicidad')
 		            				<td>
 		            					<a href="{{ route('advertising-type.details', ['id' => $type->id]) }}" class="btn btn-floating blue waves-effect waves-light">

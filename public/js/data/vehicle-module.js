@@ -558,6 +558,12 @@ $(document).ready(function () {
 
     });
 
+    $('#vehicles-previous').click(function () {
+        $('#user-tab-one').removeClass('disabled');
+        $('#two').addClass('disabled');
+        $('ul.tabs').tabs("select", "user-tab");
+    });
+
     /*$('#property').on('submit', function (e) {
         var type = $('#type').val();
         var id = $('#id').val();
