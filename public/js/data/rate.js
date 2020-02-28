@@ -263,7 +263,7 @@ $('document').ready(function () {
 
                     if(response.status!=='error') {
 
-
+                        $('#name').attr('readonly', 'readonly');
                         if (response.type == 'not-user') {
 
                             var user = response.user.response;
@@ -284,12 +284,14 @@ $('document').ready(function () {
 
                             }else{
                                 $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly');
+                                $('#name').attr('readonly','readonly');
                                 $('#surname').val(user.apellidos);
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
                                 $('#id').val(user.id);
                                 $('#address').removeAttr('readonly', '');
+                                $('#email').val('');
+                                $('#email').removeAttr('readonly', '');
                             }
 
                         } else if (response.type == 'user') {
