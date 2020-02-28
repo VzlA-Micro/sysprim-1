@@ -934,6 +934,7 @@ $('document').ready(function () {
                 success: function (response) {
 
                     if (response.type == 'not-user') {
+
                         var user = response.user.response;
                         $('#name').val(user.nombres + ' ' + user.apellidos);
                         $('#name').attr('readonly');

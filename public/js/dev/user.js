@@ -223,6 +223,20 @@ $(document).ready(function () {
                     $('#surname').attr('readonly', 'readonly');
 
 
+                    if(response.response.inscrito==false){
+                        swal({
+                            title: "Lo sentimos",
+                            text: "Su cédula no se encuentra registrada en el CNE.",
+                            icon: "info",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        }).then(function () {
+                            $('#ci').val('');
+                        });
+
+                    }
                     console.log(response);
                     M.updateTextFields();
 
