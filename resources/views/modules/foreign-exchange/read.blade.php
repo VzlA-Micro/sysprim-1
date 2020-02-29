@@ -27,9 +27,9 @@
                                 <th>Nombre Moneda</th>
                                 <th>Valor</th>
                                 <th>Fecha de creación</th>
-                                {{-- @can('Detalles Grupo de Publicidad') --}}
+                                 @can('Detalles Moneda')
                                 <th>Detalles</th>
-                                {{-- @endcan --}}
+                                 @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -38,12 +38,12 @@
                                     <td>{{$foreignExchange->name}}</td>
                                     <td>{{$foreignExchange->value}}</td>
                                     <td>{{$foreignExchange->created_at->format('d-m-Y h:m:s')}}</td>
-                                    {{-- @can('Detalles Grupo de Publicidad') --}}
+                                     @can('Detalles Moneda')
                                     <td>
                                         <a href="{{ route('foreign-exchange.details',['id' => $foreignExchange->id]) }}" class="btn btn-floating orange waves-light"><i
                                                     class="icon-pageview"></i></a>
                                     </td>
-                                    {{-- @endcan --}}
+                                     @endcan
                                 </tr>
                             @endforeach
                             </tbody>

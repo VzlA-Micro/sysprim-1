@@ -130,19 +130,26 @@ Route::middleware(['auth'])->group(/**
                         Route::get('/ciu-branch/read', 'CiuController@show')->name('ciu-branch.read');
                         Route::get('/ciu-branch/verify-code/{code}', 'CiuController@verifyCiu');
 
-                        //TIME-LINE CIIU///
-                        Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
+                        // Timeline CIIU
+                        Route::group(['middleware' => ['permission:Gestionar Linea de Tiempo']], function() {
+                            Route::get('/ciu-branch/time-line/manage', 'CiuController@managerTimeLine')->name('ciu-branch.timeline.manage');
 
-                        Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
+                            Route::group(['middleware' => ['permission:Registrar Linea de Tiempo']], function() {
+                                Route::get('/ciu-branch/time-line/register', 'CiuController@registerTimeLine')->name('ciu-branch.timeline.register');
+                                Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
 
-                        Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
+                            });
+                            Route::group(['middleware' => ['permission:Consultar Lineas de Tiempo']], function() {
+                                Route::get('/ciu-branch/time-line/index', 'CiuController@indexTimeLine')->name('ciu-branch.timeline.index');
 
-                        Route::get('/ciu-branch/time-line/details/{id}', 'CiuController@detailsTimeLine')->name('ciu-branch.timeline.details');
+                                Route::group(['middleware' => ['permission:Detalles Linea de Tiempo']], function() {
+                                    Route::get('/ciu-branch/time-line/details/{id}', 'CiuController@detailsTimeLine')->name('ciu-branch.timeline.details');
+                                    Route::post('/ciu-branch/time-line/update', 'CiuController@updateTimeLine')->name('ciu-branch.timeline.update');
 
-                        Route::post('/ciu-branch/time-line/store', 'CiuController@storeTimeLine')->name('ciu-branch.timeline.store');
 
-                        Route::post('/ciu-branch/time-line/update', 'CiuController@updateTimeLine')->name('ciu-branch.timeline.update');
-
+                                });
+                            });
+                        });
 
                         // Nivel 5 (Detalles)
                         Route::group(['middleware' => ['permission:Detalles Ramo CIIU|Actualizar Ramos CIIU']], function () {
@@ -177,7 +184,28 @@ Route::middleware(['auth'])->group(/**
                             Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
                         });
                     });
+
+                    Route::group(['middleware' => ['permission:Gestionar Linea de Tiempo']], function() {
+                        Route::get('/type-vehicles/timeline/manage', function () {
+                            return view('modules.vehicle_type.time-line.manage');
+                        })->name('type-vehicle.timeline.manage');
+                        Route::get('/type-vehicles/timeline/verified/{id}/{year}/{type}', 'TimelineTypeVehicleController@verifiedTimelineUpdate');
+
+                        Route::group(['middleware' => ['permission:Registrar Linea de Tiempo']], function() {
+                            Route::get('/type-vehicles/timeline/register', 'TimelineTypeVehicleController@create')->name('type-vehicles.timeline.register');
+                            Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
+                        });
+                        Route::group(['middleware' => ['permission:Consultar Lineas de Tiempo']], function() {
+                            Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
+
+                            Route::group(['middleware' => ['permission:Detalles Linea de Tiempo']], function() {
+                                Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
+                                Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
+                            });
+                        });
+                    });
                 });
+
 
                 // Gestionar Marcas de vehiculos
                 Route::group(['middleware' => ['permission:Gestionar Marcas de Vehiculos']], function () {
@@ -253,8 +281,6 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
 
-
-
                 // Gestionar Valor Catastral - Construccion
                 Route::group(['middleware' => ['permission:Gestionar Catastral Construccion']], function () {
                     Route::get('/catastral-construction/manager', 'CatastralConstruccionController@manage')->name('catrastal.construction.manage');
@@ -289,8 +315,6 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
 
-
-
                 // Gestionar Valor Catastral - Terreno
                 Route::group(['middleware' => ['permission:Gestionar Catastral Terreno']], function () {
                     Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
@@ -323,9 +347,6 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
             });
-
-
-
 
 
             Route::group(['middleware' => ['permission:Configuración - Publicidad']], function() {
@@ -470,6 +491,28 @@ Route::middleware(['auth'])->group(/**
                     });
                 });
             }); */
+
+            // Gestionar Moneda
+            Route::group(['middleware' => ['permission:Gestionar Monedas']], function () {
+                Route::get('/foreign-exchange/manage', function () {
+                    return view('modules.foreign-exchange.manage');
+                })->name('foreign-exchange.manage');
+
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Moneda|Consultar Monedas']], function () {
+                    Route::get('/foreign-exchange/register', 'ForeignExchangeController@create')->name('foreign-exchange.register');
+                    Route::post('/foreign-exchange/save', 'ForeignExchangeController@store')->name('foreign-exchange.save');
+                    Route::get('/foreign-exchange/read', 'ForeignExchangeController@index')->name('foreign-exchange.read');
+
+                    # Nivel 2: Detalles
+                    Route::group(['middleware' => ['permission:Detalles Moneda']], function () {
+                        Route::get('/foreign-exchange/details/{id}', 'ForeignExchangeController@show')->name('foreign-exchange.details');
+                        Route::post('/foreign-exchange/update', 'ForeignExchangeController@update')->name('foreign-exchange.update');
+                    });
+                });
+            });
+
+
 
             // Gestionar Tasas
             Route::group(['middleware' => ['permission:Gestionar Tasas']], function () {
@@ -1279,49 +1322,13 @@ Route::middleware(['auth'])->group(/**
         Route::get('home/test','HomeController@test');
 
 
-        ///////////////////////////////////////////////////////////////
-        ///
-        ///
-        ///
-
-
-        ///////////////////////////////////////////////////////////////
-        ///
-        ///
-        ///
-
-        ///////////////////////////////////////////////////////////////
-        ///
-        ///
-        ///
-
-
 //        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
 
         //:::::::::::::::::::::::::::::::::LINEA DEL TIEMPO DE TIPO DE VEHICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        Route::get('/type-vehicles/timeline/manage', function () {
-            return view('modules.vehicle_type.time-line.manage');
-        })->name('type-vehicle.timeline.manage');
 
-        Route::get('/type-vehicles/timeline/register', 'TimelineTypeVehicleController@create')->name('type-vehicles.timeline.register');
-        Route::post('/type-vehicles/timeline/save', 'TimelineTypeVehicleController@store')->name('type-vehicles.timeline.save');
-        Route::get('/type-vehicles/timeline/read', 'TimelineTypeVehicleController@index')->name('type-vehicles.timeline.read');
-        Route::get('/type-vehicles/timeline/details/{id}', 'TimelineTypeVehicleController@show')->name('type-vehicles.timeline.details');
-        Route::post('/type-vehicles/timeline/update', 'TimelineTypeVehicleController@update')->name('type-vehicles.timeline.update');
-
-        Route::get('/type-vehicles/timeline/verified/{id}/{year}/{type}', 'TimelineTypeVehicleController@verifiedTimelineUpdate');
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-        //Divisas
-        Route::get('/foreign-exchange/manage', function () {
-            return view('modules.foreign-exchange.manage');
-        })->name('foreign-exchange.manage');
 
-        Route::get('/foreign-exchange/register', 'ForeignExchangeController@create')->name('foreign-exchange.register');
-        Route::post('/foreign-exchange/save', 'ForeignExchangeController@store')->name('foreign-exchange.save');
-        Route::get('/foreign-exchange/read', 'ForeignExchangeController@index')->name('foreign-exchange.read');
-        Route::get('/foreign-exchange/details/{id}', 'ForeignExchangeController@show')->name('foreign-exchange.details');
-        Route::post('/foreign-exchange/update', 'ForeignExchangeController@update')->name('foreign-exchange.update');
 
     });

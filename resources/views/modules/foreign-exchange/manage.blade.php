@@ -14,22 +14,22 @@
                     <li class="breadcrumb-item"><a href="{{-- route('accessories.manage') --}}">Gestionar Monedas</a></li>
                 </ul>
             </div>
-            {{-- @can('Registrar Accesorio') --}}
+             @can('Registrar Moneda')
             <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('foreign-exchange.register') }}" class="btn-app white green-text text-darken-3">
                     <i class="fab fa-cc-diners-club"></i>
                     <span class="truncate">Registrar Moneda</span>
                 </a>
             </div>
-            {{-- @endcan --}}
-            {{-- @can('Consultar Accesorios') --}}
+             @endcan
+             @can('Consultar Monedas')
             <div class="col s6 m4 animated bounceIn">
                 <a href="{{ route('foreign-exchange.read') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Monedas</span>
                 </a>
             </div>
-            {{-- @endcan --}}
+             @endcan
         </div>
     </div>
 @endsection

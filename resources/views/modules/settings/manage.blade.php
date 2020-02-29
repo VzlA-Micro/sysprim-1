@@ -64,16 +64,14 @@
             </div>
             @endcan
 
-            {{-- @can('Gestionar Tasas') --}}
+             @can('Gestionar Monedas')
             <div class="col s6 m6 l3 animated bounceIn">
                 <a href="{{route('foreign-exchange.manage')}}" class="btn-app white green-text text-darken-3">
                     <i class="fab fa-cc-diners-club"></i>
                     <span class="truncate">Gestionar Monedas</span>
                 </a>
             </div>
-            {{-- @endcan --}}
-           
-
+             @endcan
         </div>
     </div>
 @endsection

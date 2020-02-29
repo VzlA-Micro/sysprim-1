@@ -37,7 +37,7 @@
                             <label for="value">Valor</label>
                         </div>
                     </div>
-                    {{-- @can('Actualizar Alicuota') --}}
+                     @can('Actualizar Moneda')
                     <div class="card-footer center-align">
                         <a href="#!" class="btn btn-large blue btn-rounded waves-effect waves-light" id="btn-modify">
                             <i class="icon-update right"></i>
@@ -48,7 +48,7 @@
                             Actualizar
                         </button>
                     </div>
-                    {{-- @endcan --}}
+                     @endcan
                 </form>
             </div>
         </div>

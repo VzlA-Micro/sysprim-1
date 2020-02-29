@@ -179,6 +179,13 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Linea de Tiempo']);
         Permission::create(['name' => 'Actualizar Linea de Tiempo']);
 
+        // -- Gestionar Monedas
+        Permission::create(['name' => 'Gestionar Monedas']);
+        Permission::create(['name' => 'Registrar Moneda']);
+        Permission::create(['name' => 'Consultar Monedas']);
+        Permission::create(['name' => 'Detalles Moneda']);
+        Permission::create(['name' => 'Actualizar Moneda']);
+
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
@@ -494,6 +501,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Lineas de Tiempo',
             'Detalles Linea de Tiempo',
             'Actualizar Linea de Tiempo',
+            'Gestionar Monedas',
+            'Registrar Moneda',
+            'Consultar Monedas',
+            'Detalles Moneda',
+            'Actualizar Moneda',
             'Taquillas',
             'Configurar Taquilla',
             ##### GESTIONAR CONTRIBUYENTE #####
