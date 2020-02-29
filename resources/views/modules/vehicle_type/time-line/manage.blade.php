@@ -16,20 +16,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('type-vehicle.timeline.manage') }}">Línea Del Tiempo - Tipo De Vehículos</a></li>
                 </ul>
             </div>
-
+            @can('Registrar Linea de Tiempo')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('type-vehicles.timeline.register')}}" class="btn-app white blue-grey-text">
                     <i class="icon-alarm_add"></i>
                     <span class="truncate">Registrar Línea Del Tiempo - Tipo De Vehículos</span>
                 </a>
             </div>
-
+            @endcan
+            @can('Consultar Lineas de Tiempo')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('type-vehicles.timeline.read')}}" class="btn-app white bnc-blue-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Ver Línea Del Tiempo - Tipo De Vehículos</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

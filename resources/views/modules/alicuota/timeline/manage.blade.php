@@ -16,22 +16,22 @@
                     <li class="breadcrumb-item"><a href="{{ route('alicuota.timeline.manage') }}" >Línea de Tiempo</a></li>
                 </ul>
             </div>
-            {{--@can('Consultar Alicuotas')--}}
+            @can('Registrar Linea de Tiempo')
                 <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('alicuota.timeline.register') }}" class="btn-app white blue-grey-text">
                         <i class="icon-alarm_add"></i>
                         <span class="truncate">Registrar Línea de Tiempo</span>
                     </a>
                 </div>
-            {{--@endcan--}}
-
+            @endcan
+            @can('Consultar Lineas de Tiempo')
             <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('alicuota.timeline.read') }}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Consultar Línea de Tiempo</span>
                 </a>
             </div>
-
+            @endcan
         </div>
     </div>
 @endsection

@@ -172,6 +172,13 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Valor Terreno']);
         Permission::create(['name' => 'Actualizar Valor Terreno']);
 
+        // -- Lineas de Tiempo
+        Permission::create(['name' => 'Gestionar Linea de Tiempo']);
+        Permission::create(['name' => 'Registrar Linea de Tiempo']);
+        Permission::create(['name' => 'Consultar Lineas de Tiempo']);
+        Permission::create(['name' => 'Detalles Linea de Tiempo']);
+        Permission::create(['name' => 'Actualizar Linea de Tiempo']);
+
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
@@ -482,6 +489,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Valores Terreno',
             'Detalles Valor Terreno',
             'Actualizar Valor Terreno',
+            'Gestionar Linea de Tiempo',
+            'Registrar Linea de Tiempo',
+            'Consultar Lineas de Tiempo',
+            'Detalles Linea de Tiempo',
+            'Actualizar Linea de Tiempo',
             'Taquillas',
             'Configurar Taquilla',
             ##### GESTIONAR CONTRIBUYENTE #####

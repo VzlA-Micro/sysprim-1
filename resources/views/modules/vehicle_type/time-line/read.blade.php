@@ -35,7 +35,7 @@
                                 <th>Hasta</th>
                                 {{--<th>Tarifa U.T menor a 3 años</th>
                                 <th>Tarifa U.T mayor a 3 años</th>--}}
-                                @can('Detalles Tipo de Vehiculos')
+                                @can('Detalles Linea de Tiempo')
                                     <th>Detalles</th>
                                 @endcan
                             </tr>
@@ -50,7 +50,7 @@
                                     <td>{{$tl->to}}</td>
                                     {{--<td>{{$type->rate}}</td>
                                     <td>{{$type->rate_UT}}</td>--}}
-                                    @can('Detalles Tipo de Vehiculos')
+                                    @can('Detalles Linea de Tiempo')
                                         <td>
                                             <a href="{{route('type-vehicles.timeline.details',['id'=>$tl->id])}}"
                                                class="btn btn-floating orange waves-light"><i

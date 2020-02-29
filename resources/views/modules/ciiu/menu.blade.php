@@ -27,14 +27,14 @@
                 </a>
             </div>
             @endcan
-
-
+            @can('Gestionar Linea de Tiempo')
             <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.manage')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Línea Del Tiempo-Ramo CIIU</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

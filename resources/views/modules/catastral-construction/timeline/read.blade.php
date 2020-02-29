@@ -30,9 +30,9 @@
                                 <th>Valor</th>
                                 <th>Desde</th>
                                 <th>Hasta</th>
-                                {{--@can('Detalles Alicuota')--}}
+                                @can('Detalles Linea de Tiempo')
                                 <th>Detalles</th>
-                                {{--@endcan--}}
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -42,13 +42,13 @@
                                     <td>{{ $timeline->value }} UT</td>
                                     <td>{{ $timeline->since }}</td>
                                     <td>{{ $timeline->to }}</td>
-                                    {{--@can('Detalles Alicuota')--}}
+                                    @can('Detalles Linea de Tiempo')
                                     <td>
                                         <a href="{{ route('catastral-construction.timeline.details', ['id' => $timeline->id]) }}" class="btn btn-floating blue waves-effect waves-light">
                                             <i class="icon-pageview"></i>
                                         </a>
                                     </td>
-                                    {{--@endcan--}}
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

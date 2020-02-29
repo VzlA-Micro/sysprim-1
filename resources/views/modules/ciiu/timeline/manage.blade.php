@@ -17,19 +17,22 @@
 
                 </ul>
             </div>
-
+            @can('Registrar Linea de Tiempo')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.register')}}" class="btn-app white blue-grey-text">
                     <i class="icon-alarm_add"></i>
                     <span class="truncate">Registrar Línea de Tiempo-CIIU</span>
                 </a>
             </div>
+            @endcan
+            @can('Consultar Lineas de Tiempo')
             <div class="col s12 m4 animated bounceIn">
                 <a href="{{route('ciu-branch.timeline.index')}}" class="btn-app white blue-grey-text">
                     <i class="icon-schedule"></i>
                     <span class="truncate">Ver Línea Del Tiempo-CIIU</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 @endsection

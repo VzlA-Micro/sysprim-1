@@ -234,7 +234,25 @@ Route::middleware(['auth'])->group(/**
                             Route::post('/alicuota/update', 'AlicuotaController@update')->name('alicuota.update');
                         });
                     });
+
+                    Route::group(['middleware' => ['permission:Gestionar Linea de Tiempo']], function() {
+                        Route::get('alicuota/timeline/manage', 'AlicuotaController@timelineManage')->name('alicuota.timeline.manage');
+                        Route::group(['middleware' => ['permission:Registrar Linea de Tiempo']], function() {
+                            Route::get('alicuota/timeline/register', 'AlicuotaController@timelineCreate')->name('alicuota.timeline.register');
+                            Route::post('alicuota/timeline/store', 'AlicuotaController@timelineStore')->name('alicuota.timeline.store');
+                        });
+
+                        Route::group(['middleware' => ['permission:Consultar Lineas de Tiempo']], function() {
+                            Route::get('alicuota/timeline/read', 'AlicuotaController@timelineIndex')->name('alicuota.timeline.read');
+
+                            Route::group(['middleware' => ['permission:Detalles Linea de Tiempo']], function() {
+                                Route::get('alicuota/timeline/details/{id}', 'AlicuotaController@timelineShow')->name('alicuota.timeline.details');
+                                Route::post('alicuota/timeline/update', 'AlicuotaController@timelineUpdate')->name('alicuota.timeline.update');
+                            });
+                        });
+                    });
                 });
+
 
 
                 // Gestionar Valor Catastral - Construccion
@@ -251,7 +269,27 @@ Route::middleware(['auth'])->group(/**
                             Route::post('/catastral-construction/update', 'CatastralConstruccionController@update')->name('catrastal.construction.update');
                         });
                     });
+
+                    Route::group(['middleware' => ['permission:Gestionar Linea de Tiempo']], function() {
+                        Route::get('catastral-construction/timeline/manage', 'CatastralConstruccionController@timelineManage')->name('catrastal-construction.timeline.manage');
+                        Route::group(['middleware' => ['permission:Registrar Linea de Tiempo']], function() {
+                            Route::get('catastral-construction/timeline/register', 'CatastralConstruccionController@timelineCreate')->name('catastral-construction.timeline.register');
+                            Route::post('catastral-construction/timeline/store', 'CatastralConstruccionController@timelineStore')->name('catastral-construction.timeline.store');
+
+                        });
+
+                        Route::group(['middleware' => ['permission:Consultar Lineas de Tiempo']], function() {
+                            Route::get('catastral-construction/timeline/read', 'CatastralConstruccionController@timelineIndex')->name('catastral-construction.timeline.read');
+
+                            Route::group(['middleware' => ['permission:Detalles Linea de Tiempo']], function() {
+                                Route::get('catastral-construction/timeline/details/{id}', 'CatastralConstruccionController@timelineShow')->name('catastral-construction.timeline.details');
+                                Route::post('catastral-construction/timeline/update', 'CatastralConstruccionController@timelineUpdate')->name('catastral-construction.timeline.update');
+                            });
+                        });
+                    });
                 });
+
+
 
                 // Gestionar Valor Catastral - Terreno
                 Route::group(['middleware' => ['permission:Gestionar Catastral Terreno']], function () {
@@ -267,8 +305,26 @@ Route::middleware(['auth'])->group(/**
                             Route::post('/catastral-terreno/update', 'CatastralTerrenoController@update')->name('catrastal.terreno.update');
                         });
                     });
+
+                    Route::group(['middleware' => ['permission:Gestionar Linea de Tiempo']], function() {
+                        Route::get('catastral-terreno/timeline/manage', 'CatastralTerrenoController@timelineManage')->name('catrastal-terreno.timeline.manage');
+                        Route::group(['middleware' => ['permission:Registrar Linea de Tiempo']], function() {
+                            Route::get('catastral-terreno/timeline/register', 'CatastralTerrenoController@timelineCreate')->name('catastral-terreno.timeline.register');
+                            Route::post('catastral-terreno/timeline/store', 'CatastralTerrenoController@timelineStore')->name('catastral-terreno.timeline.store');
+
+                        });
+                        Route::group(['middleware' => ['permission:Consultar Lineas de Tiempo']], function() {
+                            Route::get('catastral-terreno/timeline/read', 'CatastralTerrenoController@timelineIndex')->name('catastral-terreno.timeline.read');
+                            Route::group(['middleware' => ['permission:Detalles Linea de Tiempo']], function() {
+                                Route::get('catastral-terreno/timeline/details/{id}', 'CatastralTerrenoController@timelineShow')->name('catastral-terreno.timeline.details');
+                                Route::post('catastral-terreno/timeline/update', 'CatastralTerrenoController@timelineUpdate')->name('catastral-terreno.timeline.update');
+                            });
+                        });
+                    });
                 });
             });
+
+
 
 
 
@@ -1227,34 +1283,17 @@ Route::middleware(['auth'])->group(/**
         ///
         ///
         ///
-        Route::get('alicuota/timeline/manage', 'AlicuotaController@timelineManage')->name('alicuota.timeline.manage');
-        Route::get('alicuota/timeline/register', 'AlicuotaController@timelineCreate')->name('alicuota.timeline.register');
-        Route::get('alicuota/timeline/read', 'AlicuotaController@timelineIndex')->name('alicuota.timeline.read');
-        Route::post('alicuota/timeline/store', 'AlicuotaController@timelineStore')->name('alicuota.timeline.store');
-        Route::get('alicuota/timeline/details/{id}', 'AlicuotaController@timelineShow')->name('alicuota.timeline.details');
-        Route::post('alicuota/timeline/update', 'AlicuotaController@timelineUpdate')->name('alicuota.timeline.update');
+
 
         ///////////////////////////////////////////////////////////////
         ///
         ///
         ///
-        Route::get('catastral-construction/timeline/manage', 'CatastralConstruccionController@timelineManage')->name('catrastal-construction.timeline.manage');
-        Route::get('catastral-construction/timeline/register', 'CatastralConstruccionController@timelineCreate')->name('catastral-construction.timeline.register');
-        Route::post('catastral-construction/timeline/store', 'CatastralConstruccionController@timelineStore')->name('catastral-construction.timeline.store');
-        Route::get('catastral-construction/timeline/read', 'CatastralConstruccionController@timelineIndex')->name('catastral-construction.timeline.read');
-        Route::get('catastral-construction/timeline/details/{id}', 'CatastralConstruccionController@timelineShow')->name('catastral-construction.timeline.details');
-        Route::post('catastral-construction/timeline/update', 'CatastralConstruccionController@timelineUpdate')->name('catastral-construction.timeline.update');
 
         ///////////////////////////////////////////////////////////////
         ///
         ///
         ///
-        Route::get('catastral-terreno/timeline/manage', 'CatastralTerrenoController@timelineManage')->name('catrastal-terreno.timeline.manage');
-        Route::get('catastral-terreno/timeline/register', 'CatastralTerrenoController@timelineCreate')->name('catastral-terreno.timeline.register');
-        Route::get('catastral-terreno/timeline/read', 'CatastralTerrenoController@timelineIndex')->name('catastral-terreno.timeline.read');
-        Route::post('catastral-terreno/timeline/store', 'CatastralTerrenoController@timelineStore')->name('catastral-terreno.timeline.store');
-        Route::get('catastral-terreno/timeline/details/{id}', 'CatastralTerrenoController@timelineShow')->name('catastral-terreno.timeline.details');
-        Route::post('catastral-terreno/timeline/update', 'CatastralTerrenoController@timelineUpdate')->name('catastral-terreno.timeline.update');
 
 
 //        Route::get('/catastral-terreno/manager', 'CatastralTerrenoController@manage')->name('catrastal.terreno.manage');
