@@ -48,7 +48,7 @@
             @endcan
             @can('Configuración - General')
             <div class="col s6 m3 animated bounceIn">
-                <a href="{{ route('settings.general') }}" class="btn-app white green-text text-darken-4 ">
+                <a href="{{ route('settings.general') }}" class="btn-app white blue-text text-darken-4 ">
                     <i class="icon-settings_applications"></i>
                     <span class="truncate">Gestionar Configuraciones Generales</span>
                 </a>
@@ -63,6 +63,15 @@
                 </a>
             </div>
             @endcan
+
+            {{-- @can('Gestionar Tasas') --}}
+            <div class="col s6 m3 animated bounceIn">
+                <a href="{{route('foreign-exchange.manage')}}" class="btn-app white green-text text-darken-3">
+                    <i class="fab fa-cc-diners-club"></i>
+                    <span class="truncate">Gestionar Moneda</span>
+                </a>
+            </div>
+            {{-- @endcan --}}
            
 
         </div>

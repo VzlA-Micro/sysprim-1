@@ -1266,4 +1266,12 @@ Route::middleware(['auth'])->group(/**
         Route::get('/type-vehicles/timeline/verified/{id}/{year}/{type}', 'TimelineTypeVehicleController@verifiedTimelineUpdate');
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+
+        //Divisas
+        Route::get('/foreign-exchange/manage', function () {
+            return view('modules.foreign-exchange.manage');
+        })->name('foreign-exchange.manage');
+
+        Route::get('/foreign-exchange/register', 'ForeignExchangeController@create')->name('foreign-exchange.register');
+
     });
