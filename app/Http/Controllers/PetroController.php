@@ -209,7 +209,7 @@ class PetroController extends Controller
                 }
 
 //                dd($taxe);
-                $petro = '';
+                $petro = 4348064.97;
 
                 $taxe->status = 'verified-sysprim';
                 $taxe->code = TaxesNumber::generateNumberTaxes('PPV88');
@@ -233,7 +233,7 @@ class PetroController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
 
-                return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra y verificada con éxito,fue enviado al correo' . \Auth::user()->email . '.');
+                return redirect('rate/taxpayers/payments-history')->with('message', 'Su pago ha sido verificado mediante el Petro Wallet y su planilla verificada fue enviada al correo' . \Auth::user()->email . '.');
 
             } elseif ($taxe->branch == 'Prop. y Publicidad') {
                 $owner = $taxe->publicities()->get();

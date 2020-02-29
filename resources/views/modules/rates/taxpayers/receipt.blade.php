@@ -132,7 +132,7 @@
     </thead>
 
     <tbody>
-    @php $total_taxes=0; if($petro == '') { $petro = 4348064.97; } else { $petro == ''; } @endphp
+    @php $total_taxes=0; @endphp
     @foreach($taxes->rateTaxes as $rate)
 
 
@@ -144,7 +144,7 @@
             <td style="width: 10%;font-size: 10px; !important;">{{\Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y')}}</td>
             <td style="width: 15%;font-size: 10px;!important">{{$rate->cant_tax_unit}}</td>
             <td style="width: 15%;font-size: 10px;!important"></td>
-            @if($petro != '' || $petro != null)
+            @if(isset($petro))
                 <td style="width: 10%;font-size: 10px;!important">{{number_format($rate->totalRate/$petro ,8)}}PTR</td>
             @else
                 <td style="width: 10%;font-size: 10px;!important">{{number_format($rate->totalRate ,2)}}</td>
@@ -160,7 +160,7 @@
         <td></td>
         <td></td>
         <td>TOTAL</td>
-        @if($petro != '' || $petro != null)
+        @if(isset($petro))
             <td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount/$petro,8)}}PTR</td>
         @else
             <td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2)}}</td>
