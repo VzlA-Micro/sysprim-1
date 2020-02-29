@@ -16,7 +16,7 @@
     <meta name="description" content="SEMAT. El Servicio Municipal de Administración Tributaria es el encargado de la recaudación de impuestos dentro del municipio Iribarren. semat">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#a51d1d">
-    <title>{{ config('app.name') }} - Alcaldía de Iribarren</title>
+    <title>SEMAT - Alcaldía de Iribarren</title>
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owner.min.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/material-components.min.css') }}">--}}

@@ -27,8 +27,8 @@
         </div>
     
         <div class="footer-copyright">
-                <div class="container centered">
-                    <div class="row" style="margin-bottom:0">
+                <div class="container center-align">
+                    {{-- <div class="row" style="margin-bottom:0">
                             <div class="col s6 m4 offset-m4 offset-s3"  style="padding:0;">
                                     <div class="valign-wrapper">
                                          © Copyright - 
@@ -36,7 +36,8 @@
                                         {{date('Y')}}
                                     </div>
                             </div>
-                        </div> 
+                        </div>  --}}
+                        SEMAT - Alcaldía de Iribarren - 2020
                 </div>
             </div>
 </footer>
