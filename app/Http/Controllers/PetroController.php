@@ -219,7 +219,7 @@ class PetroController extends Controller
                     'data' => $data,
                     'petro' => $petro
                 ]);
-//                return $pdf->stream(); die();
+                return $pdf->stream(); die();
 
                 $user = User::find($rate[0]->pivot->user_id);;
                 $for = $user->email;

@@ -55,7 +55,7 @@
 										<span class="truncate black-text">Deposito Bancario</span>
 									</label>
 								</div>
-                                <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
+                                {{--<a href="{{url('payments/bdv/register/'.$taxes_id)}}">
                                     <div class="col s12 m6">
                                         <input type="radio" class="">
                                         <label class="btn-radio red">
@@ -67,7 +67,7 @@
                                             <span class="truncate black-text">Pago Instantaneo (Banco Venezuela)</span>
                                         </label>
                                     </div>
-                                </a>
+                                </a>--}}
                                 <a href="{{url('payments/petro/register/'.$taxes_id)}}">
                                     <div class="col s12 m6">
                                         <input type="radio" class="">
