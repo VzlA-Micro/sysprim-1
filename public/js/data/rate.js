@@ -65,6 +65,7 @@ $('document').ready(function () {
                 var document = $('#document').val();
                 var address = $('#address').val();
                 var surname = $('#surname').val();
+                var email = $('#email').val();
 
 
 
@@ -79,7 +80,8 @@ $('document').ready(function () {
                         document: document,
                         address: address,
                         type: type,
-                        user:user
+                        user:user,
+                        email:email
                     },
                     url: url + 'rate/taxpayers/company-user/register',
 
@@ -247,7 +249,7 @@ $('document').ready(function () {
         $('#name').val('');
 
 
-        if(document!=='') {
+        if(document!==''&&document.length>=7) {
             $.ajax({
                 method: "GET",
                 url: url + "rate/taxpayers/find/" + type_document  +"/"+document,
@@ -261,22 +263,37 @@ $('document').ready(function () {
 
                     if(response.status!=='error') {
 
-
+                        $('#name').attr('readonly', 'readonly');
                         if (response.type == 'not-user') {
 
                             var user = response.user.response;
-                            $('#name').val(user.nombres + ' ' + user.apellidos);
 
-                            $('#name').attr('readonly','');
+                            if(user.inscrito==false){
+                                swal({
+                                    title: "Lo sentimos",
+                                    text: "Su cédula no se encuentra registrada en el CNE.",
+                                    icon: "info",
+                                    button: {
+                                        text: "Entendido",
+                                        className: "red-gradient"
+                                    },
+                                }).then(function () {
+                                    $('#document').val('');
+                                    $('#document').focus();
+                                });
 
-                            $('#surname').val(user.apellidos);
+                            }else{
+                                $('#name').val(user.nombres + ' ' + user.apellidos);
+                                $('#name').attr('readonly','readonly');
+                                $('#surname').val(user.apellidos);
+                                $('#user_name').val(user.nombres);
+                                $('#type').val('user');
+                                $('#id').val(user.id);
+                                $('#address').removeAttr('readonly', '');
+                                $('#email').val('');
+                                $('#email').removeAttr('readonly', '');
+                            }
 
-                            $('#user_name').val(user.nombres);
-
-                            $('#type').val('user');
-                            $('#id').val(user.id);
-
-                            $('#address').removeAttr('readonly', '');
                         } else if (response.type == 'user') {
 
                             var user = response.user;
@@ -287,7 +304,10 @@ $('document').ready(function () {
 
                             $('#type').val('user');
                             $('#address').val(user.address);
+                            $('#email').val(user.email);
+                            $('#email').attr('readonly','');
                             $('#address').attr('readonly', '');
+
 
 
                         } else if (response.type == 'company') {
@@ -347,4 +367,53 @@ $('document').ready(function () {
 
 
 
+    $('#email').change(function () {
+
+
+        if ($('#email').val() !== '') {
+            var email = $('#email').val();
+            $.ajax({
+                method: "GET",
+                url: url+"rate/ticket-office/verify-email/"+email,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button:{
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        $('#email').val('');
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button:{
+                            text: "Entendido",
+                            className: "blue-gradient"
+                        },
+                    });
+
+                }
+            });
+        }
+
+
+
+    });
 });

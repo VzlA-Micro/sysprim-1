@@ -44,9 +44,9 @@
                     @endif
                 </div>
                 @endcan --}}
-                <li>
+                {{--<li>
                     <a href="{{ route('helps.manage') }}" class="tooltipped" data-tooltip="Ayuda" data-position="bottom"><i class="icon-info"></i></a>
-                </li>
+                </li>--}}
                 {{-- User dropdown trigger --}}
                 <li>
                     <a href="#" class="dropdown-trigger avatar-trigger" data-target="user-dropdown">
@@ -117,9 +117,11 @@
                         <a href="{{ route('profile') }}"><i class="icon-account_circle left"></i>Mi Cuenta</a>
                     </li>
                     @endcan
-                    <li class="divider"></li>
                     <li class="waves-efect waves-light hide-on-large-only">
                         <a href="{{ route('home') }}"class="waves-effect waves-black"><i class="icon-home left"></i>Inicio</a>
+                    </li>
+                    <li class="waves-efect waves-light">
+                        <a href="{{ route('helps.manage') }}"class="waves-effect waves-black"><i class="icon-info left"></i>Ayuda</a>
                     </li>
                     {{-- @can('Ver Notificaciones')
                     <li class="waves-efect waves-light hide-on-large-only"><a href=""><i class="icon-notifications"></i>Notificaciones</a></li>

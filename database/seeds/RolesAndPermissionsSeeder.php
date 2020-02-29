@@ -298,6 +298,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // Estadisticas
         Permission::create(['name' => 'Estadisticas']);
         Permission::create(['name' => 'Estadisticas - SuperUsuario']);
+        Permission::create(['name' => 'Estadisticas - Bancos']);
+        Permission::create(['name' => 'Estadisticas - Pagos']);
+        Permission::create(['name' => 'Estadisticas - Recaudación']);
+
+
 
 
         // Notificaciones
@@ -585,6 +590,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'GeoSEMAT',
             'Estadisticas',
             'Estadisticas - SuperUsuario',
+            'Estadisticas - Bancos',
+            'Estadisticas - Pagos',
+            'Estadisticas - Recaudación',
             'Notificaciones',
             'Registrar Notificaciones',
             'Consultar Notificaciones',
@@ -1028,6 +1036,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Actualizar Ramos CIIU',
             'GeoSEMAT',
             'Estadisticas',
+            'Estadisticas - Bancos',
+            'Estadisticas - Pagos',
+            'Estadisticas - Recaudación',
             'Mi Perfil'
         ]);
 
@@ -1035,10 +1046,31 @@ class RolesAndPermissionsSeeder extends Seeder
         $roleMayor->givePermissionTo([
             'GeoSEMAT',
             'Estadisticas',
+            'Estadisticas - Bancos',
+            'Estadisticas - Pagos',
+            'Estadisticas - Recaudación',
             'Gestionar Empresas',
             'Consultar Empresas',
             'Detalles Empresas',
             'Mi Perfil'
+        ]);
+
+        $roleTreasurer = Role::create(['name' => 'Tesorero']);
+        $roleTreasurer->givePermissionTo([
+            'Taquillas',
+            'Estadisticas',
+            'Estadisticas - Bancos',
+            'Ver Pagos',
+            'Ver Pagos - Transferencias',
+            'Ver Pagos - Punto de Venta',
+            'Ver Pagos - Depositos',
+            'Mi Taquilla - Punto de Venta',
+            'Mi Taquilla - Deposito',
+            'Ver Planillas - Taquilla',
+            'Detalles Pagos',
+            'Ver Planillas',
+            'Detalles Planilla',
+            'Ver Planilla PDF',
         ]);
 
 

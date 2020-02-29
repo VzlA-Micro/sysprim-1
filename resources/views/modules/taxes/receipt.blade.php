@@ -363,7 +363,7 @@
 					</td>
 				@else
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -20px !important;right: 800px !important;left: 900px;" alt="Image">
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} " style="float:left ;position: absolute;top: -20px !important;right: 800px !important;left: 900px;" alt="Image" >
 					</td>
 				@endif
 			</tr>

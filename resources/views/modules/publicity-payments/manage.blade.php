@@ -21,7 +21,7 @@
             </div>
             @if($publicity->status != 'disabled')
             @can('Declarar Publicidades')
-            <div class="col s6 m4">
+            <div class="col s6 m6 l4">
                 <a href="{{ route('publicity.payments.create',['id' => $publicity->id]) }}" class="btn-app white red-text text-darken-2">
                     <i class="icon-payment"></i>
                     <span class="truncate">Declarar Mis Publicidades</span>
@@ -30,7 +30,7 @@
             @endcan
             @endif
             @can('Historial de Pagos - Publicidades')
-            <div class="col s6 m4">
+            <div class="col s6 m6 l4">
                 <a href="{{ route('publicity.payments.history',['id' => $publicity->id]) }}" class="btn-app white purple-text text-darken-2">
                     <i class="icon-list"></i>
                     <span class="truncate">Historial de Declaraciones</span>

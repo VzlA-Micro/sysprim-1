@@ -19,7 +19,7 @@
             </div>
             @foreach($publicities as $index => $publicity)
                 @if($userPublicity[$index]->user_id == \Auth::user()->id && $userPublicity[$index]->person_id != null)
-                    <div class="col s6 m4 animated bounceIn">
+                    <div class="col s6 m6 l4 animated bounceIn">
                         <a href="{{ route('publicity.details', ['id' => $publicity->id]) }}" class="btn-app white purple-text">
                             <i class="icon-settings_system_daydream"></i>
                             <span class="truncate">{{ $publicity->name }}</span>
@@ -27,7 +27,7 @@
                         </a>
                     </div>
                 @elseif($userPublicity[$index]->person_id == null)
-                    <div class="col s6 m4 animated bounceIn">
+                    <div class="col s6 m6 l4 animated bounceIn">
                         <a href="{{ route('publicity.details', ['id' => $publicity->id]) }}" class="btn-app white purple-text">
                             <i class="icon-settings_system_daydream"></i>
                             <span class="truncate">{{ $publicity->name }}</span>
@@ -36,7 +36,7 @@
                     </div>
                 @endif
             @endforeach
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 @if(session()->has('company'))
                 <a href="{{ route('publicity.register.types', ['company_id' => session('company')->id]) }}" class="btn-app white orange-text">
                 @else

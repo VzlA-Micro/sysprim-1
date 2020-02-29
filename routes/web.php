@@ -536,10 +536,11 @@ Route::middleware(['auth'])->group(/**
             Route::get('/payments/taxes/download/{id}', 'CompanyTaxesController@downloadPDF')->name('taxes.download');
 
 
+
             // Nivel 1: Mis Empresas
             Route::get('/companies/my-business', 'CompaniesController@index')->name('companies.my-business');
             Route::get('/companies/details/{id}', 'CompaniesController@details')->name('companies.details');
-            Route::get('/thumb/{filename}', 'CompaniesController@getImage')->name('companies.image');
+            Route::get('/thumb-image/{filename}', 'CompaniesController@getImage')->name('companies.image');
             Route::get('/companies/carnet/{id}', 'CompaniesController@getCarnet')->name('companies.carnet');
             // Nivel 2: Registrar y Ver Detalles
             Route::group(['middleware' => ['permission:Registrar Mis Empresas']], function () {
@@ -820,9 +821,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/ticket-office/taxes/ateco/send-email/{id}', 'TicketOfficeController@sendEmailVerified');
                     Route::post('/ticket-office/taxes/save', 'TicketOfficeController@registerTaxes');
 
-                    Route::get('/ticket-office/type-payment', function () {
-                        return view('modules.payments.type_payment');
-                    })->name('ticket-office.type.payments');
+                    
                 });
             });
 
@@ -988,6 +987,9 @@ Route::middleware(['auth'])->group(/**
             ############ CONFIGURACION DE TAQUILLA
 
             Route::get('/ticket-office/config', 'TicketOfficeController@config')->name('ticket-office.config');
+            Route::get('/ticket-office/type-payment', function () {
+                return view('modules.payments.type_payment');
+            })->name('ticket-office.type.payments');
 
             ########### VERIFICACION DE PAGOS
             Route::group(['middleware' => ['permission:Verificar Pagos - Archivo']], function () {

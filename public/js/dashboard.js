@@ -1,4 +1,8 @@
 
+var url = "http://172.19.50.253/";
+var controller = "collection/statistics";
+
+
 var width = $(window).width();
 var height = $(window).height();
 

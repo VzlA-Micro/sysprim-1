@@ -53,6 +53,7 @@ $(document).ready(function() {
 		e.preventDefault();
         $('#rates').DataTable().destroy();
         var  name = $('#name').val();
+        $('#rates').DataTable().destroy();
 		var formData = new FormData(this);
 		$.ajax({
 			method: "POST",

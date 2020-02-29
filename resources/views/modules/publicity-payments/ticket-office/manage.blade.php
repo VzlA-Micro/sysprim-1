@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @can('Generar Planilla')
-                <div class="col s6 m4 animated bounceIn">
+                <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{route('publicity.ticket-office.generate')}}" class="btn-app white red-text">
                         <i class="icon-picture_as_pdf"></i>
                         <span class="truncate">Generar Planilla</span>
@@ -20,7 +20,7 @@
                 </div>
             @endcan
             @can('Pagar Planilla')
-                <div class="col s6 m4 animated bounceIn">
+                <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{route('publicity.ticket-office.payments.taxes')}}" class="btn-app white blue-text text-darken-3">
                         <i class="icon-payment"></i>
                         <span class="truncate">Pagar Planilla</span>

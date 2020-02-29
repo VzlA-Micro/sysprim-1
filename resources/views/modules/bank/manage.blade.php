@@ -15,7 +15,7 @@
                 </ul>
             </div>
             @can('Cargar Archivo Pagos')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('bank.upload') }}" class="btn-app white amber-text">
                     <i class="icon-file_upload"></i>
                     <span class="truncate">Cargar Pagos</span>
@@ -23,13 +23,13 @@
             </div>
             @endcan
             @can('Ver Pagos verificados')
-                <div class="col s6 m4 animated bounceIn">
+                <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('bank.read') }}" class="btn-app white indigo-text">
                         <i class="icon-assignment_ind"></i>
                         <span class="truncate">Ver Pagos Verificados del Día</span>
                     </a>
                 </div>
-                <div class="col s6 m4 animated bounceIn">
+                <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('bank.read.full') }}" class="btn-app white indigo-text">
                         <i class="icon-list"></i>
                         <span class="truncate">Ver Pagos Verificados Totales</span>

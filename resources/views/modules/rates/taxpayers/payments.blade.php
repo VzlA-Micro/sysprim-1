@@ -17,70 +17,47 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
-                <div class="card payment-form ">
-                    <ul class="tabs">
-                        <li class="tab col s4" id="one-payments"><a href="#payment-method"><i class="icon-filter_1"></i>
-                                Forma de Pago</a></li>
-                        <li class="tab col s4 disabled" id="two-payments"><a href="#payment-bank"><i
-                                        class="icon-filter_2"></i> Seleccionar Banco</a></li>
-                        <li class="tab col s4 disabled" id="three-payments"><a href="#payment-receipt"><i
-                                        class="icon-filter_3"></i> Obtener Planilla</a></li>
-                    </ul>
-                    <div id="payment-method">
-                        <div class="card-content">
-                            <div class="row">
-                                <div class="card-header">
-                                    <h4 class="center-align">Elige una forma de pago:</h4>
-                                </div>
-                                <div class="col s12 m4">
-                                    <input type="radio" id="ppv" name="method" value="ppv" class="type_payment_event">
-                                    <label class="btn-radio grey" for="ppv">
-                                        <i class="">
-                                            <img src="{{ asset('images/png/001-point-of-service.png') }}"
-                                                 style="height: 64px!important;width: 64px!important;" alt="Base Image"
-                                                 width="100%" height="100%">
-                                        </i>
-                                        <span class="truncate black-text">SEMAT(PUNTO DE VENTA)</span>
-                                    </label>
-                                </div>
-                                <div class="col s12 m4">
-                                    <input type="radio" id="ptb" name="method" value="ppt" class="type_payment_event">
-                                    <label class="btn-radio grey" for="ptb">
-                                        <i class="">
-                                            <img src="{{ asset('images/png/009-smartphone-1.png') }}"
-                                                 style="height: 64px!important;width: 64px!important;"
-                                                 alt="Smartphone Image" width="100%" height="100%">
-                                        </i>
-                                        <span class="truncate black-text">Transferencia Bancaria</span>
-                                    </label>
-                                </div>
-                                <div class="col s12 m4">
-                                    <input type="radio" id="ppb" name="method" value="ppb" class="type_payment_event">
-                                    <label class="btn-radio grey" for="ppb">
-                                        <i class="">
-                                            <img src="{{ asset('images/png/030-bank.png') }}"
-                                                 style="height: 64px!important;width: 64px!important;" alt=" bank Image"
-                                                 width="100%" height="100%">
-                                        </i>
-                                        <span class="truncate black-text">Deposito Bancario</span>
-                                    </label>
-                                </div>
-                             {{--
-                                <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
-                                    <div class="col s12 m4">
-                                        <input type="radio" class="">
-                                        <label class="btn-radio red">
-                                            <i class="">
-                                                <img src="{{ asset('images/png/bdv.png') }}"
-                                                     style="height: 70px!important;width: 150px!important;"
-                                                     alt=" bank Image" width="100%" height="100%">
-                                            </i>
-                                            <span class="truncate black-text">Pago Instantaneo(Banco Venezuela)</span>
-                                        </label>
-                                    </div>
-                                </a>
-                                --}}
-                            </div>
+            	<div class="card payment-form ">
+	            	<ul class="tabs">
+				        <li class="tab col s4" id="one-payments"><a href="#payment-method"><i class="icon-filter_1"></i> Forma de Pago</a></li>
+				        <li class="tab col s4 disabled" id="two-payments"><a href="#payment-bank"><i class="icon-filter_2"></i> Seleccionar Banco</a></li>
+				        <li class="tab col s4 disabled" id="three-payments"><a href="#payment-receipt"><i class="icon-filter_3"></i> Obtener Planilla</a></li>
+				    </ul>
+					<div id="payment-method">
+						<div class="card-content">
+							<div class="row">
+								<div class="card-header">
+									<h4 class="center-align">Elige una forma de pago:</h4>
+								</div>
+								<div class="col s12 m4">
+									<input type="radio" id="ppv" name="method" value="ppv" class="type_payment_event">
+									<label class="btn-radio grey" for="ppv" >
+										<i class="">
+											<img src="{{ asset('images/png/001-point-of-service.png') }}"  style="height: 64px!important;width: 64px!important;" alt="Base Image" width="100%" height="100%">
+										</i>
+										<span class="truncate black-text">SEMAT(PUNTO DE VENTA)</span>
+									</label>
+								</div>
+								<div class="col s12 m4">
+									<input type="radio" id="ppt" name="method" value="ppt" class="type_payment_event">
+									<label class="btn-radio grey" for="ptb">
+										<i class="">
+											<img src="{{ asset('images/png/009-smartphone-1.png') }}" style="height: 64px!important;width: 64px!important;" alt="Smartphone Image" width="100%" height="100%">
+										</i>
+										<span class="truncate black-text">Transferencia Bancaria</span>
+									</label>
+								</div>
+								<div class="col s12 m4">
+									<input type="radio" id="ppb" name="method" value="ppb" class="type_payment_event" >
+									<label class="btn-radio grey" for="ppb">
+										<i class="">
+											<img src="{{ asset('images/png/030-bank.png') }}" style="height: 64px!important;width: 64px!important;" alt=" bank Image" width="100%" height="100%">
+										</i>
+										<span class="truncate black-text">Deposito Bancario</span>
+									</label>
+								</div>
+							</div>
+
 
 
                             <div class="row">

@@ -43,7 +43,7 @@
                     @can('Actualizar Mis Inmuebles')
                     {{-- <div class="card-footer">
                         <div class="row" style="margin-bottom:0">
-                            <div class="col s12 center-align">
+                        <!-- <div class="col s12 center-align">
                                 <a href="{{ route('companies.edit', ['id' => $property[0]->id]) }}" class="btn blue btn-rounded waves-light">Editar</a>
                             </div>
                         </div>

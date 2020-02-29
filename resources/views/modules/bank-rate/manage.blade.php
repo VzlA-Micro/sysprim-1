@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Tasa de Banco')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('bank.rate.register') }}" class="btn-app white blue-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Tasa de Bancos</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Tasas del Banco')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('bank.rate.read') }}" class="btn-app white red-text ">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Tasas de Bancos</span>

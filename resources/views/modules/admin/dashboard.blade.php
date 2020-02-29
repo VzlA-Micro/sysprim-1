@@ -88,101 +88,94 @@
                    </div>
                </div>
            </div> -->
+           @can('Estadisticas - Bancos')
            <div class="row">
                 <div class="col s12 m12">
-                        <h4>Bancos</h4>
+                    <h4>Bancos</h4>
+                </div>
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text bod-green">
+                            <i class="i-bod"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
+                            <span class="widget-stats-number">
+                                <span class="" id="bod"></span> Bs.
+                            </span>
+                        </div>
                     </div>
-                    <div class="col s12 m6">
-                         <div class="widget bootstrap-widget stats">
-                             <div class="widget-stats-icon white-text bod-green">
-                                 <i class="i-bod"></i>
-                             </div>
-                             <div class="widget-stats-content">
-                                 <span class="widget-stats-title"><b>BOD </b>(Banco Occidental de Descuento)</span>
-                                 <span class="widget-stats-number">
-                                     <span class="" id="bod"></span> Bs.
-                                 </span>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="col s12 m6">
-                         <div class="widget bootstrap-widget stats">
-                             <div class="widget-stats-icon white-text bnc-blue">
-                                 <i class="i-bnc"></i>
-                             </div>
-                             <div class="widget-stats-content">
-                                 <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
-                                 <span class="widget-stats-number">
-                                     <span class="" id="bnc"></span> Bs.
-                                 </span>
-                             </div>
-                         </div>
-                     </div>
-              </div>
-           
-              <div class="row">
-                    <div class="col s12 m6 l4">
-                            <div class="widget bootstrap-widget stats">
-                                <div class="widget-stats-icon white-text banesco-green">
-                                    <i class="i-banesco"></i>
-                                </div>
-                                <div class="widget-stats-content">
-                                    <span class="widget-stats-title"><b>Banesco</b></span>
-                                    <span class="widget-stats-number">
-                                        <span id="banesco" class=""></span> Bs.
-                                    </span>
-                                </div>
-            
-                            </div>
+                </div>
+                <div class="col s12 m6">    
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text bnc-blue">
+                            <i class="i-bnc"></i>
                         </div>
-                        <div class="col s12 m6 l4">
-                            <div class="widget bootstrap-widget stats">
-                                <div class="widget-stats-icon white-text x100-banco-yellow">
-                                    <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
-                                </div>
-                                <div class="widget-stats-content">
-                                    <span class="widget-stats-title"><b>100% Banco</b></span>
-                                    <span class="widget-stats-number">
-                                        <span class="" id="banco100"></span> Bs.
-                                    </span>
-                                </div>
-            
-                            </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>BNC </b>(Banco Nacional de Crédito)</span>
+                            <span class="widget-stats-number">
+                                <span class="" id="bnc"></span> Bs.
+                            </span>
                         </div>
-                        <div class="col s12 m6 l4">
-                            <div class="widget bootstrap-widget stats">
-                                <div class="widget-stats-icon white-text red-gradient">
-                                    <i class="i-bicentenario" style="font-size: 30px"></i>
-                                </div>
-                                <div class="widget-stats-content">
-                                    <span class="widget-stats-title"><b>Banco Bicentenario</b></span>
-                                    <span class="widget-stats-number">
-                                        <span class="" id="bicentenario"></span> Bs.
-                                    </span>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text banesco-green">
+                            <i class="i-banesco"></i>
                         </div>
-              </div>
-            
-              <div class="row">
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>Banesco</b></span>
+                            <span class="widget-stats-number">
+                            <span id="banesco" class=""></span> Bs.</span>        
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text x100-banco-yellow">
+                            <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>100% Banco</b></span>
+                            <span class="widget-stats-number">
+                                <span class="" id="banco100"></span> Bs.</span>    
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text red-gradient">
+                            <i class="i-bicentenario" style="font-size: 30px"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>Banco Bicentenario</b></span>
+                            <span class="widget-stats-number">
+                                <span class="" id="bicentenario"></span> Bs.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endcan
+            @can('Estadisticas - Pagos')
+            <div class="row">
                 <div class="col s12 m12">
                     <h4>Recaudaciones</h4>
                 </div>
-            
                 <div class="col s12" data-aos="zoom-in">
-                        <div class="widget bootstrap-widget stats">
-                            <div class="widget-stats-icon green white-text">
-                                <i class="i-bss"></i>
-                            </div>
-                            <div class="widget-stats-content">
-                                <span class="widget-stats-title">Recaudación Total en Bolivares</span>
-                                <span class="widget-stats-number">
-                                    <span id="recaudacion" class="timer"></span> Bs.
-                                 </span>
-                            </div>
-                         </div>
-                    </div>     
-              </div>
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon green white-text">
+                            <i class="i-bss"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title">Recaudación Total en Bolivares</span>
+                            <span class="widget-stats-number">
+                                <span id="recaudacion" class="timer"></span> Bs.</span>
+                        </div>
+                    </div>
+                </div>     
+            </div>
             
            <div class="row">
                 <div class="col s12 m12">
@@ -208,7 +201,9 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
+            @can('Estadisticas - Pagos')
             <div class="row">
                     <div class="col s12 m12">
                             <h4>Pagos</h4>
@@ -286,6 +281,7 @@
                             </div>
                     </div>
                 </div>
+            @endcan    
                 
                 
                 <div class="col s12 m12">

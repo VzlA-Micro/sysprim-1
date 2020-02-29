@@ -100,7 +100,7 @@
                             <div class="input-field col s12 m6 hide" id="definitive">
                                 <i class="icon-date_range prefix"></i>
                                 <select id="fiscal_period_select" class="fiscal_period" >
-                                    <option value="null">Seleccione</option>
+                                    <option value="null" disabled selected>Seleccione</option>
                                     @for($cont;$cont>=$date;$cont--)
                                         <option value="{{$cont.'-01-01'}}">{{$cont}}</option>
                                     @endfor

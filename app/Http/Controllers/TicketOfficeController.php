@@ -1003,8 +1003,9 @@ class TicketOfficeController extends Controller
             $owner = $taxes->properties()->get();
             $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
             $property = Property::find($userProperty->property_id);
-            $propertyTaxes = PropertyTaxes::find($taxes->id);
             $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
+            $propertyTaxes = PropertyTaxes::where('taxe_id',$taxes->id)->first();
+
             if (!is_null($userProperty->company_id)) {
                 $data = Company::find($userProperty->company_id);
                 $type = 'company';
@@ -1286,6 +1287,7 @@ class TicketOfficeController extends Controller
 
             //Calculo de base imponible
             $base_amount_sub = $timeline_ciu->alicuota * $base_format;
+
 
 
             //si lo que va a pagar es mayor que el min a tributar

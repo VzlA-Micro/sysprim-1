@@ -104,7 +104,7 @@
 							</div>
 							<div class="input-field col s12">
 								<i class="icon-format_size prefix"></i>
-								<input type="text" name="name" id="name" minlength="5" maxlength="256" required>
+								<input type="text" name="name" id="name" minlength="5" maxlength="190" required>
 								<label for="name">Nombre</label>
 							</div>
 							<div class="col s12">

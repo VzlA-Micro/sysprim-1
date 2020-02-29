@@ -208,7 +208,7 @@ $(document).ready(function () {
                         }
                     });
                 }
-
+                 url = "http://172.19.50.253/";
 
 
                 $("#preloader").fadeOut('fast');

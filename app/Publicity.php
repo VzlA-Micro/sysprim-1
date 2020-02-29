@@ -16,8 +16,9 @@ class Publicity extends Model implements Auditable
     }
 
     public function company() {
-        return $this->belongsToMany('App\User','users_publicity')
-            ->withPivot('company_id');
+
+
+        return $this->belongsToMany('App\User','users_publicity')->withPivot('company_id');
     }
 
     public function advertisingType() {

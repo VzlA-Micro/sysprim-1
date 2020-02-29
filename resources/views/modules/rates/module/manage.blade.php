@@ -15,7 +15,7 @@
                 </ul>
             </div>
             @can('Registrar Tasa')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('rate.register') }}" class="btn-app white cyan-text">
                     <i class="icon-add"></i>
                     <span class="truncate">Registrar Tasa</span>
@@ -23,7 +23,7 @@
             </div>
             @endcan
             @can('Consultar Tasas')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('rate.index') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Tasas</span>

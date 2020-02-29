@@ -174,17 +174,17 @@
                                 <a href="#" id="button-brand" class="btn btn-rounded blue waves-effect">Registrar Marca<i
                                             class="icon-file_upload right"></i></a>
                             </div>
-                            <div class="input-field col s6 left-align">
-                                <a  id="vehicles-previous" class="btn btn-large btn-rounded peach waves-effect waves light">
+                            <div class="col s6 left-align">
+                                <a  id="vehicles-previous" class="btn btn-large btn-rounded peach waves-effect waves light truncate">
                                     Anterior
                                     <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
-                            <div class="input-field col s6 right-align">
+                            <div class="col s6 right-align">
                                 <button type="submit" class="btn btn-rounded btn-large peach waves-effect waves-light"
                                         id="button-company">
                                     <i class="icon-send right"></i>
-                                    Registrar
+                                    <span class="truncate">Registrar</span>
                                 </button>
                             </div>
                         </div>

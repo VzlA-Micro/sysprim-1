@@ -356,13 +356,7 @@ class RateController extends Controller{
                 $taxes->bank = $bank_payment;
                 $amount = round($taxes->amount, 0);
                 $taxes->amount = $amount;
-                var_dump($amount);
-                var_dump($date_format);
-                var_dump($bank_payment);
-                var_dump($code);
-
                 $taxes->digit = TaxesNumber::generateNumberSecret($amount, $date_format, $bank_payment, $code);
-                dd($taxes->digit);
             } else {
                 $taxes->bank = $bank_payment;
                 $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);

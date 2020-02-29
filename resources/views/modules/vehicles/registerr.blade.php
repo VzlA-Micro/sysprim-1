@@ -65,7 +65,7 @@
                                 <label for="license_plate">Placa</label>
                             </div>
 
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <i class="icon-airport_shuttle prefix"></i>
                                 <select name="typeV" id="typeV" required>
                                     {{--<option value="null" disabled selected>Selecciona el tipo de vehiculo</option>--}}
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div id="group-MB">
-                                <div class="input-field col s6">
+                                <div class="input-field col s12 m6">
                                     <i class="icon-directions_car prefix"></i>
                                     <select name="brand" id="brand" required>
                                         <option value="null" disabled selected>Selecciona la marca</option>
@@ -123,7 +123,7 @@
                                     </select>
                                     <label for="brand">Marca</label>
                                 </div>
-                                <div class="input-field col s6">
+                                <div class="input-field col s12 m6">
                                     <i class="icon-local_shipping prefix"></i>
                                     <select name="model" id="model" required>
                                         <option value="" disabled selected>Selecciona el módelo</option>
@@ -144,11 +144,11 @@
                         </div>
 
                         <div class="card-content row">
-                            <div class="input-field col s6 left-align">
+                            <div class="input-field col s12 m6 left-align">
                                 <a href="#" id="button-brand" class="btn btn-rounded btn-large blue waves-effect">Registrar Marca<i
                                             class="icon-file_upload right"></i></a>
                             </div>
-                            <div class="input-field col s6 right-align">
+                            <div class="input-field col s12 m6 right-align">
                                 <button id="button-vehicle" type="submit" class="btn btn-rounded btn-large peach waves-effect">
                                     Registrar<i class="icon-send right"></i></button>
                             </div>

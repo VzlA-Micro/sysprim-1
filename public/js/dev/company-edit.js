@@ -1,5 +1,5 @@
 
-var url = "http://sysprim.com.devel/";
+var url = localStorage.getItem('url');
 
 var addCiiu = false;
 var disabledCiiu = false;

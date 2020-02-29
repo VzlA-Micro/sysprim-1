@@ -16,7 +16,7 @@
             </div>
             
             @can('Gestionar Unidad Tribuaria')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('tax-unit.manage') }}" class="btn-app white green-text ">
                     <i class="icon-exposure_plus_1"></i>
                     <span class="truncate">Gestionar Unidades Tributarias</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan                  
             @can('Gestionar Recargos')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('recharges.manage') }}" class="btn-app white green-text text-darken-4">
                     <i class="icon-trending_up"></i>
                     <span class="truncate">Gestionar Recargos</span>
@@ -32,7 +32,7 @@
             </div>
             @endcan
             @can('Gestionar Accesorios')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('accessories.manage') }}" class="btn-app white blue-text text-darken-4">
                     <i class="icon-filter_tilt_shift"></i>
                     <span class="truncate">Gestionar Accesorios</span>
@@ -40,7 +40,7 @@
             </div>
             @endcan
             @can('Gestionar Tasas del Banco')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('bank.rate.manage') }}" class="btn-app white cyan-text">
                     <i class="icon-business_center"></i>
                     <span class="truncate">Gestionar Tasa del Banco</span>
@@ -48,7 +48,7 @@
             </div>
             @endcan
             @can('Gestionar Dias de Cobro')
-            <div class="col s6 m3 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('prologue.manage')}}" class="btn-app white purple-text text-darken-2">
                     <i class="icon-date_range"></i>
                     <span class="truncate">Días de Cobros</span>

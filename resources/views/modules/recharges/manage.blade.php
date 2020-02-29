@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @can('Registrar Recargo')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('recharges.register') }}" class="btn-app white purple-text darken-2">
                     <i class="icon-add_circle"></i>
                     <span class="truncate">Registrar Recargo</span>
@@ -24,7 +24,7 @@
             </div>
             @endcan
             @can('Consultar Recargos')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('recharges.read') }}" class="btn-app white green-text accent-1">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Recargos</span>

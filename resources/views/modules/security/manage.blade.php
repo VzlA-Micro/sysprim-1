@@ -14,7 +14,7 @@
                 </ul>
             </div>
             @can('Gestionar Roles y Permisos')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('roles.manage') }}" class="btn-app white teal-text">
                     <i class="icon-contacts"></i>
                     <span class="truncate">Gestionar Roles</span>
@@ -22,7 +22,7 @@
             </div>
             @endcan
             @can('Bitacora')
-            <div class="col s6 m4 animated bounceIn">
+            <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{ route('audits') }}" class="btn-app white lime-text">
                     <i class="icon-web"></i>
                     <span class="truncate">Bitácora</span>

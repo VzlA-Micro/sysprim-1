@@ -80,9 +80,13 @@ $('document').ready(function () {
                     dataType: false,
 
                     beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
                         $('#name').attr('readonly', 'readonly');
                     },
                     success: function (data) {
+
+
                         console.log(data)
                         if (data.status == "error") {
                             swal({
@@ -102,8 +106,13 @@ $('document').ready(function () {
                             });
 
                         }
+
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                     },
                     error: function (e) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
                         console.log(e);
                         swal({
                             title: "¡Oh no!",
