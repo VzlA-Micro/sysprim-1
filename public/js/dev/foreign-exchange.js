@@ -1,9 +1,10 @@
-$('document').ready(function () {
+$(document).ready(function () {
     var url = localStorage.getItem('url');
     //var url = "https://sysprim.com/";
    // var url = "https://sysprim.com/";
 
     $('#register').on('submit',function (e) {
+        e.preventDefault();
         if($('#name').val()!==null) {
         
         $.ajax({
@@ -18,23 +19,33 @@ $('document').ready(function () {
                 $("#preloader").fadeIn('fast');
                 $("#preloader-overlay").fadeIn('fast');
             },
-            success: function (response) {
-
-                swal({
-                    title: "¡Bien Hecho!",
-                    text: "Moneda Registrada con éxito",
-                    icon: "success",
-                    button:{
-                        text: "Esta bien",        
-                        className: "green-gradient"
-                    },
-                }).then(function (accept) {
-                    window.location.href=url+"foreign-exchange/read";
-                });
-
+            success: function (resp) {
+                if (resp.status === 'success') {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: resp.message,
+                        icon: "success",
+                        button: {
+                            text: "Esta bien",
+                            className: "green-gradient"
+                        }
+                    }).then(function (accept) {
+                        window.location.href = url + "foreign-exchange/read";
+                    });
+                }
+                else if (resp.status === 'error') {
+                    swal({
+                        title: "¡Error!",
+                        text: resp.message,
+                        icon: "error",
+                        button: {
+                            text: "Esta bien",
+                            className: "red-gradient"
+                        }
+                    });
+                }
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
-
             },
             error: function (err) {
                 console.log(err);

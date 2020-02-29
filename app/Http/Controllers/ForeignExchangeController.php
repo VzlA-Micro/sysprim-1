@@ -37,8 +37,11 @@ class ForeignExchangeController extends Controller
         $foreignExchange->name= ucwords($request->input('name'));
         $foreignExchange->value= $request->input('value');
         $foreignExchange->save();
-
-        return response()->json(['foreignExchange'=>$foreignExchange]);
+        $response = [
+            'status' => 'success',
+            'message' => 'El valor de la moneda se ha registrado con éxito.',
+            'foreignExchange' => $foreignExchange];
+        return response()->json($response);
 
     }
 
