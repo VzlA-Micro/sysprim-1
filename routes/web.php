@@ -1275,5 +1275,9 @@ Route::middleware(['auth'])->group(/**
         })->name('foreign-exchange.manage');
 
         Route::get('/foreign-exchange/register', 'ForeignExchangeController@create')->name('foreign-exchange.register');
+        Route::post('/foreign-exchange/save', 'ForeignExchangeController@store')->name('foreign-exchange.save');
+        Route::get('/foreign-exchange/read', 'ForeignExchangeController@index')->name('foreign-exchange.read');
+        Route::get('/foreign-exchange/details/{id}', 'ForeignExchangeController@show')->name('foreign-exchange.details');
+        Route::post('/foreign-exchange/update', 'ForeignExchangeController@update')->name('foreign-exchange.update');
 
     });

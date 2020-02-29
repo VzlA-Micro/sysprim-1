@@ -24,7 +24,7 @@
             {{-- @endcan --}}
             {{-- @can('Consultar Accesorios') --}}
             <div class="col s6 m4 animated bounceIn">
-                <a href="{{-- route('accessories.read') --}}" class="btn-app white amber-text">
+                <a href="{{ route('foreign-exchange.read') }}" class="btn-app white amber-text">
                     <i class="icon-format_list_bulleted"></i>
                     <span class="truncate">Ver Monedas</span>
                 </a>
