@@ -577,19 +577,66 @@ $(document).ready(function () {
     });
 
     $('#email-confirm').change(function () {
-        if ($('#email-confirm').val() !== $('#email').val()) {
+
+        if ($('#email').val() !== '') {
+
+            if ($('#email-confirm').val() !== $('#email').val()) {
+                swal({
+                    title: "Información",
+                    text: "Los correos no coinciden,debe ingresarlo nuevamente.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+                $('#email-confirm').val('');
+            }
+        }else{
             swal({
                 title: "Información",
-                text: "Los correos no coinciden.",
+                text: "Debe rellenar el campo E-mail  con un correo valido.",
                 icon: "info",
                 button: {
                     text: "Esta bien",
                     className: "blue-gradient"
                 },
             });
-            $('#email-confirm').val();
+            $('#email-confirm').val('')
         }
     });
+
+
+
+    $('#password-confirm').change(function () {
+        if ($('#password').val() !=='') {
+            if ($('#password-confirm').val() !== $('#password').val()) {
+                swal({
+                    title: "Información",
+                    text: "Las   contraseña  no coinciden, debe ingresarla nuevamente.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+                $('#password-confirm').val('');
+            }
+        }else{
+            swal({
+                title: "Información",
+                text: "Debe rellenar el campo de contraseña  para ingresar la confirmación.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $('#password-confirm').val('')
+        }
+    });
+
+
 });
 
 
