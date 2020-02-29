@@ -1209,7 +1209,12 @@ Route::middleware(['auth'])->group(/**
         Route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
         Route::get('payments/bdv/verified/{token}/{id}', 'BdvController@verifyTaxes');
 
+        /*Petro - MODULE */
 
+        Route::get('payments/petro/register/{id}','PetroController@register')->name('payments.petro.register');
+        Route::post('payments/petro/store','PetroController@store')->name('payments.petro.store');
+        Route::get('payments/petro/register', 'BdvController@register')->name('payments.petro.register');
+        Route::get('payments/petro/verified/{id}', 'PetroController@verifyTaxes')->name('payments.petro.verified');
 
 
 

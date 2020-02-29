@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
-                    {{--<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles de Autoliquidación</a></li>--}}
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id' => $id])}}">Detalles de Autoliquidación</a></li>
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
@@ -28,10 +28,7 @@
                         </div>
                         <div class="card-content row">
 
-                            <input type="hidden" id="id" name="id" value="{{$id}}">
-
-
-
+                            <input type="hidden" id="id" name="id" value="{{ $id }}">
                             <div class="input-field col s6 m4 tooltipped" data-position="bottom"
                                  data-tooltip="V: Venezolano; E: Extranjero">
                                 <i class="icon-public prefix"></i>
@@ -56,10 +53,8 @@
 
                             <div class="input-field col s12 m12 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <i class="icon-mail_outline prefix"></i>
-                                <input id="email" type="email" name="email" data-validate="email" maxlength="100"
-                                       class="validate"
-                                       title="Solo puede escribir números." required>
-                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email" data-validate="email" class="validate" title="Solo puede escribir números." required>
+                                <label for="email">Email del Wallet</label>
                             </div>
 
 
@@ -87,8 +82,8 @@
                                 <i class="prefix">
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
                                 </i>
-                                <input type="text" name="amount" id="amount" class="validate total_ciu money" pattern="^[0-9]{0,12}([.][0-9]{2,2})?$" value="{{$amount}}" readonly>
-                                <label for="amount">Monto a Pagar<b> (Bs)</b></label>
+                                <input type="text" name="amount" id="amount" class="validate" value="{{ $amount }}" readonly>
+                                <label for="amount">Monto a Pagar<b> (PTR)</b></label>
                             </div>
 
 
@@ -105,15 +100,15 @@
                     </div>
                     <div id="link-tab">
                         <div class="card-header center-align">
-                            <h4>Obtener Link de Pago</h4>
+                            <h4>Obtener Planilla</h4>
                         </div>
 
-                            <div class="col s12 m6 offset-m3 center-align" id="div-send">
-                                <a href=""  id="link" class="btn-app green">
-                                    <i class="far fa-file-pdf"></i>
-                                    <span class="truncate">Obtener Link</span>
-                                </a>
-                            </div>
+                        <div class="col s12 m6 offset-m3 center-align" id="div-send">
+                            <a href="{{ route('payments.petro.verified', ['id' => $id]) }}"  id="link" class="btn-app green">
+                                <i class="far fa-file-pdf"></i>
+                                <span class="truncate">Obtener Planilla</span>
+                            </a>
+                        </div>
 
 
 
@@ -130,5 +125,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/validations.js') }}"></script>
-    <script src="{{ asset('js/data/bdv.js') }}"></script>
+    <script src="{{ asset('js/data/petro.js') }}"></script>
 @endsection
