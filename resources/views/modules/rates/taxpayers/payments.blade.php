@@ -12,8 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles
-                            de Autoliquidación</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles de Autoliquidación</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -56,6 +55,32 @@
 										<span class="truncate black-text">Deposito Bancario</span>
 									</label>
 								</div>
+                                {{--<a href="{{url('payments/bdv/register/'.$taxes_id)}}">
+                                    <div class="col s12 m6">
+                                        <input type="radio" class="">
+                                        <label class="btn-radio red">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/bdv.png') }}"
+                                                     style="height: 70px!important;width: 150px!important;"
+                                                     alt=" bank Image" width="100%" height="100%">
+                                            </i>
+                                            <span class="truncate black-text">Pago Instantaneo (Banco Venezuela)</span>
+                                        </label>
+                                    </div>
+                                </a>--}}
+                                <a href="{{url('payments/petro/register/'.$taxes_id)}}">
+                                    <div class="col s12 m6">
+                                        <input type="radio" class="">
+                                        <label class="btn-radio" style="background-color: #164471">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/logo-petro-home.png') }}"
+                                                     style="height: 70px!important;width: 70px!important;"
+                                                     alt=" bank Image" width="100%" height="100%">
+                                            </i>
+                                            <span class="truncate black-text">Pago Instantaneo (Petro)</span>
+                                        </label>
+                                    </div>
+                                </a>
 							</div>
 
 
