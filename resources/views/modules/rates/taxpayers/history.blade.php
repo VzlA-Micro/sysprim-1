@@ -83,7 +83,7 @@
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td>
-                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
+                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id.'/true')}}" class="btn orange waves-effect waves-light">
                                                         <i class="icon-description left"></i>
                                                         <span class="truncate">
                                                             Descargar Planilla
