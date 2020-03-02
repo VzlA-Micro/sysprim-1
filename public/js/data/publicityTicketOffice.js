@@ -406,6 +406,7 @@ $('document').ready(function () {
         var status = $('#status').val();
         var name_full = $('#name').val();
         var address = $('#address').val();
+        var email = $('#email').val();
         var document_full = $('#document').val();
         var responsable = null;
         var type_document_company = false;
@@ -491,6 +492,20 @@ $('document').ready(function () {
                     }
                 });
             } else if (address == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            }
+            else if (email == '') {
                 swal({
                     title: "Información",
                     text: "Debe llenar todos los campos para poder continuar.",
