@@ -100,7 +100,9 @@
         </div>
     </div>
 
+    @can('Extensión - SysQ')
     @include('includes.lateral-bar')
+    @endcan
 @endsection
 
 @section('scripts')
