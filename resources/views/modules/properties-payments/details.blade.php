@@ -25,7 +25,7 @@
                 <div class="card center-align col s12">
                     <h5>Pago Declarado</h5>
                     <h1><i class="icon-access_alarms orange-text"></i></h1>
-                    <p>Ya has declarado tu pago, actualmete se encuentra en proceso.</p>
+                    <p>Ya has declarado tu pago, actualmete se encuentra en proceso de verificación.</p>
                 </div>
                 @elseif($statusTax == 'verified')
                 <div class="card center-align col s12">

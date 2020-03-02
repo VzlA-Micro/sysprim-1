@@ -150,7 +150,7 @@
             });
             $(".js-range-slider.width").ionRangeSlider({
                 skin: "modern",
-                max: 5,
+                max: 10,
                 min: 0,
                 grid: true,
                 step: 0.1,
@@ -159,7 +159,7 @@
             });
             $(".js-range-slider.height").ionRangeSlider({
                 skin: "modern",
-                max: 1,
+                max: 10,
                 min: 0,
                 grid: true,
                 step: 0.1,
