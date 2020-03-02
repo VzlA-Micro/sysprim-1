@@ -50,9 +50,12 @@
         <div class="row show-on-medium-and-down hide-on-large-only">
             <div class="col s12 m10 offset-m1 l6 offset-l3 animated bounceInDown">
                 @if(session('notification'))
-                <div class="alert alert-success" style="margin-top: 1.5rem">
-                    <span>{{ session('notification') }}</span>
-                </div>
+                    <div class="message message-success" style="margin-top: 1.5rem">
+                        <div class="message-body">
+                            <span>{{ session('notification') }}</span>
+
+                        </div>
+                    </div>
                 @endif
                 <article class="message bg-opacity-8" style="margin-top: 1.5rem">
                     <div class="message-body">
@@ -76,9 +79,11 @@
                             <label for="email_input">{{ __('E-Mail') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('email')
-                                <div class="alert alert-danger">
+                            <div class="message message-danger">
+                                <div class="message-body">
                                     <strong>{{ $message }}</strong>
                                 </div>
+                            </div>
                             @enderror
                         </div>
                         <div class="input-field col s12">
@@ -87,9 +92,11 @@
                             <label for="password_input">{{ __('Contraseña') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('password')
-                                <div class="alert alert-danger">
+                            <div class="message message-danger">
+                                <div class="message-body">
                                     <strong>{{ $message }}</strong>
                                 </div>
+                            </div>
                             @enderror
                         </div>
                     </div>
