@@ -114,7 +114,7 @@
                                 @can('Registrar Pago')
                                     <ul class="collapsible" style="box-shadow: none !important;">
                                         @can('Registrar Pago - Punto de Venta')
-                                            <li>
+                                            <li id="point-of-sale">
                                                 <div class="collapsible-header"><i class="icon-payment"></i>PUNTO DE
                                                     VENTA
                                                 </div>
