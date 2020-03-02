@@ -271,7 +271,7 @@ $(document).ready(function () {
         }
     }
 
-    $('#email').blur(function () {
+    $('#email').change(function () {
         if ($('#email').val() !== '') {
             var email = $('#email').val();
             $.ajax({
