@@ -74,6 +74,10 @@
                     <div class="card-content row">
                         @csrf
                         <div class="input-field col s12">
+                            <i class="icon-mail_outline prefix"></i>
+                            <input type="email" name="email" id="email_input" class="validate" required>
+                            <label for="email_input">{{ __('E-Mail') }}</label>
+                            {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('email')
                             <div class="message message-danger">
                                 <div class="message-body">
@@ -81,12 +85,12 @@
                                 </div>
                             </div>
                             @enderror
-                            <i class="icon-mail_outline prefix"></i>
-                            <input type="email" name="email" id="email_input" class="validate" required>
-                            <label for="email_input">{{ __('E-Mail') }}</label>
-                            {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                         </div>
                         <div class="input-field col s12">
+                            <i class="icon-lock_outline prefix"></i>
+                            <input type="password" name="password" id="password_input" class="validate" minlength="8" required>
+                            <label for="password_input">{{ __('Contraseña') }}</label>
+                            {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('password')
                             <div class="message message-danger">
                                 <div class="message-body">
@@ -94,10 +98,6 @@
                                 </div>
                             </div>
                             @enderror
-                            <i class="icon-lock_outline prefix"></i>
-                            <input type="password" name="password" id="password_input" class="validate" minlength="8" required>
-                            <label for="password_input">{{ __('Contraseña') }}</label>
-                            {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                         </div>
                     </div>
                     <div class="card-footer">
