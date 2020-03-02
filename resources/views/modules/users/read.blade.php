@@ -25,7 +25,6 @@
                                 <tr>
                                     <th>Nombre Completo</th>
                                     <th>Doc. Identidad</th>
-                                    <th>Teléfono</th>
                                     <th>E-mail</th>
                                     <th>Rol</th>
                                     <th>Verificado</th>
@@ -38,7 +37,6 @@
                                 <tr>
                                     <td>{{ $user->name . " " . $user->surname }}</td>
                                     <td>{{$user->ci}}</td>
-                                    <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->role->name}}</td>
 
