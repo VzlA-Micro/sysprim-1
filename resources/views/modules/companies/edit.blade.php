@@ -145,21 +145,21 @@
                         </div>
 
                             @if($ciu->pivot->status=='disabled')
-                                <div class="input-field col s12 m2" id="bDelete">
+                                <div class="input-field col s12 m2">
                                     <span class="center-align">Estado:</span>
                                     <button type="button"
-                                            class="btn waves-effect waves-light red col s12  disabled-ciu-selected"
-                                            value="{{$ciu->id}}" data-ciiu="enabled">
+                                            class="btn waves-effect waves-light red col s12 "
+                                            value="{{$ciu->id}}" >
 
                                         <i class="icon-do_not_disturb_alt "></i></button>
 
                                 </div>
                             @else
-                                <div class="input-field col s12 m2" id="bDelete">
+                                <div class="input-field col s12 m2">
                                     <span class="center-align">Estado:</span>
                                     <button type="button"
-                                            class="btn waves-effect waves-light green col s12  disabled-ciu-selected"
-                                            value="{{$ciu->id}}" data-ciiu="disabled">
+                                            class="btn waves-effect waves-light green col s12 "
+                                            value="{{$ciu->id}}">
                                         <i class="icon-check"></i></button>
                                 </div>
                             @endif

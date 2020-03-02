@@ -1,10 +1,11 @@
 $('document').ready(function () {
     var url = localStorage.getItem('url');
     $('#open-cashier').click(function () {
+
         if (localStorage.getItem('bank') == null) {
             swal({
                 title: "PUNTO DE VENTA 1/2",
-                text: "Introduzca el numero de lote del punto de venta:",
+                text: "Introduzca el numero de lote del punto de venta.(EN CASO NO POSEER PUNTO DE VENTA COLOQUE:000):",
                 icon: "info",
                 content: {
                     element: "input",
@@ -14,7 +15,7 @@ $('document').ready(function () {
                     },
                 },
             }).then(function (name) {
-                if (name === null || isNaN(name) || name <= 0) {
+                if (name === null || isNaN(name) ) {
                     swal({
                         title: "Información",
                         text: "Acción cancelada,debe ingresar un numero de lote valido.",
@@ -23,12 +24,13 @@ $('document').ready(function () {
                 } else {
                     localStorage.setItem('lot', name);
                     swal({
-                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2",
+                        title: "SELECIONE EL BANCO DE RECAUDACIÓN 2/2.",
                         icon: "info",
                         buttons: {
                             cancel: true,
+                            SN: {text: "S/N", value: "00", className: "red width"},
                             BANCO: {text: "100%BANCO", value: "33", className: "blue"},
-                            BOD: {text: "BOD", value: "44", className: "green width"},
+                            BOD: {text: "BOD", value: "44", className: "green width"}
                         }
                     }).then(function (bank) {
                         if (bank === null) {
@@ -50,7 +52,7 @@ $('document').ready(function () {
 
                             location.reload();
                         }
-                    })
+                    });
                 }
             });
 
@@ -90,9 +92,12 @@ $('document').ready(function () {
 
         if (bank === "44") {
             $('#name_bank').val('BOD');
-        } else {
+        }else if(bank=='00'){
+            $('#point-of-sale').addClass('hide');
+        }else{
             $('#name_bank').val("100%BANCO");
         }
+
 
         $('#bank').val(bank);
         $('#lot').val(lot);
