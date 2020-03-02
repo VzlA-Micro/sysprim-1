@@ -107,7 +107,7 @@ $(document).ready(function () {
             </div>
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                 <i class="icon-person prefix"></i>
-                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                 <label for="email">Correo</label>
             </div>
             <div class="input-field col s12 m6">
@@ -151,6 +151,51 @@ $(document).ready(function () {
 
                 $('#content').html('');
             }
+        }
+    });
+
+    $('#email').blur(function () {
+        if ($('#email').val() !== '') {
+            var email = $('#email').val();
+            $.ajax({
+                method: "GET",
+                url: url + "users/verify-email/" + email,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (response) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+
+                    if (response.status === 'error') {
+                        swal({
+                            title: "¡Oh no!",
+                            text: response.message,
+                            icon: "error",
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
+                        $('#email').val('');
+                    }
+                },
+                error: function (err) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "blue-gradient"
+                        },
+                    });
+                    $('#email').val('');
+                }
+            });
         }
     });
 

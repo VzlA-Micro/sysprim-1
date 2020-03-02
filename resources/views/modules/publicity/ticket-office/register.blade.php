@@ -76,7 +76,7 @@
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="email_full" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                                <input id="email_full" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                                 <label for="email_full">Correo</label>
                             </div>
                             <div class="input-field col s12 m6">
