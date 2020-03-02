@@ -89,8 +89,8 @@ class Declaration
         
         if($currentDate->year == $fiscalPeriod->year) {
             $prologueDay = CheckCollectionDay::verify('Inm.Urbanos.Desc');
-            dd($prologueDay);
-            if (intVal($currentDate->month) == 01) {
+//            dd($prologueDay);
+            if (/*intVal($currentDate->month) == 01*/!$prologueDay['mora']) {
                 $recharge = 0;
                 $interest = 0;
                 $descuento = 0.20;
@@ -135,10 +135,8 @@ class Declaration
 //                $porcentaje = $baseImponible/* * $timelineAlicuota->value*/; // Valor de alicuota
                 $total = $baseImponible - $discount; // Total del impuesto
             }
-            /*elseif() {
+            /*elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
 
-            }*/
-            elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
                 $recharge = 0;
                 $interest = 0;
 
@@ -175,9 +173,9 @@ class Declaration
 
                 $baseImponible = $totalground + $totalbuild; // Base imponible bruta
                 $discount = 0;
-//                $porcentaje = $baseImponible/* * $timelineAlicuota->value*/; // Valor de alicuota
+//                $porcentaje = $baseImponible/* * $timelineAlicuota->value; // Valor de alicuota
                 $total = $baseImponible - $discount; // Total del impuesto
-            }
+            }*/
             else {
                 $discount = 0;
 
@@ -228,9 +226,10 @@ class Declaration
                     $recharge = 0;
                     $interest = 0;
                 }
-//                $porcentaje = $baseImponible/* * $timelineAlicuota->value*/;
+//                $porcentaje = $baseImponible/* * $timelineAlicuota->value;
                 $total = $baseImponible + $interest + $recharge;
             }
+
         }
         else { // SI el periodo fiscal es diferente del año actual
             $discount = 0;
