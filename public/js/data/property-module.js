@@ -280,6 +280,8 @@ $(document).ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#email').val('');
+
         if (document !== '') {
             $.ajax({
                 method: "GET",
@@ -314,6 +316,7 @@ $(document).ready(function () {
                                 $('#surname').val(user.apellidos);
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
+                                $('#email').prop('readonly', false);
                                 $('#address').prop('readonly', false);
                             }
 
