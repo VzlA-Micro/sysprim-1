@@ -22,8 +22,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>1,
-            'rate'=>50,
-            'rate_UT'=>18
+            'rate'=>600,
+            'rate_UT'=>300
         ]);
 
         DB::table('vehicle_type')->insert([
@@ -34,8 +34,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>2,
-            'rate'=>100,
-            'rate_UT'=>33
+            'rate'=>3000,
+            'rate_UT'=>1000
         ]);
 
         DB::table('vehicle_type')->insert([
@@ -46,8 +46,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>3,
-            'rate'=>200,
-            'rate_UT'=>100
+            'rate'=>4000,
+            'rate_UT'=>2000
         ]);
 
         DB::table('vehicle_type')->insert([
@@ -58,8 +58,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>4,
-            'rate'=>300,
-            'rate_UT'=>150
+            'rate'=>5000,
+            'rate_UT'=>2500
         ]);
 
         DB::table('vehicle_type')->insert([
@@ -70,8 +70,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>5,
-            'rate'=>400,
-            'rate_UT'=>200
+            'rate'=>6000,
+            'rate_UT'=>3000
         ]);
 
         DB::table('vehicle_type')->insert([
@@ -82,8 +82,8 @@ class TypeVehicleTableSeeder extends Seeder
 
         DB::table('timeline_type_vehicle')->insert([
             'type_vehicle_id'=>6,
-            'rate'=>500,
-            'rate_UT'=>250
+            'rate'=>7000,
+            'rate_UT'=>3500
         ]);
     }
 }

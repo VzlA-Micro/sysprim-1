@@ -194,7 +194,7 @@ return [
         App\Providers\IpgBdvCheckPaymentResponseServiceProvider::class,
         App\Providers\IpgBdvPaymentRequestServiceProvider::class,
         App\Providers\IpgBdvPaymentResponseServiceProvider::class,
-
+        Spatie\Backup\BackupServiceProvider::class
     ],
 
     /*

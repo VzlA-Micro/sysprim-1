@@ -111,13 +111,15 @@ class DeclarationVehicle
 
             $day = CheckCollectionDay::verify('Pat.Veh');
 
+
             if ($dateCurrent->month <= $date->month) {
 
-                if ($dateCurrent->day >= $date->day) {
+
+                if (($dateCurrent->day >= $date->day)&&$day['diffDayMora']>=1) {
 
                     $recharge = ($taxes * $recharges->value) / 100;
 
-                    $dayMora = 31;
+                    $dayMora = 0;
                     $valueDayMora = ($rateBank / 100 / 360) * ($day['diffDayMora'] + $dayMora) * ($taxes + $recharge);
 
                 } else {
@@ -132,7 +134,7 @@ class DeclarationVehicle
             }
         } else {
             $recharge = ($taxes * $recharges->value) / 100;
-            $dayMora = 31;
+            $dayMora = 0;
             $day = DeclarationVehicle::dayMora($year);
             $valueDayMora = ($rateBank / 100 / 360) * ($day['diffDayMora'] + $dayMora) * ($taxes + $recharge);
         }
@@ -141,8 +143,17 @@ class DeclarationVehicle
         if ($optionPayment) {
             //indica que el pago es anual
 
-            if (($monthCurrent == $mes)) {
+            if ($fiscal_period_format->year == $yearCurrent) {
+                $day_prologue = CheckCollectionDay::verify('Pat.Veh');
+            }else{
+                $day_prologue =DeclarationVehicle::dayMora($year);
+            }
+
+
+
+            if (!$day_prologue['mora']) {
                 $valueDiscount = ($taxes * 20) / 100;
+
                 $total = ($taxes - $valueDiscount) + $valueDayMora;
 
             } else {
