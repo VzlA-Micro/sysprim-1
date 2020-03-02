@@ -22,8 +22,10 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 @if(Session::has('message'))
-                    <div class="alert alert-warning center-align">
-                        <strong>{{ session('message') }}</strong>
+                    <div class="message message-warning">
+                        <div class="message-body">
+                            <strong>{{ session('message') }}</strong>
+                        </div>
                     </div>
                 @endif
                 <div class="card">
