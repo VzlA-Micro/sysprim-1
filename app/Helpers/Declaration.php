@@ -25,6 +25,7 @@ use App\BankRate;
 use App\TimelineAlicuota;
 use App\TimelineCatastralBuild;
 use App\TimelineCatastralTerrain;
+use App\Prologue;
 //////////////////////////////////////////////////////////
 ///
 ///       Hacer o acomodar valores de la unidad tributaria, filtrar por fechas, tomar la uniodad tributaria actual
@@ -42,12 +43,15 @@ class Declaration
         date_default_timezone_set('America/Caracas');//Estableciendo hora local;
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $currentDate = Carbon::now();
-
+        $prologue = Prologue::where('branch', 'Inm.Urbanos.Desc')->first();
+        $prologueDate = Carbon::parse($prologue->date_limit)->format('Y-m-d');
+//        dd($prologueDate);
         $dayCurrent = Carbon::now()->format('d');
         $monthCurrent = Carbon::now()->format('m');
         $january = 01;
         $currentFiscalPeriodStart = '2019-01-01';
         $currentFiscalPeriodEnd = '2020-01-01';
+
         $fiscalPeriod = Carbon::parse($fiscal_period);
 
         $taxUnitPrice = Tributo::whereDate('to', '>=', $fiscalPeriod)->whereDate('since', '<=', $fiscalPeriod)->first();
@@ -84,6 +88,8 @@ class Declaration
         ////////////////////////////////////////////////////
         
         if($currentDate->year == $fiscalPeriod->year) {
+            $prologueDay = CheckCollectionDay::verify('Inm.Urbanos.Desc');
+            dd($prologueDay);
             if (intVal($currentDate->month) == 01) {
                 $recharge = 0;
                 $interest = 0;
@@ -129,6 +135,9 @@ class Declaration
 //                $porcentaje = $baseImponible/* * $timelineAlicuota->value*/; // Valor de alicuota
                 $total = $baseImponible - $discount; // Total del impuesto
             }
+            /*elseif() {
+
+            }*/
             elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
                 $recharge = 0;
                 $interest = 0;

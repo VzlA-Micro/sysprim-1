@@ -17,7 +17,7 @@ class PrologueTableSeeder extends Seeder
 
 
         DB::table('prologue')->insert([
-            'name'=>'ACTIVIDAD ÉCONOMICA-ANTICIPADA',
+            'name'=>'ACTIVIDAD ÉCONOMICA - ANTICIPADA',
             'branch'=>'Act.Eco.Anti',
             'date_limit'=>'2020-01-14',
             'created_at'=>Carbon::now(),
@@ -26,7 +26,7 @@ class PrologueTableSeeder extends Seeder
 
 
         DB::table('prologue')->insert([
-            'name'=>'ACTIVIDAD ÉCONOMICA-DEFINITIVA',
+            'name'=>'ACTIVIDAD ÉCONOMICA - DEFINITIVA',
             'branch'=>'Act.Eco.Defi',
             'date_limit'=>'2020-02-29',
             'created_at'=>Carbon::now(),
@@ -48,6 +48,14 @@ class PrologueTableSeeder extends Seeder
             'name'=>'INMUEBLES URBANOS',
             'branch'=>'Inm.Urbanos',
             'date_limit'=>'2020-03-31',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);
+
+        DB::table('prologue')->insert([
+            'name'=>'INMUEBLES URBANOS - DÍA DE DESCUENTO',
+            'branch'=>'Inm.Urbanos.Desc',
+            'date_limit'=>'2020-03-02',
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
