@@ -9,9 +9,11 @@
         <div class="row">
             <div class="col s12 animated bounceInDown">
                 @if(session('notification'))
-                <div class="alert alert-success" style="margin-top: 1rem">
-                    <span>{{ session('notification') }}</span>
-                </div>
+                    <div class="message message-success" style="margin-top: 1rem">
+                        <div class="message-body">
+                            <span>{{ session('notification') }}</span>
+                        </div>
+                    </div>
                 @endif
                 <form action="{{ route('login') }}" method="post" class="" >
                     <div class="row">
@@ -22,25 +24,31 @@
                     <div class="row">
                         @csrf
                         <div class="input-field col s12">
+
                             <i class="icon-mail_outline prefix"></i>
                             <input type="email" name="email" id="email" class="validate" required>
                             <label for="email">{{ __('E-Mail') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('email')
-                            <div class="alert alert-danger">
-                                <strong>{{ $message }}</strong>
+                            <div class="message message-danger">
+                                <div class="message-body">
+                                    <strong>{{ $message }}</strong>
+                                </div>
                             </div>
                             @enderror
                         </div>
                         <div class="input-field col s12">
+
                             <i class="icon-lock_outline prefix"></i>
                             <input type="password" name="password" id="password" class="validate" minlength="8" required>
                             <label for="password">{{ __('Contraseña') }}</label>
                             {{-- <span class="helper-text" data-success="Good" data-error="Wrong"></span> --}}
                             @error('password')
-                                <div class="alert alert-danger">
+                            <div class="message message-danger">
+                                <div class="message-body">
                                     <strong>{{ $message }}</strong>
                                 </div>
+                            </div>
                             @enderror
                         </div>
                     </div>

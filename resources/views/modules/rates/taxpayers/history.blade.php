@@ -16,8 +16,10 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 @if(Session::has('message'))
-                    <div class="alert alert-warning center-align">
-                        <strong>{{ session('message') }}</strong>
+                    <div class="message message-warning">
+                        <div class="message-body">
+                            <strong>{{ session('message') }}</strong>
+                        </div>
                     </div>
                 @endif
                 <div class="card">
@@ -83,7 +85,7 @@
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td>
-                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id)}}" class="btn orange waves-effect waves-light">
+                                                    <a href="{{url('rate/taxpayers/pdf/'.$taxe->id.'/true')}}" class="btn orange waves-effect waves-light">
                                                         <i class="icon-description left"></i>
                                                         <span class="truncate">
                                                             Descargar Planilla

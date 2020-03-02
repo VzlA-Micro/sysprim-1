@@ -231,9 +231,11 @@ class TaxesMonth{
         setlocale(LC_ALL, "es_ES");//establecer idioma local
         $dayMoraEspecial=5;//el dia de cobro para lo que tienen mora y son agente de retencion
 
-        $prologue=Prologue::where('branch', '')->first();
+        $prologue=Prologue::where('branch', 'Act.Eco.Anti')->first();
 
-        $dayMoraNormal=14;//el dia de cobro para lo que no son agente de retención
+        $dayMoraNormal=Carbon::parse($prologue->date_limit)->format('d');//el dia de cobro para lo que no son agente de retención
+
+
 
 
 
@@ -264,8 +266,10 @@ class TaxesMonth{
                 $mora=true;
                 $diffDayMora=$fiscal_period->diffInDays($now_pay);
             }
+
         }else{
-            $day_payment=Carbon::now()->setDay(14);
+
+            $day_payment=Carbon::now()->setDay($dayMoraNormal);
             $nombre_dia=date('w', strtotime($day_payment));
 
             if($now_pay->diffInMonths($fiscal_period)<2){
@@ -274,10 +278,15 @@ class TaxesMonth{
                 }else if($nombre_dia=="0"){
                     $dayMoraNormal=$dayMoraNormal+1;
                 }
-            }
 
-            $fiscal_period->setDay($dayMoraNormal);
+
+            }
+            $dayMoraNormalNew=Carbon::parse($prologue->date_limit)->format('d');//el dia de cobro para lo que no son agente de retención
+
+            $fiscal_period->setDay($dayMoraNormalNew);
+
             if($fiscal_period<$now_pay){
+
                 $diffDayMora=$fiscal_period->diffInDays($now_pay);
                 $mora=true;
             }else{
@@ -285,9 +294,9 @@ class TaxesMonth{
                 $mora=false;
             }
 
-
-
         }
+
+
 
         return array('mora'=>$mora,'diffDayMora'=>$diffDayMora);
     }

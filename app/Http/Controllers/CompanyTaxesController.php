@@ -168,6 +168,7 @@ class CompanyTaxesController extends Controller
 
 
 
+
         $date =TaxesMonth::calculateDayMora($fiscal_period,$company_find->typeCompany);
         $taxe = new Taxe();
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
@@ -293,7 +294,7 @@ class CompanyTaxesController extends Controller
 
             if($verify_prologue['mora']) {
 
-                if ($date['mora']) {//si tiene mora
+                if ($date['mora']&&$date['diffDayMora']>=1) {//si tiene mora
                     //Obtengo recargo
 
                     $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();

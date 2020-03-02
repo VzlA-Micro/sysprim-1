@@ -105,7 +105,12 @@ $(document).ready(function () {
                                    title="Solo puede agregar letras (con acentos)." required>
                  <label for="name">Nombre</label>
             </div>
-            <div class="input-field col s12 m12">
+            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                <i class="icon-person prefix"></i>
+                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                <label for="email">Correo</label>
+            </div>
+            <div class="input-field col s12 m6">
                  <i class="icon-directions prefix"></i>
                  <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                  <label for="address">Dirección</label>
@@ -157,6 +162,8 @@ $(document).ready(function () {
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
+        $('#email_full').val('');
+
         if (document !== '') {
             $.ajax({
                 method: "GET",
@@ -204,6 +211,8 @@ $(document).ready(function () {
                             $('#type').val('user');
                             $('#address_full').val(user.address);
                             $('#address_full').attr('readonly', '');
+                            $('#email_full').val(user.email);
+                            $('#email_full').attr('readonly','');
 
 
                         } else if (response.type == 'company') {
@@ -274,6 +283,8 @@ $(document).ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#email').val('');
+
 
         if (document !== '') {
             $.ajax({
@@ -309,6 +320,7 @@ $(document).ready(function () {
                                 $('#surname').val(user.apellidos);
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
+                                $('#email').prop('readonly', false);
                                 $('#address').prop('readonly', false);
                             }
 
@@ -323,6 +335,8 @@ $(document).ready(function () {
                             $('#type').val('user');
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
+                            $('#email').val(user.email);
+                            $('#email').attr('readonly','');
 
                         } else if (response.type == 'company') {
                             var company = response.company;
@@ -364,6 +378,7 @@ $(document).ready(function () {
         var name_full = $('#name').val();
         var address = $('#address').val();
         var document_full = $('#document').val();
+        var email = $('#email').val();
         var responsable = null;
         var type_document_company = false;
 
@@ -456,6 +471,20 @@ $(document).ready(function () {
                     }
                 });
             }
+            else if (email == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar todos los campos para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            }
             else if (document_full == '') {
 
                 swal({
@@ -522,6 +551,8 @@ $(document).ready(function () {
                 var document = $('#document').val();
                 var address = $('#address').val();
                 var surname = $('#surname').val();
+                var email = $('#email').val();
+
 
                 $.ajax({
                     method: "POST",
@@ -532,6 +563,7 @@ $(document).ready(function () {
                         type_document: type_document,
                         document: document,
                         address: address,
+                        email:email,
                         type: type
                     },
                     url: url + 'properties/taxpayers/company-user/register',

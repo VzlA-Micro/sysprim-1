@@ -304,6 +304,7 @@ class RateController extends Controller{
             $type='user';
         }
 
+
         $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
             'taxes' => $taxe,
             'data' => $data,
@@ -369,7 +370,6 @@ class RateController extends Controller{
 
         $subject = "PLANILLA DE PAGO";
         $for = \Auth::user()->email;
-
 
         $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
             'taxes' => $taxes,

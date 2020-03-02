@@ -97,8 +97,8 @@
                             <label for="date_end">Fecha de Fin</label>
                         </div>
                     </div>
+                    @can('Actualizar Linea de Tiempo')
                     <div class="card-action center">
-                        @can('Actualizar Tipos de Vehiculos')
 
                             <a id="btn-modify" class="btn btn-large btn-rounded blue waves-effect waves-light">
                                 <i class="icon-update right"></i>
@@ -110,9 +110,9 @@
                                 Guardar
                             </button>
 
-                        @endcan
                         {{--<a href="#" class="btn btn-rounded red waves-effect waves-light">Eliminar</a>--}}
                     </div>
+                    @endcan
 
                 </form>
             </div>

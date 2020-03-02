@@ -5,7 +5,11 @@
         <div class="row">
             <div class="col s12 m8 offset-m2 l6 offset-l3 animated bounceInDown">
                 @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger" style="margin-top: 1rem;">{{ $error }}</div>
+                    <div class="message message-danger" style="margin-top: 1rem;">
+                        <div class="message-body">
+                            <strong>{{ $error }}</strong>
+                        </div>
+                    </div>
                 @endforeach
                 <form action="" method="post" class="card bg-light-opacity-8">
                     <div class="card-header center-align">

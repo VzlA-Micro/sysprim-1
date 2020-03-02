@@ -43,7 +43,7 @@ class CheckCollectionDay{
             $prologue=Prologue::where('branch', $branch)->first();
             $date_limit=Carbon::parse($prologue->date_limit);
 
-            if($now->gt($date_limit)){
+            if($now->gte($date_limit)&&$date_limit->diffInDays($now)>=1){
                 $verify['mora']=true;
                 $verify['diffDayMora']=$date_limit->diffInDays($now);
             }else{

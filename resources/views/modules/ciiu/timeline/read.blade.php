@@ -27,7 +27,9 @@
                                     <th>Codigo</th>
                                     <th>Desde</th>
                                     <th>Hasta</th>
+                                    @can('Detalles Linea de Tiempo')
                                     <th>Detalles</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +39,7 @@
                                     <td>{{ $ciu->ciiu->code }}</td>
                                     <td>{{ $ciu->since }}</td>
                                     <td>{{ $ciu->to }}</td>
-                                    @can('Detalles Ramo CIIU')
+                                    @can('Detalles Linea de Tiempo')
                                     <td>
                                         <a href="{{ route('ciu-branch.timeline.details',['id' => $ciu->id]) }}" class="btn btn-small btn-floating orange waves-effect effect-light"><i class="icon-pageview"></i></a>
                                     </td>

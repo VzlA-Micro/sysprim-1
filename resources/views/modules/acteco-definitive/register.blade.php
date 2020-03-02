@@ -18,13 +18,16 @@
             <div class="col s12 m10 offset-m1">
 
                 @if($status==='verified')
-                    <div class="alert alert-success center-align">
-                        <strong>DECLARACIÓN DEL 2O19 VERIFICADA Y CONCILIADO CON ÉXITO.</strong>
+                    <div class="card center-align col s12">
+                        <h5>Pago Verificado</h5>
+                        <h1><i class="icon-check green-text"></i></h1>
+                        <p>Su pago ha sido verificado éxitosamente.</p>
                     </div>
                 @elseif($status=='process')
-                    <div class="alert alert-success center-align">
-                        <strong>PLANILLA DE ACTIVIDAD ECONÓMICA DEFINITIVA DECLARADA, POR FAVOR CONCILIE SUS
-                            PAGOS.</strong>
+                    <div class="card center-align col s12">
+                        <h5>Pago Declarado</h5>
+                        <h1><i class="icon-access_alarms orange-text"></i></h1>
+                        <p>Ya has declarado tu pago, actualmete se encuentra en proceso de verificación.</p>
                     </div>
                 @elseif($status==='new')
 
@@ -32,8 +35,10 @@
                     <form action="{{ route('taxes.save.definitive')}}" method="post" class="card"
                           id="taxes-register-definitive">
                         @if(session("message") )
-                            <div class="alert alert-danger center-align">
-                                <strong>{{session("message")}}</strong>
+                            <div class="message message-danger center-align">
+                                <div class="message-body">
+                                    <strong>{{ session('message') }}</strong>
+                                </div>
                             </div>
                         @endif
 

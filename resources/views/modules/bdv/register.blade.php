@@ -10,6 +10,9 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
+                    {{--<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles de Autoliquidación</a></li>--}}
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
@@ -53,7 +56,7 @@
 
                             <div class="input-field col s12 m12 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números. Ej: 12345678">
                                 <i class="icon-mail_outline prefix"></i>
-                                <input id="email" type="email" name="email" data-validate="email" maxlength="25"
+                                <input id="email" type="email" name="email" data-validate="email" maxlength="100"
                                        class="validate"
                                        title="Solo puede escribir números." required>
                                 <label for="email">Email</label>

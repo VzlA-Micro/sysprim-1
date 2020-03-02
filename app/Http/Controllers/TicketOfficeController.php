@@ -539,7 +539,7 @@ class TicketOfficeController extends Controller
             }
 
 
-            if ($date['mora']) {//si tiene mora
+            if ($date['mora']&&$date['diffDayMora']>=1) {//si tiene mora
 
 
                 $recharge = Recharge::where('branch', 'Act.Eco')->whereDate('to', '>=', $fiscal_period_format)->whereDate('since', '<=', $fiscal_period_format)->first();

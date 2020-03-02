@@ -16,8 +16,10 @@
             <div class="col s12 m10 offset-m1">
                 <form action="{{ route('taxes.save') }}" method="post" class="card" id="taxes-register">
                    @if(session("message") )
-                        <div class="alert alert-danger center-align">
-                            <strong>{{session("message")}}</strong>
+                        <div class="message message-danger center-align">
+                            <div class="message-body">
+                                <strong>{{ session('message') }}</strong>
+                            </div>
                         </div>
                     @endif
                         {{--

@@ -97,6 +97,7 @@ $('document').ready(function () {
                     var document = $('#document').val();
                     var address = $('#address').val();
                     var surname = $('#surname').val();
+                    var email = $('#email').val();
 
                     $.ajax({
                         method: "POST",
@@ -106,6 +107,7 @@ $('document').ready(function () {
                             surname: surname,
                             type_document: type_document,
                             document: document,
+                            email: email,
                             address: address,
                             type: type,
                             user:user
@@ -180,7 +182,12 @@ $('document').ready(function () {
                                    title="Solo puede agregar letras (con acentos)." required readonly>
                  <label for="name">Nombre</label>
             </div>
-            <div class="input-field col s12 m12">
+            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                <i class="icon-person prefix"></i>
+                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                <label for="email">Correo</label>
+            </div>
+            <div class="input-field col s12 m6">
                  <i class="icon-directions prefix"></i>
                  <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                  <label for="address">Dirección</label>
@@ -409,20 +416,27 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
-        console.log(document);
+
+
         if(document!==''&&document.length>=7) {
             $.ajax({
                 method: "GET",
-                url: url + "rate/taxpayers/find/" + type_document  + "/" + document, // Luego cambiar ruta
+                url: url + "rate/taxpayers/find/" + type_document  +"/"+document,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
 
+
+
                     if(response.status!=='error') {
+
+                        $('#name').attr('readonly', 'readonly');
                         if (response.type == 'not-user') {
+
                             var user = response.user.response;
+
                             if(user.inscrito==false){
                                 swal({
                                     title: "Lo sentimos",
@@ -439,15 +453,18 @@ $('document').ready(function () {
 
                             }else{
                                 $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly');
+                                $('#name').attr('readonly','readonly');
                                 $('#surname').val(user.apellidos);
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
                                 $('#id').val(user.id);
                                 $('#address').removeAttr('readonly', '');
+                                $('#email').val('');
+                                $('#email').removeAttr('readonly', '');
                             }
 
                         } else if (response.type == 'user') {
+
                             var user = response.user;
                             $('#name').val(user.name + ' ' + user.surname);
                             $('#name').attr('readonly');
@@ -456,7 +473,12 @@ $('document').ready(function () {
 
                             $('#type').val('user');
                             $('#address').val(user.address);
+                            $('#email').val(user.email);
+                            $('#email').attr('readonly','');
                             $('#address').attr('readonly', '');
+
+
+
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name').val(company.name);
@@ -469,7 +491,6 @@ $('document').ready(function () {
 
                         } else {
                             $('#type').val('company');
-
                         }
                     }else{
                         swal({
@@ -484,6 +505,10 @@ $('document').ready(function () {
 
                         $('#document').val('');
                     }
+
+
+
+
                     M.updateTextFields();
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
