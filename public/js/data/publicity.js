@@ -51,7 +51,8 @@ $(document).ready(function() {
                     var type_document = $('#type_document').val();
                     var document = $('#document').val();
                     var address = $('#address').val();
-                    var surname = $('#surname').val();
+                    var email = $('#email').val();
+
 
                     $.ajax({
                         method: "POST",
@@ -62,6 +63,7 @@ $(document).ready(function() {
                             type_document: type_document,
                             document: document,
                             address: address,
+                            email: email,
                             type: type,
                             user:user
                         },
@@ -136,7 +138,12 @@ $(document).ready(function() {
                                    title="Solo puede agregar letras (con acentos)." required readonly>
                  <label for="name">Nombre</label>
             </div>
-            <div class="input-field col s12 m12">
+            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                <i class="icon-person prefix"></i>
+                <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                <label for="email">Correo</label>
+            </div>
+            <div class="input-field col s12 m6">
                  <i class="icon-directions prefix"></i>
                  <textarea name="address" id="address" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                  <label for="address">Dirección</label>
@@ -163,6 +170,51 @@ $(document).ready(function() {
                 }
             });
 
+            $('#email').change(function () {
+                if ($('#email').val() !== '') {
+                    var email = $('#email').val();
+                    $.ajax({
+                        method: "GET",
+                        url: url+"rate/ticket-office/verify-email/"+email,
+                        beforeSend: function () {
+                            $("#preloader").fadeIn('fast');
+                            $("#preloader-overlay").fadeIn('fast');
+                        },
+                        success: function (response) {
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+        
+                            if (response.status === 'error') {
+                                swal({
+                                    title: "¡Oh no!",
+                                    text: response.message,
+                                    icon: "error",
+                                    button:{
+                                        text: "Esta bien",
+                                        className: "blue-gradient"
+                                    },
+                                });
+                                $('#email').val('');
+                            }
+                        },
+                        error: function (err) {
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                            swal({
+                                title: "¡Oh no!",
+                                text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                                icon: "error",
+                                button:{
+                                    text: "Entendido",
+                                    className: "blue-gradient"
+                                },
+                            });
+        
+                        }
+                    });
+                }
+            });
+
             $('#document').change(function () {
                 findDocument();
             });
@@ -176,6 +228,8 @@ $(document).ready(function() {
             $('#content').html('');
         }
     });
+
+    
 
 
     // Registrar
@@ -399,6 +453,8 @@ $(document).ready(function() {
                             $('#type').val('user');
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
+                            $('#email').val(user.email);
+                            $('#email').attr('readonly','');
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name').val(company.name);

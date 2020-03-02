@@ -315,7 +315,7 @@
                                     </div>
                                 @endcan
 
-                                <div class="col s12 m12 center-align" style="margin-top:.5rem;display:none" id="block-back">
+                                <div class="col s12 m12 center-align" style="display:none" id="block-back">
                                     <a href="{{route('tickOffice.companies.details',['id'=>$company->id])}}" class="btn btn-large btn-rounded waves-effect waves-light peach col s12 " 
                                        id="back">
                                         Atrás

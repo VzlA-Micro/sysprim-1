@@ -624,6 +624,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Registrar Notificaciones',
             'Consultar Notificaciones',
             'Ver Notificaciones',
+            'Extensión - SysQ',
             'Mi Perfil'
         ]);
 
