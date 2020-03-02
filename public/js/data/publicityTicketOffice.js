@@ -196,6 +196,8 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address_full').val('');
         $('#name_full').val('');
+        $('#email_full').val('');
+
         if (document !== '') {
             $.ajax({
                 method: "GET",
@@ -243,8 +245,8 @@ $('document').ready(function () {
                             $('#type').val('user');
                             $('#address_full').val(user.address);
                             $('#address_full').attr('readonly', '');
-                            $('#email').val(user.email);
-                            $('#email').attr('readonly','');
+                            $('#email_full').val(user.email);
+                            $('#email_full').attr('readonly','');
 
 
                         } else if (response.type == 'company') {

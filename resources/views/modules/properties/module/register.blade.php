@@ -51,7 +51,12 @@
                                        title="Solo puede agregar letras (con acentos)." required readonly>
                                 <label for="name_full">Nombre</label>
                             </div>
-                            <div class="input-field col s12 m12">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="email_full" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                                <label for="email_full">Correo</label>
+                            </div>
+                            <div class="input-field col s12 m6">
                                 <i class="icon-directions prefix"></i>
                                 <textarea name="address" id="address_full" cols="30" rows="12" data-validate="direccion" class="materialize-textarea rate" required></textarea>
                                 <label for="address_full">Dirección</label>
