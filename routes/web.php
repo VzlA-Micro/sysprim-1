@@ -943,7 +943,7 @@ Route::middleware(['auth'])->group(/**
                 Route::group(['middleware' => ['permission:Gestionar Vehiculos']], function () {
                     Route::get('/ticketOffice/vehicle/manage', function () {
                         return view('modules.ticket-office.vehicle.modules.vehicle.home');
-                    })->name('ticketOffice.vehicle.manage');}
+                    })->name('ticketOffice.vehicle.manage');
                     Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
 
 
