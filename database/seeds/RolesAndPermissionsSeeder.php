@@ -396,6 +396,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Descargar Mi Planilla']);
         Permission::create(['name' => 'Obtener Mi Planilla']);
 
+        # >>>>>>>>>>>>>> EXTENSIONES
+        Permission::create(['name' => 'Extensión - SysQ']);
+
         #######################################################################################################
 
         //Creamos el Rol del superUsuario

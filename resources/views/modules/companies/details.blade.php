@@ -15,15 +15,19 @@
             </div>
             @if($company->status=='disabled')
                 <div class="col s112 m12">
-                    <div class="alert alert-danger" style="margin-top: 1.5rem">
-                        <span>{{ "La empresa ".$company->name." ha sido  bloqueada  temporalmente, No puede realizar declaraciones, por favor dirigirse a la oficina de Atención al Contribuyente del SEMAT en la Torre David."}}</span>
+                    <div class="message message-danger center-align">
+                        <div class="message-body">
+                            <span>{{ "La empresa ".$company->name." ha sido  bloqueada  temporalmente, No puede realizar declaraciones, por favor dirigirse a la oficina de Atención al Contribuyente del SEMAT en la Torre David."}}</span>
+                        </div>
                     </div>
                 </div>
             @endif
             @if(session("message") )
                 <div class="col s112 m12">
-                    <div class="alert alert-danger center-align">
-                        <strong>{{session("message")}}</strong>
+                    <div class="message message-danger center-align">
+                        <div class="message-body">
+                            <strong>{{ session('message') }}</strong>
+                        </div>
                     </div>
                 </div>
             @endif
