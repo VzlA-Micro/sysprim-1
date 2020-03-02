@@ -168,7 +168,6 @@ class RateController extends Controller{
         $email=$request->input('email');
 
         if($type=='user'){
-
             $user=new User();
             $user->name=$name;
             $user->surname=$surname;
@@ -179,6 +178,8 @@ class RateController extends Controller{
             $user->role_id=3;
             $user->save();
             $id=$user->id;
+
+
         }else{
             $company=new Company();
             $company->name=$name;
