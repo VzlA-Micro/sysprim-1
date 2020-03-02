@@ -943,11 +943,12 @@ Route::middleware(['auth'])->group(/**
                 Route::group(['middleware' => ['permission:Gestionar Vehiculos']], function () {
                     Route::get('/ticketOffice/vehicle/manage', function () {
                         return view('modules.ticket-office.vehicle.modules.vehicle.home');
-                    })->name('ticketOffice.vehicle.manage');
+                    })->name('ticketOffice.vehicle.manage');}
+                    Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
+
 
                     # Nivel 2: Registrar y Consultar
                     Route::group(['middleware' => ['permission:Registrar Vehiculo|Consultar Vehiculos']], function () {
-                        Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
                         Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
                         # Nivel 3: Detalles
                         Route::group(['middleware' => ['permission:Detalles Vehiculos']], function () {
