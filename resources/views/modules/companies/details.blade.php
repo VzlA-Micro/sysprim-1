@@ -63,7 +63,7 @@
 
                             <div class="col s12 m4 right-align" style="margin-top: 10px">
                                 <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
-                                   class="btn red waves-light">
+                                   class="btn red waves-light" target="_blank">
                                     Descargar Carnet
                                     <i class="icon-get_app right"></i>
                                 </a>

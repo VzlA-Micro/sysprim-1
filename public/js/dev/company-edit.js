@@ -111,6 +111,7 @@ $('document').ready(function () {
             $('#update-company-status').hide();
             $('#change-maps').hide();
             $('#add-ciiu').hide();
+            $('#block-carnet').hide();
             $('#company-status').hide();
 
 
@@ -233,6 +234,7 @@ $('document').ready(function () {
             $('#block-ciiu').addClass('col s12 m12');
             $('#update-company-status').hide();
             $('#change-maps').hide();
+            $('#block-carnet').hide();
             $('#update-company').hide();
             $('#company-status').hide();
             

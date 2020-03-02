@@ -255,11 +255,17 @@
 
                         @endif
 
-
                         <div class="col l12">
                             <div class="row">
+                                <div class="col s12 m4 right-align" style="margin-top: 20px" id="block-carnet">
+                                    <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
+                                    class="btn btn-large btn-rounded waves-effect waves-light amber darken-2 col s12" target="_blank">
+                                     Descargar Carnet
+                                        <i class="icon-get_app right"></i>
+                                    </a>
+                                </div>
                                 @can('Actualizar Empresas')
-                                    <div class="col s12 m3" style="margin-top:20px;" id="block-update">
+                                    <div class="col s12 m4" style="margin-top:20px;" id="block-update">
                                         <button type="button"  class="btn btn-large btn-rounded waves-effect waves-light peach col s12 "
                                            id="update-company">
                                             Actualizar
@@ -268,7 +274,7 @@
                                     </div>
                                 @endcan
                                 @can('Añadir CIIU Empresas')
-                                    <div class="col s12 m3" style="margin-top:20px;" id="block-ciiu">
+                                    <div class="col s12 m4" style="margin-top:20px;" id="block-ciiu">
                                         <a href="#" class="btn btn-large btn-rounded waves-effect waves-light blue col s12 "
                                            id="add-ciiu">
                                             Añadir CIIU
@@ -278,7 +284,7 @@
                                 @endcan
                                 @can('Habilitar/Deshabilitar Empresas')
                                 @if($company->status===null||$company->status==='enabled')
-                                    <div class="col s12 m3" style="margin-top:20px;">
+                                    <div class="col s12 m6" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light red col s12 "
                                                 id="company-status" value="disabled">
@@ -287,7 +293,7 @@
                                         </button>
                                     </div>
                                 @else
-                                    <div class="col s12 m3" style="margin-top:20px;">
+                                    <div class="col s12 m6" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light green col s12 "
                                                 id="company-status" value="enabled">
@@ -299,11 +305,11 @@
                                 @endcan
 
                                 @can('Cambiar Ubicacion - Empresa')
-                                    <div class="col s12 m3" style="margin-top:20px;">
+                                    <div class="col s12 m6" style="margin-top:20px;">
                                         <button type="button"
                                                 class="btn btn-large btn-rounded waves-effect waves-light purple col s12 "
                                                 id="change-maps">
-                                            Ubicación
+                                            Cambiar Ubicación
                                             <i class="icon-map right"></i>
                                         </button>
                                     </div>
