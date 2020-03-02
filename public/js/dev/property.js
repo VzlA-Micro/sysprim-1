@@ -214,6 +214,53 @@ $('document').ready(function () {
                }
            });
 
+           ///////////////////////////////////
+           $('#email').change(function () {
+            if ($('#email').val() !== '') {
+                var email = $('#email').val();
+                $.ajax({
+                    method: "GET",
+                    url: url + "users/verify-email/" + email,
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (response) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+    
+                        if (response.status === 'error') {
+                            swal({
+                                title: "¡Oh no!",
+                                text: response.message,
+                                icon: "error",
+                                button: {
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
+                            });
+                            $('#email').val('');
+                        }
+                    },
+                    error: function (err) {
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "blue-gradient"
+                            },
+                        });
+                        $('#email').val('');
+                    }
+                });
+            }
+        });
+
+
            $('#document').change(function () {
                findDocument();
            });
@@ -408,50 +455,9 @@ $('document').ready(function () {
         }
     });
 
-    $('#email').change(function () {
-        if ($('#email').val() !== '') {
-            var email = $('#email').val();
-            $.ajax({
-                method: "GET",
-                url: url + "users/verify-email/" + email,
-                beforeSend: function () {
-                    $("#preloader").fadeIn('fast');
-                    $("#preloader-overlay").fadeIn('fast');
-                },
-                success: function (response) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
+    
 
-                    if (response.status === 'error') {
-                        swal({
-                            title: "¡Oh no!",
-                            text: response.message,
-                            icon: "error",
-                            button: {
-                                text: "Esta bien",
-                                className: "blue-gradient"
-                            },
-                        });
-                        $('#email').val('');
-                    }
-                },
-                error: function (err) {
-                    $("#preloader").fadeOut('fast');
-                    $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "blue-gradient"
-                        },
-                    });
-                    $('#email').val('');
-                }
-            });
-        }
-    });
+    
 
     function findDocument() {
         var type_document=$('#type_document').val();
