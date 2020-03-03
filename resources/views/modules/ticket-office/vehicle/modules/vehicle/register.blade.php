@@ -124,7 +124,7 @@
                                 <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
                                        title="Solo puede escribir letras y numeros." maxlength="17">
-                                <label for="bodySerials">Serial de carroceria</label>
+                                <label for="bodySerials">Serial de Carrocería</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-opacity prefix"></i>
@@ -137,7 +137,7 @@
                                 <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
                                        maxlength="20" autocomplete="off">
-                                <label for="serialEngines">Serial del motor</label>
+                                <label for="serialEngines">Serial del Motor</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-event_note prefix"></i>
