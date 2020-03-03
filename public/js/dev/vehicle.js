@@ -269,6 +269,8 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#email').val('');
+
         if (document !== '' && document >= 7) {
             $.ajax({
                 method: "GET",
@@ -302,6 +304,9 @@ $('document').ready(function () {
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
                                 $('#idUser').val(user.id);
+                                $('#address').removeAttr('readonly', '');
+                                $('#email').val('');
+                                $('#email').removeAttr('readonly', '');
                             }
 
                         } else if (response.type == 'user') {
