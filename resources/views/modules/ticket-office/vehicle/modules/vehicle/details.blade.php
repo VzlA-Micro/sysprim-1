@@ -192,7 +192,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input type="text" name="bodySerial" maxlength="17" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
+                            <input type="text" name="bodySerial" maxlength="17" id="bodySerial" class="validate number-and-capital-letter-only" pattern="[A-Za-z0-9]+"
                                    title="Solo puede escribir letras y numeros." value="{{$vehicle->body_serial}}"
                                    disabled>
                             <label for="bodySerial">Serial de carroceria</label>
@@ -205,7 +205,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-select_all prefix"></i>
-                            <input type="text" name="serialEngine" id="serialEngine" class="validate "
+                            <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only"
                                    pattern="[A-Za-z0-9]+" maxlength="17" title="Solo puede escribir letras y numeros." disabled
                                    value="{{$vehicle->serial_engine}}">
                             <label for="serialEngine">Serial del motor</label>

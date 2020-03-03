@@ -121,7 +121,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="bodySerials" id="bodySerials" class="validate"
+                                <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
                                        title="Solo puede escribir letras y numeros." maxlength="17">
                                 <label for="bodySerials">Serial de carroceria</label>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngines" id="serialEngines" class="validate"
+                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
                                        maxlength="20" autocomplete="off">
                                 <label for="serialEngines">Serial del motor</label>

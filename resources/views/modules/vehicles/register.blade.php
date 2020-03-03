@@ -53,30 +53,21 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input type="text" name="bodySerial" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
+                            <input type="text" name="bodySerial" id="bodySerial" class="validate number-and-capital-letter-only" pattern="[A-Za-z0-9]+"
                                    title="Solo puede escribir letras y numeros." autocomplete="off" maxlength="17">
                             <label for="bodySerial">Serial de carroceria</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-opacity prefix"></i>
                             <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z ]+"
-<<<<<<< HEAD
                                    title="Solo puede escribir letras." minlength="3" maxlength="20" required>
-=======
-                                   title="Solo puede escribir letras." minlength="3" maxlength="30" required>
->>>>>>> sysprim.alfa
                             <label for="color">Color</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-select_all prefix"></i>
-                            <input type="text" name="serialEngine" id="serialEngine" class="validate"
-<<<<<<< HEAD
+                            <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only"
                                    pattern="[A-Za-z0-9]+" maxlength="20"
                                    title="Solo puede escribir letras y numeros." autocomplete="off">
-=======
-                                   pattern="[A-Za-z0-9]+"  maxlength="20"
-                                   title="Solo puede escribir letras y numeros." autocomplete="off" >
->>>>>>> sysprim.alfa
                             <label for="serialEngine">Serial del motor</label>
                         </div>
                         <div class="input-field col s12 m6">
