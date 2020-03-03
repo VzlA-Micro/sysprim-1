@@ -123,13 +123,12 @@
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="bodySerials" id="bodySerials" class="validate"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
-                                       title="Solo puede escribir letras y numeros." minlength="12" maxlength="17"
-                                       required>
+                                       title="Solo puede escribir letras y numeros." maxlength="17">
                                 <label for="bodySerials">Serial de carroceria</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-opacity prefix"></i>
-                                <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z]+"
+                                <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z ]+"
                                        title="Solo puede escribir letras." minlength="2" maxlength="20" required>
                                 <label for="color">Color</label>
                             </div>
@@ -137,7 +136,7 @@
                                 <i class="icon-select_all prefix"></i>
                                 <input type="text" name="serialEngines" id="serialEngines" class="validate"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
-                                       minlength="12" maxlength="20" autocomplete="off" required>
+                                       maxlength="20" autocomplete="off">
                                 <label for="serialEngines">Serial del motor</label>
                             </div>
                             <div class="input-field col s12 m6">
