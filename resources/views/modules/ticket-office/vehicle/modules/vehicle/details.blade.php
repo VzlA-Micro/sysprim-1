@@ -72,7 +72,6 @@
                                        value="{{$person->name }}" required readonly>
                                 <label for="name">Nombre</label>
                             </div>
-
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
@@ -106,6 +105,7 @@
                             </div>
 
                             @endif
+
                         {{--@else
 
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom"
