@@ -67,7 +67,7 @@
                             <i class="icon-select_all prefix"></i>
                             <input type="text" name="serialEngine" id="serialEngine" class="validate"
                                    pattern="[A-Za-z0-9]+" maxlength="20"
-                                   title="Solo puede escribir letras y numeros." autocomplete="off" required>
+                                   title="Solo puede escribir letras y numeros." autocomplete="off">
                             <label for="serialEngine">Serial del motor</label>
                         </div>
                         <div class="input-field col s12 m6">
