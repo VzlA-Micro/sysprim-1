@@ -381,6 +381,7 @@ $('document').ready(function () {
         $('#name').val('');
         $('#email').val('');
         $('#person_id').val('');
+        $('#surname-div').val('');
 
         /* person foreign*/
 
@@ -480,6 +481,9 @@ $('document').ready(function () {
                             /*foreign new*/
                             $('#surname-div').removeClass('rate');
                             $('#surname-div').removeAttr('required','');
+
+                            /*validations foreign*/
+                            $('#surname-div').val(user.surname);
 
                         } else if (response.type == 'company') {
                             var company = response.company;
@@ -646,7 +650,21 @@ $('document').ready(function () {
                         closeModal: true
                     }
                 });
-            } else {
+            } else if($('#type_document').val()=='E' && $('#surname-div').val()=='' ){
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el apellido  para poder continuar.",
+                    icon: "info",
+                    button: {
+                        text: "Aceptar",
+                        visible: true,
+                        value: true,
+                        className: "green",
+                        closeModal: true
+                    }
+                });
+            }
+            else {
                 /* $('#two').removeClass('disabled');
                  $('#user-tab-one').addClass('disabled');
                  $('ul.tabs').tabs("select", "vehicle-tab");*/
