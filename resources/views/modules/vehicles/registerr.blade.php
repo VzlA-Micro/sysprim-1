@@ -77,8 +77,8 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="bodySerial" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
-                                       title="Solo puede escribir letras y numeros." autocomplete="off" minlength="15" maxlength="17">
+                                <input type="text" name="bodySerial" id="bodySerial" class="validate number-and-capital-letter-only tooltipped" pattern="[A-Za-z0-9]+"
+                                       title="Solo puede escribir letras y numeros." autocomplete="off" minlength="15" maxlength="17" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.>
                                 <label for="bodySerial">Serial de carroceria</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -89,8 +89,8 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngine" id="serialEngine" class="validate"
-                                       pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros.">
+                                <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only tooltipped"
+                                       pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros." data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.>
                                 <label for="serialEngine">Serial del motor</label>
                             </div>
                             <div class="input-field col s12 m6">

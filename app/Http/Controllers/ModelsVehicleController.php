@@ -48,7 +48,7 @@ class ModelsVehicleController extends Controller
     public function store(Request $request)
     {
         $models= new ModelsVehicle();
-        $models->name= $request->input('models');
+        $models->name= strtoupper($request->input('models'));
         $models->brand_id= $request->input('brand');
         $models->save();
 
@@ -98,7 +98,7 @@ class ModelsVehicleController extends Controller
     {
         //$id=$request->input('id');
         $models=ModelsVehicle::findOrFail($request->input('id'));
-        $models->name= $request->input('name');
+        $models->name= strtoupper($request->input('name'));
         $models->brand_id= $request->input('brand');
         $models->update();
         $update=true;

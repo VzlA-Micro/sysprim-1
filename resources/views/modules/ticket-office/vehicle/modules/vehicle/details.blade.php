@@ -192,8 +192,8 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-confirmation_number prefix"></i>
-                            <input type="text" name="bodySerial" maxlength="17" id="bodySerial" class="validate number-and-capital-letter-only" pattern="[A-Za-z0-9]+"
-                                   title="Solo puede escribir letras y numeros." value="{{$vehicle->body_serial}}"
+                            <input type="text" name="bodySerial" maxlength="17" id="bodySerial" class="validate number-and-capital-letter-only tooltipped" pattern="[A-Za-z0-9]+"
+                                   title="Solo puede escribir letras y numeros." value="{{$vehicle->body_serial}}" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas."
                                    disabled>
                             <label for="bodySerial">Serial de carroceria</label>
                         </div>
@@ -205,8 +205,8 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-select_all prefix"></i>
-                            <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only"
-                                   pattern="[A-Za-z0-9]+" maxlength="17" title="Solo puede escribir letras y numeros." disabled
+                            <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only tooltipped"
+                                   pattern="[A-Za-z0-9]+" maxlength="17" title="Solo puede escribir letras y numeros." data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas." disabled
                                    value="{{$vehicle->serial_engine}}">
                             <label for="serialEngine">Serial del motor</label>
                         </div>

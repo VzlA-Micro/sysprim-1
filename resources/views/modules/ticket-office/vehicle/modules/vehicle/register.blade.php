@@ -121,9 +121,9 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only"
+                                <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only tooltipped"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
-                                       title="Solo puede escribir letras y numeros." maxlength="17">
+                                       title="Solo puede escribir letras y numeros." maxlength="17" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <label for="bodySerials">Serial de Carrocería</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -134,9 +134,9 @@
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
+                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only tooltipped"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
-                                       maxlength="20" autocomplete="off">
+                                       maxlength="20" autocomplete="off" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <label for="serialEngines">Serial del Motor</label>
                             </div>
                             <div class="input-field col s12 m6">
