@@ -70,6 +70,9 @@ $('document').ready(function () {
 
 
 
+
+
+
                 $.ajax({
                     method: "POST",
                     dataType: "json",
@@ -238,6 +241,18 @@ $('document').ready(function () {
     });
 
 
+    /* person foreign*/
+
+    $('#surname-div').change(function () {
+        $('#surname').val($(this).val());
+
+    });
+
+    $('#name').change(function () {
+        $('#user_name').val($(this).val());
+    });
+
+
 
     function findDocument() {
         var type_document=$('#type_document').val();
@@ -247,6 +262,19 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+
+        /* person foreign*/
+
+        if(type_document==='E'){
+            $('.name-div').removeClass('m6');
+            $('.name-div').addClass('m3');
+            $('.surname-div').removeClass('hide');
+        }else{
+            $('.name-div').removeClass('m3');
+            $('.name-div').addClass('m6');
+            $('.surname-div').addClass('hide');
+        }
+
 
 
         if(document!==''&&document.length>=7) {
@@ -268,30 +296,52 @@ $('document').ready(function () {
 
                             var user = response.user.response;
 
-                            if(user.inscrito==false){
-                                swal({
-                                    title: "Lo sentimos",
-                                    text: "Su cédula no se encuentra registrada en el CNE.",
-                                    icon: "info",
-                                    button: {
-                                        text: "Entendido",
-                                        className: "red-gradient"
-                                    },
-                                }).then(function () {
-                                    $('#document').val('');
-                                    $('#document').focus();
-                                });
 
-                            }else{
-                                $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly','readonly');
-                                $('#surname').val(user.apellidos);
-                                $('#user_name').val(user.nombres);
+                            /* person foreign*/
+                            if(type_document==='E'){
+                                $('#name').prop('readonly',false);
+                                $('#surname').prop('readonly',false);
+                                $('#email').prop('readonly',false);
+
+                                $('.name-div').removeClass('m6');
+                                $('.name-div').addClass('m3');
+                                $('.surname-div').removeClass('hide');
                                 $('#type').val('user');
-                                $('#id').val(user.id);
                                 $('#address').removeAttr('readonly', '');
+                                $('#name').val('');
+                                $('#address').val('');
                                 $('#email').val('');
-                                $('#email').removeAttr('readonly', '');
+
+                                M.updateTextFields();
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+
+                            }else {
+                                if (user.inscrito == false) {
+                                    swal({
+                                        title: "Lo sentimos",
+                                        text: "Su cédula no se encuentra registrada en el CNE.",
+                                        icon: "info",
+                                        button: {
+                                            text: "Entendido",
+                                            className: "red-gradient"
+                                        },
+                                    }).then(function () {
+                                        $('#document').val('');
+                                        $('#document').focus();
+                                    });
+
+                                } else {
+                                    $('#name').val(user.nombres + ' ' + user.apellidos);
+                                    $('#name').attr('readonly', 'readonly');
+                                    $('#surname').val(user.apellidos);
+                                    $('#user_name').val(user.nombres);
+                                    $('#type').val('user');
+                                    $('#id').val(user.id);
+                                    $('#address').removeAttr('readonly', '');
+                                    $('#email').val('');
+                                    $('#email').removeAttr('readonly', '');
+                                }
                             }
 
                         } else if (response.type == 'user') {
@@ -301,12 +351,19 @@ $('document').ready(function () {
                             $('#name').attr('readonly');
                             $('#surname').val(user.surname);
                             $('#id').val(user.id);
-
                             $('#type').val('user');
                             $('#address').val(user.address);
                             $('#email').val(user.email);
                             $('#email').attr('readonly','');
+
+
                             $('#address').attr('readonly', '');
+
+
+                            /* person foreign*/
+                            $('.name-div').removeClass('m3');
+                            $('.name-div').addClass('m6');
+                            $('.surname-div').addClass('hide');
 
 
 
@@ -412,8 +469,6 @@ $('document').ready(function () {
                 }
             });
         }
-
-
 
     });
 });
