@@ -341,7 +341,9 @@ $(document).ready(function () {
         $('#address').val('');
         $('#name').val('');
         $('#email').val('');
-        
+        $('#person_id').val('');
+
+
 
         /* person foreign*/
 
@@ -349,6 +351,9 @@ $(document).ready(function () {
             $('.name-div').removeClass('m6');
             $('.name-div').addClass('m3');
             $('.surname-div').removeClass('hide');
+            /*foreign new*/
+            $('#surname-div').addClass('rate');
+            $('#surname-div').attr('required','required');
         }else{
             $('.name-div').removeClass('m3');
             $('.name-div').addClass('m6');
@@ -434,7 +439,9 @@ $(document).ready(function () {
                             $('.name-div').addClass('m6');
                             $('.surname-div').addClass('hide');
 
-
+                            /*foreign new*/
+                            $('#surname-div').removeClass('rate');
+                            $('#surname-div').removeAttr('required','');
 
                         } else if (response.type == 'company') {
                             var company = response.company;
