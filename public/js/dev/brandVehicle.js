@@ -6,23 +6,26 @@ var updateType = false;
 $('document').ready(function () {
 
     $('#brand').blur(function () {
+        var brand = $('#brand').val(); 
+
 
         $.ajax({
             url: url + "vehicles-brand/verifyBrand",
-            data: {brand: $('#brand').val()},
+            data: {brand: brand },
             dataType: 'json',
             method: "POST",
 
             beforeSend: function () {
-                //$("#preloader").fadeIn('fast');
-                //$("#preloader-overlay").fadeIn('fast');
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
             },
-            success: function (data) {
-                if (data) {
+            success: function (response) {
+                console.log(response);
+                if (response.status == 'success') {
                     //$("#preloader").close();
                     swal({
                         title: "¡Marca Registrada!",
-                        text: "No puedes registrar esta marca.",
+                        text: response.message,
                         icon: "warning",
                         button: {
                             text: "Aceptar",
@@ -30,51 +33,17 @@ $('document').ready(function () {
                         },
                     });
                     $('#brandRegister').prop('disabled', true);
+                    $('#brand').val(); 
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 } else {
                     $('#brandRegister').prop('disabled', false);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 }
-
             },
             error: function (e) {
                 console.log(e);
-            }
-        });
-    });
-
-
-
-    $('#register').on('submit', function (e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: url + "vehicles-brand/save",
-            data: {name: $('#brand').val()},
-            dataType: 'json',
-            method: "POST",
-
-            beforeSend: function () {
-                //$("#preloader").fadeIn('fast');
-                //$("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                if (data) {
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Marca de vehiculo, registrada con exito!",
-                        icon: "info",
-                        button: {
-                            text: "Aceptar",
-                            className: "green-gradient"
-                        },
-                    });
-                    $('#brandRegister').prop('disabled', true);
-                } else {
-                    $('#brandRegister').prop('disabled', false);
-                }
-
-            },
-            error: function (e) {
-
                 swal({
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -84,6 +53,59 @@ $('document').ready(function () {
                         className: "red-gradient"
                     },
                 });
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+            }
+        });
+    });
+
+
+
+    $('#register').on('submit', function (e) {
+        e.preventDefault();
+        var name = $('#brand').val(); 
+
+        $.ajax({
+            url: url + "vehicles-brand/save",
+            data: {name: name},
+            dataType: 'json',
+            method: "POST",
+
+            beforeSend: function () {
+                $("#preloader").fadeIn('fast');
+                $("#preloader-overlay").fadeIn('fast');
+            },
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    swal({
+                        title: "¡Bien Hecho!",
+                        text: "Marca de vehiculo, registrada con exito!",
+                        icon: "success",
+                        button: {
+                            text: "Aceptar",
+                            className: "green-gradient"
+                        },
+                    }).then(redirect => {
+                        location.href = url + 'vehicles-brand/read';
+                    });
+                }
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
+            },
+            error: function (e) {
+                console.log(e);
+                swal({
+                    title: "¡Oh no!",
+                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                    icon: "error",
+                    button:{
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
+                });
+                $("#preloader").fadeOut('fast');
+                $("#preloader-overlay").fadeOut('fast');
             }
         });
     });
@@ -106,8 +128,6 @@ $('document').ready(function () {
     $('#updateBrand').on('submit', function (e) {
             e.preventDefault();
             $('#name').removeAttr('readonly');
-
-
             swal({
                 icon: "info",
                 title: "Actualizar Marca Del Vehiculo",
@@ -140,21 +160,26 @@ $('document').ready(function () {
                         dataType: false,
 
                         beforeSend: function () {
-                            $('#name').attr('readonly', 'readonly');
+                            // $('#name').attr('readonly', 'readonly');
+                            $("#preloader").fadeIn('fast');
+                            $("#preloader-overlay").fadeIn('fast');
                         },
-                        success: function (data) {
-                            if (data['update'] == true) {
+                        success: function (response) {
+                            var id = response.id;
+                            console.log(response);
+                            if (response.status == 'success') {
                                 swal({
                                     title: "¡Bien Hecho!",
-                                    text: "Has Actualizado Los datos de marca de vehiculos, Con Exito",
+                                    text: response.message,
                                     icon: "success",
                                     button: "Ok",
-                                }).then(function () {
-                                    location.reload();
+                                }).then(function (redirect) {
+                                    location.href = url + 'vehicles-brand/details/' + id;
                                 });
                             }
                         },
                         error: function (e) {
+                            console.log(e);
                             swal({
                                 title: "¡Oh no!",
                                 text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
@@ -164,9 +189,11 @@ $('document').ready(function () {
                                     className: "red-gradient"
                                 },
                             });
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
                         }
                     });
-                    updateType = false;
+                    // updateType = false;
                 }
             });
     });

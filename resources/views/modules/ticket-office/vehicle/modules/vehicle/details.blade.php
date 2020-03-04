@@ -229,7 +229,7 @@
                                 </select>
                                 <label for="brand">Marca</label>
                             </div>
-                            {{--<div class="input-field col s6">
+                            <div class="input-field col s6">
                                 <i class="icon-local_shipping prefix"></i>
                                 <select name="model" id="model" disabled required>
                                     <option value="null" disabled selected>Selecciona el módelo</option>
@@ -238,14 +238,14 @@
                                     @endforeach
                                 </select>
                                 <label for="model">Módelo</label>
-                            </div>--}}
-                            <div class="input-field col s6">
+                            </div>
+                            {{-- <div class="input-field col s6">
                                 <i class="icon-local_shipping prefix"></i>
                                 <select name="model" id="model" disabled required>
                                     <option value="{{$vehicle->model->id}}" )>{{$vehicle->model->name}}</option>
-                                </select>
+                                </select>+
                                 <label for="model">Módelo</label>
-                            </div>
+                            </div> --}}
                         </div>
                             <div class="col s12 m6 center-align">
                                 <h4>Estado:</h4>
