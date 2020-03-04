@@ -1518,6 +1518,10 @@ class TicketOfficeController extends Controller
         return view('modules.ticket-office.config.manage');
     }
 
+    public function dataFilterManage() {
+        return view('modules.ticket-office.filter');
+    }
+
 
 }
 

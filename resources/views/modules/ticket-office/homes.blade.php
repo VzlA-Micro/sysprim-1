@@ -82,6 +82,15 @@
                     </a>
                 </div>
             @endcan
+
+            @can('Filtrar Datos')
+                <div class="col s6 m6 l3 animated bounceIn">
+                    <a href="{{ route('ticket-office.data.filter.manage') }}" class="btn-app white teal-text">
+                        <i class="icon-pageview"></i>
+                        <span class="truncate">Filtro ???</span>
+                    </a>
+                </div>
+            @endcan
         </div>
         <div id="mode" class="modal modal-sm">
             <div class="">

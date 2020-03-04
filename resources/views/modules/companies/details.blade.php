@@ -92,6 +92,7 @@
                                 </a>
                             </div>
                         @endcan
+                        @can('Declarar Tasas')
                         <div class="col s12 m12">
                             <a href="{{ route('rate.taxpayers.company.create', ['company' => $company->id]) }}"
                                class="btn-app white amber-text">
@@ -99,6 +100,8 @@
                                 <span class="truncate">Declaración / Tasas</span>
                             </a>
                         </div>
+                        @endcan
+                        @can('Mis Vehiculos')
                         <div class="col s12 m12">
                             <a href="{{ route('company.vehicle.read', ['idCompany' => $company->id]) }}"
                                class="btn-app white purple-text">
@@ -106,6 +109,8 @@
                                 <span class="truncate">Vehículos</span>
                             </a>
                         </div>
+                        @endcan
+                        @can('Mis Inmuebles')
                         <div class="col s12 m12">
                             <a href="{{ route('properties.company.my-properties', ['company_id' => $company->id]) }}"
                                    class="btn-app white green-text text-darken-2">
@@ -113,13 +118,16 @@
                                  <span class="truncate">Inmuebles</span>
                             </a>
                         </div>
-                            <div class="col s12 m12">
-                                <a href="{{ route('publicity.company.my-publicity', ['company_id' => $company->id]) }}"
+                        @endcan
+                        @can('Mis Publicidades')
+                        <div class="col s12 m12">
+                            <a href="{{ route('publicity.company.my-publicity', ['company_id' => $company->id]) }}"
                                    class="btn-app white red-text text-darken-2">
-                                    <i class="icon-movie_filter"></i>
-                                    <span class="truncate">Publicidades</span>
-                                </a>
-                            </div>
+                                <i class="icon-movie_filter"></i>
+                                <span class="truncate">Publicidades</span>
+                            </a>
+                        </div>
+                        @endcan
                         <!-- <div class="col s12">
                             <a href="" class="btn-app white orange-text">
                                 <i class="icon-warning"></i>

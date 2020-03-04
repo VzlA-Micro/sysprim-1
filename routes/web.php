@@ -882,6 +882,14 @@ Route::middleware(['auth'])->group(/**
             Route::get('/ticket-office/payments/change/{id}/{status}', 'TicketOfficeController@changeStatustaxes');
             ##############################################
 
+            //////////////////////////////////////////
+            /// Firtro de ramas
+            Route::get('/ticket-office/data/filter/manage', 'TicketOfficeController@dataFilterManage')->name('ticket-office.data.filter.manage');
+
+
+
+            ///
+
 
             ########### TAQUILLA --- ACTIVIDAD ECONOMICA
             Route::group(['middleware' => ['permission:Taquilla - Actividad Económica']], function () {
