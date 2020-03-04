@@ -219,7 +219,7 @@ class TicketOfficeVehicleController extends Controller
         $company_id = null;
 
         $licensePlate = strtoupper($request->input('license_plates'));
-        $color = $request->input('color');
+        $color = strtoupper($request->input('color'));
         $body_serial = strtoupper($request->input('bodySerials'));
         $serial_engine = strtoupper($request->input('serialEngines'));
         $type_vehicle_id = $request->input('typeV');
