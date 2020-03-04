@@ -164,7 +164,7 @@ $('document').ready(function () {
             </div>
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                 <i class="icon-person prefix"></i>
-                <input id="email" type="text" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                 <label for="email">Correo</label>
             </div>
             <div class="input-field col s12 m6">
@@ -269,6 +269,8 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#email').val('');
+
         if (document !== '' && document >= 7) {
             $.ajax({
                 method: "GET",
@@ -302,6 +304,9 @@ $('document').ready(function () {
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
                                 $('#idUser').val(user.id);
+                                $('#address').removeAttr('readonly', '');
+                                $('#email').val('');
+                                $('#email').removeAttr('readonly', '');
                             }
 
                         } else if (response.type == 'user') {

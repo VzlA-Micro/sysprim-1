@@ -1086,7 +1086,7 @@ $(document).ready(function () {
                 error: function (err) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-
+                    console.log(err);
                     swal({
                         title: "¡Oh no!",
                         text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
