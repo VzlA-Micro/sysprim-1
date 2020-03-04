@@ -355,8 +355,6 @@ $('document').ready(function () {
                             $('#address').val(user.address);
                             $('#email').val(user.email);
                             $('#email').attr('readonly','');
-
-
                             $('#address').attr('readonly', '');
 
 

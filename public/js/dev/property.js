@@ -175,12 +175,15 @@ $('document').ready(function () {
                  <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                  <label for="document">Identificación</label>
             </div>
-            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                 <i class="icon-person prefix"></i>
-                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
-                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                   title="Solo puede agregar letras (con acentos)." required readonly>
-                 <label for="name">Nombre</label>
+            <div class="input-field col s12 m6 tooltipped name-div" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                <i class="icon-person prefix"></i>
+                <input id="name" type="text" name="name" class="validate rate" data-validate="nombre" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                <label for="name">Nombre</label>
+            </div>
+            <div class="input-field col s12 m3 tooltipped surname-div hide" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                <i class="icon-person prefix"></i>
+                <input id="surname-div" type="text" name="surname-div" class="validate " data-validate="apellido" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" title="Solo puede agregar letras (con acentos)." required>
+                <label for="surname-div">Apellido</label>
             </div>
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
                 <i class="icon-person prefix"></i>
@@ -259,6 +262,17 @@ $('document').ready(function () {
                 });
             }
         });
+
+           /* person foreign*/
+
+           $('#surname-div').change(function () {
+               $('#surname').val($(this).val());
+
+           });
+
+           $('#name').change(function () {
+               $('#user_name').val($(this).val());
+           });
 
 
            $('#document').change(function () {
@@ -455,7 +469,8 @@ $('document').ready(function () {
         }
     });
 
-    
+
+
 
     
 
@@ -467,7 +482,20 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#id').val('');
 
+
+        /* person foreign*/
+
+        if(type_document==='E'){
+            $('.name-div').removeClass('m6');
+            $('.name-div').addClass('m3');
+            $('.surname-div').removeClass('hide');
+        }else{
+            $('.name-div').removeClass('m3');
+            $('.name-div').addClass('m6');
+            $('.surname-div').addClass('hide');
+        }
 
         if(document!==''&&document.length>=7) {
             $.ajax({
@@ -478,9 +506,6 @@ $('document').ready(function () {
                     $("#preloader-overlay").fadeIn('fast');
                 },
                 success: function (response) {
-
-
-
                     if(response.status!=='error') {
 
                         $('#name').attr('readonly', 'readonly');
@@ -488,30 +513,52 @@ $('document').ready(function () {
 
                             var user = response.user.response;
 
-                            if(user.inscrito==false){
-                                swal({
-                                    title: "Lo sentimos",
-                                    text: "Su cédula no se encuentra registrada en el CNE.",
-                                    icon: "info",
-                                    button: {
-                                        text: "Entendido",
-                                        className: "red-gradient"
-                                    },
-                                }).then(function () {
-                                    $('#document').val('');
-                                    $('#document').focus();
-                                });
+                            /* person foreign*/
+                            if(type_document==='E'){
+                                $('#name').prop('readonly',false);
+                                $('#surname').prop('readonly',false);
+                                $('#email').prop('readonly',false);
 
-                            }else{
-                                $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly','readonly');
-                                $('#surname').val(user.apellidos);
-                                $('#user_name').val(user.nombres);
+                                $('.name-div').removeClass('m6');
+                                $('.name-div').addClass('m3');
+                                $('.surname-div').removeClass('hide');
                                 $('#type').val('user');
-                                $('#id').val(user.id);
                                 $('#address').removeAttr('readonly', '');
+                                $('#name').val('');
+                                $('#address').val('');
                                 $('#email').val('');
-                                $('#email').removeAttr('readonly', '');
+
+                                M.updateTextFields();
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+
+                            }
+                            else {
+                                if(user.inscrito==false){
+                                    swal({
+                                        title: "Lo sentimos",
+                                        text: "Su cédula no se encuentra registrada en el CNE.",
+                                        icon: "info",
+                                        button: {
+                                            text: "Entendido",
+                                            className: "red-gradient"
+                                        },
+                                    }).then(function () {
+                                        $('#document').val('');
+                                        $('#document').focus();
+                                    });
+
+                                }else{
+                                    $('#name').val(user.nombres + ' ' + user.apellidos);
+                                    $('#name').attr('readonly','readonly');
+                                    $('#surname').val(user.apellidos);
+                                    $('#user_name').val(user.nombres);
+                                    $('#type').val('user');
+                                    $('#id').val(user.id);
+                                    $('#address').removeAttr('readonly', '');
+                                    $('#email').val('');
+                                    $('#email').removeAttr('readonly', '');
+                                }
                             }
 
                         } else if (response.type == 'user') {
@@ -529,6 +576,10 @@ $('document').ready(function () {
                             $('#address').attr('readonly', '');
 
 
+                            /* person foreign*/
+                            $('.name-div').removeClass('m3');
+                            $('.name-div').addClass('m6');
+                            $('.surname-div').addClass('hide');
 
                         } else if (response.type == 'company') {
                             var company = response.company;
