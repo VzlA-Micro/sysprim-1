@@ -260,7 +260,7 @@
                                 <div class="col s12 m4 right-align" style="margin-top: 20px" id="block-carnet">
                                     <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
                                     class="btn btn-large btn-rounded waves-effect waves-light amber darken-2 col s12" target="_blank">
-                                     Descargar Carnet
+                                     Descargar RIM
                                         <i class="icon-get_app right"></i>
                                     </a>
                                 </div>
