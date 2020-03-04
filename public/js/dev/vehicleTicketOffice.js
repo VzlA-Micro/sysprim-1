@@ -175,15 +175,12 @@ $('document').ready(function () {
                     $('select').formSelect();
                     $('#model').html('');
 
-
-                    var i = 0;
-                    console.log(model);
-                    for (i; i < data[1]; i++) {
-                        console.log(data[0][i]['name']);
-                        var template = `<option value="${data[0][i]['id']}">${data[0][i]['name']}</option>`;
-                        $('select').formSelect();
+                    var brands=data[0];
+                    for (i=0; i < brands.length; i++) {
+                        var template = `<option value="${brands[i].id}">${brands[i].name}</option>`;
                         $('#model').append(template);
                     }
+                    $('select').formSelect();
 
                 }
 
@@ -339,11 +336,11 @@ $('document').ready(function () {
                     $(this).text('');
                     $('#button-vehicle').prop('disabled', true);
                 } else {
-                    swal({
+                    /*swal({
                         title: data['message'],
                         icon: "success",
                         button: "Ok",
-                    });
+                    });*/
                     $('#button-vehicle').prop('disabled', false);
                 }
             },

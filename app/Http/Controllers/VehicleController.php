@@ -87,7 +87,7 @@ class VehicleController extends Controller
         $vehicle = new Vehicle();
 
         $vehicle->license_plate = strtoupper($request->input('license_plate'));
-        $vehicle->color = $request->input('color');
+        $vehicle->color = strtoupper($request->input('color'));
         $bodySerial = strtoupper($request->input('bodySerial'));
 
         $vehicle->serial_engine = strtoupper($request->input('serialEngine'));
@@ -346,7 +346,7 @@ class VehicleController extends Controller
 
         $id = $request->input('id');
         $licensePlate = $request->input('license');
-        $color = $request->input('color');
+        $color = strtoupper($request->input('color'));
         $body_serial = $request->input('bodySerial');
         $serial_engine = $request->input('serialEngine');
         $type_vehicle_id = $request->input('type');
@@ -376,9 +376,7 @@ class VehicleController extends Controller
     public function brand(Request $request)
     {
         $models = ModelsVehicle::where('brand_id', $request->input('brand'))->get();
-        $count = count($models);
-
-        return response()->json([$models, $count]);
+        return response()->json([$models]);
     }
 
 
