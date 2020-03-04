@@ -442,13 +442,15 @@ class VehicleController extends Controller
         }
 
         if (is_null($id)) {
-            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->get();
+            $bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))->get();
         } else {
-            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))
+
+            $bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))
                 ->where('id', '!=', $id)->get();
+
         }
         if (!$bodySerial->isEmpty()) {
-            $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('body_serial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
+            $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('bodySerial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
         } else {
             $response = array('status' => 'success', 'message' => 'No registrado.');
         }
