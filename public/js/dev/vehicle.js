@@ -390,7 +390,9 @@ $('document').ready(function () {
                             $('.name-div').addClass('m6');
                             $('.surname-div').addClass('hide');
 
+
                             /*foreign new*/
+
                             $('#surname-div').removeClass('rate');
                             $('#surname-div').removeAttr('required','');
 
