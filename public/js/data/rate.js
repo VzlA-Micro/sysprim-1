@@ -262,6 +262,9 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
+        $('#id').val('');
+        $('#email').val('');
+
 
         /* person foreign*/
 
@@ -330,7 +333,7 @@ $('document').ready(function () {
                                         $('#document').val('');
                                         $('#document').focus();
                                     });
-
+                                    $('#email').val('');
                                 } else {
                                     $('#name').val(user.nombres + ' ' + user.apellidos);
                                     $('#name').attr('readonly', 'readonly');

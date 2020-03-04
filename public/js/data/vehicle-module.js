@@ -356,7 +356,9 @@ $(document).ready(function () {
         $('#address').val('');
         $('#name').val('');
         $('#email').val('');
+
         $('#person_id').val('');
+        $('#surname-div').val('');
 
 
         if (type_document === 'E') {

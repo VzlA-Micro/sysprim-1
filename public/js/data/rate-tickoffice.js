@@ -244,8 +244,8 @@ $('document').ready(function () {
         $('#type').val('');
         $('#address').val('');
         $('#name').val('');
-
-
+        $('#email').val('');
+        $('#id').val('');
 
         if(type_document==='E'){
             $('.name-div').removeClass('m6');
