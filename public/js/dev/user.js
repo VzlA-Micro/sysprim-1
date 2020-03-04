@@ -53,6 +53,9 @@ $(document).ready(function () {
 
 
     function CheckCedula() {
+        $('#name').attr('readonly','readonly');
+        $('#surname').attr('readonly','readonly');
+
         if ($('#ci').val() !== '') {
             if ($('#ci').val().length >= 7) {
                 var ci = $('#ci').val();
@@ -65,7 +68,6 @@ $(document).ready(function () {
                         $("#preloader-overlay").fadeIn('fast');
                     },
                     success: function (response) {
-                        console.log(response);
                         if (response.status === 'error') {
                             swal({
                                 title: "Información",
@@ -83,14 +85,18 @@ $(document).ready(function () {
                             $("#preloader-overlay").fadeOut('fast');
                         } else {
 
-                            console.log(nationality);
                             if(nationality==='E'){
-                                $('#name').removeAttr('disabled','');
-                                $('#surname').removeAttr('disabled','');
-                                console.log('epa');
+                                $('#name').prop('readonly',false);
+                                $('#surname').prop('readonly',false);
+
+                                $('#name').val('');
+                                $('#surname').val('');
+
+                                M.updateTextFields();
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
                             }else{
-                                /*// #####findUser(nationality, ci);*/
-                                console.log('epa2');
+                                findUser(nationality, ci);
                             }
 
 
@@ -216,7 +222,7 @@ $(document).ready(function () {
         }
     });
 
-   /* function findUser(nationality, ci) {
+    function findUser(nationality, ci) {
         $.ajax({
             method: "GET",
             url: url + "users/find/" + nationality + "/" + ci,
@@ -271,7 +277,7 @@ $(document).ready(function () {
             }
         });
     }
-    */
+
 
 
     $('#gestionUser').on('submit', function (e) {
