@@ -119,11 +119,11 @@
                                 </select>
                                 <label for="typeV">Tipo De Vehiculo</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only tooltipped"
+                                <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
-                                       title="Solo puede escribir letras y numeros." maxlength="17" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
+                                       title="Solo puede escribir letras y numeros." maxlength="17">
                                 <label for="bodySerials">Serial de Carrocería</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -132,11 +132,11 @@
                                        title="Solo puede escribir letras." minlength="2" maxlength="20" required>
                                 <label for="color">Color</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only tooltipped"
+                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
-                                       maxlength="20" autocomplete="off" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
+                                       maxlength="20" autocomplete="off">
                                 <label for="serialEngines">Serial del Motor</label>
                             </div>
                             <div class="input-field col s12 m6">
