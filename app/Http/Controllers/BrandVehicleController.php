@@ -46,10 +46,11 @@ class BrandVehicleController extends Controller
     public function store(Request $request)
     {
         $brand= new Brand();
-        $brand->name= strtoupper($request->input('name'));
+        $brand->name = strtoupper($request->input('name'));
         $brand->save();
-
-        return redirect()->route('vehicles.brand.read');
+        $response = ['status' => 'success', 'message' => 'Se ha registrado la marca con éxito.'];
+        return response()->json($response);
+        // return redirect()->route('vehicles.brand.read');
 
     }
 
@@ -93,11 +94,12 @@ class BrandVehicleController extends Controller
     {
         //$id=$request->input('id');
         $brand=Brand::findOrFail($request->input('id'));
-        $brand->name= $request->input('name');
-        $brand->brand_id= $request->input('brand_id');
+        $brand->name= strtoupper($request->input('name'));
+        // $brand->brand_id= $request->input('brand_id');
         $brand->update();
-        $update=true;
-        return response()->json(['update'=>$update]);
+        $id = $brand->id;
+        $response = ['status' => 'success', 'message' => 'La marca se ha actualizado éxitosamente.', 'id' => $id];
+        return response()->json($response);
     }
 
     /**
@@ -114,6 +116,13 @@ class BrandVehicleController extends Controller
 
     public function verifyBrand(Request $request){
         $brand = Brand::where('name', $request->input('brand'))->exists();
-        return response()->json($brand);
+        if($brand) {
+            $response = ['status' => 'success', 'message' => 'La marca se encuentra registrada.'];
+        }
+        else {
+            $response = ['status' => 'error', 'message' => ''];
+
+        }
+        return response()->json($response);
     }
 }
