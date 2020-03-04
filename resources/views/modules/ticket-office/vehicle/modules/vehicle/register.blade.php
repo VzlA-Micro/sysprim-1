@@ -102,7 +102,7 @@
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Ej: L1S2M3">
                                 <i class="icon-crop_16_9 prefix"></i>
-                                <input type="text" name="license_plates" id="license_plates" minlength="7" maxlength="7"
+                                <input type="text" name="license_plates" id="license_plates" minlength="5" maxlength="7"
                                        pattern="[0-9A-Za-z]+" autocomplete="off"
                                        title="Solo puede escribir números y letra en mayúsculas." class="validate"
                                        required>

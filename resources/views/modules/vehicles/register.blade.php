@@ -35,7 +35,7 @@
                         <input type="hidden" name="Vcompany" value="true">
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: L1S2M3">
                             <i class="icon-crop_16_9 prefix"></i>
-                            <input type="text" name="license_plate" id="license_plate" minlength="7" maxlength="7"
+                            <input type="text" name="license_plate" id="license_plate" minlength="5" maxlength="7"
                                    pattern="[0-9A-Za-z]+" autocomplete="off"
                                    title="Solo puede escribir números y letra en mayúsculas." class="validate" required>
                             <label for="license_plate">Placa</label>

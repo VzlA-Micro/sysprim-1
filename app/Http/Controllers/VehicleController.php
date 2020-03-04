@@ -375,9 +375,7 @@ class VehicleController extends Controller
     public function brand(Request $request)
     {
         $models = ModelsVehicle::where('brand_id', $request->input('brand'))->get();
-        $count = count($models);
-
-        return response()->json([$models, $count]);
+        return response()->json([$models]);
     }
 
 
