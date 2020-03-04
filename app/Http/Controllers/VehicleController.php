@@ -325,6 +325,7 @@ class VehicleController extends Controller
             $response = 'vehicle';
         }
 
+//        dd($vehicle[0]->model);
 
         return view('modules.vehicles.details', array(
             'vehicle' => $vehicle,

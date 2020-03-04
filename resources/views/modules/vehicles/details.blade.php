@@ -50,12 +50,15 @@
                     <div class="card-content">
                         <ul>
                             <li><b>Licencia: </b>{{ $vehicle[0]->license_plate }}</li>
-                            {{--
-                            <li><b>Marca: </b>{{ $vehicle->model->brand->name }}</li>
-                            <li><b>Modelo: </b>{{ $vehicle->model->name }}</li>
-                            --}}
+                            <li><b>Marca: </b>{{ $vehicle[0]->model->brand->name }}</li>
+                            <li><b>Modelo: </b>{{ $vehicle[0]->model->name }}
+                            <li><b>Color: </b>{{ $vehicle[0]->color }}</li>
+                            @if($vehicle[0]->serial_engine != null || $vehicle[0]->serial_engine != '')
                             <li><b>Serial del Motor: </b>{{ $vehicle[0]->serial_engine }}</li>
+                            @endif
+                            @if($vehicle[0]->body_serial != null || $vehicle[0]->body_serial != '')
                             <li><b>Serial De Carrocería: </b>{{ $vehicle[0]->body_serial }}</li>
+                            @endif
                             <li><b>Año: </b>{{ $vehicle[0]->year }}</li>
                             <li><b></b></li>
                         </ul>
