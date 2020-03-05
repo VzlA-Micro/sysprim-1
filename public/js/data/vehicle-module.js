@@ -456,19 +456,9 @@ $(document).ready(function () {
                             var user = response.user.response;
 
 
-<<<<<<< HEAD
-                            }else{
-                                $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly', '');
-                                $('#surname').val(user.apellidos);
-                                $('#surname-div').val(user.apellidos);
-                                $('#user_name').val(user.nombres);
-                                $('#type').val('user');
-=======
                             if (type_document == 'E') {
                                 $('#name').prop('readonly', false);
                                 $('#surname').prop('readonly', false);
->>>>>>> bedfd73ceda0a5e704c3c4808787924034b84df8
                                 $('#email').prop('readonly', false);
 
                                 $('.name-div').removeClass('m6');
@@ -521,6 +511,7 @@ $(document).ready(function () {
                             $('#name').attr('readonly', '');
                             $('#surname').val(user.surname);
                             $('#surname-div').val(user.surname);
+
                             $('#person_id').val(user.id);
                             $('#type').val('user');
                             $('#address').val(user.address);
