@@ -341,13 +341,8 @@ $('document').ready(function () {
                                 $('#name').val('');
                                 $('#address').val('');
                                 $('#email').val('');
-<<<<<<< HEAD
                                 $('#email').removeAttr('readonly', '');
                                 $('#surname-div').val(user.apellidos);
-                            }
-=======
->>>>>>> bedfd73ceda0a5e704c3c4808787924034b84df8
-
                                 M.updateTextFields();
                                 $("#preloader").fadeOut('fast');
                                 $("#preloader-overlay").fadeOut('fast');
@@ -390,25 +385,17 @@ $('document').ready(function () {
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
                             $('#email').val(user.email);
-<<<<<<< HEAD
                             $('#email').attr('readonly','');
 
                             $('#surname-div').val(user.surname);
-
-
-=======
-                            $('#email').attr('readonly', '');
-
                             $('.name-div').removeClass('m3');
                             $('.name-div').addClass('m6');
                             $('.surname-div').addClass('hide');
 
-
                             /*foreign new*/
-
                             $('#surname-div').removeClass('rate');
                             $('#surname-div').removeAttr('required','');
->>>>>>> bedfd73ceda0a5e704c3c4808787924034b84df8
+
 
                         } else if (response.type == 'company') {
                             var company = response.company;
