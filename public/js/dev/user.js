@@ -98,10 +98,6 @@ $(document).ready(function () {
                             }else{
                                 findUser(nationality, ci);
                             }
-
-
-
-
                         }
 
                     },
