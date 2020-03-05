@@ -467,7 +467,7 @@ class VehicleController extends Controller
 
     public function showTicketOffice()
     {
-        $vehicle = Vehicle::all();
+        $vehicle = Vehicle::orderBy('id','desc')->get();
         return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
             'show' => $vehicle
         ));
