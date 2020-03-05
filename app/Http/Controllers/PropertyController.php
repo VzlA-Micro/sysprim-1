@@ -89,7 +89,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
 
 
         $property = Property::where('code_cadastral', $code_cadastral)->first();
@@ -456,7 +458,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
 
 
         $property = Property::where('code_cadastral', $code_cadastral)->first();
@@ -585,7 +589,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
         $id = $request->input('id');
 
         $verification = $this->verification($code_cadastral,$id);
