@@ -495,6 +495,7 @@ $(document).ready(function () {
                                     $('#name').attr('readonly', '');
                                     $('#surname').val(user.apellidos);
                                     $('#user_name').val(user.nombres);
+                                    $('#surname-div').val(user.apellidos);
                                     $('#type').val('user');
                                     $('#email').prop('readonly', false);
                                     $('#address').prop('readonly', false);
@@ -521,6 +522,7 @@ $(document).ready(function () {
                             $('.name-div').addClass('m6');
                             $('.surname-div').addClass('hide');
                             /*validations foreign*/
+                            console.log(user.surname, "hola");
                             $('#surname-div').val(user.surname);
 
                         } else if (response.type == 'company') {
