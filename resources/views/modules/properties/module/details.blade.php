@@ -82,55 +82,76 @@
                             <h6 class="center-align">Codígo Catastral</h6>
                         </div>
 
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C1" id="C1" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                    maxlength="4" minlength="2" title="Solo puede escribir números."
                                    required value="{{$codeCadastral[0]}}" readonly>
                             <label for="C1">Estado</label>
-
                         </div>
-
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C2" id="C2" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="4" minlength="2" title="Solo puede escribir números."
+                                   maxlength="4" minlength="2" title="Solo puede escribir números y letras mayúscula."
                                    required value="{{$codeCadastral[1]}}" readonly>
                             <label for="C2">Municipio</label>
                         </div>
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C3" id="C3" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="3" minlength="2" value="{{$codeCadastral[2]}}" title="Solo puede escribir números."
-                                   required  readonly>
+                                   maxlength="3" minlength="2" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[2]}}" readonly>
                             <label for="C3">Parroquia</label>
                         </div>
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C4" id="C4" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="3" minlength="3" value="{{$codeCadastral[3]}}" title="Solo puede escribir números."
-                                   required  readonly>
-                            <label for="C4">Sector</label>
+                                   maxlength="3" minlength="3" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[3]}}" readonly>
+                            <label for="C4">Ámbito</label>
                         </div>
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="4" minlength="2" value="{{$codeCadastral[4]}}" title="Solo puede escribir números."
-                                   required  readonly>
-                            <label for="C5">Comuna</label>
+                                   maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[4]}}" readonly>
+                            <label for="C5">Sector</label>
                         </div>
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="4" minlength="3" value="{{$codeCadastral[5]}}" title="Solo puede escribir números."
-                                   required  readonly>
-                            <label for="C6">Barrio</label>
+                                   maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[5]}}" readonly>
+                            <label for="C6">Manzana</label>
                         </div>
-                        <div class="input-field col s12 m3">
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
                             <input type="text" name="C7" id="C7" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="3" minlength="3" value="{{$codeCadastral[6]}}" title="Solo puede escribir números."
-                                   required  readonly>
-                            <label for="C7">Manzana</label>
+                                   maxlength="3" minlength="1" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[6]}}" readonly>
+                            <label for="C7">Parcela</label>
                         </div>
-                        <div class="input-field col s12 m3">
-                            <input type="text" name="C8" id="C8" value="{{$codeCadastral[7]}}" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                   maxlength="8" minlength="3" title="."
-                                   required  readonly>
-                            <label for="C8">Terreno</label>
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                            <input type="text" name="C8" id="C8" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="3" minlength="1" title="Solo puede escribir números y letras mayúscula."
+                                   required value="{{$codeCadastral[7]}}" readonly>
+                            <label for="C8">Edificación</label>
+                        </div>
+
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                            <input type="text" name="C9" id="C9" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="2" minlength="2" title="."
+                                   required value="{{$codeCadastral[8]}}" readonly>
+                            <label for="C9">Nivel</label>
+                        </div>
+                        <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                             data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                            <input type="text" name="C10" id="C10" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                   maxlength="3" minlength="3" title="."
+                                   required value="{{$codeCadastral[9]}}" readonly>
+                            <label for="C10">Unidad</label>
                         </div>
 
                         <div class="input-field col s12 m12">

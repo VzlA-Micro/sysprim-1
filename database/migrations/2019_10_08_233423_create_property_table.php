@@ -19,7 +19,7 @@ class CreatePropertyTable extends Migration
             $table->integer('type_inmueble_id')->unsigned();
             $table->integer('value_cadastral_ground_id')->unsigned();
 //            $table->integer('value_cadastral_build_id')->unsigned();
-            $table->string('code_cadastral',35)->unique();
+            $table->string('code_cadastral',45)->unique();
             $table->string('address');
             $table->float('area_ground');
             $table->float('area_build');

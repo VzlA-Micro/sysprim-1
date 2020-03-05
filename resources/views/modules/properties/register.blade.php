@@ -91,7 +91,7 @@
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C2" id="C2" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="4" minlength="2" title="Solo puede escribir números y letras mayúscula."
-                                       required value="3" readonly>
+                                       required value="03" readonly>
                                 <label for="C2">Municipio</label>
                             </div>
                             <div class="input-field col s12 m3 tooltipped" data-position="bottom"
@@ -106,35 +106,50 @@
                                 <input type="text" name="C4" id="C4" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
                                        maxlength="3" minlength="3" title="Solo puede escribir números y letras mayúscula."
                                        required>
-                                <label for="C4">Sector</label>
+                                <label for="C4">Ámbito</label>
                             </div>
-                            <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="4" minlength="2" title="Solo puede escribir números y letras mayúscula."
+                                       maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
                                        required>
-                                <label for="C5">Comuna</label>
+                                <label for="C5">Sector</label>
                             </div>
-                            <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="4" minlength="3" title="Solo puede escribir números y letras mayúscula."
+                                       maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
                                        required>
-                                <label for="C6">Barrio</label>
+                                <label for="C6">Manzana</label>
                             </div>
-                            <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C7" id="C7" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="3" minlength="3" title="Solo puede escribir números y letras mayúscula."
+                                       maxlength="3" minlength="1" title="Solo puede escribir números y letras mayúscula."
                                        required>
-                                <label for="C7">Manzana</label>
+                                <label for="C7">Parcela</label>
                             </div>
-                            <div class="input-field col s12 m3 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C8" id="C8" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="8" minlength="3" title="."
+                                       maxlength="3" minlength="1" title="Solo puede escribir números y letras mayúscula."
                                        required>
-                                <label for="C8">Terreno</label>
+                                <label for="C8">Edificación</label>
+                            </div>
+
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                                <input type="text" name="C9" id="C9" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                       maxlength="2" minlength="2" title="."
+                                       required>
+                                <label for="C9">Nivel</label>
+                            </div>
+                            <div class="input-field col s12 m2 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede escribir números. Ej: 1234567890">
+                                <input type="text" name="C10" id="C10" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
+                                       maxlength="3" minlength="3" title="."
+                                       required>
+                                <label for="C10">Unidad</label>
                             </div>
                             <div class="input-field col m6 s12">
                                 <i class="icon-map prefix"></i>
@@ -181,7 +196,7 @@
 
                             <div class="input-field col s12 m6">
                                 <i class="icon-panorama_horizontal prefix"></i>
-                                <input type="text" name="area_ground" id="area_ground" class="validate number-only only-number-positive" maxlength="6" pattern="[0-9.]+"
+                                <input type="text" name="area_ground" id="area_ground" class="validate number-only" maxlength="6" pattern="[0-9.]+"
                                        data-tooltip="Solo puede usar números y caracter especial(.) . Ej: 15.47"
                                        required>
                                 <label for="area_ground">Area de Terreno</label>
