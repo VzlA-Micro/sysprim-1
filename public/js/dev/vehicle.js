@@ -307,6 +307,7 @@ $('document').ready(function () {
                                 $('#address').removeAttr('readonly', '');
                                 $('#email').val('');
                                 $('#email').removeAttr('readonly', '');
+                                $('#surname-div').val(user.apellidos);
                             }
 
                         } else if (response.type == 'user') {
@@ -321,6 +322,11 @@ $('document').ready(function () {
                             $('#address').attr('readonly', '');
                             $('#email').val(user.email);
                             $('#email').attr('readonly','');
+
+                            $('#surname-div').val(user.surname);
+
+
+
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name').val(company.name);

@@ -365,6 +365,7 @@ $(document).ready(function () {
                                 $('#name').val(user.nombres + ' ' + user.apellidos);
                                 $('#name').attr('readonly', '');
                                 $('#surname').val(user.apellidos);
+                                $('#surname-div').val(user.apellidos);
                                 $('#user_name').val(user.nombres);
                                 $('#type').val('user');
                                 $('#email').prop('readonly', false);
@@ -378,6 +379,9 @@ $(document).ready(function () {
                             $('#name').val(user.name + ' ' + user.surname);
                             $('#name').attr('readonly', '');
                             $('#surname').val(user.surname);
+
+                            $('#surname-div').val(user.surname);
+
                             $('#person_id').val(user.id);
                             $('#type').val('user');
                             $('#address').val(user.address);
