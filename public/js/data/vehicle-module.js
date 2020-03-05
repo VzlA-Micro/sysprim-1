@@ -906,107 +906,114 @@ $(document).ready(function () {
     $('#bodySerials').change(function () {
         var bodySerial = $(this).val();
         console.log(bodySerial);
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifyBodySerial",
-            data: {
-                bodySerial: bodySerial
-            },
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "error") {
+        if(bodySerial.length >=1) {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifyBodySerial",
+                data: {
+                    bodySerial: bodySerial
+                },
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Serial de Carroceria Registrado!",
+                            text: data['message'],
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        /*
+                         swal({
+                             title: data['message'],
+                             icon: "success",
+                             button: "Ok",
+                         });
+                         */
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Serial de Carroceria Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                   /*
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    */
-                    $('#button-vehicle').prop('disabled', false);
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
+
     });
 
     $('#serialEngines').change(function () {
         var serialEngine = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifySerialEngine",
-            data: {
-                serialEngine: serialEngine
-            },
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "error") {
-                    swal({
-                        title: "¡Serial del Motor Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
-                    });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                   /* swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
+        if(serialEngine.length >=1) {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifySerialEngine",
+                data: {
+                    serialEngine: serialEngine
+                },
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Serial del Motor Registrado!",
+                            text: data['message'],
+                            icon: "info",
+                            button: "Ok",
                         });
-                    */
-                    $('#button-vehicle').prop('disabled', false);
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        /* swal({
+                             title: data['message'],
+                             icon: "success",
+                             button: "Ok",
+                             });
+                         */
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
     });
 
     $('#brand').change(function () {

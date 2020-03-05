@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    
+
 @endsection
 
 @section('content')
@@ -82,13 +82,24 @@
                             <div id="content">
 
                             </div>
+
+
+                            <div class="input-field col s6 left-align ">
+                                <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide">
+                                    Generar Correo
+                                    <i class="icon-mail_outline left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <a href="#" class="btn peach waves-effect waves light" id="company-next">
+                                    Siguiente
+                                    <i class="icon-navigate_next right"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="card-footer right-align">
-                            <a href="#" id='data-next' class="btn peach waves-effect waves-light">
-                                Siguiente
-                                <i class="icon-navigate_next right"></i>
-                            </a>
-                        </div>
+
+
+
                     </div>
                     <div id="property-tab">
                         <div class="card-header center-align">
@@ -107,7 +118,7 @@
                                      <span style="font-size: 20px;display: block;">Codigo Catastral</span>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col s12 m12 center-align">
                                     <span style="font-size: 16px" ><b>Importante: Ingrese el código catastral, si al terminar faltan digitos complete  con 0.</b></span>
@@ -176,7 +187,7 @@
                                 </select>
                                 <label>Ubicación Catastral</label>
                             </div>
-                            
+
 
                             <div class="input-field col m6 s12">
                                 <i class="icon-satellite prefix"></i>
@@ -199,7 +210,7 @@
                                 </select>
                                 <label>Tipo de Construccion</label>
                             </div>
-                            
+
                             <div class="input-field col m6 s12">
                                 <i class="icon-domain prefix"></i>
                                 <select name="type_inmueble_id" id="type_inmueble_id"  required>
@@ -226,7 +237,7 @@
                                 <label for="area_build">Area de Construcción</label>
                             </div>
 
-                            
+
 
 
                             <div class="input-field col s12">
