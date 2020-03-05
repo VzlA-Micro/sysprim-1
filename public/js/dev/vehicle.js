@@ -367,6 +367,7 @@ $('document').ready(function () {
                                     $('#name').attr('readonly');
                                     $('#surname').val(user.apellidos);
                                     $('#user_name').val(user.nombres);
+                                    $('#surname-div').val(user.apellidos);
                                     $('#type').val('user');
                                     $('#idUser').val(user.id);
                                     $('#address').removeAttr('readonly', '');
