@@ -160,7 +160,7 @@ $('document').ready(function () {
                                 <i class="icon-person prefix"></i>
                                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." minlength="2" maxlength="40" required>
+                                       title="Solo puede agregar letras (con acentos)." minlength="2" maxlength="150" required>
                                 <label for="name">Nombre</label>
                     </div>
                     
