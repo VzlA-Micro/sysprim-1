@@ -117,9 +117,9 @@ class PropertyController extends Controller
         $property = new Property();
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
-        $property->alias = $alias;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
+        $property->alias = strtoupper($alias);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -488,9 +488,9 @@ class PropertyController extends Controller
         $property = new Property();
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
-        $property->alias = $alias;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
+        $property->alias = strtoupper($alias);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -617,13 +617,13 @@ class PropertyController extends Controller
 
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
-        $property->alias=$alias;
+        $property->alias= strtoupper($alias);
         $property->type_inmueble_id = $type_inmueble_id;
         //$property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();

@@ -190,7 +190,7 @@ class CompaniesController extends Controller
         $parish=$request->input('parish');
         $rif=$request->input('rif');
         $name=$request->input('name');
-        $address=$request->input('address');
+        $address = $request->input('address');
         $code_catastral=$request->input('codeCadastral');
         $numberEmployees=$request->input('numberEmployees');
         $sector=$request->input('sector');

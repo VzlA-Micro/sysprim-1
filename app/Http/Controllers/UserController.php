@@ -81,8 +81,8 @@ class UserController extends Controller{
     {
         $nacionality= $request->input('nationality');
         $ci= $request->input('ci');
-        $name= $request->input('name');
-        $surname= $request->input('surname');
+        $name= strtoupper($request->input('name'));
+        $surname= strtoupper($request->input('surname'));
         $phone= $request->input('phone');
         $country_code= $request->input('country_code');
         $role= $request->input('role');
@@ -237,8 +237,8 @@ class UserController extends Controller{
     public function storeTaxpayer(Request $request) {
         $nacionality= $request->input('nationality');
         $ci= $request->input('ci');
-        $name= $request->input('name');
-        $surname= $request->input('surname');
+        $name= strtoupper($request->input('name'));
+        $surname= strtoupper($request->input('surname'));
         $phone= $request->input('phone');
         $country_code= $request->input('country_code');
         $role= $request->input('role');
