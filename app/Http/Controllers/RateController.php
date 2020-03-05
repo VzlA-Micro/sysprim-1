@@ -169,11 +169,11 @@ class RateController extends Controller{
 
         if($type=='user'){
             $user=new User();
-            $user->name=$name;
-            $user->surname=$surname;
+            $user->name=strtoupper($name);
+            $user->surname=strtoupper($surname);
             $user->ci=$type_document.$document;
             $user->status_account='waiting';
-            $user->address=$address;
+            $user->address=strtoupper($address);
             $user->email=$email;
             $user->role_id=3;
             $user->save();

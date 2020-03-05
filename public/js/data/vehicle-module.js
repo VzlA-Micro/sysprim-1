@@ -104,7 +104,7 @@ $(document).ready(function () {
                                 <i class="icon-person prefix"></i>
                                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." required>
+                                       title="Solo puede agregar letras (con acentos)." required maxlength="40">
                                 <label for="name">Nombre</label>
                     </div>
                     
@@ -112,9 +112,9 @@ $(document).ready(function () {
                       <div class="input-field col s12 m3 tooltipped surname-div hide" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="surname-div" type="text" name="surname-div" class="validate rate" data-validate="apellido"
+                                <input id="surname-div" type="text" name="surname-div" class="validate" data-validate="apellido"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." required>
+                                       title="Solo puede agregar letras (con acentos)." required  maxlength="40">
                                 <label for="surname-div">Apellido</label>
                      </div>
             
@@ -495,6 +495,7 @@ $(document).ready(function () {
                                     $('#name').attr('readonly', '');
                                     $('#surname').val(user.apellidos);
                                     $('#user_name').val(user.nombres);
+                                    $('#surname-div').val(user.apellidos);
                                     $('#type').val('user');
                                     $('#email').prop('readonly', false);
                                     $('#address').prop('readonly', false);
@@ -570,8 +571,12 @@ $(document).ready(function () {
         if ($('#type').val() == 'company') {
             status = 'propietario';
         }
+
+
         var type = $('#type_document_full').val();
 
+
+        console.log($('#type_document').val());
         if (type === 'J' || type === 'G') {
             var name_f = $('#name_full').val();
             var address_f = $('#address_full').val();
@@ -686,7 +691,11 @@ $(document).ready(function () {
                 });
 
                 /*validations foreign */
+
+
             }else if($('#type_document').val()=='E' && $('#surname-div').val()=='' ){
+
+                    console.log('epa');
                 swal({
                     title: "Información",
                     text: "Debe llenar el apellido  para poder continuar.",
@@ -699,6 +708,8 @@ $(document).ready(function () {
                         closeModal: true
                     }
                 });
+
+
             } else {
 
                 /* $('#two').removeClass('disabled');
