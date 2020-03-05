@@ -21,12 +21,12 @@
             <div class="col s12 m8">
                 <div class="card">
                     <div class="card-header center-align">
-                        <h5>Mi Inmueble: {{$property[0]->code_cadastral}}</h5>
+                        <h5>Mi Inmueble: {{$property[0]->alias}}</h5>
                     </div>
 
                     <div class="card-content">
                         <ul>
-                            <li><b>Alias del Inmueble: </b>{{ $property[0]->alias }}</li>
+                            <li><b>Código Catastral: </b>{{ $property[0]->code_cadastral }}</li>
                             <li><b>Direccion: </b>{{ $property[0]->address }}</li>
                             <li><b>Tipo(s) de Construccion(es): </b>
                                 @foreach($propertyBuildings as $propertyBuilding)

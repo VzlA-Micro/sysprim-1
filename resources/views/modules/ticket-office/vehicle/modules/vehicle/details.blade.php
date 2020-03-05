@@ -196,12 +196,7 @@
                                    title="Solo puede escribir letras y numeros." value="{{$vehicle->body_serial}}"
                                    disabled>
                             <label for="bodySerial">Serial de Carroceria</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <i class="icon-opacity prefix"></i>
-                            <input type="text" name="color" maxlength="20" id="color" class="validate" pattern="[A-Za-z]+"
-                                   title="Solo puede escribir letras." value="{{$vehicle->color}}" disabled required>
-                            <label for="color">Color</label>
+                            <span class="helper-text">Este campo es opcional</span>
                         </div>
                         <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                             <i class="icon-select_all prefix"></i>
@@ -209,6 +204,13 @@
                                    pattern="[A-Za-z0-9]+" maxlength="17" title="Solo puede escribir letras y numeros." disabled
                                    value="{{$vehicle->serial_engine}}">
                             <label for="serialEngine">Serial del Motor</label>
+                            <span class="helper-text">Este campo es opcional</span>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <i class="icon-opacity prefix"></i>
+                            <input type="text" name="color" maxlength="20" id="color" class="validate" pattern="[A-Za-z]+"
+                                   title="Solo puede escribir letras." value="{{$vehicle->color}}" disabled required>
+                            <label for="color">Color</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="icon-event_note prefix"></i>
