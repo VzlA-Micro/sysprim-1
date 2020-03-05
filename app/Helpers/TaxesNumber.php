@@ -193,7 +193,7 @@ class TaxesNumber{
 
 
     public static function generateNumberTaxes($type_payments){
-        $code=DB::table('taxes')->select('code')//->where('code','LIKE',"%".$type_payments."%")
+        $code=DB::table('taxes')->select('code')->where('code','LIKE',"%".$type_payments."%")
                         ->orderByDesc('id')->take(1)->get();
 
         if($code->isEmpty()){
