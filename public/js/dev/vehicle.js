@@ -175,7 +175,7 @@ $('document').ready(function () {
                      </div>
                     
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                <i class="icon-person prefix"></i>
+                <i class="icon-mail_outline prefix"></i>
                 <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                 <label for="email">Correo</label>
             </div>

@@ -144,7 +144,7 @@ $('document').ready(function () {
                 <label for="surname-div">Apellido</label>
             </div>
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                <i class="icon-person prefix"></i>
+                <i class="icon-mail_outline prefix"></i>
                 <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                 <label for="email">Correo</label>
             </div>
@@ -161,11 +161,63 @@ $('document').ready(function () {
                 /*generate correo */
                 $('#generate-correo').removeClass('hide');
                 $('#generate-correo').click(function () {
-                    if($('#user_name').val()!==''&&$('#surname').val()){
-                        var number_rando=getRandomArbitrary(1,999);
-                        var email=$('#user_name').val().substr(0,4).toLocaleLowerCase()+number_rando+'@sincorreo.com';
-                        $('#email').val(email);
-                        M.updateTextFields();
+                    if($('#type_document').val() !== '' && $('#document').val() !== '') {
+                        if($('#user_name').val() !== '' && $('#surname').val()) {
+                            swal({
+                                title: "Información",
+                                text: "¿Está seguro que desea generar un correo aleatorio?",
+                                icon: "info",
+                                buttons: {
+                                    confirm: {
+                                        text: "SI",
+                                        className: "blue-gradient",
+                                        visible: true,
+                                        value: true
+                                    },
+                                    cancel: {
+                                        text: "NO",
+                                        className: "grey lighten-2",
+                                        visible: true,
+                                        value: false,
+                                        closeModal: true
+                                    }
+                                }
+                            }).then(confirm => {
+                                if(confirm) {
+                                    // if($('#user_name').val()!==''&&$('#surname').val()){
+                                    var number_rando=getRandomArbitrary(1,999);
+                                    var email=$('#user_name').val().substr(0,4).toLocaleLowerCase()+number_rando+'@sincorreo.com';
+                                    $('#email').val(email);
+                                    M.updateTextFields();
+                                    // }
+                                }
+                                else {
+                                    $('#email').val('');
+                                }
+                            });
+                        }
+                        else {
+                            swal({
+                                title: 'Información',
+                                text: 'Debe llenar el nombre y el apellido para generar el correo aleatorio.',
+                                icon: 'info',
+                                button: {
+                                    text: "Esta bien",
+                                    className: "blue-gradient"
+                                },
+                            });
+                        }
+                    }
+                    else {
+                        swal({
+                            title: 'Información',
+                            text: 'Debe llenar el documento y la identificación para generar el correo aleatorio.',
+                            icon: 'info',
+                            button: {
+                                text: "Esta bien",
+                                className: "blue-gradient"
+                            },
+                        });
                     }
                 });
 
