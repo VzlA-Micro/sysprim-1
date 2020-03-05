@@ -157,6 +157,19 @@ $('document').ready(function () {
             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
        `;
             if (status == 'responsable') {
+
+                /*generate correo */
+                $('#generate-correo').removeClass('hide');
+                $('#generate-correo').click(function () {
+                    if($('#user_name').val()!==''&&$('#surname').val()){
+                        var number_rando=getRandomArbitrary(1,999);
+                        var email=$('#user_name').val().substr(0,4).toLocaleLowerCase()+number_rando+'@sincorreo.com';
+                        $('#email').val(email);
+                        M.updateTextFields();
+                    }
+                });
+
+
                 $('#content').append(content);
                 $('select').formSelect();
                 M.textareaAutoResize($('#address'));
@@ -248,7 +261,9 @@ $('document').ready(function () {
         }
     });
 
-    
+    function getRandomArbitrary(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 
     function findDocument() {
         var type_document = $('#type_document_full').val();
