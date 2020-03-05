@@ -155,7 +155,7 @@ $('document').ready(function () {
                  <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                  <label for="document">Cedula</label>
             </div>
-             <div class="input-field col s12 m6 tooltipped name-div" data-position="bottom"
+                <div class="input-field col s12 m6 tooltipped name-div" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
                                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
@@ -169,7 +169,7 @@ $('document').ready(function () {
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
                                 <input id="surname-div" type="text" name="surname-div" class="validate rate" data-validate="apellido"
-                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" minlength="2" maxlength="40" 
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+" minlength="2" maxlength="60" 
                                        title="Solo puede agregar letras (con acentos)." required>
                                 <label for="surname-div">Apellido</label>
                      </div>

@@ -522,6 +522,7 @@ $(document).ready(function () {
                             $('.name-div').addClass('m6');
                             $('.surname-div').addClass('hide');
                             /*validations foreign*/
+                            console.log(user.surname, "hola");
                             $('#surname-div').val(user.surname);
 
                         } else if (response.type == 'company') {
