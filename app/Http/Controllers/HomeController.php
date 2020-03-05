@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TaxesNumber;
 use App\Helpers\Verification;
 use App\Prologue;
+use App\Taxe;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -42,6 +43,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request){
+
+
+
 
 
         if(\Auth::user()->status_account==='block'){

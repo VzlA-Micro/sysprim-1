@@ -210,7 +210,7 @@ class TicketOfficeController extends Controller
                 $taxes_find = Taxe::findOrFail($taxes_explode[$i]);
                 if ($bank_destinations !== null) {
                     $code = substr($taxes_find->code, 3, 12);
-                    $code_payment = substr($taxes_find->code, 3, 4);
+                    $code_payment = substr($taxes_find->code, 3, 2);
                     $taxes_find->bank = $bank_destinations;
                     $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
@@ -218,7 +218,7 @@ class TicketOfficeController extends Controller
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
-                    $code_payment = substr($taxes_find->code, 3, 4);
+                    $code_payment = substr($taxes_find->code, 3, 2);
                     $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
@@ -226,7 +226,7 @@ class TicketOfficeController extends Controller
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
-                    $code_payment = substr($taxes_find->code, 3, 4);
+                    $code_payment = substr($taxes_find->code, 3, 2);
                     $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
