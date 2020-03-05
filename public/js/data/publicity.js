@@ -494,6 +494,7 @@ $(document).ready(function() {
                                     $('#name').attr('readonly');
                                     $('#surname').val(user.apellidos);
                                     $('#user_name').val(user.nombres);
+                                    $('#surname-div').val(user.apellidos);
                                     $('#type').val('user');
                                     $('#id').val(user.id);
                                     $('#address').removeAttr('readonly', '');
