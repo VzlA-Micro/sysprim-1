@@ -212,22 +212,22 @@ class TicketOfficeController extends Controller
                     $code = substr($taxes_find->code, 3, 12);
                     $code_payment = substr($taxes_find->code, 0, 5);
                     $taxes_find->bank = $bank_destinations;
-                    $taxes_find->code = TaxesNumber::generateNumberTaxes($code_payment);
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
 
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
                     $code_payment = substr($taxes_find->code, 0, 5);
-                    $taxes_find->code = TaxesNumber::generateNumberTaxes($code_payment);
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
-                    $code_payment = substr($taxes_find->code, 0, 5);
-                    $taxes_find->code = TaxesNumber::generateNumberTaxes($code_payment);
+                    $code_payment = substr($taxes_find->code, 3, 5);
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
                     $taxes_find->bank = $bank;
