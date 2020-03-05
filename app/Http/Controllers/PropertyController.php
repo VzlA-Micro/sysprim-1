@@ -297,8 +297,8 @@ class PropertyController extends Controller
     {
 //        dd($request->input('type')); die();
         $type = $request->input('type');
-        $name = $request->input('name');
-        $surname = $request->input('surname');
+        $name = strtoupper($request->input('name'));
+        $surname = strtoupper($request->input('surname'));
         $type_document = $request->input('type_document');
         $document = $request->input('document');
         $address = $request->input('address');

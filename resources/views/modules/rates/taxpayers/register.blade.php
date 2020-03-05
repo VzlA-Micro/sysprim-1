@@ -82,12 +82,17 @@
                                 <label for="address">Dirección</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                                <i class="icon-person prefix"></i>
+                                <i class="icon-mail_outline prefix"></i>
                                 <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                                 <label for="email">Correo</label>
                             </div>
 
-
+                            <div class="input-field col s6 left-align ">
+                                <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide">
+                                    Generar Correo
+                                    <i class="icon-mail_outline left"></i>
+                                </a>
+                            </div>
                             <div class="input-field col s12 right-align">
                                 <a href="#" id='data-next' class="btn peach waves-effect waves-light">
                                     Siguiente

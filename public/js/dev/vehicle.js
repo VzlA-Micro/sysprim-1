@@ -155,15 +155,27 @@ $('document').ready(function () {
                  <input id="document" type="text" name="document" data-validate="documento" maxlength="8" class="validate number-only rate" pattern="[0-9]+" title="Solo puede escribir números." required>
                  <label for="document">Cedula</label>
             </div>
+             <div class="input-field col s12 m6 tooltipped name-div" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)." required>
+                                <label for="name">Nombre</label>
+                    </div>
+                    
+                    
+                      <div class="input-field col s12 m3 tooltipped surname-div hide" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="surname-div" type="text" name="surname-div" class="validate rate" data-validate="apellido"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)." required>
+                                <label for="surname-div">Apellido</label>
+                     </div>
+                    
             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                 <i class="icon-person prefix"></i>
-                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
-                                   pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                   title="Solo puede agregar letras (con acentos)." required readonly>
-                 <label for="name">Nombre</label>
-            </div>
-            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                <i class="icon-person prefix"></i>
+                <i class="icon-mail_outline prefix"></i>
                 <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                 <label for="email">Correo</label>
             </div>
@@ -174,7 +186,13 @@ $('document').ready(function () {
             </div>
             <input id="surname" type="hidden" name="surname" class="validate" value="">
             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
+            
+             
+
+                    
        `;
+
+
         if (status == 'responsable') {
 
 
@@ -200,12 +218,21 @@ $('document').ready(function () {
                 }
             });
 
+            $('#surname-div').change(function () {
+                $('#surname').val($(this).val());
+
+            });
+
+            $('#name').change(function () {
+                $('#user_name').val($(this).val());
+            });
+
             $('#email').change(function () {
                 if ($('#email').val() !== '') {
                     var email = $('#email').val();
                     $.ajax({
                         method: "GET",
-                        url: url+"rate/ticket-office/verify-email/"+email,
+                        url: url + "rate/ticket-office/verify-email/" + email,
                         beforeSend: function () {
                             $("#preloader").fadeIn('fast');
                             $("#preloader-overlay").fadeIn('fast');
@@ -213,13 +240,13 @@ $('document').ready(function () {
                         success: function (response) {
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
-        
+
                             if (response.status === 'error') {
                                 swal({
                                     title: "¡Oh no!",
                                     text: response.message,
                                     icon: "error",
-                                    button:{
+                                    button: {
                                         text: "Esta bien",
                                         className: "blue-gradient"
                                     },
@@ -234,12 +261,12 @@ $('document').ready(function () {
                                 title: "¡Oh no!",
                                 text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                                 icon: "error",
-                                button:{
+                                button: {
                                     text: "Entendido",
                                     className: "blue-gradient"
                                 },
                             });
-        
+
                         }
                     });
                 }
@@ -259,7 +286,6 @@ $('document').ready(function () {
         }
     });
 
-    
 
     function findDocument() {
         var type_document = $('#type_document').val();
@@ -270,6 +296,22 @@ $('document').ready(function () {
         $('#address').val('');
         $('#name').val('');
         $('#email').val('');
+        $('#id').val('');
+
+
+        if (type_document === 'E') {
+            $('.name-div').removeClass('m6');
+            $('.name-div').addClass('m3');
+            $('.surname-div').removeClass('hide');
+            /*foreign new*/
+            $('#surname-div').addClass('rate');
+            $('#surname-div').attr('required','required');
+        } else {
+            $('.name-div').removeClass('m3');
+            $('.name-div').addClass('m6');
+            $('.surname-div').addClass('hide');
+        }
+
 
         if (document !== '' && document >= 7) {
             $.ajax({
@@ -281,34 +323,56 @@ $('document').ready(function () {
                 },
                 success: function (response) {
                     if (response.status !== 'error') {
+
+
                         if (response.type == 'not-user') {
                             var user = response.user.response;
-                            if(user.inscrito==false){
-                                swal({
-                                    title: "Lo sentimos",
-                                    text: "Su cédula no se encuentra registrada en el CNE.",
-                                    icon: "info",
-                                    button: {
-                                        text: "Entendido",
-                                        className: "red-gradient"
-                                    },
-                                }).then(function () {
-                                    $('#document').val('');
-                                    $('#document').focus();
-                                });
 
-                            }else{
-                                $('#name').val(user.nombres + ' ' + user.apellidos);
-                                $('#name').attr('readonly');
-                                $('#surname').val(user.apellidos);
-                                $('#user_name').val(user.nombres);
+                            if (type_document === 'E') {
+                                $('#name').prop('readonly', false);
+                                $('#surname').prop('readonly', false);
+                                $('#email').prop('readonly', false);
+
+                                $('.name-div').removeClass('m6');
+                                $('.name-div').addClass('m3');
+                                $('.surname-div').removeClass('hide');
                                 $('#type').val('user');
-                                $('#idUser').val(user.id);
                                 $('#address').removeAttr('readonly', '');
+                                $('#name').val('');
+                                $('#address').val('');
                                 $('#email').val('');
-                                $('#email').removeAttr('readonly', '');
-                            }
 
+                                M.updateTextFields();
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+
+                            } else {
+                                if (user.inscrito == false) {
+                                    swal({
+                                        title: "Lo sentimos",
+                                        text: "Su cédula no se encuentra registrada en el CNE.",
+                                        icon: "info",
+                                        button: {
+                                            text: "Entendido",
+                                            className: "red-gradient"
+                                        },
+                                    }).then(function () {
+                                        $('#document').val('');
+                                        $('#document').focus();
+                                    });
+
+                                } else {
+                                    $('#name').val(user.nombres + ' ' + user.apellidos);
+                                    $('#name').attr('readonly');
+                                    $('#surname').val(user.apellidos);
+                                    $('#user_name').val(user.nombres);
+                                    $('#type').val('user');
+                                    $('#idUser').val(user.id);
+                                    $('#address').removeAttr('readonly', '');
+                                    $('#email').val('');
+                                    $('#email').removeAttr('readonly', '');
+                                }
+                            }
                         } else if (response.type == 'user') {
                             var user = response.user;
                             $('#name').val(user.name + ' ' + user.surname);
@@ -320,7 +384,18 @@ $('document').ready(function () {
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
                             $('#email').val(user.email);
-                            $('#email').attr('readonly','');
+                            $('#email').attr('readonly', '');
+
+                            $('.name-div').removeClass('m3');
+                            $('.name-div').addClass('m6');
+                            $('.surname-div').addClass('hide');
+
+
+                            /*foreign new*/
+
+                            $('#surname-div').removeClass('rate');
+                            $('#surname-div').removeAttr('required','');
+
                         } else if (response.type == 'company') {
                             var company = response.company;
                             $('#name').val(company.name);
@@ -393,8 +468,8 @@ $('document').ready(function () {
                     $('select').formSelect();
                     $('select').formSelect();
                     $('#model').html('');
-                    var brands=data[0];
-                    for (i=0; i < brands.length; i++) {
+                    var brands = data[0];
+                    for (i = 0; i < brands.length; i++) {
                         var template = `<option value="${brands[i].id}">${brands[i].name}</option>`;
                         $('#model').append(template);
                     }
@@ -476,112 +551,121 @@ $('document').ready(function () {
     });
 
     $('#bodySerial').change(function () {
-        var bodySerial = $(this).val();
+        var bodySerial = $('#bodySerial').val();
+        console.log(bodySerial);
         var id = $('#id').val();
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifyBodySerial",
-            data: {
-                bodySerial: bodySerial,
-                id: id
-            },
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                if (data['status'] == "error") {
+        if(bodySerial.length >=1) {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifyBodySerial",
+                data: {
+                    bodySerial: bodySerial,
+                    id: id
+                },
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Serial de Carroceria Registrado!",
+                            text: data['message'],
+                            icon: "info",
+                            button: "Ok",
+                        });
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        /*
+                         swal({
+                             title: data['message'],
+                             icon: "success",
+                             button: "Ok",
+                         });
+                         */
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "¡Serial de Carroceria Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                   /*
-                    swal({
-                        title: data['message'],
-                        icon: "success",
-                        button: "Ok",
-                    });
-                    */
-                    $('#button-vehicle').prop('disabled', false);
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
     });
 
     $('#serialEngine').change(function () {
         var serialEngine = $(this).val();
         var id = $('#id').val();
-        $.ajax({
-            type: "POST",
-            url: url + "vehicles/verifySerialEngine",
-            data: {
-                serialEngine: serialEngine,
-                id: id
-            },
 
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                console.log(data);
-                if (data['status'] == "error") {
-                    swal({
-                        title: "¡Serial del Motor Registrado!",
-                        text: data['message'],
-                        icon: "info",
-                        button: "Ok",
-                    });
-                    $(this).text('');
-                    $('#button-vehicle').prop('disabled', true);
-                } else {
-                   /*
-                       swal({
-                            title: data['message'],
-                            icon: "success",
+
+        if(serialEngine.length >=1) {
+            $.ajax({
+                type: "POST",
+                url: url + "vehicles/verifySerialEngine",
+                data: {
+                    serialEngine: serialEngine,
+                    id: id
+                },
+
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    console.log(data);
+                    if (data['status'] == "error") {
+                        swal({
+                            title: "¡Serial del Motor Registrado!",
+                            text: data['message'],
+                            icon: "info",
                             button: "Ok",
                         });
-                    */
-                    $('#button-vehicle').prop('disabled', false);
+                        $(this).text('');
+                        $('#button-vehicle').prop('disabled', true);
+                    } else {
+                        /*
+                            swal({
+                                 title: data['message'],
+                                 icon: "success",
+                                 button: "Ok",
+                             });
+                         */
+                        $('#button-vehicle').prop('disabled', false);
+                    }
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
     });
 
     $('#vehicle').on('submit', function (e) {
@@ -632,7 +716,7 @@ $('document').ready(function () {
                     console.log(data);
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    if (data.status == 'success' && data.isCompany ==false) {
+                    if (data.status == 'success' && data.isCompany == false) {
                         swal({
                             title: "¡Bien Hecho!",
                             text: "Vehículo registrado con exito!",
@@ -641,7 +725,7 @@ $('document').ready(function () {
                         }).then(function () {
                             window.location.href = url + "vehicles/read";
                         });
-                    } else if (data.isCompany == true && data.status=== 'success') {
+                    } else if (data.isCompany == true && data.status === 'success') {
                         swal({
                             title: "¡Bien Hecho!",
                             text: "Vehículo registrado con exito!",
@@ -957,18 +1041,18 @@ $('document').ready(function () {
     });
 
     $('#year').change(function () {
-        var anio=$(this).val();
-        var yearCurrent= (new Date).getFullYear();
+        var anio = $(this).val();
+        var yearCurrent = (new Date).getFullYear();
 
-        if (anio > yearCurrent){
+        if (anio > yearCurrent) {
             swal({
-                title:"informacion",
-                text:'Debe introducir un año valido',
-                icon:'info'
+                title: "informacion",
+                text: 'Debe introducir un año valido',
+                icon: 'info'
             });
             $(this).val('');
             $(this).focus();
-        }else{
+        } else {
 
         }
     });
