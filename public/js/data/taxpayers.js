@@ -76,7 +76,19 @@ $(document).ready(function () {
                         $("#preloader").fadeOut('fast');
                         $("#preloader-overlay").fadeOut('fast');
                     } else {
-                        findUser(nationality, ci);
+                        if(nationality==='E'){
+                            $('#name').prop('readonly',false);
+                            $('#surname').prop('readonly',false);
+
+                            $('#name').val('');
+                            $('#surname').val('');
+
+                            M.updateTextFields();
+                            $("#preloader").fadeOut('fast');
+                            $("#preloader-overlay").fadeOut('fast');
+                        }else{
+                            findUser(nationality, ci);
+                        }
                     }
 
                 },

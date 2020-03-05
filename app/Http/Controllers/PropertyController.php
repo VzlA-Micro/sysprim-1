@@ -89,7 +89,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
 
 
         $property = Property::where('code_cadastral', $code_cadastral)->first();
@@ -115,9 +117,9 @@ class PropertyController extends Controller
         $property = new Property();
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
-        $property->alias = $alias;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
+        $property->alias = strtoupper($alias);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -297,8 +299,8 @@ class PropertyController extends Controller
     {
 //        dd($request->input('type')); die();
         $type = $request->input('type');
-        $name = $request->input('name');
-        $surname = $request->input('surname');
+        $name = strtoupper($request->input('name'));
+        $surname = strtoupper($request->input('surname'));
         $type_document = $request->input('type_document');
         $document = $request->input('document');
         $address = $request->input('address');
@@ -456,7 +458,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
 
 
         $property = Property::where('code_cadastral', $code_cadastral)->first();
@@ -484,9 +488,9 @@ class PropertyController extends Controller
         $property = new Property();
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
-        $property->alias = $alias;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
+        $property->alias = strtoupper($alias);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
@@ -585,7 +589,9 @@ class PropertyController extends Controller
             '-' . $request->input('C5') .
             '-' . $request->input('C6') .
             '-' . $request->input('C7') .
-            '-' . $request->input('C8');
+            '-' . $request->input('C8') .
+            '-' . $request->input('C9') .
+            '-' . $request->input('C10');
         $id = $request->input('id');
 
         $verification = $this->verification($code_cadastral,$id);
@@ -611,13 +617,13 @@ class PropertyController extends Controller
 
         $property->parish_id = $parish;
         $property->value_cadastral_ground_id = $location_cadastral;
-        $property->code_cadastral = $code_cadastral;
-        $property->address = $address;
+        $property->code_cadastral = strtoupper($code_cadastral);
+        $property->address = strtoupper($address);
         $property->area_build = $area_build;
         $property->area_ground = $area_ground;
         $property->lat = $lat;
         $property->lng = $lng;
-        $property->alias=$alias;
+        $property->alias= strtoupper($alias);
         $property->type_inmueble_id = $type_inmueble_id;
         //$property->value_cadastral_build_id = $typeConst;
 //        dd($owner_id); die();

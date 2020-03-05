@@ -56,7 +56,7 @@
 
                         <div class="input-field col s12 m4">
                             <i class="icon-offline_pin prefix tooltipped" data-position="bottom" data-tooltip="Código que revela la ubicación exacta del inmueble."></i>
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="20" maxlength="20" title="Solo puede usar números y letras en mayúsculas." required>
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only" pattern="[0-9A-Z]+" minlength="15" maxlength="45" title="Solo puede usar números y letras en mayúsculas." required>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
 

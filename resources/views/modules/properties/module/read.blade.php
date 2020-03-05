@@ -28,7 +28,6 @@
                                 <tr>
                                     <th>Código Catastral</th>
                                     <th>Tipo de Inmueble</th>
-                                    <th>Ubicación Catastral</th>
                                     <th>Alias</th>
                                     <th>Dirección</th>
                                     <th>Fecha de creación</th>
@@ -41,7 +40,6 @@
                                 <tr>
                                     <td>{{$property->code_cadastral}}</td>
                                     <td>{{$property->type->name}}</td>
-                                    <td>{{$property->valueGround->name}}</td>
                                     <td>{{$property->alias}}</td>
                                     <td>{{$property->address}}</td>
                                     <td>{{$property->created_at->format('d-m-Y h:m:s')}}</td>

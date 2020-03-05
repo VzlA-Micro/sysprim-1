@@ -28,7 +28,7 @@
                         <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Ej: Toyota">
                             <i class="icon-time_to_leave prefix"></i>
                             <input type="text" name="brand" id="brand" pattern="[a-zA-Z0-9 ]+"
-                                   title="Solo puede escribir números y letra en mayúsculas." class="validate" maxlength="40" minlength="10" required>
+                                   title="Solo puede escribir números y letra en mayúsculas." class="validate" maxlength="40" minlength="2" required>
                             <label for="brand"> Marca de Vehículo</label>
                         </div>
                         <div class="input-field col s12 center-align">

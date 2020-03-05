@@ -108,7 +108,7 @@ class PublicityController extends Controller
         $statusPublicity = 'enabled';
         $publicity = new Publicity();
         $publicity->code = TaxesNumber::generatePublicityCode();
-        $publicity->name = $request->input('name');
+        $publicity->name = strtoupper($request->input('name'));
         $publicity->date_start = $request->input('date_start');
         $publicity->date_end = $request->input('date_end');
         $publicity->unit = $request->input('unit');
@@ -251,7 +251,7 @@ class PublicityController extends Controller
     {
         $id = $request->input('id');
         $publicity = Publicity::find($id);
-        $publicity->name = $request->input('name');
+        $publicity->name = strtoupper($request->input('name'));
         $publicity->date_start = $request->input('date_start');
         $publicity->date_end = $request->input('date_end');
         $publicity->quantity = $request->input('quantity');
@@ -371,7 +371,7 @@ class PublicityController extends Controller
         $person_id = $request->input('person_id');
         $publicity = new Publicity();
         $publicity->code = TaxesNumber::generatePublicityCode();
-        $publicity->name = $request->input('name');
+        $publicity->name = strtoupper($request->input('name'));
         $publicity->date_start = $request->input('date_start');
         $publicity->date_end = $request->input('date_end');
         $publicity->unit = $request->input('unit');

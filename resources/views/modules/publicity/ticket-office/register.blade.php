@@ -103,11 +103,21 @@
 
                             </div>
                         </div>
-                        <div class="card-footer right-align">
-                            <a href="#" id='data-next' class="btn peach waves-effect waves-light">
-                                Siguiente
-                                <i class="icon-navigate_next right"></i>
-                            </a>
+                        <div class="card-footer">
+                            <div class="row" style="margin-bottom: 0">
+                                <div class="col s6 left-align" style="margin-bottom: 0">
+                                    <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide left-align">
+                                        Generar Correo
+                                        <i class="icon-mail_outline left"></i>
+                                    </a>
+                                </div>
+                                <div class="col s6 right-align" style="margin-bottom: 0">
+                                    <a href="#" id='data-next' class="btn peach waves-effect waves-light right-align">
+                                        Siguiente
+                                        <i class="icon-navigate_next right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="typePublicity-tab">

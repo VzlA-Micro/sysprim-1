@@ -321,10 +321,13 @@ class TicketOfficeVehicleController extends Controller
 
     public function detailsVehicle($id)
     {
-        $models = ModelsVehicle::all();
-        $brands = Brand::all();
+        
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
+        $brands = Brand::all();
+        $models = ModelsVehicle::where('brand_id',$vehicle->model->brand->id)->get();
+        // dd($models);
+
         if (isset($vehicle->person[0]->pivot->person_id)) {
             $person = User::find($vehicle->person[0]->pivot->person_id);
         } else {

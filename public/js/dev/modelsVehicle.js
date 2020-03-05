@@ -61,7 +61,7 @@ $('document').ready(function () {
                             if (data['update'] == true) {
                                 swal({
                                     title: "¡Bien Hecho!",
-                                    text: "Has Actualizado Los datos de modelo del vehicul Con Exito",
+                                    text: "Se han actualizado los datos con éxito.",
                                     icon: "success",
                                     button: "Ok",
                                 }).then(function () {

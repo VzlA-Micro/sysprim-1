@@ -2056,7 +2056,7 @@ $('document').ready(function () {
     });
 
 
-    $('#email').blur(function () {
+    $('#email').change(function () {
 
 
         if ($('#email').val() !== '') {

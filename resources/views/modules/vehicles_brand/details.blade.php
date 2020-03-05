@@ -29,7 +29,7 @@
 
                         <div class="input-field col s12">
                             <i class="icon-time_to_leave prefix"></i>
-                            <input id="name" type="text" name="name" readonly value="{{ $brand->name }}" maxlength="40" minlength="10" required>
+                            <input id="name" type="text" name="name" readonly value="{{ $brand->name }}" maxlength="40" minlength="2" required>
                             <label for="name">Marca</label>
                         </div>
                     </div>
