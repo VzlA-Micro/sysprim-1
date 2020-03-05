@@ -216,14 +216,14 @@ class TicketOfficeController extends Controller
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type . $code;
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type);
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type . $code;
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type);
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
                     $taxes_find->bank = $bank;
