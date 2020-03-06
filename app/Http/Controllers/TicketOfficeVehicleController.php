@@ -52,10 +52,8 @@ class TicketOfficeVehicleController extends Controller
                 $taxe_find->status = 'cancel';
                 $taxe_find->update();
                 return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
-
             } else {
-                $calculateTaxes = Calculate::calculateTaxes($id);
-                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes]);
+                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => null]);
             }
 
         } catch (DecryptException $e) {
@@ -79,6 +77,7 @@ class TicketOfficeVehicleController extends Controller
                 return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null]);
             }
         }
+
     }
 
 

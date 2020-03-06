@@ -11,13 +11,11 @@ use App\Taxe;
 use App\Helpers\TaxesNumber;
 use App\Tributo;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Mail;
 use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
-
-
-
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 class RateController extends Controller{
 
 
@@ -548,7 +546,49 @@ class RateController extends Controller{
     }
 
 
+    public function QrTaxes($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
 
+            $taxe = Taxe::where('id', $id)->get();
+
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+                return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+            } elseif ($taxe[0]->status === 'cancel') {
+                return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+            } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
+                $taxe_find = Taxe::find($taxe[0]->id);
+                $taxe_find->status = 'cancel';
+                $taxe_find->update();
+                return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
+
+            } else {
+                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => null]);
+            }
+
+        } catch (DecryptException $e) {
+            $code = strtoupper($id);
+            $taxe = Taxe::where('code', $code)->get();
+            if (!$taxe->isEmpty()) {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+                    return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
+                } elseif ($taxe[0]->status === 'cancel') {
+                    return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
+                } elseif ($taxe[0]->created_at->format('d-m-Y') !== Carbon::now()->format('d-m-Y')) {
+                    $taxe_find = Taxe::find($taxe[0]->id);
+                    $taxe_find->status = 'cancel';
+                    $taxe_find->update();
+                    return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null]);
+
+                } else {
+                    return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => 'null']);
+                }
+            } else {
+                return response()->json(['status' => 'error', 'taxe' => null, 'calculate' => null]);
+            }
+        }
+    }
 
 
 

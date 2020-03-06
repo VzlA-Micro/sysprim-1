@@ -505,6 +505,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/foreign-exchange/read', 'ForeignExchangeController@index')->name('foreign-exchange.read');
 
                     # Nivel 2: Detalles
+
                     Route::group(['middleware' => ['permission:Detalles Moneda']], function () {
                         Route::get('/foreign-exchange/details/{id}', 'ForeignExchangeController@show')->name('foreign-exchange.details');
                         Route::post('/foreign-exchange/update', 'ForeignExchangeController@update')->name('foreign-exchange.update');
@@ -586,6 +587,12 @@ Route::middleware(['auth'])->group(/**
         Route::get('rate/ticket-office/verify-email/{mail}', 'RateController@verifyEmail')->name('rate.ticketoffice.verify.email');
         Route::post('rate/taxpayers/company-user/register', 'RateController@registerCompanyUsers');
         Route::get('rate/taxpayers/pdf/{id}/{download?}', 'RateController@pdfTaxPayers')->name('rate.taxpayers.pdf');
+        Route::get('rate/ticket-office/cashier/{id}', 'RateController@QrTaxes')->name('rate.taxpayers.pdf');
+
+
+
+
+
 
         ##### VEHICULOS
         Route::post('/vehicles/searchBrand', 'VehicleController@brand')->name('vehicle.searchModel');

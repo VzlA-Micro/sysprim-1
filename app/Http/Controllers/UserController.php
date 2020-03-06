@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TaxesNumber;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ use App\User;
 use App\Helpers\CedulaVE;
 use App\Role;
 use OwenIt\Auditing\Models\Audit;
-
+use App\Taxe;
 
 class UserController extends Controller{
 
@@ -218,16 +219,28 @@ class UserController extends Controller{
     public function detailsTaxpayer($id) {
         $user = User::find($id);
         $number_company=$user->companies()->count();
-        $number_rate=$user->taxesRate()->count();
+        $rate=$user->taxesRate()->count();
+        $rates=$user->taxesRate()->get();
+
+        $rate_id=[];
+
+        foreach ($rates as $taxes){
+            $rate_id[]=$taxes->id;
+        }
+
+        $number_rates=Taxe::whereIn('id',$rate_id)->distinct()->count();
+
 
         $number_vehicle=$user->vehicles()->count();
         $number_property=$user->property()->count();
 
 
+
+
         return view('modules.taxpayers.details', array(
             'user' => $user,
             'number_company'=>$number_company,
-            'number_rate'=>$number_rate,
+            'number_rate'=>$number_rates,
             'number_vehicle'=>$number_vehicle,
             'number_property'=>$number_property
         ));
@@ -367,6 +380,16 @@ class UserController extends Controller{
     public function detailsRatesTaxPayers($id){
         $user = User::find($id);
         $rates=$user->taxesRate()->get();
+
+        $rate_id=[];
+
+        foreach ($rates as $taxes){
+           $rate_id[]=$taxes->id;
+        }
+        $rates=Taxe::whereIn('id',$rate_id)->distinct()->get();
+
+
+
         return view('modules.rates.ticket-office.all-taxes',['taxes'=>$rates,'id'=>$id]);
     }
 
