@@ -204,7 +204,7 @@ class UserController extends Controller{
     }
 
     public function showTaxpayer() {
-        $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->get();
+        $users = User::where('role_id','=','3')->where('status_account','!=','waiting')->orderBy('id','desc')->get();
 
         return view('modules.taxpayers.read', array(
             'users' => $users
