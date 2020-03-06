@@ -918,7 +918,7 @@ $(document).ready(function () {
                     className: "red-gradient"
                 },
             });
-        } else if (license.length < 7) {
+        } else if (license.length < 6) {
             swal({
                 title: "Información",
                 text: "Introduzca una placa valida",
