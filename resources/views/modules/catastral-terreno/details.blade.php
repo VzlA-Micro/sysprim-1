@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item"><a href="#!">Detalles</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 offset-m2">
+            <div class="col s12 m10 offset-m1">
             	<form method="post" class="card" id="update">
             		<div class="card-header center-align">
             			<h4>Detalles</h4>
@@ -51,20 +51,28 @@
                         </div>
 
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
                             <i class="icon-verified_user prefix"></i>
                             <input type="text" name="sector_nueva" id="sector_nueva" maxlength="5"  minlength="1" class="validate number-date" value="{{$catastral->sector_nueva_nomenclatura}}" readonly>
                             <label for="sector_nueva">Sector nueva Nomenclatura</label>
                         </div>
 
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
                             <i class="icon-directions_run prefix"></i>
                             <input type="text" name="sector_catastral" id="sector_catastral" maxlength="5"  minlength="1" class="validate number-date"  value="{{$catastral->sector_catastral}}" readonly required>
                             <label for="sector_catastral">Sector Catastral</label>
 
                         </div>
-
+                        <div class="input-field col s12 m4">
+                            <i class="icon-satellite prefix"></i>
+                            <select name="status" id="status" disabled>
+                                <option value="null" disabled selected>Elije una opción</option>
+                                <option value="enabled" @if($catastral->status == 'enabled') {{ 'selected' }} @endif>Habilitado</option>
+                                <option value="disabled" @if($catastral->status == 'disabled') {{ 'selected' }} @endif>Deshabilitado</option>
+                            </select>
+                            <label for="status">Status</label>
+                        </div>
 
 
 

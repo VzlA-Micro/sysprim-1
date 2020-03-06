@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Inmueble;
+use App\Helpers\Calculate;
+
 use App\Notification;
 use App\Tributo;
 use App\Val_cat_const_inmu;
@@ -911,9 +913,7 @@ class PropertyTaxesController extends Controller
     {
         try {
             $id = Crypt::decrypt($id);
-
             $taxe = Taxe::with('properties')->where('id', $id)->get();
-
             if ($taxe[0]->status === 'verified'||$taxe[0]->status === 'verified-sysprim') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
@@ -925,10 +925,9 @@ class PropertyTaxesController extends Controller
                 return response()->json(['status' => 'old', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
 
             } else {
-                $calculateTaxes = Calculate::calculateTaxes($id);
-                return response()->json(['status' => 'process', 'taxe' => $taxe, 'calculate' => $calculateTaxes]);
+//                $calculateTaxes = Calculate::calculateTaxes($id);
+                return response()->json(['status' => 'process', 'taxe' => $taxe]);
             }
-
         } catch (DecryptException $e) {
             $code=strtoupper($id);
             $taxe = Taxe::with('properties')->where('code', $code)->get();

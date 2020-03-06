@@ -27,7 +27,7 @@
 
                         <div class="input-field col s12">
                             <i class="icon-time_to_leave prefix"></i>
-                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." class="validate" value="{{ $alicuota->name }}" required readonly>
+                            <input type="text" name="name" id="name" pattern="[a-zA-Z0-9 ]+" title="Solo puede escribir números y letra en mayúsculas." minlength="5" maxlength="30" class="validate" value="{{ $alicuota->name }}" required readonly>
                             <label for="name">Nombre</label>
                         </div>
                         {{--<div class="input-field col s12 m6">--}}
