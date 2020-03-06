@@ -119,7 +119,7 @@
                                                 <td>
                                                     <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn orange waves-effect waves-light">
-                                                        <i class="icon-pageview left"></i>
+                                                        <i class="icon-pageview"></i>
                                                     </a>
                                             @elseif($taxe->taxes[0]->branch==='Inm.Urbanos')
                                                 <td>
