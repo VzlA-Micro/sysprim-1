@@ -724,7 +724,7 @@ $('document').ready(function () {
                 var search = $('#search').val();
                 $.ajax({
                     method: "GET",
-                    url: url + "ticket-office/cashier/" + search,
+                    url: url + "rate/ticket-office/cashier/" + search,
                     beforeSend: function () {
                         $("#preloader").fadeIn('fast');
                         $("#preloader-overlay").fadeIn('fast');
