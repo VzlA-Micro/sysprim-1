@@ -981,14 +981,9 @@ $(document).ready(function() {
                         }).then(function (accept) {
                             var link;
 
-<<<<<<< HEAD
-                            link = '<a href=' + url + 'properties/ticket-office/payments/details/' + taxe.id + '"' +
-=======
                             link = '<a href=' + url + '/properties/ticket-office/payments/details/' + taxe.id + '"' +
->>>>>>> 24ac1f547db7ac85965498dd5f55950524d96c37
                                 '\nclass="btn indigo waves-effect waves-light"><i\n' +
                                 'class="icon-pageview left"></i>Detalles</a>';
-
 
                             $('#receipt-body').append('' +
                                 '<tr>' +
