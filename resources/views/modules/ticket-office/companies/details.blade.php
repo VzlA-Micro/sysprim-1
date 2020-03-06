@@ -111,9 +111,9 @@
                              data-tooltip="Código que revela la ubicación exacta del inmueble.">
                             <i class="icon-offline_pin prefix"></i>
                             <input type="text" name="code_catastral" id="code_catastral" class="validate number-only"
-                                   pattern="[0-9A-Z]+" minlength="20" maxlength="20"
+                                   pattern="[0-9A-Z]+" minlength="0" maxlength="45"
                                    title="Solo puede usar números y letras en mayúsculas."
-                                   value="{{ $company->code_catastral }}"  disabled required>
+                                   value="{{ $company->code_catastral }}"  disabled>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
                         <div class="input-field col s6 m3">
@@ -260,7 +260,7 @@
                                 <div class="col s12 m4 right-align" style="margin-top: 20px" id="block-carnet">
                                     <a href="{{ route('companies.carnet', ['id' => $company->id]) }}"
                                     class="btn btn-large btn-rounded waves-effect waves-light amber darken-2 col s12" target="_blank">
-                                     Descargar Carnet
+                                     Descargar RIM
                                         <i class="icon-get_app right"></i>
                                     </a>
                                 </div>

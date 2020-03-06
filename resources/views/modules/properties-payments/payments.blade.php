@@ -15,7 +15,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => session('company')->id]) }}">{{ session('company')->name }}</a></li>
                     @endif
                     <li class="breadcrumb-item"><a href="{{ route('properties.my-properties') }}">Mis Inmuebles</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $taxe->properties[0]->id]) }}">{{ $taxe->properties[0]->code_cadastral }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('properties.details', ['id' => $taxe->properties[0]->id]) }}">{{ $taxe->properties[0]->alias }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.manage',['id' => $taxe->properties[0]->id]) }}">Mis Declaraciones</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.create', ['id' => $taxe->properties[0]->id]) }}">Declarar Inmueble</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('properties.taxes.payments',['id' => $taxe->properties[0]->id]) }}">Detalles de Autoliquidación</a></li>

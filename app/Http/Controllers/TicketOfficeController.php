@@ -210,20 +210,24 @@ class TicketOfficeController extends Controller
                 $taxes_find = Taxe::findOrFail($taxes_explode[$i]);
                 if ($bank_destinations !== null) {
                     $code = substr($taxes_find->code, 3, 12);
+                    $code_payment = substr($taxes_find->code, 3, 2);
                     $taxes_find->bank = $bank_destinations;
-                    $taxes_find->code = $payments_type . $code;
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
+
                 } else if ($payments_type == 'PPB' || $payments_type == 'PPE' || $payments_type == 'PPC') {
 
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type . $code;
+                    $code_payment = substr($taxes_find->code, 3, 2);
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
 
                 } else {
                     $code = substr($taxes_find->code, 3, 12);
-                    $taxes_find->code = $payments_type . $code;
+                    $code_payment = substr($taxes_find->code, 3, 2);
+                    $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
                     $taxes_find->bank = $bank;
@@ -296,7 +300,6 @@ class TicketOfficeController extends Controller
         $company->sector = $sector;
         $company->number_employees = $numberEmployees;
         $company->phone = $country_code . $phone;
-        $company->created_at = '2019-09-14';
         $company->save();
         $id_company = $company->id;
 
@@ -1516,6 +1519,10 @@ class TicketOfficeController extends Controller
     public function config()
     {
         return view('modules.ticket-office.config.manage');
+    }
+
+    public function dataFilterManage() {
+        return view('modules.ticket-office.filter');
     }
 
 

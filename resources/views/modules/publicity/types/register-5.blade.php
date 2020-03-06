@@ -173,6 +173,8 @@
 
 @section('scripts')
     <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
+    <script src="{{ asset('js/data/publicity.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('#advertising_type_id').change(function() {
@@ -240,7 +242,6 @@
 
     </script>
     <script src="{{ asset('js/imagePreview.js') }}"></script>
-    <script src="{{ asset('js/data/publicity.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
 
 @endsection

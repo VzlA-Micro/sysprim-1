@@ -53,6 +53,9 @@ $(document).ready(function () {
 
 
     function CheckCedula() {
+        $('#name').attr('readonly','readonly');
+        $('#surname').attr('readonly','readonly');
+
         if ($('#ci').val() !== '') {
             if ($('#ci').val().length >= 7) {
                 var ci = $('#ci').val();
@@ -81,7 +84,20 @@ $(document).ready(function () {
                             $("#preloader").fadeOut('fast');
                             $("#preloader-overlay").fadeOut('fast');
                         } else {
-                            findUser(nationality, ci);
+
+                            if(nationality==='E'){
+                                $('#name').prop('readonly',false);
+                                $('#surname').prop('readonly',false);
+
+                                $('#name').val('');
+                                $('#surname').val('');
+
+                                M.updateTextFields();
+                                $("#preloader").fadeOut('fast');
+                                $("#preloader-overlay").fadeOut('fast');
+                            }else{
+                                findUser(nationality, ci);
+                            }
                         }
 
                     },
@@ -257,6 +273,7 @@ $(document).ready(function () {
             }
         });
     }
+
 
 
     $('#gestionUser').on('submit', function (e) {

@@ -50,20 +50,29 @@
                                        title="Solo puede escribir números." required>
                                 <label for="document">Cedula</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m6 tooltipped name-div" data-position="bottom"
                                  data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
                                 <input id="name" type="text" name="name" class="validate rate" data-validate="nombre"
                                        pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
-                                       title="Solo puede agregar letras (con acentos)." required>
+                                       title="Solo puede agregar letras (con acentos)." required maxlength="40">
                                 <label for="name">Nombre</label>
                             </div>
 
-
+                            <div class="input-field col s12 m3 tooltipped surname-div hide" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
+                                <i class="icon-person prefix"></i>
+                                <input id="surname-div" type="text" name="surname-div" class="validate " data-validate="apellido"
+                                       pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ ]+"
+                                       title="Solo puede agregar letras (con acentos)." required maxlength="40">
+                                <label for="surname-div">Apellido</label>
+                            </div>
 
                             <input id="surname" type="hidden" name="surname" class="validate" value="">
-
                             <input id="user_name" type="hidden" name="name_user" class="validate" value="">
+
+
+
 
 
                             <div class="input-field col s12 m6">
@@ -73,12 +82,17 @@
                                 <label for="address">Dirección</label>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
-                                <i class="icon-person prefix"></i>
+                                <i class="icon-mail_outline prefix"></i>
                                 <input id="email" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
                                 <label for="email">Correo</label>
                             </div>
 
-
+                            <div class="input-field col s6 left-align ">
+                                <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide">
+                                    Generar Correo
+                                    <i class="icon-mail_outline left"></i>
+                                </a>
+                            </div>
                             <div class="input-field col s12 right-align">
                                 <a href="#" id='data-next' class="btn peach waves-effect waves-light">
                                     Siguiente

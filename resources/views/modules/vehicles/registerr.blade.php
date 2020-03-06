@@ -59,7 +59,7 @@
 
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Ej: L1S2M3">
                                 <i class="icon-crop_16_9 prefix"></i>
-                                <input type="text" name="license_plate" id="license_plate" minlength="7" maxlength="7"
+                                <input type="text" name="license_plate" id="license_plate" minlength="5" maxlength="7"
                                        pattern="[0-9A-Za-z]+"
                                        title="Solo puede escribir números y letra en mayúsculas."  autocomplete="off" class="validate" required>
                                 <label for="license_plate">Placa</label>
@@ -75,23 +75,26 @@
                                 </select>
                                 <label for="typeV">Tipo De Vehículo</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="bodySerial" id="bodySerial" class="validate" pattern="[A-Za-z0-9]+"
-                                       title="Solo puede escribir letras y numeros." autocomplete="off" minlength="15" maxlength="17">
-                                <label for="bodySerial">Serial de carroceria</label>
+
+                                <input type="text" name="bodySerial" id="bodySerial" class="validate number-and-capital-letter-only" pattern="[A-Za-z0-9]+"
+                                       title="Solo puede escribir letras y numeros." autocomplete="off"  maxlength="17">
+                                <label for="bodySerial">Serial de Carroceria</label>
+                                <span class="helper-text">Este campo es opcional</span>
+                            </div>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
+                                <i class="icon-select_all prefix"></i>
+                                <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only"
+                                       pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros.">
+                                <label for="serialEngine">Serial del Motor</label>
+                                <span class="helper-text">Este campo es opcional</span>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-opacity prefix"></i>
                                 <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z ]+"
-                                       title="Solo puede escribir letras."minlength="3" maxlength="20" required>
+                                       title="Solo puede escribir letras." maxlength="20" >
                                 <label for="color">Color</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngine" id="serialEngine" class="validate"
-                                       pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros.">
-                                <label for="serialEngine">Serial del motor</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-event_note prefix"></i>

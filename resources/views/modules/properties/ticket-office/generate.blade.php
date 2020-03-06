@@ -31,7 +31,7 @@
                             <input type="hidden" name="taxe_id" id="taxe_id">
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="code_cadastral" id="code_cadastral" maxlength="35" class="validate code-only">
+                                <input type="text" name="code_cadastral" id="code_cadastral" maxlength="45" class="validate code-only">
                                 <label for="code_cadastral">Código Catastral</label>
                             </div>
                             {{--<div class="input-field col m6 s12">

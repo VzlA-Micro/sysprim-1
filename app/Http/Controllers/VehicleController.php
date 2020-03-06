@@ -87,7 +87,7 @@ class VehicleController extends Controller
         $vehicle = new Vehicle();
 
         $vehicle->license_plate = strtoupper($request->input('license_plate'));
-        $vehicle->color = $request->input('color');
+        $vehicle->color = strtoupper($request->input('color'));
         $bodySerial = strtoupper($request->input('bodySerial'));
 
         $vehicle->serial_engine = strtoupper($request->input('serialEngine'));
@@ -325,6 +325,7 @@ class VehicleController extends Controller
             $response = 'vehicle';
         }
 
+//        dd($vehicle[0]->model);
 
         return view('modules.vehicles.details', array(
             'vehicle' => $vehicle,
@@ -345,7 +346,7 @@ class VehicleController extends Controller
 
         $id = $request->input('id');
         $licensePlate = $request->input('license');
-        $color = $request->input('color');
+        $color = strtoupper($request->input('color'));
         $body_serial = $request->input('bodySerial');
         $serial_engine = $request->input('serialEngine');
         $type_vehicle_id = $request->input('type');
@@ -375,9 +376,7 @@ class VehicleController extends Controller
     public function brand(Request $request)
     {
         $models = ModelsVehicle::where('brand_id', $request->input('brand'))->get();
-        $count = count($models);
-
-        return response()->json([$models, $count]);
+        return response()->json([$models]);
     }
 
 
@@ -443,13 +442,15 @@ class VehicleController extends Controller
         }
 
         if (is_null($id)) {
-            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))->get();
+            $bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))->get();
         } else {
-            $bodySerial = Vehicle::where('body_serial', $request->input('body_serial'))
+
+            $bodySerial = Vehicle::where('body_serial', $request->input('bodySerial'))
                 ->where('id', '!=', $id)->get();
+
         }
         if (!$bodySerial->isEmpty()) {
-            $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('body_serial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
+            $response = array('status' => 'error', 'message' => 'El serial de la carrocería "' . $request->input('bodySerial') . '" se encuentra registrado en el sistema. Por favor, ingrese un serial de carrocería válido.');
         } else {
             $response = array('status' => 'success', 'message' => 'No registrado.');
         }
@@ -466,7 +467,7 @@ class VehicleController extends Controller
 
     public function showTicketOffice()
     {
-        $vehicle = Vehicle::all();
+        $vehicle = Vehicle::orderBy('id','desc')->get();
         return view('modules.ticket-office.vehicle.modules.vehicle.read', array(
             'show' => $vehicle
         ));

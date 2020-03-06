@@ -396,6 +396,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Descargar Mi Planilla']);
         Permission::create(['name' => 'Obtener Mi Planilla']);
 
+        Permission::create(['name' => 'Filtrar Datos']);
+
+
         # >>>>>>>>>>>>>> EXTENSIONES
         Permission::create(['name' => 'Extensión - SysQ']);
 
@@ -603,7 +606,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Taquilla - Caja',
             'Abrir/Cerrar Caja',
             'Ver Planillas',
-
+            'Filtrar Datos',
             'Gestionar Inmuebles',
             'Registrar Inmueble',
             'Consultar Inmuebles',
@@ -687,7 +690,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Historial de Pago - Inmuebles',
             # ------------------------- #
             ##### TAQUILLA DE PUBLICIDAD #####
-            'Taquilla - Publicidad',
+            /*'Taquilla - Publicidad',
             'Gestionar Publicidad',
             'Registrar Publicidad',
             'Consultar Publicidad',
@@ -695,7 +698,7 @@ class RolesAndPermissionsSeeder extends Seeder
 //            'Actualizar Publicidad',
             'Gestionar Pagos - Publicidad',
             'Cambiar Usuario - Publicidad',
-            'Historial de Pago - Publicidad',
+            'Historial de Pago - Publicidad',*/
             # ------------------------- #
             'Gestionar Pagos',
             'Registrar Pago',
@@ -767,7 +770,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Pagar Vehiculo',
 
             # --------- Módulo de Mis Publicidades
-            'Mis Publicidades',
+            /*'Mis Publicidades',
             'Registrar Mis Publicidades',
             'Consultar Mis Publicidades',
             'Detalles Mis Publicidades',
@@ -775,7 +778,7 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Eliminar Mis Publicidades',
             'Mis Pagos - Publicidad',
             'Declarar Publicidades',
-            'Historial de Pagos - Publicidades',
+            'Historial de Pagos - Publicidades',*/
 
             # --------- Módulo de Mis Tasas
             'Generar Tasas',
@@ -797,29 +800,43 @@ class RolesAndPermissionsSeeder extends Seeder
         $rolePublicAttention = Role::create(['name' => 'Atención al Público']);
         $rolePublicAttention->givePermissionTo([
             'Taquillas',
-            'Taquilla - Actividad Económica',
+            ##### GESTIONAR CONTRIBUYENTE #####
             'Gestionar Contribuyentes',
             'Registrar Contribuyente',
             'Consultar Contribuyentes',
             'Detalles Contribuyentes',
-            'Actualizar Contribuyentes',
-            'Resetear Contribuyentes',
+            ##### TAQUILLA DE ACTIVIDAD ECONOMICA #####
+            'Taquilla - Actividad Económica',
             'Gestionar Empresas',
             'Registrar Empresa',
             'Consultar Empresas',
             'Detalles Empresas',
-//            'Historial de Pago - Empresas',
-            'Gestionar Inmuebles',
-            'Registrar Inmueble',
-            'Consultar Inmuebles',
-            'Detalles Inmuebles',
-            'Actualizar Inmuebles',
-//            'Historial de Pago - Inmuebles',
+            # --------------------------------------- #
+            ##### PLANILLA DE VEHICULOS #####
+            'Taquilla - Vehiculos',
             'Gestionar Vehiculos',
             'Registrar Vehiculo',
             'Consultar Vehiculos',
             'Detalles Vehiculos',
-            'Actualizar Vehiculos',
+            # ----------------------------- #
+            ##### TAQUILLA DE INMUEBLES #####
+            'Taquilla - Inmuebles',
+            'Gestionar Inmuebles',
+            'Registrar Inmueble',
+            'Consultar Inmuebles',
+            'Detalles Inmuebles',
+            ##### TAQUILLA DE PUBLICIDAD #####
+            /*'Taquilla - Publicidad',
+            'Gestionar Publicidad',
+            'Registrar Publicidad',
+            'Consultar Publicidad',
+            'Detalles Publicidad',
+//            'Actualizar Publicidad',
+            'Gestionar Pagos - Publicidad',
+            'Cambiar Usuario - Publicidad',
+            'Historial de Pago - Publicidad',*/
+            # ------------------------- #
+
 //            'Historial de Pago - Vehiculos',
             'Mi Perfil'
         ]);

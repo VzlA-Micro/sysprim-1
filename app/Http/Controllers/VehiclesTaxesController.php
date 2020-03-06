@@ -324,11 +324,10 @@ class VehiclesTaxesController extends Controller
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect()->route('vehicle.payments.history', ['id' => $vehicleTaxes[0]->id]);
+        return redirect()->route('vehicle.payments.history', ['id' => $vehicleTaxes[0]->id])->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
     }
 
-    public
-    function history($vehicleId)
+    public function history($vehicleId)
     {
         $vehicle = Vehicle::where('id', $vehicleId)->with('company')->get();
         $vehicles = Vehicle::find($vehicleId);

@@ -23,8 +23,8 @@
                             <tr>
                                 <th>Licencia</th>
                                 <th>Color</th>
-                                {{--<th>Marca</th>
-                                <th>Módelo</th>--}}
+                                <th>Marca</th>
+                                <th>Módelo</th>
                                 <th>Año</th>
                                 <th>Fecha de creación</th>
                                 @can('Detalles Mis Vehiculos')
@@ -37,8 +37,8 @@
                                 <tr>
                                     <td>{{$vehicle->license_plate}}</td>
                                     <td>{{$vehicle->color}}</td>
-                                    {{--<td>{{$vehicle->model->brand->name}}</td>
-                                    <td>{{$vehicle->model->name}}</td>--}}
+                                    <td>{{$vehicle->model->brand->name}}</td>
+                                    <td>{{$vehicle->model->name}}</td>
                                     <td>{{$vehicle->year}}</td>
                                     <td>{{$vehicle->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Mis Vehiculos')

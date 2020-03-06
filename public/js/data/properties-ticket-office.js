@@ -981,7 +981,7 @@ $(document).ready(function() {
                         }).then(function (accept) {
                             var link;
 
-                            link = '<a href=' + url + 'rate/ticket-office/details/' + taxe.id + '"' +
+                            link = '<a href=' + url + '/properties/ticket-office/payments/details/' + taxe.id + '"' +
                                 '\nclass="btn indigo waves-effect waves-light"><i\n' +
                                 'class="icon-pageview left"></i>Detalles</a>';
 

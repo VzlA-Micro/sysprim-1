@@ -54,7 +54,8 @@ class DeclarationPublicity
                 else {
                     // Dividir la cantidad actual entre la cantidad de la ordenanza para tomar el valor y multiplicarlo por el valor de UT
                     $valueByQuantity = $publicity->quantity / 500;
-                    $value = round($valueByQuantity, PHP_ROUND_HALF_UP); // Redondea el valor al entero mayor mas cercano
+                    $value = ceil($valueByQuantity); // Redondea el valor al entero mayor mas cercano
+//                    dd($value);
                     $baseImponible = $taxUnitPrice[0]->value * ($publicity->advertisingType->value * $value); //
                 }
             }

@@ -82,11 +82,21 @@
 
                             </div>
                         </div>
-                        <div class="card-footer right-align">
-                            <a href="#" id='data-next' class="btn peach waves-effect waves-light">
-                                Siguiente
-                                <i class="icon-navigate_next right"></i>
-                            </a>
+                        <div class="card-footer">
+                            <div class="row" style="margin-bottom: 0">
+                                <div class="col s6 left-align" style="margin-bottom: 0">
+                                    <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide left-align">
+                                        Generar Correo
+                                        <i class="icon-mail_outline left"></i>
+                                    </a>
+                                </div>
+                                <div class="col s6 right-align" style="margin-bottom: 0">
+                                    <a href="#" id='data-next' class="btn peach waves-effect waves-light right-align">
+                                        Siguiente
+                                        <i class="icon-navigate_next right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="vehicle-tab">
@@ -102,7 +112,7 @@
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom"
                                  data-tooltip="Ej: L1S2M3">
                                 <i class="icon-crop_16_9 prefix"></i>
-                                <input type="text" name="license_plates" id="license_plates" minlength="7" maxlength="7"
+                                <input type="text" name="license_plates" id="license_plates" minlength="5" maxlength="7"
                                        pattern="[0-9A-Za-z]+" autocomplete="off"
                                        title="Solo puede escribir números y letra en mayúsculas." class="validate"
                                        required>
@@ -119,25 +129,27 @@
                                 </select>
                                 <label for="typeV">Tipo De Vehiculo</label>
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="bodySerials" id="bodySerials" class="validate number-and-capital-letter-only"
                                        pattern="[A-Za-z0-9]+" autocomplete="off"
                                        title="Solo puede escribir letras y numeros." maxlength="17">
                                 <label for="bodySerials">Serial de Carrocería</label>
+                                <span class="helper-text">Este campo es opcional</span>
+                            </div>
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
+                                <i class="icon-select_all prefix"></i>
+                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
+                                       pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
+                                       maxlength="20" autocomplete="off">
+                                <label for="serialEngines">Serial del Motor</label>
+                                <span class="helper-text">Este campo es opcional</span>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-opacity prefix"></i>
                                 <input type="text" name="color" id="color" class="validate" pattern="[A-Za-z ]+"
                                        title="Solo puede escribir letras." minlength="2" maxlength="20" required>
                                 <label for="color">Color</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngines" id="serialEngines" class="validate number-and-capital-letter-only"
-                                       pattern="[A-Za-z0-9]+" title="Solo puede escribir letras y numeros."
-                                       maxlength="20" autocomplete="off">
-                                <label for="serialEngines">Serial del Motor</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="icon-event_note prefix"></i>
