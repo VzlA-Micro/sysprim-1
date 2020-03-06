@@ -82,7 +82,7 @@ class RegisterController extends Controller
             $user=User::find($user->id);
             $user->phone = $data['country_code'] . $data['phone'];
             $user->confirmed = 0;
-            $user->address = $data['address'];
+            $user->address = strtoupper($data['address']);
             $user->role_id = 3;
             $user->email = $data['email'];
             $user->password =Hash::make($data['password']);
@@ -91,10 +91,10 @@ class RegisterController extends Controller
             $user->update();
         }else {
             $user = User::create([
-                'name' => $data['name'],
-                'surname' => $data['surname'],
+                'name' => strtoupper($data['name']),
+                'surname' => strtoupper($data['surname']),
                 'email' => $data['email'],
-                'address' => $data['address'],
+                'address' => strtoupper($data['address']),
                 'password' => Hash::make($data['password']),
                 'ci' => $data['nationality'] . $data['ci'],
                 'phone' => $data['country_code'] . $data['phone'],

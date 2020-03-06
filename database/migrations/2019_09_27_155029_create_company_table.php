@@ -17,7 +17,7 @@ class CreateCompanyTable extends Migration
             $table->increments('id');
             $table->string('name',100);
             $table->string('RIF',40);
-            $table->string('code_catastral',20)->nullable();
+            $table->string('code_catastral',45)->nullable();
             $table->string('license',20)->unique()->nullable();
             $table->date('opening_date')->nullable();
             $table->string('lat',20)->nullable();

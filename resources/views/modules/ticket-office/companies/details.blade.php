@@ -110,9 +110,9 @@
                         <div class="input-field col s12 m6 tooltipped" data-position="left"
                              data-tooltip="Código que revela la ubicación exacta del inmueble.">
                             <i class="icon-offline_pin prefix"></i>
-                            <input type="text" name="code_catastral" id="code_catastral" class="validate number-only"
+                            <input type="text" name="code_catastral" id="code_catastral" class="validate code-only"
                                    pattern="[0-9A-Z]+" minlength="0" maxlength="45"
-                                   title="Solo puede usar números y letras en mayúsculas."
+                                   title="Solo puede usar números y letras en mayúsculas y guiones."
                                    value="{{ $company->code_catastral }}"  disabled>
                             <label for="code_catastral">Código Catastral</label>
                         </div>
