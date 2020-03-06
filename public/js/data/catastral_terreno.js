@@ -63,6 +63,7 @@ $(document).ready(function() {
         $('#sector_nueva').removeAttr('readonly');
         $('#sector_catastral').removeAttr('readonly');
         $('#parish_id').removeAttr('disabled','');
+        $('#status').removeAttr('disabled','');
         $('select').formSelect();
 	});
 

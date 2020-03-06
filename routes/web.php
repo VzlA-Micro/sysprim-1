@@ -113,7 +113,7 @@ Route::middleware(['auth'])->group(/**
                     Route::get('/ciu-group/register', function () {
                         return view('modules.ciiu-group.register');
                     })->name('ciu-group.register');
-                    Route::post('/ciu-group/save', 'groupCiiuController@store')->name('ciu-group.save');
+                    Route::post('/ciu-group/save', 'GroupCiiuController@store')->name('ciu-group.save');
                     Route::get('/ciu-group/read', 'GroupCiiuController@show')->name('ciu-group.read');
                     Route::get('/ciu-group/verify-code/{code}', 'GroupCiiuController@verifyGroupCiu');
     

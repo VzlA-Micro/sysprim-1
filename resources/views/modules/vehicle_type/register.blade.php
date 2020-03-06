@@ -27,8 +27,8 @@
                         <div class="input-field col s12 m12 tooltipped" data-position="bottom" data-tooltip="Ej: Carga">
                             <i class="icon-motorcycle prefix"></i>
                             <input type="text" name="type_vehicle" id="type_vehicle" pattern="[A-Za-zàáâäãèéêëìíîïòóôöõùúûüñçÀÁÂÄÃÈÉÊËÌÍÎÏÒÓÔÖÕÙÚÛÜÑßÇ0-9 ]+"
-                                   title="Solo puede escribir números y letra en mayúsculas." minlength="3" maxlength="100" class="validate" required>
-                            <label for="type_vehicle">Tipo de vehículo</label>
+                                   title="Solo puede escribir números y letra en mayúsculas." minlength="3" maxlength="50" class="validate" required>
+                            <label for="type_vehicle">Tipo de Vehículo</label>
                         </div>
 
                         {{--<div class="input-field col s12 m6">

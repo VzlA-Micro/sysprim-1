@@ -270,14 +270,16 @@
                                                             <button type="button"
                                                                     class="btn waves-effect waves-light  col s12 red"
                                                                     value="">
-                                                                <i class="icon-do_not_disturb_alt"></i></button>
+                                                                <i class="icon-do_not_disturb_alt"></i>
+                                                            </button>
                                                         </div>
-                                                    @elseif($taxe->status=='verified'&&$taxe->status=='verified-sysprim')
+                                                    @elseif($taxe->status=='verified'||$taxe->status=='verified-sysprim')
                                                         <div class="input-field col s12 m12">
                                                             <button type="button"
                                                                     class="btn waves-effect waves-light green col s12"
                                                                     value="#" data-status="#">
-                                                                <i class="icon-check"></i></button>
+                                                                <i class="icon-check"></i>
+                                                            </button>
                                                         </div>
                                                     @else
                                                         <div class="input-field col s12 m6">

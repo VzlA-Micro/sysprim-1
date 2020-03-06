@@ -24,6 +24,7 @@ class CatastralTerrenoController extends Controller
         $catastral = new CatastralTerreno();
         $catastral->name = $request->input('name');
         $catastral->parish_id = $request->input('parish_id');
+        $catastral->status = 'enabled';
         $catastral->sector_nueva_nomenclatura = $request->input('sector_nueva');
         $catastral->sector_catastral = $request->input('sector_catastral');
         $catastral->save();
@@ -48,6 +49,7 @@ class CatastralTerrenoController extends Controller
         $catastral = CatastralTerreno::find($id);
         $catastral->name = $request->input('name');
         $catastral->parish_id = $request->input('parish_id');
+        $catastral->status =  $request->input('status');
         $catastral->sector_nueva_nomenclatura = $request->input('sector_nueva');
         $catastral->sector_catastral = $request->input('sector_catastral');
         $catastral->update();

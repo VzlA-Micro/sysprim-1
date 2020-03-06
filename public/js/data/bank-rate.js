@@ -1,8 +1,7 @@
 $(document).ready(function() {
+    var url = localStorage.getItem('url');
 
-    var url = "http://sysprim.com.devel/";
-
-	// Registrar
+    // Registrar
 	$('#register').submit(function(e) {
 		e.preventDefault();
 		var formData = new FormData(this);
