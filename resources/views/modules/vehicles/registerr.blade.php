@@ -61,7 +61,7 @@
                                 <i class="icon-crop_16_9 prefix"></i>
                                 <input type="text" name="license_plate" id="license_plate" minlength="5" maxlength="7"
                                        pattern="[0-9A-Za-z]+"
-                                       title="Solo puede escribir números y letra en mayúsculas."  autocomplete="off" class="validate" required>
+                                       title="Solo puede escribir números y letras."  autocomplete="off" class="validate serial-vehicle" required>
                                 <label for="license_plate">Placa</label>
                             </div>
 
@@ -78,14 +78,14 @@
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-confirmation_number prefix"></i>
 
-                                <input type="text" name="bodySerial" id="bodySerial" class="validate number-and-capital-letter-only" pattern="[A-Za-z0-9]+"
+                                <input type="text" name="bodySerial" id="bodySerial" class="validate serial-vehicle" pattern="[A-Za-z0-9]+"
                                        title="Solo puede escribir letras y numeros." autocomplete="off"  maxlength="17">
                                 <label for="bodySerial">Serial de Carroceria</label>
                                 <span class="helper-text">Este campo es opcional</span>
                             </div>
                             <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede ingresar números y mayúsculas.">
                                 <i class="icon-select_all prefix"></i>
-                                <input type="text" name="serialEngine" id="serialEngine" class="validate number-and-capital-letter-only"
+                                <input type="text" name="serialEngine" id="serialEngine" class="validate serial-vehicle"
                                        pattern="[A-Za-z0-9]+" autocomplete="off" minlength="15" maxlength="20" title="Solo puede escribir letras y numeros.">
                                 <label for="serialEngine">Serial del Motor</label>
                                 <span class="helper-text">Este campo es opcional</span>

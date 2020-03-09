@@ -513,9 +513,9 @@ $('document').ready(function () {
             success: function (data) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
 
-
-                if (data['status'] == "error") {
+                if (data.status == "error") {
                     swal({
                         title: "¡Placa Registrada!",
                         text: data['message'],
@@ -574,7 +574,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     console.log(data);
-                    if (data['status'] == "error") {
+                    if (data.status == "error") {
                         swal({
                             title: "¡Serial de Carroceria Registrado!",
                             text: data['message'],
@@ -633,7 +633,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     console.log(data);
-                    if (data['status'] == "error") {
+                    if (data.status == "error") {
                         swal({
                             title: "¡Serial del Motor Registrado!",
                             text: data['message'],
