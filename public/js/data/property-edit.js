@@ -30,6 +30,8 @@ $('document').ready(function () {
         $('#C6').prop('readonly', false);
         $('#C7').prop('readonly', false);
         $('#C8').prop('readonly', false);
+        $('#C9').prop('readonly', false);
+        $('#C10').prop('readonly', false);
         $(this).addClass('hide');
 
         swal({
@@ -400,7 +402,7 @@ $('document').ready(function () {
     });
 
 
-    $('#C4').change(function () {
+    $('#C5').change(function () {
 
         var sector = $(this).val();
 
