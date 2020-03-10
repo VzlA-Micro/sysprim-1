@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('settings.manage') }}" >Configuración</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('foreign-exchange.manage')}}">Gestionar de Monedas</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('foreign-exchange.manage')}}">Gestionar Monedas</a></li>
                     <li class="breadcrumb-item"><a href="#!">Consultar Monedas</a></li>
                 </ul>
             </div>
