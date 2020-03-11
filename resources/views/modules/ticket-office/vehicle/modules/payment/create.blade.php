@@ -40,7 +40,7 @@
                             <input type="hidden" id="tributo" value="">
                             <div class="input-field col s12 m4">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <input type="text" name="licensePlate" id="licensePlate" minlength="7" maxlength="7"
+                                <input class="validate serial-vehicle" type="text" name="licensePlate" id="licensePlate" minlength="7" maxlength="7"
                                        pattern="[0-9A-Za-z]+">
                                 <label for="licensePlate">Placa del Vehículo</label>
                             </div>

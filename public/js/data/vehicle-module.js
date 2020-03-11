@@ -897,9 +897,19 @@ $(document).ready(function () {
                 title: "informacion",
                 text: 'Debe introducir un año valido',
                 icon: 'info'
+            }).then(function () {
+                $('#year').val('');
+                $('#year').focus();
             });
-            $(this).val('');
-            $(this).focus();
+        } else if (anio.length < 4) {
+            swal({
+                title: "informacion",
+                text: 'Debe introducir un año valido',
+                icon: 'info'
+            }).then(function () {
+                $('#year').val('');
+                $('#year').focus();
+            });
         } else {
 
         }
