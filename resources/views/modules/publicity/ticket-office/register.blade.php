@@ -138,7 +138,7 @@
 
                             <div class="col s12 m6 animated bounceIn">
                                 <button type="button" id="f1" name="f1" style="border: none"
-                                        class="btn-app white blue-text" value="4">
+                                        class="btn-app white teal-text" value="4">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad eventual u ocacional</span>
                                 </button>
@@ -146,7 +146,7 @@
 
                             <div class="col s12 m6 animated bounceIn">
                                 <button type="button" id="f2" name="f2" style="border: none"
-                                        class="btn-app white blue-text" value="1">
+                                        class="btn-app white teal-text value="1">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tiempo</span>
                                 </button>
@@ -154,21 +154,21 @@
 
                             <div class="col s12 m4 animated bounceIn">
                                 <button type="button" id="f3" name="f3" style="border: none"
-                                        class="btn-app white blue-text" value="2">
+                                        class="btn-app white teal-text" value="2">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tamaño</span>
                                 </button>
                             </div>
                             <div class="col s12 m4 animated bounceIn">
                                 <button type="button" id="f4" name="f4" style="border: none"
-                                        class="btn-app white blue-text" value="3">
+                                        class="btn-app white teal-text" value="3">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por cantidad</span>
                                 </button>
                             </div>
                             <div class="col s12 m4 animated bounceIn">
                                 <button type="button" id="f5" name="f5" style="border: none"
-                                        class="btn-app white blue-text" value="5">
+                                        class="btn-app white teal-text" value="5">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por vallas</span>
                                 </button>
