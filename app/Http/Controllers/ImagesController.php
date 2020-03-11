@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Images;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\Response;
+
 
 class ImagesController extends Controller
 {
@@ -14,7 +18,9 @@ class ImagesController extends Controller
      */
     public function index()
     {
+        $images = Images::all();
 
+        return view('modules.image.read', ['images'=>$images]);
     }
 
     /**
@@ -24,7 +30,7 @@ class ImagesController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.image.register');
     }
 
     /**
@@ -35,7 +41,30 @@ class ImagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image = new Images();
+
+        $image_path = $request->file('image');
+        if ($image_path) {
+            $image_path_name = time() . $image_path->getClientOriginalName();
+            Storage::disk('images')->put($image_path_name, File::get($image_path));
+            $image->path = $image_path_name;
+        } else {
+            $image->path = null;
+        }
+
+        $image->save();
+
+        $response = [
+            'status' => 'success',
+            'message' => 'La imagen se ha registrado con éxito.',
+            '$image' => $image];
+
+        return response()->json($response);
+    }
+
+    public function getImage($filename){
+        $file = Storage::disk('images')->get($filename);
+        return new Response($file, 200);
     }
 
     /**
@@ -80,6 +109,11 @@ class ImagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $image = Images::find($id);
+        Storage::disk('images')->delete($image->path);
+
+        $image->delete();
+
+        return redirect()->route('image.read');
     }
 }
