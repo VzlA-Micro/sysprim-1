@@ -12,8 +12,10 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas
                         </a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla -
+                            Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.managePublicity')}}">Gestionar
+                            Publicidad</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticketOffice.publicity.register')}}">Registrar
                             Publicidad</a></li>
                 </ul>
@@ -74,9 +76,11 @@
                                        title="Solo puede agregar letras (con acentos)." required>
                                 <label for="name_full">Nombre</label>
                             </div>
-                            <div class="input-field col s12 m6 tooltipped" data-position="bottom" data-tooltip="Solo puede agregar letras (con acentos).">
+                            <div class="input-field col s12 m6 tooltipped" data-position="bottom"
+                                 data-tooltip="Solo puede agregar letras (con acentos).">
                                 <i class="icon-person prefix"></i>
-                                <input id="email_full" type="email" name="email" class="validate rate" data-validate="email"  title="Solo puede agregar letras (con acentos)." required >
+                                <input id="email_full" type="email" name="email" class="validate rate"
+                                       data-validate="email" title="Solo puede agregar letras (con acentos)." required>
                                 <label for="email_full">Correo</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -106,7 +110,8 @@
                         <div class="card-footer">
                             <div class="row" style="margin-bottom: 0">
                                 <div class="col s6 left-align" style="margin-bottom: 0">
-                                    <a href="#" id="generate-correo" class="btn blue waves-effect waves light hide left-align">
+                                    <a href="#" id="generate-correo"
+                                       class="btn blue waves-effect waves light hide left-align">
                                         Generar Correo
                                         <i class="icon-mail_outline left"></i>
                                     </a>
@@ -173,7 +178,7 @@
                                 <a href="#" id="publicity-previous"
                                    class="btn peach waves-effect waves light">
                                     Anterior
-                                <i class="icon-navigate_before left"></i>
+                                    <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6  right-align">
@@ -189,441 +194,41 @@
                             <h4>Datos de la publicidad</h4>
                         </div>
 
-                        <div class="card-content row" id="form-1">
-                            <div class="input-field col s12">
-                                <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="type_id-1">
-                                    <option value="null" disabled selected>Elija un tipo</option>
-                                </select>
-                                <label>Tipo de Publicidad</label>
+                        <div class="card-content row">
+                            <div id="form-1">
+
                             </div>
 
-                            <div class="input-field col s12 m6">
-                                <i class="icon-smoking_rooms prefix"></i>
-                                <select name="licor" id="licor">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-my_location prefix"></i>
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
-
-                            <div class="input-field col s12">
-                                <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
-                                <label for="name">Nombre</label>
-                            </div>
-                            <div class="col s12">
-                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                <div class="preview img-wrapper center-align valing-wrapper">
-                                    <i class="icon-add_a_photo medium"></i>
-                                </div>
-                                <div class="file-upload-wrapper">
-                                    <input type="file" name="image" id="image" class="file-upload-native"
-                                           accept="image/*"/>
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text"/>
+                            <div>
+                                <div class="col s12">
+                                    <div class="preview img-wrapper center-align valing-wrapper">
+                                        <i class="icon-add_a_photo medium"></i>
+                                    </div>
+                                    <div class="file-upload-wrapper">
+                                        <input type="file" name="image" id="image" class="file-upload-native"
+                                               accept="image/*"/>
+                                        <input type="text" disabled placeholder="Subir imagen"
+                                               class="file-upload-text"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
-                                <label for="date_start">Fecha de Inicio</label>
+                            <div>
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-date_range prefix"></i>
+                                    <input type="text" name="date_start" id="date_start" class="datepicker date_start">
+                                    <label for="date_start">Fecha de Inicio</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <i class="icon-date_range prefix"></i>
+                                    <input type="text" name="date_end" id="date_end" class="datepicker date_end">
+                                    <label for="date_end">Fecha de Fin</label>
+                                </div>
                             </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
-                                <label for="date_end">Fecha de Fin</label>
-                            </div>
-                            <div class="col s12 input-field">
-                                <i class="icon-straighten prefix"></i>
-                                <select name="unit" id="unit">
-                                    <option value="null" disabled>Elige la unidad</option>
-                                    <option value="mts" selected>Metro</option>
-                                    <option value="qnt" disabled>Cantidad</option>
-                                </select>
-                                <label>Unidad</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_horizontal prefix"></i>
-                                <label for="width">Ancho</label>
-                                <input type="text" class="validate only-number-positive number-only-float" name="width" id="width" maxlength="5" value="">
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_vertical prefix"></i>
-                                <label for="height">Alto</label>
-                                <input type="text" class="validate only-number-positive number-only-float" name="height" id="height" maxlength="5" value="">
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" class="validate only-number-positive number-date" maxlength="4" name="quantity" id="quantity">
-                                <label for="quantity">Cantidad de Lugares</label>
-                            </div>
-
                             <div class="input-field col s6 left-align">
                                 <a href="#" id="publicity-previous2"
                                    class="btn   peach waves-effect waves light">
-                                    Cargar De Nuevo
-                                    <i class="icon-autorenew left"></i>
-                                </a>
-                            </div>
-                            <div class="input-field col s6 right-align">
-                                <button type="submit" class="btn peach waves-effect waves-light"
-                                        id="button-publicity">
-                                    <i class="icon-send right"></i>
-                                    Registrar
-                                </button>
-                            </div>
-
-                        </div>
-                        <div class="card-content row" id="form-2">
-
-                            <div class="input-field col s12">
-                                <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="type_id-2">
-                                    <option value="null" disabled selected>Elija un tipo</option>
-                                </select>
-                                <label>Tipo de Publicidad</label>
-                            </div>
-
-                            <div class="input-field col s12 m6">
-                                <i class="icon-smoking_rooms prefix"></i>
-                                <select name="licor" id="licor">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-my_location prefix"></i>
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
-
-                            <div class="input-field col s12">
-                                <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
-                                <label for="name">Nombre</label>
-                            </div>
-                            <div class="col s12">
-                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                <div class="preview img-wrapper center-align valing-wrapper">
-                                    <i class="icon-add_a_photo medium"></i>
-                                </div>
-                                <div class="file-upload-wrapper">
-                                    <input type="file" name="image" id="image" class="file-upload-native"
-                                           accept="image/*"/>
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text"/>
-                                </div>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
-                                <label for="date_start">Fecha de Inicio</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
-                                <label for="date_end">Fecha de Fin</label>
-                            </div>
-                            <div class="col s12 input-field">
-                                <i class="icon-straighten prefix"></i>
-                                <select name="unit" id="unit">
-                                    <option value="null" disabled>Elige la unidad</option>
-                                    <option value="mts" disabled>Metro</option>
-                                    <option value="qnt" selected>Cantidad</option>
-                                </select>
-                                <label>Unidad</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="icon-chrome_reader_mode prefix"></i>
-                                <input type="text" class="validate only-number-positive number-date" maxlength="9" name="quantity" id="quantity">
-                                <label for="quantity">Ejemplares</label>
-                            </div>
-
-                            <div class="input-field col s6 left-align">
-                                <a href="#" id="publicity-previous2"
-                                   class="btn   peach waves-effect waves light">
-                                    Cargar De Nuevo
-                                    <i class="icon-autorenew left"></i>
-                                </a>
-                            </div>
-                            <div class="input-field col s6 right-align">
-                                <button type="submit" class="btn peach waves-effect waves-light"
-                                        id="button-publicity">
-                                    <i class="icon-send right"></i>
-                                    Registrar
-                                </button>
-                            </div>
-
-                        </div>
-                        <div class="card-content row" id="form-3">
-                            <div class="input-field col s12">
-                                <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="type_id-3">
-                                    <option value="null" disabled selected>Elija un tipo</option>
-                                </select>
-                                <label>Tipo de Publicidad</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
-                                <label for="name">Nombre</label>
-                            </div>
-
-                            <div class="input-field col s12 m6">
-                                <i class="icon-smoking_rooms prefix"></i>
-                                <select name="licor" id="licor">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-my_location prefix"></i>
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
-
-                            <div class="col s12">
-                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                <div class="preview img-wrapper center-align valing-wrapper">
-                                    <i class="icon-add_a_photo medium"></i>
-                                </div>
-                                <div class="file-upload-wrapper">
-                                    <input type="file" name="image" id="image" class="file-upload-native"
-                                           accept="image/*"/>
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text"/>
-                                </div>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
-                                <label for="date_start">Fecha de Inicio</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
-                                <label for="date_end">Fecha de Fin</label>
-                            </div>
-
-                            <div class="input-field col s6 left-align">
-                                <a href="#" id="publicity-previous2"
-                                   class="btn   peach waves-effect waves light">
-                                    Cargar De Nuevo
-                                    <i class="icon-autorenew left"></i>
-                                </a>
-                            </div>
-                            <div class="input-field col s6 right-align">
-                                <button type="submit" class="btn peach waves-effect waves-light"
-                                        id="button-publicity">
-                                    <i class="icon-send right"></i>
-                                    Registrar
-                                </button>
-                            </div>
-
-                        </div>
-                        <div class="card-content row" id="form-4">
-                            <div class="input-field col s12">
-                                <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="type_id-4">
-                                    <option value="null" disabled selected>Elija un tipo</option>
-                                </select>
-                                <label>Tipo de Publicidad</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
-                                <label for="name">Nombre</label>
-                            </div>
-
-                            <div class="input-field col s12 m6">
-                                <i class="icon-smoking_rooms prefix"></i>
-                                <select name="licor" id="licor">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-my_location prefix"></i>
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
-
-                            <div class="col s12">
-                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                <div class="preview img-wrapper center-align valing-wrapper">
-                                    <i class="icon-add_a_photo medium"></i>
-                                </div>
-                                <div class="file-upload-wrapper">
-                                    <input type="file" name="image" id="image" class="file-upload-native"
-                                           accept="image/*"/>
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text"/>
-                                </div>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
-                                <label for="date_start">Fecha de Inicio</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
-                                <label for="date_end">Fecha de Fin</label>
-                            </div>
-                            <div class="col s12 input-field">
-                                <i class="icon-straighten prefix"></i>
-                                <select name="unit" id="unit">
-                                    <option value="null" disabled>Elige la unidad</option>
-                                    <option value="mts" selected>Metro</option>
-                                    <option value="qnt" disabled>Cantidad</option>
-                                </select>
-                                <label>Unidad</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_horizontal prefix"></i>
-                                <label for="width">Ancho</label>
-                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_vertical prefix"></i>
-                                <label for="height">Alto</label>
-                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1" name="height" id="height" value="">
-                            </div>
-
-                            <div class="input-field col s6 left-align">
-                                <a href="#" id="publicity-previous2"
-                                   class="btn   peach waves-effect waves light">
-                                    Cargar De Nuevo
-                                    <i class="icon-autorenew left"></i>
-                                </a>
-                            </div>
-                            <div class="input-field col s6 right-align">
-                                <button type="submit" class="btn peach waves-effect waves-light"
-                                        id="button-publicity">
-                                    <i class="icon-send right"></i>
-                                    Registrar
-                                </button>
-                            </div>
-
-                        </div>
-                        <div class="card-content row" id="form-5">
-                            <div class="input-field col s12">
-                                <i class="icon-linked_camera prefix"></i>
-                                <select name="advertising_type_id" id="type_id-5">
-                                    <option value="null" disabled selected>Elija un tipo</option>
-                                </select>
-                                <label>Tipo de Publicidad</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="icon-format_size prefix"></i>
-                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
-                                <label for="name">Nombre</label>
-                            </div>
-
-                            <div class="input-field col s12 m6">
-                                <i class="icon-smoking_rooms prefix"></i>
-                                <select name="licor" id="licor">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-my_location prefix"></i>
-                                <select name="state_location" id="state_location">
-                                    <option value="" disabled selected>Elija una opción</option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
-                                </select>
-                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
-                            </div>
-
-
-                            <div class="col s12">
-                                {{-- <img src="{{ asset('images/bqto-4.jpg') }}" class="responsive-img" alt=""> --}}
-                                <div class="preview img-wrapper center-align valing-wrapper">
-                                    <i class="icon-add_a_photo medium"></i>
-                                </div>
-                                <div class="file-upload-wrapper">
-                                    <input type="file" name="image" id="image" class="file-upload-native"
-                                           accept="image/*"/>
-                                    <input type="text" disabled placeholder="Subir imagen" class="file-upload-text"/>
-                                </div>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_start" id="date_start" class="datepicker date_start">
-                                <label for="date_start">Fecha de Inicio</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-date_range prefix"></i>
-                                <input type="text" name="date_end" id="date_end" class="datepicker date_end">
-                                <label for="date_end">Fecha de Fin</label>
-                            </div>
-                            <div class="col s12  input-field">
-                                <i class="icon-straighten prefix"></i>
-                                <select name="unit" id="unit">
-                                    <option value="null" disabled>Elige la unidad</option>
-                                    <option value="mts" selected>Metro</option>
-                                    <option value="qnt" disabled>Cantidad</option>
-                                </select>
-                                <label>Unidad</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_horizontal prefix"></i>
-                                <label for="width">Ancho</label>
-                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="icon-panorama_vertical prefix"></i>
-                                <label for="height">Alto</label>
-                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1"  name="height" id="height" value="">
-                            </div>
-                            {{-- <div class="input-field col s12">
-                                <input type="text" name="quantity" id="quantity">
-                                <label for="quantity">Cantidad de Lugares</label>
-                            </div> --}}
-                            <div class="input-field col s12 ">
-                                <i class="icon-exposure_plus_1 prefix"></i>
-                                <input type="text" class="validate only-number-positive number-only-float" maxlength="2" name="side" id="side">
-                                <label for="side">Cantidad de Caras</label>
-                            </div>
-                            {{-- <div class="input-field col s12">
-                                <input type="text" name="floor" id="floor">
-                                <label for="floor">Pisos</label>
-                            </div> --}}
-
-                            <div class="input-field col s6 left-align">
-                                <a href="#" id="publicity-previous2"
-                                   class="btn   peach waves-effect waves light">
-                                    Cargar De Nuevo
-                                    <i class="icon-autorenew left"></i>
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
                                 </a>
                             </div>
                             <div class="input-field col s6 right-align">
@@ -645,6 +250,5 @@
 @section('scripts')
     <script src="{{ asset('js/imagePreview.js') }}"></script>
     <script src="{{ asset('js/data/publicityTicketOffice.js') }}"></script>
-    {{--<script src="{{ asset('js/dev/vehicleTicketOffice.js') }}"></script>--}}
     <script src="{{ asset('js/validations.js') }}"></script>
 @endsection
