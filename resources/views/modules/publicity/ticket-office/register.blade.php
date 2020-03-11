@@ -146,7 +146,7 @@
 
                             <div class="col s12 m6 animated bounceIn">
                                 <button type="button" id="f2" name="f2" style="border: none"
-                                        class="btn-app white teal-text value="1">
+                                        class="btn-app white teal-text" value="1">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tiempo</span>
                                 </button>
