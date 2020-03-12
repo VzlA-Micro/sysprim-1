@@ -135,4 +135,16 @@ class DeclarationPublicity
         );
         return $amounts;
     }
+
+    public static function verify($id, $temporal = true)
+    {
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        if ($temporal){
+            $taxe = Taxe::find($id);
+            $taxe->delete();
+        }
+
+        return 0;
+    }
 }

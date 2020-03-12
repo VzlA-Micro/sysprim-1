@@ -21,7 +21,7 @@
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" class="card" id="register">
+                <form class="card" id="register">
                     <ul class="tabs">
                         <li class="tab col s4" id="user-tab-one">
                             <a href="#user-tab">

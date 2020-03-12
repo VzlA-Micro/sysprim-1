@@ -1346,7 +1346,7 @@ Route::middleware(['auth'])->group(/**
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
+        Route::get('delete-temp','HomeController@deleteTemp')->name('delete-temp');
 
 
     });

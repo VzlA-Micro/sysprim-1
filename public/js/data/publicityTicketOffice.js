@@ -1007,7 +1007,6 @@ $('document').ready(function () {
                 });
 
             } else if ($('#licor').val() === null) {
-
                 swal({
                     title: "Información",
                     text: "Debes selecionar si la publicidad hace refencia a cigarrillos o bebidas alcoholicas.",
@@ -1017,15 +1016,12 @@ $('document').ready(function () {
                         className: "blue-gradient"
                     },
                 });
-
-
             }
         }
     });
 
     //::::::::UPDATE FOR TICKET OFFICE::::::::::::::::::
 
-    console.log($('#update-publicity'));
     var typePublicity = null;
     $('#update-publicity').click(function () {
         typePublicity = $('#advertising_type_id2').val();
