@@ -327,8 +327,10 @@ $date = '31/12/' . date('Y');
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/isotipo.png', .2)->size(170)->generate(
                     'CODIGO:'.$taxes->payments[0]->code."\n".
                     'REF:'.$taxes->payments[0]->ref."\n".
-                    'MONTO:'.$taxes->payments[0]->amount."\n"
-
+                    'MONTO:'.$taxes->payments[0]->amount."\n".
+                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+                    'Estado:'.$taxes->payments[0]->status."\n".
+                    'TEL:'.$taxes->payments[0]->phone."\n"
                      ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" >
 
                 @endif
