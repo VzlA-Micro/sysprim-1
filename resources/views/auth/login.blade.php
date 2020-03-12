@@ -34,18 +34,19 @@
 @section('content')
     <div class="container-fluid">
         <div id="slides">
-          <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bqto-1.webp') }})"></span>
-          </div>
-          <div class="slide">
-            <span class="animate in" style="background-image: url({{ asset('images/bqto-4.webp') }})"></span>
-          </div>
-          <div class="slide">
-            <span class="animate down" style="background-image: url({{ asset('images/bqto-2.webp') }})"></span>
-          </div>
-          <div class="slide">
-            <span class="animate out" style="background-image: url({{ asset('images/bqto-3.webp') }})"></span>
-          </div>
+                    @php
+                        $i=0;
+                    @endphp
+              @if($backgrounds)
+                  @foreach($backgrounds as $background)
+                    <div class="slide">
+                      <span class="{{$animated[$i]}}" style="background-image:url({{ route('image.file', ['filename' => $background->path])}})"></span>
+                    </div>
+                      @php
+                         $i++;
+                     @endphp
+                  @endforeach
+              @endif
         </div>
         <div class="row show-on-medium-and-down hide-on-large-only">
             <div class="col s12 m10 offset-m1 l6 offset-l3 animated bounceInDown">
