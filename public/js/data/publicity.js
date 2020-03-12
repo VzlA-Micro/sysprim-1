@@ -317,7 +317,7 @@ $(document).ready(function() {
             if ($('#advertising_type_id').val() === null) {
                 swal({
                     title: "Información",
-                    text: "Debes selecionar el tipo de publicidad para poder registralar.",
+                    text: "Debes selecionar el tipo de publicidad para poder registrarla.",
                     icon: "info",
                     button: {
                         text: "Esta bien",

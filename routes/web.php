@@ -1324,7 +1324,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
         Route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
         Route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
-        Route::get('payments/bdv/verified/{token}/{id}', 'BdvController@verifyTaxes');
+        Route::get('payments/bdv/verified/{taxe_id}', 'BdvController@verifyTaxes');
 
         /*Petro - MODULE */
 
@@ -1346,7 +1346,14 @@ Route::middleware(['auth'])->group(/**
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        Route::get('settings/image', function () {
+            return view('modules.image.manage');
+        })->name('settings.images.manage');
 
-
+        Route::get('settings/image/register','ImagesController@create')->name('register.images.manage');
+        Route::post('image/save','ImagesController@store')->name('save.images');
+        Route::get('image/file{filename}', 'ImagesController@getImage')->name('image.file');
+        Route::get('image/read', 'ImagesController@index')->name('image.read');
+        Route::get('image/delete/{id}', 'ImagesController@destroy')->name('image.delete');
 
     });
