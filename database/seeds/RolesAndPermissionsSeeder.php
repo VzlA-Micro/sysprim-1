@@ -770,7 +770,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Pagar Vehiculo',
 
             # --------- Módulo de Mis Publicidades
-            /*'Mis Publicidades',
+            'Mis Publicidades',
             'Registrar Mis Publicidades',
             'Consultar Mis Publicidades',
             'Detalles Mis Publicidades',
@@ -778,7 +778,7 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Eliminar Mis Publicidades',
             'Mis Pagos - Publicidad',
             'Declarar Publicidades',
-            'Historial de Pagos - Publicidades',*/
+            'Historial de Pagos - Publicidades',
 
             # --------- Módulo de Mis Tasas
             'Generar Tasas',

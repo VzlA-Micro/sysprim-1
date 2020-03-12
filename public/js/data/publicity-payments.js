@@ -88,6 +88,8 @@ $(document).ready(function() {
         var publicity_id = $('#publicity_id').val();
         var amount = $('#amount').val();
         var increment = $('#increment').val();
+        var type = $('#type').val();
+
 
         $.ajax({
             method: 'POST',
@@ -97,6 +99,7 @@ $(document).ready(function() {
                 interest: interest,
                 fiscal_credit: fiscal_credit,
                 increment: increment,
+                type: type,
                 publicity_id: publicity_id,
                 amount: amount
             },

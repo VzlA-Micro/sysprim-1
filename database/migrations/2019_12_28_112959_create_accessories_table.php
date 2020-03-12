@@ -16,6 +16,7 @@ class CreateAccessoriesTable extends Migration
         Schema::create('accessories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('branch',20);
             $table->float('value');
             $table->timestamps();
         });
