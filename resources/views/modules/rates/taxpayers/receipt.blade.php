@@ -321,7 +321,7 @@ $date = '31/12/' . date('Y');
             <td style="width: 20%;">
                 @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
-                        <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
+                        <img src="{{ url('images/pdf/{{$taxes->bank.".png"}}') }}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image">
                     @endif
 

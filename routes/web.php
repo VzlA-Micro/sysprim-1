@@ -11,13 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    if (Auth::guest()) {
-        return view('auth.login');
-    } else {
-        return view('home');
-    }
-});
+Route::get('/', 'HomeController@home');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -1352,8 +1346,12 @@ Route::middleware(['auth'])->group(/**
 
         Route::get('settings/image/register','ImagesController@create')->name('register.images.manage');
         Route::post('image/save','ImagesController@store')->name('save.images');
-        Route::get('image/file{filename}', 'ImagesController@getImage')->name('image.file');
+
         Route::get('image/read', 'ImagesController@index')->name('image.read');
         Route::get('image/delete/{id}', 'ImagesController@destroy')->name('image.delete');
+        Route::get('image/status/{id}', 'ImagesController@status')->name('image.status');
+
+
 
     });
+Route::get('image/file{filename}', 'ImagesController@getImage')->name('image.file');

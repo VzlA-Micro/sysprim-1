@@ -18,7 +18,7 @@ class ImagesController extends Controller
      */
     public function index()
     {
-        $images = Images::all();
+        $images = Images::orderBy('id', 'desc')->get();
 
         return view('modules.image.read', ['images'=>$images]);
     }
@@ -52,6 +52,7 @@ class ImagesController extends Controller
             $image->path = null;
         }
 
+        $image->status = "disabled";
         $image->save();
 
         $response = [
@@ -65,6 +66,40 @@ class ImagesController extends Controller
     public function getImage($filename){
         $file = Storage::disk('images')->get($filename);
         return new Response($file, 200);
+    }
+
+    public function status($id){
+        $image = Images::find($id);
+
+        $imagesEnabled = Images::where('status', 'enabled')->get();
+        $imagesNumber = count($imagesEnabled);
+
+        if($image->status == "disabled"){
+            if($imagesNumber == 4){
+                return redirect()->route('image.read')
+                                 ->with(['message' => 'Ya tienes cuatro imagenes seleccionadas deshabilite una para colocar la que seleccionó']);
+            }else{
+                $image->status = "enabled";
+                $image->update();
+
+                return redirect()->route('image.read')
+                    ->with(['mesage' => 'Imagen Habilitada.']);
+            }
+        }
+
+        if($image->status == "enabled"){
+
+            if($imagesNumber == 1){
+                return redirect()->route('image.read')
+                    ->with(['message' => 'No puedes deshabilitar la ultima imagen.']);
+            }else{
+                $image->status = "disabled";
+                $image->update();
+
+                return redirect()->route('image.read')
+                    ->with(['mesage' => 'Imagen Deshabilitada.']);
+            }
+        }
     }
 
     /**
