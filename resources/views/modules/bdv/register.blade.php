@@ -16,21 +16,19 @@
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" method="post"  class="card" id="register">
-                    <ul class="tabs">
-                        <li class="tab col s6" id="one"><a href="#payment-tab"><i class="icon-filter_1"></i>Datos del Pago</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#link-tab"><i class="icon-filter_2"></i> Obtener Link</a></li>
-                    </ul>
+                <div class="message message-danger hide">
+                    <div class="message-body">
+                        <strong id="message"></strong>
+                    </div>
+                </div>
 
-                    <div id="payment-tab">
-                        <div class="card-header center-align">
-                            <h4>Datos del Pago</h4>
+                <form action="#" method="post"  class="card " id="register">
+
+                        <div class="card-title center-align padding-1">
+                            <h4> Datos de Pago</h4>
                         </div>
                         <div class="card-content row">
-
                             <input type="hidden" id="id" name="id" value="{{$id}}">
-
-
 
                             <div class="input-field col s6 m4 tooltipped" data-position="bottom"
                                  data-tooltip="V: Venezolano; E: Extranjero">
@@ -102,26 +100,6 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div id="link-tab">
-                        <div class="card-header center-align">
-                            <h4>Obtener Link de Pago</h4>
-                        </div>
-
-                            <div class="col s12 m6 offset-m3 center-align" id="div-send">
-                                <a href=""  id="link" class="btn-app green">
-                                    <i class="far fa-file-pdf"></i>
-                                    <span class="truncate">Obtener Link</span>
-                                </a>
-                            </div>
-
-
-
-                        <div class="card-content row">
-
-                        </div>
-
-                    </div>
                 </form>
             </div>
         </div>

@@ -314,7 +314,7 @@ class RateController extends Controller{
         if(is_null($download)||$download=='false'){
             return $pdf->stream('PLANILLA_TASAS.pdf');
         }else{
-            return $pdf->download('PLANILLA_TASAS.pdf');
+            return $pdf->stream('PLANILLA_TASAS.pdf');
         }
 
     }

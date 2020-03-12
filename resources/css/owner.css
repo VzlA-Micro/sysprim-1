@@ -711,6 +711,17 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   font-weight: 400;
 }
 
+.message.message-red-semat .message-header {
+  background-color: #a51d1d;
+  color: #fff;
+}
+
+.message.message-red-semat .message-body {
+  background-color: #fff;
+  border-color: #a51d1d;
+  color: #a51d1d;
+}
+
 /* Datepicker */
 .datepicker-date-display {
   background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
@@ -918,7 +929,5 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 .bar ul li a:last-child {
   border-bottom-left-radius: 2px;
 }
-
-
 
 /*# sourceMappingURL=owner.css.map */

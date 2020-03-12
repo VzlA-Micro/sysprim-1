@@ -1318,7 +1318,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('payments/bdv/register/{id}','BdvController@register')->name('payments.bdv.register');
         Route::post('payments/bdv/store','BdvController@store')->name('payments.bdv.store');
         Route::get('payments/bdv/register', 'BdvController@register')->name('payments.bdv.register');
-        Route::get('payments/bdv/verified/{token}/{id}', 'BdvController@verifyTaxes');
+        Route::get('payments/bdv/verified/{taxe_id}', 'BdvController@verifyTaxes');
 
         /*Petro - MODULE */
 
