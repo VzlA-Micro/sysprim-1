@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             RechargeTableSeeder::class,
             BankRateTableSeeder::class,
             RatesTableSeeder::class,
-            PrologueTableSeeder::class
+            PrologueTableSeeder::class,
+            AccessoriesTableSeeder::class,
         ]);
     }
 }

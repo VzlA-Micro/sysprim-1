@@ -1,8 +1,19 @@
 $(document).ready(function() {
     var url = localStorage.getItem('url');
+    var date = new Date();
+    var currentYear = date.getFullYear();
 
     $('#code').blur(function() {
         var code = $(this).val();
+        $('#publicity_id').val('');
+        $('#person').val('');
+        $('#advertising_type_id').val('');
+        $('#type').val('');
+        $('#name').val('');
+        $('#date_start').val('');
+        $('#date_end').val('');
+        $('select').formSelect();
+
         if(code !== '') {
             $.ajax({
                 method: 'GET',
@@ -17,16 +28,77 @@ $(document).ready(function() {
                     if(response.status == 'success') {
                         var publicity = response.publicity;
                         var user = response.publicity.users[0];
+                        var taxeType = response.type;
                         var id = publicity.id;
                         $('#publicity_id').val(id);
                         $('#name').val(publicity.name);
                         $('#advertising_type_id option[value=' + publicity.advertising_type_id + ']').attr('selected',true);
                         $('#advertising_type_id').attr('disabled',true);
+                        $('#advertising_type_id_2 option[value=' + publicity.advertising_type_id + ']').attr('selected',true);
                         $('#date_start').val(publicity.date_start).attr('disabled',true);
                         $('#date_end').val(publicity.date_end).attr('disabled',true);
                         $('#person').val(user.name + " " + user.surname).attr('disabled',true);
-                        $('#fiscal_period').attr('disabled',false);
-                        $('#status').attr('disabled',false);
+                        $('#type').val(taxeType);
+
+                        var period = currentYear.toString() + '-01-01';
+                        if(taxeType === 'annual') {
+                            $('#fiscal_period').attr('disabled',false);
+                            $('#status option').each(function(index) {
+                                if(this.value !== taxeType) {
+                                    this.setAttribute('disabled',true);
+                                    this.setAttribute('selected',false);
+                                }
+                                /*else {
+                                    this.setAttribute('disabled',false);
+                                }*/
+                            });
+                            $('#status option[value=' + taxeType + ']').attr('selected',true).attr('disabled',false);
+                            $('#status').attr('disabled',false);
+                        }
+                        else if(taxeType === 'monthly') {
+                            $('#fiscal_period').attr('disabled',false);
+                            $('#fiscal_period option').each(function(index) { // Deshabilita los años diferentes al año actual del select
+                                if(this.value !== period) {
+                                    this.setAttribute('disabled',true);
+                                    this.setAttribute('selected',false);
+                                }
+                            });
+                            $('#fiscal_period option[value='+ date.getFullYear() + '-01-01' + ']').attr('selected',true);
+                            $('#status option').each(function(index) {
+                                if(this.value !== taxeType) {
+                                    this.setAttribute('disabled',true);
+                                    this.setAttribute('selected',false);
+                                }
+                                /*else {
+                                    this.setAttribute('disabled',false);
+                                }*/
+                            });
+                            // Selecciona el tipo de pago
+                            $('#status option[value=' + taxeType + ']').attr('selected',true).attr('disabled',false);
+                            $('#status').attr('disabled',false);
+                        }
+                        else if(taxeType === 'daily') {
+                            $('#fiscal_period').attr('disabled',false);
+                            $('#fiscal_period option').each(function(index) { // Deshabilita los años diferentes al año actual del select
+                                if(this.value !== period) {
+                                    this.setAttribute('disabled',true);
+                                    this.setAttribute('selected',false);
+                                }
+                            });
+                            $('#fiscal_period option[value='+ date.getFullYear() + '-01-01' + ']').attr('selected',true);
+                            $('#status option').each(function(index) {
+                                if(this.value !== taxeType) {
+                                    this.setAttribute('disabled',true);
+                                    this.setAttribute('selected',false);
+                                }
+                                /*else {
+                                    this.setAttribute('disabled',false);
+                                }*/
+                            });
+                            // Selecciona el tipo de pago
+                            $('#status option[value=' + taxeType + ']').attr('selected',true).attr('disabled',false);
+                            $('#status').attr('disabled',false);
+                        }
                         $('select').formSelect();
                         M.updateTextFields();
                     }
@@ -58,6 +130,7 @@ $(document).ready(function() {
                             className: "red-gradient"
                         },
                     });
+                    console.log(err);
                 }
             });
         }
@@ -66,46 +139,49 @@ $(document).ready(function() {
     $('#fiscal_period').change(function () {
         var fiscalPeriod = $(this).val();
         var id = $('#publicity_id').val();
-
-        $.ajax({
-            type: "GET",
-            url: url + "publicity/ticket-office/verify/fiscal-period/" + id + "/" + fiscalPeriod,
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function (data) {
-                console.log(data);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                if (data) {
+        var type = $('#type').val();
+        if(type == 'annual') {
+            $.ajax({
+                type: "GET",
+                url: url + "publicity/ticket-office/verify/fiscal-period/" + id + "/" + fiscalPeriod,
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    if (data) {
+                        swal({
+                            title: "Información",
+                            text: 'Ya tiene un pago declarado para este periodo fiscal',
+                            icon: "info",
+                        });
+                        $('#general-next').attr('disabled','disabled');
+                        /*$('#fiscal_period option[value='+ fiscalPeriod +']').attr('selected',false).attr('disabled',true);
+                        $('#fiscal_period option[value=null]').attr('selected',true);
+                        $('select').formSelect();*/
+                    }else {
+                        $('#general-next').removeAttr('disabled', '');
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                     swal({
-                        title: "Información",
-                        text: 'Ya tiene un pago declarado para este periodo fiscal',
-                        icon: "info",
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
                     });
-                    $('#general-next').attr('disabled','disabled');
-                    /*$('#fiscal_period option[value='+ fiscalPeriod +']').attr('selected',false).attr('disabled',true);
-                    $('#fiscal_period option[value=null]').attr('selected',true);
-                    $('select').formSelect();*/
-                }else {
-                    $('#general-next').removeAttr('disabled', '');
                 }
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
-        });
+            });
+        }
     });
 
     $('#fiscal_credit').blur(function() {
@@ -317,6 +393,8 @@ $(document).ready(function() {
         var fiscal_period = $('#fiscal_period').val();
         var amount = $('#amount').val();
         var status = $('#status').val();
+        var type = $('#type').val();
+
         e.preventDefault();
         $.ajax({
             method: "POST",
@@ -329,6 +407,7 @@ $(document).ready(function() {
                 fiscal_period: fiscal_period,
                 amount: amount,
                 increment: increment,
+                type: type,
                 status: status
             },
             url: url + 'publicity/ticket-office/taxes/store',

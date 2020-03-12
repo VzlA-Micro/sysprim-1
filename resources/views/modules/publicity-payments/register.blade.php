@@ -72,7 +72,8 @@
             		<div class="card-content row">
             			@csrf
                         <input type="hidden" name="publicity_id" id="publicity_id" value="{{ $publicity->id }}">
-            			<div class="input-field col s8 m9">
+                        <input type="hidden" name="type" id="type" value="{{ $taxeType }}">
+                        <div class="input-field col s8 m9">
                             <i class="icon-confirmation_number prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id" disabled>
                                 <option value="null" disabled selected>Elija un tipo</option>

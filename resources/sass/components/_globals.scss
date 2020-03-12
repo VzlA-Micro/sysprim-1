@@ -12,6 +12,29 @@ $bnc-green: #0C894B;
 $bnc-yellow: #FE8100;
 $bnc-blue: #003C81;
 $peach: #F63;
+$breakpoint-laptop: 1600px;
+$breakpoint-sm-laptop: 1400px;
+$breakpoint-large-tablet: 922px;
+
+@media (max-width: $breakpoint-sm-laptop) {
+    .page-footer {
+        padding: .5rem;
+
+        .social {
+            & i {
+                font-size: 30px !important;
+            }
+        }
+
+        .row {
+            margin-bottom: .5rem;
+
+            span {
+                font-size: 10px;
+            }
+        }
+    }
+}
 
 body {
     display: flex;

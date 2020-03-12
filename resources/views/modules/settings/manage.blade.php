@@ -72,10 +72,18 @@
                 </a>
             </div>
              @endcan
+
+            <div class="col s6 m6 l3 animated bounceIn">
+                <a href="#" id="delete-temp" class="btn-app white orange-text text-darken-3">
+                    <i class="icon-delete"></i>
+                    <span class="truncate">Eliminar Temporales</span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    
+    <script src="{{ asset('js/data/home.js') }}"></script>
+
 @endsection
