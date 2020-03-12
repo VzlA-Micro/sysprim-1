@@ -323,6 +323,8 @@ $(document).ready(function () {
                             }).then(function (aceptar) {
                                 if (aceptar) {
                                     window.location.href = url + "taxpayers/register";
+                                }else{
+                                    $('#document_full').val('');
                                 }
                             })
 

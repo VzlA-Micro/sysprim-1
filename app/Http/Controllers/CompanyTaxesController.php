@@ -532,7 +532,7 @@ class CompanyTaxesController extends Controller
         });
 
 
-        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date_format);
+        return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra con éxito, fue enviado al correo ' . \Auth::user()->email . ', recuerda que esta planilla es valida solo por el dia ' . $date_format);
     }
 
 

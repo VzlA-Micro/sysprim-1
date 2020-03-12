@@ -383,7 +383,7 @@ class RateController extends Controller{
             $msj->attachData($pdf->output(), time() . "planilla.pdf");
         });
 
-        return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra con éxito,fue enviado al correo ' . \Auth::user()->email . ',recuerda que esta planilla es valida solo por el dia ' . $date);
+        return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra con éxito, fue enviado al correo ' . \Auth::user()->email . ', recuerda que esta planilla es valida solo por el dia ' . $date);
     }
 
 
