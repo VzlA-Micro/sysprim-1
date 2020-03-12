@@ -55,19 +55,19 @@
 										<span class="truncate black-text">Deposito Bancario</span>
 									</label>
 								</div>
-                                {{--<a href="{{url('payments/bdv/register/'.$taxes_id)}}">
+                                <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
                                     <div class="col s12 m6">
                                         <input type="radio" class="">
                                         <label class="btn-radio red">
                                             <i class="">
                                                 <img src="{{ asset('images/png/bdv.png') }}"
-                                                     style="height: 70px!important;width: 150px!important;"
+                                                     style="height: 70px!important;width: 200px!important;"
                                                      alt=" bank Image" width="100%" height="100%">
                                             </i>
-                                            <span class="truncate black-text">Pago Instantaneo (Banco Venezuela)</span>
+                                            <span class="truncate black-text"><b>Pago Instantaneo (Banco Venezuela)</b></span>
                                         </label>
                                     </div>
-                                </a>--}}
+                                </a>
                                 <a href="{{url('payments/petro/register/'.$taxes_id)}}">
                                     <div class="col s12 m6">
                                         <input type="radio" class="">

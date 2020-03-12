@@ -8,7 +8,7 @@ class Payment extends Model implements Auditable{
     use \OwenIt\Auditing\Auditable;
 
     protected $table='payments';
-    protected $appends = ['bankName','statusName'];
+    protected $appends = ['statusName'];
 
 
 
@@ -18,7 +18,7 @@ class Payment extends Model implements Auditable{
     }
 
 
-
+/*
     public function getBankNameAttribute(){
         if($this->bank==44){
             return $this->bankName="BOD";
@@ -32,7 +32,7 @@ class Payment extends Model implements Auditable{
             return  $this->bankName="BANESCO";
         }
     }
-
+*/
 
     public function getStatusNameAttribute(){
         if($this->status=='process'){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
 use App\Taxe;
 use Illuminate\Http\Request;
 use App\Helpers\IpgBdv;
@@ -37,7 +38,7 @@ class BdvController extends Controller
 
 
         $taxes = Taxe::findOrFail($request->input('id'));
-        $taxes_id=$request->input('id');
+        $taxes_id = $request->input('id');
         $Payment = new IpgBdvPaymentRequest();;
 
         $Payment->idLetter = $request->input('type_document'); //Letra de la cédula - V, E o P
@@ -46,21 +47,17 @@ class BdvController extends Controller
         $amount_format = str_replace('.', '', $request->input('amount'));
         $amount_format = str_replace(',', '.', $amount_format);
 
-
+        $number_payments = TaxesNumber::generateNumberPayment('PBV');
         $Payment->amount = 1; //Monto a combrar, DECIMAL
         $Payment->currency = 1; //Moneda del pago, 0 - Bolivar Fuerte, 1 - Dolar
-        $Payment->reference = TaxesNumber::generateNumberPayment('PBV'); //Código de referecia o factura
+        $Payment->reference = $number_payments; //Código de referecia o factura
         $Payment->title = "IMPUESTOS SEMAT IRIBARREN."; //Titulo para el pago, Ej: Servicio de Cable
         $Payment->description = "PAGO DE " . strtoupper($taxes->branch) . " " . $taxes->created_at->format('d-m-Y'); //Descripción del pago, Ej: Abono mes de marzo 2017
         $Payment->email = $request->input('email');
         $Payment->cellphone = $request->input('country_code') . $request->input('phone');
+        $Payment->urlToReturn = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/payments/bdv/verified/' . $taxes_id; //URL de retrono al finalizar el pago
 
-
-        $Payment->urlToReturn = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/payments/bdv/verified/{ID}/'.$taxes_id; //URL de retrono al finalizar el pago
-
-
-        $PaymentProcess = new IpgBdv ("73247489", "aj6lEoN6");//Instanciación de la API de pago con usuario y clave
-
+        $PaymentProcess = new IpgBdv ("00000000018", "M96wlqhC");//Instanciación de la API de pago con usuario y clave
         $response = $PaymentProcess->createPayment($Payment);
 
 
@@ -68,6 +65,15 @@ class BdvController extends Controller
         {
             if (strtolower(filter_input(INPUT_SERVER, 'HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest') { //si es ajax
                 // echo $response->urlPayment;
+                $payments_sysprim = new  Payment();
+                $payments_sysprim->code = $number_payments;
+                $payments_sysprim->amount = $amount_format;
+                $payments_sysprim->status = 'process-bdv';
+                $payments_sysprim->bank_name = 'BANCO VENEZUELA';
+                $payments_sysprim->phone = $request->input('country_code') . $request->input('phone');
+                $payments_sysprim->save();
+                $paymentsTaxes = $payments_sysprim->taxes()->attach(['taxe_id' => $taxes_id]);
+
                 return response()->json($response);
             } else { //si no es ajax
                 header("Location: " . $response->urlPayment); //W
@@ -77,20 +83,31 @@ class BdvController extends Controller
             return response()->json($response);
         }
 
-
     }
 
 
-    public function verifyTaxes($token,$id){
+    public function verifyTaxes($taxes_id){
+        $taxe = Taxe::findOrFail($taxes_id);
+        $token=$_GET['id'];
+        $firm=false;
 
-        $taxe = Taxe::findOrFail($id);
+        $PaymentProcess = new IpgBdv ("00000000018","M96wlqhC");//Instanciación de la API de pago con usuario y clave
+        $payments = $PaymentProcess->checkPayment($token);
 
-        if($taxe->status!='process'){
 
-            $firm=false;
+        if($payments->status&&$payments->success) {
+            $firm=true;
+            $payments_find=Payment::where('code',$payments->reference)->first();
+            $payments_find->status='verified';
+            $payments_find->update();
+            $taxe->status='verified';
+            $taxe->update();
+        }
+
+
+
 
             $pdf='';
-
 
             if ($taxe->branch == 'Act.Eco') {
 
@@ -116,7 +133,7 @@ class BdvController extends Controller
                             'fiscal_period' => $fiscal_period,
                             'ciuTaxes' => $ciuTaxes,
                             'companyTaxes' => $companyTaxes,
-                            'firm' => true
+                            'firm' => $firm
                         ]);
 
                         $userCompany = $company->users()->get();
@@ -139,7 +156,7 @@ class BdvController extends Controller
                     $pdf = \PDF::loadView('modules.acteco-definitive.receipt', [
                         'taxes' => $taxe,
                         'ciuTaxes' => $ciuTaxes,
-                        'firm' => true
+                        'firm' => $firm
                     ]);
 
                 }
@@ -175,7 +192,7 @@ class BdvController extends Controller
                     'vehicle' => $vehicleFind,
                     'user' => $user,
                     'diffYear' => $diffYear,
-                    'firm' => true
+                    'firm' => $firm
                 ]);
 
                 $for = $user[0]->email;
@@ -219,7 +236,7 @@ class BdvController extends Controller
                     'property' => $property,
                     'propertyTaxes' => $propertyTaxes,
                     'type' => $type,
-                    'firm' => true
+                    'firm' => $firm
                 ]);
 
 
@@ -295,7 +312,7 @@ class BdvController extends Controller
                     'publicity' => $publicity,
                     'publicityTaxes' => $publicityTaxes,
                     'type' => $type,
-                    'firm' => true
+                    'firm' => $firm
                 ]);
 
 
@@ -314,9 +331,6 @@ class BdvController extends Controller
 
 
             }
-
-
-        }
 
     }
 

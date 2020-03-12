@@ -23,15 +23,13 @@ $(document).ready(function() {
             console.log(resp.success);
 
                 if(resp.success){
-                    console.log('epa');
-                    $('#two').removeClass('disabled');
-                    $('#one').addClass('disabled');
-                    $('ul.tabs').tabs("select", "link-tab");
+                    window.location=resp.urlPayment;
                     $('#link').attr('href',resp.urlPayment);
+                }else{
+
+                    $('.message').removeClass('hide');
+                    $('#message').text(resp.responseMessage);
                 }
-
-
-                console.log(resp);
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
             },
