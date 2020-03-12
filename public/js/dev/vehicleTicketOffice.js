@@ -2399,6 +2399,12 @@ $('document').ready(function () {
         }
     });
 
+    $('#previous-details').click(function () {
+        $('#two').addClass('disabled');
+        $('#one').removeClass('disabled');
+        $('ul.tabs').tabs("select", "general-tab");
+    });
+
 
 });
 

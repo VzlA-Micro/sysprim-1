@@ -271,6 +271,8 @@ class DeclarationVehicle
         $now_pay = Carbon::now();//fecha de pago
         $mount_pay = null;
 
+
+
         if ($temporal) {
             $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle->id)
                 ->where('status', '=', 'Temporal')
@@ -278,7 +280,6 @@ class DeclarationVehicle
 
             if (!$vehicleTaxes->isEmpty()) {
                 foreach ($vehicleTaxes as $tax) {
-
                     if ($tax->status !== 'cancel') {
                         $taxe = Taxe::find($tax->taxe_id);
                         $taxe->delete();
@@ -286,6 +287,7 @@ class DeclarationVehicle
                 }
             }
         }
+        return $taxe->delete();
     }
 
     public static function dayMora($year)

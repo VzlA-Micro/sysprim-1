@@ -26,6 +26,8 @@ use App\TimelineAlicuota;
 use App\TimelineCatastralBuild;
 use App\TimelineCatastralTerrain;
 use App\Prologue;
+use App\Taxe;
+
 //////////////////////////////////////////////////////////
 ///
 ///       Hacer o acomodar valores de la unidad tributaria, filtrar por fechas, tomar la uniodad tributaria actual
@@ -65,63 +67,60 @@ class Declaration
         $alicuota = Alicuota::where('id', $property->type_inmueble_id)->first();
         $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
         $propertyBuildingArray = [];
-        foreach($propertyBuildings as $propertyBuilding) {
+        foreach ($propertyBuildings as $propertyBuilding) {
             $propertyBuildingArray[] = $propertyBuilding->value_catas_const_id;
         }
 
         $cadastralGround = CatastralTerreno::where('id', $property->value_cadastral_ground_id)->first();
         //// Obteniendo valores de los timelines
-        $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id',$alicuota->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
+        $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id', $alicuota->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
         if (is_null($timelineAlicuota)) {
-            $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id',$alicuota->id)->orderBy('id', 'desc')->take(1)->first();
+            $timelineAlicuota = TimelineAlicuota::where('alicuota_inmueble_id', $alicuota->id)->orderBy('id', 'desc')->take(1)->first();
         }
 
-        $timelineCatastralBuildings = TimelineCatastralBuild::whereIn('value_catastral_construccion_id',$propertyBuildingArray)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->get();
+        $timelineCatastralBuildings = TimelineCatastralBuild::whereIn('value_catastral_construccion_id', $propertyBuildingArray)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->get();
         if (is_null($timelineCatastralBuildings)) {
-            $timelineCatastralBuildings = TimelineCatastralBuild::whereIn('value_catastral_construccion_id',$propertyBuildingArray)->orderBy('id', 'desc')->get();
+            $timelineCatastralBuildings = TimelineCatastralBuild::whereIn('value_catastral_construccion_id', $propertyBuildingArray)->orderBy('id', 'desc')->get();
         }
 
-        $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id',$cadastralGround->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
+        $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id', $cadastralGround->id)->whereYear('since', '<=', $fiscalPeriod->format('Y'))->whereYear('to', '>=', $fiscalPeriod->format('Y'))->first();
         if (is_null($timelineCatastralTerrain)) {
-            $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id',$cadastralGround->id)->orderBy('id', 'desc')->take(1)->first();
+            $timelineCatastralTerrain = TimelineCatastralTerrain::where('value_catastral_terreno_id', $cadastralGround->id)->orderBy('id', 'desc')->take(1)->first();
         }
         ////////////////////////////////////////////////////
-        
-        if($currentDate->year == $fiscalPeriod->year) {
+
+        if ($currentDate->year == $fiscalPeriod->year) {
             $prologueDay = CheckCollectionDay::verify('Inm.Urbanos.Desc');
 //            dd($prologueDay);
-            if (/*intVal($currentDate->month) == 01*/!$prologueDay['mora']) {
+            if (/*intVal($currentDate->month) == 01*/
+            !$prologueDay['mora']) {
                 $recharge = 0;
                 $interest = 0;
                 $descuento = 0.20;
 
                 // Calculo para el valor del terreno
-                if($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
-                    if($property->area_ground > 0) {
-                        $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                    }
-                    else {
+                if ($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
+                    if ($property->area_ground > 0) {
+                        $totalground = (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                    } else {
                         $totalground = 0;
                     }
-                }
-                elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
-                    if($property->area_ground > 0) {
-                        $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                    }
-                    else {
+                } elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
+                    if ($property->area_ground > 0) {
+                        $totalground = (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                    } else {
                         $totalground = 0;
                     }
                 }
                 //////////////////////////////////////////////////////////////////////////////////////////
                 // Calculo del total de la construccion por cada uno de los tipos de construcciones
-                if($property->area_build > 0) {
+                if ($property->area_build > 0) {
                     $acum = 0;
                     foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
                         $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                     }
                     $totalbuild = $acum;
-                }
-                else {
+                } else {
                     $totalbuild = 0;
                 }
                 //////////////////////////////////////////////////////////////////////////////////////////
@@ -134,8 +133,7 @@ class Declaration
                 }
 //                $porcentaje = $baseImponible/* * $timelineAlicuota->value*/; // Valor de alicuota
                 $total = $baseImponible - $discount; // Total del impuesto
-            }
-            /*elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
+            } /*elseif(intVal($currentDate->month) == 02 || intVal($currentDate->month) == 03) {
 
                 $recharge = 0;
                 $interest = 0;
@@ -183,32 +181,28 @@ class Declaration
 
 
                 // Calculo para el valor del terreno
-                if($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
-                    if($property->area_ground > 0) {
-                        $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                    }
-                    else {
+                if ($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
+                    if ($property->area_ground > 0) {
+                        $totalground = (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                    } else {
                         $totalground = 0;
                     }
-                }
-                elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
-                    if($property->area_ground > 0) {
-                        $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                    }
-                    else {
+                } elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
+                    if ($property->area_ground > 0) {
+                        $totalground = (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                    } else {
                         $totalground = 0;
                     }
                 }
                 //////////////////////////////////////////////////////////////////////////////////////////
                 // Calculo del total de la construccion por cada uno de los tipos de construcciones
-                if($property->area_build > 0) {
+                if ($property->area_build > 0) {
                     $acum = 0;
                     foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
                         $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                     }
                     $totalbuild = $acum;
-                }
-                else {
+                } else {
                     $totalbuild = 0;
                 }
                 //////////////////////////////////////////////////////////////////////////////////////////
@@ -230,38 +224,33 @@ class Declaration
                 $total = $baseImponible + $interest + $recharge;
             }
 
-        }
-        else { // SI el periodo fiscal es diferente del año actual
+        } else { // SI el periodo fiscal es diferente del año actual
             $discount = 0;
             $verifyPrologue = CheckCollectionDay::verify('Inm.Urbanos', $fiscal_period);
 
             // Calculo para el valor del terreno
-            if($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
-                if($property->area_ground > 0) {
-                    $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                }
-                else {
+            if ($property->type_inmueble_id == 2 || $property->type_inmueble_id == 3) {
+                if ($property->area_ground > 0) {
+                    $totalground = (($property->area_ground * $timelineCatastralTerrain->value_empty_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                } else {
                     $totalground = 0;
                 }
-            }
-            elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
-                if($property->area_ground > 0) {
-                    $totalground =  (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) *  $taxUnitPrice->value) * $timelineAlicuota->value;
-                }
-                else {
+            } elseif ($property->type_inmueble_id == 1 || $property->type_inmueble_id == 4) {
+                if ($property->area_ground > 0) {
+                    $totalground = (($property->area_ground * $timelineCatastralTerrain->value_built_terrain) * $taxUnitPrice->value) * $timelineAlicuota->value;
+                } else {
                     $totalground = 0;
                 }
             }
             //////////////////////////////////////////////////////////////////////////////////////////
             // Calculo del total de la construccion por cada uno de los tipos de construcciones
-            if($property->area_build > 0) {
+            if ($property->area_build > 0) {
                 $acum = 0;
                 foreach ($timelineCatastralBuildings as $timelineCatastralBuilding) {
                     $acum += ($property->area_build * $timelineCatastralBuilding->value * $taxUnitPrice->value) * $timelineAlicuota->value;
                 }
                 $totalbuild = $acum;
-            }
-            else {
+            } else {
                 $totalbuild = 0;
             }
             //////////////////////////////////////////////////////////////////////////////////////////
@@ -340,5 +329,17 @@ class Declaration
     // else {
     //     $totalbuild = 0;
     // }
+
+    public static function verify($id, $temporal = true)
+    {
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        if ($temporal){
+            $taxe = Taxe::find($id);
+            $taxe->delete();
+        }
+
+        return 0;
+    }
 }
 

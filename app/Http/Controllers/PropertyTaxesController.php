@@ -101,12 +101,15 @@ class PropertyTaxesController extends Controller
 //        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
+
+
+
         if(!empty($taxes)) {
             foreach ($taxes as $tax) {
                 if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
                     $statusTax = 'verified';
                 }else if($tax->status === 'temporal'){
-//                $tax->delete();
+                    Declaration::verify($tax->id);
                     $statusTax = 'new';
                 }else if($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y') ){
                     $statusTax = 'process';
