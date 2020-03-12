@@ -904,82 +904,161 @@ $('document').ready(function () {
     });
 
     $('#data1-next').click(function () {
-        $.ajax({
-            method: 'get',
-            url: url + "/ticketOffice/publicity/getTypeGroup/" + valType,
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                var i = 0;
-
-                $('#there').removeClass('disabled');
-                $('#two').addClass('disabled');
-                $('#user-tab-one').addClass('disabled');
-
-
-                $('ul.tabs').tabs("select", "publicity-tab");
-
-                form(valType,data);
-
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            }
-        });
-    });
-
-    $('#register').submit(function (e) {
-        if ($('#advertising_type_id').val() !== null && $('#state_location').val() !== null && $('#licor').val() !== null) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            // var image = $('#image')[0].files[0]; // Getting file input data
-            // formData.append('image',image);
+        if (!checkType) {
             $.ajax({
-                url: url + "/ticketOffice/publicity/save",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: formData,
-                method: "POST",
+                method: 'get',
+                url: url + "/ticketOffice/publicity/getTypeGroup/" + valType,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
+
                 },
-                success: function (resp) {
-                    console.log(resp);
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Se ha registrado la publicidad exitosamente.",
-                        icon: "success",
-                        button: {
-                            text: "Esta bien",
-                            className: "green-gradient"
-                        }
-                    }).then(function (accept) {
-                        window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
-                    });
-                },
-                error: function (err) {
-                    console.log(err);
+                success: function (data) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
+                    var i = 0;
+
+                    $('#there').removeClass('disabled');
+                    $('#two').addClass('disabled');
+                    $('#user-tab-one').addClass('disabled');
+
+
+                    $('ul.tabs').tabs("select", "publicity-tab");
+
+                    form(valType, data);
+
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 }
             });
+        } else {
+            swal({
+                title: "Información",
+                text: "Debe selecionar un tipo de publicidad.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "green-gradient"
+                }
+            });
+        }
+    });
+
+    $('#register').submit(function (e) {
+        e.preventDefault();
+        if ($('#advertising_type_id').val() !== null && $('#state_location').val() !== null && $('#licor').val() !== null) {
+
+            if ($('#name').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (NOMBRE).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#name').focus();
+                });
+            }
+            else if ($('#width').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (ANCHO).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#width').focus();
+                });
+            }
+            else if ($('#height').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (ALTO).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#height').focus();
+                });
+            } else if ($('#date_start').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar una fecha de inicio.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#date_start').focus();
+                });
+            } else if ($('#date_end').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar una fecha de fin.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#date_end').focus();
+                });
+            }
+            else {
+
+                var formData = new FormData(this);
+                // var image = $('#image')[0].files[0]; // Getting file input data
+                // formData.append('image',image);
+                $.ajax({
+                    url: url + "/ticketOffice/publicity/save",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    method: "POST",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Se ha registrado la publicidad exitosamente.",
+                            icon: "success",
+                            button: {
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            }
+                        }).then(function (accept) {
+                            window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                });
+            }
         } else {
 
 
@@ -1403,10 +1482,10 @@ $('document').ready(function () {
 
 });
 
-function form(valType,data) {
+function form(valType, data) {
     var template = '';
     var templateForm = '';
-    var i=0;
+    var i = 0;
 
 
     if (valType == 1) {
@@ -1711,29 +1790,29 @@ function form(valType,data) {
         }
     }
 
-    $('.validate.number-only').keyup(function (){
+    $('.validate.number-only').keyup(function () {
         this.value = (this.value + '').replace(/[^.,0-9]/g, '');
     });
 
-    $('.validate.number-and-capital-letter-only').keyup(function (){
+    $('.validate.number-and-capital-letter-only').keyup(function () {
         this.value = (this.value + '').replace(/[^A-Z0-9]/g, '');
     });
 
-    $('.validate.number-only-float').keyup(function (){
+    $('.validate.number-only-float').keyup(function () {
         this.value = (this.value + '').replace(/[^0-9.]/g, '');
     });
 
-    $('.validate.number-date').keyup(function (){
+    $('.validate.number-date').keyup(function () {
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
 
-    $('.validate.code-only').keyup(function (){
+    $('.validate.code-only').keyup(function () {
         this.value = (this.value + '').replace(/[^A-Z0-9-]/g, '');
 
     });
 
     $('.only-number-positive').change(function () {
-        if($(this).val()<1) {
+        if ($(this).val() < 1) {
             swal({
                 title: "Información",
                 text: "El campo no debe ser mayor o igual 1.",
@@ -1747,11 +1826,11 @@ function form(valType,data) {
         }
     });
 
-    $('.validate.text-validate').keyup(function (){
+    $('.validate.text-validate').keyup(function () {
         this.value = (this.value + '').replace(/[^a-zA-Z ]/g, '');
     });
 
-    $('.validate.serial-vehicle').keyup(function (){
+    $('.validate.serial-vehicle').keyup(function () {
         this.value = (this.value + '').replace(/[^a-zA-Z0-9-]/g, '');
 
     });
