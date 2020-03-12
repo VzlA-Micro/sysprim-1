@@ -29,6 +29,8 @@
                             <input type="hidden" name="publicity_id" id="publicity_id">
                             <input type="hidden" name="user_id" id="user_id">
                             <input type="hidden" name="taxe_id" id="taxe_id">
+                            <input type="hidden" name="type" id="type">
+
                             <div class="input-field col s12">
                                 <i class="icon-confirmation_number prefix"></i>
                                 <input type="text" name="code" id="code" maxlength="12" class="validate code-only">
@@ -64,16 +66,11 @@
                                 <input type="text" name="person" id="person" value="" readonly>
                                 <label for="person">Usuario Web</label>
                             </div>
-                            {{--<div class="input-field col s12 m6">--}}
-                                {{--<i class="icon-directions prefix"></i>--}}
-                                {{--<textarea name="address" id="address" cols="30" rows="12" class="materialize-textarea" required readonly></textarea>--}}
-                                {{--<label for="address">Dirección</label>--}}
-                            {{--</div>--}}
                             @php
                                 $cont=(int)date('Y');
                                 $date=2019;
                             @endphp
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6" id="fiscal_period_div">
                                 <i class="icon-date_range prefix"></i>
                                 <select id="fiscal_period" name="fiscal_period" disabled>
                                     <option value="null" disabled selected>Seleccione un año...</option>
@@ -83,11 +80,33 @@
                                 </select>
                                 <label>Periodo Fiscal</label>
                             </div>
+                            {{-- @php
+                                $month = (int)date('n');
+                                $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                                // $date=2019;
+                                // echo $month; die();
+                            @endphp
+
+                            <div class="input-field col s12 m6" id="month_div">
+                                <i class="icon-date_range prefix"></i>
+                                <select id="month" name="month" disabled>
+                                    
+                                    
+                                </select>
+                                <label>Mes de Pago</label>
+                            </div> --}}
+                            <!-- <div class="col s12 m6 hide" id="month_div">
+                                <i class="icon-date_range prefix"></i>
+                                <input type="hidden" id="month" name="month" value="">
+                                <label>Mes de Pago</label>
+                            </div> -->
                             <div class="input-field col s12 m6">
                                 <i class="icon-supervisor_account prefix"></i>
                                 <select name="status" id="status" disabled required>
-                                    <option value="null" disabled>Selecciona la Forma de Pago</option>
-                                    <option value="full" selected>Pago Completo Anual</option>
+                                    <option value="null" disabled selected>Selecciona la Forma de Pago</option>
+                                    <option value="annual">Pago Completo Anual</option>
+                                    <option value="monthly">Pago Completo Mensual</option>
+                                    <option value="daily">Pago Completo Diario</option>
                                     {{--<option value="trimestral">Pago Trimestral</option>--}}
                                 </select>
                                 <label>Forma de Pago</label>
@@ -107,12 +126,13 @@
                         <div class="card-content row">
                             {{--<input type="hidden" name="property_id" id="property_id" value="{{ $property[0]->id }}">--}}
                             <input type="hidden" name="owner_id" id="owner_id" value="">
+                            <!-- <input type="hidden" name="type" id="type" value=""> -->
                             {{--<input type="hidden" name="owner_type" id="owner_type" value="{{ $owner_type }}">--}}
-                            {{--<input type="hidden" name="status" id="status" value="{{ $status }}">--}}
+                            {{-- <input type="hidden" name="status" id="status" value="{{ $status }}"> --}}
                             <input type="hidden" name="status" id="statusTax" value="">
                             <div class="input-field col s8 m9">
                                 <i class="icon-confirmation_number prefix"></i>
-                                <select name="advertising_type_id" id="advertising_type_id" disabled>
+                                <select name="advertising_type_id" id="advertising_type_id_2" disabled>
                                     <option value="null" disabled>Elija un tipo</option>
                                     @foreach($advertisingTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -199,6 +219,11 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/dropdown-datepicker.min.js') }}"></script> -->
+
+    <script src="{{ asset('js/combodate.js') }}"></script>
     <script src="{{ asset('js/validations.js') }}"></script>
+
     <script src="{{ asset('js/data/publicity-ticket-office-payments.js') }}"></script>
 @endsection
