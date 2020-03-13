@@ -150,10 +150,22 @@ class ImagesController extends Controller
     public function destroy($id)
     {
         $image = Images::find($id);
-        Storage::disk('images')->delete($image->path);
 
-        $image->delete();
+        $imagesEnabled = Images::where('status', 'enabled')->get();
+        $imagesNumber = count($imagesEnabled);
 
-        return redirect()->route('image.read');
+        if($imagesNumber == 1 && $image->status == "enabled") {
+            return redirect()->route('image.read')
+                ->with(['message' => 'No puedes eliminar la ultima imagen.']);
+        }else{
+
+            Storage::disk('images')->delete($image->path);
+            $image->delete();
+
+            return redirect()->route('image.read');
+
+        }
+
+
     }
 }
