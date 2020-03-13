@@ -171,8 +171,9 @@
         <td style="width: 10%;font-size: 10px;!important;"> {{$taxes->branch}}</td>
         <td style="width: 20%;font-size: 10px;!important">{{$taxes->fiscal_period." - ".$taxes->fiscal_period_end}}</td>
         <td style="width: 15%;font-size: 10px; !important;">0</td>
-        <td style="width: 15%;font-size: 10px;!important">0</td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible, 2, ',', '.')}}</td>
+        <td style="width: 15%;font-size: 10px;!important">0
+        @php $conDiscount=$vehicleTaxes[0]->pivot->base_imponible;@endphp
+        <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
 
     </tr>
     @if($taxes->type==="Anual")
@@ -183,7 +184,8 @@
                 <td style="width: 20%;font-size: 10px;!important"></td>
                 <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount,2)}}</td>
+                @php $conDiscount=$vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount,2)}}</td>
             </tr>
         @endif
 
@@ -192,9 +194,10 @@
                 <td style="width: 20%;font-size: 10px !important;">Credito fiscal</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($vehicleTaxes[0]->pivot->fiscal_credits, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount-=$vehicleTaxes[0]->pivot->fiscal_credits;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
         @if($vehicleTaxes[0]->pivot->recharge > 0)
@@ -202,9 +205,10 @@
                 <td style="width: 20%;font-size: 10px !important;">recargo (20%)</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount+=$vehicleTaxes[0]->pivot->recharge;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
         @if($vehicleTaxes[0]->pivot->recharge_mora > 0)
@@ -212,9 +216,10 @@
                 <td style="width: 20%;font-size: 10px !important;">interés por mora</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge_mora, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge+$vehicleTaxes[0]->pivot->recharge_mora-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount+=$vehicleTaxes[0]->pivot->recharge_mora;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
 
@@ -419,9 +424,15 @@ $date = '31/12/' . date('Y');
         @else
 
             <tr>
-                <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;">
+                <td style="width: 20%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/sysprim.png', .18)->size(170)->generate(
+                      "CODIGO:".$taxes->code."\n".
+                      "PERIODO FISCAL:".$taxes->fiscal_period." - ".$taxes->fiscal_period_end."\n".
+                      "RAMO:".$taxes->branch."\n".
+                      "ESTADO:".$taxes->statusName."\n".
+                      "MONTO:".number_format($taxes->amount,2)."\n".
+                      'FECHA DE PAGO:'.$taxes->created_at."\n")) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px; height: 180px !important;width: 180px !important;" alt="Image" >
                 </td>
             </tr>
 
@@ -434,6 +445,15 @@ $date = '31/12/' . date('Y');
                         <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="">
                     @endif
+                @elseif(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/isotipo.png', .2)->size(170)->generate(
+                    'CODIGO:'.$taxes->payments[0]->code."\n".
+                    'REF:'.$taxes->payments[0]->ref."\n".
+                    'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
+                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+                    'TEL:'.$taxes->payments[0]->phone."\n".
+                    'FECHA:'.$taxes->payments[0]->created_at."\n"
+                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
                 @endif
             </td>
         </tr>

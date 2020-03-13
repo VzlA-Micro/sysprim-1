@@ -14,6 +14,7 @@ use App\Tributo;
 use App\BankRate;
 use App\Taxe;
 use Carbon\Carbon;
+use App\Accessory;
 
 
 class DeclarationPublicity
@@ -26,6 +27,8 @@ class DeclarationPublicity
         $currentYear = Carbon::now()->format('Y');
         $taxUnit = Tributo::orderBy('id', 'desc')->take(1)->get();
         $bankRate = BankRate::select('value_rate')->latest()->first();
+        $taxeType = '';
+
 
 //        $advertisingTypes = AdvertisingType::all();
 //        $interest = 0;
@@ -36,6 +39,8 @@ class DeclarationPublicity
         $taxUnitPrice = Tributo::orderBy('id', 'desc')->take(1)->get();
 //        dd($taxUnitPrice);
         if($type == 1) { // Si es publicidad Eventual
+            $taxeType = 'daily';
+            $publicityAccessory = Accessory::where('id',3)->first();
             $dateStart = Carbon::parse($publicity->date_start);
             $dateEnd = Carbon::parse($publicity->date_end);
             $daysDiff = $dateEnd->diffInDays($dateStart); // Calcula la cantidad de dias que tendra la publicidad
@@ -43,10 +48,12 @@ class DeclarationPublicity
                 $daysDiff = 1;
             }
             $linealMeters = $publicity->width + $publicity->height; // Calcula los metros lineales (Se suman)
-            $baseImponible = $taxUnitPrice[0]->value * ((($linealMeters * $publicity->advertisingType->value) * $daysDiff) * $publicity->quantity); // Calcula la Base Imponible a paga
+            $pointsValue = $publicityAccessory->value * $publicity->quantity;
+            $baseImponible = $taxUnitPrice[0]->value * ((($linealMeters * $publicity->advertisingType->value) * $daysDiff) + $pointsValue); // Calcula la Base Imponible a paga
 //            dd($baseImponible);
         }
         elseif($type == 2 || $type == 3 || $type == 4 || $type == 5 || $type == 6 || $type == 7 || $type == 12 || $type == 14) {
+            $taxeType = 'daily';
             if($type == 2 || $type == 3 || $type == 4 || $type == 5 || $type == 6) {
                 if($publicity->quantity <= 500) {
                     $baseImponible = $taxUnitPrice[0]->value * $publicity->advertisingType->value;
@@ -76,6 +83,12 @@ class DeclarationPublicity
 //            dd($baseImponible);
         }
         elseif ($type == 8 || $type == 9 || $type == 13) {
+            if($type == 8 || $type == 9) {
+                $taxeType = 'daily';
+            }
+            else {
+                $taxeType = 'monthly';
+            }
             $dateStart = Carbon::parse($publicity->date_start);
             $dateEnd = Carbon::parse($publicity->date_end);
             $daysDiff = $dateEnd->diffInDays($dateStart); // Calcula la cantidad de dias que tendra la publicidad
@@ -87,6 +100,7 @@ class DeclarationPublicity
 
         }
         elseif ($type == 10 || $type == 11 || $type == 16 || $type == 18 || $type == 19) {
+            $taxeType = 'annual';
             $squareMeters = $publicity->width * $publicity->height;
             if($squareMeters == 0) {
                 $squareMeters = 1;
@@ -96,6 +110,7 @@ class DeclarationPublicity
 
         }
         elseif ($type == 17 || $type == 20) {
+            $taxeType = 'annual';
             $squareMeters = $publicity->width * $publicity->height;
             if($squareMeters == 0) {
                 $squareMeters = 1;
@@ -112,13 +127,17 @@ class DeclarationPublicity
 
         }
         if($publicity->state_location == 'SI') {
-            $increment = $taxUnitPrice[0]->value * 5000;
+            $publicityAccessory = Accessory::where('id',1)->first();
+            $increment = $taxUnitPrice[0]->value * $publicityAccessory->value;
         }
         elseif($publicity->licor == 'SI') {
-            $increment = $taxUnitPrice[0]->value * 5000;
+            $publicityAccessory = Accessory::where('id',2)->first();
+            $increment = $taxUnitPrice[0]->value * $publicityAccessory->value;
         }
         elseif($publicity->licor == 'SI' && $publicity->state_location == 'SI') {
-            $increment = $taxUnitPrice[0]->value * (5000 * 2);
+            $publicityStateLocation = Accessory::where('id',1)->first();
+            $publicityLicor = Accessory::where('id',2)->first();
+            $increment = $taxUnitPrice[0]->value * ($publicityStateLocation->value + $publicityLicor->value);
         }
         else {
             $increment = 0;
@@ -131,8 +150,21 @@ class DeclarationPublicity
             'baseImponible' => $baseImponible,
             'daysDiff' => $daysDiff,
             'total' => $total,
-            'increment' => $increment
+            'increment' => $increment,
+            'taxeType' => $taxeType
         );
         return $amounts;
+    }
+
+    public static function verify($id, $temporal = true)
+    {
+        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
+        setlocale(LC_ALL, "es_ES");//establecer idioma local
+        if ($temporal){
+            $taxe = Taxe::find($id);
+            $taxe->delete();
+        }
+
+        return 0;
     }
 }

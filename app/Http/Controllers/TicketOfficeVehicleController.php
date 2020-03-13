@@ -907,8 +907,7 @@ class TicketOfficeVehicleController extends Controller
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
-                    DeclarationVehicle::verify($tax->id);
-//                  $tax->delete();
+                    DeclarationVehicle::verify($idVehicle);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
                     $statusTax = 'process';
@@ -975,13 +974,36 @@ class TicketOfficeVehicleController extends Controller
             }
         }*/
 
+        if ($statusTax === 'process'){
+            return view('modules.taxes.detailsVehicle', array(
+                'vehicle' => $vehicle,
+                'taxes' => $taxes,
+                'grossTaxes' => $grossTaxes,
+                'paymentFractional' => $paymentFractional,
+                'period' => $period_fiscal,
+                'valueDiscount' => $valueDiscount,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'previousDebt' => $previousDebt,
+                'total' => $total,
+                'vehicleTaxes' => false,
+                'valueMora' => $valueMora,
+                'totalAux' => $totalAux,
+                'statusTax' => $statusTax
+            ));
+        }
+
         $taxes = new Taxe();
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxes->fiscal_period = $period_fiscal_begin;
         $taxes->fiscal_period_end = $period_fiscal_end;
+        $taxes->status = 'Temporal';
         $taxes->type = $type;
-        $taxes->save();
+        $taxes->amount = $totalAux;
+        $taxes->status = 'temporal';
+        $taxes->branch = 'Pat.Veh';
 
+        $taxes->save();
         $taxesId = $taxes->id;
 
         $vehicleTaxes = new VehiclesTaxe();
@@ -990,6 +1012,12 @@ class TicketOfficeVehicleController extends Controller
         $vehicleTaxes->status = 'Temporal';
         $vehicleTaxes->type_payments = $declaration['optionPayment'];
         $vehicleTaxes->fiscal_credits = 0;
+
+        $vehicleTaxes->recharge = $declaration['recharge'];
+        $vehicleTaxes->recharge_mora = $declaration['valueMora'];
+        $vehicleTaxes->base_imponible = $declaration['grossTaxes'];
+        $vehicleTaxes->previous_debt = $declaration['previousDebt'];
+        $vehicleTaxes->discount = $declaration['valueDiscount'];
         $vehicleTaxes->save();
 
 
@@ -1131,20 +1159,20 @@ class TicketOfficeVehicleController extends Controller
 
         $taxes->update();
 
-        $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
+        //$idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
 
-        $vehicleTaxes = VehiclesTaxe::findOrFail($idVehicleTaxes[0]->id);
+        //$vehicleTaxes = VehiclesTaxe::findOrFail($idVehicleTaxes[0]->id);
 
-        $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
-        $vehicleTaxes->recharge = $recharge_format;
-        $vehicleTaxes->recharge_mora = $rechargeMora_format;
-        $vehicleTaxes->base_imponible = $base_format;
+        //$vehicleTaxes->fiscal_credits = $fiscalCredits_format;
+        //$vehicleTaxes->recharge = $recharge_format;
+        //$vehicleTaxes->recharge_mora = $rechargeMora_format;
+       // $vehicleTaxes->base_imponible = $base_format;
 
-        $vehicleTaxes->previous_debt = $previousDebt_format;
+        //$vehicleTaxes->previous_debt = $previousDebt_format;
 
-        $vehicleTaxes->discount = $discount_format;
+        //$vehicleTaxes->discount = $discount_format;
 
-        $vehicleTaxes->update();
+        //$vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
@@ -1367,6 +1395,7 @@ class TicketOfficeVehicleController extends Controller
         $date = Carbon::now();
         $vehicleTaxe = Vehicle::find($id);
         $tax = $vehicleTaxe->taxesVehicle()->whereDate('fiscal_period', $year)->first();
+        //dd($vehicleTaxe->taxesVehicle());
         $statusTax = false;
         if (is_null($tax)) {
             $statusTax = false;

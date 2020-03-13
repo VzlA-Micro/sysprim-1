@@ -1,4 +1,3 @@
-
 var url = localStorage.getItem('url');
 var updateType = false;
 
@@ -37,12 +36,12 @@ $('document').ready(function () {
         }
     });
 
-    $('#form-1').hide();
+    /*$('#form-1').hide();
     $('#form-2').hide();
     $('#form-3').hide();
     $('#form-4').hide();
     $('#form-5').hide();
-
+*/
 
     $('#model').prop('disabled', true);
     $('select').formSelect();
@@ -89,7 +88,7 @@ $('document').ready(function () {
 
 
     });
-    
+
 
     $('#status_view').change(function () {
 
@@ -161,8 +160,8 @@ $('document').ready(function () {
                 /*generate correo */
                 $('#generate-correo').removeClass('hide');
                 $('#generate-correo').click(function () {
-                    if($('#type_document').val() !== '' && $('#document').val() !== '') {
-                        if($('#user_name').val() !== '' && $('#surname').val()) {
+                    if ($('#type_document').val() !== '' && $('#document').val() !== '') {
+                        if ($('#user_name').val() !== '' && $('#surname').val()) {
                             swal({
                                 title: "Información",
                                 text: "¿Está seguro que desea generar un correo aleatorio?",
@@ -183,10 +182,10 @@ $('document').ready(function () {
                                     }
                                 }
                             }).then(confirm => {
-                                if(confirm) {
+                                if (confirm) {
                                     // if($('#user_name').val()!==''&&$('#surname').val()){
-                                    var number_rando=getRandomArbitrary(1,999);
-                                    var email=$('#user_name').val().substr(0,4).toLocaleLowerCase()+number_rando+'@sincorreo.com';
+                                    var number_rando = getRandomArbitrary(1, 999);
+                                    var email = $('#user_name').val().substr(0, 4).toLocaleLowerCase() + number_rando + '@sincorreo.com';
                                     $('#email').val(email);
                                     M.updateTextFields();
                                     // }
@@ -245,7 +244,7 @@ $('document').ready(function () {
                         var email = $('#email').val();
                         $.ajax({
                             method: "GET",
-                            url: url+"rate/ticket-office/verify-email/"+email,
+                            url: url + "rate/ticket-office/verify-email/" + email,
                             beforeSend: function () {
                                 $("#preloader").fadeIn('fast');
                                 $("#preloader-overlay").fadeIn('fast');
@@ -253,13 +252,13 @@ $('document').ready(function () {
                             success: function (response) {
                                 $("#preloader").fadeOut('fast');
                                 $("#preloader-overlay").fadeOut('fast');
-            
+
                                 if (response.status === 'error') {
                                     swal({
                                         title: "¡Oh no!",
                                         text: response.message,
                                         icon: "error",
-                                        button:{
+                                        button: {
                                             text: "Esta bien",
                                             className: "blue-gradient"
                                         },
@@ -274,12 +273,12 @@ $('document').ready(function () {
                                     title: "¡Oh no!",
                                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                                     icon: "error",
-                                    button:{
+                                    button: {
                                         text: "Entendido",
                                         className: "blue-gradient"
                                     },
                                 });
-            
+
                             }
                         });
                     }
@@ -375,7 +374,7 @@ $('document').ready(function () {
                             $('#address_full').val(user.address);
                             $('#address_full').attr('readonly', '');
                             $('#email_full').val(user.email);
-                            $('#email_full').attr('readonly','');
+                            $('#email_full').attr('readonly', '');
 
 
                         } else if (response.type == 'company') {
@@ -452,14 +451,14 @@ $('document').ready(function () {
 
         /* person foreign*/
 
-        if(type_document==='E'){
+        if (type_document === 'E') {
             $('.name-div').removeClass('m6');
             $('.name-div').addClass('m3');
             $('.surname-div').removeClass('hide');
             /*foreign new*/
             $('#surname-div').addClass('rate');
-            $('#surname-div').attr('required','required');
-        }else{
+            $('#surname-div').attr('required', 'required');
+        } else {
             $('.name-div').removeClass('m3');
             $('.name-div').addClass('m6');
             $('.surname-div').addClass('hide');
@@ -481,10 +480,10 @@ $('document').ready(function () {
                             var user = response.user.response;
 
                             /* person foreign*/
-                            if(type_document==='E'){
-                                $('#name').prop('readonly',false);
-                                $('#surname').prop('readonly',false);
-                                $('#email').prop('readonly',false);
+                            if (type_document === 'E') {
+                                $('#name').prop('readonly', false);
+                                $('#surname').prop('readonly', false);
+                                $('#email').prop('readonly', false);
 
                                 $('.name-div').removeClass('m6');
                                 $('.name-div').addClass('m3');
@@ -501,7 +500,7 @@ $('document').ready(function () {
 
                             }
                             else {
-                                if(user.inscrito==false){
+                                if (user.inscrito == false) {
                                     swal({
                                         title: "Lo sentimos",
                                         text: "Su cédula no se encuentra registrada en el CNE.",
@@ -515,7 +514,7 @@ $('document').ready(function () {
                                         $('#document').focus();
                                     });
 
-                                }else{
+                                } else {
                                     $('#name').val(user.nombres + ' ' + user.apellidos);
                                     $('#name').attr('readonly', '');
                                     $('#surname').val(user.apellidos);
@@ -538,7 +537,7 @@ $('document').ready(function () {
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
                             $('#email').val(user.email);
-                            $('#email').attr('readonly','');
+                            $('#email').attr('readonly', '');
 
 
                             /* person foreign*/
@@ -548,7 +547,7 @@ $('document').ready(function () {
 
                             /*foreign new*/
                             $('#surname-div').removeClass('rate');
-                            $('#surname-div').removeAttr('required','');
+                            $('#surname-div').removeAttr('required', '');
 
                             /*validations foreign*/
                             $('#surname-div').val(user.surname);
@@ -642,7 +641,7 @@ $('document').ready(function () {
                 $('ul.tabs').tabs("select", "typePublicity-tab");
             }
         }
-        else if(status != 'propietario') {
+        else if (status != 'propietario') {
             if ($('#type_document').val() == null) {
                 swal({
                     title: "Información",
@@ -653,7 +652,7 @@ $('document').ready(function () {
                         className: "blue-gradient"
                     },
                 });
-            }else if($('#document').val() == ''){
+            } else if ($('#document').val() == '') {
                 swal({
                     title: "Información",
                     text: "Debe introducir el documento de la persona responsable.",
@@ -718,7 +717,7 @@ $('document').ready(function () {
                         closeModal: true
                     }
                 });
-            } else if($('#type_document').val()=='E' && $('#surname-div').val()=='' ){
+            } else if ($('#type_document').val() == 'E' && $('#surname-div').val() == '') {
                 swal({
                     title: "Información",
                     text: "Debe llenar el apellido  para poder continuar.",
@@ -739,7 +738,7 @@ $('document').ready(function () {
                 responsable = true;
             }
         }
-        if(responsable) {
+        if (responsable) {
             band = true;
             $('.rate').each(function () {
                 if ($(this).val() === '' || $(this).val() === null) {
@@ -905,145 +904,161 @@ $('document').ready(function () {
     });
 
     $('#data1-next').click(function () {
-        $.ajax({
-            method: 'get',
-            url: url + "/ticketOffice/publicity/getTypeGroup/" + valType,
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-
-            },
-            success: function (data) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-                var i = 0;
-
-                $('#there').removeClass('disabled');
-                $('#two').addClass('disabled');
-                $('#user-tab-one').addClass('disabled');
-
-                var template = '';
-
-
-                if (valType == 1) {
-                    //PUBLICIDAD POR TIEMPO
-                    //$('#form-3').removeClass('hide');
-                    $('#form-3').show();
-                    $('#form-1').remove();
-                    $('#form-2').remove();
-                    $('#form-4').remove();
-                    $('#form-5').remove();
-                    for (i; i < data.length; i++) {
-                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-3').html(template);
-                        $('select').formSelect();
-                    }
-                } else if (valType == 2) {
-                    //$('#form-4').removeClass('hide');
-                    $('#form-4').show();
-                    $('#form-1').remove();
-                    $('#form-2').remove();
-                    $('#form-3').remove();
-                    $('#form-5').remove();
-                    for (i; i < data.length; i++) {
-                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-4').html(template);
-                        $('select').formSelect();
-                    }
-                } else if (valType == 3) {
-                    //$('#form-2').removeClass('hide');
-                    $('#form-2').show();
-                    $('#form-1').remove();
-                    $('#form-4').remove();
-                    $('#form-3').remove();
-                    $('#form-5').remove();
-                    for (i; i < data.length; i++) {
-                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-2').html(template);
-                        $('select').formSelect();
-                    }
-                } else if (valType == 4) {
-                    //$('#form-1').removeClass('hide');
-                    $('#form-1').show();
-                    $('#form-2').remove();
-                    $('#form-4').remove();
-                    $('#form-3').remove();
-                    $('#form-5').remove();
-                    for (i; i < data.length; i++) {
-                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-1').html(template);
-                        $('select').formSelect();
-                    }
-                } else if (valType == 5) {
-                    //$('#form-5').removeClass('hide');
-                    $('#form-5').show();
-                    $('#form-1').remove();
-                    $('#form-4').remove();
-                    $('#form-3').remove();
-                    $('#form-2').remove();
-                    for (i; i < data.length; i++) {
-                        template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
-                        $('#type_id-5').html(template);
-                        $('select').formSelect();
-                    }
-                }
-
-                $('ul.tabs').tabs("select", "publicity-tab");
-
-            },
-            error: function (e) {
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            }
-        });
-    });
-
-    $('#register').submit(function (e) {
-        if ($('#advertising_type_id').val() !== null && $('#state_location').val() !== null && $('#licor').val() !== null) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            // var image = $('#image')[0].files[0]; // Getting file input data
-            // formData.append('image',image);
+        if (!checkType) {
             $.ajax({
-                url: url + "/ticketOffice/publicity/save",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: formData,
-                method: "POST",
+                method: 'get',
+                url: url + "/ticketOffice/publicity/getTypeGroup/" + valType,
                 beforeSend: function () {
                     $("#preloader").fadeIn('fast');
                     $("#preloader-overlay").fadeIn('fast');
+
                 },
-                success: function (resp) {
-                    console.log(resp);
-                    swal({
-                        title: "¡Bien Hecho!",
-                        text: "Se ha registrado la publicidad exitosamente.",
-                        icon: "success",
-                        button: {
-                            text: "Esta bien",
-                            className: "green-gradient"
-                        }
-                    }).then(function (accept) {
-                        window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
-                    });
-                },
-                error: function (err) {
-                    console.log(err);
+                success: function (data) {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
-                    swal({
-                        title: "¡Oh no!",
-                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                        icon: "error",
-                        button: {
-                            text: "Entendido",
-                            className: "red-gradient"
-                        },
-                    });
+                    var i = 0;
+
+                    $('#there').removeClass('disabled');
+                    $('#two').addClass('disabled');
+                    $('#user-tab-one').addClass('disabled');
+
+
+                    $('ul.tabs').tabs("select", "publicity-tab");
+
+                    form(valType, data);
+
+                },
+                error: function (e) {
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
                 }
             });
+        } else {
+            swal({
+                title: "Información",
+                text: "Debe selecionar un tipo de publicidad.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "green-gradient"
+                }
+            });
+        }
+    });
+
+    $('#register').submit(function (e) {
+        e.preventDefault();
+        if ($('#advertising_type_id').val() !== null && $('#state_location').val() !== null && $('#licor').val() !== null) {
+
+            if ($('#name').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (NOMBRE).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#name').focus();
+                });
+            }
+            else if ($('#width').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (ANCHO).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#width').focus();
+                });
+            }
+            else if ($('#height').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe llenar el campo (ALTO).",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#height').focus();
+                });
+            } else if ($('#date_start').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar una fecha de inicio.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#date_start').focus();
+                });
+            } else if ($('#date_end').val() == '') {
+                swal({
+                    title: "Información",
+                    text: "Debe seleccionar una fecha de fin.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "green-gradient"
+                    }
+                }).then(function () {
+                    $('#date_end').focus();
+                });
+            }
+            else {
+
+                var formData = new FormData(this);
+                // var image = $('#image')[0].files[0]; // Getting file input data
+                // formData.append('image',image);
+                $.ajax({
+                    url: url + "/ticketOffice/publicity/save",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    method: "POST",
+                    beforeSend: function () {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: "¡Bien Hecho!",
+                            text: "Se ha registrado la publicidad exitosamente.",
+                            icon: "success",
+                            button: {
+                                text: "Esta bien",
+                                className: "green-gradient"
+                            }
+                        }).then(function (accept) {
+                            window.location.href = url + "ticketOffice/publicity/show-Ticket-office";
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                    }
+                });
+            }
         } else {
 
 
@@ -1071,7 +1086,6 @@ $('document').ready(function () {
                 });
 
             } else if ($('#licor').val() === null) {
-
                 swal({
                     title: "Información",
                     text: "Debes selecionar si la publicidad hace refencia a cigarrillos o bebidas alcoholicas.",
@@ -1081,18 +1095,15 @@ $('document').ready(function () {
                         className: "blue-gradient"
                     },
                 });
-
-
             }
         }
     });
 
     //::::::::UPDATE FOR TICKET OFFICE::::::::::::::::::
 
-    console.log($('#update-publicity'));
-
+    var typePublicity = null;
     $('#update-publicity').click(function () {
-        var typePublicity = $('#advertising_type_id2').val();
+        typePublicity = $('#advertising_type_id2').val();
         console.log(typePublicity);
         if (typePublicity == 1) {
             console.log('hola');
@@ -1166,11 +1177,11 @@ $('document').ready(function () {
             $('#quantity').prop('disabled', false);
             $(this).hide();
             $('#update-publicity-save').removeClass('hide');
-            
+
             $('#block-update').addClass('col s12 m12 center-align');
             $('#block-status').hide();
             $('#block-back').show();
-            
+
         } else if (typePublicity == 5) {
             $('#date-begin').hide();
             $('#date-end').hide();
@@ -1460,15 +1471,370 @@ $('document').ready(function () {
     });
 
     $('#publicity-previous2').click(function () {
-        $("#preloader").fadeOut('fast');
-        $("#preloader-overlay").fadeOut('fast');
-        location.reload();
-        //$('#two').removeClass('disabled');
-        //$('#there').addClass('disabled');
-        //$('ul.tabs').tabs("select", "typePublicity-tab");
+        //$("#preloader").fadeOut('fast');
+        //$("#preloader-overlay").fadeOut('fast');
+        //location.reload();
+        $('#two').removeClass('disabled');
+        $('#there').addClass('disabled');
+        $('ul.tabs').tabs("select", "typePublicity-tab");
+        typePublicity = 0;
     });
 
 });
+
+function form(valType, data) {
+    var template = '';
+    var templateForm = '';
+    var i = 0;
+
+
+    if (valType == 1) {
+        //PUBLICIDAD POR TIEMPO
+        //$('#form-3').removeClass('hide');
+
+        templateForm = `<div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
+                                <select name="advertising_type_id" id="type_id-3">
+                                    <option value="null" disabled selected>Elija un tipo</option>
+                                </select>
+                                <label>Tipo de Publicidad</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
+                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
+                                <label for="name">Nombre</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>`;
+
+        $('#form-1').html(templateForm);
+
+
+        for (i; i < data.length; i++) {
+            template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+            $('#type_id-3').html(template);
+            $('select').formSelect();
+        }
+    } else if (valType == 2) {
+        //$('#form-4').removeClass('hide');
+        templateForm = `<div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
+                                <select name="advertising_type_id" id="type_id-4">
+                                    <option value="null" disabled selected>Elija un tipo</option>
+                                </select>
+                                <label>Tipo de Publicidad</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
+                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
+                                <label for="name">Nombre</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
+                            <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
+                                <select name="unit" id="unit">
+                                    <option value="null" disabled>Elige la unidad</option>
+                                    <option value="mts" selected>Metro</option>
+                                    <option value="qnt" disabled>Cantidad</option>
+                                </select>
+                                <label>Unidad</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_horizontal prefix"></i>
+                                <label for="width">Ancho</label>
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_vertical prefix"></i>
+                                <label for="height">Alto</label>
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1" name="height" id="height" value="">
+                            </div>`;
+
+        $('#form-1').html(templateForm);
+
+
+        for (i; i < data.length; i++) {
+            template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+            $('#type_id-4').html(template);
+            $('select').formSelect();
+        }
+    } else if (valType == 3) {
+        //$('#form-2').removeClass('hide');
+
+        templateForm = `  <div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
+                                <select name="advertising_type_id" id="type_id-2">
+                                    <option value="null" disabled selected>Elija un tipo</option>
+                                </select>
+                                <label>Tipo de Publicidad</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
+                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
+                                <label for="name">Nombre</label>
+                            </div>
+                           
+                            <div class="col s12 input-field">
+                                <i class="icon-straighten prefix"></i>
+                                <select name="unit" id="unit">
+                                    <option value="null" disabled>Elige la unidad</option>
+                                    <option value="mts" disabled>Metro</option>
+                                    <option value="qnt" selected>Cantidad</option>
+                                </select>
+                                <label>Unidad</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="icon-chrome_reader_mode prefix"></i>
+                                <input type="text" class="validate only-number-positive number-date" maxlength="9" name="quantity" id="quantity">
+                                <label for="quantity">Ejemplares</label>
+                            </div>`;
+
+        $('#form-1').html(templateForm);
+
+        for (i; i < data.length; i++) {
+            template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+            $('#type_id-2').html(template);
+            $('select').formSelect();
+        }
+    } else if (valType == 4) {
+        //$('#form-1').removeClass('hide');
+
+        templateForm = `<div class="input-field col s12">
+            <i class="icon-linked_camera prefix"></i>
+            <select name="advertising_type_id" id="type_id-1">
+            <option value="null" disabled selected>Elija un tipo</option>
+        </select>
+        <label>Tipo de Publicidad</label>
+        </div>
+
+        <div class="input-field col s12 m6">
+            <i class="icon-smoking_rooms prefix"></i>
+            <select name="licor" id="licor">
+            <option value="" disabled selected>Elija una opción</option>
+        <option value="SI">SI</option>
+            <option value="NO">NO</option>
+            </select>
+            <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <i class="icon-my_location prefix"></i>
+            <select name="state_location" id="state_location">
+            <option value="" disabled selected>Elija una opción</option>
+        <option value="SI">SI</option>
+            <option value="NO">NO</option>
+            </select>
+            <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+        </div>
+
+        <div class="input-field col s12">
+            <i class="icon-format_size prefix"></i>
+            <input type="text" name="name" id="name" minlength="5" maxlength="190">
+            <label for="name">Nombre</label>
+            </div>
+            <div class="col s12">
+      
+        <div class="col s12 input-field">
+            <i class="icon-straighten prefix"></i>
+            <select name="unit" id="unit">
+            <option value="null" disabled>Elige la unidad</option>
+        <option value="mts" selected>Metro</option>
+        <option value="qnt" disabled>Cantidad</option>
+        </select>
+        <label>Unidad</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <i class="icon-panorama_horizontal prefix"></i>
+            <label for="width">Ancho</label>
+            <input type="text" class="validate only-number-positive number-only-float" name="width" id="width" maxlength="5" value="">
+            </div>
+            <div class="input-field col s12 m6">
+            <i class="icon-panorama_vertical prefix"></i>
+            <label for="height">Alto</label>
+            <input type="text" class="validate only-number-positive number-only-float" name="height" id="height" maxlength="5" value="">
+            </div>
+            <div class="input-field col s12">
+            <i class="icon-exposure_plus_1 prefix"></i>
+            <input type="text" class="validate only-number-positive number-date" maxlength="4" name="quantity" id="quantity">
+            <label for="quantity">Cantidad de Lugares</label>
+        </div>`;
+
+        $('#form-1').html(templateForm);
+
+        for (i; i < data.length; i++) {
+            template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+            $('#type_id-1').html(template);
+            $('select').formSelect();
+        }
+    } else if (valType == 5) {
+        templateForm = `<div class="input-field col s12">
+                                <i class="icon-linked_camera prefix"></i>
+                                <select name="advertising_type_id" id="type_id-5">
+                                    <option value="null" disabled selected>Elija un tipo</option>
+                                </select>
+                                <label>Tipo de Publicidad</label>
+                            </div>
+                            
+                            <div class="input-field col s12">
+                                <i class="icon-format_size prefix"></i>
+                                <input type="text" name="name" id="name" minlength="5" maxlength="190">
+                                <label for="name">Nombre</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="icon-smoking_rooms prefix"></i>
+                                <select name="licor" id="licor">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad hace refencia a cigarrillos o bebidas alcoholicas?</label>
+                            </div>
+                            
+                            <div class="input-field col s12 m6">
+                                <i class="icon-my_location prefix"></i>
+                                <select name="state_location" id="state_location">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                                <label>¿Su publicidad está ubicada en un espacio reservado de la alcaldía?</label>
+                            </div>
+
+                            <div class="col s12  input-field">
+                                <i class="icon-straighten prefix"></i>
+                                <select name="unit" id="unit">
+                                    <option value="null" disabled>Elige la unidad</option>
+                                    <option value="mts" selected>Metro</option>
+                                    <option value="qnt" disabled>Cantidad</option>
+                                </select>
+                                <label>Unidad</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_horizontal prefix"></i>
+                                <label for="width">Ancho</label>
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="7" name="width" id="width" value="">
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="icon-panorama_vertical prefix"></i>
+                                <label for="height">Alto</label>
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="1"  name="height" id="height" value="">
+                            </div>
+                            <div class="input-field col s12 ">
+                                <i class="icon-exposure_plus_1 prefix"></i>
+                                <input type="text" class="validate only-number-positive number-only-float" maxlength="2" name="side" id="side">
+                                <label for="side">Cantidad de Caras</label>
+                            </div>
+`;
+
+        $('#form-1').html(templateForm);
+        for (i; i < data.length; i++) {
+            template += `<option value="${data[i]['id']}">${data[i]['name']}</option>`;
+            $('#type_id-5').html(template);
+            $('select').formSelect();
+        }
+    }
+
+    $('.validate.number-only').keyup(function () {
+        this.value = (this.value + '').replace(/[^.,0-9]/g, '');
+    });
+
+    $('.validate.number-and-capital-letter-only').keyup(function () {
+        this.value = (this.value + '').replace(/[^A-Z0-9]/g, '');
+    });
+
+    $('.validate.number-only-float').keyup(function () {
+        this.value = (this.value + '').replace(/[^0-9.]/g, '');
+    });
+
+    $('.validate.number-date').keyup(function () {
+        this.value = (this.value + '').replace(/[^0-9]/g, '');
+    });
+
+    $('.validate.code-only').keyup(function () {
+        this.value = (this.value + '').replace(/[^A-Z0-9-]/g, '');
+
+    });
+
+    $('.only-number-positive').change(function () {
+        if ($(this).val() < 1) {
+            swal({
+                title: "Información",
+                text: "El campo no debe ser mayor o igual 1.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $(this).val('');
+        }
+    });
+
+    $('.validate.text-validate').keyup(function () {
+        this.value = (this.value + '').replace(/[^a-zA-Z ]/g, '');
+    });
+
+    $('.validate.serial-vehicle').keyup(function () {
+        this.value = (this.value + '').replace(/[^a-zA-Z0-9-]/g, '');
+
+    });
+}
 
 
 

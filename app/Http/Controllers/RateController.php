@@ -208,7 +208,6 @@ class RateController extends Controller{
             $user_id=\Auth::user()->id;
 
         }else{
-
             $user_id=\Auth::user()->id;
             $company_id=$id;
         }

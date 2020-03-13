@@ -32,7 +32,6 @@ $('document').ready(function () {
         $('#C8').prop('readonly', false);
         $('#C9').prop('readonly', false);
         $('#C10').prop('readonly', false);
-
         $(this).addClass('hide');
 
         swal({

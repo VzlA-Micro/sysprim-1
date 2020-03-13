@@ -16,7 +16,7 @@ class CreateForeignExchangeTable extends Migration
         Schema::create('foreign_exchange', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 20);
-            $table->float('value');
+            $table->float('value',15,2);
             $table->timestamps();
         });
     }

@@ -186,6 +186,14 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Moneda']);
         Permission::create(['name' => 'Actualizar Moneda']);
 
+        // -- Gestionar Monedas
+        Permission::create(['name' => 'Gestionar Imagenes']);
+        Permission::create(['name' => 'Registrar Imagen']);
+        Permission::create(['name' => 'Consultar Imagenes']);
+        Permission::create(['name' => 'Detalles Imagen']);
+        Permission::create(['name' => 'Actualizar Imagen']);
+
+
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
@@ -770,7 +778,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Pagar Vehiculo',
 
             # --------- Módulo de Mis Publicidades
-            /*'Mis Publicidades',
+            'Mis Publicidades',
             'Registrar Mis Publicidades',
             'Consultar Mis Publicidades',
             'Detalles Mis Publicidades',
@@ -778,7 +786,7 @@ class RolesAndPermissionsSeeder extends Seeder
             // 'Eliminar Mis Publicidades',
             'Mis Pagos - Publicidad',
             'Declarar Publicidades',
-            'Historial de Pagos - Publicidades',*/
+            'Historial de Pagos - Publicidades',
 
             # --------- Módulo de Mis Tasas
             'Generar Tasas',
@@ -1117,6 +1125,32 @@ class RolesAndPermissionsSeeder extends Seeder
             'Detalles Planilla',
             'Ver Planilla PDF',
         ]);
+
+        $roleTreasurer = Role::create(['name' => 'Prensa']);
+        $roleTreasurer->givePermissionTo([
+                'Taquillas',
+                'Estadisticas',
+                'Estadisticas - Bancos',
+                'Ver Pagos',
+                'Ver Pagos - Transferencias',
+                'Ver Pagos - Punto de Venta',
+                'Ver Pagos - Depositos',
+                'Mi Taquilla - Punto de Venta',
+                'Mi Taquilla - Deposito',
+                'Ver Planillas - Taquilla',
+                'Detalles Pagos',
+                'Ver Planillas',
+                'Detalles Planilla',
+                'Ver Planilla PDF',
+            ]);
+
+        // Permission::create(['name' => 'Configuración']);
+        // Permission::create(['name' => 'Configuración - General']);
+        // Permission::create(['name' => 'Gestionar Imagenes']);
+        // Permission::create(['name' => 'Registrar Imagen']);
+        // Permission::create(['name' => 'Consultar Imagenes']);
+        // Permission::create(['name' => 'Detalles Imagen']);
+        // Permission::create(['name' => 'Actualizar Imagen']);
 
 
         DB::table('model_has_roles')->insert([

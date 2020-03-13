@@ -53,7 +53,7 @@ $(document).ready(function() {
 
     var date = new Date();
     $('#date_limit').datepicker({
-        maxDate:  date,
+        // maxDate:  date,
         // defaultDate: date,
         format: 'yyyy-mm-dd', // Configure the date format
         yearRange: [1900,date.getFullYear()],

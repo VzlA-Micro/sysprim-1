@@ -305,7 +305,7 @@ $('document').ready(function () {
             $('.surname-div').removeClass('hide');
             /*foreign new*/
             $('#surname-div').addClass('rate');
-            $('#surname-div').attr('required','required');
+            $('#surname-div').attr('required', 'required');
         } else {
             $('.name-div').removeClass('m3');
             $('.name-div').addClass('m6');
@@ -386,7 +386,7 @@ $('document').ready(function () {
                             $('#address').val(user.address);
                             $('#address').attr('readonly', '');
                             $('#email').val(user.email);
-                            $('#email').attr('readonly','');
+                            $('#email').attr('readonly', '');
 
                             $('#surname-div').val(user.surname);
                             $('.name-div').removeClass('m3');
@@ -395,7 +395,7 @@ $('document').ready(function () {
 
                             /*foreign new*/
                             $('#surname-div').removeClass('rate');
-                            $('#surname-div').removeAttr('required','');
+                            $('#surname-div').removeAttr('required', '');
 
 
                         } else if (response.type == 'company') {
@@ -513,9 +513,9 @@ $('document').ready(function () {
             success: function (data) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
+                console.log(data);
 
-
-                if (data['status'] == "error") {
+                if (data.status == "error") {
                     swal({
                         title: "¡Placa Registrada!",
                         text: data['message'],
@@ -557,7 +557,7 @@ $('document').ready(function () {
         console.log(bodySerial);
         var id = $('#id').val();
 
-        if(bodySerial.length >=1) {
+        if (bodySerial.length >= 1) {
             $.ajax({
                 type: "POST",
                 url: url + "vehicles/verifyBodySerial",
@@ -574,7 +574,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     console.log(data);
-                    if (data['status'] == "error") {
+                    if (data.status == "error") {
                         swal({
                             title: "¡Serial de Carroceria Registrado!",
                             text: data['message'],
@@ -616,7 +616,7 @@ $('document').ready(function () {
         var id = $('#id').val();
 
 
-        if(serialEngine.length >=1) {
+        if (serialEngine.length >= 1) {
             $.ajax({
                 type: "POST",
                 url: url + "vehicles/verifySerialEngine",
@@ -633,7 +633,7 @@ $('document').ready(function () {
                     $("#preloader").fadeOut('fast');
                     $("#preloader-overlay").fadeOut('fast');
                     console.log(data);
-                    if (data['status'] == "error") {
+                    if (data.status == "error") {
                         swal({
                             title: "¡Serial del Motor Registrado!",
                             text: data['message'],
@@ -1051,9 +1051,20 @@ $('document').ready(function () {
                 title: "informacion",
                 text: 'Debe introducir un año valido',
                 icon: 'info'
+            }).then(function () {
+                $('#year').val('');
+                $('#year').focus();
             });
-            $(this).val('');
-            $(this).focus();
+
+        } else if (anio.length < 4) {
+            swal({
+                title: "informacion",
+                text: 'Debe introducir un año valido',
+                icon: 'info'
+            }).then(function () {
+                $('#year').val('');
+                $('#year').focus();
+            });
         } else {
 
         }

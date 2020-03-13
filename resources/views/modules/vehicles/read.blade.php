@@ -21,7 +21,7 @@
                         <table class="centered striped responsive-table" id="vehicle">
                             <thead>
                             <tr>
-                                <th>Licencia</th>
+                                <th>Placa</th>
                                 <th>Color</th>
                                 <th>Marca</th>
                                 <th>Módelo</th>

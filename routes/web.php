@@ -593,7 +593,7 @@ Route::middleware(['auth'])->group(/**
         Route::post('/vehicles/verifyLicense', 'VehicleController@licensePlate')->name('vehicle.licensePlate');
         Route::post('/vehicles/verifyBodySerial', 'VehicleController@bodySerial')->name('vehicle.bodySerial');
         Route::post('/vehicles/verifySerialEngine', 'VehicleController@serialEngine')->name('vehicle.serialEngine');
-        Route::post('/taxes/credits_fiscal/vehicles', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
+        Route::get('/taxes/credits_fiscal/vehicles/{creditFiscal}/{idVehicle}', 'VehiclesTaxesController@creditsFiscal')->name('taxes.creditsFiscal.vehicle');
         Route::get('company/vehicles/{idCompany}', 'VehicleController@vehicleCompanyRead')->name('company.vehicle.read');
         Route::get('/vehicles/register/{register?}', 'VehicleController@create')->name('vehicles.register');
         Route::get('/vehicles/register/{register}', 'VehicleController@create')->name('vehicles.register');
@@ -618,6 +618,8 @@ Route::middleware(['auth'])->group(/**
         ##### PUBLICIDAD
 
         Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
+        Route::post('/publicity/taxes/total', 'PublicityTaxesController@calculateAmount');
+
         Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
         Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
 
