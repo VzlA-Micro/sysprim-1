@@ -308,18 +308,18 @@ class BdvController extends Controller
                 ]);
 
 
-                // $user = User::find($userPublicity->user_id);
-                // $for = $user->email;
+                $user = User::find($userPublicity->user_id);
+                $for = $user->email;
 
 
-                // $subject = "PLANILLA VERIFICADA";
-                // Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
+                $subject = "PLANILLA VERIFICADA";
+                Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
 
-                //     $msj->from("grabieldiaz63@gmail.com", "SEMAT");
-                //     $msj->subject($subject);
-                //     $msj->to($for);
-                //     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
-                // });
+                    $msj->from("grabieldiaz63@gmail.com", "SEMAT");
+                    $msj->subject($subject);
+                    $msj->to($for);
+                    $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
+                });
 
                 return redirect('publicity/payments/history/'.$publicity->id)->with('message', 'La planilla fue registrada y su pago fue procesado  con éxito, fue enviado al correo: ' . \Auth::user()->email . '.');
 
