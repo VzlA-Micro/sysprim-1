@@ -16,67 +16,100 @@ $(document).ready(function() {
         }
     });
 
-    $('#fiscal_credit').blur(function() {
+    $('#fiscal_credit').change(function() {
         var fiscal_credit = $(this).val();
         var amount = $('#amount').val();
-        $.ajax({
-            method: 'post',
-            dataType: 'json',
-            data: {
-                fiscal_credit: fiscal_credit,
-                amount: amount
-            },
-            url: url + 'properties/taxes/total',
-            beforeSend: function() {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(resp) {
-                if(resp.status == 'success') {
-                    swal({
-                        title: '¡Bien Hecho!',
-                        text: resp.message,
-                        icon: 'success',
-                        button: {
-                            text: 'Entendido',
-                            className: 'blue-gradient'
-                        }
-                    });
-                    /*$('#fiscal_credit').val(resp.fiscal_credit);
-                    console.log(resp.fiscal_credit);*/
-                    $('#amount').val(resp.total);
+        var taxe_id = $('#taxe_id').val();
+        var publicity_id = $('#publicity_id').val();
+
+        swal({
+            title: "Información",
+            text: "Al momento de introducir su crédito fiscal, debe asegurarse de que el monto introducido sea el correcto. Una vez introcducido no podra agregar un nuevo monto, en ese caso presione el botón de (CALCULAR DE NUEVO)",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2",
+                    closeModal: true
+                },
+                confirm: {
+                    text: "Confirmar",
+                    value: true,
+                    visible: true,
+                    className: "red",
+                    closeModal: true
                 }
-                else if(resp.status == 'error') {
-                    swal({
-                        title: '¡Oh No!',
-                        text: resp.message,
-                        icon: 'error',
-                        button: {
-                            text: 'Entendido',
-                            className: 'blue-gradient'
-                        }
-                    });
-                    $('#fiscal_credit').val(0);
-                }
-                else if(resp.status == 'void'){
-                    $('#fiscal_credit').val(0);
-                }
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            },
-            error: function (err) {
-                console.log(err);
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
             }
-        })
+        }).then(confirm => {
+            if(confirm) {
+                $.ajax({
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        fiscal_credit: fiscal_credit,
+                        amount: amount,
+                        taxe_id: taxe_id,
+                        publicity_id: publicity_id
+                    },
+                    url: url + 'publicity/taxes/total',
+                    beforeSend: function() {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function(resp) {
+                        if(resp.status == 'success') {
+                            swal({
+                                title: '¡Bien Hecho!',
+                                text: resp.message,
+                                icon: 'success',
+                                button: {
+                                    text: 'Entendido',
+                                    className: 'blue-gradient'
+                                }
+                            });
+                            $('#amount').val(resp.total);
+                        }
+                        else if(resp.status == 'error') {
+                            swal({
+                                title: '¡Oh No!',
+                                text: resp.message,
+                                icon: 'error',
+                                button: {
+                                    text: 'Entendido',
+                                    className: 'blue-gradient'
+                                }
+                            });
+                            $('#fiscal_credit').val(0);
+                        }
+                        else if(resp.status == 'void'){
+                            $('#fiscal_credit').val(0);
+                        }
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }
+                });
+                $('#fiscal_credit').prop('disabled',true);
+            }
+            else {
+                $('#fiscal_credit').val('');
+            }
+        });
     });
 
     $('#register').submit(function(e) {

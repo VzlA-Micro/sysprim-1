@@ -305,6 +305,11 @@ class PropertyTaxesController extends Controller
     }
 
     public function calculateAmount(Request $request) {
+        $propertyId = $request->input('property_id');
+        $taxeId = $request->input('taxes_id');
+        $propertyTaxe = PropertyTaxes::where('taxe_id', $taxeId)->first();
+        $taxe = Taxe::find($taxeId);
+
         $value = strval($request->input('amount'));
         $valor = str_replace('.', '', $value);
         $amount = str_replace(',', '.', $valor);
@@ -328,8 +333,11 @@ class PropertyTaxesController extends Controller
             ]);
         }
         else {
-            $totalAmount = $amount - $fiscalCredit;
-//            var_dump($totalAmount);
+            $totalAmount = $taxe->amount - $fiscalCredit;
+            $propertyTaxe->fiscal_credit = $fiscalCredit;
+            $propertyTaxe->update();
+            $taxe->amount = $totalAmount;
+            $taxe->update();
             $total = number_format($totalAmount,2,',','.');
             return response()->json([
                 'status' => 'success',

@@ -188,6 +188,50 @@ class PublicityTaxesController extends Controller
         return response()->json(['status' => 'success', 'taxe_id' => $taxeId]);
     }
 
+    public function calculateAmount(Request $request) {
+        $publicityId = $request->input('publicity_id');
+        $taxeId = $request->input('taxe_id');
+        $publicityTaxe = PublicityTaxe::where('taxe_id', $taxeId)->first();
+        $taxe = Taxe::find($taxeId);
+
+        $value = strval($request->input('amount'));
+        $valor = str_replace('.', '', $value);
+        $amount = str_replace(',', '.', $valor);
+
+        $valueFiscalCredit = strval($request->input('fiscal_credit'));
+        $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
+        $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
+
+        if($fiscalCredit == '' || $fiscalCredit == null) {
+            return response()->json([
+                'status' => 'void',
+                'message' => ''
+            ]);
+        }
+        elseif($fiscalCredit > $amount) {
+            $total = 0;
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El crédito fiscal no puede ser mayor al monto total del impuesto.',
+                'total' => $total,
+            ]);
+        }
+        else {
+            $totalAmount = $taxe->amount - $fiscalCredit;
+            $publicityTaxe->fiscal_credit = $fiscalCredit;
+            $publicityTaxe->update();
+            $taxe->amount = $totalAmount;
+            $taxe->update();
+            $total = number_format($totalAmount,2,',','.');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Su total a pagar se ha reducido por un crédito fiscal.',
+                'total' => $total,
+                'fiscal_credit' => $fiscalCredit
+            ]);
+        }
+    }
+
     public function typePayment($id)
     {
         $taxe = Taxe::findOrFail($id);
