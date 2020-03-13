@@ -21,6 +21,7 @@ use App\User;
 use Mail;
 use App\Company;
 use App\PublicityTaxe;
+use App\Val_cat_const_inmu;
 
 class BdvController extends Controller
 {
@@ -209,7 +210,7 @@ class BdvController extends Controller
                 $userProperty = UserProperty::where('property_id', $owner[0]->pivot->property_id)->first();
                 $property = Property::find($userProperty->property_id);
                 $propertyTaxes = $propertyTaxes = PropertyTaxes::where('taxe_id', $taxe->id)->first();
-
+                $propertyBuildings = Val_cat_const_inmu::where('property_id', $property->id)->get();
 
                 if (!is_null($userProperty->company_id)) {
                     $data = Company::find($userProperty->company_id);
@@ -229,13 +230,13 @@ class BdvController extends Controller
                     'property' => $property,
                     'propertyTaxes' => $propertyTaxes,
                     'type' => $type,
-                    'firm' => $firm
+                    'firm' => $firm,
+                    'propertyBuildings' => $propertyBuildings
                 ]);
 
 
                 $user = User::find($userProperty->user_id);
                 $for = $user->email;
-
 
                 $subject = "PLANILLA VERIFICADA";
                 Mail::send('mails.payment-verification', [], function ($msj) use ($subject, $for, $pdf) {
@@ -245,7 +246,7 @@ class BdvController extends Controller
                     $msj->to($for);
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
-                return redirect('properties/payments/history/'.$property->id)->with('message', 'La planilla fue registra y verificada con éxito,fue enviado al correo' . \Auth::user()->email . '.');
+                return redirect('properties/payments/history/'.$property->id)->with('message', 'La planilla fue registrada y su pago fue procesado  con éxito, fue enviado al correo: ' . \Auth::user()->email . '.');
 
             } elseif ($taxe->branch == 'Tasas y Cert') {
                 $rate = $taxe->rateTaxes()->get();
@@ -277,7 +278,7 @@ class BdvController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
 
-                return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra y su pago fue procesado  con éxito, fue enviado al correo:' . \Auth::user()->email . '.');
+                return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registrada y su pago fue procesado  con éxito, fue enviado al correo: ' . \Auth::user()->email . '.');
 
             } elseif ($taxe->branch == 'Prop. y Publicidad') {
                 $owner = $taxe->publicities()->get();
@@ -320,6 +321,7 @@ class BdvController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
 
+                return redirect('publicity/payments/history/'.$publicity->id)->with('message', 'La planilla fue registrada y su pago fue procesado  con éxito, fue enviado al correo: ' . \Auth::user()->email . '.');
 
             }
 

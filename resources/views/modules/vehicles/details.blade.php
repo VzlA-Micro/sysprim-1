@@ -49,7 +49,7 @@
 
                     <div class="card-content">
                         <ul>
-                            <li><b>Licencia: </b>{{ $vehicle[0]->license_plate }}</li>
+                            <li><b>Placa: </b>{{ $vehicle[0]->license_plate }}</li>
                             <li><b>Marca: </b>{{ $vehicle[0]->model->brand->name }}</li>
                             <li><b>Modelo: </b>{{ $vehicle[0]->model->name }}
                             <li><b>Color: </b>{{ $vehicle[0]->color }}</li>

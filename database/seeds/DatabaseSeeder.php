@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             BankRateTableSeeder::class,
             RatesTableSeeder::class,
             PrologueTableSeeder::class,
+            AccessoriesTableSeeder::class,
             ImageSeeder::class
         ]);
     }

@@ -62,8 +62,8 @@ class VehiclesTaxesController extends Controller
             foreach ($taxes as $tax) {
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
-                } else if ($tax->status === 'temporal') {
-                    DeclarationVehicle::verify($tax->id);
+                } else if ($tax->status === 'Temporal') {
+                    DeclarationVehicle::verify($idVehicle);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
                     $statusTax = 'process';
@@ -131,10 +131,30 @@ class VehiclesTaxesController extends Controller
             }
         }*/
 
+        if ($statusTax === 'process'){
+            return view('modules.taxes.detailsVehicle', array(
+                'vehicle' => $vehicle,
+                'taxes' => $taxes,
+                'grossTaxes' => $grossTaxes,
+                'paymentFractional' => $paymentFractional,
+                'period' => $period_fiscal,
+                'valueDiscount' => $valueDiscount,
+                'rateYear' => $rateYear,
+                'recharge' => $recharge,
+                'previousDebt' => $previousDebt,
+                'total' => $total,
+                'vehicleTaxes' => false,
+                'valueMora' => $valueMora,
+                'totalAux' => $totalAux,
+                'statusTax' => $statusTax
+            ));
+        }
+
         $taxes = new Taxe();
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxes->fiscal_period = $period_fiscal_begin;
         $taxes->fiscal_period_end = $period_fiscal_end;
+        $taxes->status = 'Temporal';
         $taxes->type = $type;
         $taxes->amount = $totalAux;
         $taxes->status = 'temporal';

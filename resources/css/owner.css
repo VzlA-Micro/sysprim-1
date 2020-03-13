@@ -1,4 +1,18 @@
 @charset "UTF-8";
+@media (max-width: 1400px) {
+  .page-footer {
+    padding: 0.5rem;
+  }
+  .page-footer .social i {
+    font-size: 30px !important;
+  }
+  .page-footer .row {
+    margin-bottom: 0.5rem;
+  }
+  .page-footer .row span {
+    font-size: 10px;
+  }
+}
 body {
   display: flex;
   min-height: 100vh;

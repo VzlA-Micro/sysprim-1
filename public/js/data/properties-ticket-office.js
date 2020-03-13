@@ -3,6 +3,8 @@ $(document).ready(function() {
 
     // Buscar datos por Codigo catastral
     $('#code_cadastral').blur(function() {
+        $('#property_id').val('');
+        $('#person').val('');
         var code = $(this).val();
         if(code !== '') {
             $.ajax({

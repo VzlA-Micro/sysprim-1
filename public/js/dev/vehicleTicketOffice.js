@@ -652,7 +652,7 @@ $('document').ready(function () {
         var license = $(this).val();
         if (license == '') {
 
-        } else if (license.length < 7) {
+        } else if (license.length < 6) {
             swal({
                 title: "Información",
                 text: "Ingrese una placa válida.",
@@ -2397,6 +2397,12 @@ $('document').ready(function () {
                 }
             });
         }
+    });
+
+    $('#previous-details').click(function () {
+        $('#two').addClass('disabled');
+        $('#one').removeClass('disabled');
+        $('ul.tabs').tabs("select", "general-tab");
     });
 
 

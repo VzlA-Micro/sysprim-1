@@ -92,4 +92,12 @@ class HomeController extends Controller
         dd($verify);
     }
 
+    public function deleteTemp()
+    {
+        $taxes=Taxe::where('status','Temporal')
+            ->where('status','temporal')
+            ->delete();
+        return response()->json(true);
+    }
+
 }
