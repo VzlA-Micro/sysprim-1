@@ -126,7 +126,7 @@ $(document).ready(function() {
 
         swal({
             title: "Información",
-            text: "Al momento de introducir su crédito fiscal, debe asegurarse de que el monto introducido sea el correcto. Una vez introcducido no podra agregar un nuevo monto, en ese caso presione el botón de (CALCULAR DE NUEVO)",
+            text: "Al momento de introducir su crédito fiscal, debe asegurarse de que el monto introducido sea el correcto. Una vez introcducido no podra agregar un nuevo monto, en ese caso de equivocarse en el monto deberá anular la planilla y volver a generarla.",
             icon: "info",
             buttons: {
                 cancel: {

@@ -192,8 +192,8 @@
                                 <input id="amount" type="text" name="amount" class="validate" value="" readonly>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" href="#" class="btn btn-rounded peach waves-effect waves-light modal-trigger ">
+                        <div class="card-footer right-align">
+                            <button type="submit" href="#" class="btn btn-rounded btn-large peach waves-effect waves-light modal-trigger ">
                                 Continuar
                                 <i class="icon-more_horiz right"></i>
                             </button>
