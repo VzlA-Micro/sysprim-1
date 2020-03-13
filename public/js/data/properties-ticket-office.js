@@ -21,7 +21,7 @@ $(document).ready(function() {
                         var property = response.property;
                         var user = response.property.users[0];
                         var id = property.id;
-                        // console.log(response.taxe_id);
+                        console.log(response.taxe_id);
                         $('#property_id').val(property.id);
                         // console.log($('#property_id').val());
                         $('#area_ground').val(property.area_ground).attr('disabled',true);
@@ -38,7 +38,7 @@ $(document).ready(function() {
                         $('#parish_id').attr('disabled',true);
                         $('#fiscal_period').attr('disabled',false);
                         $('#status').attr('disabled',false);
-                        // $('#taxe_id').val(response.taxe_id);
+                        $('#taxe_id').val(response.taxe_id);
                         $('select').formSelect();
                         // $('#status').attr('disabled',false);
                         M.updateTextFields();
@@ -117,67 +117,103 @@ $(document).ready(function() {
         });
     });
 
-    $('#fiscal_credit').blur(function() {
+    $('#fiscal_credit').change(function() {
         var fiscal_credit = $(this).val();
+        var property_id = $('#property_id').val();
         var amount = $('#amount').val();
-        $.ajax({
-            method: 'post',
-            dataType: 'json',
-            data: {
-                fiscal_credit: fiscal_credit,
-                amount: amount
-            },
-            url: url + 'properties/taxes/total',
-            beforeSend: function() {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(resp) {
-                if(resp.status == 'success') {
-                    swal({
-                        title: '¡Bien Hecho!',
-                        text: resp.message,
-                        icon: 'success',
-                        button: {
-                            text: 'Entendido',
-                            className: 'blue-gradient'
-                        }
-                    });
-                    /*$('#fiscal_credit').val(resp.fiscal_credit);
-                    console.log(resp.fiscal_credit);*/
-                    $('#amount').val(resp.total);
+        var taxe_id = $('#taxe_id').val();
+        console.log(property_id,taxe_id);
+
+        swal({
+            title: "Información",
+            text: "Al momento de introducir su crédito fiscal, debe asegurarse de que el monto introducido sea el correcto. Una vez introcducido no podra agregar un nuevo monto, en ese caso presione el botón de (CALCULAR DE NUEVO)",
+            icon: "info",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2",
+                    closeModal: true
+                },
+                confirm: {
+                    text: "Confirmar",
+                    value: true,
+                    visible: true,
+                    className: "red",
+                    closeModal: true
                 }
-                else if(resp.status == 'error') {
-                    swal({
-                        title: '¡Oh No!',
-                        text: resp.message,
-                        icon: 'error',
-                        button: {
-                            text: 'Entendido',
-                            className: 'blue-gradient'
-                        }
-                    });
-                    $('#fiscal_credit').val(0);
-                }
-                else if(resp.status == 'void'){
-                    $('#fiscal_credit').val(0);
-                }
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            },
-            error: function (err) {
-                console.log(err);
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
             }
-        })
+        }).then(confirm => {
+            if(confirm) {
+                $.ajax({
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        property_id: property_id,
+                        fiscal_credit: fiscal_credit,
+                        amount: amount,
+                        taxe_id: taxe_id
+                    },
+                    url: url + 'properties/taxes/total',
+                    beforeSend: function() {
+                        $("#preloader").fadeIn('fast');
+                        $("#preloader-overlay").fadeIn('fast');
+                    },
+                    success: function(resp) {
+                        if(resp.status == 'success') {
+                            swal({
+                                title: '¡Bien Hecho!',
+                                text: resp.message,
+                                icon: 'success',
+                                button: {
+                                    text: 'Entendido',
+                                    className: 'blue-gradient'
+                                }
+                            });
+                            /*$('#fiscal_credit').val(resp.fiscal_credit);
+                            console.log(resp.fiscal_credit);*/
+                            $('#amount').val(resp.total);
+                        }
+                        else if(resp.status == 'error') {
+                            swal({
+                                title: '¡Oh No!',
+                                text: resp.message,
+                                icon: 'error',
+                                button: {
+                                    text: 'Entendido',
+                                    className: 'blue-gradient'
+                                }
+                            });
+                            $('#fiscal_credit').val(0);
+                        }
+                        else if(resp.status == 'void'){
+                            $('#fiscal_credit').val(0);
+                        }
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        swal({
+                            title: "¡Oh no!",
+                            text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                            icon: "error",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        });
+                        $("#preloader").fadeOut('fast');
+                        $("#preloader-overlay").fadeOut('fast');
+                    }
+                });
+                $('#fiscal_credit').prop('disabled',true);
+            }
+            else {
+                $('#fiscal_credit').val('');
+            }
+        });
     });
 
     $('#general-next').click(function () {
@@ -256,6 +292,7 @@ $(document).ready(function() {
                         $('#recharge').val(recharge);
                         $('#statusTax').val(status);
                         $('#amount').val(total);
+                        $('#taxe_id').val(resp.taxe_id);
                         M.updateTextFields();
                     }
                     $("#preloader").fadeOut('fast');
@@ -282,6 +319,39 @@ $(document).ready(function() {
     });
 
     $('#generate-payroll').submit(function(e) {
+        e.preventDefault();
+        swal({
+            title: "¡Bien Hecho!",
+            text: "Se ha registrado una planilla. ¿Desea seguir generando planillas?",
+            icon: "success",
+            buttons: {
+                confirm: {
+                    text: "Si",
+                    value: true,
+                    visible: true,
+                    className: "green-gradient"
+
+                },
+                cancel: {
+                    text: "No",
+                    value: false,
+                    visible: true,
+                    className: "grey lighten-2"
+                }
+            }
+
+        }).then(function (confirm) {
+            if (confirm) {
+                location.reload();
+            } else {
+                url=localStorage.getItem('url');
+                window.location.href = url + 'properties/ticket-office/payments/taxes';
+            }
+        });
+    });
+
+
+    /* $('#generate-payroll').submit(function(e) {
         // e.preventDefault();
         var property_id = $('#property_id').val();
         var owner_id = $('#owner_id').val();
@@ -350,18 +420,6 @@ $(document).ready(function() {
                         window.location.href = url + 'properties/ticket-office/payments/taxes';
                     }
                 });
-                /*console.log(resp.taxe_id);
-                swal({
-                    title: "!Bien Hecho!",
-                    text: "Se ha generado una Planilla. Ahora debes proceder con el pago.",
-                    icon: "success",
-                    button: {
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                }).then(function() {
-                    location.href = url + 'properties/taxes/payments/' + resp.taxe_id;
-                });*/
             },
             error: function (err) {
                 console.log(err);
@@ -376,7 +434,7 @@ $(document).ready(function() {
                 });
             }
         });
-    });
+    });  */ 
 
     /*function sendPayroll() {
 

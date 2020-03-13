@@ -172,9 +172,9 @@
                                             <input id="amount" type="text" name="amount" class="validate" value="{{ $total }}" readonly>
                                             <label for="amount">Total a Pagar:(Bs)</label>
                                         </div>
-                                        <input type="hidden" id="bank" name="bank" value="0">
-                                        <input type="hidden" id="payments" name="payments" value="1">
-                                        <input type="hidden" name="taxes_id" id="taxes_id" value="{{ $taxe_id }}">
+                                        {{-- <input type="hidden" id="bank" name="bank" value="0">
+                                        <input type="hidden" id="payments" name="payments" value="1"> --}}
+                                        <input type="hidden" name="taxe_id" id="taxe_id" value="{{ $taxe_id }}">
                                     </div>
                                 </div>
                             </div>

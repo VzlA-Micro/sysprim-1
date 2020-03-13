@@ -77,7 +77,7 @@ $('document').ready(function () {
         var fiscal_credit = $(this).val();
         var property_id = $('#property_id').val();
         var amount = $('#amount').val();
-        var taxes_id = $('#taxes_id').val();
+        var taxe_id = $('#taxe_id').val();
 
         swal({
             title: "Información",
@@ -108,7 +108,7 @@ $('document').ready(function () {
                         property_id: property_id,
                         fiscal_credit: fiscal_credit,
                         amount: amount,
-                        taxes_id: taxes_id
+                        taxe_id: taxe_id
                     },
                     url: url + 'properties/taxes/total',
                     beforeSend: function() {
@@ -174,7 +174,7 @@ $('document').ready(function () {
 
     $('#property-taxes').submit(function(e) {
         e.preventDefault();
-        var taxe_id = $('#taxes_id').val();
+        var taxe_id = $('#taxe_id').val();
         $("#preloader").fadeIn('fast');
         $("#preloader-overlay").fadeIn('fast');
         swal({

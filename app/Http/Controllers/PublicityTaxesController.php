@@ -235,9 +235,6 @@ class PublicityTaxesController extends Controller
     public function typePayment($id)
     {
         $taxe = Taxe::findOrFail($id);
-//        $propertyTaxes = PropertyTaxes::where('taxes_id', $id)->get();
-//        dd($propertyTaxes[0]->property_id); die();
-//        dd($taxe->publicities[0]);
         return view('modules.publicity-payments.payments', ['taxes_id' => $id, 'taxe' => $taxe]);
     }
 
@@ -413,25 +410,57 @@ class PublicityTaxesController extends Controller
         $declaration = DeclarationPublicity::Declarate($publicity->id);
         $userPublicity = UserPublicity::where('publicity_id', $id)->first();
         $base = $declaration['baseImponible'];
-        $taxes = $publicity->publicityTaxes()->where('branch', 'Prop. y Publicidad')->whereYear('fiscal_period', '=', $actualDate->format('Y'))->get();
-        if (!empty($taxes)) {
-            foreach ($taxes as $tax) {
-                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
-                    $statusTax = 'verified';
-                } else if ($tax->status === 'temporal') {
-//                $tax->delete();
-                    $statusTax = 'new';
-                } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')) {
-                    $statusTax = 'process';
-                } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')) {
-                    $statusTax = 'process';
-                } else {
-                    $statusTax = 'new';
-                }
-            }
-        } else {
-            $statusTax = 'new';
-        }
+//         $taxes = $publicity->publicityTaxes()->where('branch', 'Prop. y Publicidad')->whereYear('fiscal_period', '=', $actualDate->format('Y'))->get();
+//         if (!empty($taxes)) {
+//             foreach ($taxes as $tax) {
+//                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+//                     $statusTax = 'verified';
+//                 } else if ($tax->status === 'temporal') {
+// //                $tax->delete();
+//                     $statusTax = 'new';
+//                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')) {
+//                     $statusTax = 'process';
+//                 } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')) {
+//                     $statusTax = 'process';
+//                 } else {
+//                     $statusTax = 'new';
+//                 }
+//             }
+//         } else {
+//             $statusTax = 'new';
+//         }
+        # Declarating variables to generate taxe
+        $amount = $declaration['total'];
+        $baseImponible = $declaration['baseImponible'];
+        $increment = $declaration['increment'];
+        $taxeType = $declaration['taxeType'];
+        $fiscalPeriod = $fiscal_period;
+        $fiscalCredit = 0;
+        $date = Carbon::parse($fiscal_period);
+        $year = $date->year;
+
+        # Creating Temporal Taxe --------------------------------
+        # --------------------------------------------------------------
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('PTS86');
+        $taxe->status = 'ticket-office';
+        $taxe->type = $taxeType;
+        $taxe->fiscal_period = $fiscalPeriod;
+        $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
+        $taxe->branch = 'Prop. y Publicidad';
+        $taxe->amount = $amount;
+        $taxe->save();
+
+        $taxeId = $taxe->id;
+        $publicityTaxes = new PublicityTaxe();
+        $publicityTaxes->publicity_id = $publicity->id;
+        $publicityTaxes->taxe_id = $taxeId;
+        $publicityTaxes->base_imponible = $baseImponible;
+        $publicityTaxes->increment = $increment;
+//        $publicityTaxes->interest = $interest;
+        $publicityTaxes->fiscal_credit = $fiscalCredit;
+        $publicityTaxes->save();
+        # -------------------------------------------------------------------
         if ($userPublicity->company_id != null) {
             $owner_id = $userPublicity->company_id;
             $owner_type = 'company';
@@ -464,9 +493,9 @@ class PublicityTaxesController extends Controller
             'amount' => $amount,
             'status' => $status,
             'statusTax' => $statusTax,
-            'taxeType' => $taxeType
+            'taxeType' => $taxeType,
 //            'advertisingTypes' => $advertisingTypes
-//            'taxe_id' => $taxe_id
+           'taxe_id' => $taxeId
         ];
 
         return response()->json($resp);
