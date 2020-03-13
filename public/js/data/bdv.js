@@ -7,50 +7,123 @@ $(document).ready(function() {
 
     $('#register').submit(function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: url + "payments/bdv/store",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: formData,
-            method: "POST",
-            beforeSend: function() {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(resp) {
-            console.log(resp.success);
+        var ci=$('#document').val();
+        var phone=$('#phone').val();
 
-                if(resp.success){
-                    window.location=resp.urlPayment;
-                    $('#link').attr('href',resp.urlPayment);
-                }else{
 
-                    $('.message').removeClass('hide');
-                    $('#message').text(resp.responseMessage);
+        if(ci.length>6&&phone.length>6) {
+
+
+            var formData = new FormData(this);
+            $.ajax({
+                url: url + "payments/bdv/store",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                method: "POST",
+                beforeSend: function () {
+                    $("#preloader").fadeIn('fast');
+                    $("#preloader-overlay").fadeIn('fast');
+                },
+                success: function (resp) {
+                    console.log(resp.success);
+
+                    if (resp.success) {
+                        window.location = resp.urlPayment;
+                        $('#link').attr('href', resp.urlPayment);
+                    } else {
+
+                        $('.message').removeClass('hide');
+                        $('#message').text(resp.responseMessage);
+                    }
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#preloader").fadeOut('fast');
+                    $("#preloader-overlay").fadeOut('fast');
+                    swal({
+                        title: "¡Oh no!",
+                        text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+                        icon: "error",
+                        button: {
+                            text: "Entendido",
+                            className: "red-gradient"
+                        },
+                    });
                 }
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
-            },
-            error: function(err) {
-                console.log(err);
-                $("#preloader").fadeOut('fast');
-                $("#preloader-overlay").fadeOut('fast');
+            });
+        }else{
+            console.log('epa');
+            console.log(ci.length);
+            if(ci.length<=6){
                 swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button:{
-                        text: "Entendido",
-                        className: "red-gradient"
+                    title: "Información",
+                    text: "Debes Ingresar una cedula valida para realizar un pago.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
+                    },
+                });
+            }else if(phone.length<=6){
+                swal({
+                    title: "Información",
+                    text: "Debes Ingresar un telefono valido para realizar un pago.",
+                    icon: "info",
+                    button: {
+                        text: "Esta bien",
+                        className: "blue-gradient"
                     },
                 });
             }
-        });
+
+        }
     });
 
 
+
+
+
+
+
+    $('#document').keyup(function () {
+        if ($('#type_document').val() === null) {
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la nacionalidad, antes de ingresar el número de cedula.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+            $('#document').val('')
+        }
+
+    });
+
+
+
+
+
+    $('#phone').keyup(function () {
+        if ($('#country_code').val() === null) {
+            swal({
+                title: "Información",
+                text: "Debes seleccionar la operadora, antes de ingresar el número de teléfono.",
+                icon: "info",
+                button: {
+                    text: "Esta bien",
+                    className: "blue-gradient"
+                },
+            });
+
+            $('#phone').val('');
+        }
+    });
 
     $('input[type="text"].money').each(function () {
         $(this).val(function (index, value) {

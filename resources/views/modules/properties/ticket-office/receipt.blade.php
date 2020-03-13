@@ -29,7 +29,7 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
+                <img src="{{ url('images/alcaldia_logo.png') }}" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
             </td>
@@ -42,7 +42,7 @@
 					</span>
             </td>
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
+                <img src="{{ url('images/semat_logo.png') }}" style="width:180px; height:80px" alt="Image" width="100%" height="100%"><br>
 
 
                 @php $i=count($taxes[0]->payments); @endphp
@@ -417,7 +417,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image">
+                    <img src="{{ url('images/pdf/firma-director.png') }}" style="width:180px; height:190px;" alt="Image">
                 </td>
             @else
                 <td style="width: 40%;text-align: center;">
@@ -469,7 +469,7 @@ $date = '31/12/' . date('Y');
             <td style="width: 20%;">
                 @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
                     @if($taxes[0]!=null)
-                        <img src="https://sysprim.com/images/pdf/{{$taxes[0]->bank.".png"}}"
+                        <img src="{{ url('images/pdf/{{$taxes[0]->bank.".png"}}') }}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image" >
                     @endif
                 @endif

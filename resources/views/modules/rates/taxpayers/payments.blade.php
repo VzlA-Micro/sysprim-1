@@ -64,7 +64,7 @@
                                                      style="height: 70px!important;width: 200px!important;"
                                                      alt=" bank Image" width="100%" height="100%">
                                             </i>
-                                            <span class="truncate black-text"><b>Pago Instantaneo (Banco Venezuela)</b></span>
+                                            <span class="truncate black-text">Pago Instantaneo (Banco Venezuela)</span>
                                         </label>
                                     </div>
                                 </a>

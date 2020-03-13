@@ -16,9 +16,26 @@
                     <li class="breadcrumb-item"><a href="#!">Ver Imagen</a></li>
                 </ul>
             </div>
+      </div>
+            @if(Session::has('message'))
+                <div class="message message-danger">
+                    <div class="message-body">
+                        <strong>{{ session('message') }}</strong>
+                    </div>
+                </div>
+            @endif
 
+        @if(Session::has('mesage'))
+            <div class="message message-success">
+                <div class="message-body">
+                    <strong>{{ session('mesage') }}</strong>
+                </div>
+            </div>
+        @endif
+
+            <div class="row">
             @if($images !== null)
-                <div class="row">
+
                 @foreach($images as $image)
                         <div class="col s3 m3">
                             <div class="card">
@@ -28,31 +45,42 @@
                                     <a href="{{ route('image.delete', $image->id)  }}" class="btn-floating halfway-fab waves-effect waves-light red-gradient"><i class="icon-delete"></i></a>
                                     {{--<span class="card-title">Inicio</span>--}}
                                 </div>
-                                <div class="card-action">
-                                    <a href="#" class="activator orange-text text-darken-2">Seleccionar Imagen</a>
-                                </div>
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Cambiar fondo<i class="icon-close right"></i></span>
 
-                                    <div class="row" style="margin-top: 20px">
-                                        <div class="col s12 m12 l12">
-                                            <a href="#" class="activator red-text text-darken-3">Cambiar imagen del inicio 1</a>
-                                        </div>
-                                        <div class="col s12 m12 l12">
-                                            <a href="#" class="activator red-text text-darken-3">Cambiar imagen del inicio 2</a>
-                                        </div>
-                                        <div class="col s12 m12 l12">
-                                            <a href="#" class="activator red-text text-darken-3">Cambiar imagen del inicio 3</a>
-                                        </div>
+
+                                @if($image->status == "enabled")
+                                    <div class="card-action">
+                                        <a href="#" class="activator green-text text-darken-2">Imagen Hablitada (Presione para deshabilitarla)</a>
                                     </div>
-                                </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Deshabilitar imagen de inicio<i class="icon-close right"></i></span>
+
+                                           <div class="row" style="margin-top: 20px">
+                                                <div class="col s12 m12 l12">
+                                                    <a href="{{ route('image.status', $image->id)  }}" class="activator waves-effect waves-light btn red-gradient">Deshabilitar</a>
+                                                </div>
+                                            </div>
+                                    </div>
+                                @elseif($image->status == "disabled")
+                                    <div class="card-action">
+                                        <a href="#" class="activator orange-text text-darken-2">Seleccionar Imagen (Presione para habilitar)</a>
+                                    </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Habilitar imagen de inicio<i class="icon-close right"></i></span>
+
+                                            <div class="row" style="margin-top: 20px">
+                                                <div class="col s12 m12 l12">
+                                                    <a href="{{ route('image.status', $image->id)  }}" class="activator waves-effect waves-light btn green-gradient">Habilitar</a>
+                                                </div>
+                                            </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
+                    </div>
                 </div>
             @endif
         </div>
-    </div>
 @endsection
 
 @section('scripts')

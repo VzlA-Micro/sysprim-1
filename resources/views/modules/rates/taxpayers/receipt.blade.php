@@ -304,33 +304,36 @@ $date = '31/12/' . date('Y');
         @else
 
             <tr>
-                <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" >
+                <td style="width: 20%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/sysprim.png', .18)->size(170)->generate(
+                      "CODIGO:".$taxes->code."\n".
+                      "PERIODO FISCAL:".$taxes->fiscal_period."\n".
+                      "RAMO:".$taxes->branch."\n".
+                      "ESTADO:".$taxes->statusName."\n".
+                      "MONTO:".number_format($taxes->amount,2)."\n".
+                      'FECHA DE PAGO:'.$taxes->created_at."\n")) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px; height: 180px !important;width: 180px !important;" alt="Image" >
                 </td>
             </tr>
 
         @endif
-
         <tr>
             <td style="width: 20%;">
                 @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
-                        <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
+                        <img src="{{ url('images/pdf/{{$taxes->bank.".png"}}') }}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image">
                     @endif
 
-
-
                @elseif(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
-
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/isotipo.png', .2)->size(170)->generate(
                     'CODIGO:'.$taxes->payments[0]->code."\n".
                     'REF:'.$taxes->payments[0]->ref."\n".
-                    'MONTO:'.$taxes->payments[0]->amount."\n"
-
-                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" >
-
+                    'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
+                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+                    'TEL:'.$taxes->payments[0]->phone."\n".
+                    'FECHA:'.$taxes->payments[0]->created_at."\n"
+                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
                 @endif
             </td>
         </tr>

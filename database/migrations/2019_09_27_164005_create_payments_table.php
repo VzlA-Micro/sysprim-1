@@ -20,7 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->string('code',15)->unique()->nullable();
             $table->string('digit',3)->nullable();
-            $table->string('ref',10)->nullable();
+            $table->string('ref',255)->nullable();
             $table->string('lot',10)->nullable();
             $table->string('bank',10)->nullable();
             $table->string('bank_name',30)->nullable();

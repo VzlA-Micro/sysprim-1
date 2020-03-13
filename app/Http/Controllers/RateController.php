@@ -391,10 +391,6 @@ class RateController extends Controller{
     public function paymentHistoryTaxPayers(){
         $users=User::find(\Auth::user()->id);
         $taxes=$users->taxesRate()->distinct()->orderBy('id','desc')->get();
-
-
-
-
         return view('modules.rates.taxpayers.history', ['taxes' =>$taxes]);
     }
 
