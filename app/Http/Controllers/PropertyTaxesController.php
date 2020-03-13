@@ -57,8 +57,6 @@ class PropertyTaxesController extends Controller
     }
 
     public function manage($id) {
-//        $userProperty = UserProperty::where('user_id', \Auth::user()->id)->select('property_id')->get();
-//        $property = Property::find('id', $userProperty[0])->get();
         $property = Property::find($id);
         return view('modules.properties-payments.manage', ['property' => $property]);
     }
@@ -85,8 +83,6 @@ class PropertyTaxesController extends Controller
 
     public function create($id, $status = 'full')
     {
-        date_default_timezone_set('America/Caracas');//Estableciendo hora local;
-        setlocale(LC_ALL, "es_ES");//establecer idioma local
         $actualDate = Carbon::now();
         $declaration = Declaration::VerifyDeclaration($id, $status);
         $statusTax = '';
@@ -98,7 +94,6 @@ class PropertyTaxesController extends Controller
         $period_fiscal = Carbon::now()->year;
         $userProperty = UserProperty::where('property_id', $property->id)->first();
 
-//        $propertyTaxes = PropertyTaxes::find('company_id', $id);
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
 
@@ -123,6 +118,8 @@ class PropertyTaxesController extends Controller
         else {
             $statusTax = 'new';
         }
+
+
         // Realizar verificacion si el propietario es una compañia o es una persona
         if($userProperty->company_id != null) {
             $owner_id = $userProperty->company_id;
@@ -139,6 +136,47 @@ class PropertyTaxesController extends Controller
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
+        # Declarating variables to generate taxe
+        $amount = $declaration['total'];
+        $baseImponible = $declaration['baseImponible'];
+        $terrainAmount = $declaration['totalGround'];
+        $buildAmount = $declaration['totalBuild'];
+        $recharge = $declaration['recharge'];
+        $discount = $declaration['discount'];
+        $interest = $declaration['interest'];
+        $fiscalCredit = 0;
+        $date = Carbon::now();
+        $year = $date->year;    
+
+
+        # Creating Temporal Taxe --------------------------------
+        # --------------------------------------------------------------
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->status = 'temporal';
+        $taxe->type = 'annual';
+        $taxe->fiscal_period = Carbon::parse('01-01-'.$year)->format('Y-m-d');
+        $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
+        $taxe->branch = 'Inm.Urbanos';
+        $taxe->amount = $amount;
+        $taxe->save();
+        
+        $taxeId = $taxe->id;
+        $propertyTaxes = new PropertyTaxes();
+        $propertyTaxes->property_id = $property->id;
+        $propertyTaxes->taxe_id = $taxeId;
+        $propertyTaxes->base_imponible = $baseImponible;
+        $propertyTaxes->terrain_amount = $terrainAmount;
+        $propertyTaxes->build_amount = $buildAmount;
+        $propertyTaxes->recharge = $recharge;
+        $propertyTaxes->discount = $discount;
+//        $propertyTaxes->alicuota = $alicuota;
+        $propertyTaxes->interest = $interest;
+        $propertyTaxes->fiscal_credit = $fiscalCredit;
+        $propertyTaxes->status = $status;
+
+        $propertyTaxes->save();
+
         if($status == 'full'){
             $baseImponible = number_format($declaration['baseImponible'],2,',','.');
             $totalGround = number_format($declaration['totalGround'],2,',','.');
@@ -176,7 +214,8 @@ class PropertyTaxesController extends Controller
             'discount' => $discount,
             'total' => $total,
             'status' => $status,
-            'statusTax' => $statusTax
+            'statusTax' => $statusTax,
+            'taxe_id' => $taxeId
         ));
     }
 
@@ -226,53 +265,51 @@ class PropertyTaxesController extends Controller
         $valorFiscalCredit = str_replace('.', '', $valueFiscalCredit);
         $fiscalCredit = str_replace(',', '.', $valorFiscalCredit);
 
-//        dd($fiscalCredit);
-
         $status = $request->input('status');
-
-        # --------------------------------------------------------------
-        $taxe = new Taxe();
-        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
-        $taxe->status = 'temporal';
-//        dd($baseImponible); die();
-        $taxe->type='daily';
-
-
         $date = Carbon::now();
         $year = $date->year;
 
-        $taxe->fiscal_period = Carbon::parse('01-01-'.$year)->format('Y-m-d');
-        $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
-        $taxe->branch='Inm.Urbanos';
-        $taxe->amount = $amount;
-        $taxe->save();
-        $taxeId = $taxe->id;
+        # --------------------------------------------------------------
+//         $taxe = new Taxe();
+//         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+//         $taxe->status = 'temporal';
+//         $taxe->type='daily';
+//         $taxe->fiscal_period = Carbon::parse('01-01-'.$year)->format('Y-m-d');
+//         $taxe->fiscal_period_end = Carbon::parse('31-12-'.$year)->format('Y-m-d');
+//         $taxe->branch='Inm.Urbanos';
+//         $taxe->amount = $amount;
+//         $taxe->save();
+        
+//         $taxeId = $taxe->id;
+//         $propertyTaxes = new PropertyTaxes();
+//         $propertyTaxes->property_id = $request->input('property_id');
+//         $propertyTaxes->taxe_id = $taxeId;
+//         $propertyTaxes->base_imponible = $baseImponible;
+//         $propertyTaxes->terrain_amount = $terrainAmount;
+//         $propertyTaxes->build_amount = $buildAmount;
+//         $propertyTaxes->recharge = $recharge;
+//         $propertyTaxes->discount = $discount;
+// //        $propertyTaxes->alicuota = $alicuota;
+//         $propertyTaxes->interest = $interest;
+//         if($fiscalCredit == '') {
+//             $propertyTaxes->fiscal_credit = 0;
+//         }
+//         else {
+//             $propertyTaxes->fiscal_credit = $fiscalCredit;
+//         }
+//         $propertyTaxes->status = $status;
 
-        //$taxes = Taxe::where('id', $taxesId)->get();
-        $propertyTaxes = new PropertyTaxes();
-        $propertyTaxes->property_id = $request->input('property_id');
-        $propertyTaxes->taxe_id = $taxeId;
-        $propertyTaxes->base_imponible = $baseImponible;
-        $propertyTaxes->terrain_amount = $terrainAmount;
-        $propertyTaxes->build_amount = $buildAmount;
-        $propertyTaxes->recharge = $recharge;
-        $propertyTaxes->discount = $discount;
-//        $propertyTaxes->alicuota = $alicuota;
-        $propertyTaxes->interest = $interest;
-        if($fiscalCredit == '') {
-            $propertyTaxes->fiscal_credit = 0;
-        }
-        else {
-            $propertyTaxes->fiscal_credit = $fiscalCredit;
-        }
-        $propertyTaxes->status = $status;
-
-        $propertyTaxes->save();
+//         $propertyTaxes->save();
 //        dd($propertyTaxes);
         return response()->json(['status' => 'success','taxe_id' => $taxeId]);
     }
 
     public function calculateAmount(Request $request) {
+        $propertyId = $request->input('property_id');
+        $taxeId = $request->input('taxes_id');
+        $propertyTaxe = PropertyTaxes::where('taxe_id', $taxeId)->first();
+        $taxe = Taxe::find($taxeId);
+
         $value = strval($request->input('amount'));
         $valor = str_replace('.', '', $value);
         $amount = str_replace(',', '.', $valor);
@@ -296,8 +333,11 @@ class PropertyTaxesController extends Controller
             ]);
         }
         else {
-            $totalAmount = $amount - $fiscalCredit;
-//            var_dump($totalAmount);
+            $totalAmount = $taxe->amount - $fiscalCredit;
+            $propertyTaxe->fiscal_credit = $fiscalCredit;
+            $propertyTaxe->update();
+            $taxe->amount = $totalAmount;
+            $taxe->update();
             $total = number_format($totalAmount,2,',','.');
             return response()->json([
                 'status' => 'success',

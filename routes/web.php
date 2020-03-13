@@ -618,6 +618,8 @@ Route::middleware(['auth'])->group(/**
         ##### PUBLICIDAD
 
         Route::get('property/find/{type_document}/{document}/{band}', 'PropertyController@findTaxPayers');
+        Route::post('/publicity/taxes/total', 'PublicityTaxesController@calculateAmount');
+
         Route::post('/publicity/save', 'PublicityController@store')->name('publicity.save');
         Route::post('/publicity/update', 'PublicityController@update')->name('publicity.update');
 
