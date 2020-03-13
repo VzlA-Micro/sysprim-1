@@ -436,7 +436,7 @@ $date = '31/12/' . date('Y');
             <tr>
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->taxes->id))) !!} "
-                         style="float: left;top: -80px;right: 0px !important;left: 100px; position: absolute;" alt="Image" >
+                         style="float: left;top: 0.2cm;right: 0px !important;left: 100px; position: absolute;" alt="Image" >
                 </td>
             </tr>
 
