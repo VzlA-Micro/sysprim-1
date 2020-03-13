@@ -56,7 +56,7 @@
 									</label>
 								</div>
                                 <a href="{{url('payments/bdv/register/'.$taxes_id)}}">
-                                    <div class="col s12 m6">
+                                    <div class="col s12 m4">
                                         <input type="radio" class="">
                                         <label class="btn-radio red">
                                             <i class="">
@@ -64,23 +64,23 @@
                                                      style="height: 70px!important;width: 200px!important;"
                                                      alt=" bank Image" width="100%" height="100%">
                                             </i>
-                                            <span class="truncate black-text">Pago Instantaneo (Banco Venezuela)</span>
+                                            <span class="truncate white-text">Pago Instantaneo (Banco Venezuela)</span>
                                         </label>
                                     </div>
                                 </a>
-                                <a href="{{url('payments/petro/register/'.$taxes_id)}}">
-                                    <div class="col s12 m6">
-                                        <input type="radio" class="">
-                                        <label class="btn-radio" style="background-color: #164471">
-                                            <i class="">
-                                                <img src="{{ asset('images/png/logo-petro-home.png') }}"
-                                                     style="height: 70px!important;width: 70px!important;"
-                                                     alt=" bank Image" width="100%" height="100%">
-                                            </i>
-                                            <span class="truncate black-text">Pago Instantaneo (Petro)</span>
-                                        </label>
-                                    </div>
-                                </a>
+                                {{--<a href="{{url('payments/petro/register/'.$taxes_id)}}">--}}
+                                    {{--<div class="col s12 m6">--}}
+                                        {{--<input type="radio" class="">--}}
+                                        {{--<label class="btn-radio" style="background-color: #164471">--}}
+                                            {{--<i class="">--}}
+                                                {{--<img src="{{ asset('images/png/logo-petro-home.png') }}"--}}
+                                                     {{--style="height: 70px!important;width: 70px!important;"--}}
+                                                     {{--alt=" bank Image" width="100%" height="100%">--}}
+                                            {{--</i>--}}
+                                            {{--<span class="truncate black-text">Pago Instantaneo (Petro)</span>--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
+                                {{--</a>--}}
 							</div>
 
 
