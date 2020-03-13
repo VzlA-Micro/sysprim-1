@@ -489,7 +489,7 @@
 
                                     <div class="input-field col s12">
                                         <i class="icon-exposure_plus_1 prefix"></i>
-                                        <input type="number" name="quantity" id="quantity" maxlength="5" value="{{$publicity->quantity}}" min="1" disabled required>
+                                        <input type="text" name="quantity" id="quantity" class="validate number-only" maxlength="5" value="{{$publicity->quantity}}" min="1" disabled required>
                                         <label for="quantity">Cantidad de Lugares</label>
                                     </div>
                                 </div>
