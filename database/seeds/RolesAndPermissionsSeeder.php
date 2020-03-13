@@ -1144,13 +1144,13 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Ver Planilla PDF',
             ]);
 
-        Permission::create(['name' => 'Configuración']);
-        Permission::create(['name' => 'Configuración - General']);
-        Permission::create(['name' => 'Gestionar Imagenes']);
-        Permission::create(['name' => 'Registrar Imagen']);
-        Permission::create(['name' => 'Consultar Imagenes']);
-        Permission::create(['name' => 'Detalles Imagen']);
-        Permission::create(['name' => 'Actualizar Imagen']);
+        // Permission::create(['name' => 'Configuración']);
+        // Permission::create(['name' => 'Configuración - General']);
+        // Permission::create(['name' => 'Gestionar Imagenes']);
+        // Permission::create(['name' => 'Registrar Imagen']);
+        // Permission::create(['name' => 'Consultar Imagenes']);
+        // Permission::create(['name' => 'Detalles Imagen']);
+        // Permission::create(['name' => 'Actualizar Imagen']);
 
 
         DB::table('model_has_roles')->insert([

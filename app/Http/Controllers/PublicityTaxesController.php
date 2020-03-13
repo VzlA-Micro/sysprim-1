@@ -128,11 +128,7 @@ class PublicityTaxesController extends Controller
         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxe->status = 'temporal';
 //        dd($baseImponible); die();
-<<<<<<< HEAD
         $taxe->type = $taxeType;
-=======
-        $taxe->type = 'daily';
->>>>>>> c798facf68f193670c5b269475aa75523bae48f4
 
         $date = Carbon::now();
         $year = $date->year;
