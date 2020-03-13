@@ -8,7 +8,7 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company') }}</a></li>
                         <li class="breadcrumb-item"><a
                                     href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
                                 Declaraciones</a></li>
@@ -23,7 +23,7 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company') }}</a></li>
                         <li class="breadcrumb-item"><a
                                     href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
                                 Declaraciones</a></li>

@@ -476,8 +476,11 @@ class CompanyTaxesController extends Controller
 
         }
 
+
         $taxes->status="process";
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->update();
+
 
 
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
@@ -1014,6 +1017,7 @@ class CompanyTaxesController extends Controller
         }
 
         $taxes->status = "process";
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->update();
 
 

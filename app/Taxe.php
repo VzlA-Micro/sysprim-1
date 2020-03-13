@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment', 'bankName','statusName','typeTaxes','amountFormat','fiscalPeriodFormat','fiscalPeriodFormatEnd'];
+    protected $appends = ['total', 'typePayment','statusName','typeTaxes','amountFormat','fiscalPeriodFormat','fiscalPeriodFormatEnd'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
@@ -137,27 +137,28 @@ class Taxe extends Model implements Auditable {
             return $this->typePayment = "TRASNFERENCIA BANCARIA";
         }else if($type=='PTS'){
             return $this->typePayment = "TAQUILLA SEMAT";
+        }else if($type=='PBP'){
+            return $this->typePayment = "BOTÓN DE PAGO";
         }
 
 
     }
 
-    public function getBankNameAttribute(){
+
+    public function getNameBankAttribute(){
         if($this->bank==44){
-            return $this->bankName="BOD";
+            return $this->nameBank="BOD";
         }else if($this->bank==77){
-            return $this->bankName="BICENTENARIO";
+            return $this->nameBank="BICENTENARIO";
         }else if ($this->bank==99){
-            return $this->bankName="BNC";
+            return $this->nameBank="BNC";
         }else if($this->bank==33){
-             return $this->bankName="100%BANCO";
+             return $this->nameBank="100%BANCO";
         }else if($this->bank==55){
-           return  $this->bankName="BANESCO";
+           return  $this->nameBank="BANESCO";
         }else{
-            return $this->bankName="S/N";
+            return $this->nameBank="S/N";
         }
-
-
     }
 
 
