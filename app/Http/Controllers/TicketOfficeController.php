@@ -167,7 +167,7 @@ class TicketOfficeController extends Controller
         $payments->amount = $amount;
         $payments->ref = $ref;
         $payments->bank = $bank;
-
+        $payments->bank_name = CheckCollectionDay::getNameBank($bank);
 
         $payments->name = $person;
         $payments->phone = $country_code . $phone;
@@ -212,6 +212,7 @@ class TicketOfficeController extends Controller
                     $code = substr($taxes_find->code, 3, 12);
                     $code_payment = substr($taxes_find->code, 3, 2);
                     $taxes_find->bank = $bank_destinations;
+                    $taxes_find->bank_name=CheckCollectionDay::getNameBank($bank_destinations);
                     $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
 
@@ -222,6 +223,8 @@ class TicketOfficeController extends Controller
                     $taxes_find->code = TaxesNumber::generateNumberTaxes($payments_type.$code_payment);
                     $taxes_find->status = 'process';
                     $taxes_find->bank = $bank;
+                    $taxes_find->bank_name=CheckCollectionDay::getNameBank($bank);
+
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
 
                 } else {
@@ -231,6 +234,7 @@ class TicketOfficeController extends Controller
                     $taxes_find->digit = TaxesNumber::generateNumberSecret($taxes_find->amount, $taxes_find->created_at->format('Y-m-d'), $bank, $code);
                     $taxes_find->status = 'verified';
                     $taxes_find->bank = $bank;
+                    $taxes_find->bank_name=CheckCollectionDay::getNameBank($bank);
                 }
                 $taxes_find->update();
             }
@@ -742,7 +746,9 @@ class TicketOfficeController extends Controller
             return view('modules.payments.pointofsale', ['taxes' => $payment, 'amount_taxes' => 0]);
         } else if ($type === 'DEPOSITO BANCARIO') {
             return view('modules.payments.deposit', ['taxes' => $payment, 'amount_taxes' => 0]);
-        } else {
+        } else  if($type === 'BOTON DE PAGO'){
+            return view('modules.payments.button_payment', ['taxes' => $payment, 'amount_taxes' => 0]);
+        }else{
             return redirect('ticket-office/type-payment');
         }
 

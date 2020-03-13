@@ -57,4 +57,22 @@ class CheckCollectionDay{
 
         return $verify;
     }
+
+
+    public static function  getNameBank($code){
+            $name_bank='';
+            if($code==44){
+                return $name_bank="BOD";
+            }else if($code==77){
+                return $name_bank="BICENTENARIO";
+            }else if ($code==99){
+                return $name_bank="BNC";
+            }else if($code==33){
+                return $name_bank="100%BANCO";
+            }else if($code==55){
+                return  $name_bank="BANESCO";
+            }else{
+                return $name_bank="S/N";
+            }
+    }
 }

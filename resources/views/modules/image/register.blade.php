@@ -72,6 +72,14 @@
 @endsection
 
 @section('scripts')
+
+    <script>
+        $('#register').submit(function () {
+            $("#preloader").fadeIn('fast');
+            $("#preloader-overlay").fadeIn('fast');
+        });
+    </script>
+
     <script src="{{ asset('js/imagePreview.js') }}"></script>
     {{--<script src="{{ asset('js/data/image.js') }}"></script>--}}
 @endsection

@@ -21,6 +21,7 @@ use App\User;
 use Mail;
 use App\Company;
 use App\PublicityTaxe;
+use App\Helpers\TaxesMonth;
 use App\Val_cat_const_inmu;
 
 class BdvController extends Controller
@@ -39,13 +40,15 @@ class BdvController extends Controller
 
 
         $taxes = Taxe::findOrFail($request->input('id'));
+        $taxes->bank_name="BANCO VENEZUELA";
+        $taxes->update();
         $taxes_id = $request->input('id');
         $Payment = new IpgBdvPaymentRequest();;
 
         $Payment->idLetter = $request->input('type_document'); //Letra de la cédula - V, E o P
         $Payment->idNumber = $request->input('document'); //Número de cédula
 
-        $number_payments = TaxesNumber::generateNumberPayment('PBV55');
+        $number_payments = TaxesNumber::generateNumberPayment('PBP55');
         $Payment->amount = $taxes->amount; //Monto a combrar, DECIMAL
         $Payment->currency = 1; //Moneda del pago, 0 - Bolivar Fuerte, 1 - Dolar
         $Payment->reference = $number_payments; //Código de referecia o factura
@@ -65,7 +68,8 @@ class BdvController extends Controller
                 $payments_sysprim = new  Payment();
                 $payments_sysprim->code = $number_payments;
                 $payments_sysprim->amount = $taxes->amount;
-                $payments_sysprim->status = 'process-bdv';
+                $payments_sysprim->type_payment = 'BOTON DE PAGO';
+                $payments_sysprim->status = 'process';
                 $payments_sysprim->bank_name = 'BANCO VENEZUELA';
                 $payments_sysprim->description="PAGO DE " . strtoupper($taxes->branch) . " " . $taxes->created_at->format('d-m-Y'); ;
                 $payments_sysprim->phone = $request->input('country_code') . $request->input('phone');
@@ -119,7 +123,7 @@ class BdvController extends Controller
                     $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
                     $company = Company::find($companyTaxes[0]->company_id);
                     $userCompany = $company->users()->get();
-                    $taxe->code = TaxesNumber::generateNumberTaxes('PPV81');
+                    $taxe->code = TaxesNumber::generateNumberTaxes('PBP81');
                     $taxe->update();
 
 
@@ -140,7 +144,7 @@ class BdvController extends Controller
                 } elseif ($taxe->type == 'definitive') {
 
                     $taxe->status = 'verified-sysprim';
-                    $taxe->code = TaxesNumber::generateNumberTaxes('PPV89');
+                    $taxe->code = TaxesNumber::generateNumberTaxes('PBP89');
                     $taxe->update();
 
                     $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
@@ -169,7 +173,7 @@ class BdvController extends Controller
                 });
 
 
-                return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra y verificada con éxito,fue enviado al correo' . \Auth::user()->email . '.');
+                return redirect('payments/history/' . session('company'))->with('message', 'La planilla fue registra y su pago fue procesado  con éxito, fue enviado al correo:' . \Auth::user()->email . '.');
 
             } elseif ($taxe->branch == 'Pat.Veh') {
 
@@ -178,7 +182,7 @@ class BdvController extends Controller
                 $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
                 $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
                 $user = $vehicleFind->users()->get();
-                $taxe->code = TaxesNumber::generateNumberTaxes('PPV85');
+                $taxe->code = TaxesNumber::generateNumberTaxes('PBP85');
                 $taxe->update();
 
                 $pdf = \PDF::loadView('modules.ticket-office.vehicle.modules.receipt.receipt', [
@@ -220,7 +224,7 @@ class BdvController extends Controller
                     $type = 'user';
                 }
 
-                $taxe->code = TaxesNumber::generateNumberTaxes('PPV84');
+                $taxe->code = TaxesNumber::generateNumberTaxes('PBP84');
                 $taxe->update();
 
 
@@ -259,7 +263,7 @@ class BdvController extends Controller
                     $type = 'user';
                 }
 
-                $taxe->code = TaxesNumber::generateNumberTaxes('PPV88');
+                $taxe->code = TaxesNumber::generateNumberTaxes('PBP88');
                 $taxe->update();
                 $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
                     'taxes' => $taxe,
@@ -295,7 +299,7 @@ class BdvController extends Controller
                 }
                 $publicityTaxes = PublicityTaxe::where('taxe_id', $taxe->id)->first();
 
-                $taxe->code = TaxesNumber::generateNumberTaxes('PPV86');
+                $taxe->code = TaxesNumber::generateNumberTaxes('PBP86');
                 $taxe->update();
 
                 $pdf = \PDF::loadView('modules.publicity-payments.receipt', [

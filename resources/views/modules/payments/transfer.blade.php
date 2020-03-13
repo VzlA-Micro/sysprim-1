@@ -46,7 +46,7 @@
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         {{--<td class="hide">{{$taxe->name}}</td>
                                         <td class="hide">{{$taxe->phone}}</td>--}}
-                                        <td>{{$taxe->bankName}}</td>
+                                        <td>{{$taxe->bank_name}}</td>
                                         <td>{{$taxe->statusName}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
@@ -140,7 +140,7 @@
                                             
                                                 <a href="#"
                                                    class="btn blue waves-effect waves-light details-payment"
-                                                   data-bank="{{$taxe->bankName}}" data-destino="{{$taxe->taxes[0]->bankName}}"
+                                                   data-bank="{{$taxe->bank_name}}" data-destino="{{$taxe->taxes[0]->bank_name}}"
                                                    data-phone="{{$taxe->phone}}"
                                                    data-name="{{$taxe->name}}"
                                                    data-reference="{{$taxe->ref}}">

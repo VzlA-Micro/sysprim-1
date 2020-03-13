@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Pagos</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Punto de Venta</a></li>
                 </ul>
             </div>
 
@@ -21,18 +21,22 @@
                     <div class="card-content">
                         <input type="text" class="hide" id="amount_total" value="{{number_format($amount_taxes,2)}}">
 
+
                         <table class="centered highlight" id="payments" style="width: 100%">
                             <thead>
+
                             <tr>
-                                <th>Código</th>
+                                <th>Codigó de Pago</th>
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
-                                <th>Lote</th>
                                 <th>Ref o Código</th>
-                                <th>status</th>
+                                <th>Status</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
+                                @can('Anular Pagos')
+                                    <th>Acción</th>
+                                @endcan
                                 @can('Detalles Pagos')
                                     <th>Detalles</th>
                                 @endcan
@@ -42,16 +46,41 @@
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
                                     <tr>
-                                        <td>{{$taxe->code}}</td>
+                                        <td>{{ $taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         <td>{{$taxe->type_payment}}</td>
                                         <td>{{$taxe->bank_name}}</td>
-                                        <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->ref}}</td>
-                                        <td>{{$taxe->statusName}}</td>
+                                        <td>{{$taxe->status_name}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
-
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
+                                        @can('Anular Pagos')
+                                            <td>
+                                                @if($taxe->status=='process')
+                                                    <div class="input-field col s12 m6 ">
+                                                        <button type="button"
+                                                                class="change-status btn waves-effect waves-light green"
+                                                                value="{{$taxe->id}}" data-status="verified">
+                                                            <i class="icon-check"></i></button>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6 ">
+                                                        <button type="button"
+                                                                class="change-status btn waves-effect waves-light red"
+                                                                value="{{$taxe->id}}" data-status="cancel">
+                                                            <i class="icon-cancel"></i></button>
+                                                    </div>
+                                                @else
+                                                    <div class="input-field col s12 m12">
+                                                        <button type="button"
+                                                                class="btn waves-effect waves-light green col s12 change-status-point"
+                                                                value="{{$taxe->id}}" data-status="cancel">
+                                                            <i class="icon-cancel"></i></button>
+                                                    </div>
+                                                @endif
+
+                                            </td>
+                                        @endcan
                                         @can('Detalles Pagos')
                                             @if($taxe->taxes[0]->branch==='Act.Eco')
 
@@ -103,9 +132,11 @@
                                                 </td>
                                             @endif
 
+
+
+
+
                                         @endcan
-
-
                                     </tr>
                                 @endforeach
                             @endif
@@ -121,7 +152,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/datatables.js') }}"></script>
-    <script src="{{ asset('js/dev/generate-receipt.js') }}"></script>
+    <script src="{{ asset('js/dev/payments.js') }}"></script>
     <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
     <script src="{{asset('js/jszip.min.js')}}"></script>
     <script src="{{asset('js/pdfmake.min.js')}}"></script>
@@ -178,18 +209,15 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: 'REGISTROS DE PAGO',
+                    title: 'REGISTROS DE PAGO/PUNTO DE VENTA',
                     download: 'open',
                     className: 'btn orange waves-effect waves-light',
                     messageTop: 'Usuario:' + name,
 
 
-                    messageBottom: 'TOTAL RECAUDADO:' + amount_total + ".Bs",
-
-
                     customize: function (doc) {
                         doc.styles.title = {
-                            fontSize: '25',
+                            fontSize: '20',
                             alignment: 'center'
                         }, doc.styles['td:nth-child(2)'] = {
                             width: '100px',
@@ -201,13 +229,14 @@
                             alignment: 'center',
                             bold: true
 
-                        }, doc.defaultStyle.fontSize = 8;
+                        }, doc.defaultStyle.fontSize = 9;
 
-                    }, exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
-                }
-                },
-                {
+
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    }
+                },{
                     extend: 'csvHtml5',
                     title: 'REGISTROS DE PAGO',
                     className: 'btn orange waves-effect waves-light',

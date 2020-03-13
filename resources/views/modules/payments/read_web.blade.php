@@ -43,7 +43,7 @@
                                     <td>{{$taxe->code}}</td>
                                     <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                     <td>{{$taxe->typePayment}}</td>
-                                    <td>{{$taxe->bankName}}</td>
+                                    <td>{{$taxe->bank_name}}</td>
                                     <td>{{$taxe->branch}}</td>
                                     <td>{{$taxe->statusName}}</td>
                                     <td>{{number_format($taxe->amount,2)}}</td>
