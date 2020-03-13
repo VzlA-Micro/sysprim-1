@@ -46,11 +46,13 @@
                             <tbody>
                             @if($taxes!==null)
                                 @foreach($taxes as $taxe)
+
+
                                     <tr>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         <td>{{$taxe->code}}</td>
                                         <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->bankName}}</td>
+                                        <td>{{$taxe->bank_name}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{$taxe->ref}}</td>
                                         <td>{{$taxe->statusName}}</td>
