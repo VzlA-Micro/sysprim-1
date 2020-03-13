@@ -171,8 +171,9 @@
         <td style="width: 10%;font-size: 10px;!important;"> {{$taxes->branch}}</td>
         <td style="width: 20%;font-size: 10px;!important">{{$taxes->fiscal_period." - ".$taxes->fiscal_period_end}}</td>
         <td style="width: 15%;font-size: 10px; !important;">0</td>
-        <td style="width: 15%;font-size: 10px;!important">0</td>
-        <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible, 2, ',', '.')}}</td>
+        <td style="width: 15%;font-size: 10px;!important">0
+        @php $conDiscount=$vehicleTaxes[0]->pivot->base_imponible;@endphp
+        <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
 
     </tr>
     @if($taxes->type==="Anual")
@@ -183,7 +184,8 @@
                 <td style="width: 20%;font-size: 10px;!important"></td>
                 <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount,2)}}</td>
+                @php $conDiscount=$vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount,2)}}</td>
             </tr>
         @endif
 
@@ -192,9 +194,10 @@
                 <td style="width: 20%;font-size: 10px !important;">Credito fiscal</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{'-'.number_format($vehicleTaxes[0]->pivot->fiscal_credits, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount-=$vehicleTaxes[0]->pivot->fiscal_credits;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
         @if($vehicleTaxes[0]->pivot->recharge > 0)
@@ -202,9 +205,10 @@
                 <td style="width: 20%;font-size: 10px !important;">recargo (20%)</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount+=$vehicleTaxes[0]->pivot->recharge;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
         @if($vehicleTaxes[0]->pivot->recharge_mora > 0)
@@ -212,9 +216,10 @@
                 <td style="width: 20%;font-size: 10px !important;">interés por mora</td>
                 <td style="width: 10%;font-size: 10px;!important;"></td>
                 <td style="width: 20%;font-size: 10px;!important"></td>
-                <td style="width: 15%;font-size: 10px; !important;">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                <td style="width: 15%;font-size: 10px; !important;">{{number_format($conDiscount, 2, ',', '.')}}</td>
                 <td style="width: 15%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->recharge_mora, 2, ',', '.')}}</td>
-                <td style="width: 10%;font-size: 10px;!important">{{number_format($vehicleTaxes[0]->pivot->base_imponible+$vehicleTaxes[0]->pivot->recharge+$vehicleTaxes[0]->pivot->recharge_mora-$vehicleTaxes[0]->pivot->discount, 2, ',', '.')}}</td>
+                @php $conDiscount+=$vehicleTaxes[0]->pivot->recharge_mora;@endphp
+                <td style="width: 10%;font-size: 10px;!important">{{number_format($conDiscount, 2, ',', '.')}}</td>
             </tr>
         @endif
 
