@@ -44,7 +44,7 @@
                                        pattern="[0-9A-Za-z]+">
                                 <label for="licensePlate">Placa del Vehículo</label>
                             </div>
-                            <input type="text" id="vehicle_id" value="" name="vehicle_id" class="hide">
+                            <input type="text" id="vehicleId" value="" name="vehicleId" class="hide">
                             <div class="input-field col s12 m4">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="brandTo" id="brandTo" disabled>

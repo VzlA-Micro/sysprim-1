@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
-
 class ImagesController extends Controller
 {
     /**
@@ -41,6 +40,11 @@ class ImagesController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $this->validate($request,[
+            'image' => 'required|dimensions:min_width=4000,min_height=2250|max:2000|mimes:jpg,png,jpeg',
+        ]);
+
+
         $image = new Images();
 
         $image_path = $request->file('image');
@@ -55,12 +59,13 @@ class ImagesController extends Controller
         $image->status = "disabled";
         $image->save();
 
-        $response = [
-            'status' => 'success',
-            'message' => 'La imagen se ha registrado con éxito.',
-            '$image' => $image];
-
-        return response()->json($response);
+//        $response = [
+//            'status' => 'success',
+//            'message' => 'La imagen se ha registrado con éxito.',
+//            '$image' => $image];
+//
+//        return response()->json($response);
+          return redirect()->route('image.read')->with(['mesage'=>'La imagen se registro con exito']);
     }
 
     public function getImage($filename){
