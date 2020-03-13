@@ -23,6 +23,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
+
     /**
      * Where to redirect users after login.
      *
@@ -41,6 +43,15 @@ class LoginController extends Controller
         if(\Auth::check()){
            \ Auth::logoutOtherDevices(request('password'));
         }
+    }
+
+    public function showLoginForm()
+    {
+        $animated = ['animate down','animate in','animate down','animate out'];
+        $background = Images::where('status', 'enabled')->get();
+
+        return view('auth.login', ['backgrounds'    => $background,
+            'animated'       =>  $animated  ]);
     }
 
     protected function authenticated()
