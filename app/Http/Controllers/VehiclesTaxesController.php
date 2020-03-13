@@ -412,11 +412,13 @@ class VehiclesTaxesController extends Controller
         //$total = (float)$request->input('total');
         $fiscalCredits = $fiscalCredit;
         $idVehicle = $vehicleId;
-        $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$idVehicle)->get();
-        $vehicleTaxe=VehiclesTaxe::find($vehicleTaxes[0]->id);
-        $taxes=Taxe::where('id',$vehicleTaxes[0]->taxe_id)->first();
+        $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$idVehicle)->latest()
+            ->first();
+        $vehicleTaxe=VehiclesTaxe::find($vehicleTaxes->id);
+        $taxes=Taxe::where('id',$vehicleTaxes->taxe_id)->latest()
+            ->first();
         $aux = 0;
-
+//dd($taxes);
         if ($fiscalCredits >= 0) {
             $aux = $taxes->amount - $fiscalCredits;
             if ($aux < 0) {
