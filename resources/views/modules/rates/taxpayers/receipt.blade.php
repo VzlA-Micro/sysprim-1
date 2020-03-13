@@ -298,7 +298,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->errorCorrection('H')->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
                          style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image">
                 </td>
         @else
