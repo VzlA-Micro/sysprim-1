@@ -21,7 +21,7 @@ use App\Brand;
 use App\ModelsVehicle;
 use App\VehicleType;
 use App\Taxe;
-
+use App\Helpers\CheckCollectionDay;
 class VehiclesTaxesController extends Controller
 {
     public function create($id)
@@ -280,9 +280,10 @@ class VehiclesTaxesController extends Controller
             $taxes->bank = $bank_payment;
             $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
         }
-
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->status = "process";
         $taxes->update();
+
 
         $vehiclesTaxe->status = 'process';
         $vehiclesTaxe->update();

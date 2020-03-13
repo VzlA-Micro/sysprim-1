@@ -30,8 +30,8 @@
                                 <th>Fecha</th>
                                 <th>Forma de Pago</th>
                                 <th>Banco</th>
-                                <th>Lote</th>
                                 <th>Ref o Código</th>
+                                <th>Status</th>
                                 <th>Planilla</th>
                                 <th>Monto</th>
                                 @can('Anular Pagos')
@@ -49,19 +49,26 @@
                                         <td>{{ $taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->nameBank}}</td>
+                                        <td>{{$taxe->bank_name}}</td>
                                         <td>{{$taxe->ref}}</td>
-                                        <td>{{$taxe->lot}}</td>
+                                        <td>{{$taxe->status_name}}</td>
                                         <td>{{$taxe->taxes[0]->code}}</td>
                                         <td>{{number_format($taxe->amount,2)." Bs"}}</td>
                                         @can('Anular Pagos')
                                             <td>
-                                                @if($taxe->status==='cancel')
-                                                    <div class="input-field col s12 m12">
-                                                        <button type="button" disabled
-                                                                class="btn waves-effect waves-light  col s12 red"
-                                                                value="">
-                                                            <i class="icon-do_not_disturb_alt"></i></button>
+                                                @if($taxe->status=='process')
+                                                    <div class="input-field col s12 m6 ">
+                                                        <button type="button"
+                                                                class="change-status btn waves-effect waves-light green"
+                                                                value="{{$taxe->id}}" data-status="verified">
+                                                            <i class="icon-check"></i></button>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6 ">
+                                                        <button type="button"
+                                                                class="change-status btn waves-effect waves-light red"
+                                                                value="{{$taxe->id}}" data-status="cancel">
+                                                            <i class="icon-cancel"></i></button>
                                                     </div>
                                                 @else
                                                     <div class="input-field col s12 m12">

@@ -386,6 +386,7 @@ class PropertyTaxesController extends Controller
         }
 
         $taxes->status = "process";
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->update();
 
 //        dd($propertyTaxes);
