@@ -44,11 +44,8 @@ class BdvController extends Controller
         $Payment->idLetter = $request->input('type_document'); //Letra de la cédula - V, E o P
         $Payment->idNumber = $request->input('document'); //Número de cédula
 
-        $amount_format = str_replace('.', '', $request->input('amount'));
-        $amount_format = str_replace(',', '.', $amount_format);
-
-        $number_payments = TaxesNumber::generateNumberPayment('PBV');
-        $Payment->amount = 1; //Monto a combrar, DECIMAL
+        $number_payments = TaxesNumber::generateNumberPayment('PBV55');
+        $Payment->amount = $taxes->amount; //Monto a combrar, DECIMAL
         $Payment->currency = 1; //Moneda del pago, 0 - Bolivar Fuerte, 1 - Dolar
         $Payment->reference = $number_payments; //Código de referecia o factura
         $Payment->title = "IMPUESTOS SEMAT IRIBARREN."; //Titulo para el pago, Ej: Servicio de Cable
@@ -56,7 +53,6 @@ class BdvController extends Controller
         $Payment->email = $request->input('email');
         $Payment->cellphone = $request->input('country_code') . $request->input('phone');
         $Payment->urlToReturn = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/payments/bdv/verified/' . $taxes_id; //URL de retrono al finalizar el pago
-
         $PaymentProcess = new IpgBdv ("00000000018", "M96wlqhC");//Instanciación de la API de pago con usuario y clave
         $response = $PaymentProcess->createPayment($Payment);
 
@@ -67,9 +63,10 @@ class BdvController extends Controller
                 // echo $response->urlPayment;
                 $payments_sysprim = new  Payment();
                 $payments_sysprim->code = $number_payments;
-                $payments_sysprim->amount = $amount_format;
+                $payments_sysprim->amount = $taxes->amount;
                 $payments_sysprim->status = 'process-bdv';
                 $payments_sysprim->bank_name = 'BANCO VENEZUELA';
+                $payments_sysprim->description="PAGO DE " . strtoupper($taxes->branch) . " " . $taxes->created_at->format('d-m-Y'); ;
                 $payments_sysprim->phone = $request->input('country_code') . $request->input('phone');
                 $payments_sysprim->save();
                 $paymentsTaxes = $payments_sysprim->taxes()->attach(['taxe_id' => $taxes_id]);
@@ -99,8 +96,9 @@ class BdvController extends Controller
             $firm=true;
             $payments_find=Payment::where('code',$payments->reference)->first();
             $payments_find->status='verified';
+            $payments_find->ref=$token;
             $payments_find->update();
-            $taxe->status='verified';
+            $taxe->status='verified-sysprim';
             $taxe->update();
         }
 
@@ -120,9 +118,7 @@ class BdvController extends Controller
                     $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
                     $company = Company::find($companyTaxes[0]->company_id);
                     $userCompany = $company->users()->get();
-                    $taxe->status = 'verified-sysprim';
                     $taxe->code = TaxesNumber::generateNumberTaxes('PPV81');
-
                     $taxe->update();
 
 
@@ -181,8 +177,6 @@ class BdvController extends Controller
                 $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
                 $vehicleFind = Vehicle::find($vehicleTaxes[0]->id);
                 $user = $vehicleFind->users()->get();
-
-                $taxe->status = 'verified-sysprim';
                 $taxe->code = TaxesNumber::generateNumberTaxes('PPV85');
                 $taxe->update();
 
@@ -226,7 +220,6 @@ class BdvController extends Controller
                 }
 
                 $taxe->code = TaxesNumber::generateNumberTaxes('PPV84');
-                $taxe->status = 'verified-sysprim';
                 $taxe->update();
 
 
@@ -265,7 +258,6 @@ class BdvController extends Controller
                     $type = 'user';
                 }
 
-                $taxe->status = 'verified-sysprim';
                 $taxe->code = TaxesNumber::generateNumberTaxes('PPV88');
                 $taxe->update();
                 $pdf = \PDF::loadView('modules.rates.taxpayers.receipt', [
@@ -285,7 +277,7 @@ class BdvController extends Controller
                     $msj->attachData($pdf->output(), time() . 'PLANILLA_VERIFICADA.pdf');
                 });
 
-                return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra y verificada con éxito,fue enviado al correo' . \Auth::user()->email . '.');
+                return redirect('rate/taxpayers/payments-history')->with('message', 'La planilla fue registra y su pago fue procesado  con éxito, fue enviado al correo:' . \Auth::user()->email . '.');
 
             } elseif ($taxe->branch == 'Prop. y Publicidad') {
                 $owner = $taxe->publicities()->get();
@@ -302,7 +294,6 @@ class BdvController extends Controller
                 }
                 $publicityTaxes = PublicityTaxe::where('taxe_id', $taxe->id)->first();
 
-                $taxe->status = 'verified-sysprim';
                 $taxe->code = TaxesNumber::generateNumberTaxes('PPV86');
                 $taxe->update();
 

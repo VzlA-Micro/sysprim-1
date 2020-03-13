@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             RatesTableSeeder::class,
             PrologueTableSeeder::class,
             AccessoriesTableSeeder::class,
+            ImageSeeder::class
         ]);
     }
 }

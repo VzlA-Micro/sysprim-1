@@ -7,6 +7,7 @@ use App\Helpers\Verification;
 use App\Prologue;
 use App\Taxe;
 use App\User;
+use App\Images;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +20,6 @@ use App\Helpers\CedulaVE;
 use Psy\Util\Json;
 use  App\Helpers\Rif;
 use App\Helpers\CheckCollectionDay;
-
-
-
-
 
 class HomeController extends Controller
 {
@@ -37,16 +34,24 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    public function home(){
+        if (Auth::guest()) {
+            $animated = ['animate down','animate in','animate down','animate out'];
+            $background = Images::where('status', 'enabled')->get();
+
+            return view('auth.login', ['backgrounds'    => $background,
+                             'animated'       =>  $animated  ]);
+        } else {
+            return view('home');
+        }
+    }
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request){
-
-
-
-
 
         if(\Auth::user()->status_account==='block'){
             Auth::logout();
