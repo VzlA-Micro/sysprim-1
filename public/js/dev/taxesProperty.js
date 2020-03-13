@@ -136,71 +136,89 @@ $('document').ready(function () {
         })
     });
 
+
     $('#property-taxes').submit(function(e) {
-        var property_id = $('#property_id').val();
-        var owner_id = $('#owner_id').val();
-        var base_imponible = $('#base_imponible').val();
-        var recharge = $('#recharge').val();
-        var terrain_amount = $('#terrain_amount').val();
-        var build_amount = $('#build_amount').val();
-        var interest = $('#interest').val();
-        // var alicuota = $('#alicuota').val();
-        var fiscal_credit = $('#fiscal_credit').val();
-        var discount = $('#discount').val();
-        var amount = $('#amount').val();
-        var status = $('#status').val();
-        console.log(amount, property_id);
         e.preventDefault();
-        $.ajax({
-            method: "POST",
-            dataType: "json",
-            data: {
-                property_id:property_id,
-                owner_id: owner_id,
-                base_imponible: base_imponible,
-                recharge: recharge,
-                interest: interest,
-                terrain_amount: terrain_amount,
-                build_amount: build_amount,
-                // alicuota: alicuota,
-                fiscal_credit: fiscal_credit,
-                discount: discount,
-                amount: amount,
-                status: status
+        var taxe_id = $('#taxes_id').val();
+        $("#preloader").fadeIn('fast');
+        $("#preloader-overlay").fadeIn('fast');
+        swal({
+            title: "!Bien Hecho!",
+            text: "Se ha generado una planilla. Ahora debes proceder con el pago.",
+            icon: "success",
+            button: {
+                text: "Esta bien",
+                className: "blue-gradient"
             },
-            url: url + 'properties/taxes/store',
-            beforeSend: function () {
-                $("#preloader").fadeIn('fast');
-                $("#preloader-overlay").fadeIn('fast');
-            },
-            success: function(resp) {
-                console.log(resp.taxe_id);
-                swal({
-                    title: "!Bien Hecho!",
-                    text: "Se ha generado una Planilla. Ahora debes proceder con el pago.",
-                    icon: "success",
-                    button: {
-                        text: "Esta bien",
-                        className: "blue-gradient"
-                    },
-                }).then(function() {
-                    location.href = url + 'properties/taxes/payments/' + resp.taxe_id;
-                });
-            },
-            error: function (err) {
-                console.log(err);
-                swal({
-                    title: "¡Oh no!",
-                    text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
-                    icon: "error",
-                    button: {
-                        text: "Entendido",
-                        className: "red-gradient"
-                    },
-                });
-            }
+        }).then(function() {
+            location.href = url + 'properties/taxes/payments/' + taxe_id;
         });
     });
+    // $('#property-taxes').submit(function(e) {
+    //     var property_id = $('#property_id').val();
+    //     var owner_id = $('#owner_id').val();
+    //     var base_imponible = $('#base_imponible').val();
+    //     var recharge = $('#recharge').val();
+    //     var terrain_amount = $('#terrain_amount').val();
+    //     var build_amount = $('#build_amount').val();
+    //     var interest = $('#interest').val();
+    //     // var alicuota = $('#alicuota').val();
+    //     var fiscal_credit = $('#fiscal_credit').val();
+    //     var discount = $('#discount').val();
+    //     var amount = $('#amount').val();
+    //     var status = $('#status').val();
+    //     console.log(amount, property_id);
+    //     e.preventDefault();
+    //     $.ajax({
+    //         method: "POST",
+    //         dataType: "json",
+    //         data: {
+    //             property_id:property_id,
+    //             owner_id: owner_id,
+    //             base_imponible: base_imponible,
+    //             recharge: recharge,
+    //             interest: interest,
+    //             terrain_amount: terrain_amount,
+    //             build_amount: build_amount,
+    //             // alicuota: alicuota,
+    //             fiscal_credit: fiscal_credit,
+    //             discount: discount,
+    //             amount: amount,
+    //             status: status
+    //         },
+    //         url: url + 'properties/taxes/store',
+    //         beforeSend: function () {
+    //             $("#preloader").fadeIn('fast');
+    //             $("#preloader-overlay").fadeIn('fast');
+    //         },
+    //         success: function(resp) {
+    //             console.log(resp.taxe_id);
+    //             swal({
+    //                 title: "!Bien Hecho!",
+    //                 text: "Se ha generado una Planilla. Ahora debes proceder con el pago.",
+    //                 icon: "success",
+    //                 button: {
+    //                     text: "Esta bien",
+    //                     className: "blue-gradient"
+    //                 },
+    //             }).then(function() {
+    //                 location.href = url + 'properties/taxes/payments/' + resp.taxe_id;
+    //             });
+    //         },
+    //         error: function (err) {
+    //             console.log(err);
+    //             swal({
+    //                 title: "¡Oh no!",
+    //                 text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
+    //                 icon: "error",
+    //                 button: {
+    //                     text: "Entendido",
+    //                     className: "red-gradient"
+    //                 },
+    //             });
+    //         }
+    //     });
+    // });
 
     $('.bank').click(function () {
         $('#bank').val($(this).attr('data-bank'));

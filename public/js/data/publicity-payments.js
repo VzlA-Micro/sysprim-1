@@ -81,6 +81,26 @@ $(document).ready(function() {
 
     $('#register').submit(function(e) {
         e.preventDefault();
+        var taxe_id = $('#taxe_id').val();
+        $("#preloader").fadeIn('fast');
+        $("#preloader-overlay").fadeIn('fast');
+        swal({
+            title: "!Bien Hecho!",
+            text: "Se ha generado una Planilla. Ahora debes proceder con el pago.",
+            icon: "success",
+            button: {
+                text: "Esta bien",
+                className: "blue-gradient"
+            },
+        }).then(function() {
+            location.href = url + 'publicity/payments/taxes/' + taxe_id;
+        });
+        $("#preloader").fadeIn('fast');
+        $("#preloader-overlay").fadeIn('fast');
+    });
+
+    /* $('#register').submit(function(e) {
+        e.preventDefault();
 
         var base_imponible = $('#base_imponible').val();
         var interest = $('#interest').val();
@@ -139,7 +159,7 @@ $(document).ready(function() {
                 $("#preloader-overlay").fadeOut('fast');
             }
         });
-    });
+    }); */
 
     $('.bank').click(function () {
         $('#bank').val($(this).attr('data-bank'));

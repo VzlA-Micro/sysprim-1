@@ -46,7 +46,7 @@ class PublicityTaxesController extends Controller
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
-                    DeclarationPublicity::verify($tax->id);-
+                    DeclarationPublicity::verify($tax->id);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $actualDate->format('d-m-Y')) {
                     $statusTax = 'process';
@@ -72,15 +72,43 @@ class PublicityTaxesController extends Controller
             $owner_type = 'user';
             $owner = User::find($owner_id);
         }
+        # Declarating variables to generate taxe
+        $amount = $declaration['total'];
+        $baseImponible = $declaration['baseImponible'];
+        $increment = $declaration['increment'];
+        $taxeType = $declaration['taxeType'];
+        $fiscalCredit = 0;
+        $date = Carbon::now();
+        $year = $date->year;    
+
+        # Creating Temporal Taxe --------------------------------
+        # --------------------------------------------------------------
+        $taxe = new Taxe();
+        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+        $taxe->status = 'temporal';
+        $taxe->type = $taxeType;
+        $taxe->fiscal_period = Carbon::parse('01-01-' . $year)->format('Y-m-d');
+        $taxe->fiscal_period_end = Carbon::parse('31-12-' . $year)->format('Y-m-d');
+        $taxe->branch = 'Prop. y Publicidad';
+        $taxe->amount = $amount;
+        $taxe->save();
+        $taxeId = $taxe->id;
+
+        $publicityTaxes = new PublicityTaxe();
+        $publicityTaxes->publicity_id = $publicity->id;
+        $publicityTaxes->taxe_id = $taxeId;
+        $publicityTaxes->base_imponible = $baseImponible;
+        $publicityTaxes->increment = $increment;
+//        $publicityTaxes->interest = $interest;
+        $publicityTaxes->fiscal_credit = $fiscalCredit;
+        $publicityTaxes->save();
+        # ---------------------------------------------------
+
         $baseImponible = number_format($declaration['baseImponible'], 2, ',', '.');
         $increment = number_format($declaration['increment'], 2, ',', '.');
-
 //        $interest = number_format($declaration['interest'],2,',','.');
         $amount = number_format($declaration['total'], 2, ',', '.');
-//        dd($statusTax);
-        $taxeType = $declaration['taxeType'];
 
-//        dd($taxeType);
     	return view('modules.publicity-payments.register', [
     		'advertisingTypes' => $advertisingTypes,
     		'publicity' => $publicity,
@@ -93,7 +121,8 @@ class PublicityTaxesController extends Controller
             'statusTax' => $statusTax,
             'daysDiff' => $declaration['daysDiff'],
             'increment' => $increment,
-            'taxeType' => $taxeType
+            'taxeType' => $taxeType,
+            'taxe_id' => $taxeId
     	]);
     }
 
@@ -124,38 +153,38 @@ class PublicityTaxesController extends Controller
         $taxeType = $request->input('type');
 
         # --------------------------------------------------------------
-        $taxe = new Taxe();
-        $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
-        $taxe->status = 'temporal';
-//        dd($baseImponible); die();
-        $taxe->type = $taxeType;
+//         $taxe = new Taxe();
+//         $taxe->code = TaxesNumber::generateNumberTaxes('TEM');
+//         $taxe->status = 'temporal';
+// //        dd($baseImponible); die();
+//         $taxe->type = $taxeType;
 
-        $date = Carbon::now();
-        $year = $date->year;
+//         $date = Carbon::now();
+//         $year = $date->year;
 
-//        dd($amount);
+// //        dd($amount);
 
-        $taxe->fiscal_period = Carbon::parse('01-01-' . $year)->format('Y-m-d');
-        $taxe->fiscal_period_end = Carbon::parse('31-12-' . $year)->format('Y-m-d');
-        $taxe->branch = 'Prop. y Publicidad';
-        $taxe->amount = $amount;
-        $taxe->save();
-        $taxeId = $taxe->id;
+//         $taxe->fiscal_period = Carbon::parse('01-01-' . $year)->format('Y-m-d');
+//         $taxe->fiscal_period_end = Carbon::parse('31-12-' . $year)->format('Y-m-d');
+//         $taxe->branch = 'Prop. y Publicidad';
+//         $taxe->amount = $amount;
+//         $taxe->save();
+//         $taxeId = $taxe->id;
 
-        $publicityTaxes = new PublicityTaxe();
-        $publicityTaxes->publicity_id = $request->input('publicity_id');
-        $publicityTaxes->taxe_id = $taxeId;
-        $publicityTaxes->base_imponible = $baseImponible;
-        $publicityTaxes->increment = $increment;
+//         $publicityTaxes = new PublicityTaxe();
+//         $publicityTaxes->publicity_id = $request->input('publicity_id');
+//         $publicityTaxes->taxe_id = $taxeId;
+//         $publicityTaxes->base_imponible = $baseImponible;
+//         $publicityTaxes->increment = $increment;
 
-//        $publicityTaxes->interest = $interest;
-        $publicityTaxes->fiscal_credit = $fiscalCredit;
-        if ($fiscalCredit == '') {
-            $publicityTaxes->fiscal_credit = 0;
-        } else {
-            $publicityTaxes->fiscal_credit = $fiscalCredit;
-        }
-        $publicityTaxes->save();
+// //        $publicityTaxes->interest = $interest;
+//         $publicityTaxes->fiscal_credit = $fiscalCredit;
+//         if ($fiscalCredit == '') {
+//             $publicityTaxes->fiscal_credit = 0;
+//         } else {
+//             $publicityTaxes->fiscal_credit = $fiscalCredit;
+//         }
+//         $publicityTaxes->save();
         return response()->json(['status' => 'success', 'taxe_id' => $taxeId]);
     }
 
