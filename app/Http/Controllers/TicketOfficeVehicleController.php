@@ -323,7 +323,7 @@ class TicketOfficeVehicleController extends Controller
         
         $type = VehicleType::all();
         $vehicle = Vehicle::find($id);
-        $brands = Brand::all();
+        $brands = Brand::orderBy('name','asc')->get();
         $models = ModelsVehicle::where('brand_id',$vehicle->model->brand->id)->get();
         // dd($models);
 

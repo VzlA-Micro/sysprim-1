@@ -4,6 +4,13 @@ $(window).on("load", function () {
     $("#preloader-overlay").fadeOut("fast");
 });
 $(document).ready(function() {
+    // Dark tooltip
+    var style = {
+        'background-color': '#424242',
+        'border-radius': '3px',
+        'max-width': '300px !important',
+    };
+
     if( localStorage.getItem('url')===null){
         // localStorage.setItem('url','https://172.19.50.253/');
         localStorage.setItem('url','https://sysprim.com/');

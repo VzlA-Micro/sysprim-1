@@ -31,8 +31,8 @@
                             <table class="centered highlight responsive-table" id="receipt" style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>Fecha</th>
                                     <th>Código</th>
+                                    <th>Fecha</th>
                                     <th>Ramo</th>
                                     <th>Monto</th>
                                     <th>Planilla</th>
@@ -47,12 +47,11 @@
                                 @if($taxes!==null)
                                     @foreach($taxes as $taxe)
                                         <tr>
-                                            <td>{{ $taxe->created_at }}</td>
                                             <td>{{ $taxe->publicities[0]->code }}</td>
-                                            <td>{{ $taxe->code }}</td>
+                                            <td>{{ $taxe->created_at }}</td>
                                             <td>{{ $taxe->branch }}</td>
+                                            <td>{{ $taxe->code }}</td>
                                             <td>{{ number_format($taxe->amount,2) }}</td>
-
                                             <td class="center-align">
                                                 <label>
                                                     <input type="checkbox" name="payroll" class="payroll"

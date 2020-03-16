@@ -107,6 +107,8 @@ $('document').ready(function () {
         },
         success: function (response) {
 
+            console.log(response[0]['total']);
+
             if (response !== 'error') {
                 $('#recaudacion').text(response[0]['total']);
                 $('#banesco').text(response[0]['banesco']);
@@ -114,6 +116,7 @@ $('document').ready(function () {
                 $('#bicentenario').text(response[0]['bicentenario']);
                 $('#bod').text(response[0]['bod']);
                 $('#banco100').text(response[0]['banco100']);
+                $('#bdv').text(response[0]['venezuela']);
                 chartsMonth(response);
                 topTaxes(response[11]);
                 console.log(response[12]);
@@ -537,6 +540,29 @@ function chartsMonth(data) {
                         data[3]['octubre'],
                         data[3]['noviembre'],
                         data[3]['diciembre']],
+                    "fill":
+                        false,
+                    "borderColor":
+                        "#9c27b0",
+                    "lineTension":
+                        0.1
+                },
+                {
+                    "label":
+                        "BANCO DE VENEZUELA",
+                    "data": [
+                        data[16]['enero'],
+                        data[16]['febrero'],
+                        data[16]['marzo'],
+                        data[16]['abril'],
+                        data[16]['mayo'],
+                        data[16]['junio'],
+                        data[16]['julio'],
+                        data[16]['agosto'],
+                        data[16]['septiembre'],
+                        data[16]['octubre'],
+                        data[16]['noviembre'],
+                        data[16]['diciembre']],
                     "fill":
                         false,
                     "borderColor":

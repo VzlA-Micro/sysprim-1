@@ -775,15 +775,30 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   border-radius: 3px;
   max-width: 300px !important;
 }
-
-.backdrop {
-  background-color: #ff8c66;
+.material-tooltip.default-toolitip {
+  background-color: #424242;
   border-radius: 3px;
   max-width: 300px !important;
 }
 
 .backdrop {
   background-color: #ff8c66;
+  border-radius: 3px;
+  max-width: 300px !important;
+}
+.backdrop.default-toolitip {
+  background-color: #424242;
+  border-radius: 3px;
+  max-width: 300px !important;
+}
+
+.backdrop {
+  background-color: #ff8c66;
+  max-width: 300px !important;
+}
+.backdrop.default-toolitip {
+  background-color: #424242;
+  border-radius: 3px;
   max-width: 300px !important;
 }
 
