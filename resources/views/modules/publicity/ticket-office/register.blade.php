@@ -136,7 +136,7 @@
                             <input type="hidden" name="status" value="" id="status">
                             <input type="hidden" name="type" value="" id="type">
 
-                            <div class="col s12 m6 animated bounceIn">
+                            <div class="col s12 m6 animated bounceIn tooltipped" data-tooltip="Art. 58" data-position="top">
                                 <button type="button" id="f1" name="f1" style="border: none"
                                         class="btn-app white teal-text" value="4">
                                     <i class="icon-add_circle"></i>
@@ -144,7 +144,7 @@
                                 </button>
                             </div>
 
-                            <div class="col s12 m6 animated bounceIn">
+                            <div class="col s12 m6 animated bounceIn tooltipped" data-tooltip="Art. 67, 68, 72 y 76" data-position="top">
                                 <button type="button" id="f2" name="f2" style="border: none"
                                         class="btn-app white teal-text" value="1">
                                     <i class="icon-add_circle"></i>
@@ -152,21 +152,21 @@
                                 </button>
                             </div>
 
-                            <div class="col s12 m4 animated bounceIn">
+                            <div class="col s12 m4 animated bounceIn tooltipped" data-tooltip="Art. 70, 71, 77, 84, 85" data-position="left">
                                 <button type="button" id="f3" name="f3" style="border: none"
                                         class="btn-app white teal-text" value="2">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por tamaño</span>
                                 </button>
                             </div>
-                            <div class="col s12 m4 animated bounceIn">
+                            <div class="col s12 m4 animated bounceIn tooltipped" data-tooltip="Art. 61, 62, 63, 64, 65, 66, 67, 72, 75" data-position="bottom">
                                 <button type="button" id="f4" name="f4" style="border: none"
                                         class="btn-app white teal-text" value="3">
                                     <i class="icon-add_circle"></i>
                                     <span class="truncate">Publicidad por cantidad</span>
                                 </button>
                             </div>
-                            <div class="col s12 m4 animated bounceIn">
+                            <div class="col s12 m4 animated bounceIn tooltipped" data-tooltip="Art. 83, 86" data-position="right">
                                 <button type="button" id="f5" name="f5" style="border: none"
                                         class="btn-app white teal-text" value="5">
                                     <i class="icon-add_circle"></i>

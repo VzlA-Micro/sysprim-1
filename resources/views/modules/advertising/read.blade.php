@@ -16,7 +16,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('advertising-type.read') }}">Consultar Tipos de Publicidad</a></li>
                 </ul>
             </div>
-            <div class="col s12 m12">
+            <div class="col s12 m8 offset-m2">
             	<div class="card">
             		<div class="card-header center-align">
             			<h4>Consultar Tipos de Publicidad</h4>
