@@ -6,7 +6,7 @@ $(window).on("load", function () {
 $(document).ready(function() {
     if( localStorage.getItem('url')===null){
         // localStorage.setItem('url','https://172.19.50.253/');
-        localStorage.setItem('url','http://sysprim.com.devel/');
+        localStorage.setItem('url','https://sysprim.com/');
 
     }
 
