@@ -57,14 +57,14 @@
                                         @can('Anular Pagos')
                                             <td>
                                                 @if($taxe->status=='process')
-                                                    <div class="input-field col s12 m6 ">
+                                                    <div class="input-field col s12 m12 ">
                                                         <button type="button"
                                                                 class="change-status btn waves-effect waves-light green"
                                                                 value="{{$taxe->id}}" data-status="verified">
                                                             <i class="icon-check"></i></button>
                                                     </div>
 
-                                                    <div class="input-field col s12 m6 ">
+                                                    <div class="input-field col s12 m12 ">
                                                         <button type="button"
                                                                 class="change-status btn waves-effect waves-light red"
                                                                 value="{{$taxe->id}}" data-status="cancel">
@@ -113,7 +113,7 @@
                                                 <td>
                                                     <a href="{{url('ticketOffice/vehicle/viewDetails/'.$taxe->taxes[0]->id)  }}"
                                                        class="btn btn-floating orange waves-effect waves-light">
-                                                        <i class="icon-pageview left"></i>
+                                                        <i class="icon-pageview"></i>
                                                     </a>
                                                 </td>
                                             @elseif($taxe->taxes[0]->branch==='Inm.Urbanos')
