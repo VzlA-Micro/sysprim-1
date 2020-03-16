@@ -246,12 +246,12 @@
                                                     </button>
                                                 @endif
                                                     @can('Ver Planilla PDF')
-                                                    @if($taxes->status!='cancel')
-                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" style="margin-top:20px;"
-                                                           class="btn col s12 m6 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla (PDF).
-                                                            <i class="icon-picture_as_pdf right"></i>
-                                                        </a>
-                                                    @endif
+                                                        @if($taxes->status!='cancel')
+                                                            <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" style="margin-top:20px;"
+                                                               class="btn col s12 m6 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla (PDF).
+                                                                <i class="icon-picture_as_pdf right"></i>
+                                                            </a>
+                                                        @endif
                                                     @endcan
                                             </div>
                                         @endif

@@ -8,12 +8,12 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company')->name }}</a></li>
                         <li class="breadcrumb-item"><a
-                                    href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
+                                    href="{{ route('companies.my-payments', ['company' => session('company')->id]) }}">Mis
                                 Declaraciones</a></li>
                         <li class="breadcrumb-item"><a
-                                    href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
+                                    href="{{ route('payments.history',['company'=> session('company')->id]) }}">Historial
                                 de Pagos</a></li>
                         <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     </ul>
@@ -23,12 +23,12 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company')->name }}</a></li>
                         <li class="breadcrumb-item"><a
-                                    href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
+                                    href="{{ route('companies.my-payments', ['company' => session('company')->id]) }}">Mis
                                 Declaraciones</a></li>
                         <li class="breadcrumb-item"><a
-                                    href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}">Pagar
+                                    href="{{ route('payments.create',['company'=>session('company')->id,'type'=>'actuated']) }}">Pagar
                                 Impuestos</a></li>
                         <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     </ul>

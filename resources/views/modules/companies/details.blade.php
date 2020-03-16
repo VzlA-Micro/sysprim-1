@@ -85,7 +85,7 @@
                         @can('Declarar Actividad Económica')
                             <div class="col s12 m12">
 
-                                <a href="{{ route('companies.my-payments', ['company' => $company->name]) }}"
+                                <a href="{{ route('companies.my-payments', ['company' => $company->id]) }}"
                                    class="btn-app white cyan-text">
                                     <i class="icon-payment"></i>
                                     <span class="truncate">Declaración/Act-Ecónomica</span>
