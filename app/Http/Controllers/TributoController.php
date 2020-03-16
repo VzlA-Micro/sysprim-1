@@ -25,8 +25,11 @@ class TributoController extends Controller
         $tributo->to= $request->input('to_date');
         $tributo->value= $request->input('valueUndTributo');
         $tributo->save();
-
-        return redirect()->route('tax-unit.read');
+        $response = [
+            'status' => 'success',
+            'message' => 'Se ha registrado la nueva unidad tributaria.'
+        ];
+        return response()->json($response);
     }
 
     /**

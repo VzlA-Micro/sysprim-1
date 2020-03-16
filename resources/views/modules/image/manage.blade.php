@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item"><a href="#!">Gestionar Imagenes</a></li>
                 </ul>
             </div>
-            @can('Registrar Usuario')
+            @can('Registrar Imagen')
                 <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('register.images.manage') }}" class="btn-app white amber-text">
                         <i class="icon-loupe"></i>
@@ -23,7 +23,7 @@
                     </a>
                 </div>
             @endcan
-            @can('Consultar Usuarios')
+            @can('Consultar Imagenes')
                 <div class="col s6 m6 l4 animated bounceIn">
                     <a href="{{ route('image.read') }}" class="btn-app white indigo-text">
                         <i class="icon-perm_media"></i>

@@ -25,6 +25,8 @@ Route::get('/users/verify-ci/{ci}', 'UserController@verifyCi');
 
 Route::get('/users/verify-email/{email}/{id?}', 'UserController@verifyEmail');
 Route::get('/users/find/{nationality}/{ci}', 'UserController@findUser');
+Route::get('image/file{filename}', 'ImagesController@getImage')->name('image.file');
+
 
 Route::middleware(['auth'])->group(/**
  *
@@ -90,9 +92,7 @@ Route::middleware(['auth'])->group(/**
                 Route::get('/ciu/manage', function () {
                     return view('modules.ciiu-group.menu');
                 })->name('ciu.manage');
-                Route::get('/tax-unit/manage', function () {
-                    return view('modules.tax-unit.manage');
-                })->name('tax-unit.manage');
+                
             });
 
          //Menu de configuraciones de los modulos.
@@ -391,6 +391,10 @@ Route::middleware(['auth'])->group(/**
 
                 // Gestionar UT
                 Route::group(['middleware' => ['permission:Registrar Unidad Tribuaria|Consultar Unidades Tribuarias']], function () {
+                    Route::get('/tax-unit/manage', function () {
+                        return view('modules.tax-unit.manage');
+                    })->name('tax-unit.manage');
+                    
                     Route::get('/tax-unit/register', function () {
                         return view('modules.tax-unit.register');
                     })->name('tax-unit.register');
@@ -466,26 +470,6 @@ Route::middleware(['auth'])->group(/**
             });
             
 
-            /* // Gestionar Tipos de Vehiculos
-            Route::group(['middleware' => ['permission:Gestionar Tipos de Vehiculos']], function () {
-                Route::get('/vehicles/type-vehicles', function () {
-                    return view('modules.vehicle_type.manage');
-                })->name('vehicles.type.vehicles');
-                # Nivel 1: Registrar o Consultar
-                Route::group(['middleware' => ['permission:Registrar Tipo de Vehiculo|Consultar Tipos de Vehiculos']], function () {
-                    Route::get('/vehicles/register-type', function () {
-                        return view('modules.vehicle_type.register');
-                    })->name('vehicles.type.register');
-                    Route::post('/type-vehicles/save', 'VehicleTypeController@store')->name('typeVehicles.save');
-                    Route::get('/type-vehicles/read', 'VehicleTypeController@show')->name('type-vehicles.read');
-                    # Nivel 2: Detalles
-                    Route::group(['middleware' => ['permission:Detalles Tipo de Vehiculos']], function () {
-                        Route::get('/type-vehicles/details/{id?}', 'VehicleTypeController@edit')->name('typeVehicle.details');
-                        Route::post('/type-vehicles/update', 'VehicleTypeController@update')->name('typeVehicles.update');
-                    });
-                });
-            }); */
-
             // Gestionar Moneda
             Route::group(['middleware' => ['permission:Gestionar Monedas']], function () {
                 Route::get('/foreign-exchange/manage', function () {
@@ -507,7 +491,23 @@ Route::middleware(['auth'])->group(/**
                 });
             });
 
+            // Gestionar Imagenes de Inicio
+            Route::group(['middleware' => ['permission:Gestionar Imagenes']], function () {
+                Route::get('settings/image', function () {
+                    return view('modules.image.manage');
+                })->name('settings.images.manage');
 
+                # Nivel 1: Registrar y Consultar
+                Route::group(['middleware' => ['permission:Registrar Imagen|Consultar Imagenes']], function () {
+                    Route::get('settings/image/register','ImagesController@create')->name('register.images.manage');
+                    Route::post('image/save','ImagesController@store')->name('save.images');
+                    Route::get('image/read', 'ImagesController@index')->name('image.read');
+                    Route::get('image/delete/{id}', 'ImagesController@destroy')->name('image.delete');
+                    Route::get('image/status/{id}', 'ImagesController@status')->name('image.status');
+                });
+            });
+
+            
 
             // Gestionar Tasas
             Route::group(['middleware' => ['permission:Gestionar Tasas']], function () {
@@ -833,28 +833,6 @@ Route::middleware(['auth'])->group(/**
                 });
             });
         });
-
-
-        ##################### ---------------- TAQUILLAS -------------------- ############################
-
-
-        //___________________________________VEHICLE TICKET OFFICE ______________________________________________________________
-
-
-        /*Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');*/
-//        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');
-
-
-        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
-        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
-        //_______________________________________________________________________________________________________________________
-
-
-        /*Route::post('ticketOffice/vehicle/save', 'TicketOfficeVehicleController@storeVehicle');
-        Route::get('/ticketOffice/vehicle/read', 'VehicleController@showTicketOffice')->name('ticketOffice.vehicle.read');
-        Route::get('/ticketOffice/vehicle/details/{id}', 'TicketOfficeVehicleController@detailsVehicle')->name('ticketOffice.vehicle.details');*/
-        //Route::get('/ticketOffice/vehicle/register',)->name('ticketOffice.vehicle.register');
 
 
         Route::group(['middleware' => ['permission:Taquillas']], function () {
@@ -1342,18 +1320,8 @@ Route::middleware(['auth'])->group(/**
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        Route::get('settings/image', function () {
-            return view('modules.image.manage');
-        })->name('settings.images.manage');
-
-        Route::get('settings/image/register','ImagesController@create')->name('register.images.manage');
-        Route::post('image/save','ImagesController@store')->name('save.images');
-
-        Route::get('image/read', 'ImagesController@index')->name('image.read');
-        Route::get('image/delete/{id}', 'ImagesController@destroy')->name('image.delete');
-        Route::get('image/status/{id}', 'ImagesController@status')->name('image.status');
+        
 
 
 
     });
-Route::get('image/file{filename}', 'ImagesController@getImage')->name('image.file');

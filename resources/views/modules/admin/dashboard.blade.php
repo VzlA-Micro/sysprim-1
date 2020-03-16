@@ -323,8 +323,9 @@
                                     <td>{{$dear['company']['Total']}} Bs</td>
                                     <td>
                                         <div>
+                                            <span class="right grey-text text-darken-2" style="font-size: 12px;">{{$dear['company']['Porcentaje']}}%</span>
                                             <div class="progress">
-                                                <div class="determinate red" style="width:{{$dear['company']['Porcentaje']}}%"><span>{{$dear['company']['Porcentaje']}}%</span></div>
+                                                <div class="determinate red" style="width:{{$dear['company']['Porcentaje']}}%"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -338,8 +339,9 @@
                                     <td>{{$dear['vehicle']['Total']}} Bs</td>
                                     <td>
                                         <div>
+                                            <span class="right grey-text text-darken-2" style="font-size: 12px;">{{$dear['vehicle']['Porcentaje']}}%</span>
                                             <div class="progress">
-                                                <div class="determinate red" style="width:{{$dear['vehicle']['Porcentaje']}}%"><span>{{$dear['vehicle']['Porcentaje']}}%</span></div>
+                                                <div class="determinate red" style="width:{{$dear['vehicle']['Porcentaje']}}%; "></div>
                                             </div>
                                         </div>
                                     </td>
