@@ -379,7 +379,7 @@
 				@if($firm)
 					<td style="width: 20%;">
 						@if(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
-							<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/isotipo.png', .2)->size(170)->generate(
+							<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/isotipo.png', .2)->size(170)->generate(
                     'CODIGO:'.$taxes->payments[0]->code."\n".
                     'REF:'.$taxes->payments[0]->ref."\n".
                     'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
