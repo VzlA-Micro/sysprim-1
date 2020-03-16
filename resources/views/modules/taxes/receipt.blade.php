@@ -380,13 +380,13 @@
 					<td style="width: 20%;">
 						@if(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
 							<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/isotipo.png', .2)->size(170)->generate(
-                    'CODIGO:'.$taxes->payments[0]->code."\n".
-                    'REF:'.$taxes->payments[0]->ref."\n".
-                    'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
-                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
-                    'TEL:'.$taxes->payments[0]->phone."\n".
-                    'FECHA:'.$taxes->payments[0]->created_at."\n"
-                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
+								'CODIGO:'.$taxes->payments[0]->code."\n".
+								'REF:'.$taxes->payments[0]->ref."\n".
+								'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
+								'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+								'TEL:'.$taxes->payments[0]->phone."\n".
+								'FECHA:'.$taxes->payments[0]->created_at."\n"
+								 ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
 						@endif
 					</td>
 				@else
