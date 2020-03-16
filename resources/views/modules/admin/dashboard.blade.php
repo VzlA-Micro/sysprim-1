@@ -177,7 +177,7 @@
                 <div class="col s12 m12">
                     <h4>Recaudaciones</h4>
                 </div>
-                <div class="col s12" data-aos="zoom-in">
+                <div class="col s12 m12" data-aos="zoom-in">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon green white-text">
                             <i class="i-bss"></i>
@@ -346,6 +346,22 @@
                                     <td>{{$dear['vehicle']['Estimado']}} Bs</td>
                                     <td><i class="icon-arrow_upward text-success"> </i>{{$dear['vehicle']['Incremento']}} Bs</td>
                                 </tr>{{----}}
+
+                                <tr>
+                                    <td>{{$dear['property']['taxes']}}</td>
+                                    <td>{{$dear['property']['Recaudado']}} Bs</td>
+                                    <td>{{$dear['property']['Espera']}} Bs</td>
+                                    <td>{{$dear['property']['Total']}} Bs</td>
+                                    <td>
+                                        <div>
+                                            <div class="progress">
+                                                <div class="determinate red" style="width:{{$dear['property']['Porcentaje']}}%"><span>{{$dear['property']['Porcentaje']}}%</span></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{$dear['property']['Estimado']}} Bs</td>
+                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['property']['Incremento']}} Bs</td>
+                                </tr>
 
                                 </tbody>
                             </table>
