@@ -1307,7 +1307,7 @@ Route::middleware(['auth'])->group(/**
         Route::get('payments/petro/register', 'BdvController@register')->name('payments.petro.register');
         Route::get('payments/petro/verified/{id}', 'PetroController@verifyTaxes')->name('payments.petro.verified');
 
-
+        Route::get('delete-temp','HomeController@deleteTemp')->name('delete-temp');
 
 
 

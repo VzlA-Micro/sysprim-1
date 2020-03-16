@@ -41,7 +41,22 @@ class PublicityTaxesController extends Controller
         $userPublicity = UserPublicity::where('publicity_id', $id)->first();
         $base = $declaration['baseImponible'];
         $taxes = $publicity->publicityTaxes()->where('branch', 'Prop. y Publicidad')->whereYear('fiscal_period', '=', $actualDate->format('Y'))->get();
-        if (!empty($taxes)) {
+        
+        if ($userPublicity->company_id != null) {
+            $owner_id = $userPublicity->company_id;
+            $owner_type = 'company';
+            $owner = Company::find($owner_id);
+        } elseif ($userPublicity->person_id != null) {
+            $owner_id = $userPublicity->person_id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        } else {
+            $owner_id = \Auth::user()->id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+        
+        if (!$taxes->isEmpty()) {
             foreach ($taxes as $tax) {
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
@@ -59,19 +74,31 @@ class PublicityTaxesController extends Controller
         } else {
             $statusTax = 'new';
         }
-        if ($userPublicity->company_id != null) {
-            $owner_id = $userPublicity->company_id;
-            $owner_type = 'company';
-            $owner = Company::find($owner_id);
-        } elseif ($userPublicity->person_id != null) {
-            $owner_id = $userPublicity->person_id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        } else {
-            $owner_id = \Auth::user()->id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
+
+        if($statusTax === 'process' || $statusTax === 'verified' || $statusTax === 'verified-sysprim' || $statusTax === 'exonerated') {
+            $taxeType = $declaration['taxeType'];
+            $baseImponible = number_format($declaration['baseImponible'], 2, ',', '.');
+            $increment = number_format($declaration['increment'], 2, ',', '.');
+    //        $interest = number_format($declaration['interest'],2,',','.');
+            $amount = number_format($declaration['total'], 2, ',', '.');
+
+            return view('modules.publicity-payments.register', [
+                'advertisingTypes' => $advertisingTypes,
+                'publicity' => $publicity,
+                'base' => $base,
+                'baseImponible' => $baseImponible,
+    //            'interest' => $interest,
+                'amount' => $amount,
+                'owner_type' => $owner_type,
+                'owner' => $owner,
+                'statusTax' => $statusTax,
+                'daysDiff' => $declaration['daysDiff'],
+                'increment' => $increment,
+                'taxeType' => $taxeType,
+                // 'taxe_id' => $taxeId
+            ]);
         }
+        
         # Declarating variables to generate taxe
         $amount = $declaration['total'];
         $baseImponible = $declaration['baseImponible'];
@@ -409,6 +436,21 @@ class PublicityTaxesController extends Controller
         $publicity = Publicity::where('id', $id)->with('advertisingType')->first();
         $declaration = DeclarationPublicity::Declarate($publicity->id);
         $userPublicity = UserPublicity::where('publicity_id', $id)->first();
+
+        if ($userPublicity->company_id != null) {
+            $owner_id = $userPublicity->company_id;
+            $owner_type = 'company';
+            $owner = Company::find($owner_id);
+        } elseif ($userPublicity->person_id != null) {
+            $owner_id = $userPublicity->person_id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        } else {
+            $owner_id = \Auth::user()->id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+
         $base = $declaration['baseImponible'];
 //         $taxes = $publicity->publicityTaxes()->where('branch', 'Prop. y Publicidad')->whereYear('fiscal_period', '=', $actualDate->format('Y'))->get();
 //         if (!empty($taxes)) {
@@ -461,19 +503,7 @@ class PublicityTaxesController extends Controller
         $publicityTaxes->fiscal_credit = $fiscalCredit;
         $publicityTaxes->save();
         # -------------------------------------------------------------------
-        if ($userPublicity->company_id != null) {
-            $owner_id = $userPublicity->company_id;
-            $owner_type = 'company';
-            $owner = Company::find($owner_id);
-        } elseif ($userPublicity->person_id != null) {
-            $owner_id = $userPublicity->person_id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        } else {
-            $owner_id = \Auth::user()->id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        }
+        
         $baseImponible = number_format($declaration['baseImponible'], 2, ',', '.');
 //        $interest = number_format($declaration['interest'],2,',','.');
         $increment = number_format($declaration['increment'],2,',','.');
@@ -495,7 +525,7 @@ class PublicityTaxesController extends Controller
             'statusTax' => $statusTax,
             'taxeType' => $taxeType,
 //            'advertisingTypes' => $advertisingTypes
-           'taxe_id' => $taxeId
+            'taxe_id' => $taxeId
         ];
 
         return response()->json($resp);

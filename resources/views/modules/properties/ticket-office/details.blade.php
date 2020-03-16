@@ -254,6 +254,11 @@
                                     <i class="icon-more_horiz left"></i>
                                     ESTADO: CANCELADA.
                                 </a>
+                                @elseif($taxes->status=='exonerated')
+                                <a href="#" class="btn red col s12">
+                                    <i class="icon-more_horiz left"></i>
+                                    ESTADO: EXONERADA.
+                                </a>
                                 @endif
                             </div>
                         </div>
@@ -272,6 +277,7 @@
                                         </a>
                                     </div>
                                 @endcan
+                                
                                 @can('Verificar Pagos - Manual')
                                     @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
                                         <div class="col s12 m6 center-align">
@@ -297,6 +303,14 @@
                                         </a>
                                     </div>
                                 @endif
+                                {{-- @can('Anular Pagos') --}}
+                                    <div class="col s12 m6 center-align">
+                                        <a href="#" class="btn red waves-effect waves-ligt reconcile col s12" data-status="cancel" style="margin-top: 20px;">
+                                            EXONERAR PLANILLA.
+                                            <i class="icon-close right col s12"></i>
+                                        </a>
+                                    </div>
+                                {{-- @endcan --}}
                             @endif
                         </div>
                     <div>

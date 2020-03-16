@@ -111,14 +111,14 @@
                             <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C5" id="C5" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
+                                       maxlength="4" minlength="2" title="Solo puede escribir números y letras mayúscula."
                                        required>
                                 <label for="C5">Sector</label>
                             </div>
                             <div class="input-field col s12 m2 tooltipped" data-position="bottom"
                                  data-tooltip="Solo puede escribir números. Ej: 1234567890">
                                 <input type="text" name="C6" id="C6" class="validate number-and-capital-letter-only" pattern="[0-9A-Z]+"
-                                       maxlength="4" minlength="4" title="Solo puede escribir números y letras mayúscula."
+                                       maxlength="4" minlength="1" title="Solo puede escribir números y letras mayúscula."
                                        required>
                                 <label for="C6">Manzana</label>
                             </div>
