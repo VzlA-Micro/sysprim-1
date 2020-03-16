@@ -26,6 +26,7 @@
 		            		<thead>
 		            			<tr>
                                     <th>Nombre</th>
+                                    <th>Sector</th>
                                     <th>Fecha de creación</th>
                                     @can('Detalles Valor Terreno')
 		            				<th>Detalles</th>
@@ -36,6 +37,7 @@
                             @foreach($catastral as $cat)
                                 <tr>
                                     <td>{{ $cat->name }}</td>
+                                    <td>{{ $cat->sector_catastral }}</td>
                                     <td>{{$cat->created_at->format('d-m-Y h:m:s')}}</td>
                                     @can('Detalles Valor Terreno')
                                     <td>
@@ -64,7 +66,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
-            "aaSorting": [],
+            "order": [[ 1, "asc" ]],
             language: {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
