@@ -37,7 +37,7 @@ class VehicleController extends Controller
      */
     public function create($register = null)
     {
-        $models = ModelsVehicle::orgerBy('name','asc')->get();
+        $models = ModelsVehicle::orderBy('name','asc')->get();
         $brands = Brand::orderBy('name','asc')->get();
         $type = VehicleType::all();
 

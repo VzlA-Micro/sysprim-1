@@ -527,7 +527,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Gestionar Imagenes',
             'Registrar Imagen',
             'Consultar Imagenes',
-            'Detalles Imagen',
+            // 'Detalles Imagen',
             'Actualizar Imagen',
             'Taquillas',
             'Configurar Taquilla',
@@ -1143,7 +1143,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Gestionar Imagenes',
             'Registrar Imagen',
             'Consultar Imagenes',
-            'Detalles Imagen',
+            // 'Detalles Imagen',
             'Actualizar Imagen',
             'Mi Perfil'
         ]);
