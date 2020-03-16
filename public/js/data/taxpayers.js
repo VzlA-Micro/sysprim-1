@@ -203,19 +203,38 @@ $(document).ready(function () {
     function findUser(nationality, ci) {
         $.ajax({
             method: "GET",
-            url: url+"users/find/"+nationality+"/"+ci,
+            url: url + "users/find/" + nationality + "/" + ci,
             success: function (response) {
                 $("#preloader").fadeOut('fast');
                 $("#preloader-overlay").fadeOut('fast');
 
                 if (response.status !== 'error') {
                     $('#name').val(response.response.nombres);
-                    $('#name').attr('readonly','readonly');
-                    if($('#name_user').val()!==undefined){
+                    $('#name').attr('readonly', 'readonly');
+
+
+                    if ($('#name_user').val() !== undefined) {
                         $('#name_user').val(response.response.nombres);
+                        $('#name_user').attr('readonly', 'readonly')
                     }
                     $('#surname').val(response.response.apellidos);
-                    $('#surname').attr('readonly','readonly');
+                    $('#surname').attr('readonly', 'readonly');
+
+
+                    if(response.response.inscrito==false){
+                        swal({
+                            title: "Lo sentimos",
+                            text: "Su cédula no se encuentra registrada en el CNE.",
+                            icon: "info",
+                            button: {
+                                text: "Entendido",
+                                className: "red-gradient"
+                            },
+                        }).then(function () {
+                            $('#ci').val('');
+                        });
+
+                    }
                     console.log(response);
                     M.updateTextFields();
 
@@ -228,7 +247,10 @@ $(document).ready(function () {
                     title: "¡Oh no!",
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
-                    button: "Ok",
+                    button: {
+                        text: "Entendido",
+                        className: "red-gradient"
+                    },
                 });
             }
         });

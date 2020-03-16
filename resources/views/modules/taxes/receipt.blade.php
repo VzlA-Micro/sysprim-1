@@ -220,14 +220,14 @@
 			<td></td>
 			<td></td>
 			<td>TOTAL</td>
-			<td style="font-size: 14px !important; text-align: left">{{number_format($taxes->amount,2)}}</td>
+			<td colspan="10">{{number_format($taxes->amount,2)}}</td>
 		</tr>
 		</tbody>
 
 
 		<hr>
 		<tr>
-			<td colspan="7" style="font-size: 12px;!important;">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
+			<td colspan="7" >{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
 		</tr>
 	</table>
 	<table>

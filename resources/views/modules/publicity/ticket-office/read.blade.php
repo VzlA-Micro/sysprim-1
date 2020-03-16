@@ -74,6 +74,7 @@
             responsive: true,
             "pageLength": 10,
             "scrollX": true,
+            "order": [[ 3, "desc" ]],
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",

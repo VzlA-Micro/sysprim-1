@@ -158,8 +158,8 @@
                                     <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
-                                       class="validate number-only" pattern="[0-9.,]+"
-                                       value="0" maxlength="15"
+                                       class="validate money_keyup" pattern="[0-9.,]+"
+                                       value="" maxlength="15"
                                 >
                                 <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
                             </div>

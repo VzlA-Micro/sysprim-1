@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var url = localStorage.getItem('url');
 
@@ -68,8 +69,8 @@ $(document).ready(function () {
                     }).then(function (accept) {
                         window.location.href = url + "tax-unit/manage";
                     });
-                }
-             },
+                }            	
+            },
             error: function(err) {
             	console.log(err);
                 $("#preloader").fadeOut('fast');
@@ -79,7 +80,7 @@ $(document).ready(function () {
                     text: "Ocurrio un error inesperado, refresque la pagina e intentenlo de nuevo.",
                     icon: "error",
                     button:{
-                        text: "Entendido", 
+                        text: "Entendido",
                         className: "red-gradient"
                     },
                 });
@@ -87,3 +88,4 @@ $(document).ready(function () {
 		});
 	});
 });
+

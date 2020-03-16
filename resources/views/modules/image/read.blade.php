@@ -46,13 +46,13 @@
                                     {{--<span class="card-title">Inicio</span>--}}
                                 </div>
 
-
+                                @can('Habilitar/Deshabilitar Imagen')
                                 @if($image->status == "enabled")
                                     <div class="card-action">
                                         <a href="#" class="activator green-text text-darken-2">Imagen Hablitada (Presione para deshabilitarla)</a>
                                     </div>
                                     <div class="card-reveal">
-                                        <span class="card-title grey-text text-darken-4">Deshabilitar imagen de inicio<i class="icon-close right"></i></span>
+                                        <span class="card-title grey-text text-darken-4">Deshabilitar Imagen de Inicio<i class="icon-close right"></i></span>
 
                                            <div class="row" style="margin-top: 20px">
                                                 <div class="col s12 m12 l12">
@@ -65,7 +65,7 @@
                                         <a href="#" class="activator orange-text text-darken-2">Seleccionar Imagen (Presione para habilitar)</a>
                                     </div>
                                     <div class="card-reveal">
-                                        <span class="card-title grey-text text-darken-4">Habilitar imagen de inicio<i class="icon-close right"></i></span>
+                                        <span class="card-title grey-text text-darken-4">Habilitar Imagen de Inicio<i class="icon-close right"></i></span>
 
                                             <div class="row" style="margin-top: 20px">
                                                 <div class="col s12 m12 l12">
@@ -74,6 +74,7 @@
                                             </div>
                                     </div>
                                 @endif
+                                @endcan
                             </div>
                         </div>
                     @endforeach

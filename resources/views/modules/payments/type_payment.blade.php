@@ -40,14 +40,14 @@
             @endcan
 
 
-            {{--@can('Mi Taquilla - Deposito')--}}
+            @can('Ver Pagos - Boton de Pago')
             <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('ticket-office.payment.type',['type'=>'BOTON DE PAGO'])}}" class="btn-app white cyan-text text-darken-4">
                     <i class="icon-touch_app"></i>
                     <span class="truncate">Botón de Pago</span>
                 </a>
             </div>
-            {{--@endcan--}}
+            @endcan
 
 
 
