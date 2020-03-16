@@ -411,7 +411,9 @@ class VehiclesTaxesController extends Controller
     function creditsFiscal($fiscalCredit,$vehicleId)
     {
         //$total = (float)$request->input('total');
-        $fiscalCredits = $fiscalCredit;
+        $fiscalCredits_format = str_replace('.', '', $fiscalCredit);
+        $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
+        $fiscalCredits = $fiscalCredits_format;
         $idVehicle = $vehicleId;
         $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$idVehicle)->latest()
             ->first();
