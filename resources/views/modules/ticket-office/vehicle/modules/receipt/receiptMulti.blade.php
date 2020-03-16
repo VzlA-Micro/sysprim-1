@@ -463,7 +463,7 @@ $date = '31/12/' . date('Y');
             <tr>
                 <td style="width: 80%;">
 
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/sysprim.png', .18)->size(190)->generate(
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/sysprim.png', .18)->size(190)->generate(
                       "CODIGO:".$taxes[0]->payments[$i-1]->code."\n".
                       "PERIODO FISCAL:".$taxes[0]->fiscal_period."\n".
                       "RAMO:".$taxes[0]->branch."\n".

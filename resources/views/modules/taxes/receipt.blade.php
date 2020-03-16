@@ -227,7 +227,7 @@
 
 		<hr>
 		<tr>
-			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
+			<td colspan="7" style="font-size: 12px;!important;">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
 		</tr>
 	</table>
 	<table>
@@ -359,7 +359,7 @@
 
 				@if($firm)
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/sysprim.png', .18)->size(170)->generate(
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/sysprim.png', .18)->size(170)->generate(
                       "CODIGO:".$taxes->code."\n".
                       "PERIODO FISCAL:".$taxes->fiscal_period."\n".
                       "RAMO:".$taxes->branch."\n".
@@ -379,14 +379,14 @@
 				@if($firm)
 					<td style="width: 20%;">
 						@if(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
-							<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/isotipo.png', .2)->size(170)->generate(
-                    'CODIGO:'.$taxes->payments[0]->code."\n".
-                    'REF:'.$taxes->payments[0]->ref."\n".
-                    'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
-                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
-                    'TEL:'.$taxes->payments[0]->phone."\n".
-                    'FECHA:'.$taxes->payments[0]->created_at."\n"
-                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
+							<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/isotipo.png', .2)->size(170)->generate(
+								'CODIGO:'.$taxes->payments[0]->code."\n".
+								'REF:'.$taxes->payments[0]->ref."\n".
+								'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
+								'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+								'TEL:'.$taxes->payments[0]->phone."\n".
+								'FECHA:'.$taxes->payments[0]->created_at."\n"
+								 ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
 						@endif
 					</td>
 				@else

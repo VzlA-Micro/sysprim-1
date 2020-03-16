@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
+  
 @endsection
 
 @section('content')
@@ -409,4 +409,4 @@
                     }
                 });
             </script>
-@endsection
+        @endsection

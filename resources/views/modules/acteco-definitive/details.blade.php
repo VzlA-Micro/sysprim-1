@@ -168,6 +168,7 @@
 
 
                         @endforeach
+
                         <div class="col l12 s12">
 
                             <div class="col l6 s12">
@@ -198,7 +199,19 @@
                             </div>
 
 
+
                             <div class="col l6 s12">
+
+                                <div class="input-field col s12 m12">
+
+                                    <input type="text" name="fiscal_credits[]" id="fiscal_credits"
+                                           class="validate money"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
+                                           value="{{ $taxes->companies[0]->pivot->fiscal_credits}}"
+                                           readonly>
+                                    <label for="fiscal_credits">Creditos Fiscales</label>
+                                </div>
+
                                 <div class="col s12 m12 ">
                                     <input type="text" name="interest"  class="validate money" id='interest' value="{{$total_interest}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
