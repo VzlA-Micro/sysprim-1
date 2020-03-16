@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
                     <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Punto de Venta</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Botón de Pago</a></li>
                 </ul>
             </div>
 

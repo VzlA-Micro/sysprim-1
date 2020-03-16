@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text banesco-green">
                             <i class="i-banesco"></i>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text x100-banco-yellow">
                             <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text red-gradient">
                             <i class="i-bicentenario" style="font-size: 30px"></i>
@@ -152,6 +152,20 @@
                             <span class="widget-stats-title"><b>Banco Bicentenario</b></span>
                             <span class="widget-stats-number">
                                 <span class="" id="bicentenario"></span> Bs.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text red-gradient">
+                            <i class="i-bicentenario" style="font-size: 30px"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>Banco De Venezuela</b></span>
+                            <span class="widget-stats-number">
+                                <span class="" id="bdv"></span> Bs.
                             </span>
                         </div>
                     </div>

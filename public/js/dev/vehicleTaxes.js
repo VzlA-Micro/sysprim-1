@@ -75,4 +75,20 @@ $('document').ready(function () {
             }
         });
     });
+
+
+    $('input[type="text"].money_keyup').on('keyup', function (event) {
+        var total = $(this).val();
+        if ($(this).val() == 0 && $(this).val().toString().length >= 2) {
+            $(this).val('');
+        } else if ($(this).val().toString().length >= 2 && total[0] == 0) {
+            $(this).val('');
+        } else {
+            $(event.target).val(function (index, value) {
+                return value.replace(/\D/g, "")
+                    .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+                    .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+            });
+        }
+    });
 });
