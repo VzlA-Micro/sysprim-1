@@ -585,7 +585,7 @@ Route::middleware(['auth'])->group(/**
 
 
 
-
+        Route::get('properties/deer', 'DashboardController@dearTaxesProperty');
 
 
         ##### VEHICULOS
