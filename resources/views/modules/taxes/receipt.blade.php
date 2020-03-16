@@ -359,7 +359,7 @@
 
 				@if($firm)
 					<td style="width: 80%;">
-						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('\public/images/pdf/sysprim.png', .18)->size(170)->generate(
+						<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/sysprim.png', .18)->size(170)->generate(
                       "CODIGO:".$taxes->code."\n".
                       "PERIODO FISCAL:".$taxes->fiscal_period."\n".
                       "RAMO:".$taxes->branch."\n".
