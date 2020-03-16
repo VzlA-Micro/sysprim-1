@@ -350,7 +350,7 @@ function chartsMonth(data) {
     var bankEarningsChart = document.querySelector("#bank-earnings");
     var bankEarningsOptions = {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         legend: {
             position: "bottom"
         },

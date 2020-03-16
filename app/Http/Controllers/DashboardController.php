@@ -16,6 +16,7 @@ use App\User;
 use Mail;
 use App\Taxe;
 use App\Company;
+use App\Property;
 use App\Extras;
 use App\Tributo;
 use App\Helpers\TaxesMonth;
@@ -25,6 +26,8 @@ use Carbon\Carbon;
 use App\Employees;
 use App\CiuTaxes;
 use App\Rate;
+use App\Helpers\Declaration;
+
 
 class DashboardController extends Controller
 {
@@ -1126,7 +1129,8 @@ class DashboardController extends Controller
         $countPpc = count($ppc);
         $dear = array(
             'company' => $this->dearTaxes(),
-            'vehicle' => $this->dearTaxesVehicle()
+            'vehicle' => $this->dearTaxesVehicle(),
+            'property'=> $this->dearTaxesProperty()
         );
 
         $users = User::all()->count();
@@ -2043,7 +2047,7 @@ class DashboardController extends Controller
         return $dearTaxesVehicle;
     }
 
-/*public function dearTaxesRate()
+public function dearTaxesProperty()
     {
         $year = Carbon::now()->format('Y');
         $month = Carbon::now()->format('m');
@@ -2057,34 +2061,27 @@ class DashboardController extends Controller
         $raised = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->orWhere('status', 'verified-sysprim')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->sum('amount');
 
         $wait = Taxe::where('status', 'process')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->sum('amount');
 
-        foreach ($vehicle as $vehicles) {
-            $yearVehicle = $vehicles->year;
+        $property=Property::all();
 
-            $diffYear = $year - intval($yearVehicle);
+        $acum=0;
 
-            if ($diffYear < 3) {
-                $rateYear = $vehicle[0]->type->rate;
-                $taxes = $rateYear * $rate[0]->value;
-            } else {
-                $rateYear = $vehicle[0]->type->rate_UT;
-                $taxes = $rateYear * $rate[0]->value;
-            }
-            $acum += $taxes;
+        foreach($property as $proper){
+            $save=Declaration::VerifyDeclaration($proper->id,'full');
+            $acum+=$save['total'];
         }
-
 
         $totalCollection = $raised + $wait;
 
@@ -2097,8 +2094,8 @@ class DashboardController extends Controller
             $increment = 0;
         }
 
-        $dearTaxesVehicle = array(
-            'taxes' => 'Patente Vehículo',
+        $dearTaxesProperty = array(
+            'taxes' => 'Inmuebles Urbanos',
             'Recaudado' => number_format($raised, 2, ',', '.'),
             'Espera' => number_format($wait, 2, ',', '.'),
             'Total' => number_format($totalCollection, 2, ',', '.'),
@@ -2110,8 +2107,8 @@ class DashboardController extends Controller
             'incremento' => $increment
         );
 
-        return $dearTaxesVehicle;
-    }*/
+        return $dearTaxesProperty;
+    }
 
 
 }
