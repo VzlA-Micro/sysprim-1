@@ -4,31 +4,24 @@
     <div class="container-fluid">
         <div class="row">
 
-            @if($taxes->status!=='temporal'&&substr($taxes->code,0,1)=='P')
+
 
                 <div class="col s12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                        <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.history',['company'=>session('company')]) }}">Historial
-                                de Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('companies.details', ['id' => $taxes->companies[0]->id]) }}">{{ session('company') }}</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis
+                                Declaraciones</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}">Pagar
+                                Impuestos</a></li>
                         <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     </ul>
                 </div>
 
-            @else
-                <div class="col s12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('home.ticket-office') }}">Taquilla</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('payments.manage') }}">Gestionar Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('ticket-office.type.payments') }}">Ver Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Detalles de Planilla</a></li>
-                    </ul>
-                </div>
-            @endif
+
 
 
             <div class="col s12 m10 offset-m1">
@@ -175,6 +168,7 @@
 
 
                         @endforeach
+
                         <div class="col l12 s12">
 
                             <div class="col l6 s12">
@@ -205,7 +199,19 @@
                             </div>
 
 
+
                             <div class="col l6 s12">
+
+                                <div class="input-field col s12 m12">
+
+                                    <input type="text" name="fiscal_credits[]" id="fiscal_credits"
+                                           class="validate money"
+                                           pattern="^[0-9]{0,12}([.][0-9]{2,2})?$"
+                                           value="{{ $taxes->companies[0]->pivot->fiscal_credits}}"
+                                           readonly>
+                                    <label for="fiscal_credits">Creditos Fiscales</label>
+                                </div>
+
                                 <div class="col s12 m12 ">
                                     <input type="text" name="interest"  class="validate money" id='interest' value="{{$total_interest}}"  readonly>
                                     <label for="interest">Interes por Mora:(Bs)</label>
@@ -248,48 +254,7 @@
 
 
                                 @endif
-                                    @if(!$taxes->payments->isEmpty())
-                                    <div class="row">
 
-                                            @if($taxes->status==='process')
-                                                <button class="btn green col s12">
-                                                    <i class="icon-more_horiz left "></i>
-                                                    ESTADO:  SIN CONCILIAR AÚN
-                                                </button>
-                                            @elseif($taxes->status==='verified')
-
-                                                <button class="btn blue col s12">
-                                                    <i class="icon-more_horiz left"></i>
-                                                    ESTADO:  VERIFICADA.
-                                                </button>
-
-
-                                            @elseif($taxes->status=='cancel')
-
-                                                <button class="btn red col s12">
-                                                    <i class="icon-more_horiz left"></i>
-                                                    ESTADO: CANCELADA.
-                                                </button>
-                                            @endif
-
-                                        <div class="input-field col s12">
-                                            @if($taxes->status=='process')
-                                                @can('Anular Pagos')
-                                                <a href="#"  class="btn btn-rounded col s6 red waves-effect waves-ligt reconcile" data-status="cancel">
-                                                    ANULAR PLANILLA.
-                                                    <i class="icon-close right"></i>
-                                                </a>
-                                                @endcan
-                                                @can('Verificar Pagos - Manual')
-                                                <a href="#"  class="btn btn-rounded col s6 blue waves-effect waves-light reconcile" data-status="verified">
-                                                    VERIFICAR PLANILLA.
-                                                    <i class="icon-verified_user right"></i>
-                                                </a>
-                                                @endcan
-                                            @endif
-                                        </div>
-                                        @endif
-                                    </div>
                             </div>
                         </div>
                     </form>

@@ -47,6 +47,8 @@
                 </a>
             </div>
             @endcan
+
+
             @can('Gestionar Dias de Cobro')
             <div class="col s6 m6 l4 animated bounceIn">
                 <a href="{{route('prologue.manage')}}" class="btn-app white purple-text text-darken-2">
@@ -55,7 +57,14 @@
                 </a>
             </div>
             @endcan
-
+            @can('Gestionar Imagenes')
+                <div class="col s6 m6 l4 animated bounceIn">
+                    <a href="{{route('settings.images.manage')}}" class="btn-app white pink-text text-darken-2">
+                        <i class="icon-panorama"></i>
+                        <span class="truncate">Gestionar Fotos</span>
+                    </a>
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

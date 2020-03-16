@@ -55,6 +55,7 @@
                                 <option value="+58416">(416)</option>
                                 <option value="+58424">(424)</option>
                                 <option value="+58426">(426)</option>
+                                <option value="+58251">(251)</option>
                             </select>
                             <label for="country_code_user">Operadora</label>
                         </div>

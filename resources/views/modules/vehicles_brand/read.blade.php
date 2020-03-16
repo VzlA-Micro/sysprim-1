@@ -61,6 +61,7 @@
             responsive: true,
             "scrollX": true,
             "pageLength": 10,
+            "order": [[ 0, "asc" ]],
             "aaSorting": [],
             language: {
                 "sProcessing":     "Procesando...",

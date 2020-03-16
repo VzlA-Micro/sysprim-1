@@ -29,7 +29,7 @@
     <table style="width: 100%; border-collapse: collapse;">
         <tr style="text-align: center">
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/alcaldia_logo.png" style="width:180px; height:80px" alt="Logo Image" width="100%" height="100%"><br>
+                <img src="{{url('images/alcaldia_logo.png')}}" style="width:180px; height:80px" alt="Logo Image" width="100%" height="100%"><br>
                 <span></span><br>
                 <span style="font-size: 5px;"></span><br>
             </td>
@@ -42,7 +42,7 @@
 					</span>
             </td>
             <td style="width: 25%;" rowspan="2">
-                <img src="https://sysprim.com/images/semat_logo.png" style="width:180px; height:80px" alt="Logo Image" width="100%" height="100%"><br>
+                <img src="{{url("images/semat_logo.png")}}" style="width:180px; height:80px" alt="Logo Image" width="100%" height="100%"><br>
                 <span style="font-size: 10px !important;">{{$taxes->code}}</span><br>
                 <span style="font-size: 10px !important;">{{$taxes->created_at->format('d-m-Y')}}</span><br>
 
@@ -249,19 +249,11 @@ $date = '31/12/' . date('Y');
 ?>
 
 
+
+
 <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
-    <table style="width: 100%">
-        <tr>
-            <td style="width: 100%;"></td>
-            <td style="width: 100%"></td>
-            <td style="width: 100%;">
 
 
-            </td>
-
-        </tr>
-
-    </table>
     <b></b> <b></b><br>
     <b></b><br>
     <b></b><br>
@@ -272,7 +264,7 @@ $date = '31/12/' . date('Y');
 
             @if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
-                    <img src="https://sysprim.com/images/pdf/firma-director.png" style="width:180px; height:190px;" alt="Image" width="100%" height="100%">
+                    <img src="{{url("images/pdf/firma-director.png")}}" style="width:180px; height:190px;" alt="Image" width="100%" height="100%">
                 </td>
             @else
                 <td style="width: 40%;text-align: center;">
@@ -306,27 +298,42 @@ $date = '31/12/' . date('Y');
 
             @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                 <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
                          style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image">
                 </td>
         @else
 
             <tr>
-                <td style="width: 80%;">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(170)->generate($taxes->fiscal_period.'-'.$taxes->code.'-'.$taxes->created_at)) !!} "
-                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;" alt="Image" >
+                <td style="width: 20%;">
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/sysprim.png', .18)->size(170)->generate(
+                      "CODIGO:".$taxes->code."\n".
+                      "PERIODO FISCAL:".$taxes->fiscal_period."\n".
+                      "RAMO:".$taxes->branch."\n".
+                      "ESTADO:".$taxes->statusName."\n".
+                      "MONTO:".number_format($taxes->amount,2)."\n".
+                      'FECHA DE PAGO:'.$taxes->created_at."\n")) !!} "
+                         style="float:left ;position: absolute;top: 100px !important;right: 800px !important;left: 900px; height: 180px !important;width: 180px !important;" alt="Image" >
                 </td>
             </tr>
 
         @endif
-
         <tr>
             <td style="width: 20%;">
                 @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
                     @if($taxes->bank!=null)
-                        <img src="https://sysprim.com/images/pdf/{{$taxes->bank.".png"}}"
+                        <img src="{{ url("images/pdf/".$taxes->bank.".png") }}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image">
                     @endif
+
+               @elseif(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
+                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/isotipo.png', .2)->size(170)->generate(
+                    'CODIGO:'.$taxes->payments[0]->code."\n".
+                    'REF:'.$taxes->payments[0]->ref."\n".
+                    'MONTO:'.number_format($taxes->payments[0]->amount,2)."\n".
+                    'DESCRIPCIÓN:'.$taxes->payments[0]->description."\n".
+                    'TEL:'.$taxes->payments[0]->phone."\n".
+                    'FECHA:'.$taxes->payments[0]->created_at."\n"
+                     ));  !!} " style="float:right ;position: absolute;top: 100px !important;right: 800px !important;left: 900px;  height: 162px!important;width: 162px !important;" alt="Image" >
                 @endif
             </td>
         </tr>

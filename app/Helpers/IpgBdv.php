@@ -8,7 +8,7 @@ namespace App\Helpers;
 
 class IpgBdv{
 
-    private $urlApi = 'https://biopago.banvenez.com/ipg/api/Payment';
+    private $urlApi = 'https://ip.ex-cle.com:4443/ipg/web/api/Payment';
     private $messages;
     private $pass;
     private $user;

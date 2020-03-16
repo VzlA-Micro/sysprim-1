@@ -186,6 +186,15 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Detalles Moneda']);
         Permission::create(['name' => 'Actualizar Moneda']);
 
+        // -- Gestionar Monedas
+        Permission::create(['name' => 'Gestionar Imagenes']);
+        Permission::create(['name' => 'Registrar Imagen']);
+        Permission::create(['name' => 'Consultar Imagenes']);
+        // Permission::create(['name' => 'Detalles Imagen']);
+        Permission::create(['name' => 'Actualizar Imagen']);
+        Permission::create(['name' => 'Habilitar/Deshabilitar Imagen']);
+
+
         // ---------------- Taquilla ---------------------- //
         Permission::create(['name' => 'Taquillas']);
         Permission::create(['name' => 'Taquilla - Actividad Económica']);
@@ -229,6 +238,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Ver Pagos - Transferencias']);
         Permission::create(['name' => 'Ver Pagos - Punto de Venta']);
         Permission::create(['name' => 'Ver Pagos - Depositos']);
+        Permission::create(['name' => 'Ver Pagos - Boton de Pago']);
         Permission::create(['name' => 'Mi Taquilla - Punto de Venta']);
         Permission::create(['name' => 'Mi Taquilla - Deposito']);
         Permission::create(['name' => 'Ver Planillas - Taquilla']);
@@ -237,6 +247,8 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'Abrir/Cerrar Caja']);
         Permission::create(['name' => 'Ver Planillas']);
         Permission::create(['name' => 'Ver Planilla PDF']);
+
+
 
         // -- Gestionar Empresas
         Permission::create(['name' => 'Gestionar Empresas']);
@@ -512,6 +524,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Consultar Monedas',
             'Detalles Moneda',
             'Actualizar Moneda',
+            'Gestionar Imagenes',
+            'Registrar Imagen',
+            'Consultar Imagenes',
+            // 'Detalles Imagen',
+            'Actualizar Imagen',
             'Taquillas',
             'Configurar Taquilla',
             ##### GESTIONAR CONTRIBUYENTE #####
@@ -600,6 +617,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Ver Pagos - Punto de Venta',
             'Ver Pagos - Depositos',
             'Mi Taquilla - Punto de Venta',
+            'Ver Pagos - Boton de Pago',
             'Mi Taquilla - Deposito',
             'Ver Planillas - Taquilla',
             'Escanear QR',
@@ -788,8 +806,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'Pagar Tasas',
 
             #  ---------------------------------------
-
-
             # ------- GENERAL PARA EL USUARIO WEB
             'Detalles Mi Planilla',
             'Descargar Mi Planilla',
@@ -964,6 +980,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Ver Pagos - Transferencias',
             'Ver Pagos - Punto de Venta',
             'Ver Pagos - Depositos',
+            'Ver Pagos - Boton de Pago',
             'Mi Taquilla - Punto de Venta',
             'Mi Taquilla - Deposito',
             'Ver Planillas - Taquilla',
@@ -1116,6 +1133,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'Ver Planillas',
             'Detalles Planilla',
             'Ver Planilla PDF',
+            'Mi Perfil'
+        ]);
+
+        $roleTreasurer = Role::create(['name' => 'Prensa']);
+        $roleTreasurer->givePermissionTo([
+            'Configuración',
+            'Configuración - General',
+            'Gestionar Imagenes',
+            'Registrar Imagen',
+            'Consultar Imagenes',
+            // 'Detalles Imagen',
+            'Actualizar Imagen',
+            'Mi Perfil'
         ]);
 
 

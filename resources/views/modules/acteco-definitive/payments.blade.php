@@ -11,9 +11,11 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="">{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">{{ session('company') }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('payments.create',['company'=>session('company')]) }}">Pagar Impuestos</a></li>
+                    <li class="breadcrumb-item"><a
+								href="{{ route('payments.create',['company'=>session('company'),'type'=>'definitive']) }}">Pagar
+							Impuestos</a></li>
                     <li class="breadcrumb-item"><a href="#!">Detalles de Autoliquidación</a></li>
                     <li class="breadcrumb-item"><a href="#!">Pagar</a></li>
 
@@ -60,9 +62,32 @@
 									</label>
 								</div>
 							</div>
-
-
-
+							<a href="{{ url('payments/bdv/register/'.$taxes_id) }}">
+								<div class="col s12 m4">
+									<input type="radio" class="">
+									<label class="btn-radio red">
+										<i class="">
+											<img src="{{ asset('images/png/bdv.png') }}"
+												 style="height: 70px!important;width: 200px!important;"
+												 alt=" bank Image" width="100%" height="100%">
+										</i>
+										<span class="truncate white-text">Pago Instantaneo (Banco Venezuela)</span>
+									</label>
+								</div>
+							</a>
+							{{-- <a href="{{url('payments/petro/register/'.$taxes_id)}}">
+                                    <div class="col s12 m6">
+                                        <input type="radio" class="">
+                                        <label class="btn-radio" style="background-color: #164471">
+                                            <i class="">
+                                                <img src="{{ asset('images/png/logo-petro-home.png') }}"
+                                                     style="height: 70px!important;width: 70px!important;"
+                                                     alt=" bank Image" width="100%" height="100%">
+                                            </i>
+                                            <span class="truncate black-text">Pago Instantaneo (Petro)</span>
+                                        </label>
+                                    </div>
+								</a> --}}
 							<div class="row">
 
 							</div>

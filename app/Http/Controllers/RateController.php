@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Helpers\CheckCollectionDay;
 use Illuminate\Http\Request;
 use App\Rate;
 use App\User;
@@ -16,6 +17,7 @@ use OwenIt\Auditing\Models\Audit;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
+
 class RateController extends Controller{
 
 
@@ -362,6 +364,7 @@ class RateController extends Controller{
             }
         }
 
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->status = "process";
         $taxes->update();
 
@@ -390,10 +393,6 @@ class RateController extends Controller{
     public function paymentHistoryTaxPayers(){
         $users=User::find(\Auth::user()->id);
         $taxes=$users->taxesRate()->distinct()->orderBy('id','desc')->get();
-
-
-
-
         return view('modules.rates.taxpayers.history', ['taxes' =>$taxes]);
     }
 

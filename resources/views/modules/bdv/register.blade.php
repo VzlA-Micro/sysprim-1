@@ -10,29 +10,27 @@
             <div class="col s12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.menu')}}">Gestión de Tasas</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Declarar Tasa</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="preview-view">Formas de Pago</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.register')}}">Datos de pago de BDV</a></li>
                     {{--<li class="breadcrumb-item"><a href="{{route('rate.taxpayers.details',['id'=>$taxes_id])}}">Detalles de Autoliquidación</a></li>--}}
                 </ul>
             </div>
             <div class="col s12 m8 l8 offset-m2 offset-l2">
-                <form action="#" method="post"  class="card" id="register">
-                    <ul class="tabs">
-                        <li class="tab col s6" id="one"><a href="#payment-tab"><i class="icon-filter_1"></i>Datos del Pago</a></li>
-                        <li class="tab col s6 disabled" id="two"><a href="#link-tab"><i class="icon-filter_2"></i> Obtener Link</a></li>
-                    </ul>
+                <div class="message message-danger hide">
+                    <div class="message-body">
+                        <strong id="message"></strong>
+                    </div>
+                </div>
 
-                    <div id="payment-tab">
-                        <div class="card-header center-align">
-                            <h4>Datos del Pago</h4>
+                <form action="#" method="post"  class="card " id="register">
+
+                        <div class="card-title center-align padding-1">
+                            <h4> Datos de Pago(BDV)</h4>
                         </div>
                         <div class="card-content row">
-
                             <input type="hidden" id="id" name="id" value="{{$id}}">
 
-
-
-                            <div class="input-field col s6 m4 tooltipped" data-position="bottom"
+                            <div class="input-field col s12 m4 tooltipped" data-position="bottom"
                                  data-tooltip="V: Venezolano; E: Extranjero">
                                 <i class="icon-public prefix"></i>
                                 <select name="type_document" id="type_document" required>
@@ -49,7 +47,7 @@
                                 <input id="document" type="text" name="document" data-validate="documento" maxlength="8"
                                        class="validate number-only rate" pattern="[0-9]+"
                                        title="Solo puede escribir números." required>
-                                <label for="document">Cedula</label>
+                                <label for="document">Cedula Afiliada a BDV</label>
                             </div>
 
 
@@ -61,8 +59,6 @@
                                        title="Solo puede escribir números." required>
                                 <label for="email">Email</label>
                             </div>
-
-
 
                             <div class="input-field col s6">
                                 <i class="icon-phone prefix tooltipped" data-position="S" data-tooltip="412: Digitel<br>414/424: Movistar<br>416/426: Movilnet<br>251: Local"></i>
@@ -77,7 +73,7 @@
                                 <label for="country_code">Operadora</label>
                             </div>
                             <div class="input-field col s6 tooltipped" data-position="bottom" data-tooltip="Solo puede escribir números">
-                                <label for="phone">Teléfono</label>
+                                <label for="phone">Teléfono Afiliado a BDV</label>
                                 <input id="phone" type="tel" name="phone" value="" class="validate number-only" pattern="[0-9]+" title="Solo puede escribir números." placeholder="Ej. 1234567" maxlength="7" minlength="7" required>
                             </div>
 
@@ -94,34 +90,21 @@
 
 
 
-                            <div class="input-field col s12 right-align">
-                                <button type="submit" id='data-next' class="btn peach waves-effect waves-light">
+                            <div class="input-field col s6 left-align">
+                                <a href="#"  class="btn peach waves-effect waves light preview-view ">
+                                    Anterior
+                                    <i class="icon-navigate_before left"></i>
+                                </a>
+                            </div>
+                            <div class="input-field col s6 right-align">
+                                <button type="submit" class="btn peach waves-effect waves light" id="data-next">
                                     Siguiente
                                     <i class="icon-navigate_next right"></i>
                                 </button>
                             </div>
 
-                        </div>
-                    </div>
-                    <div id="link-tab">
-                        <div class="card-header center-align">
-                            <h4>Obtener Link de Pago</h4>
-                        </div>
-
-                            <div class="col s12 m6 offset-m3 center-align" id="div-send">
-                                <a href=""  id="link" class="btn-app green">
-                                    <i class="far fa-file-pdf"></i>
-                                    <span class="truncate">Obtener Link</span>
-                                </a>
-                            </div>
 
 
-
-                        <div class="card-content row">
-
-                        </div>
-
-                    </div>
                 </form>
             </div>
         </div>

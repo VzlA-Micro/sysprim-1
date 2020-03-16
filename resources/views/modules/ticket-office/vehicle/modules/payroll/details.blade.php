@@ -195,7 +195,7 @@
                                                     ESTADO: SIN CONCILIAR AÚN
 
                                                 </a>
-                                            @elseif($response['taxes']->status==='verified')
+                                            @elseif($response['taxes']->status==='verified'|| $response['taxes']->status=='verified-sysprim')
 
                                                 <a href="#" class="btn blue col s12">
                                                     <i class="icon-more_horiz left"></i>
@@ -211,7 +211,7 @@
                                                 </a>
                                             @endif
 
-                                            @if($response['taxes']->status=='process'||$response['taxes']->status=='ticket-office'||$response['taxes']->status=='temporal'||$response['taxes']->status=='verified')
+                                            @if($response['taxes']->status=='process'||$response['taxes']->status=='ticket-office'||$response['taxes']->status=='temporal'||$response['taxes']->status=='verified'|| $response['taxes']->status=='verified-sysprim')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>

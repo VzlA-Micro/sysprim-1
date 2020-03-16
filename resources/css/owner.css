@@ -1,4 +1,18 @@
 @charset "UTF-8";
+@media (max-width: 1400px) {
+  .page-footer {
+    padding: 0.5rem;
+  }
+  .page-footer .social i {
+    font-size: 30px !important;
+  }
+  .page-footer .row {
+    margin-bottom: 0.5rem;
+  }
+  .page-footer .row span {
+    font-size: 10px;
+  }
+}
 body {
   display: flex;
   min-height: 100vh;
@@ -711,6 +725,17 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   font-weight: 400;
 }
 
+.message.message-red-semat .message-header {
+  background-color: #a51d1d;
+  color: #fff;
+}
+
+.message.message-red-semat .message-body {
+  background-color: #fff;
+  border-color: #a51d1d;
+  color: #a51d1d;
+}
+
 /* Datepicker */
 .datepicker-date-display {
   background: -webkit-linear-gradient(40deg, #a51d1d, #d92626) !important;
@@ -750,15 +775,30 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   border-radius: 3px;
   max-width: 300px !important;
 }
-
-.backdrop {
-  background-color: #ff8c66;
+.material-tooltip.default-toolitip {
+  background-color: #424242;
   border-radius: 3px;
   max-width: 300px !important;
 }
 
 .backdrop {
   background-color: #ff8c66;
+  border-radius: 3px;
+  max-width: 300px !important;
+}
+.backdrop.default-toolitip {
+  background-color: #424242;
+  border-radius: 3px;
+  max-width: 300px !important;
+}
+
+.backdrop {
+  background-color: #ff8c66;
+  max-width: 300px !important;
+}
+.backdrop.default-toolitip {
+  background-color: #424242;
+  border-radius: 3px;
   max-width: 300px !important;
 }
 
@@ -918,7 +958,5 @@ textarea[readonly=readonly].materialize-textarea + label.active {
 .bar ul li a:last-child {
   border-bottom-left-radius: 2px;
 }
-
-
 
 /*# sourceMappingURL=owner.css.map */

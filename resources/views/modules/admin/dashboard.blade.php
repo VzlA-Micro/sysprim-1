@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
+  
 @endsection
 
 @section('content')
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text banesco-green">
                             <i class="i-banesco"></i>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text x100-banco-yellow">
                             <i class="i-percent-banco" style="font-size:25px; line-height: 20px"></i>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l4">
+                <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text red-gradient">
                             <i class="i-bicentenario" style="font-size: 30px"></i>
@@ -156,6 +156,20 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col s12 m6">
+                    <div class="widget bootstrap-widget stats">
+                        <div class="widget-stats-icon white-text red-gradient">
+                            <i class="i-bicentenario" style="font-size: 30px"></i>
+                        </div>
+                        <div class="widget-stats-content">
+                            <span class="widget-stats-title"><b>Banco De Venezuela</b></span>
+                            <span class="widget-stats-number">
+                                <span class="" id="bdv"></span> Bs.
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
             @endcan
             @can('Estadisticas - Pagos')
@@ -163,7 +177,7 @@
                 <div class="col s12 m12">
                     <h4>Recaudaciones</h4>
                 </div>
-                <div class="col s12" data-aos="zoom-in">
+                <div class="col s12 m12" data-aos="zoom-in">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon green white-text">
                             <i class="i-bss"></i>
@@ -309,8 +323,9 @@
                                     <td>{{$dear['company']['Total']}} Bs</td>
                                     <td>
                                         <div>
+                                            <span class="right grey-text text-darken-2" style="font-size: 12px;">{{$dear['company']['Porcentaje']}}%</span>
                                             <div class="progress">
-                                                <div class="determinate red" style="width:{{$dear['company']['Porcentaje']}}%"><span>{{$dear['company']['Porcentaje']}}%</span></div>
+                                                <div class="determinate red" style="width:{{$dear['company']['Porcentaje']}}%"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -324,14 +339,31 @@
                                     <td>{{$dear['vehicle']['Total']}} Bs</td>
                                     <td>
                                         <div>
+                                            <span class="right grey-text text-darken-2" style="font-size: 12px;">{{$dear['vehicle']['Porcentaje']}}%</span>
                                             <div class="progress">
-                                                <div class="determinate red" style="width:{{$dear['vehicle']['Porcentaje']}}%"><span>{{$dear['vehicle']['Porcentaje']}}%</span></div>
+                                                <div class="determinate red" style="width:{{$dear['vehicle']['Porcentaje']}}%; "></div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>{{$dear['vehicle']['Estimado']}} Bs</td>
                                     <td><i class="icon-arrow_upward text-success"> </i>{{$dear['vehicle']['Incremento']}} Bs</td>
                                 </tr>{{----}}
+
+                                <tr>
+                                    <td>{{$dear['property']['taxes']}}</td>
+                                    <td>{{$dear['property']['Recaudado']}} Bs</td>
+                                    <td>{{$dear['property']['Espera']}} Bs</td>
+                                    <td>{{$dear['property']['Total']}} Bs</td>
+                                    <td>
+                                        <div>
+                                            <div class="progress">
+                                                <div class="determinate red" style="width:{{$dear['property']['Porcentaje']}}%"><span>{{$dear['property']['Porcentaje']}}%</span></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{$dear['property']['Estimado']}} Bs</td>
+                                    <td><i class="icon-arrow_upward text-success"> </i>{{$dear['property']['Incremento']}} Bs</td>
+                                </tr>
 
                                 </tbody>
                             </table>
@@ -393,4 +425,4 @@
                     }
                 });
             </script>
-@endsection
+        @endsection

@@ -16,6 +16,7 @@ use App\User;
 use Mail;
 use App\Taxe;
 use App\Company;
+use App\Property;
 use App\Extras;
 use App\Tributo;
 use App\Helpers\TaxesMonth;
@@ -25,6 +26,8 @@ use Carbon\Carbon;
 use App\Employees;
 use App\CiuTaxes;
 use App\Rate;
+use App\Helpers\Declaration;
+
 
 class DashboardController extends Controller
 {
@@ -117,43 +120,62 @@ class DashboardController extends Controller
         $banco100Noviembre = 0;
         $banco100Diciembre = 0;
 
+        $bdvEnero = 0;
+        $bdvFebrero = 0;
+        $bdvMarzo = 0;
+        $bdvAbril = 0;
+        $bdvMayo = 0;
+        $bdvJunio = 0;
+        $bdvJulio = 0;
+        $bdvAgosto = 0;
+        $bdvSeptiembre = 0;
+        $bdvOctubre = 0;
+        $bdvNoviembre = 0;
+        $bdvDiciembre = 0;
+
         $taxe = Taxe::where('status', 'verified')
             ->orWhere('status', 'verified-sysprim')
             ->sum('amount');
         $taxes = number_format($taxe, 2, ',', '.');
 
         $banesco1 = Taxe::where('status', 'verified')
-            ->where('bank', 55)
+            ->where('bank_name', 'BANESCO')
             ->orWhere('status', 'verified-sysprim')
-            ->where('bank', 55)
+            ->where('bank_name', 'BANESCO')
             ->sum('amount');
         $banesco = number_format($banesco1, 2, ',', '.');
 
         $banco1001 = Taxe::where('status', '=', 'verified')
-            ->where('bank', 33)
+            ->where('bank_name', '100%BANCO')
             ->orWhere('status', 'verified-sysprim')
-            ->where('bank', 33)
+            ->where('bank_name', '100%BANCO')
             ->sum('amount');
         $banco100 = number_format($banco1001, 2, ',', '.');
         $bnc1 = Taxe::where('status', 'verified')
-            ->where('bank', 99)
+            ->where('bank_name', 'BNC')
             ->orWhere('status', 'verified-sysprim')
-            ->where('bank', 99)
+            ->where('bank_name', 'BNC')
             ->sum('amount');
         $bnc = number_format($bnc1, 2, ',', '.');
         $bod1 = Taxe::where('status', 'verified')
-            ->where('bank', 44)
+            ->where('bank_name', 'BOD')
             ->orWhere('status', 'verified-sysprim')
-            ->where('bank', 44)
+            ->where('bank_name', 'BOD')
             ->sum('amount');
         $bod = number_format($bod1, 2, ',', '.');
         $bicentenario1 = Taxe::where('status', 'verified')
-            ->where('bank', 77)
+            ->where('bank_name', 'BICENTENARIO')
             ->orWhere('status', 'verified-sysprim')
-            ->where('bank', 77)
+            ->where('bank_name', 'BICENTENARIO')
             ->sum('amount');
         $bicentenario = number_format($bicentenario, 2, ',', '.');
 
+        $bdv1 = Taxe::where('status', 'verified')
+        ->where('bank_name', 'BANCO VENEZUELA')
+        ->orWhere('status', 'verified-sysprim')
+        ->where('bank_name', 'BANCO VENEZUELA')
+        ->sum('amount');
+        $bdv = number_format($bdv1, 2, ',', '.');
 
         //Recaudacion por meses
 
@@ -803,13 +825,126 @@ class DashboardController extends Controller
             ->where('bank', 33)
             ->sum('amount');
 
+
+//RECAUDACION POR BANCO DE VENEZUELA
+
+        $bdvEnero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '01')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvFebrero = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '02')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvMarzo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '03')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvAbril = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '04')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvMayo = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '05')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvJunio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '06')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvJulio = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '07')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvAgosto = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '08')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvSeptiembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '09')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvOctubre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '10')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvNoviembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '11')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+        $bdvDiciembre = Taxe::where('status', 'verified')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->orWhere('status', 'verified-sysprim')
+            ->whereMonth('created_at', '=', '12')
+            ->whereYear('created_at', '=', $year)
+            ->where('bank', 44)
+            ->sum('amount');
+
         $collection = array(
             'total' => $taxes,
             'banesco' => $banesco,
             'banco100' => $banco100,
             'bnc' => $bnc,
             'bod' => $bod,
-            'bicentenario' => $bicentenario
+            'bicentenario' => $bicentenario,
+            'venezuela'=> $bdv
         );
         $collectionMonth = array(
             'enero' => $enero,
@@ -898,6 +1033,23 @@ class DashboardController extends Controller
             'noviembre' => $banco100Noviembre,
             'diciembre' => $banco100Diciembre
         );
+
+        $bdvMonth = array(
+            'enero' => $bdvEnero,
+            'febrero' => $bdvFebrero,
+            'marzo' => $bdvMarzo,
+            'abril' => $bdvAbril,
+            'mayo' => $bdvMayo,
+            'junio' => $bdvJunio,
+            'julio' => $bdvJulio,
+            'agosto' => $bdvAgosto,
+            'septiembre' => $bdvSeptiembre,
+            'octubre' => $bdvOctubre,
+            'noviembre' => $bdvNoviembre,
+            'diciembre' => $bdvDiciembre
+        );
+
+
         $actividad = $this->actividadTaxes();
         $property = $this->propertyTaxes();
         $vehicle = $this->vehicleTaxes();
@@ -935,7 +1087,8 @@ class DashboardController extends Controller
             $dearTaxes,
             $taxpayers,
             $companies,
-            $rate
+            $rate,
+            $bdvMonth
         ]);
     }
 
@@ -976,7 +1129,8 @@ class DashboardController extends Controller
         $countPpc = count($ppc);
         $dear = array(
             'company' => $this->dearTaxes(),
-            'vehicle' => $this->dearTaxesVehicle()
+            'vehicle' => $this->dearTaxesVehicle(),
+            'property'=> $this->dearTaxesProperty()
         );
 
         $users = User::all()->count();
@@ -1893,7 +2047,7 @@ class DashboardController extends Controller
         return $dearTaxesVehicle;
     }
 
-/*public function dearTaxesRate()
+public function dearTaxesProperty()
     {
         $year = Carbon::now()->format('Y');
         $month = Carbon::now()->format('m');
@@ -1907,34 +2061,27 @@ class DashboardController extends Controller
         $raised = Taxe::where('status', 'verified')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->orWhere('status', 'verified-sysprim')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->sum('amount');
 
         $wait = Taxe::where('status', 'process')
             ->whereMonth('created_at', '=', $month)
             ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Pat.Veh')
+            ->where('branch', 'Inm.Urbanos')
             ->sum('amount');
 
-        foreach ($vehicle as $vehicles) {
-            $yearVehicle = $vehicles->year;
+        $property=Property::all();
 
-            $diffYear = $year - intval($yearVehicle);
+        $acum=0;
 
-            if ($diffYear < 3) {
-                $rateYear = $vehicle[0]->type->rate;
-                $taxes = $rateYear * $rate[0]->value;
-            } else {
-                $rateYear = $vehicle[0]->type->rate_UT;
-                $taxes = $rateYear * $rate[0]->value;
-            }
-            $acum += $taxes;
+        foreach($property as $proper){
+            $save=Declaration::VerifyDeclaration($proper->id,'full');
+            $acum+=$save['total'];
         }
-
 
         $totalCollection = $raised + $wait;
 
@@ -1947,8 +2094,8 @@ class DashboardController extends Controller
             $increment = 0;
         }
 
-        $dearTaxesVehicle = array(
-            'taxes' => 'Patente Vehículo',
+        $dearTaxesProperty = array(
+            'taxes' => 'Inmuebles Urbanos',
             'Recaudado' => number_format($raised, 2, ',', '.'),
             'Espera' => number_format($wait, 2, ',', '.'),
             'Total' => number_format($totalCollection, 2, ',', '.'),
@@ -1960,8 +2107,8 @@ class DashboardController extends Controller
             'incremento' => $increment
         );
 
-        return $dearTaxesVehicle;
-    }*/
+        return $dearTaxesProperty;
+    }
 
 
 }

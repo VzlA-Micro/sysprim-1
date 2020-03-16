@@ -281,7 +281,6 @@ class Declaration
             'interest' => $interest,
             'discount' => $discount,
             'total' => $total,
-//              'mora' => $verifyPrologue
         );
         return $amounts;
     }

@@ -21,7 +21,7 @@ use App\Brand;
 use App\ModelsVehicle;
 use App\VehicleType;
 use App\Taxe;
-
+use App\Helpers\CheckCollectionDay;
 class VehiclesTaxesController extends Controller
 {
     public function create($id)
@@ -156,6 +156,10 @@ class VehiclesTaxesController extends Controller
         $taxes->fiscal_period_end = $period_fiscal_end;
         $taxes->status = 'Temporal';
         $taxes->type = $type;
+        $taxes->amount = $totalAux;
+        $taxes->status = 'temporal';
+        $taxes->branch = 'Pat.Veh';
+
         $taxes->save();
 
         $taxesId = $taxes->id;
@@ -166,6 +170,13 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxes->status = 'Temporal';
         $vehicleTaxes->type_payments = $declaration['optionPayment'];
         $vehicleTaxes->fiscal_credits = 0;
+
+
+        $vehicleTaxes->recharge = $declaration['recharge'];
+        $vehicleTaxes->recharge_mora = $declaration['valueMora'];
+        $vehicleTaxes->base_imponible = $declaration['grossTaxes'];
+        $vehicleTaxes->previous_debt = $declaration['previousDebt'];
+        $vehicleTaxes->discount = $declaration['valueDiscount'];
         $vehicleTaxes->save();
 
 
@@ -202,7 +213,7 @@ class VehiclesTaxesController extends Controller
         $companyId = $request->input('companyId');
         $idVehicle = $request->input('vehicleId');
 
-
+        $declaration = DeclarationVehicle::Declaration($idVehicle, true);
         if (isset($companyId)) {
             $vehicle = Vehicle::where('id', $idVehicle)->with('company')->get();
 
@@ -252,14 +263,14 @@ class VehiclesTaxesController extends Controller
 
         $idVehicleTaxes = VehiclesTaxe::where('taxe_id', $id)->get();
 
-        $vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
-        $vehicleTaxes->fiscal_credits = $fiscalCredits_format;
-        $vehicleTaxes->recharge = $recharge_format;
-        $vehicleTaxes->recharge_mora = $rechargeMora_format;
-        $vehicleTaxes->base_imponible = $base_format;
-        $vehicleTaxes->previous_debt = (float)$previouDebt_format;
-        $vehicleTaxes->discount = $discount_format;
-        $vehicleTaxes->update();
+        //$vehicleTaxes = VehiclesTaxe::find($idVehicleTaxes[0]->id);
+        //$vehicleTaxes->fiscal_credits = $fiscalCredits_format;
+        //$vehicleTaxes->recharge = $recharge_format;
+        //$vehicleTaxes->recharge_mora = $rechargeMora_format;
+        //$vehicleTaxes->base_imponible = $base_format;
+        //$vehicleTaxes->previous_debt = (float)$previouDebt_format;
+        //$vehicleTaxes->discount = $discount_format;
+        //$vehicleTaxes->update();
 
         $date_format = date("Y-m-d", strtotime($taxes->created_at));
         $date = date("d-m-Y", strtotime($taxes->created_at));
@@ -300,9 +311,10 @@ class VehiclesTaxesController extends Controller
             $taxes->bank = $bank_payment;
             $taxes->digit = TaxesNumber::generateNumberSecret($taxes->amount, $date_format, $bank_payment, $code);
         }
-
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->status = "process";
         $taxes->update();
+
 
         $vehiclesTaxe->status = 'process';
         $vehiclesTaxe->update();
@@ -396,14 +408,22 @@ class VehiclesTaxesController extends Controller
     }
 
     public
-    function creditsFiscal(Request $request)
+    function creditsFiscal($fiscalCredit,$vehicleId)
     {
-        $total = (float)$request->input('total');
-        $fiscalCredits = (float)$request->input('creditsFiscal');
+        //$total = (float)$request->input('total');
+        $fiscalCredits_format = str_replace('.', '', $fiscalCredit);
+        $fiscalCredits_format = str_replace(',', '.', $fiscalCredits_format);
+        $fiscalCredits = $fiscalCredits_format;
+        $idVehicle = $vehicleId;
+        $vehicleTaxes=VehiclesTaxe::where('vehicle_id',$idVehicle)->latest()
+            ->first();
+        $vehicleTaxe=VehiclesTaxe::find($vehicleTaxes->id);
+        $taxes=Taxe::where('id',$vehicleTaxes->taxe_id)->latest()
+            ->first();
         $aux = 0;
-
+//dd($taxes);
         if ($fiscalCredits >= 0) {
-            $aux = $total - $fiscalCredits;
+            $aux = $taxes->amount - $fiscalCredits;
             if ($aux < 0) {
                 //DEVUELVO TRUE SI EL VALOR QUE INTRODUJO
                 // EN EL CREDITO FISCAL ES MAYOR AL QUE LE CORRESPONDE
@@ -411,6 +431,12 @@ class VehiclesTaxesController extends Controller
                 return response()->json([true]);
             } else {
                 //DEVUELVO FALSE SI EL CREDITO FISCAL ES IGUAL O MENOR AL MONTO A PAGAR
+                $vehicleTaxe->fiscal_credits=$fiscalCredits;
+                $vehicleTaxe->update();
+
+                $taxes->amount=$aux;
+                $taxes->update();
+
                 $totalAux = (string)number_format($aux, 2, ',', '.');
                 $fiscalCreditsAux = (string)number_format($fiscalCredits, 2, ',', '.');
                 return response()->json([false, $totalAux, $fiscalCreditsAux]);

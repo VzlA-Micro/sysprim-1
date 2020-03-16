@@ -17,7 +17,7 @@ class CiuController extends Controller
      */
     public function index()
     {
-       $groupCiiu = GroupCiiu::all();
+       $groupCiiu = GroupCiiu::orderBy('name','asc')->get();
        return view('modules.ciiu.register',array(
           'groupCiiu'=>$groupCiiu
        ));

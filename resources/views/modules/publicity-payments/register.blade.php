@@ -73,6 +73,7 @@
             			@csrf
                         <input type="hidden" name="publicity_id" id="publicity_id" value="{{ $publicity->id }}">
                         <input type="hidden" name="type" id="type" value="{{ $taxeType }}">
+                        <input type="hidden" name="taxe_id" id="taxe_id" value="{{ $taxe_id }}">
                         <div class="input-field col s8 m9">
                             <i class="icon-confirmation_number prefix"></i>
                             <select name="advertising_type_id" id="advertising_type_id" disabled>

@@ -44,7 +44,7 @@
                                        pattern="[0-9A-Za-z]+">
                                 <label for="licensePlate">Placa del Vehículo</label>
                             </div>
-                            <input type="text" id="vehicle_id" value="" name="vehicle_id" class="hide">
+                            <input type="text" id="vehicleId" value="" name="vehicleId" class="hide">
                             <div class="input-field col s12 m4">
                                 <i class="icon-person prefix"></i>
                                 <input type="text" name="brandTo" id="brandTo" disabled>
@@ -168,8 +168,8 @@
                                          width="100%" height="100%">
                                 </i>
                                 <input type="text" name="fiscal_credits" id="fiscal_credits"
-                                       class="validate number-only" pattern="[0-9.,]+"
-                                       value="0"
+                                       class="validate money_keyup" pattern="[0-9.,]+"
+                                       value=""
                                 >
                                 <label for="fiscal_credits">Credito fiscal<b> (Bs)</b></label>
                             </div>

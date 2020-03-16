@@ -83,6 +83,7 @@ class CompanyTaxesController extends Controller
     {
         $company = Company::where('name', $company)->get();
         $company_find = Company::find($company[0]->id);
+
         $mounths = array("ENERO" => '01', "FEBRERO" => '02', "MARZO" => '03', "ABRIL" => '04', "MAYO" => '05', "JUNIO" => '06', "JULIO" => '07', "AGOSTO" => '08', "SEPTIEMBRE" => '09', "OCTUBRE" => '10', "NOVIEMBRE" => '11', "DICIEMBRE" => '12');
         $mounthNow = Carbon::now()->format('m');
 
@@ -476,13 +477,22 @@ class CompanyTaxesController extends Controller
 
         }
 
+
         $taxes->status="process";
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->update();
+
 
 
         $fiscal_period = TaxesMonth::convertFiscalPeriod($taxes->fiscal_period);
         $fiscal_period_format=Carbon::parse($taxes->fiscal_period);
         $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
+
+
+        if (is_null($tributo)) {
+            $tributo = Tributo::orderBy('id', 'desc')->take(1)->first();
+        }
+
 
 
         $amount=Calculate::calculateTaxes($id_taxes);
@@ -1014,6 +1024,7 @@ class CompanyTaxesController extends Controller
         }
 
         $taxes->status = "process";
+        $taxes->bank_name= CheckCollectionDay::getNameBank($bank_payment);
         $taxes->update();
 
 

@@ -45,7 +45,7 @@
                                         <td>{{$taxe->code}}</td>
                                         <td>{{$taxe->created_at->format('d-m-Y')}}</td>
                                         <td>{{$taxe->type_payment}}</td>
-                                        <td>{{$taxe->bankName}}</td>
+                                        <td>{{$taxe->bank_name}}</td>
                                         <td>{{$taxe->lot}}</td>
                                         <td>{{$taxe->ref}}</td>
                                         <td>{{$taxe->statusName}}</td>

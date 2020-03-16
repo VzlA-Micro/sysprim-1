@@ -67,6 +67,8 @@ class UsersTableSeeder extends Seeder
             'role_id'=>3,
         ]);
 
+       
+
         DB::table('users')->insert([
             'ci'=>'V14141478',
             'name'=>'Admin',
@@ -84,5 +86,7 @@ class UsersTableSeeder extends Seeder
             'updated_at'=>Carbon::now(),
             'role_id'=>3,
         ]);
+
+        
     }
 }
