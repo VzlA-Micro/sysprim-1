@@ -23,7 +23,7 @@ use App\Company;
 use App\PublicityTaxe;
 use App\Helpers\TaxesMonth;
 use App\Val_cat_const_inmu;
-
+use App\Helpers\Calculate;
 class BdvController extends Controller
 {
 
@@ -118,28 +118,25 @@ class BdvController extends Controller
                 if ($taxe->type == 'actuated') {
 
                     $companyTaxes = CompanyTaxe::where('taxe_id', $taxe->id)->get();
-
                     $ciuTaxes = CiuTaxes::where('taxe_id', $taxe->id)->get();
                     $fiscal_period = TaxesMonth::convertFiscalPeriod($taxe->fiscal_period);
                     $company = Company::find($companyTaxes[0]->company_id);
-                    $userCompany = $company->users()->get();
                     $taxe->code = TaxesNumber::generateNumberTaxes('PBP81');
                     $taxe->update();
+                    $amount = Calculate::calculateTaxes($taxe->id);
 
-
-                    foreach ($ciuTaxes as $ciu) {
-
-                        $pdf = \PDF::loadView('modules.taxes.receipt', [
+                    $pdf = \PDF::loadView('modules.taxes.receipt', [
                             'taxes' => $taxe,
                             'fiscal_period' => $fiscal_period,
                             'ciuTaxes' => $ciuTaxes,
                             'companyTaxes' => $companyTaxes,
+                            'amount' => $amount,
                             'firm' => $firm
-                        ]);
+                    ]);
 
-                        $userCompany = $company->users()->get();
-                        $for = $userCompany[0]->email;
-                    }
+                    $userCompany = $company->users()->get();
+                    $for = $userCompany[0]->email;
+
 
                 } elseif ($taxe->type == 'definitive') {
 

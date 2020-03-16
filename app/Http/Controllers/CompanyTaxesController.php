@@ -488,6 +488,12 @@ class CompanyTaxesController extends Controller
         $tributo = Tributo::whereDate('to','>=',$fiscal_period_format)->whereDate('since','<=',$fiscal_period_format)->first();
 
 
+        if (is_null($tributo)) {
+            $tributo = Tributo::orderBy('id', 'desc')->take(1)->first();
+        }
+
+
+
         $amount=Calculate::calculateTaxes($id_taxes);
         $ciuTaxes =CiuTaxes::where('taxe_id', $id_taxes)->get();
         $verify=TaxesMonth::calculateDayMora($taxes->fiscal_period,$taxes->companies[0]->typeCompany);
