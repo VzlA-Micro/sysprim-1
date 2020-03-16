@@ -227,7 +227,7 @@
 
 		<hr>
 		<tr>
-			<td colspan="7">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
+			<td colspan="7" style="font-size: 12px;!important;">{{strtoupper(NumerosEnLetras::convertir($taxes->amount))."."}}</td>
 		</tr>
 	</table>
 	<table>
