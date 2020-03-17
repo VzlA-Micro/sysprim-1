@@ -55,18 +55,6 @@ class DashboardController extends Controller
 
         $year = Carbon::now()->format('Y');
 
-        $banescoEnero = 0;
-        $banescoFebrero = 0;
-        $banescoMarzo = 0;
-        $banescoAbril = 0;
-        $banescoMayo = 0;
-        $banescoJunio = 0;
-        $banescoJulio = 0;
-        $banescoAgosto = 0;
-        $banescoSeptiembre = 0;
-        $banescoOctubre = 0;
-        $banescoNoviembre = 0;
-        $banescoDiciembre = 0;
 
         $bncEnero = 0;
         $bncFebrero = 0;
@@ -120,18 +108,6 @@ class DashboardController extends Controller
         $banco100Noviembre = 0;
         $banco100Diciembre = 0;
 
-        $bdvEnero = 0;
-        $bdvFebrero = 0;
-        $bdvMarzo = 0;
-        $bdvAbril = 0;
-        $bdvMayo = 0;
-        $bdvJunio = 0;
-        $bdvJulio = 0;
-        $bdvAgosto = 0;
-        $bdvSeptiembre = 0;
-        $bdvOctubre = 0;
-        $bdvNoviembre = 0;
-        $bdvDiciembre = 0;
 
         $taxe = Taxe::where('status', 'verified')
             ->orWhere('status', 'verified-sysprim')
@@ -177,208 +153,42 @@ class DashboardController extends Controller
         ->sum('amount');
         $bdv = number_format($bdv1, 2, ',', '.');
 
-        //Recaudacion por meses
-
-        $enero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $febrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $marzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $abril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $mayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $junio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $julio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $agosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $septiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $octubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-        $noviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-
-        //$noviembre=number_format($noviembre1, 2, ',', '.');
-        $diciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->sum('amount');
-
-        //Recaudacion por meses de banesco
+        /*--------------------------RECAUDACION POR MESES -------------------------------------*/
 
 
-        $banescoEnero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoFebrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoMarzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoAbril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoMayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoJunio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoJulio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoAgosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoSeptiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoOctubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoNoviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
-        $banescoDiciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 55)
-            ->sum('amount');
+        $monthTaxes=[];
+        for ($month=1;$month<=12;$month++){
+            $monthTaxes[] = Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->sum('amount');
+        }
 
-        //Recaudacion por meses de bnc
+
+
+
+        /*--------------------------RECAUDACION POR MESES (BANESCO) -------------------------------------*/
+
+
+        $monthBanesco=[];
+        for ($month=1;$month<=12;$month++){
+            $monthBanesco[] = Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('bank_name', 'BANESCO')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', '01')
+                ->whereYear('created_at', '=', $year)
+                ->where('bank_name', 'BANESCO')
+                ->sum('amount');
+        }
+
+
+
+        /*--------------------------RECAUDACION POR MESES (BNC) -------------------------------------*/
 
 
         $bncEnero = Taxe::where('status', 'verified')
@@ -826,116 +636,21 @@ class DashboardController extends Controller
             ->sum('amount');
 
 
-//RECAUDACION POR BANCO DE VENEZUELA
+        //RECAUDACION POR BANCO DE VENEZUELA
+        $monthBdv=[];
+        for($month=1;$month<=12;$month++){
+            $monthBdv[] = Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('bank_name', 'BANCO VENEZUELA')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('bank_name', 'BANCO VENEZUELA')
+                ->sum('amount');
+        }
 
-        $bdvEnero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvFebrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvMarzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvAbril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvMayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvJunio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvJulio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvAgosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvSeptiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvOctubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvNoviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
-        $bdvDiciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('bank', 44)
-            ->sum('amount');
+
 
         $collection = array(
             'total' => $taxes,
@@ -947,32 +662,34 @@ class DashboardController extends Controller
             'venezuela'=> $bdv
         );
         $collectionMonth = array(
-            'enero' => $enero,
-            'febrero' => $febrero,
-            'marzo' => $marzo,
-            'abril' => $abril,
-            'mayo' => $mayo,
-            'junio' => $junio,
-            'julio' => $julio,
-            'agosto' => $agosto,
-            'septiembre' => $septiembre,
-            'octubre' => $octubre,
-            'noviembre' => $noviembre,
-            'diciembre' => $diciembre
+            'enero' => $monthTaxes[0],
+            'febrero' => $monthTaxes[1],
+            'marzo' => $monthTaxes[2],
+            'abril' => $monthTaxes[3],
+            'mayo' => $monthTaxes[4],
+            'junio' => $monthTaxes[5],
+            'julio' => $monthTaxes[6],
+            'agosto' => $monthTaxes[7],
+            'septiembre' => $monthTaxes[8],
+            'octubre' => $monthTaxes[9],
+            'noviembre' => $monthTaxes[10],
+            'diciembre' => $monthTaxes[11]
         );
+
+
         $banescoMonth = array(
-            'enero' => $banescoEnero,
-            'febrero' => $banescoFebrero,
-            'marzo' => $banescoMarzo,
-            'abril' => $banescoAbril,
-            'mayo' => $banescoMayo,
-            'junio' => $banescoJunio,
-            'julio' => $banescoJulio,
-            'agosto' => $banescoAgosto,
-            'septiembre' => $banescoSeptiembre,
-            'octubre' => $banescoOctubre,
-            'noviembre' => $banescoNoviembre,
-            'diciembre' => $banescoDiciembre
+            'enero' => $monthBanesco[0],
+            'febrero' => $monthBanesco[1],
+            'marzo' => $monthBanesco[2],
+            'abril' => $monthBanesco[3],
+            'mayo' => $monthBanesco[4],
+            'junio' => $monthBanesco[5],
+            'julio' => $monthBanesco[6],
+            'agosto' => $monthBanesco[7],
+            'septiembre' =>$monthBanesco[8],
+            'octubre' => $monthBanesco[9],
+            'noviembre' => $monthBanesco[10],
+            'diciembre' => $monthBanesco[11]
         );
         $bncMonth = array(
             'enero' => $bncEnero,
@@ -1035,18 +752,18 @@ class DashboardController extends Controller
         );
 
         $bdvMonth = array(
-            'enero' => $bdvEnero,
-            'febrero' => $bdvFebrero,
-            'marzo' => $bdvMarzo,
-            'abril' => $bdvAbril,
-            'mayo' => $bdvMayo,
-            'junio' => $bdvJunio,
-            'julio' => $bdvJulio,
-            'agosto' => $bdvAgosto,
-            'septiembre' => $bdvSeptiembre,
-            'octubre' => $bdvOctubre,
-            'noviembre' => $bdvNoviembre,
-            'diciembre' => $bdvDiciembre
+            'enero' => $monthBdv[0],
+            'febrero' => $monthBdv[1],
+            'marzo' => $monthBdv[2],
+            'abril' => $monthBdv[3],
+            'mayo' => $monthBdv[4],
+            'junio' => $monthBdv[5],
+            'julio' => $monthBdv[6],
+            'agosto' => $monthBdv[7],
+            'septiembre' => $monthBdv[8],
+            'octubre' => $monthBdv[9],
+            'noviembre' => $monthBdv[10],
+            'diciembre' =>$monthBdv[11]
         );
 
 
@@ -1054,7 +771,7 @@ class DashboardController extends Controller
         $property = $this->propertyTaxes();
         $vehicle = $this->vehicleTaxes();
         $rate = $this->rateTaxes();
-        $event = $this->eventTaxes();
+        $publicity = $this->publicityTaxes();
         $top = $this->topPayments();
         $dear = $this->dearTaxes();
         $dearVehicle = $this->dearTaxesVehicle();
@@ -1071,24 +788,27 @@ class DashboardController extends Controller
         $taxpayers = User::get()->count();
         $companies = Company::get()->count();
 
+
+        /* Position sirve para saber en que posicion del array estan lo datos para el javascript*/
+
         return response()->json([
-            $collection,
-            $collectionMonth,
-            $banescoMonth,
-            $bncMonth,
-            $bicentenarioMonth,
-            $bodMonth,
-            $banco100Month,
-            $actividad,
-            $property,
-            $vehicle,
-            $event,
-            $top,
-            $dearTaxes,
-            $taxpayers,
-            $companies,
-            $rate,
-            $bdvMonth
+            $collection,  //position:0
+            $collectionMonth,//position:1
+            $banescoMonth,//position:2
+            $bncMonth,//position:3
+            $bicentenarioMonth,//position:4
+            $bodMonth,//position:5
+            $banco100Month,//position:6
+            $actividad,//position:7
+            $property,//position:8
+            $vehicle,//position:9
+            $publicity,//position:10
+            $top,//position:11
+            $dearTaxes,//position:12
+            $taxpayers,//position:13
+            $companies,//position:14
+            $rate,//position:15
+            $bdvMonth//position:16
         ]);
     }
 
@@ -1138,6 +858,17 @@ class DashboardController extends Controller
         $vehicles = Vehicle::get()->count();
         $property = Inmueble::get()->count();
 
+
+
+        //Conseguir nombre de mes en enpaniol
+        $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $date_now = Carbon::now();
+        $mounthNow = $month[($date_now->format('n')) - 1];
+
+
+
+
+
         return view('modules.admin.dashboard', array(
                 'company' => $company,
                 'ptb' => $countPtb,
@@ -1148,7 +879,8 @@ class DashboardController extends Controller
                 'users' => $users,
                 'companies' => $companies,
                 'vehicles' => $vehicles,
-                'property' => $property
+                'property' => $property,
+                'monthNow'=>$mounthNow
             )
         );
     }
@@ -1175,141 +907,33 @@ class DashboardController extends Controller
     {
         $year = Carbon::now()->format('Y');
 
-        $Act_Enero = 0;
-        $Act_Febrero = 0;
-        $Act_Marzo = 0;
-        $Act_Abril = 0;
-        $Act_Mayo = 0;
-        $Act_Junio = 0;
-        $Act_Julio = 0;
-        $Act_Agosto = 0;
-        $Act_Septiembre = 0;
-        $Act_Octubre = 0;
-        $Act_Noviembre = 0;
-        $Act_Diciembre = 0;
+        $month=[];
 
-        $Act_Enero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Febrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Marzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Abril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Mayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Junio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Julio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Agosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Septiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Octubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Noviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
-        $Act_Diciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Act.Eco')
-            ->sum('amount');
+        for ($i=1;$i<=12;$i++){
+            $month[]= Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $i)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Act.Eco')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $i)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Act.Eco')
+                ->sum('amount');
+         }
 
         $actividad = array(
-            'enero' => $Act_Enero,
-            'febrero' => $Act_Febrero,
-            'marzo' => $Act_Marzo,
-            'abril' => $Act_Abril,
-            'mayo' => $Act_Mayo,
-            'junio' => $Act_Junio,
-            'julio' => $Act_Julio,
-            'agosto' => $Act_Agosto,
-            'septiembre' => $Act_Septiembre,
-            'octubre' => $Act_Octubre,
-            'noviembre' => $Act_Noviembre,
-            'diciembre' => $Act_Diciembre
+            'enero' => $month[0],
+            'febrero' => $month[1],
+            'marzo' => $month[2],
+            'abril' => $month[3],
+            'mayo' => $month[4],
+            'junio' => $month[5],
+            'julio' => $month[6],
+            'agosto' => $month[7],
+            'septiembre' => $month[8],
+            'octubre' => $month[9],
+            'noviembre' => $month[10],
+            'diciembre' => $month[11],
         );
         return $actividad;
     }
@@ -1318,141 +942,35 @@ class DashboardController extends Controller
     {
         $year = Carbon::now()->format('Y');
 
-        $pro_Enero = 0;
-        $pro_Febrero = 0;
-        $pro_Marzo = 0;
-        $pro_Abril = 0;
-        $pro_Mayo = 0;
-        $pro_Junio = 0;
-        $pro_Julio = 0;
-        $pro_Agosto = 0;
-        $pro_Septiembre = 0;
-        $pro_Octubre = 0;
-        $pro_Noviembre = 0;
-        $pro_Diciembre = 0;
 
-        $pro_Enero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Febrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Marzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Abril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Mayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Junio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Julio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Agosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Septiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Octubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Noviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
-        $pro_Diciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Inm.Urb')
-            ->sum('amount');
+        $propertyMonth=[];
+
+        for ($month=1;$month<=12;$month++){
+            $propertyMonth[]= Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Inm.Urbanos')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Inm.Urbanos')
+                ->sum('amount');
+        }
+
 
         $property = array(
-            'enero' => $pro_Enero,
-            'febrero' => $pro_Febrero,
-            'marzo' => $pro_Marzo,
-            'abril' => $pro_Abril,
-            'mayo' => $pro_Mayo,
-            'junio' => $pro_Junio,
-            'julio' => $pro_Julio,
-            'agosto' => $pro_Agosto,
-            'septiembre' => $pro_Septiembre,
-            'octubre' => $pro_Octubre,
-            'noviembre' => $pro_Noviembre,
-            'diciembre' => $pro_Diciembre
+            'enero' => $propertyMonth[0],
+            'febrero' => $propertyMonth[1],
+            'marzo' =>$propertyMonth[2],
+            'abril' => $propertyMonth[3],
+            'mayo' => $propertyMonth[4],
+            'junio' => $propertyMonth[5],
+            'julio' =>$propertyMonth[6],
+            'agosto' =>$propertyMonth[7],
+            'septiembre' => $propertyMonth[8],
+            'octubre' => $propertyMonth[9],
+            'noviembre' => $propertyMonth[10],
+            'diciembre' => $propertyMonth[11]
         );
         return $property;
     }
@@ -1604,251 +1122,73 @@ class DashboardController extends Controller
     {
         $year = Carbon::now()->format('Y');
 
-        $rate_Enero = 0;
-        $rate_Febrero = 0;
-        $rate_Marzo = 0;
-        $rate_Abril = 0;
-        $rate_Mayo = 0;
-        $rate_Junio = 0;
-        $rate_Julio = 0;
-        $rate_Agosto = 0;
-        $rate_Septiembre = 0;
-        $rate_Octubre = 0;
-        $rate_Noviembre = 0;
-        $rate_Diciembre = 0;
 
-        $rate_Enero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Febrero = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Marzo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Abril = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Mayo = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Junio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Julio = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Agosto = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Septiembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Octubre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Noviembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
-        $rate_Diciembre = Taxe::where('status', 'verified')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Tasas y Cert')
-            ->sum('amount');
+        $rateMonth=[];
+
+        for ($month=1;$month<=12;$month++){
+            $rateMonth[]= Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Tasas y Cert')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Tasas y Cert')
+                ->sum('amount');
+        }
+
 
         $rate = array(
-            'enero' => $rate_Enero,
-            'febrero' => $rate_Febrero,
-            'marzo' => $rate_Marzo,
-            'abril' => $rate_Abril,
-            'mayo' => $rate_Mayo,
-            'junio' => $rate_Junio,
-            'julio' => $rate_Julio,
-            'agosto' => $rate_Agosto,
-            'septiembre' => $rate_Septiembre,
-            'octubre' => $rate_Octubre,
-            'noviembre' => $rate_Noviembre,
-            'diciembre' => $rate_Diciembre
+            'enero' => $rateMonth[0],
+            'febrero' => $rateMonth[1],
+            'marzo' => $rateMonth[2],
+            'abril' => $rateMonth[3],
+            'mayo' => $rateMonth[4],
+            'junio' => $rateMonth[5],
+            'julio' => $rateMonth[6],
+            'agosto' => $rateMonth[7],
+            'septiembre' => $rateMonth[8],
+            'octubre' => $rateMonth[9],
+            'noviembre' => $rateMonth[10],
+            'diciembre' => $rateMonth[11]
         );
         return $rate;
     }
 
-    public function eventTaxes()
+    public function publicityTaxes()
     {
         $year = Carbon::now()->format('Y');
 
-        $event_Enero = 0;
-        $event_Febrero = 0;
-        $event_Marzo = 0;
-        $event_Abril = 0;
-        $event_Mayo = 0;
-        $event_Junio = 0;
-        $event_Julio = 0;
-        $event_Agosto = 0;
-        $event_Septiembre = 0;
-        $event_Octubre = 0;
-        $event_Noviembre = 0;
-        $event_Diciembre = 0;
+        $publicityMonth=[];
 
-        $event_Enero = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '01')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Febrero = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '02')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Marzo = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '03')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Abril = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '04')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Mayo = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '05')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Junio = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '06')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Julio = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '07')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Agosto = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '08')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Septiembre = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '09')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Octubre = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '10')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Noviembre = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '11')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
-        $event_Diciembre = Taxe::where('status', 'verified')
-            ->orWhere('status', 'verified-sysprim')
-            ->whereMonth('created_at', '=', '12')
-            ->whereYear('created_at', '=', $year)
-            ->where('branch', 'Event')
-            ->sum('amount');
+        for ($month=1;$month<=12;$month++){
+            $publicityMonth[]= Taxe::where('status', 'verified')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Prop. y Publicidad')
+                ->orWhere('status', 'verified-sysprim')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->where('branch', 'Prop. y Publicidad')
+                ->sum('amount');
+        }
 
-        $event = array(
-            'enero' => $event_Enero,
-            'febrero' => $event_Febrero,
-            'marzo' => $event_Marzo,
-            'abril' => $event_Abril,
-            'mayo' => $event_Mayo,
-            'junio' => $event_Junio,
-            'julio' => $event_Julio,
-            'agosto' => $event_Agosto,
-            'septiembre' => $event_Septiembre,
-            'octubre' => $event_Octubre,
-            'noviembre' => $event_Noviembre,
-            'diciembre' => $event_Diciembre
+        $publicity = array(
+            'enero' => $publicityMonth[0],
+            'febrero' => $publicityMonth[1],
+            'marzo' => $publicityMonth[2],
+            'abril' => $publicityMonth[3],
+            'mayo' => $publicityMonth[4],
+            'junio' => $publicityMonth[5],
+            'julio' => $publicityMonth[6],
+            'agosto' => $publicityMonth[7],
+            'septiembre' => $publicityMonth[8],
+            'octubre' => $publicityMonth[9],
+            'noviembre' => $publicityMonth[10],
+            'diciembre' => $publicityMonth[11]
         );
 
-        return $event;
+        return $publicity;
     }
 
     public function topPayments()

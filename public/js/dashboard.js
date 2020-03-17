@@ -13,7 +13,7 @@ var line="line";
 var type;
 
 if ((width>=300 && width <=1000) &&( height>=640 && height<= 1200) ){
-    type=bar ;
+    type=line ;
 }else{
     type= line;
 }
@@ -107,7 +107,7 @@ $('document').ready(function () {
         },
         success: function (response) {
 
-            console.log(response[0]['total']);
+
 
             if (response !== 'error') {
                 $('#recaudacion').text(response[0]['total']);
@@ -119,14 +119,14 @@ $('document').ready(function () {
                 $('#bdv').text(response[0]['venezuela']);
                 chartsMonth(response);
                 topTaxes(response[11]);
-                console.log(response[12]);
+
                 dear(response[12]);
 
                 //api();
             }
                $("#preloader").fadeOut('fast');
-               $("#preloader-overlay").fadeOut('fast');   
-                        
+               $("#preloader-overlay").fadeOut('fast');
+
 
         },
         error: function (e) {
@@ -144,7 +144,9 @@ $('document').ready(function () {
 function chartsMonth(data) {
 
 // Charts
-    var taxCollectionChart = document.querySelector("#tax-collection");
+
+
+    var taxCollectionChart = $("#tax-collection");
     var taxCollection = new Chart(taxCollectionChart, {
 
         type: "bar", // Tipo de chart
@@ -184,23 +186,85 @@ function chartsMonth(data) {
                     "#03a9f4",
                 ],
                 "lineTension": 0.1
+
+
             }]
         },
+
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: true,
                 text: "Recaudo de Impuestos Mensual",
-                fontSize: 25
+                fontSize: 20
             },
             legend: {
                 position: 'bottom'
             },
-            resonsive: true
-        }
+            responsive: true,
+
+
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(label, index, labels) {
+                                return formatNumber(label, 2, '.',  ',')+"Bs";
+                            }
+
+                        }
+                    }
+
+                ],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title : function() {
+                        return '***** Recaudo de Impuestos Mensual *****';
+                    },
+
+                    beforeLabel : function(tooltipItem, data) {
+                        return 'Mes: '  + tooltipItem.xLabel;
+                    },
+
+
+                    label: function(tooltipItem, data) {
+                        return "Monto:"+formatNumber(tooltipItem.yLabel, 2, '.',  ',')+"Bs";
+                    },
+
+                }
+            }
+
+
+        },
     });
+
+
+    function formatNumber(number, decimalsLength, decimalSeparator, thousandSeparator) {
+        var n = number,
+            decimalsLength = isNaN(decimalsLength = Math.abs(decimalsLength)) ? 2 : decimalsLength,
+            decimalSeparator = decimalSeparator == undefined ? "," : decimalSeparator,
+            thousandSeparator = thousandSeparator == undefined ? "." : thousandSeparator,
+            sign = n < 0 ? "-" : "",
+            i = parseInt(n = Math.abs(+n || 0).toFixed(decimalsLength)) + "",
+            j = (j = i.length) > 3 ? j % 3 : 0;
+
+        return sign +
+            (j ? i.substr(0, j) + thousandSeparator : "") +
+            i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandSeparator) +
+            (decimalsLength ? decimalSeparator + Math.abs(n - i).toFixed(decimalsLength).slice(2) : "");
+    }
+
 
     var taxCollectionChart = document.querySelector("#typeTaxes");
     var taxCollection = new Chart(taxCollectionChart, {
+
 
         type: type, // Tipo de chart
         data: { // Incluye lo referente a datos
@@ -283,18 +347,18 @@ function chartsMonth(data) {
                     "label":
                         "Publicidad",
                     "data": [
-                        data[5]['enero'],
-                        data[5]['febrero'],
-                        data[5]['marzo'],
-                        data[5]['abril'],
-                        data[5]['mayo'],
-                        data[5]['junio'],
-                        data[5]['julio'],
-                        data[5]['agosto'],
-                        data[5]['septiembre'],
-                        data[5]['octubre'],
-                        data[5]['noviembre'],
-                        data[5]['diciembre']],
+                        data[10]['enero'],
+                        data[10]['febrero'],
+                        data[10]['marzo'],
+                        data[10]['abril'],
+                        data[10]['mayo'],
+                        data[10]['junio'],
+                        data[10]['julio'],
+                        data[10]['agosto'],
+                        data[10]['septiembre'],
+                        data[10]['octubre'],
+                        data[10]['noviembre'],
+                        data[10]['diciembre']],
                     "fill":
                         false,
                     "borderColor":
@@ -338,19 +402,61 @@ function chartsMonth(data) {
             title: {
                 display: true,
                 text: "Recaudo Por Impuestos Mensual",
-                fontSize: 25
+                fontSize: 20
             },
             legend: {
                 position: 'bottom'
             },
-            resonsive: true
+            responsive: true,
+
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(label, index, labels) {
+                                return formatNumber(label, 2, '.',  ',')+"Bs";
+
+                            }
+
+                        }
+                    }
+
+                ],
+                xAxes: [{
+                    ticks: {
+
+                        autoSkip: false
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title : function() {
+                        return '***** Recaudo de Impuestos Por Ramo(Banco) *****';
+                    },
+
+                    beforeLabel : function(tooltipItem, data) {
+
+                        return 'Mes:'+tooltipItem.xLabel+'||'+'Ramo:'+data.datasets[tooltipItem.datasetIndex].label;
+                        },
+                    label: function(tooltipItem, data) {
+                        return "Monto Recaudado:"+formatNumber(tooltipItem.yLabel, 2, '.',  ',')+"Bs";
+                    }
+
+
+
+
+                }
+            }
+
         }
     });
 
     var bankEarningsChart = document.querySelector("#bank-earnings");
     var bankEarningsOptions = {
         responsive: true,
-        maintainAspectRatio: true,
         legend: {
             position: "bottom"
         },
@@ -358,78 +464,54 @@ function chartsMonth(data) {
             mode: "label"
         },
         scales: {
-            xAxes: [
-                {
-                    display: true,
-                    gridLines: {
-                        color: "#f3f3f3",
-                        drawTicks: false
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: "Mes"
-                    }
-                }
-            ],
             yAxes: [
                 {
-                    display: true,
-                    gridLines: {
-                        color: "#f3f3f3",
-                        drawTicks: false
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: "Recaudación en BS"
+                    ticks: {
+                        beginAtZero: true,
+
+                        callback: function(label, index, labels) {
+                            return formatNumber(label, 2, '.',  ',')+"Bs";
+
+                        }
+
+
                     }
                 }
-            ]
+
+            ],
+            xAxes: [{
+                ticks: {
+
+                    autoSkip: false
+                }
+            }]
         },
         title: {
             display: true,
             text: "Recaudación Mensual",
-            fontSize: 25
+            fontSize: 20
+        },
+
+
+        tooltips: {
+            callbacks: {
+                title : function() {
+                    return '***** Recaudo de Impuestos Por Banco *****';
+                },
+
+                beforeLabel : function(tooltipItem, data) {
+
+                    return 'Mes:'+tooltipItem.xLabel+'||'+'Banco:'+data.datasets[tooltipItem.datasetIndex].label;
+                },
+                label: function(tooltipItem, data) {
+                    return "Monto Recaudado:"+formatNumber(tooltipItem.yLabel, 2, '.',  ',')+"Bs";
+                }
+
+            }
         }
     };
 
-    var bankData = {
-        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Novienbre", "Diciembre"],
-        datasets: [
-            {
-                label: "My First dataset",
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-                borderColor: "#e91e63",
-                pointBorderColor: "#e91e63",
-                pointBackgroundColor: "#FFF",
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 2,
-                pointRadius: 4
-            },
-            {
-                label: "My Second dataset",
-                data: [28, 48, 40, 19, 86, 27, 90],
-                fill: false,
-                borderColor: "#03a9f4",
-                pointBorderColor: "#03a9f4",
-                pointBackgroundColor: "#FFF",
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 2,
-                pointRadius: 4
-            },
-            {
-                label: "My Third dataset - No bezier",
-                data: [45, 25, 16, 36, 67, 18, 76],
-                fill: false,
-                borderColor: "#ffc107",
-                pointBorderColor: "#ffc107",
-                pointBackgroundColor: "#FFF",
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 2,
-                pointRadius: 4
-            }
-        ]
-    };
+
 
 
     var bankEarnings = new Chart(bankEarningsChart, {
@@ -566,7 +648,7 @@ function chartsMonth(data) {
                     "fill":
                         false,
                     "borderColor":
-                        "#9c27b0",
+                        "#ffbc14",
                     "lineTension":
                         0.1
                 }
@@ -604,6 +686,14 @@ function topTaxes(data) {
                     ]
                 }],
             labels: ['Transferencia', 'Cheques', 'Efectivo','Punto De Venta']
+        },
+        options: {
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: "Formas de Pago",
+                fontSize: 20
+            }
         }
     });
 }
@@ -614,7 +704,7 @@ function dear(data) {
         type: "bar", // Tipo de chart
         data: { // Incluye lo referente a datos
             "labels": [ // Etiquetas para la leyenda
-                "Estimado", "Incremento", "Total",],
+                "Estimado", "Incremento", "Total"],
             "datasets": [{ // Sets de datos que tendra la chart
                 "label": "",
                 "data": [
@@ -634,18 +724,86 @@ function dear(data) {
                 "lineTension": 0.1
             }]
         },
+        tooltips: {
+            callbacks: {
+                title : function() {
+                    return '***** Recaudo de Impuestos Por Banco *****';
+                },
+
+                beforeLabel : function(tooltipItem, data) {
+
+                    console.log(tooltipItem);
+                    return 'Mes:'+tooltipItem.xLabel+'||'+'Banco:'+data.datasets[tooltipItem.datasetIndex].label;
+                },
+                label: function(tooltipItem, data) {
+                    return "Monto Recaudado:"+formatNumber(tooltipItem.yLabel, 2, '.',  ',')+"Bs";
+                }
+
+            }
+        },
         options: {
+            maintainAspectRatio: false,
             title: {
                 display: true,
                 text: "Estimado",
-                fontSize: 25
+                fontSize: 20
             },
             legend: {
                 position: 'bottom'
             },
-            resonsive: true
-        }
+            responsive: true,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(label, index, labels) {
+                                return formatNumber(label, 2, '.',  ',')+"Bs";
+
+                            }
+
+                        }
+                    }
+
+                ],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title : function(tooltipItem) {
+                        console.log(tooltipItem);
+                        return '*****'+ tooltipItem[0].xLabel +'*****';
+                    },
+                    label: function(tooltipItem, data) {
+                        return "Monto:"+formatNumber(tooltipItem.yLabel, 2, '.',  ',')+"Bs";
+                    }
+
+                }
+            }
+
+        },
+
+
+
     });
 }
 
 
+function formatNumber(number, decimalsLength, decimalSeparator, thousandSeparator) {
+    var n = number,
+        decimalsLength = isNaN(decimalsLength = Math.abs(decimalsLength)) ? 2 : decimalsLength,
+        decimalSeparator = decimalSeparator == undefined ? "," : decimalSeparator,
+        thousandSeparator = thousandSeparator == undefined ? "." : thousandSeparator,
+        sign = n < 0 ? "-" : "",
+        i = parseInt(n = Math.abs(+n || 0).toFixed(decimalsLength)) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    return sign +
+        (j ? i.substr(0, j) + thousandSeparator : "") +
+        i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandSeparator) +
+        (decimalsLength ? decimalSeparator + Math.abs(n - i).toFixed(decimalsLength).slice(2) : "");
+}

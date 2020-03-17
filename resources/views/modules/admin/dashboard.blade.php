@@ -195,14 +195,14 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="tax-collection" style="/* position: relative; height:40vh; width:80vw */"></canvas>
+                            <canvas id="tax-collection" style=" position: relative; height:60vh; width:80vw ;margin: auto;"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="bank-earnings"  style="/* position: relative; height:100vh; width:80vw */"></canvas>
+                            <canvas id="bank-earnings"  style="position: relative; height:60vh; width:80vw ;margin: auto;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <canvas id="typeTaxes"  style="/*position: relative; height:100vh; width:80vw */"></canvas>
+                            <canvas id="typeTaxes"  style="position: relative; height:60vh; width:80vw ;margin: auto;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -219,10 +219,34 @@
 
             @can('Estadisticas - Pagos')
             <div class="row">
+
+
                     <div class="col s12 m12">
                             <h4>Pagos</h4>
                     </div>
+
+                     <div class="col s12 m6">
+                        <div class="card">
+                            <div class="card-content">
+                                <canvas id="donus" style="position: relative; height:60vh; width:80vw; "></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col s12 m6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <canvas id="dear" style=" position: relative; height:60vh; width:80vw;"></canvas>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                
+            </div>
+                
+
+            <div class="row">
+               
+  			  <div class="col s12 m6">
                             <ul class="collection with-header">
                                <li class="collection-header"><h5>Últimas Empresas que han pagado</h5></li>
                                 @foreach ($company as $compa)
@@ -275,33 +299,18 @@
                                 </li>{{----}}
                             </ul>
                         </div>
-            </div>
-                
 
-            <div class="row">
-                <div class="col s12 m6">
-                        <div class="card">
-                            <div class="card-content">
-                                <h5 class="center">Formas de Pago</h5>
-                                <canvas id="donus" style="/* position: relative; height:120vh; width:160vw */"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m6">
-                            <div class="card">
-                                <div class="card-content">
-                                    <canvas id="dear" style="/* position: relative; height:160vh; width:160vw */"></canvas>
-                                </div>
-                            </div>
-                    </div>
-                </div>
+
+
+
             @endcan    
                 
                 
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-content">
-                            <span class="card-title">Resumen</span>
+                        
+                            <span class="card-title">Resumen Mensual({{$monthNow}})</span>
                             <div class="divider"></div>
                             <table class="centered highlight" id="dear-table" style="width: 100%;">
                                 <thead>
