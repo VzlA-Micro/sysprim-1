@@ -37,6 +37,9 @@ class CompaniesController extends Controller
     public function index(){
         $companies=UserCompany::where('user_id',\Auth::user()->id)->select('company_id')->get();
         $companies_find=Company::whereIn('id',$companies)->get();
+
+        session()->forget('company');
+
         return view('modules.companies.menu',['companies'=>$companies_find]);
     }
 
@@ -232,7 +235,7 @@ class CompaniesController extends Controller
 
     public function details($id) {
         $company = Company::find($id);
-
+        session(['company' => $company]);
         return view('modules.companies.details',['company' => $company]);
     }
 

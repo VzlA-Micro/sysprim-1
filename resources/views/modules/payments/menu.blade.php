@@ -7,13 +7,13 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}">Mis Empresas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}" >{{ session('company') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('companies.my-business') }}" >{{ session('company')->name }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('companies.my-payments', ['company' => session('company')]) }}">Mis Declaraciones</a></li>
                 </ul>
             </div>
             @can('Declaración Anticipada - Actividad Económica')
             <div class="col s6 m6 l4 animated bounceIn">
-                <a href="{{ route('payments.create',['company'=>session('company'),'type'=>'actuated']) }}" class="btn-app white">
+                <a href="{{ route('payments.create',['company'=>session('company')->id,'type'=>'actuated']) }}" class="btn-app white">
                     <i class="icon-account_balance grey-text"></i>
                     <span class="truncate black-text">Declaración  ANTICIPADA - Actividad Económica</span>
                 </a>

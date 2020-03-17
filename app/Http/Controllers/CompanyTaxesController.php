@@ -55,7 +55,7 @@ class CompanyTaxesController extends Controller
 
     public function history($company)
     {
-        $company=Company::where('name',$company)->get();
+        $company=Company::where('id',session('company')->id)->get();
 
 
         $company=Company::find($company[0]->id);
@@ -81,8 +81,8 @@ class CompanyTaxesController extends Controller
 
     public function create($company,$type)
     {
-        $company = Company::where('name', $company)->get();
-        $company_find = Company::find($company[0]->id);
+
+        $company_find = Company::find(session('company')->id);
 
         $mounths = array("ENERO" => '01', "FEBRERO" => '02', "MARZO" => '03', "ABRIL" => '04', "MAYO" => '05', "JUNIO" => '06', "JULIO" => '07', "AGOSTO" => '08', "SEPTIEMBRE" => '09', "OCTUBRE" => '10', "NOVIEMBRE" => '11', "DICIEMBRE" => '12');
         $mounthNow = Carbon::now()->format('m');
@@ -93,7 +93,7 @@ class CompanyTaxesController extends Controller
 
 
                 if ($type !== 'definitive') {
-                    $mounth_pay = TaxesMonth::verify($company[0]->id, false);
+                    $mounth_pay = TaxesMonth::verify($company_find->id, false);
 
                     $users = $company_find->users()->get();
 
@@ -110,7 +110,7 @@ class CompanyTaxesController extends Controller
 
                     $users = $company_find->users()->get();
 
-                    $status = TaxesMonth::verifyDefinitive($company[0]->id);
+                    $status = TaxesMonth::verifyDefinitive($company_find->id);
 
                     $unid_tribu = Tributo::orderBy('id', 'desc')->take(1)->get();
 

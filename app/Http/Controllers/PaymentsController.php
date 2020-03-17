@@ -7,12 +7,8 @@ use App\Company;
 class PaymentsController extends Controller{
     public function menuPayments($company)
     {
-        session(['company' => $company]);
-        $company = Company::where('name', $company)->get();
-        $company_find = Company::find($company[0]->id);
 
-
-
+        $company_find = Company::find(session('company')->id);
 
         if ($company_find->status !== 'disabled'&&substr($company_find->license,0,2)!='SL') {
             return view('modules.payments.menu');

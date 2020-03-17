@@ -97,9 +97,26 @@ class PropertyTaxesController extends Controller
         $propertyTaxes = Property::find($id);
         $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
 
+        // Realizar verificacion si el propietario es una compañia o es una persona
+        if($userProperty->company_id != null) {
+            $owner_id = $userProperty->company_id;
+            $owner_type = 'company';
+            $owner = Company::find($owner_id);
+        }
+        elseif($userProperty->person_id != null) {
+            $owner_id = $userProperty->person_id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+        else{
+            $owner_id = \Auth::user()->id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
 
 
-        if(!empty($taxes)) {
+        // dd($taxes);
+        if(!$taxes->isEmpty()) {
             foreach ($taxes as $tax) {
                 if($tax->status === 'verified'||$tax->status==='verified-sysprim'){
                     $statusTax = 'verified';
@@ -119,22 +136,36 @@ class PropertyTaxesController extends Controller
             $statusTax = 'new';
         }
 
+        
+        
+        if($statusTax === 'process' || $statusTax === 'verified' || $statusTax === 'verified-sysprim' || $statusTax === 'exonerated') {
+            $baseImponible = number_format($declaration['baseImponible'],2,',','.');
+            $totalGround = number_format($declaration['totalGround'],2,',','.');
+            $totalBuild = number_format($declaration['totalBuild'],2,',','.');
+            $discount = number_format($declaration['porcentaje'],2,',','.');
+            $total = number_format($declaration['total'],2,',','.');
 
-        // Realizar verificacion si el propietario es una compañia o es una persona
-        if($userProperty->company_id != null) {
-            $owner_id = $userProperty->company_id;
-            $owner_type = 'company';
-            $owner = Company::find($owner_id);
-        }
-        elseif($userProperty->person_id != null) {
-            $owner_id = $userProperty->person_id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        }
-        else{
-            $owner_id = \Auth::user()->id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
+            $response = array(
+                'property' => $property,
+                'declaration' => $declaration,
+                'build' => $catasBuild,
+                'userProperty' => $userProperty[0],
+                'period' => $period_fiscal
+            );
+            return view('modules.properties-payments.details',array(
+                'property' => $property,
+                'response'=>$response,
+                'owner_type' => $owner_type,
+                'owner' => $owner,
+                'baseImponible' => $baseImponible,
+                'totalGround' => $totalGround,
+                'totalBuild' => $totalBuild,
+                'discount' => $discount,
+                'total' => $total,
+                'status' => $status,
+                'statusTax' => $statusTax,
+                // 'taxe_id' => $taxeId
+            ));
         }
         # Declarating variables to generate taxe
         $amount = $declaration['total'];
@@ -668,6 +699,23 @@ class PropertyTaxesController extends Controller
         $property = Property::where('id', $id)->with('valueGround')->with('type')->first();
         $userProperty = UserProperty::where('property_id', $property->id)->first();
         $declaration = Declaration::VerifyDeclaration($id, $status, $fiscal_period);
+
+        // Realizar verificacion si el propietario es una compañia o es una persona
+        if($userProperty->company_id != null) {
+            $owner_id = $userProperty->company_id;
+            $owner_type = 'company';
+            $owner = Company::find($owner_id);
+        }
+        elseif($userProperty->person_id != null) {
+            $owner_id = $userProperty->person_id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
+        else{
+            $owner_id = \Auth::user()->id;
+            $owner_type = 'user';
+            $owner = User::find($owner_id);
+        }
         // $propertyTaxes = Property::find($id);
         // $taxes = $propertyTaxes->propertyTaxes()->where('branch','Inm.Urbanos')->whereYear('fiscal_period','=',$actualDate->format('Y'))->get();
 
@@ -691,22 +739,6 @@ class PropertyTaxesController extends Controller
         //     $statusTax = 'new';
         // }
 
-        // Realizar verificacion si el propietario es una compañia o es una persona
-        if($userProperty->company_id != null) {
-            $owner_id = $userProperty->company_id;
-            $owner_type = 'company';
-            $owner = Company::find($owner_id);
-        }
-        elseif($userProperty->person_id != null) {
-            $owner_id = $userProperty->person_id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        }
-        else{
-            $owner_id = \Auth::user()->id;
-            $owner_type = 'user';
-            $owner = User::find($owner_id);
-        }
         
         # Declarating variables to generate taxe
         $amount = $declaration['total'];
