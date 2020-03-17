@@ -34,6 +34,7 @@
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
+
                 @if( $statusTax=== 'process')
                     <div class="row">
                         <div class="col s12 center card">

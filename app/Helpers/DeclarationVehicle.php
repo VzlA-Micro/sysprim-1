@@ -275,7 +275,7 @@ class DeclarationVehicle
 
         if ($temporal) {
             $vehicleTaxes = VehiclesTaxe::where('vehicle_id', $vehicle->id)
-                ->where('status', '=', 'Temporal')
+                ->where('status', '=', 'temporal')
                 ->get();
 
             if (!$vehicleTaxes->isEmpty()) {
@@ -287,7 +287,7 @@ class DeclarationVehicle
                 }
             }
         }
-        return $taxe->delete();
+        return 0;
     }
 
     public static function dayMora($year)

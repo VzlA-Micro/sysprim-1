@@ -48,21 +48,23 @@ class VehiclesTaxesController extends Controller
         $date = Carbon::now();
 
         $vehicleTaxe = Vehicle::find($idVehicle);
-        if ($vehicleTaxe->taxesVehicle->isEmpty()) {
+        $taxes = $vehicleTaxe->taxesVehicle()->where('branch','Pat.Veh')->whereYear('fiscal_period','=',$trimester['monthBegin']->format('Y'))->get();
+        /*if ($vehicleTaxe->taxesVehicle->isEmpty()) {
             $taxes = '';
         } else {
-            $taxes = Taxe::whereIn('id', $vehicleTaxe->taxesVehicle)->get();
+            $taxes = Taxe::whereIn('id', $vehicleTaxe->taxesVehicle->taxe_id)->get();
 
         }
+*/
 
+        if (!$taxes->isEmpty()) {
 
-
-
-        if (!empty($taxes)) {
             foreach ($taxes as $tax) {
+
                 if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
                     $statusTax = 'verified';
-                } else if ($tax->status === 'Temporal') {
+                } else if ($tax->status === 'temporal') {
+
                     DeclarationVehicle::verify($idVehicle);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
@@ -131,7 +133,7 @@ class VehiclesTaxesController extends Controller
             }
         }*/
 
-        if ($statusTax === 'process'){
+        if ($statusTax === 'process' || $statusTax === 'verified' || $statusTax=== 'verified-sysprim'){
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
                 'taxes' => $taxes,
@@ -154,7 +156,6 @@ class VehiclesTaxesController extends Controller
         $taxes->code = TaxesNumber::generateNumberTaxes('TEM');
         $taxes->fiscal_period = $period_fiscal_begin;
         $taxes->fiscal_period_end = $period_fiscal_end;
-        $taxes->status = 'Temporal';
         $taxes->type = $type;
         $taxes->amount = $totalAux;
         $taxes->status = 'temporal';
@@ -167,7 +168,7 @@ class VehiclesTaxesController extends Controller
         $vehicleTaxes = new VehiclesTaxe();
         $vehicleTaxes->vehicle_id = $vehicle[0]->id;
         $vehicleTaxes->taxe_id = $taxesId;
-        $vehicleTaxes->status = 'Temporal';
+        $vehicleTaxes->status = 'temporal';
         $vehicleTaxes->type_payments = $declaration['optionPayment'];
         $vehicleTaxes->fiscal_credits = 0;
 
