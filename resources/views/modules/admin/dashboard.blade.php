@@ -160,7 +160,7 @@
                 <div class="col s12 m6">
                     <div class="widget bootstrap-widget stats">
                         <div class="widget-stats-icon white-text red-gradient">
-                            <i class="i-bicentenario" style="font-size: 30px"></i>
+                            <i class="i-bdv" style="font-size: 30px"></i>
                         </div>
                         <div class="widget-stats-content">
                             <span class="widget-stats-title"><b>Banco De Venezuela</b></span>
