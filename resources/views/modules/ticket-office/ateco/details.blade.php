@@ -17,23 +17,28 @@
             </div>
             <div class="col s12 m10 offset-m1">
                 <div class="card">
-                    <div class="card-header center-align">
-                        <h5>Resumen de Autoliquidación</h5>
-                        <h5> Periodo Fiscal:<span> {{ $fiscal_period }}</span></h5>
-                        <h5> Código:<b> {{$taxes->code}}</b></h5>
+                    <div class="card-header left-align">
+                        <h5 class="center-align">Resumen de Autoliquidación|{{$taxes->created_at->format('d-m-Y')}}</h5>
+
                     </div>
-                    <div class="row padding-2 left-align">
+                    <div class="row padding-2">
+                        <div class="col m6">
+                            <ul>
+                                <li><b>Periodo Fiscal: </b>{{ $fiscal_period }}</li>
+                                <li><b>Código: </b>{{ $taxes->code }}</li>
+                                @if($taxes->bank_name)
+                                    <li><b>Banco:</b> {{  $taxes->bank_name }}</li>
+
+                                @endif
+                            </ul>
+                        </div>
+
                         <div class="col m6">
                             <ul>
                                 <li><b>Nombre: </b>{{ $taxes->companies[0]->name }}</li>
                                 <li><b>RIF: </b>{{ $taxes->companies[0]->RIF }}</li>
                                 <li><b>Licencia: </b>{{ $taxes->companies[0]->license }}</li>
-                                <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                             </ul>
-                            <ul>
-                            </ul>
-                        </div>
-                        <div class="col m6">
 
                         </div>
                     </div>
@@ -145,21 +150,13 @@
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
                                     <thead>
                                     <tr>
-                                        <th>CODIGO</th>
-                                        <th>NOMBRE</th>
-                                        <th>ALICUOTA</th>
-                                        <th>MININIMO TRIBUTABLE</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($taxes->taxesCiu as $ciu)
-                                        <tr class="centered">
-                                            <td>{{$ciu->code}}</td>
-                                            <td>{{$ciu->name}}</td>
-                                            <td>{{($ciu->alicuota*100)."%"}}</td>
-                                            <td>{{$ciu->min_tribu_men}}</td>
-                                        </tr>
-                                    @endforeach
                                     </tbody>
                                 </table>
                                 <div class="col s12">
@@ -237,13 +234,13 @@
                                                                     <i class="icon-check"></i></button>
                                                             </div>
                                                         @else
-                                                            <div class="input-field col s12 m6">
+                                                            <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light green col s12"
                                                                         value="{{$taxe->id}}" data-status="verified">
                                                                     <i class="icon-check"></i></button>
                                                             </div>
-                                                            <div class="input-field col s12 m6">
+                                                            <div class="input-field col s12 m12">
                                                                 <button type="button"
                                                                         class="change-status btn waves-effect waves-light red col s12"
                                                                         value="{{$taxe->id}}" data-status="cancel">
@@ -275,10 +272,14 @@
 
                                                 <a href="#" class="btn blue col s12">
                                                     <i class="icon-more_horiz left"></i>
-                                                    ESTADO: VERIFICADA.
+                                                    ESTADO: {{$taxes->statusName}}.
                                                 </a>
 
-
+                                            @elseif($taxes->status=='exempt')
+                                                <a href="#" class="btn yellow darken-4 col s12">
+                                                    <i class="icon-more_horiz left"></i>
+                                                    ESTADO: EXONERADA.
+                                                </a>
                                             @elseif($taxes->status=='cancel')
 
                                                 <a href="#" class="btn red col s12">
@@ -287,7 +288,7 @@
                                                 </a>
                                             @endif
 
-                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim' ||$taxes->status=='exempt')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>
@@ -304,8 +305,19 @@
                                                             <i class="icon-close right"></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Verificar Pagos - Manual')
-                                                        @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
+
+
+                                                        @can('Verificar Pagos - Manual')
+
+                                                        @if($taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' && $taxes->status!='exempt')
+                                                        <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
+                                                               style="margin-top:20px"
+                                                               data-status="exempt">
+                                                                EXONERAR.
+                                                                <i class="icon-verified_user right"></i>
+                                                        </a>
+
+
 
                                                                 <a href="#" class="btn col s12 m6  blue waves-effect waves-light reconcile"
                                                                 style="margin-top:20px"
@@ -320,7 +332,7 @@
 
 
                                                     @endcan
-                                                    @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                                    @if($taxes->status=='verified'||$taxes->status=='verified-sysprim'||$taxes->status=='exempt')
                                                         <button type="button" id="send-email-verified"
                                                                 class="btn col s12 m6 green waves-effect waves-light"
                                                                 value="{{$taxes->id}}" style="margin-top:20px">Enviar Correo Verificado.

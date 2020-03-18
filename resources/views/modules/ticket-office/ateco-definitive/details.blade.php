@@ -21,22 +21,25 @@
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación(Definitiva)</h5>
 
-                       <div class="row">
-
-                           <div class="col l6">
-                               <h5> Periodo Fiscal de Inicio:<span>{{ \Carbon\Carbon::parse($taxes->fiscal_period)->format('d-m-Y') }}</span></h5>
-                           </div>
-
-                           <div class="col l6">
-                               <h5> Periodo Fiscal de Fin:<span> {{ \Carbon\Carbon::parse($taxes->fiscal_period_end)->format('d-m-Y') }}</span></h5>
-                           </div>
-
-                           <h5> Código:<b> {{$taxes->code}}</b></h5>
-                       </div>
-
 
                     </div>
                     <div class="row padding-2 left-align">
+
+
+                        <div class="col m6">
+                            <ul>
+                                <li><b>Periodo Fiscal Inicio: </b>{{ $taxes->fiscalPeriodFormat }}</li>
+                                <li><b>Periodo Fiscal Fin: </b>{{ $taxes->fiscalPeriodFormatEnd }}</li>
+                                <li><b>Código: </b>{{ $taxes->code }}</li>
+
+                                @if($taxes->bank_name)
+                                    <li><b>Banco:</b> {{  $taxes->bank_name }}</li>
+                                @endif
+
+
+                            </ul>
+                        </div>
+
                         <div class="col m6">
                             <ul>
                                 <li><b>Nombre: </b>{{ $taxes->companies[0]->name }}</li>
@@ -44,11 +47,11 @@
                                 <li><b>Licencia: </b>{{ $taxes->companies[0]->license }}</li>
                                 <li><b>Fecha: </b>{{ $taxes->created_at->format('d-m-Y') }}</li>
                             </ul>
-                            <ul>
-
-
-                            </ul>
                         </div>
+
+
+
+
                         <div class="col m6">
 
                         </div>
@@ -174,24 +177,8 @@
                         <div class="col l12 s12">
                             <div class="col l6 s12">
                                 <table class="centered responsive-table" style="font-size: 10px;!important;">
-                                    <thead>
-                                        <tr>
-                                            <th>CODIGO</th>
-                                            <th>NOMBRE</th>
-                                            <th>ALICUOTA</th>
-                                            <th>MININIMO TRIBUTABLE</th>
-                                        </tr> 
-                                    </thead>
-                                    <tbody>
-                                        @foreach($taxes->taxesCiu as $ciu)
-                                        <tr class="centered">
-                                            <td>{{$ciu->code}}</td>
-                                            <td>{{$ciu->name}}</td>
-                                            <td>{{($ciu->alicuota*100)."%"}}</td>
-                                            <td>{{$ciu->min_tribu_men}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+
+
                                 </table>
                                 <div class="col s12">
                                     
@@ -330,6 +317,12 @@
                                             </a>
 
 
+
+                                        @elseif($taxes->status=='exempt')
+                                            <a href="#" class="btn yellow darken-4 col s12">
+                                                <i class="icon-more_horiz left"></i>
+                                                ESTADO: EXONERADA.
+                                            </a>
                                         @elseif($taxes->status=='cancel')
 
                                             <a href="#" class="btn red col s12">
@@ -338,7 +331,7 @@
                                             </a>
                                         @endif
 
-                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified-sysprim'||$taxes->status=='verified')
+                                        @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified-sysprim'||$taxes->status=='verified'||$taxes->status=='exempt')
 
                                             <div class="col l12">
                                                 <h4 class="center-align mt-2">Acciones</h4>
@@ -355,17 +348,29 @@
                                                         <i class="icon-close right"></i>
                                                     </a>
                                                 @endcan
+
+
                                                 @can('Verificar Pagos - Manual')
-                                                    @if($verified&&$taxes->status!=='verified' && $taxes->status!=='verified-sysprim')
+                                                @if($taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' && $taxes->status!='exempt')
+                                                        <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
+                                                           style="margin-top:20px"
+                                                           data-status="exempt">
+                                                            EXONERAR.
+                                                            <i class="icon-verified_user right"></i>
+                                                        </a>
+
                                                         <a href="#"
-                                                           class="btn col s12 m6 blue waves-effect waves-light reconcile"
+                                                           class="btn col s12 m6 blue waves-effect waves-light reconcile"   style="margin-top:20px"
                                                            data-status="verified">
                                                             VERIFICAR PLANILLA.
                                                             <i class="icon-verified_user right"></i>
                                                         </a>
-                                                    @endif
+
+                                                        @endif
+
+
                                                 @endcan
-                                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim'||$taxes->status=='exempt')
                                                     <button type="button" id="send-email-verified" style="margin-top:20px"
                                                             class="btn col s12 m6 green waves-effect waves-light"
                                                             value="{{$taxes->id}}">Enviar Correo Verificado.
@@ -375,7 +380,7 @@
 
 
                                                     @if($taxes->status='cancel')
-                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" style="margin-top:20px"
+                                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"  style="margin-top:20px"
                                                            class="btn col s12 m6 red darken-4 waves-effect waves-light" target="_blank" >Ver Planilla(PDF).
                                                             <i class="icon-picture_as_pdf right"></i>
                                                         </a>

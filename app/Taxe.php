@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Taxe extends Model implements Auditable {
     protected $table="taxes";
     use \OwenIt\Auditing\Auditable;
-    protected $appends = ['total', 'typePayment','statusName','typeTaxes','amountFormat','fiscalPeriodFormat','fiscalPeriodFormatEnd'];
+    protected $appends = ['total', 'typePayment','statusName','typeTaxes','amountFormat','fiscalPeriodFormat','fiscalPeriodFormatEnd','typePaymentFormat'];
 
     public function taxesCiu(){
         return $this->belongsToMany('App\Ciu','ciu_taxes')
@@ -117,7 +117,9 @@ class Taxe extends Model implements Auditable {
             return $this->statusName='TAQUILLA/SIN PAGO ASOCIADO AÚN.';
         }else if($this->status=='verified-sysprim'){
             return $this->statusName="VERIFICADA/SYSPRIM";
-        }else if($this->status=='temporal'){
+        }else if($this->status=='exempt'){
+            return $this->statusName="EXONERADA";
+        } else if($this->status=='temporal'){
             return $this->statusName="WEB/TEMPORAL";
         }
     }
@@ -143,6 +145,18 @@ class Taxe extends Model implements Auditable {
 
 
     }
+
+
+
+    public function getTypePaymentFormatAttribute()
+    {
+        $type = substr($this->code, 0, 3);
+
+        return  $this->typePaymentFormat = $type;
+
+
+    }
+
 
 
     public function getNameBankAttribute(){

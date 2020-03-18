@@ -11,15 +11,49 @@
             height: 100% !important;
         }
 
-        header,
-        main,
-        footer {
-          padding-right: 400px !important;
+
+
+
+        @media only screen and (min-width: 1024px) {
+            .sidenav{
+                width: 375px !important;
+            }
+
+            header,
+            main,
+            footer {
+                padding-right: 375px !important;
+            }
         }
 
-        .sidenav {
-            width: 400px !important;
+
+        @media only screen and (min-width: 1200px){
+            .sidenav{
+                width: 360px !important;
+            }
+
+            header,
+            main,
+            footer {
+                padding-right: 360px !important;
+            }
         }
+
+
+
+        @media only screen  and (min-width : 1400px) {
+            .sidenav{
+                width: 400px !important;
+            }
+
+            header,
+            main,
+            footer {
+                padding-right: 400px !important;
+            }
+        }
+
+
 
         @media only screen and (max-width: 992px) {
             header,

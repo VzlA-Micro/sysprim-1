@@ -24,7 +24,7 @@ class TaxesMonth{
         if (!$companyTaxes->isEmpty()){
             foreach ($companyTaxes as $tax){
                 if($tax->status!=='cancel'){
-                    if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')||$tax->status=='verified'||$tax->status=='verified-sysprim'){
+                    if($tax->status=='process'&&$tax->created_at->format('Y-d-m')==$now_pay->format('Y-d-m')||$tax->status=='verified'||$tax->status=='verified-sysprim'||$tax->status=='exempt'){
 
                         $mount_pay[$tax->fiscal_period]=$tax->statusName;
                     }
@@ -193,7 +193,7 @@ class TaxesMonth{
         $companyTaxes = $company->taxesCompanies()->where('type','definitive')->where('branch','Act.Eco')->orderBy('id','desc')->first();
 
         if(is_object($companyTaxes)){
-            if($companyTaxes->status==='verified'||$companyTaxes->status==='verified-sysprim'){
+            if($companyTaxes->status==='verified'||$companyTaxes->status==='verified-sysprim'||$companyTaxes->status==='exempt'){
                 return $status='verified';
             }else if($companyTaxes->status==='temporal'){
                 $companyTaxes->delete();

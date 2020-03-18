@@ -49,7 +49,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($taxes as $taxe)
-                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
+                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim' ||  $taxe->status=='exempt' || $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
 
                                         <tr>
                                             <td>{{ $taxe->code }}</td>
@@ -95,11 +95,11 @@
 
 
                                                 @endif
-                                            @elseif($taxe->status==='verified'||$taxe->status==='verified-sysprim')
+                                            @elseif($taxe->status==='verified'||$taxe->status==='verified-sysprim'||$taxe->status==='exempt')
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-check left"></i>
-                                                        <span class="truncate">VERIFICADA.</span>
+                                                        <span class="truncate">{{$taxe->statusName}}.</span>
                                                     </button>
                                                 </td>
 

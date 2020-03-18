@@ -302,7 +302,7 @@ $(document).ready(function () {
                             if (response.status === 'error') {
                                 swal({
                                     title: "Información",
-                                    text: 'La empresa ' + $('#name_company').val() + 'ya declaró el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
+                                    text: 'La empresa ' + $('#name_company').val() + ' ya declaró el periodo de ' + $('#fiscal_period').val() + ', seleccione un periodo fiscal valido',
                                     icon: "info",
                                     button: {
                                         text: "Esta bien",

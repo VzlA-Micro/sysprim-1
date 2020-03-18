@@ -24,11 +24,35 @@ main {
   flex: 1 0 auto;
 }
 
-header,
-main,
-footer {
-  padding-left: 300px !important;
+
+@media only screen and (min-width: 1024px) {
+  .sidenav{
+    width: 275px !important;
+  }
+
+  header,
+  main,
+  footer {
+    padding-left: 275px !important;
+  }
 }
+
+@media only screen and (min-width: 1200px) {
+  .sidenav{
+    width: 300px !important;
+  }
+
+  header,
+  main,
+  footer {
+    padding-left: 300px !important;
+  }
+}
+
+
+
+
+
 
 @media only screen and (max-width: 992px) {
   header,

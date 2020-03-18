@@ -51,7 +51,7 @@ class TicketOfficeController extends Controller
 
             $taxe = Taxe::with('companies')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim'||$taxe[0]->status === 'exempt') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -71,7 +71,7 @@ class TicketOfficeController extends Controller
             $code = strtoupper($id);
             $taxe = Taxe::with('companies')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim' ||$taxe[0]->status === 'exempt') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -629,17 +629,37 @@ class TicketOfficeController extends Controller
 
     public function verifyTaxes($fiscal_period, $company_id)
     {
-        $band = true;
-        $company = Company::where('id', '=', $company_id)->with('taxesCompanies')->get();
-        foreach ($company[0]->taxesCompanies as $taxes) {
-            if ($taxes->fiscal_period == $fiscal_period && $taxes->status !== 'cancel') {
-                $band = false;
+
+        $date = Carbon::now();
+
+        $company = Company::find($company_id);
+        $tax = $company->taxesCompanies()->where('type', 'actuated')->whereDate('fiscal_period', $fiscal_period)->first();
+
+        $statusTax = false;
+
+        if (is_null($tax)) {
+            $statusTax = false;
+        } else {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim' ||  $tax->status === 'exempt') {
+                $statusTax =true;
+            } else if ($tax->status === 'temporal') {
+                $tax->delete();
+                $statusTax =false;
+            } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'process' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
+                $statusTax = true;
+            } else if ($tax->status === 'cancel') {
+                $statusTax = false;
+            } else if ($tax->status === null) {
+                $statusTax = false;
             }
         }
 
+
         $fiscal_period = TaxesMonth::convertFiscalPeriod($fiscal_period);
 
-        if ($band) {
+        if (!$statusTax) {
             $response = array('status' => 'success');
         } else {
             $response = array('status' => 'error', 'fiscal_period' => $fiscal_period);
@@ -775,7 +795,7 @@ class TicketOfficeController extends Controller
                 }
             }
         } else {
-            $verified = false;
+            $verified = true;
         }
 
 
@@ -940,7 +960,7 @@ class TicketOfficeController extends Controller
         if ($taxes->branch === 'Act.Eco') {
 
 
-            if ($taxes->type == 'actuated' && $taxes->status == 'verified' || $taxes->status == 'verified-sysprim') {
+            if ($taxes->type == 'actuated' && $taxes->status == 'verified' || $taxes->status == 'verified-sysprim'||$taxes->status=='exempt') {
                 $taxes_find = CiuTaxes::whereIn('taxe_id', [$id])->with('ciu')->with('taxes')->get();
                 $companyTaxe = $taxes->companies()->get();
                 $company_find = Company::find($companyTaxe[0]->id);
@@ -963,7 +983,7 @@ class TicketOfficeController extends Controller
                 $band = true;
                 $email = $user[0]->email;
 
-            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
+            } elseif ($taxes->type == 'definitive' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim'||$taxes->status=='exempt')) {
 
                 $ciuTaxes = CiuTaxes::where('taxe_id', $taxes->id)->get();
                 $companyTaxe = $taxes->companies()->get();
@@ -985,7 +1005,7 @@ class TicketOfficeController extends Controller
 
 
             $email = $user[0]->email;
-        } elseif ($taxes->branch == 'Tasas y Cert' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
+        } elseif ($taxes->branch == 'Tasas y Cert' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim' ||$taxes->status=='exempt' )) {
 
             $rate = $taxes->rateTaxes()->get();
             $type = '';
@@ -1006,7 +1026,7 @@ class TicketOfficeController extends Controller
             $user = User::find($rate[0]->pivot->user_id);;
             $email = $user->email;
             $band = true;
-        } elseif ($taxes->branch == 'Inm.Urbanos' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
+        } elseif ($taxes->branch == 'Inm.Urbanos' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim' ||$taxes->status=='exempt' )) {
 
 
             $owner = $taxes->properties()->get();
@@ -1035,7 +1055,7 @@ class TicketOfficeController extends Controller
             $user = User::find($userProperty->user_id);
             $email = $user->email;
             $band = true;
-        } elseif ($taxes->branch == 'Pat.Veh' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
+        } elseif ($taxes->branch == 'Pat.Veh' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim' ||$taxes->status=='exempt')) {
 
             $vehicleTaxes = $taxes->vehicleTaxes()->get();
             $diffYear = Carbon::now()->format('Y') - intval($vehicleTaxes[0]->year);
@@ -1055,7 +1075,7 @@ class TicketOfficeController extends Controller
 
             $email = $user[0]->email;
             $band = true;
-        } elseif ($taxes->branch == 'Prop. y Publicidad' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim')) {
+        } elseif ($taxes->branch == 'Prop. y Publicidad' && ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim'||$taxes->status=='except')) {
             $owner = $taxes->publicities()->get();
             $userPublicity = UserPublicity::where('publicity_id', $owner[0]->pivot->publicity_id)->first();
 
@@ -1147,7 +1167,7 @@ class TicketOfficeController extends Controller
         if (is_null($tax)) {
             $statusTax = false;
         } else {
-            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim' ||  $tax->status === 'exempt') {
                 $statusTax =true;
             } else if ($tax->status === 'temporal') {
 //                      $tax->delete();
@@ -1380,7 +1400,7 @@ class TicketOfficeController extends Controller
                 }
             }
         } else {
-            $verified = false;
+            $verified = true;
         }
 
         return view('modules.ticket-office.ateco-definitive.details', [
@@ -1400,7 +1420,7 @@ class TicketOfficeController extends Controller
         $pdf = '';
 
 
-        if ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim') {
+        if ($taxes->status == 'verified' || $taxes->status == 'verified-sysprim'|| $taxes->status == 'exempt') {
             $firm = true;
         }
 

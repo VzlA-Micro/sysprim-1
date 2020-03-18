@@ -8,7 +8,7 @@
 </footer> --}}
 <footer style="z-index: 1" class="page-footer iribarren-wine-gradient">
         <div class="row valign-wrapper">
-            <div class="col s12 l6 xl3 left-align social hide-on-med-and-down">
+            <div class="col s12 l6 xl3 left-align social hide-on-med-and-down" id="footer-messge">
                 <span class="white-text" style="font-size:12px">
                     SERVICIO MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA <br>
                     <b>RIF:</b> G-20000207-7,

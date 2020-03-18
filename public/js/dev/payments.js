@@ -6,12 +6,15 @@ $('document').ready(function () {
         var status=$(this).data('status');
         var taxes_id=$(this).val();
 
-        console.log(taxes_id);
         if(status==='verified'){
             message='verificada';
-        }else{
+        }else if( status==='cancel'){
             message='cancelada';
+        }else if(status==='except'){
+            message='exonerado';
         }
+
+        console.log('epa');
         swal({
             title: "Información",
             text: '¿Estas seguro de realizar esta acción?,' +
@@ -93,13 +96,15 @@ $('document').ready(function () {
 
         if(status==='verified'){
             message='verificada';
-        }else{
+        }else if( status==='cancel'){
             message='cancelada';
+        }else if(status==='except'){
+            message='exonerado';
         }
 
         swal({
             title: "Información",
-            text: '¿Estas seguro de realizar esta acción?, El estado de este pago  cambiaria  el status a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla  cambiaria  el status a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {

@@ -60,7 +60,7 @@
     </table>
 </div>
 
-@if($taxes->status==='verified'||$taxes->status==='verified-sysprim')
+@if($taxes->status==='verified'||$taxes->status==='verified-sysprim'||$taxes->status==='exempt')
     <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (DECLARACIÓN DEFINITIVA)</h4>
 @else
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(DECLARACIÓN DEFINITIVA)</h4>
@@ -324,7 +324,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status==='verified' ||$taxes->status=='verified-sysprim')
+            @if($taxes->status==='verified' ||$taxes->status=='verified-sysprim'|| $taxes->status==='exempt')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
                     <img src="{{url("images/pdf/firma-director.png")}}" style="width:180px; height:190px;" alt="Image">
                 </td>
@@ -336,7 +336,7 @@ $date = '31/12/' . date('Y');
 
         </tr>
         <tr>
-            @if($taxes->status==='verified' || $taxes->status=='verified-sysprim')
+            @if($taxes->status==='verified' || $taxes->status=='verified-sysprim'||$taxes->status==='exempt')
                 <td style="width:40%;text-align: center; font-size: 10px;"><b>
                         __________________________________________<br>
                         ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
@@ -358,7 +358,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+            @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim'&&$taxes->status!='exempt')
             <td style="width: 80%;">
                 <img alt="Imagen Varias" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes->id))) !!} "
                      style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;">
@@ -381,11 +381,11 @@ $date = '31/12/' . date('Y');
 
         <tr>
             <td style="width: 20%;">
-                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim')
+                @if($taxes->status!='verified'&&$taxes->status!='verified-sysprim'&&$taxes->status!='exempt')
                     @if($taxes->bank!=null)
                         <img src="{{url("images/pdf/".$taxes->bank.".png") }}" style="width:180px; height:80px ;float: right;top: -120px; position: absolute;" alt="Image" >
                     @endif
-				@elseif(isset($taxes->payments)&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
+				@elseif(!$taxes->payments->isEmpty()&&$taxes->payments[0]->bank_name=='BANCO VENEZUELA'&&$taxes->payments[0]->status=='verified')
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->merge('/public/images/pdf/isotipo.png', .2)->size(170)->generate(
                     'CODIGO:'.$taxes->payments[0]->code."\n".
                     'REF:'.$taxes->payments[0]->ref."\n".
