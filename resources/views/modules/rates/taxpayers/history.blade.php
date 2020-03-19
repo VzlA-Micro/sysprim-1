@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{route('rate.taxpayers.payment.history')}}">Historial de Pagos</a></li>
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1">
+            <div class="col s12 m12">
                 @if(Session::has('message'))
                     <div class="message message-warning">
                         <div class="message-body">

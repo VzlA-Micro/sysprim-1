@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('properties.payments.history', ['id' => $property->id]) }}">Historial de Pagos</a></li>
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1">
+            <div class="col s12 m12">
                 @if(Session::has('message'))
                     <div class="message message-warning">
                         <div class="message-body">
@@ -65,43 +65,56 @@
                                             @if($taxe->status==='process')
                                                 <td>
                                                     <button class="btn blue">
-                                                        <i class="icon-more_horiz left"></i>
-                                                        SIN CONCILIAR AÚN
+                                                        <span class="truncate">
+                                                            <i class="icon-more_horiz left"></i>
+                                                            SIN CONCILIAR AÚN
+                                                        </span>
                                                     </button>
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td><a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}"
-                                                       class="btn orange waves-effect waves-light"><i
-                                                                class="icon-description left"></i>Descargar
-                                                        planilla
+                                                       class="btn orange waves-effect waves-light">
+                                                       <span class="truncate">
+                                                            <i class="icon-description left"></i>
+                                                            Descargar planilla
+                                                        </span>
                                                     </a>
                                                 </td>
                                                 @endcan
                                             @elseif($taxe->status==='verified' || $taxe->status=='verified-sysprim'  ||   $taxe->status=='exempt')
                                                 <td>
                                                     <button class="btn green">
-                                                        <i class="icon-check left"></i>
-                                                        {{$taxe->statusName}}.
+                                                        <span class="truncate">
+                                                            <i class="icon-check left"></i>
+                                                            {{$taxe->statusName}}.
+                                                        </span>
                                                     </button>
                                                 </td>
                                                 @can('Descargar Mi Planilla')
                                                 <td>
-                                                    <a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}" class="btn orange waves-effect waves-light"><i class="icon-description left">
-                                                        </i>Descargar Planilla.</a>
+                                                    <a href="{{ route('properties.taxpayers.pdf', ['id' => $taxe->id]) }}" class="btn orange waves-effect waves-light">
+                                                        <span class="truncate">
+                                                            <i class="icon-description left">
+                                                            </i>Descargar Planilla.</a>
+                                                        </span>       
                                                 </td>
                                                 @endcan
                                             @elseif($taxe->status=='cancel')
                                                 <td>
                                                     <button class="btn" disabled>
-                                                        <i class="icon-block left"></i>
-                                                        CANCELADA.
+                                                        <span class="truncate">
+                                                            <i class="icon-block left"></i>
+                                                            CANCELADA.
+                                                        </span>                                   
                                                     </button>
                                                 </td>
                                                 @can('Detalles Mi Planilla')
                                                 <td>
                                                     <a href="#" class="btn indigo waves-effect waves-light" disabled>
-                                                        <i class="icon-pageview left"></i>
-                                                        Detalles
+                                                        <span class="truncate">
+                                                            <i class="icon-pageview left"></i>
+                                                            Detalles
+                                                        </span>    
                                                     </a>
                                                 <!-- <a href="{{route('taxes.download',['id',$taxe->id])}}" class="btn orange waves-effect waves-light"><i class="icon-description left"></i>Descargar planilla.</a>-->
                                                 </td>

@@ -20,7 +20,7 @@
                             Publicidad</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 l8 offset-m2 offset-l2">
+            <div class="col s12 m10 l10 offset-m1 offset-l1">
                 <form class="card" id="register">
                     <ul class="tabs">
                         <li class="tab col s4" id="user-tab-one">

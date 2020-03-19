@@ -1,4 +1,4 @@
-$(window).on("load", function () {
+$(window).on("load", function() {
 
     $("#preloader").fadeOut("fast");
     $("#preloader-overlay").fadeOut("fast");
@@ -11,9 +11,9 @@ $(document).ready(function() {
         'max-width': '300px !important',
     };
 
-    if( localStorage.getItem('url')===null){
+    if (localStorage.getItem('url') === null) {
         // localStorage.setItem('url','https://172.19.50.253/');
-        localStorage.setItem('url','https://sysprim.com/');
+        localStorage.setItem('url', 'http://sysprim.com.devel/');
 
     }
 
@@ -35,10 +35,10 @@ $(document).ready(function() {
     // var date = new Date(year - 1, month, day);
 
     $('.datepicker').datepicker({
-        maxDate:  date,
+        maxDate: date,
         // defaultDate: date,
         format: 'yyyy-mm-dd', // Configure the date format
-        yearRange: [1900,date.getFullYear()],
+        yearRange: [1900, date.getFullYear()],
         showClearBtn: false,
         i18n: {
             cancel: 'Cerrar',
@@ -70,7 +70,7 @@ $(document).ready(function() {
         indicators: true
     });
 
-    $('.preview-view').click(function () {
+    $('.preview-view').click(function() {
         window.history.back();
     });
 

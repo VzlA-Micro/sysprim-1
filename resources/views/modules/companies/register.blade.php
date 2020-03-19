@@ -9,7 +9,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('companies.register') }}">Registrar Empresa</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 l8 offset-m2 offset-l2">
+            <div class="col s12 m10 l10 offset-m1 offset-l1">
                 <form action="#" method="post" class="card" enctype="multipart/form-data" id="company-register">
                     <div class="card-header center-align">
                         <h5>Registrar Empresa</h5>

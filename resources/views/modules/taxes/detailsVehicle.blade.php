@@ -36,22 +36,33 @@
             <div class="col s12 m10 offset-m1">
 
                 @if( $statusTax=== 'process')
-                    <div class="row">
-                        <div class="col s12 center card">
-                            <h5>Pago Declarado</h5>
-                            <h1><i class="icon-restore orange-text"></i></h1>
-                            <p>Ya has declarado tu pago, actualmete se encuentra en proceso de verificación.</p>
+                <div class="message message-warning ">
+                    <div class="message-body ">
+                        <div class="row">
+                            <div class="col s2 center-align ">
+                                <h3><i class="icon-access_alarms orange-text"></i></h3>
+                            </div>
+                            <div class="col s10 left-align ">
+                                <h5>Pago Declarado</h5>
+                                <p>Ya has declarado tu pago, actualmete se encuentra en proceso de verificación.</p>
+                            </div>
                         </div>
-
                     </div>
+                </div>
                 @elseif($statusTax==='verified')
-                    <div class="row">
-                        <div class="col s12 center card">
-                            <h5>Pago Verificado</h5>
-                            <h1><i class="icon-check green-text"></i></h1>
-                            <p>Tu pago ha sido Verificado, Actualmete no puede declarar su impuesto</p>
+                <div class="message message-success ">
+                    <div class="message-body ">
+                        <div class="row">
+                            <div class="col s2 center-align ">
+                                <h3><i class="icon-check green-text"></i></h3>
+                            </div>
+                            <div class="col s10 left-align ">
+                                <h5>Pago Verificado</h5>
+                                <p>Su pago ha sido verificado éxitosamente.</p>
+                            </div>
                         </div>
                     </div>
+                </div>
                 @else
                     <div class="card">
                         <div class="card-header center-align">

@@ -50,16 +50,20 @@
                                             <td>
 
                                                 <button class="btn blue">
-                                                    <i class="icon-refresh left"></i>
-                                                    SIN CONCILIAR AÚN
+                                                    <span class="truncate">    
+                                                        <i class="icon-refresh left"></i>
+                                                        SIN CONCILIAR AÚN
+                                                    </span>
                                                 </button>
                                             </td>
 
                                         @elseif($taxe->status==='verified'||$taxe->status==='verified-sysprim')
                                             <td>
                                                 <button class="btn green">
-                                                    <i class="icon-check left"></i>
-                                                    {{$taxe->statusName}}
+                                                    <span class="truncate">
+                                                        <i class="icon-check left"></i>
+                                                        {{$taxe->statusName}}
+                                                    </span>
                                                 </button>
                                             </td>
 
@@ -68,15 +72,19 @@
                                         @elseif($taxe->status=='cancel')
                                             <td>
                                                 <button class="btn" disabled>
-                                                    <i class="icon-cancel left"></i>
-                                                    CANCELADA.
+                                                    <span class="truncate">
+                                                        <i class="icon-cancel left"></i>
+                                                        CANCELADA.
+                                                    </span>
                                                 </button>
                                             </td>
                                         @elseif($taxe->status=='ticket-office')
                                             <td>
                                                 <button class="btn amber">
-                                                    <i class="icon-personal_video left"></i>
-                                                    TAQUILLA.
+                                                    <span class="truncate">
+                                                        <i class="icon-personal_video left"></i>
+                                                        TAQUILLA.
+                                                    </span>             
                                                 </button>
                                             </td>
                                         @endif

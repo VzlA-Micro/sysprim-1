@@ -18,7 +18,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('properties.register') }}">Registrar Inmueble</a></li>
                 </ul>
             </div>
-            <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="col s12 m10 l10 offset-m1 offset-l1">
                 <form action="" method="post" id="property" class="card">
                     @csrf
                     <ul class="tabs">

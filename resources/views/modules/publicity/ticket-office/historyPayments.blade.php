@@ -23,7 +23,7 @@
                     <li class="breadcrumb-item"><a href="#">Historial de pago</a></li>
                 </ul>
             </div>
-            <div class="col s12 m10 offset-m1">
+            <div class="col s12 m12">
                 <div class="col s12 m12">
                     <div class="card">
                         <div class="card-header center-align">

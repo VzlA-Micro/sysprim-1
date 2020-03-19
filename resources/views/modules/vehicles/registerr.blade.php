@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="#">Registrar Vehículos</a></li>
                 </ul>
             </div>
-            <div class="col s12 m8 l8 offset-m2 offset-l2">
+            <div class="col s12 m10 l10 offset-m1 offset-l1">
                 <form id="vehicle" action="#" method="post" class="card" enctype="multipart/form-data">
                     <ul class="tabs">
                         <li class="tab col s6" id="one"><a href="#user-tab"><i class="icon-filter_1"></i>Datos Generales</a>

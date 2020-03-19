@@ -24,7 +24,7 @@
 
                 </ul>
             </div>
-            <form id="vehicle" action="#" method="post" class="col s12 m8 offset-m2" enctype="multipart/form-data">
+            <form id="vehicle" action="#" method="post" class="col s12 m10 offset-m1" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Registrar Vehículo</h5>
