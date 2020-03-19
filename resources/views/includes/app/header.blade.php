@@ -78,7 +78,7 @@
                 </ul>
             </ul>
         </div>
-        <ul id="sidenav-menu" class="sidenav sidenav-fixed">
+        <ul id="sidenav-menu" class="sidenav sidenav-fixed lateral-scrollbar">
             <li>
                 <a href="" class="logo-container font-audiowide center-align">
                     <img src="{{ asset('images/semat.webp') }}" alt="semat" width="100%" height="100%" srcset="">

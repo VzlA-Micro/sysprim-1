@@ -24,18 +24,24 @@
             footer {
                 padding-right: 375px !important;
             }
+
+
         }
 
 
         @media only screen and (min-width: 1200px){
             .sidenav{
-                width: 360px !important;
+                width: 350px !important;
             }
 
             header,
             main,
             footer {
-                padding-right: 360px !important;
+                padding-right: 350px !important;
+            }
+
+            #footer-messge{
+                width: 45% ;
             }
         }
 
@@ -44,6 +50,9 @@
         @media only screen  and (min-width : 1400px) {
             .sidenav{
                 width: 400px !important;
+            }
+            #footer-messge{
+                width: 25% ;
             }
 
             header,
@@ -165,7 +174,7 @@
 
                     <div class="message-body">
                         <div class="row" style="margin-bottom: 0">
-                            <div class="col s1 center-align" style="margin-right:1.5rem !important; ">
+                            <div class="col s1 center-align" style="margin-right:1.3rem !important; ">
                                 <i class="icon-info medium "></i>
                             </div>
                             <div class="col s10">

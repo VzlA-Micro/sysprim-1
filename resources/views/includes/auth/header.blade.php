@@ -1,6 +1,6 @@
 <header class=" z-depth-1">
     @if (Route::currentRouteName() == "login" || Route::currentRouteName() == "")
-    <ul class="sidenav sidenav-fixed hide-on-small-only z-depth-1" id="side-login">
+    <ul class="sidenav sidenav-fixed hide-on-small-only z-depth-1 lateral-scrollbar" id="side-login">
         <li>
             <a href="" class="logo-container font-ubuntu center-align">
                 <img src="{{ asset('images/semat.webp') }}" alt="Logo" width="100%" height="100%" srcset="">

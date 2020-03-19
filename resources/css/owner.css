@@ -983,4 +983,21 @@ textarea[readonly=readonly].materialize-textarea + label.active {
   border-bottom-left-radius: 2px;
 }
 
+
+/* Scrollbar */
+
+.lateral-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lateral-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(162, 161, 162, .5);
+  border-radius: 5px;
+  border-right: 2px solid .000;
+}
+
+.lateral-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(162, 161, 162, .8)
+}
+
 /*# sourceMappingURL=owner.css.map */

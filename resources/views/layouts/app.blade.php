@@ -31,7 +31,7 @@
     <link rel="shortcut icon" type="image´/png" href="{{ asset('images/sysprim/sysprim_icono color.ico') }}">
     @yield('styles')
 </head>
-<body class="grey lighten-4 @guest auth-view auth-background @endguest">
+<body class="grey lighten-4 @guest auth-view auth-background @endguest lateral-scrollbar">
     @include('includes.preloader')
     @auth
         @include('includes.app.header')
