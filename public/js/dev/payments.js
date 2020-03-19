@@ -91,6 +91,7 @@ $('document').ready(function () {
 
     $('.reconcile').click(function () {
         var status=$(this).data('status');
+
         var taxes_id=$('#taxes_id').val();
         var message;
 
@@ -98,13 +99,13 @@ $('document').ready(function () {
             message='verificada';
         }else if( status==='cancel'){
             message='cancelada';
-        }else if(status==='except'){
+        }else if(status==='exempt'){
             message='exonerado';
         }
 
         swal({
             title: "Información",
-            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla  cambiaria  el status a "'+ message+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
+            text: '¿Estas seguro de realizar esta acción?, El estado de esta planilla  cambiaria  el status a "'+ message.toUpperCase()+'".Los cambios realizados son permanente, en caso de error debe contactarse con los administradores.',
             icon: "warning",
             buttons: {
                 confirm: {

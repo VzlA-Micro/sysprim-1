@@ -71,7 +71,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($taxes as $taxe)
-                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim'|| $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel')
+                                    @if($taxe->status=='verified' || $taxe->status=='verified-sysprim'|| $taxe->status=='process'&&$taxe->created_at->format('d-m-Y')==\Carbon\Carbon::now()->format('d-m-Y')||$taxe->status=='cancel'||$taxe->status=='exempt')
 
                                         <tr>
                                             <td>{{ $taxe->code }}</td>
@@ -94,11 +94,11 @@
                                                     </a>
                                                 </td>
                                                 @endcan
-                                            @elseif($taxe->status==='verified' ||$taxe->status=='verified-sysprim')
+                                            @elseif($taxe->status==='verified' ||$taxe->status=='verified-sysprim'||$taxe->status=='exempt')
                                                 <td>
                                                     <button class="btn green">
                                                         <i class="icon-more_horiz left"></i>
-                                                        VERIFICADA.
+                                                        {{$taxe->statusName}}.
                                                     </button>
                                                 </td>
                                                 @can('Descargar Mi Planilla')

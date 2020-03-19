@@ -11,16 +11,26 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ticketOffice.home') }}">Taquillas</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla - Publicidad</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ticketOffice.publicity.home') }}">Taquilla -
+                            Publicidad</a></li>
                     @if(session()->has('property'))
-                        <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar Inmuebles Urbanos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.details-property',['id' => $property->id]) }}">Detalles del Inmueble</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('properties.ticket-office.property-taxes',['id'=>$property->id]) }}">Registro de Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('property.ticket-office.read-property') }}">Consultar
+                                Inmuebles Urbanos</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('property.ticket-office.details-property',['id' => $property->id]) }}">Detalles
+                                del Inmueble</a></li>
+                        <li class="breadcrumb-item"><a
+                                    href="{{ route('properties.ticket-office.property-taxes',['id'=>$property->id]) }}">Registro
+                                de Pagos</a></li>
                     @else
-                        <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.manage') }}">Gestionar Pagos</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.payments.taxes') }}">Pagar Planillas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.manage') }}">Gestionar
+                                Pagos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.payments.taxes') }}">Pagar
+                                Planillas</a></li>
                     @endif
-                    <li class="breadcrumb-item"><a href="{{ route('publicity.ticket-office.payments.details',['id' => $taxes->id]) }}">Detalles de Planilla</a></li>
+                    <li class="breadcrumb-item"><a
+                                href="{{ route('publicity.ticket-office.payments.details',['id' => $taxes->id]) }}">Detalles
+                            de Planilla</a></li>
                 </ul>
             </div>
             <div class="col s12 m10 offset-m1">
@@ -39,8 +49,8 @@
                                     <li><b>RIF: </b>{{ $owner->RIF }}</li>
                                 @endif
                                 {{-- <li><b>Tipo de Publicidad </b>{{ $publicity->advertisingType->name }}</li> --}}
-                                    <li><b>Código de Publicidad: </b>{{ $publicity->code }}</li>
-                                    <li><b>Nombre: </b>{{ $publicity->name }}</li>
+                                <li><b>Código de Publicidad: </b>{{ $publicity->code }}</li>
+                                <li><b>Nombre: </b>{{ $publicity->name }}</li>
 
                             </ul>
                         </div>
@@ -77,14 +87,18 @@
                         </div>
                         <div class="input-field col s12 m3">
                             <i class="icon-assignment prefix"></i>
-                            <input type="text" name="value" id="value" value="{{ $publicity->advertisingType->value }}" readonly>
+                            <input type="text" name="value" id="value" value="{{ $publicity->advertisingType->value }}"
+                                   readonly>
                             <label for="value">Valor U.T</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image" width="100%" height="100%">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="Image"
+                                     width="100%" height="100%">
                             </i>
-                            <input type="text" name="base_imponible" id="base_imponible" value="{{ number_format($publicityTaxe->pivot->base_imponible,2,',','.') }}" readonly>
+                            <input type="text" name="base_imponible" id="base_imponible"
+                                   value="{{ number_format($publicityTaxe->pivot->base_imponible,2,',','.') }}"
+                                   readonly>
                             <label for="base_imponible">Base Imponible<b> (Bs)</b></label>
                         </div>
                         {{--<div class="input-field col s12 m4">
@@ -96,16 +110,20 @@
                         </div>--}}
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS"
+                                     width="100%" height="100%">
                             </i>
-                            <input type="text" name="increment" id="increment" class="validate money" value="{{ number_format($publicityTaxe->pivot->increment,2,',','.') }}" readonly>
+                            <input type="text" name="increment" id="increment" class="validate money"
+                                   value="{{ number_format($publicityTaxe->pivot->increment,2,',','.') }}" readonly>
                             <label for="increment">Incremento</label>
                         </div>
                         <div class="input-field col s12 m4">
                             <i class="prefix">
-                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS" width="100%" height="100%">
+                                <img src="{{ asset('images/isologo-BsS.png') }}" style="width: 2rem" alt="BsS"
+                                     width="100%" height="100%">
                             </i>
-                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup" value="{{ number_format($publicityTaxe->pivot->fiscal_credit,2,',','.') }}" readonly>
+                            <input type="text" name="fiscal_credit" id="fiscal_credit" class="validate money_keyup"
+                                   value="{{ number_format($publicityTaxe->pivot->fiscal_credit,2,',','.') }}" readonly>
                             <label for="fiscal_credit">Crédito Fiscal</label>
                         </div>
                         <div class="input-field col s12">
@@ -183,7 +201,8 @@
                                 <div class="col s12 m6">
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <input type="text" name="amount" id="amount" class="validate" value="{{ number_format($taxes->amount,2,',','.') }}" readonly>
+                                            <input type="text" name="amount" id="amount" class="validate"
+                                                   value="{{ number_format($taxes->amount,2,',','.') }}" readonly>
                                             <label for="amount">Total a Pagar:(Bs)</label>
                                         </div>
                                         <input type="hidden" id="bank" name="bank" value="0">
@@ -279,37 +298,57 @@
                                         <i class="icon-more_horiz left"></i>
                                         ESTADO: CANCELADA.
                                     </a>
+
+                                @elseif($taxes->status=='exempt')
+                                    <a href="#" class="btn yellow darken-4 col s12">
+                                        <i class="icon-more_horiz left"></i>
+                                        ESTADO: EXONERADA.
+                                    </a>
+
                                 @endif
                             </div>
                         </div>
                     </div>
                     <div class="card-footer center-align">
                         <div class="row">
-                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim'||$taxes->status=='exempt')
                                 <div class="col s12">
                                     <h4 class="center-align">Acciones</h4>
                                 </div>
                                 @can('Anular Pagos')
                                     <div class="col s12 m6 center-align" style="margin-top:20px">
-                                        <a href="#" class="btn red waves-effect waves-ligt reconcile col s12" data-status="cancel">
+                                        <a href="#" class="btn red waves-effect waves-ligt reconcile col s12"
+                                           data-status="cancel">
                                             ANULAR PLANILLA.
                                             <i class="icon-close right"></i>
                                         </a>
                                     </div>
                                 @endcan
                                 @can('Verificar Pagos - Manual')
-                                    @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
+                                    @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' && $taxes->status!='exempt' )
                                         <div class="col s12 m6 center-align" style="margin-top:20px">
-                                            <a href="#" class="btn blue waves-effect waves-light reconcile col s12" data-status="verified">
+                                            <a href="#" class="btn blue waves-effect waves-light reconcile col s12"
+                                               data-status="verified">
                                                 VERIFICAR PLANILLA.
+                                                <i class="icon-verified_user right"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col s12 m6 center-align" style="margin-top:20px">
+                                            <a href="#"
+                                               class="btn col s12 yellow darken-4 waves-effect waves-light reconcile"
+                                               data-status="exempt">
+                                                EXONERAR PLANILLA.
                                                 <i class="icon-verified_user right"></i>
                                             </a>
                                         </div>
                                     @endif
                                 @endcan
-                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim' || $taxes->status=='exempt')
                                     <div class="col s12 m6 center-align" style="margin-top:20px">
-                                        <button type="button" id="send-email-verified" class="btn green waves-effect waves-light col s12" value="{{$taxes->id}}">
+                                        <button type="button" id="send-email-verified"
+                                                class="btn green waves-effect waves-light col s12"
+                                                value="{{$taxes->id}}">
                                             Enviar Correo Verificado.
                                             <i class="icon-mail_outline right"></i>
                                         </button>
@@ -317,7 +356,9 @@
                                 @endif
                                 @if($taxes->status!='cancel')
                                     <div class="col s12 m6 center-align" style="margin-top:20px">
-                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#" class="btn red darken-4 waves-effect waves-light col s12" target="_blank" >Ver Planilla(PDF).
+                                        <a href="{{route('ticket-office.download.pdf',['id'=>$taxes->id])}}" id="#"
+                                           class="btn red darken-4 waves-effect waves-light col s12" target="_blank">Ver
+                                            Planilla(PDF).
                                             <i class="icon-picture_as_pdf right"></i>
                                         </a>
                                     </div>

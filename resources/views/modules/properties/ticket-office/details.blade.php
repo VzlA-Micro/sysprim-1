@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <div class="col s12">
-                            @if($taxes != null)
+                            @if(!$taxes->payments->isEmpty())
                                 <h4 class="center-align">Registro de Pago:</h4>
                                 <table class="centered highlight" id="payments" style="width: 100%">
                                     <thead>
@@ -254,8 +254,8 @@
                                     <i class="icon-more_horiz left"></i>
                                     ESTADO: CANCELADA.
                                 </a>
-                                @elseif($taxes->status=='exonerated')
-                                <a href="#" class="btn red col s12">
+                                @elseif($taxes->status=='exempt')
+                                <a href="#" class="btn yellow darken-4 col s12">
                                     <i class="icon-more_horiz left"></i>
                                     ESTADO: EXONERADA.
                                 </a>
@@ -265,7 +265,7 @@
                     </div>
                     <div class="card-footer center-align">
                         <div class="row">
-                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                            @if($taxes->status=='process'||$taxes->status=='ticket-office'||$taxes->status=='temporal'||$taxes->status=='verified'||$taxes->status=='verified-sysprim' || $taxes->status=='exempt')
                                 <div class="col s12">
                                     <h4 class="center-align">Acciones</h4>
                                 </div>
@@ -279,7 +279,17 @@
                                 @endcan
                                 
                                 @can('Verificar Pagos - Manual')
-                                    @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' )
+                                    @if( $taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' &&  $taxes->status!='exempt' )
+
+
+                                        <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
+                                           style="margin-top:20px"
+                                           data-status="exempt">
+                                            EXONERAR PLANILLA.
+                                            <i class="icon-verified_user right"></i>
+                                        </a>
+
+
                                         <div class="col s12 m6 center-align">
                                             <a href="#" class="btn blue waves-effect waves-light reconcile col s12" data-status="verified" style="margin-top: 20px;">
                                                 VERIFICAR PLANILLA.
@@ -288,7 +298,7 @@
                                         </div>
                                     @endif
                                 @endcan
-                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim')
+                                @if($taxes->status=='verified'||$taxes->status=='verified-sysprim' || $taxes->status=='exempt' )
                                     <div class="col s12 m6 center-align">
                                         <button type="button" id="send-email-verified" style="margin-top: 20px;" class="btn green waves-effect waves-light col s12" value="{{$taxes->id}}">
                                             Enviar Correo Verificado.
@@ -304,12 +314,7 @@
                                     </div>
                                 @endif
                                 {{-- @can('Anular Pagos') --}}
-                                    <div class="col s12 m6 center-align">
-                                        <a href="#" class="btn red waves-effect waves-ligt reconcile col s12" data-status="cancel" style="margin-top: 20px;">
-                                            EXONERAR PLANILLA.
-                                            <i class="icon-close right col s12"></i>
-                                        </a>
-                                    </div>
+
                                 {{-- @endcan --}}
                             @endif
                         </div>

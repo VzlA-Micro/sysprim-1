@@ -17,12 +17,12 @@
                 <div class="card">
                     <div class="card-header center-align">
                         <h5>Resumen de Autoliquidación</h5>
-                        <h5> Periodo Fiscal:<span>{{$response['taxes']->fiscal_period." - ".$response['taxes']->fiscal_period_end}}</span></h5>
-                        <h5> Código:<b> {{$response['taxes']->code}}</b></h5>
                     </div>
                     <div class="row padding-2 left-align">
                         <div class="col m6">
                             <ul>
+                                <li><b>Código: </b>{{$response['taxes']->code}}</li>
+                                <li><b>Fiscal Periodo: </b>{{ $response['taxes']->fiscal_period." - ".$response['taxes']->fiscal_period_end}}</li>
                                 <li><b>Placa: </b>{{ $response['vehicle'][0]->license_plate }}</li>
                                 <li><b>Color: </b>{{ $response['vehicle'][0]->color }}</li>
                                 <li><b>Marca: </b>{{ $response['model']->brand->name }}</li>
@@ -209,9 +209,20 @@
                                                     <i class="icon-more_horiz left"></i>
                                                     ESTADO: CANCELADA.
                                                 </a>
-                                            @endif
 
-                                            @if($response['taxes']->status=='process'||$response['taxes']->status=='ticket-office'||$response['taxes']->status=='temporal'||$response['taxes']->status=='verified'|| $response['taxes']->status=='verified-sysprim')
+
+
+                                           @elseif($response['taxes']->status=='exempt')
+                                               <a href="#" class="btn yellow darken-4 col s12">
+                                                   <i class="icon-more_horiz left"></i>
+                                                   ESTADO: EXONERADA.
+                                               </a>
+                                           @endif
+
+
+
+
+                                            @if($response['taxes']->status=='process'||$response['taxes']->status=='ticket-office'||$response['taxes']->status=='temporal'||$response['taxes']->status=='verified'|| $response['taxes']->status=='verified-sysprim' || $response['taxes']->status=='exempt')
 
                                                 <div class="col l12">
                                                     <h4 class="center-align mt-2">Acciones</h4>
@@ -229,22 +240,45 @@
                                                         </a>
                                                     @endcan
                                                     @can('Verificar Pagos - Manual')
-                                                        @if($response['verified']&&$response['taxes']->status!=='verified')
+
+                                                        @if($response['verified']&&$response['taxes']->status!=='verified' && $response['taxes']->status!=='verified-sysprim' && $response['taxes']->status!=='exempt')
                                                             <a href="#"
                                                                class="btn col s12 m6 blue waves-effect waves-light reconcile"
                                                                data-status="verified" style="margin-top:10px;">
                                                                 VERIFICAR PLANILLA.
                                                                 <i class="icon-verified_user right"></i>
                                                             </a>
+
+                                                                <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
+                                                                   style="margin-top:20px"
+                                                                   data-status="exempt">
+                                                                    EXONERAR PLANILLA.
+                                                                    <i class="icon-verified_user right"></i>
+                                                                </a>
+
                                                         @endif
+
+
+
+
+
                                                     @endcan
-                                                    @if($response['taxes']->status=='verified')
+                                                    @if($response['taxes']->status=='verified' ||$response['taxes']->status=='verified-sysprim' ||  $response['taxes']->status=='exempt')
                                                         <button type="button" id="send-email-verified"
                                                                 class="btn col s12 m6 green waves-effect waves-light"
                                                                 value="{{$response['taxes']->id}}" style="margin-top:10px;">Enviar Correo Verificado.
                                                             <i class="icon-send right"></i>
                                                         </button>
                                                     @endif
+
+                                                        @if($response['taxes']->status!='cancel')
+
+                                                                <a href="{{route('ticket-office.download.pdf',['id'=>$response['taxes']->id])}}" style="margin-top: 20px;" id="#" class="btn red darken-4  waves-effect waves-light col s12 m6 " target="_blank" >Ver Planilla(PDF).
+                                                                    <i class="icon-picture_as_pdf right"></i>
+                                                                </a>
+
+                                                        @endif
+
 
                                                 </div>
                                             @endif

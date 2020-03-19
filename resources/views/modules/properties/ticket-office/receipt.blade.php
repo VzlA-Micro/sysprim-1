@@ -65,7 +65,7 @@
     </table>
 </div>
 
-@if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
+@if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim' ||$taxes[0]->status==='exempt')
     <h4 style="text-align:center">RECIBO DE PAGO VERIFICADO (INMUEBLES URBANOS)</h4>
 @else
     <h4 style="text-align:center">DEPOSITO TRIBUTARIO MUNICIPAL(INMUEBLES URBANOS)</h4>
@@ -361,7 +361,7 @@
     </tr>
 
     <tr>
-        @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
+        @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim' || $taxes[0]->status!='exempt' )
             <td style="width: 100%;text-align: center; font-size: 14px;">
                 @if($taxes[0]->bank==44)
                     ***** SOLAMENTE PARA SER CANCELADA A TRAVÉS DE BOD*****
@@ -415,7 +415,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
+            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim'||$taxes[0]->status==='exempt')
                 <td style="width: 80%;text-align: center;margin-bottom: -50px!important;">
                     <img src="{{ url('images/pdf/firma-director.png') }}" style="width:180px; height:190px;" alt="Image">
                 </td>
@@ -427,7 +427,7 @@ $date = '31/12/' . date('Y');
 
         </tr>
         <tr>
-            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim')
+            @if($taxes[0]->status==='verified'||$taxes[0]->status==='verified-sysprim' ||$taxes[0]->status==='exempt')
                 <td style="width:40%;text-align: center; font-size: 10px;"><b>
                         __________________________________________<br>
                         ABG. YOLIBETH GRACIELA NELO HERNÁNDEZ<br>
@@ -449,7 +449,7 @@ $date = '31/12/' . date('Y');
     <table style="width: 100%;margin-bottom:-30px;">
         <tr>
 
-            @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
+            @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim'&&$taxes[0]->status!='exempt')
                 <td style="width: 80%;">
                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->errorCorrection('H')->size(170)->generate(\Illuminate\Support\Facades\Crypt::encrypt($taxes[0]->id))) !!} "
                          style="float:left ;position: absolute;top: -10px;right: 800px !important;left: 900px;" alt="Image">
@@ -473,7 +473,7 @@ $date = '31/12/' . date('Y');
 
         <tr>
             <td style="width: 20%;">
-                @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim')
+                @if($taxes[0]->status!='verified'&&$taxes[0]->status!='verified-sysprim' &&$taxes[0]->status!='exempt')
                     @if($taxes[0]!=null)
                         <img src="{{ url("images/pdf/".$taxes[0]->bank.".png") }}"
                              style="width:180px; height:100px ;float: right;top: -120px; position: absolute;" alt="Image" >

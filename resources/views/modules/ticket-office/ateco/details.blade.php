@@ -310,12 +310,12 @@
                                                         @can('Verificar Pagos - Manual')
 
                                                         @if($taxes->status!='verified' && $verified && $taxes->status!='verified-sysprim' && $taxes->status!='exempt')
-                                                        <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
-                                                               style="margin-top:20px"
-                                                               data-status="exempt">
-                                                                EXONERAR.
-                                                                <i class="icon-verified_user right"></i>
-                                                        </a>
+                                                            <a href="#" class="btn col s12 m6  yellow darken-4 waves-effect waves-light reconcile"
+                                                                   style="margin-top:20px"
+                                                                   data-status="exempt">
+                                                                    EXONERAR PLANILLA.
+                                                                    <i class="icon-verified_user right"></i>
+                                                            </a>
 
 
 

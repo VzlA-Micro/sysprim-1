@@ -43,7 +43,7 @@ class TicketOfficeVehicleController extends Controller
 
             $taxe = Taxe::with('VehicleTaxes')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim' || $taxe[0]->status === 'exempt') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -60,7 +60,7 @@ class TicketOfficeVehicleController extends Controller
             $code = strtoupper($id);
             $taxe = Taxe::with('VehicleTaxes')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim'|| $taxe[0]->status === 'exempt') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);
@@ -904,7 +904,7 @@ class TicketOfficeVehicleController extends Controller
 
         if (!empty($taxes)) {
             foreach ($taxes as $tax) {
-                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim'|| $tax->status  === 'exempt' ) {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
                     DeclarationVehicle::verify($idVehicle);
@@ -1228,7 +1228,7 @@ class TicketOfficeVehicleController extends Controller
                 }
             }
         } else {
-            $verified = false;
+            $verified = true;
         }
         $response = array(
             'taxes' => $taxes,
@@ -1400,7 +1400,7 @@ class TicketOfficeVehicleController extends Controller
         if (is_null($tax)) {
             $statusTax = false;
         } else {
-            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+            if ($tax->status === 'verified' || $tax->status === 'verified-sysprim'|| $tax->status === 'exempt' ) {
                 $statusTax = true;
             } else if ($tax->status === 'temporal') {
 //                      $tax->delete();

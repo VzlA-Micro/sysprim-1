@@ -58,7 +58,7 @@ class PublicityTaxesController extends Controller
         
         if (!$taxes->isEmpty()) {
             foreach ($taxes as $tax) {
-                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim'||  $tax->status === 'exempt') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
                     DeclarationPublicity::verify($tax->id);
@@ -75,7 +75,8 @@ class PublicityTaxesController extends Controller
             $statusTax = 'new';
         }
 
-        if($statusTax === 'process' || $statusTax === 'verified' || $statusTax === 'verified-sysprim' || $statusTax === 'exonerated') {
+
+        if($statusTax === 'process' || $statusTax === 'verified' || $statusTax === 'verified-sysprim' || $statusTax === 'exempt') {
             $taxeType = $declaration['taxeType'];
             $baseImponible = number_format($declaration['baseImponible'], 2, ',', '.');
             $increment = number_format($declaration['increment'], 2, ',', '.');
@@ -411,7 +412,7 @@ class PublicityTaxesController extends Controller
         if (is_null($taxe)) {
             $statusTax = false;
         } else {
-            if ($taxe->status === 'verified' || $taxe->status === 'verified-sysprim') {
+            if ($taxe->status === 'verified' || $taxe->status === 'verified-sysprim' || $taxe->status === 'exempt') {
                 $statusTax = true;
             } elseif ($taxe->status === 'temporal') {
 //                      $tax->delete();
@@ -619,7 +620,7 @@ class PublicityTaxesController extends Controller
                 }
             }
         } else {
-            $verified = false;
+            $verified = true;
         }
         $daysDiff = $declaration['daysDiff'];
 
@@ -696,7 +697,7 @@ class PublicityTaxesController extends Controller
 
             $taxe = Taxe::with('publicities')->where('id', $id)->get();
 
-            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+            if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim'  || $taxe[0]->status === 'exempt') {
                 return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
             } elseif ($taxe[0]->status === 'cancel') {
                 return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null, 'ciu' => null]);
@@ -715,7 +716,7 @@ class PublicityTaxesController extends Controller
             $code = strtoupper($id);
             $taxe = Taxe::with('publicities')->where('code', $code)->get();
             if (!$taxe->isEmpty()) {
-                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim') {
+                if ($taxe[0]->status === 'verified' || $taxe[0]->status === 'verified-sysprim' || $taxe[0]->status === 'exempt') {
                     return response()->json(['status' => 'verified', 'taxe' => null, 'calculate' => null]);
                 } elseif ($taxe[0]->status === 'cancel') {
                     return response()->json(['status' => 'cancel', 'taxe' => null, 'calculate' => null]);

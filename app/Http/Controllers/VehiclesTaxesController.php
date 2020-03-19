@@ -61,10 +61,9 @@ class VehiclesTaxesController extends Controller
 
             foreach ($taxes as $tax) {
 
-                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim') {
+                if ($tax->status === 'verified' || $tax->status === 'verified-sysprim' || $tax->status === 'exempt') {
                     $statusTax = 'verified';
                 } else if ($tax->status === 'temporal') {
-
                     DeclarationVehicle::verify($idVehicle);
                     $statusTax = 'new';
                 } else if ($tax->status === 'ticket-office' && $tax->created_at->format('d-m-Y') === $date->format('d-m-Y')) {
@@ -133,7 +132,7 @@ class VehiclesTaxesController extends Controller
             }
         }*/
 
-        if ($statusTax === 'process' || $statusTax === 'verified' || $statusTax=== 'verified-sysprim'){
+        if ($statusTax === 'process' || $statusTax === 'verified' || $statusTax=== 'verified-sysprim'|| $statusTax === 'exempt'){
             return view('modules.taxes.detailsVehicle', array(
                 'vehicle' => $vehicle,
                 'taxes' => $taxes,
